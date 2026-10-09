@@ -33,6 +33,7 @@ export const booEnergeticChild: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e597aba9dc5748e49621c84f4da6f30a",
+    tcgPlayer: "690202",
   },
   text: [
     {

@@ -66,4 +66,31 @@ describe("OP12-001 Silvers Rayleigh", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("uses base power rather than attached DON power and expires its boost at turn end", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op12SilversRayleigh001,
+      hand: [op08PhoenixBrand055, op08PhoenixBrand055],
+      character: ["ST02-012", "ST02-002"],
+      activeDon: 3,
+    });
+    const bepo = engine.findCardInZone("south", "character", "ST02-012");
+    const doma = engine.findCardInZone("south", "character", "ST02-002");
+    engine.attachDon(bepo, 3, "south");
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    engine.accept("south");
+    const choice = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (choice?.kind !== "selectEntity") throw new Error("Expected power target");
+    expect(choice.candidates.map((candidate) => candidate.ref.id)).toContain(bepo);
+    expect(choice.candidates.map((candidate) => candidate.ref.id)).not.toContain(doma);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [bepo] }, "south");
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === bepo)
+        ?.power,
+    ).toBe(8000);
+    engine.endTurn("south");
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === bepo)
+        ?.power,
+    ).toBe(3000);
+  });
 });

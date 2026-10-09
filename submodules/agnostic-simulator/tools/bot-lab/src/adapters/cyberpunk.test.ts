@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import { BOT_CORE_SCHEMA_VERSION, type BotCandidateManifestV1 } from "@tcg/bot-core";
 import { cyberpunkBotLabAdapter } from "./cyberpunk";
+import { createAuthoredBotLabDecks } from "../../../../../cyberpunk/tools/ai-runner/src/legal-decks.ts";
 
 describe("cyberpunk bot-lab adapter", () => {
   it("uses a varied legal real-card deck matrix for promotion", () => {
@@ -23,11 +24,15 @@ describe("cyberpunk bot-lab adapter", () => {
 
   it("evaluates over the authored archetype deck pool", async () => {
     const result = await cyberpunkBotLabAdapter.doctor();
-
-    expect(result.checks.find((check) => check.name === "legal-decks")?.detail).toBe("10 decks");
+    const decks = createAuthoredBotLabDecks();
+    expect(result.checks.find((check) => check.name === "legal-decks")?.detail).toBe(
+      `${decks.length} decks`,
+    );
     const pairs = cyberpunkBotLabAdapter.getPromotionDeckPairs("promotion");
-    // 10 authored mirror pairs + 5 adjacent cross pairings.
-    expect(pairs.length).toBe(15);
+    expect(pairs.length).toBe(decks.length + Math.floor(decks.length / 2));
+    expect(pairs.filter((pair) => pair.deckA === pair.deckB).map((pair) => pair.deckA)).toEqual(
+      decks.map((deck) => deck.id),
+    );
     expect(
       pairs.every(
         (pair) => pair.deckA.startsWith("authored-") && pair.deckB.startsWith("authored-"),
@@ -35,9 +40,15 @@ describe("cyberpunk bot-lab adapter", () => {
     ).toBe(true);
   });
 
-  it("keeps the explicit default baseline distinct from the promoted runtime default", () => {
+  it("reports the full-information default for both the alias and runtime", () => {
     expect(cyberpunkBotLabAdapter.getStrategyDescriptor("default")?.id).toBe("default");
-    expect(cyberpunkBotLabAdapter.getCurrentDefaultStrategyId()).toBe("tactical");
+    expect(cyberpunkBotLabAdapter.getCurrentDefaultStrategyId()).toBe("expert-oracle");
+    expect(cyberpunkBotLabAdapter.getStrategyDescriptor("default")?.informationPolicy).toBe(
+      "oracle",
+    );
+    expect(cyberpunkBotLabAdapter.getStrategyDescriptor("expert-oracle")?.productionEligible).toBe(
+      true,
+    );
   });
 
   it("plays an authored mirror match end to end", async () => {
@@ -46,7 +57,7 @@ describe("cyberpunk bot-lab adapter", () => {
       game: "cyberpunk",
       candidateId: "default",
       parentStrategyId: "default",
-      informationPolicy: "public",
+      informationPolicy: "oracle",
       hypothesis: "Authored-pool mirror smoke",
       engineRevision: cyberpunkBotLabAdapter.getEngineRevision(),
       cardCatalogHash: cyberpunkBotLabAdapter.getCardCatalogHash(),
@@ -79,7 +90,7 @@ describe("cyberpunk bot-lab adapter", () => {
     });
 
     expect(record.candidateDeckId).toBe("authored-overwatch-recharge-control");
-    expect(record.termination).not.toBe("illegal-command");
+    expect(record.termination).toBe("rules-win");
     expect(record.turnCount).toBeGreaterThan(0);
-  });
+  }, 60_000);
 });

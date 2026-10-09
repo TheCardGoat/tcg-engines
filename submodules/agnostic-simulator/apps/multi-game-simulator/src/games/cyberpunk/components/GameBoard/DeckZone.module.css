@@ -98,6 +98,21 @@
   max-width: 100%;
 }
 
+.zone[data-setup-shuffle="true"] .cardWrap {
+  animation: setup-deck-shuffle 800ms cubic-bezier(.22, 1, .36, 1) both;
+}
+
+@keyframes setup-deck-shuffle {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  25% { transform: translate(-9%, -4%) rotate(-7deg); }
+  50% { transform: translate(8%, 3%) rotate(6deg); }
+  75% { transform: translate(-4%, -2%) rotate(-3deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zone[data-setup-shuffle="true"] .cardWrap { animation: none; }
+}
+
 .stack :global(.empty-zone) {
   height: 100%;
   aspect-ratio: 5 / 7;

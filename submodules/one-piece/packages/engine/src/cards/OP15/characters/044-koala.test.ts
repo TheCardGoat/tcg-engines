@@ -53,21 +53,33 @@ describe("OP15-044 Koala", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
-  test("[Continuous] survives the turn handoff", () => {
+  test("Blocker protects Life and the resulting K.O. still opens its search", () => {
     const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP15-044", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
+      {
+        character: [op15Koala044],
+        hand: [],
+        life: 3,
+        deck: [op04GumGumKingKongGun093, eb01Doma005, eb01Fourtricks025],
+      },
+      {},
+      { firstPlayer: "south", activeSeat: "north" },
     );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP15-044",
+    const koalaId = engine.findCardInZone("south", "character", op15Koala044);
+    engine.declareAttack(engine.leader("north"), engine.leader("south"), "north");
+    engine.resolveDecision("battleBlocker", { selectedIds: [koalaId] }, "south");
+    engine.resolveDecision("effectSearchSelection", { selectedIds: [] }, "south");
+    const order = engine.pendingDecision("effectSearchRemainderOrder", "south").steps[0];
+    if (order?.kind !== "orderItems") throw new Error("Expected bottom order.");
+    engine.resolveDecision(
+      "effectSearchRemainderOrder",
+      { selectedIds: order.candidates.map((card) => card.ref.id) },
+      "south",
     );
+    expect(engine.getView("south").players.south.lifeCount).toBe(3);
+    expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
+      koalaId,
+    );
+    expect(engine.getView("south").players.south.deckCount).toBe(3);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

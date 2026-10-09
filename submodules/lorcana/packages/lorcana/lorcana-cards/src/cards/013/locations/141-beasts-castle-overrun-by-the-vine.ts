@@ -29,9 +29,13 @@ export const beastsCastleOverrunByTheVine: LocationCard = {
   moveCost: 2,
   lore: 1,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_c3d3666c9afc43cb83e0778480e549d1",
+    tcgPlayer: "704640",
+  },
   text: [
     {
-      title: "Imminent Threat",
+      title: "IMMINENT THREAT",
       description:
         "Your Floodborn characters gain Rush. (They can challenge the turn they're played.)",
     },

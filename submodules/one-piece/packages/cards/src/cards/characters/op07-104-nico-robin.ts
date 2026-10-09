@@ -24,7 +24,7 @@ export const op07NicoRobin104: CharacterCard = {
   power: 4000,
   counter: 1000,
   trigger: "If your Leader has the {Egghead} type, draw 2 cards.",
-  traits: ["Straw Hat Crew Egghead"],
+  traits: ["Egghead", "Straw Hat Crew"],
   attribute: "special",
   effect: "[Trigger] If your Leader has the {Egghead} type, draw 2 cards.",
   effects: {
@@ -35,7 +35,7 @@ export const op07NicoRobin104: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Egghead",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

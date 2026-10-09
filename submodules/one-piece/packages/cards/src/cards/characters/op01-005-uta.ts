@@ -22,7 +22,7 @@ export const op01Uta005: CharacterCard = {
   setId: "OP01",
   cost: 4,
   power: 4000,
-  traits: ["Film"],
+  traits: ["FILM"],
   attribute: "special",
   effect:
     "[On Play] Add up to 1 red Character card other than [Uta] with a cost of 3 or less from your trash to your hand.  This card has been officially errata'd.",

@@ -22,7 +22,7 @@ export const op13GumGumSnakeShot039: EventCard = {
   setId: "OP13",
   cost: 2,
   trigger: "Activate this card's [Counter] effect.",
-  traits: ["Straw Hat Crew Supernovas Fish-Man Island"],
+  traits: ["Fish-Man Island", "Supernovas", "Straw Hat Crew"],
   effect: "[Counter] K.O. up to 1 of your opponent's rested Characters with a cost of 4 or less.",
   effects: {
     effects: [

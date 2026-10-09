@@ -30,7 +30,7 @@ export const op01KouzukiOden031: LeaderCard = {
   setId: "OP01",
   power: 5000,
   life: 5,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "slash",
   effect:
     '[Activate:Main] [Once Per Turn] You can trash 1 "Land of Wano" type card from your hand: Set up to 2 of your DON!! cards as active.',
@@ -46,7 +46,7 @@ export const op01KouzukiOden031: LeaderCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

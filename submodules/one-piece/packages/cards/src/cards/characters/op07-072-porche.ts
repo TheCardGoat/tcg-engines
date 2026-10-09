@@ -60,7 +60,7 @@ export const op07Porche072: CharacterCard = {
               {
                 filter: "trait",
                 value: "Foxy Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

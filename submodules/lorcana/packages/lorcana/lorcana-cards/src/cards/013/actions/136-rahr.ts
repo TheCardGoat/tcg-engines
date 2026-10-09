@@ -27,6 +27,7 @@ export const rahr: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a7298b97da7e4414b0b9c6eaebeb0bcd",
+    tcgPlayer: "704637",
   },
   text: "Chosen character gets +3 {S} this turn.",
   abilities: [

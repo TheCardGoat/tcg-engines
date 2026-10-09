@@ -5,6 +5,27 @@ import { prb02CrocodileP082PirateFoil082 } from "../../../../../cards/src/cards/
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("P-082 Crocodile - P-082 (Pirate Foil)", () => {
+  test("Alvida may play Crocodile on the opponent's turn but it cannot remove the low-power target", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["EB01-018", "OP03-044"] },
+      {
+        leaderCardId: "OP09-042",
+        character: [{ cardId: "OP09-043", rested: true }],
+        hand: ["P-082"],
+      },
+    );
+    const alvida = e.findCardInZone("north", "character", "OP09-043");
+    const crocodile = e.findCardInZone("north", "hand", "P-082");
+    const kaya = e.findCardInZone("south", "character", "OP03-044");
+    e.asSouth().attack("EB01-018", alvida);
+    e.resolveDecision("effectPlaySelection", { selectedIds: [crocodile] }, "north");
+    expect(e.getView("south").players.north.characters.filter(Boolean)).toMatchObject([
+      { instanceId: crocodile },
+    ]);
+    expect(e.getView("south").players.south.characters.map((c) => c?.instanceId)).toContain(kaya);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+
   test("under either included Leader trait, maps only opposing power-2000 targets to deck bottom", () => {
     for (const leaderCardId of [op09Buggy042, op01Crocodile062]) {
       const engine = OnePieceTestEngine.create(

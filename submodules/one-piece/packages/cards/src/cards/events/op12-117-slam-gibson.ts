@@ -21,7 +21,7 @@ export const op12SlamGibson117: EventCard = {
   rarity: "R",
   setId: "OP12",
   cost: 1,
-  traits: ["Kid Pirates Supernovas"],
+  traits: ["Supernovas", "Kid Pirates"],
   effect:
     '[Main] You may rest 5 of your DON!! cards: If your Leader has the "Supernovas" type, add up to 1 Character with a cost of 9 or less to the top or bottom of the owner\'s Life cards face-down.\n[Counter] Your Leader gains +3000 power during this battle.',
   effects: {
@@ -56,7 +56,7 @@ export const op12SlamGibson117: EventCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Supernovas",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

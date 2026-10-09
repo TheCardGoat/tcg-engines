@@ -25,15 +25,19 @@ export const bunchOfBalloons: ItemCard = {
   rarity: "rare",
   cost: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_e778e18d9b814a18868304e6360aea8d",
+    tcgPlayer: "702693",
+  },
   text: [
     {
-      title: "Float Away",
+      title: "FLOAT AWAY",
       description:
         "When you play this item, choose a location of yours. While this item is in play, that location gains Evasive. (Only characters with Evasive can challenge it.)",
     },
     {
-      title: "Out of Sight",
-      description: "3 {I} — Return this item to your hand.",
+      title: "OUT OF SIGHT 3",
+      description: "{I} — Return this item to your hand.",
     },
   ],
   abilities: [

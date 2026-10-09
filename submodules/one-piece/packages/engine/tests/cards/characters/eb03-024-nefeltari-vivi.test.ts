@@ -51,4 +51,20 @@ describe("EB03-024 Nefeltari Vivi", () => {
     );
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("zero chosen play still imposes the restriction and it expires on the next turn", () => {
+    const e = OnePieceTestEngine.create({
+      hand: ["EB03-024", "EB01-004", "EB01-005"],
+      activeDon: 10,
+    });
+    e.asSouth().play("EB03-024");
+    e.resolveDecision("effectPlaySelection", { selectedIds: [] }, "south");
+    const id = e.findCardInZone("south", "hand", "EB01-005");
+    const f = e.expectFailure({ type: "playCard", seat: "south", instanceId: id });
+    const restored = OnePieceTestEngine.fromState(f.state);
+    expect(restored.getView("south").players.south.activeDon).toBe(5);
+    restored.asSouth().endTurn();
+    restored.asNorth().endTurn();
+    restored.asSouth().play("EB01-005");
+    expect(restored.findCardInZone("south", "character", "EB01-005")).toBe(id);
+  });
 });

@@ -21,6 +21,7 @@ describe("reduceLiveGatewayMessage", () => {
         players: [],
         interactionView: interactionView(5),
         undoable: true,
+        undoTurnAvailable: true,
       },
       { gameId: "g_1" },
     );
@@ -32,6 +33,7 @@ describe("reduceLiveGatewayMessage", () => {
         state: projection,
         interactionView: interactionView(5),
         canUndo: true,
+        canUndoTurn: true,
       },
     });
   });
@@ -63,7 +65,7 @@ describe("reduceLiveGatewayMessage", () => {
 
   it("revokes undo when an advanced state omits undoability", () => {
     const effect = reduceLiveGatewayMessage(
-      { ...view(), version: 5, canUndo: true },
+      { ...view(), version: 5, canUndo: true, canUndoTurn: true },
       {
         type: "state_update",
         gameId: "g_1",
@@ -76,7 +78,7 @@ describe("reduceLiveGatewayMessage", () => {
       { gameId: "g_1" },
     );
 
-    expect(effect).toMatchObject({ type: "state", view: { canUndo: false } });
+    expect(effect).toMatchObject({ type: "state", view: { canUndo: false, canUndoTurn: false } });
   });
 
   it("keeps the stored view when a view-less sync arrives for the same version", () => {
@@ -224,6 +226,7 @@ function view(): LiveMatchView {
     version: 0,
     state: null,
     canUndo: false,
+    canUndoTurn: false,
     animationPackets: [],
     engineLogRecords: [],
     ended: null,
@@ -234,6 +237,7 @@ describe("refresh log restoration", () => {
   it("rebuilds log records from bootstrap history entries", () => {
     const records = engineLogRecordsFromBootstrapHistory([
       bootstrapEntry({
+        tag: "engine_log",
         stateVersion: 3,
         ts: 1000,
         data: canonicalLog("drawCard", 900),
@@ -241,12 +245,6 @@ describe("refresh log restoration", () => {
       // Legacy emitters without a stored version are skipped, not fabricated.
       { tag: "engine_log", data: canonicalLog("playCard", 950), ts: 1050 },
       { tag: "engine_log", stateVersion: 4, data: canonicalLog("passTurn", 980) },
-      {
-        tag: "engine_log",
-        stateVersion: 4,
-        ts: 1100,
-        log: { type: "legacyMove", playerId: "p1", timestamp: 990 },
-      },
     ]);
 
     expect(records).toEqual([

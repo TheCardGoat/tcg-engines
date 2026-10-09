@@ -16,7 +16,7 @@ describe("OP10-061 Special Long-Range Attack!! Bagworm", () => {
     const engine = OnePieceTestEngine.create(
       {
         hand: [op10SpecialLongRangeAttackBagworm061],
-        deck: [eb01Doma005],
+        deck: [eb01Doma005, eb01MountainGod018],
         activeDon: 3,
       },
       { character: [op09DocQ090, op05Pell014] },

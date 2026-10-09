@@ -23,7 +23,7 @@ export const op15Cabaji005: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Buggy Pirates East Blue"],
+  traits: ["East Blue", "Buggy Pirates"],
   attribute: "slash",
   effect:
     "[When Attacking] If your opponent has any DON!! cards given, this Character gains +2000 power during this turn.",

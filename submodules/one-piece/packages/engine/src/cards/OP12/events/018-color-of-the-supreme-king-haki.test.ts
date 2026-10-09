@@ -1,57 +1,89 @@
 import { describe, expect, test } from "vite-plus/test";
-
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP12-018 Color of the Supreme King Haki", () => {
-  test("[Counter] boosts a Character and the optional rest-DON drops the opponent's board", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP12-018"], character: ["OP13-066"], activeDon: 5 },
-      { character: ["OP16-012"], activeDon: 5 },
+  test.each([true, false])("Rayleigh boost precedes optional DON rest: accept=%s", (accept) => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP12-001", hand: ["OP12-018", "ST02-002"], activeDon: 1 },
+      { character: ["OP16-012"] },
+      { activeSeat: "north", firstPlayer: "south" },
     );
-    const rayleighId = engine.findCardInZone("south", "character", "OP13-066");
-
-    engine.endTurn("south");
-    engine.asNorth().attack("OP16-012", engine.asSouth().leader());
-    engine.asSouth().chooseCounter("OP12-018");
-    engine.acceptLeadingOptional("south");
-    const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
-    if (target?.kind !== "selectEntity") throw new Error("Expected the boost target.");
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [rayleighId] }, "south");
-    const restCount = engine.pendingDecision("effectRestDonCount", "south").steps[0];
-    if (restCount?.kind !== "chooseOption") throw new Error("Expected the rest count.");
-    engine.resolveDecision("effectRestDonCount", { optionId: "1" }, "south");
-
-    const north = engine.getView("south").players.north;
-    // Opponent Leader and Characters each dropped by 1000 (6000 and 6000 base).
-    expect(north.leader?.power).toBe(4000);
-    expect(north.characters.find((c) => c?.cardId === "OP16-012")?.power).toBe(5000);
-    expect(engine.getView("south").players.south.lifeCount).toBe(3);
+    e.asNorth().attack("OP16-012", e.leader("south"));
+    e.asSouth().chooseCounter("OP12-018");
+    e.asSouth().chooseTargets(e.leader("south"));
+    expect(e.getView("south").players.south.leader.power).toBe(7000);
+    if (accept) {
+      e.resolveDecision("effectActionOptional", { optionId: "yes" }, "south");
+      e.resolveDecision(
+        "effectMixedRestSelection",
+        { selectedIds: ["active-don:south:0"] },
+        "south",
+      );
+    } else e.resolveDecision("effectActionOptional", { optionId: "no" }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(accept ? 0 : 1);
+    expect(e.getView("south").players.north.leader.power).toBe(accept ? 4000 : 5000);
+    expect(e.getView("south").players.north.characters[0]?.power).toBe(accept ? 5000 : 6000);
+    e.asSouth().chooseCounter();
+    expect(e.getView("south").players.south.lifeCount).toBe(5);
+    expect(e.getView("south").players.south.leader.power).toBe(5000);
+    e.asNorth().endTurn();
+    expect(e.getView("south").players.north.leader.power).toBe(5000);
   });
 
-  test("[Counter] with the boost target declined, only the counter value applies", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: ["OP13-066"], hand: ["OP12-018"], activeDon: 5 },
-      { character: ["OP16-012"], activeDon: 5 },
+  test("boosts a Character even when the Leader is not Rayleigh", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST01-001", character: ["ST02-002"], hand: ["OP12-018", "ST02-002"] },
+      {},
+      { activeSeat: "north", firstPlayer: "south" },
     );
+    const target = e.findCardInZone("south", "character", "ST02-002");
+    const power = e.getView("south").players.south.characters[0]!.power!;
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().chooseCounter("OP12-018");
+    e.asSouth().chooseTargets(target);
+    expect(e.getView("south").players.south.characters[0]?.power).toBe(power + 2000);
+    e.asSouth().chooseCounter();
+    expect(e.getView("south").players.south.characters[0]?.power).toBe(power);
+  });
 
-    engine.endTurn("south");
-    const northLeaderPower = engine.getView("south").players.north.leader.power;
-    if (northLeaderPower === null) throw new Error("Expected the north Leader.");
-    engine.asNorth().attack("OP16-012", engine.asSouth().leader());
-    engine.asSouth().chooseCounter("OP12-018");
-    engine.acceptLeadingOptional("south");
-    const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
-    if (target?.kind !== "selectEntity") throw new Error("Expected the boost target.");
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
-    const restCount = engine.pendingDecision("effectRestDonCount", "south").steps[0];
-    if (restCount?.kind !== "chooseOption") throw new Error("Expected the rest count.");
-    engine.resolveDecision("effectRestDonCount", { optionId: "1" }, "south");
+  test("no active DON still boosts Rayleigh; already-rested DON cannot fund the reduction", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP12-001", hand: ["OP12-018", "ST02-002"], restedDon: 2 },
+      { character: ["OP16-012"] },
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    e.asNorth().attack("OP16-012", e.leader("south"));
+    e.asSouth().chooseCounter("OP12-018");
+    e.asSouth().chooseTargets(e.leader("south"));
+    expect(e.getView("south").players.south.leader.power).toBe(7000);
+    expect(e.getView("south").players.north.leader.power).toBe(5000);
+    expect(e.getView("south").players.south.restedDon).toBe(2);
+    e.asSouth().chooseCounter();
+    expect(e.getView("south").players.south.lifeCount).toBe(5);
+  });
 
-    // No boost target selected; the optional rest still dropped the
-    // opponent's Leader by 1000. The 9000 attacker still overpowers the
-    // 5000 Leader + 2000 counter, so 1 damage lands.
-    expect(engine.getView("south").players.north.leader.power).toBe(northLeaderPower - 1000);
-    expect(engine.getView("south").players.south.lifeCount).toBe(3);
-    expect(engine.getView("south").prompts).toHaveLength(0);
+  test("a non-Rayleigh Leader is excluded but declining the boost still permits the DON payment", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "ST01-001",
+        character: ["ST02-002"],
+        hand: ["OP12-018", "ST02-002"],
+        activeDon: 1,
+      },
+      { character: ["OP16-012"] },
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    e.asNorth().attack("OP16-012", e.leader("south"));
+    e.asSouth().chooseCounter("OP12-018");
+    const step = e.asSouth().pendingDecision("effectTargetSelection").steps[0];
+    if (step.kind !== "selectEntity") throw Error("Expected boost targets");
+    expect(step.candidates.map((c) => c.ref.id)).not.toContain(e.leader("south"));
+    e.asSouth().chooseTargets();
+    e.resolveDecision("effectActionOptional", { optionId: "yes" }, "south");
+    e.resolveDecision("effectMixedRestSelection", { selectedIds: ["active-don:south:0"] }, "south");
+    expect(e.getView("south").players.south.leader.power).toBe(5000);
+    expect(e.getView("south").players.north.leader.power).toBe(4000);
+    e.asSouth().chooseCounter();
+    expect(e.getView("south").players.south.lifeCount).toBe(4);
   });
 });

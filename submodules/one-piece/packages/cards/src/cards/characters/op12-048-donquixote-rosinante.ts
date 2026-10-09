@@ -37,7 +37,7 @@ export const op12DonquixoteRosinante048: CharacterCard = {
           count: { amount: 1 },
           filters: [
             { filter: "color", value: "blue" },
-            { filter: "trait", value: "Navy", match: "includes" },
+            { filter: "trait", value: "Navy", match: "exact" },
           ],
         },
         source: "opponentEffect",

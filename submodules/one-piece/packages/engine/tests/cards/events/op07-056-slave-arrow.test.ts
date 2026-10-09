@@ -50,6 +50,7 @@ describe("OP07-056 Slave Arrow", () => {
       { selectedIds: [engine.leader("north")] },
       "north",
     );
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     expect(engine.getView("north").players.north.lifeCount).toBe(lifeBefore);
     expect(engine.getView("north").players.north.hand.map((card) => card.instanceId)).toContain(

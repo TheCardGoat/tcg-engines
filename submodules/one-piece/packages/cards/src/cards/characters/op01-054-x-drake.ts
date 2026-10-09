@@ -23,7 +23,7 @@ export const op01XDrake054: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Drake Pirates Navy Supernovas"],
+  traits: ["Supernovas", "Navy", "Drake Pirates"],
   attribute: "slash",
   effect:
     "[On Play] K.O. up to 1 of your opponent's rested Characters with a cost of 4 or less.  This card has been officially errata'd.",

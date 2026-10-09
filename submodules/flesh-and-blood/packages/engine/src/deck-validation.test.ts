@@ -6,7 +6,9 @@ import { serBoltynBreakerOfDawn } from "../../cards/src/cards/heroes/ser-boltyn-
 import { shiyanaDiamondGemini } from "../../cards/src/cards/heroes/shiyana-diamond-gemini.ts";
 import { puffinHightail } from "../../cards/src/cards/heroes/puffin-hightail.ts";
 import { riptideLurkerOfTheDeep } from "../../cards/src/cards/heroes/riptide-lurker-of-the-deep.ts";
+import { azaleaAceInTheHole } from "../../cards/src/cards/heroes/azalea-ace-in-the-hole.ts";
 import { bravoShowstopper } from "../../cards/src/cards/heroes/bravo-showstopper.ts";
+import { iraCrimsonHaze } from "../../cards/src/cards/heroes/ira-crimson-haze.ts";
 import { sparkOfGeniusYellow } from "../../cards/src/cards/actions/spark-of-genius.ts";
 import { steelbladeSupremacyRed } from "../../cards/src/cards/actions/steelblade-supremacy.ts";
 import { luminaAscensionYellow } from "../../cards/src/cards/actions/lumina-ascension.ts";
@@ -256,6 +258,51 @@ describe("FAB unified deck validation", () => {
         result.issues.filter((issue) => issue.code !== "format_legal").map((issue) => issue.code),
       ).toEqual(quantity === 59 ? ["cc_minimum"] : []);
     }
+  });
+  it("rotates Living Legend heroes and signature weapons out of the format that flagged them", () => {
+    const azalea = card(azaleaAceInTheHole);
+    const dealer = card(deathDealer);
+    const dash = card(dashIO);
+    const ira = card(iraCrimsonHaze);
+
+    expect(azalea.legalFormats).toContain("ll");
+    expect(azalea.legalFormats).not.toContain("cc");
+    expect(dealer.legalFormats).toContain("ll");
+    expect(dealer.legalFormats).not.toContain("cc");
+    expect(dash.legalFormats).toContain("cc");
+    expect(ira.legalFormats).not.toContain("blitz");
+
+    const classic = validateFabDeckConstruction({
+      mode: "registered",
+      format: "cc",
+      heroId: azalea.canonicalId,
+      cards: { [azalea.canonicalId]: azalea, [dealer.canonicalId]: dealer },
+      entries: [{ canonicalId: dealer.canonicalId, quantity: 1 }],
+    });
+    expect(
+      classic.issues
+        .filter((issue) => issue.code === "format_legal")
+        .map((issue) => issue.canonicalId)
+        .sort(),
+    ).toEqual([azalea.canonicalId, dealer.canonicalId].sort());
+
+    const livingLegend = validateFabDeckConstruction({
+      mode: "registered",
+      format: "ll",
+      heroId: azalea.canonicalId,
+      cards: { [azalea.canonicalId]: azalea, [dealer.canonicalId]: dealer },
+      entries: [{ canonicalId: dealer.canonicalId, quantity: 1 }],
+    });
+    expect(livingLegend.issues.some((issue) => issue.code === "format_legal")).toBe(false);
+
+    const currentClassic = validateFabDeckConstruction({
+      mode: "registered",
+      format: "cc",
+      heroId: dash.canonicalId,
+      cards: { [dash.canonicalId]: dash },
+      entries: [],
+    });
+    expect(currentClassic.issues.some((issue) => issue.code === "format_legal")).toBe(false);
   });
   it("checks hero age and rarity through the same format entrypoint", () => {
     const hero = card(dashIO),

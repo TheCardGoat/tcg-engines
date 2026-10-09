@@ -40,7 +40,7 @@ export const op17CharlotteKatakuri103: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Big Mom Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

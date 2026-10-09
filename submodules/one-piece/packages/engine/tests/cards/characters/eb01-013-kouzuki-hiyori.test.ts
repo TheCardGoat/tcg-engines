@@ -67,4 +67,19 @@ describe("EB01-013 Kouzuki Hiyori", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("still draws after paying itself and choosing zero eligible Characters", () => {
+    const engine = OnePieceTestEngine.create({
+      character: [eb01KouzukiHiyori013],
+      hand: [eb01MountainGod018],
+      deck: [eb01Doma005, eb01Doma005],
+    });
+    const hiyori = engine.findCardInZone("south", "character", eb01KouzukiHiyori013);
+    engine.activateEffect(hiyori, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectPlaySelection", { selectedIds: [] }, "south");
+    expect(engine.getView("south").players.south.hand).toHaveLength(2);
+    expect(engine.getView("south").players.south.deckCount).toBe(1);
+    expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(hiyori);
+    expect(engine.getView("south").players.south.characters.filter(Boolean)).toHaveLength(0);
+  });
 });

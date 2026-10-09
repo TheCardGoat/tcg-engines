@@ -36,7 +36,7 @@ export const op08Garchu037: EventCard = {
               {
                 filter: "trait",
                 value: "Minks",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

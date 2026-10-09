@@ -25,6 +25,10 @@ export const propheticVision: ActionCard = {
   rarity: "uncommon",
   cost: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_ba9b62b0777c4dc8a6db9c3bac944da8",
+    tcgPlayer: "704638",
+  },
   text: "Shuffle your deck, then reveal the top card. If it's an action card, you may play it for free. Otherwise, put it on the bottom of your deck, then each opponent loses 1 lore and you gain 1 lore.",
   abilities: [
     {

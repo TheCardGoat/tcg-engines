@@ -52,6 +52,10 @@ export const resolveCardTypeChoiceMove: MoveDefinition<ResolveCardTypeChoiceInpu
       type: "cardsRevealed",
       cardIds: [cardId],
       playerId,
+      audience: "public",
+      fromZone: "deck",
+      ownerId: playerId,
+      sourceCardId: choice.payload.sourceCardId,
     });
 
     if (hit) {
@@ -67,11 +71,7 @@ export const resolveCardTypeChoiceMove: MoveDefinition<ResolveCardTypeChoiceInpu
         toZone: "hand",
         playerId,
       });
-      if (player.spentEddies > 0) {
-        player.spentEddies -= 1;
-        player.eddies += 1;
-        operations.event.emit({ type: "eddiesGained", playerId, amount: 1 });
-      }
+      if (player.spentEddies > 0) operations.game.readyEddies(playerId, 1);
     } else {
       if (card) {
         card.zone = "trash";

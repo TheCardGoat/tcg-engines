@@ -1,4 +1,6 @@
 import { describe, expect, it, spyOn } from "bun:test";
+import { createMockCharacter } from "@tcg/lorcana-engine/testing";
+import { getLocale, overwriteGetLocale } from "$lib/paraglide/runtime.js";
 import {
   type CardInstanceId,
   type ChallengePreviewResult,
@@ -6,6 +8,8 @@ import {
   type LorcanaEngineBase,
   type LorcanaProjectedBoardView,
   createEmptyMatchStaticResources,
+  createRecordCardCatalog,
+  createRecordCardInstanceRegistry,
   createPlayerId,
 } from "@tcg/lorcana-engine";
 
@@ -74,6 +78,7 @@ function createBoard(stateID: number): LorcanaProjectedBoardView {
     players: {
       player_one: {
         canAddCardToInkwell: false,
+        inkDrops: 0,
         lore: 5,
         deckCount: 50,
         handCount: 7,
@@ -84,6 +89,7 @@ function createBoard(stateID: number): LorcanaProjectedBoardView {
       },
       player_two: {
         canAddCardToInkwell: false,
+        inkDrops: 0,
         lore: 3,
         deckCount: 50,
         handCount: 7,
@@ -250,6 +256,50 @@ function createEngine(options?: {
 }
 
 describe("lorcana game context", () => {
+  it("refreshes translated card text without a game-state change", () => {
+    const originalGetLocale = getLocale;
+    const english = { title: "HAT COUTURE", description: "Ink a hand card." };
+    const german = { title: "Hut-Couture", description: "Lege eine Karte in deinen Tintenvorrat." };
+    const engine = createEngine({ board: createChallengeBoard(20) });
+    const definition = {
+      ...createMockCharacter({ id: "locale-card", name: "Locale Card", cost: 1 }),
+      text: [english],
+      i18n: {
+        en: { name: "Locale Card", text: [english] },
+        de: { name: "Locale Card", text: [german] },
+        fr: { name: "Locale Card" },
+        it: { name: "Locale Card" },
+        es: { name: "Locale Card" },
+      },
+    };
+    engine.staticResources = {
+      ...engine.staticResources,
+      cards: createRecordCardCatalog("locale-cards", { [definition.id]: definition }),
+      instances: createRecordCardInstanceRegistry("locale-instances", {
+        [attackerId]: {
+          instanceId: attackerId,
+          definitionId: definition.id,
+          ownerID: "player_one",
+        },
+      }),
+    };
+    try {
+      overwriteGetLocale(() => "en");
+      const context = new LorcanaGameContext(toEngine(engine));
+      expect(context.resolveCardSnapshot(attackerId)?.textEntries).toEqual([english]);
+      overwriteGetLocale(() => "de");
+      context.handleLocaleChanged();
+      expect(context.resolveCardSnapshot(attackerId)?.textEntries).toEqual([german]);
+      expect(engine.getStateID()).toBe(20);
+      overwriteGetLocale(() => "en");
+      context.handleLocaleChanged();
+      expect(context.resolveCardSnapshot(attackerId)?.textEntries).toEqual([english]);
+      expect(engine.getStateID()).toBe(20);
+    } finally {
+      overwriteGetLocale(originalGetLocale);
+    }
+  });
+
   it("anchors new server clocks without restarting clocks on local refreshes", () => {
     const now = spyOn(performance, "now").mockReturnValue(500);
     const serverTimestamp = 1_700_000_000_000;
@@ -568,5 +618,54 @@ describe("lorcana game context", () => {
         id: "pooh",
       },
     });
+  });
+});
+
+describe("armed activated-ability ink-drop payment", () => {
+  for (const armed of [false, true]) {
+    it(`forwards ${armed ? "armed drops" : "bank payment"} for activated abilities`, () => {
+      const board = createBoard(1);
+      board.players.player_one!.inkDrops = 2;
+      const calls: Record<string, unknown>[] = [];
+      const engine = createEngine({
+        board,
+        dispatch: (_moveId, _playerId, params) => {
+          calls.push(params);
+          return createCommandSuccess();
+        },
+      });
+      const context = new LorcanaGameContext(toEngine(engine));
+      if (armed) context.toggleInkDropPayment();
+      expect(
+        context.executeMove("activateAbility", { cardId: "cheese-item", abilityIndex: 0 }),
+      ).toBe(true);
+      expect(calls).toEqual([
+        { cardId: "cheese-item", abilityIndex: 0, ...(armed ? { inkDrops: 2 } : {}) },
+      ]);
+      context.destroy();
+    });
+  }
+  it("preserves an explicit drop payment rather than replacing it with all held drops", () => {
+    const board = createBoard(1);
+    board.players.player_one!.inkDrops = 2;
+    const calls: Record<string, unknown>[] = [];
+    const engine = createEngine({
+      board,
+      dispatch: (_moveId, _playerId, params) => {
+        calls.push(params);
+        return createCommandSuccess();
+      },
+    });
+    const context = new LorcanaGameContext(toEngine(engine));
+    context.toggleInkDropPayment();
+    expect(
+      context.executeMove("activateAbility", {
+        cardId: "cheese-item",
+        abilityIndex: 0,
+        inkDrops: 1,
+      }),
+    ).toBe(true);
+    expect(calls).toEqual([{ cardId: "cheese-item", abilityIndex: 0, inkDrops: 1 }]);
+    context.destroy();
   });
 });

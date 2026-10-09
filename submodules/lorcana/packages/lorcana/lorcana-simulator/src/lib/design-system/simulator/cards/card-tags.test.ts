@@ -183,4 +183,56 @@ describe("card tags", () => {
 
     expect(groups.tags.find((tag) => tag.id === "shift")?.label).toBe("Shift");
   });
+
+  it("replaces the generic Can't Challenge badge when the Adventurous pair is granted", () => {
+    const groups = getLorcanaCardTagGroups(
+      createCardSnapshot({
+        temporaryRestrictions: { "cant-challenge": 4, "must-quest": 4 },
+      }),
+    );
+
+    const adventurous = groups.tags.find((tag) => tag.id === "adventurous");
+    expect(adventurous?.label).toBe("Adventurous");
+    expect(adventurous?.tooltip).toContain("can't challenge");
+    expect(adventurous?.tooltip).toContain("must quest");
+    expect(groups.tags.some((tag) => tag.id === "cant-challenge")).toBe(false);
+  });
+
+  it("shows the Adventurous badge for printed keyword text", () => {
+    const groups = getLorcanaCardTagGroups(
+      createCardSnapshot({
+        textEntries: [
+          {
+            title: "Adventurous",
+            description: "(This character can't challenge and must quest each turn if able.)",
+          },
+        ],
+      }),
+    );
+
+    expect(groups.tags.some((tag) => tag.id === "adventurous")).toBe(true);
+    expect(groups.tags.some((tag) => tag.id === "cant-challenge")).toBe(false);
+  });
+
+  it("keeps the generic Can't Challenge badge for non-Adventurous restrictions", () => {
+    const groups = getLorcanaCardTagGroups(
+      createCardSnapshot({
+        temporaryRestrictions: { "cant-challenge": 3 },
+      }),
+    );
+
+    expect(groups.tags.find((tag) => tag.id === "cant-challenge")?.label).toBe("Can't Challenge");
+    expect(groups.tags.some((tag) => tag.id === "adventurous")).toBe(false);
+  });
+
+  it("shows no challenge restriction badge for must-quest alone", () => {
+    const groups = getLorcanaCardTagGroups(
+      createCardSnapshot({
+        temporaryRestrictions: { "must-quest": 2 },
+      }),
+    );
+
+    expect(groups.tags.some((tag) => tag.id === "adventurous")).toBe(false);
+    expect(groups.tags.some((tag) => tag.id === "cant-challenge")).toBe(false);
+  });
 });

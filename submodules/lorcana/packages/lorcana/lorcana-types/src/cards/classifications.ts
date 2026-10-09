@@ -23,6 +23,7 @@ export const CLASSIFICATIONS = [
   "Giant",
   "Hero",
   "Hunny",
+  "Hyperia City",
   "Hyena",
   "Illusion",
   "Inventor",

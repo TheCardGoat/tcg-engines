@@ -14,7 +14,7 @@ describe("OP02-059 Boa Hancock", () => {
       {
         hand: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018],
         character: [{ card: op02BoaHancock059, playedOnTurn: 0 }],
-        deck: [eb01Doma005],
+        deck: [eb01Doma005, "EB01-025"],
       },
       {},
       { firstPlayer: "north", activeSeat: "south" },
@@ -57,7 +57,7 @@ describe("OP02-059 Boa Hancock", () => {
       {
         hand: [eb01Doma005],
         character: [{ card: op02BoaHancock059, playedOnTurn: 0 }],
-        deck: [eb01Fourtricks025],
+        deck: [eb01Fourtricks025, "EB01-025"],
       },
       {},
       { firstPlayer: "north", activeSeat: "south" },

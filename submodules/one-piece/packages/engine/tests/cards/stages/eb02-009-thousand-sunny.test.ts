@@ -10,6 +10,30 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("EB02-009 Thousand Sunny", () => {
+  test("moves DON from the Leader to a Straw Hat Character and keeps the other DON attached", () => {
+    const engine = OnePieceTestEngine.create({
+      stage: eb02ThousandSunny009,
+      character: [op13RoronoaZoro037, op13Higuma013],
+      activeDon: 2,
+    });
+    const south = engine.asSouth();
+    engine.attachDon(engine.leader("south"), 2);
+    south.activateMain(engine.findCardInZone("south", "stage", eb02ThousandSunny009));
+    south.acceptOptional();
+    engine.resolveDecision(
+      "effectRedistributeDonSource",
+      { selectedIds: [engine.leader("south")] },
+      "south",
+    );
+    const recipient = engine.findCardInZone("south", "character", op13RoronoaZoro037);
+    engine.resolveDecision("effectRedistributeDonTarget", { selectedIds: [recipient] }, "south");
+    const view = south.view().players.south;
+    expect(view.leader.attachedDon).toBe(1);
+    expect(view.characters.find((card) => card?.instanceId === recipient)?.attachedDon).toBe(1);
+    expect(view.characters.find((card) => card?.cardId === op13Higuma013.id)?.attachedDon).toBe(0);
+    expect(view.stage?.rested).toBe(true);
+  });
+
   test("moves a chosen given DON!! card to a chosen Straw Hat Crew Character", () => {
     const engine = OnePieceTestEngine.create({
       stage: eb02ThousandSunny009,
@@ -109,6 +133,7 @@ describe("EB02-009 Thousand Sunny", () => {
     const trashBefore = before.trash.length;
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
     const after = engine.getView("south").players.south;
+    expect(after.stage?.rested).toBe(false);
     expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
     expect(after.donDeckCount).toBe(donDeckBefore);
     expect(after.hand.length).toBe(handBefore);

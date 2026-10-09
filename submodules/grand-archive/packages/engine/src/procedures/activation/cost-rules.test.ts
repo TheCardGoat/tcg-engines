@@ -18,6 +18,7 @@ import {
   collectGrandArchiveCostRules,
 } from "../../rules/state/rule-modifications.ts";
 import { GrandArchiveMatchRuntime } from "../game-flow/runtime.ts";
+import { GrandArchiveTestEngine } from "../../testing/test-engine.ts";
 
 function card(
   canonicalId: string,
@@ -704,4 +705,103 @@ describe("Grand Archive cost-modifying rules", () => {
     ]).state;
     expect(rules(started).map((rule) => rule.effect.amount)).toEqual([2]);
   });
+});
+
+// Card Activation 1.1, 1.7, and 1.8: announcement precedes cost evaluation.
+describe("activation costs after the source leaves its previous zone", () => {
+  for (const zone of ["hand", "memory", "graveyard"] as const)
+    for (const remaining of [0, 1])
+      for (const explicitZone of [false, true])
+        it(`counts the remaining allies in ${zone}: ${remaining}, explicit zone=${explicitZone}`, () => {
+          const sourceCard = card(
+            `announced-from-${zone}`,
+            "ALLY",
+            { kind: "reserve", amount: 3 },
+            [
+              {
+                id: `announced-from-${zone}-a1`,
+                kind: "static",
+                staticKind: "effects",
+                text: "Costs 2 less if the original zone has no allies.",
+                ...(explicitZone ? { functionalZones: [zone] } : {}),
+                effects: [
+                  {
+                    kind: "rule-modification",
+                    mode: "modify-cost",
+                    action: "activate",
+                    subject: { kind: "source" },
+                    costKind: "reserve",
+                    costOperation: "subtract",
+                    amount: 2,
+                    condition: {
+                      kind: "compare",
+                      comparison: {
+                        left: {
+                          kind: "count",
+                          collection: {
+                            zones: [zone],
+                            player: "controller",
+                            filter: { kind: "type", oneOf: ["ALLY"] },
+                          },
+                        },
+                        operator: "eq",
+                        right: 0,
+                      },
+                    },
+                    duration: { kind: "while-source-in-functional-zone" },
+                  },
+                  {
+                    kind: "rule-modification",
+                    mode: "allow",
+                    action: "activate",
+                    subject: { kind: "source" },
+                    fromZone: zone,
+                    duration: { kind: "while-source-in-functional-zone" },
+                  },
+                ],
+              },
+            ],
+          );
+          const game = GrandArchiveTestEngine.startFixture({
+            playerOne: {
+              champion,
+              zones: {
+                hand: [
+                  filler,
+                  filler,
+                  filler,
+                  ...(zone === "hand"
+                    ? Array.from({ length: 1 + remaining }, () => sourceCard)
+                    : []),
+                ],
+                ...(zone !== "hand"
+                  ? { [zone]: Array.from({ length: 1 + remaining }, () => sourceCard) }
+                  : {}),
+              },
+            },
+            playerTwo: { champion },
+          });
+          const p = game.player("player-one"),
+            source = p.cards(sourceCard, { zone })[0]!,
+            cost = remaining === 0 ? 1 : 3;
+          const payment = p
+            .cards(filler, { zone: "hand" })
+            .map((c) => ({ kind: "card" as const, cardId: c.objectId }));
+          const before = game.state;
+          expect(() =>
+            p.activate(source, { reservePayment: payment.slice(0, cost - 1) }),
+          ).toThrow();
+          expect(game.state).toEqual(before);
+          p.activate(source, { reservePayment: payment.slice(0, cost) });
+          expect(game.state.objects[source.objectId]!.zone).toBe("effects-stack");
+          expect(p.cards(sourceCard, { zone })).toHaveLength(remaining);
+          expect(p.cards(filler, { zone: "memory" })).toHaveLength(cost);
+          for (let step = 0; game.state.stack.length > 0 && step < 10; step++) {
+            const wait = game.waitState();
+            if (wait.kind !== "opportunity") throw new Error(`Unexpected ${wait.kind}`);
+            game.player(wait.playerId).pass();
+          }
+          expect(game.state.stack).toHaveLength(0);
+          expect(game.state.objects[source.objectId]!.zone).toBe("field");
+        });
 });

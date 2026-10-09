@@ -22,7 +22,7 @@ export const op10Brook035: CharacterCard = {
   setId: "OP10",
   cost: 3,
   power: 5000,
-  traits: ["Straw Hat Crew ODYSSEY"],
+  traits: ["ODYSSEY", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     "[On K.O.] Rest up to 1 of your opponent's Leader or Character cards with a cost of 5 or less.",

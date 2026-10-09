@@ -33,15 +33,15 @@ describe("Goro Takemura - Vengeful Bodyguard (Retail) jsdom happy path", () => {
         welcomeToNightCityRetailSwordwiseHuscle.id,
       );
 
-      // Swordwise Huscle has base power 5
-      await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, unit.instanceId, 5);
+      // Swordwise Huscle has base power 3
+      await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, unit.instanceId, 3);
 
       await pom.activateAbility(goro.instanceId, 1, CYBERPUNK_P1);
 
       await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
       await pom.expectLegendCardSpent(CYBERPUNK_P1, goro.instanceId, true);
       await pom.expectFieldCardGrantedRule(CYBERPUNK_P1, unit.instanceId, "blocker", true);
-      await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, unit.instanceId, 6);
+      await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, unit.instanceId, 4);
 
       await pom.expectStructuralState();
     } finally {

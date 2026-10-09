@@ -1,0 +1,1228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Grand Archive board wireframes</title>
+    <style>
+      :root {
+        --ink: #1c1915;
+        --muted: #6b645c;
+        --line: #1c1915;
+        --paper: #f6f4ef;
+        --panel: #fff;
+        --field: #e7efe4;
+        --hand: #f3ead7;
+        --stack: #f3e4c4;
+        --decision: #d9e4f2;
+        --ghost: #fff;
+        --target: #1f7a45;
+        --dim: rgba(28, 25, 21, 0.45);
+        --rail: #eceae4;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: #e8e4dc;
+        color: var(--ink);
+        font-family: "Avenir Next", "Segoe UI", sans-serif;
+      }
+
+      header.page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 28px 20px 8px;
+      }
+
+      header.page h1 {
+        margin: 0 0 8px;
+        font-size: 28px;
+        letter-spacing: -0.03em;
+      }
+
+      header.page p,
+      .note {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .legend span {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        padding: 4px 8px;
+        font-size: 12px;
+      }
+
+      main {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 12px 20px 48px;
+        display: grid;
+        gap: 28px;
+      }
+
+      article h2 {
+        margin: 0 0 6px;
+        font-size: 16px;
+      }
+
+      .note { margin-bottom: 8px; }
+
+      .screen {
+        position: relative;
+        overflow: hidden;
+        background:
+          radial-gradient(ellipse at 50% 42%, #3c4650 0%, #1a1e24 46%, #101216 100%);
+        box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.45);
+      }
+
+      .screen::before,
+      .screen::after {
+        content: "Scenery";
+        position: absolute;
+        z-index: 0;
+        color: rgba(232, 220, 190, 0.42);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        pointer-events: none;
+      }
+
+      .desktop { display: block; height: 640px; }
+      .desktop::before { left: 16px; top: 46%; }
+      .desktop::after { right: 16px; top: 46%; }
+      .phone {
+        display: block;
+        width: 390px;
+        height: 760px;
+      }
+      .phone::before,
+      .phone::after {
+        top: 34%;
+        writing-mode: vertical-rl;
+      }
+      .phone::before { left: 6px; }
+      .phone::after { right: 6px; }
+
+      .rail, .drawer {
+        position: absolute;
+        z-index: 6;
+        top: 14px;
+        left: 14px;
+        width: 92px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        background: rgba(12, 14, 16, 0.55);
+        color: #f4efe6;
+        font-size: 11px;
+        backdrop-filter: blur(8px);
+      }
+
+      .phone .drawer { display: none; }
+
+      .board {
+        position: absolute;
+        z-index: 1;
+        display: grid;
+        min-width: 0;
+        min-height: 0;
+      }
+
+      .desktop .board,
+      .desktop .board.with-decision,
+      .desktop .board.split {
+        inset: 18px 78px 16px;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto auto;
+      }
+
+      .desktop .board.split .status,
+      .desktop .board.split .decision,
+      .desktop .board.split .hand,
+      .desktop .board.split .play,
+      .desktop .board.split .dock {
+        grid-column: auto;
+        grid-row: auto;
+      }
+
+      .phone .board {
+        inset: 52px 0 8px;
+        grid-template-rows: 1fr auto auto;
+      }
+
+      .status, .decision, .toprail, .bottomrail {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 10px;
+        border: 0;
+        background: transparent;
+        color: #f6f1e8;
+        font-size: 12px;
+        font-weight: 650;
+      }
+
+      .status, .toprail {
+        position: absolute;
+        z-index: 6;
+        top: 8px;
+        left: 108px;
+        right: 16px;
+        height: auto;
+      }
+
+      .phone .toprail { left: 10px; right: 10px; top: 10px; }
+
+      .decision {
+        position: relative;
+        z-index: 5;
+        justify-content: space-between;
+        margin: 8px 8% 0;
+        min-height: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 999px;
+        background: rgba(14, 18, 22, 0.78);
+        backdrop-filter: blur(10px);
+      }
+
+      .bottomrail {
+        position: absolute;
+        z-index: 6;
+        top: 50px;
+        right: 12px;
+        left: auto;
+        bottom: auto;
+        width: auto;
+        height: auto;
+        padding: 6px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+        background: rgba(12, 14, 16, 0.55);
+      }
+
+      .pill, .chip, .mini {
+        border: 1px solid var(--line);
+        background: #fff;
+        padding: 3px 7px;
+        font-size: 11px;
+        font-weight: 650;
+      }
+
+      .pill.live { background: #111; color: #fff; }
+      .chip.on { background: var(--target); color: #fff; border-color: var(--target); }
+
+      .play {
+        min-height: 0;
+        display: grid;
+        grid-template-rows: 1fr auto 1fr;
+        gap: 6px;
+        margin-top: 36px;
+        padding: 28px 8% 10px;
+        border-radius: 18px 18px 10px 10px;
+        background:
+          radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.2), transparent 46%),
+          linear-gradient(180deg, #9aab8c 0%, #6f8664 42%, #5a7252 100%);
+        box-shadow:
+          inset 0 0 0 7px rgba(92, 64, 36, 0.28),
+          0 18px 36px rgba(0, 0, 0, 0.45);
+        clip-path: polygon(7% 0, 93% 0, 100% 100%, 0 100%);
+      }
+
+      .phone .play {
+        grid-template-rows: auto auto auto;
+        align-content: start;
+        margin: 8px 22px 0;
+        padding: 16px 14% 8px;
+        clip-path: polygon(12% 0, 88% 0, 100% 100%, 0 100%);
+      }
+      .phone .seat { min-height: 112px; }
+
+      .seat, .center, .hand, .dock, .tray, .sheet {
+        min-width: 0;
+        min-height: 0;
+      }
+
+      .seat, .center, .tray {
+        border: 0;
+        background: transparent;
+        color: #f7f3ea;
+      }
+
+      .seat { padding: 6px; display: grid; gap: 6px; align-content: center; }
+      .seat header, .center header, .hand header, .dock header, .sheet header, .tray header {
+        font-size: 10px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      .row { display: flex; gap: 6px; align-items: end; min-width: 0; }
+      .grow { flex: 1; }
+
+      .card, .pile, .layer {
+        color: #1c1915;
+        border: 1px solid #1c1915;
+        border-radius: 4px;
+        background: #fff;
+        box-shadow: 0 8px 14px rgba(0, 0, 0, 0.35);
+        display: grid;
+        place-items: center;
+        text-align: center;
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 1.15;
+        padding: 3px;
+      }
+
+      .card { width: 58px; height: 80px; }
+      .phone .card { width: 46px; height: 64px; }
+      .card.sm, .layer { width: 48px; height: 64px; }
+      .card.target, .layer.target { outline: 3px solid var(--target); }
+      .card.rest { transform: rotate(-12deg); }
+      .card.ghost, .layer.ghost {
+        border-style: dashed;
+        background: repeating-linear-gradient(-45deg, #fff, #fff 4px, #f3e4c4 4px, #f3e4c4 8px);
+      }
+      .lineage { display: grid; }
+      .lineage .card { grid-area: 1 / 1; }
+      .lineage .card:nth-child(1) { transform: translate(14px, -12px); }
+      .lineage .card:nth-child(2) { transform: translate(7px, -6px); }
+
+      .pile { width: 42px; height: 28px; font-size: 9px; }
+      .piles { display: flex; gap: 4px; flex-wrap: wrap; }
+
+      .center {
+        padding: 6px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .hand {
+        position: relative;
+        z-index: 4;
+        margin-top: -34px;
+        padding: 6px 6px 0;
+        border: 0;
+        background: transparent;
+        color: #f7f3ea;
+      }
+      .hand .row { justify-content: center; }
+      .hand .card:nth-child(1) { transform: rotate(-8deg) translateY(8px); }
+      .hand .card:nth-child(2) { transform: rotate(-4deg) translateY(3px); }
+      .hand .card:nth-child(3) { transform: rotate(-1deg); }
+      .hand .card:nth-child(4) { transform: rotate(2deg); }
+      .hand .card:nth-child(5) { transform: rotate(5deg) translateY(3px); }
+      .hand .card:nth-child(6) { transform: rotate(8deg) translateY(8px); }
+      .hand.collapsed .row { display: none; }
+      .hand.collapsed {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: min(420px, 86%);
+        margin: 6px auto 0;
+        padding: 6px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+        background: rgba(12, 14, 16, 0.55);
+      }
+
+      .dock {
+        position: absolute;
+        z-index: 5;
+        top: 72px;
+        right: 8px;
+        width: 118px;
+        margin: 0;
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 14px;
+        background: rgba(16, 14, 12, 0.62);
+        color: #f7f3ea;
+        backdrop-filter: blur(8px);
+      }
+
+      .dock .layer, .tray .layer { width: 100%; height: 52px; }
+
+      .tray {
+        background: #fff8ea;
+        padding: 6px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .board.dim-field .play { filter: brightness(0.55); }
+      .dimmer {
+        position: absolute;
+        z-index: 2;
+        inset: 0;
+        background: rgba(8, 10, 12, 0.62);
+      }
+
+      .phone .dimmer { inset: 0; }
+
+      .sheet {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 64px;
+        bottom: 72px;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+        border: 0;
+        border-radius: 18px;
+        background: rgba(255, 252, 247, 0.96);
+        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+      }
+      .sheet header { color: var(--muted); }
+
+      .phone .sheet { left: 8px; right: 8px; top: 8px; bottom: 52px; }
+
+      .inert { opacity: 0.4; }
+      .preview, .modal, .order {
+        position: absolute;
+        z-index: 4;
+        border: 1px solid var(--line);
+        background: #fff;
+        padding: 8px;
+        font-size: 11px;
+      }
+      .preview { right: 168px; bottom: 96px; width: 132px; }
+      .preview strong, .modal strong { display: block; margin-bottom: 4px; }
+      .modal {
+        left: 50%;
+        top: 42%;
+        width: 240px;
+        transform: translate(-50%, -50%);
+        display: grid;
+        gap: 8px;
+      }
+      .modal .row, .order .row { justify-content: flex-end; }
+      .order { left: 28%; right: 28%; top: 38%; display: grid; gap: 6px; }
+      .phone .order { left: 12px; right: 12px; top: 180px; }
+      .yesno { display: grid; gap: 4px; justify-items: center; }
+      .steps { display: flex; gap: 4px; flex-wrap: wrap; }
+      .arrow { font-size: 18px; align-self: center; }
+      .pair { display: flex; gap: 8px; align-items: center; justify-content: center; flex: 1; }
+      .stackline { font-size: 11px; border: 1px dashed var(--line); padding: 4px 6px; background: var(--stack); }
+
+      .hs {
+        position: relative;
+        height: 640px;
+        overflow: hidden;
+        background:
+          linear-gradient(#6a4a2e, #6a4a2e) 0 0 / 100% 18px no-repeat,
+          linear-gradient(#6a4a2e, #6a4a2e) 0 100% / 100% 18px no-repeat,
+          linear-gradient(#1d4c86, #1d4c86) 0 18px / 28px calc(100% - 36px) no-repeat,
+          linear-gradient(#1d4c86, #1d4c86) 100% 18px / 28px calc(100% - 36px) no-repeat,
+          #8a5a32;
+      }
+      .hs-frame {
+        position: absolute;
+        inset: 28px 36px 78px;
+        border: 14px solid #d7d2c8;
+        border-radius: 28px;
+        background: #c4b8a4;
+        box-shadow: inset 0 0 0 6px #8d867c;
+      }
+      .sand {
+        position: absolute;
+        inset: 78px 92px;
+        border-radius: 18px;
+        background:
+          linear-gradient(180deg, rgba(0, 0, 0, 0.04), transparent 18% 82%, rgba(0, 0, 0, 0.05)),
+          #e2c89a;
+      }
+      .notch {
+        position: absolute;
+        left: 50%;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transform: translateX(-50%);
+      }
+      .notch.top { top: 18px; }
+      .notch.bot { bottom: 16px; }
+      .hero, .slot, .deck, .mem, .pass, .unit, .stackcard {
+        display: grid;
+        place-items: center;
+        border: 2px solid #2a241c;
+        background: #fff;
+        color: #1c1915;
+        font-size: 11px;
+        font-weight: 800;
+        text-align: center;
+        line-height: 1.15;
+      }
+      .hero { width: 86px; height: 104px; border-radius: 12px; box-shadow: 0 8px 0 #8d867c; }
+      .hero small { display: block; font-size: 12px; }
+      .slot { width: 54px; height: 54px; border-radius: 8px; }
+      .slot.round { border-radius: 50%; }
+      .mem {
+        position: absolute;
+        z-index: 2;
+        height: 28px;
+        padding: 0 8px;
+        border-radius: 999px;
+        background: #2f6fed;
+        color: #fff;
+        border-color: #173e86;
+      }
+      .mem.theirs { top: 22px; right: 108px; }
+      .mem.yours { bottom: 22px; left: 28px; }
+      .cosmetic {
+        position: absolute;
+        z-index: 1;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .cosmetic.tl { top: 36px; left: 28px; }
+      .cosmetic.br { right: 28px; bottom: 28px; }
+      .hs .rail {
+        left: auto;
+        top: 24px;
+        right: 14px;
+        bottom: 24px;
+        width: 64px;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: #1c1915;
+        backdrop-filter: none;
+      }
+      .deck { width: 46px; height: 58px; border-radius: 4px; font-size: 9px; }
+      .pass {
+        width: 86px;
+        height: 36px;
+        margin-right: 28px;
+        border-radius: 10px;
+        background: #f4d36b;
+      }
+      .sand .units { position: absolute; left: 24px; right: 24px; display: flex; gap: 8px; }
+      .sand .units.far { top: 16px; }
+      .sand .units.near { bottom: 16px; }
+      .unit { width: 58px; height: 80px; border-radius: 4px; }
+      .unit.target { outline: 3px solid #1f7a45; }
+      .stackcol {
+        position: absolute;
+        z-index: 3;
+        right: 128px;
+        top: 50%;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        transform: translateY(-50%);
+      }
+      .stackcard { width: 52px; height: 36px; font-size: 9px; }
+      .stackcard.ghost { border-style: dashed; background: repeating-linear-gradient(-45deg, #fff, #fff 4px, #f3e4c4 4px, #f3e4c4 8px); }
+      .hs-hand {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+      }
+      .hs-hand .unit { box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25); }
+      .sentence {
+        position: absolute;
+        left: 120px;
+        right: 150px;
+        bottom: 92px;
+        z-index: 4;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(20, 16, 12, 0.88);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 750;
+      }
+      .hs.phone {
+        width: 390px;
+        height: 760px;
+      }
+      .hs.phone .hs-frame { inset: 16px 10px 92px; border-width: 10px; }
+      .hs.phone .sand { inset: 86px 58px 78px; }
+      .hs.phone .hero { width: 64px; height: 78px; }
+      .hs.phone .slot { width: 40px; height: 40px; font-size: 9px; }
+      .hs.phone .rail { width: 42px; right: 8px; }
+      .hs.phone .deck { width: 36px; height: 44px; }
+      .hs.phone .pass { width: 64px; margin-right: 18px; font-size: 10px; }
+      .hs .sentence { bottom: 86px; left: 48px; right: 48px; z-index: 6; }
+      .hs .intent {
+        position: absolute;
+        left: 50%;
+        top: 46%;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transform: translate(-50%, -50%);
+      }
+      .hs .tray {
+        position: absolute;
+        z-index: 3;
+        left: 18px;
+        top: 50%;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        transform: translateY(-50%);
+      }
+      .hs .notch, .hs .mem, .hs .rail, .hs .stackcol { z-index: 5; }
+      .hs .veil {
+        position: absolute;
+        inset: 0;
+        z-index: 4;
+        border-radius: 18px;
+        background: rgba(8, 10, 12, 0.55);
+      }
+      .hs .lift {
+        position: absolute;
+        z-index: 6;
+        left: 18%;
+        right: 18%;
+        top: 100px;
+        bottom: 110px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+        border-radius: 16px;
+        background: #fff;
+        color: #1c1915;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      }
+      .hs .lift header { color: #6b645c; }
+      .hs .orderbox {
+        position: absolute;
+        z-index: 6;
+        left: 50%;
+        top: 42%;
+        width: 180px;
+        display: grid;
+        gap: 6px;
+        padding: 10px;
+        border: 2px solid #2a241c;
+        border-radius: 12px;
+        background: #fff;
+        color: #1c1915;
+        transform: translate(-50%, -50%);
+      }
+      .hs .preview {
+        position: absolute;
+        z-index: 6;
+        right: 150px;
+        bottom: 130px;
+        width: 140px;
+        padding: 8px;
+        border: 2px solid #2a241c;
+        border-radius: 10px;
+        background: #fff;
+        color: #1c1915;
+      }
+      .hs .ask {
+        position: absolute;
+        z-index: 7;
+        left: 50%;
+        top: 42%;
+        width: 220px;
+        display: grid;
+        gap: 8px;
+        padding: 12px;
+        border-radius: 12px;
+        background: #fff;
+        color: #1c1915;
+        transform: translate(-50%, -50%);
+      }
+      .yesno { display: grid; justify-items: center; gap: 4px; }
+      .hs.phone .lift { left: 12px; right: 48px; top: 96px; bottom: 150px; }
+      .hs.phone .sentence { left: 12px; right: 12px; bottom: 78px; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <header class="page">
+      <h1>Grand Archive board wireframes</h1>
+      <p>
+        Every sample uses the same flat anchors. Champions, memory, Pass, and the decks do not move.
+      </p>
+      <div class="legend">
+        <span>Dark gutters = scenery, a cosmetic</span>
+        <span>Green cloth = the playmat, also a cosmetic</span>
+        <span>White cards float above the cloth</span>
+        <span>Green outline = legal choice</span>
+        <span>Dashed card = ghost, not on the stack yet</span>
+        <span>Dark pill = the one decision sentence</span>
+      </div>
+    </header>
+    <main>
+      <article id="anchors">
+        <h2>Desktop · Fixed anchors</h2>
+        <p class="note">Flat frame. Champions are the heroes. Memory is the mana. Pass is the end-turn button. Decks sit on the right rail beside that button. The sand is only for units.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="cosmetic tl">Cosmetic</div>
+            <div class="cosmetic br">Cosmetic</div>
+            <div class="mem theirs">Mem 2</div>
+            <div class="mem yours">Mem 1</div>
+            <div class="notch top">
+              <div class="slot">Wpn</div>
+              <div class="hero">Their<br />champion<small>Life 18</small></div>
+              <div class="slot round">Mastery</div>
+            </div>
+            <div class="sand"></div>
+            <div class="notch bot">
+              <div class="slot">Wpn</div>
+              <div class="hero">Your<br />champion<small>Life 20</small></div>
+              <div class="slot round">Mastery</div>
+            </div>
+            <div class="rail">
+              <div class="deck">Their deck</div>
+              <div class="deck">Their mat</div>
+              <div class="pass">Pass</div>
+              <div class="deck">Your mat</div>
+              <div class="deck">Your deck</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article id="anchors-idle">
+        <h2>Desktop · Idle, cards in those anchors</h2>
+        <p class="note">Units use the sand. The stack, when present, stands just left of Pass. The hand hangs below the frame. Graveyard and banishment stay with the decks.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="cosmetic tl">Cosmetic</div>
+            <div class="mem theirs">Mem 2</div>
+            <div class="mem yours">Mem 1</div>
+            <div class="notch top">
+              <div class="slot">Wpn</div>
+              <div class="hero">Their<br />champion<small>18</small></div>
+              <div class="slot round">—</div>
+            </div>
+            <div class="sand">
+              <div class="units far"><div class="unit">Ally</div><div class="unit">Ally</div></div>
+              <div class="units near"><div class="unit">Ally</div><div class="unit">Item</div></div>
+            </div>
+            <div class="stackcol">
+              <div class="stackcard">Trigger</div>
+              <div class="stackcard">Spell</div>
+            </div>
+            <div class="notch bot">
+              <div class="slot">Wpn 2</div>
+              <div class="hero">Your<br />champion<small>20</small></div>
+              <div class="slot round">Sheen</div>
+            </div>
+            <div class="rail">
+              <div class="deck">Deck 41</div>
+              <div class="deck">Mat 6<br />GY 8</div>
+              <div class="pass">Main<br />Pass</div>
+              <div class="deck">Mat 7<br />GY 4</div>
+              <div class="deck">Deck 38</div>
+            </div>
+          </div>
+          <div class="hs-hand">
+            <div class="unit">Ally</div><div class="unit">Fast</div><div class="unit">Slow</div><div class="unit">Atk</div><div class="unit">Wpn</div>
+          </div>
+        </div>
+      </article>
+
+      <article id="anchors-aim">
+        <h2>Desktop · Aim, without moving the anchors</h2>
+        <p class="note">Pass stays. The sentence lies along the bottom of the sand. The legal ally lights up. The ghost layer joins the stack column.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="mem theirs">Mem 2</div>
+            <div class="mem yours">Mem 1</div>
+            <div class="notch top">
+              <div class="slot">Wpn</div>
+              <div class="hero">Their<br />champion</div>
+              <div class="slot round">—</div>
+            </div>
+            <div class="sand">
+              <div class="units far"><div class="unit">Champ</div><div class="unit target">Ally</div></div>
+              <div class="units near"><div class="unit">Ally</div></div>
+            </div>
+            <div class="sentence">Choose a unit for the fast spell</div>
+            <div class="stackcol">
+              <div class="stackcard ghost">Ghost</div>
+              <div class="stackcard">Their spell</div>
+            </div>
+            <div class="notch bot">
+              <div class="slot">Wpn</div>
+              <div class="hero">Your<br />champion</div>
+              <div class="slot round">—</div>
+            </div>
+            <div class="rail">
+              <div class="deck">Deck</div>
+              <div class="deck">Mat</div>
+              <div class="pass">Cancel</div>
+              <div class="deck">Mat</div>
+              <div class="deck">Deck</div>
+            </div>
+          </div>
+          <div class="hs-hand"><div class="unit">6 cards</div></div>
+        </div>
+      </article>
+
+      <article id="anchors-phone">
+        <h2>Phone · The same anchors</h2>
+        <p class="note">Still flat. Champion notches stay centered. Memory stays in the corners. Pass and the decks stay on the right. The hand is the bottom edge.</p>
+        <div class="hs phone">
+          <div class="hs-frame">
+            <div class="mem theirs">2</div>
+            <div class="mem yours">1</div>
+            <div class="notch top">
+              <div class="slot">Wpn</div>
+              <div class="hero">Them<small>18</small></div>
+              <div class="slot round">M</div>
+            </div>
+            <div class="sand">
+              <div class="units far"><div class="unit">Ally</div></div>
+              <div class="units near"><div class="unit">Ally</div></div>
+            </div>
+            <div class="notch bot">
+              <div class="slot">Wpn</div>
+              <div class="hero">You<small>20</small></div>
+              <div class="slot round">M</div>
+            </div>
+            <div class="rail">
+              <div class="deck">Deck</div>
+              <div class="pass">Pass</div>
+              <div class="deck">Deck</div>
+            </div>
+          </div>
+          <div class="hs-hand"><div class="unit">Ally</div><div class="unit">Fast</div><div class="unit">Atk</div></div>
+        </div>
+      </article>
+
+      <article id="desktop-idle">
+        <h2>Desktop · Idle, you have Opportunity</h2>
+        <p class="note">Pass stays on the right and shows the phase. Champions stay in the notches. Units are the only things on the sand. The hand is below the frame.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="mem theirs">Mem 2</div>
+            <div class="mem yours">Mem 1</div>
+            <div class="notch top"><div class="slot">Wpn</div><div class="hero">Their<br />champion<small>18</small></div><div class="slot round">—</div></div>
+            <div class="sand"><div class="units far"><div class="unit">Ally</div><div class="unit">Ally</div></div><div class="units near"><div class="unit">Ally</div><div class="unit">Item</div></div></div>
+            <div class="stackcol"><div class="stackcard">Trigger</div><div class="stackcard">Spell</div></div>
+            <div class="notch bot"><div class="slot">Wpn 2</div><div class="hero">Your<br />champion<small>20</small></div><div class="slot round">Sheen</div></div>
+            <div class="rail"><div class="deck">Deck 41</div><div class="deck">Mat 6</div><div class="pass">Main<br />Pass</div><div class="deck">Mat 7</div><div class="deck">Deck 38</div></div>
+          </div>
+          <div class="hs-hand"><div class="unit">Ally</div><div class="unit">Fast</div><div class="unit">Slow</div><div class="unit">Atk</div><div class="unit">Wpn</div></div>
+        </div>
+      </article>
+
+      <article id="desktop-aim">
+        <h2>Desktop · Aim a fast card while the stack is occupied</h2>
+        <p class="note">The ghost joins the stack column left of Pass. The legal ally lights on the sand. The sentence sits above the hand. Pass becomes Cancel and does not move.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="mem theirs">Mem 2</div><div class="mem yours">Mem 1</div>
+            <div class="notch top"><div class="slot">Wpn</div><div class="hero">Their<br />champion<small>18</small></div><div class="slot round">—</div></div>
+            <div class="sand"><div class="units far"><div class="unit">Champ</div><div class="unit target">Ally</div></div><div class="units near"><div class="unit">Ally</div></div></div>
+            <div class="stackcol"><div class="stackcard ghost">Ghost</div><div class="stackcard">Their spell</div></div>
+            <div class="notch bot"><div class="slot">Wpn</div><div class="hero">Your<br />champion<small>20</small></div><div class="slot round">—</div></div>
+            <div class="rail"><div class="deck">Deck</div><div class="deck">Mat</div><div class="pass">Cancel</div><div class="deck">Mat</div><div class="deck">Deck</div></div>
+          </div>
+          <div class="sentence">Choose a unit for the fast spell</div>
+          <div class="hs-hand"><div class="unit">Hand · 6</div></div>
+        </div>
+      </article>
+
+      <article id="desktop-triggers">
+        <h2>Desktop · Place your triggers, then aim the one you are committing</h2>
+        <p class="note">Unplaced triggers sit in a tray on the left of the sand. The one you are committing is the ghost in the stack column. Its target lights on the sand.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="mem theirs">Mem 2</div><div class="mem yours">Mem 1</div>
+            <div class="notch top"><div class="slot">Wpn</div><div class="hero">Their<br />champion</div><div class="slot round">—</div></div>
+            <div class="sand">
+              <div class="tray"><div class="stackcard">2 · On kill</div><div class="stackcard">3 · On enter</div></div>
+              <div class="units far"><div class="unit target">Ally</div></div>
+            </div>
+            <div class="stackcol"><div class="stackcard ghost">On attack</div><div class="stackcard">Their trigger</div></div>
+            <div class="notch bot"><div class="slot">Wpn</div><div class="hero">Your<br />champion</div><div class="slot round">—</div></div>
+            <div class="rail"><div class="deck">Deck</div><div class="deck">Mat</div><div class="pass">Commit</div><div class="deck">Mat</div><div class="deck">Deck</div></div>
+          </div>
+          <div class="sentence">Place On Attack · choose one unit</div>
+        </div>
+      </article>
+
+      <article id="desktop-attack">
+        <h2>Desktop · Declare an attack</h2>
+        <p class="note">The stack column is empty, so that slot is gone. Intent lies in the center of the sand. Champions stay in the notches. The defender lights up.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="mem theirs">Mem 2</div><div class="mem yours">Mem 1</div>
+            <div class="notch top"><div class="slot">Wpn</div><div class="hero">Their<br />champion<small>defender</small></div><div class="slot round">—</div></div>
+            <div class="sand">
+              <div class="units far"><div class="unit target">Defender</div></div>
+              <div class="intent"><div class="unit">Attacker</div><span>→</span><div class="unit">Intent</div><div class="unit">Wpn</div></div>
+            </div>
+            <div class="notch bot"><div class="slot">Wpn</div><div class="hero">Your<br />champion<small>attacking</small></div><div class="slot round">—</div></div>
+            <div class="rail"><div class="deck">Deck</div><div class="deck">Mat</div><div class="pass">Cancel</div><div class="deck">Mat</div><div class="deck">Deck</div></div>
+          </div>
+          <div class="sentence">1 Attacker · 2 Weapon · 3 Defender · 4 Extra cost</div>
+        </div>
+      </article>
+
+      <article id="desktop-reserve">
+        <h2>Desktop · Pay a reserve cost</h2>
+        <p class="note">The sand dims because the choice is in the hand. Two hand cards are the payment. The ghost stays in the stack column. Memory and Pass stay put.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="veil"></div>
+            <div class="mem theirs">Mem 2</div><div class="mem yours">Mem 1</div>
+            <div class="notch top"><div class="slot">Wpn</div><div class="hero">Their<br />champion</div><div class="slot round">—</div></div>
+            <div class="sand"><div class="units far"><div class="unit inert">Ally</div></div></div>
+            <div class="stackcol"><div class="stackcard ghost">Ally played</div></div>
+            <div class="notch bot"><div class="slot">Wpn</div><div class="hero">Your<br />champion</div><div class="slot round">—</div></div>
+            <div class="rail"><div class="deck">Deck</div><div class="deck">Mat</div><div class="pass">Confirm</div><div class="deck">Mat</div><div class="deck">Deck</div></div>
+          </div>
+          <div class="sentence">Reserve 2 · 2 selected</div>
+          <div class="hs-hand"><div class="unit target">Pay</div><div class="unit target">Pay</div><div class="unit">Keep</div><div class="unit">Keep</div></div>
+        </div>
+      </article>
+
+      <article id="desktop-material">
+        <h2>Desktop · Materialize from your material deck</h2>
+        <p class="note">The sheet lifts over the sand. Champions, memory, Pass, and the decks stay in their anchors. Decline is the Pass button.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="veil"></div>
+            <div class="mem theirs">Mem 2</div><div class="mem yours">Mem 1</div>
+            <div class="notch top"><div class="slot">Wpn</div><div class="hero">Their<br />champion</div><div class="slot round">—</div></div>
+            <div class="sand"></div>
+            <div class="lift">
+              <div class="stackcard">Stack · 1 spell, if this is a response</div>
+              <header>Your material deck</header>
+              <div class="units far"><div class="unit target">Lv2</div><div class="unit inert">Lv3</div><div class="unit target">Regalia</div></div>
+            </div>
+            <div class="notch bot"><div class="slot">Wpn</div><div class="hero">Your<br />champion<small>Lv1</small></div><div class="slot round">—</div></div>
+            <div class="rail"><div class="deck">Deck</div><div class="deck">Mat</div><div class="pass">Decline</div><div class="deck">Mat</div><div class="deck">Deck</div></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="desktop-combat-response">
+        <h2>Desktop · Respond during combat</h2>
+        <p class="note">Intent stays in the center of the sand. The stack column comes back beside Pass because a fast spell is legal. Champions do not leave their notches.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="mem theirs">Mem 2</div><div class="mem yours">Mem 1</div>
+            <div class="notch top"><div class="slot">Wpn</div><div class="hero">Their<br />champion</div><div class="slot round">—</div></div>
+            <div class="sand">
+              <div class="units far"><div class="unit target">Ally</div></div>
+              <div class="intent"><div class="unit">Attacker</div><span>→</span><div class="unit">Attack</div><span>→</span><div class="unit">Defender</div></div>
+            </div>
+            <div class="stackcol"><div class="stackcard ghost">Fast spell</div><div class="stackcard">On attack</div></div>
+            <div class="notch bot"><div class="slot">Wpn</div><div class="hero">Your<br />champion<small>attacking</small></div><div class="slot round">—</div></div>
+            <div class="rail"><div class="deck">Deck</div><div class="deck">Mat</div><div class="pass">Cancel</div><div class="deck">Mat</div><div class="deck">Deck</div></div>
+          </div>
+          <div class="sentence">Choose a unit for the fast spell</div>
+        </div>
+      </article>
+
+      <article id="desktop-stack-target">
+        <h2>Desktop · The target is a stack layer</h2>
+        <p class="note">The sand stays quiet. The buttons are the layers in the stack column. Pass stays on the right.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="mem theirs">Mem 2</div><div class="mem yours">Mem 1</div>
+            <div class="notch top"><div class="slot">Wpn</div><div class="hero">Their<br />champion</div><div class="slot round">—</div></div>
+            <div class="sand"><div class="units far"><div class="unit inert">Ally</div></div><div class="units near"><div class="unit inert">Ally</div></div></div>
+            <div class="stackcol"><div class="stackcard ghost">Negate</div><div class="stackcard target">Their spell</div><div class="stackcard">Trigger</div></div>
+            <div class="notch bot"><div class="slot">Wpn</div><div class="hero">Your<br />champion</div><div class="slot round">—</div></div>
+            <div class="rail"><div class="deck">Deck</div><div class="deck">Mat</div><div class="pass">Cancel</div><div class="deck">Mat</div><div class="deck">Deck</div></div>
+          </div>
+          <div class="sentence">Choose a spell to negate</div>
+        </div>
+      </article>
+
+      <article id="desktop-retaliate">
+        <h2>Desktop · Retaliation</h2>
+        <p class="note">No stack column. Each awake defender on the sand gets yes or no. Done replaces the Pass label. Champions stay centered.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="mem theirs">Mem 2</div><div class="mem yours">Mem 1</div>
+            <div class="notch top"><div class="slot">Wpn</div><div class="hero">Attacker<small>their champ</small></div><div class="slot round">—</div></div>
+            <div class="sand">
+              <div class="units near">
+                <div class="yesno"><div class="unit target">Ally</div><span class="pill">Yes</span></div>
+                <div class="yesno"><div class="unit target">Ally</div><span class="pill">No</span></div>
+                <div class="unit inert">Rested</div>
+              </div>
+            </div>
+            <div class="notch bot"><div class="slot">Wpn</div><div class="hero">Your<br />champion<small>defending</small></div><div class="slot round">—</div></div>
+            <div class="rail"><div class="deck">Deck</div><div class="deck">Mat</div><div class="pass">Done</div><div class="deck">Mat</div><div class="deck">Deck</div></div>
+          </div>
+          <div class="sentence">Rest a defender to retaliate</div>
+        </div>
+      </article>
+
+      <article id="desktop-order-damage">
+        <h2>Desktop · Order damage or prevention</h2>
+        <p class="note">The order list sits in the center of the sand, over the units it refers to. No stack. Confirm is the Pass button.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="mem theirs">Mem 2</div><div class="mem yours">Mem 1</div>
+            <div class="notch top"><div class="slot">Wpn</div><div class="hero">Their<br />champion</div><div class="slot round">—</div></div>
+            <div class="sand"><div class="units far"><div class="unit">Ally A</div><div class="unit">Ally B</div></div></div>
+            <div class="orderbox"><strong>Damage order</strong><div class="stackcard">1 · Ally A</div><div class="stackcard">2 · Ally B</div></div>
+            <div class="notch bot"><div class="slot">Wpn</div><div class="hero">Your<br />champion</div><div class="slot round">—</div></div>
+            <div class="rail"><div class="deck">Deck</div><div class="deck">Mat</div><div class="pass">Confirm</div><div class="deck">Mat</div><div class="deck">Deck</div></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="desktop-wither">
+        <h2>Desktop · Wither, field and hand both live</h2>
+        <p class="note">The ally on the sand can be sacrificed. The hand can pay the reserve. One sentence. The wither trigger stays in the stack column.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="mem theirs">Mem 2</div><div class="mem yours">Mem 1</div>
+            <div class="notch top"><div class="slot">Wpn</div><div class="hero">Their<br />champion</div><div class="slot round">—</div></div>
+            <div class="sand"><div class="units near"><div class="unit target">Sacrifice</div><div class="unit">Safe</div></div></div>
+            <div class="stackcol"><div class="stackcard">Wither</div></div>
+            <div class="notch bot"><div class="slot">Wpn</div><div class="hero">Your<br />champion</div><div class="slot round">—</div></div>
+            <div class="rail"><div class="deck">Deck</div><div class="deck">Mat</div><div class="pass">Confirm</div><div class="deck">Mat</div><div class="deck">Deck</div></div>
+          </div>
+          <div class="sentence">Pay 1 reserve, or sacrifice the ally</div>
+          <div class="hs-hand"><div class="unit target">Pay</div><div class="unit">Keep</div></div>
+        </div>
+      </article>
+
+      <article id="desktop-inspect">
+        <h2>Desktop · Inspect while a decision is open</h2>
+        <p class="note">The preview floats over the sand and does not replace the sentence. Pass stays Cancel. A tap on the green ally still selects it.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="mem theirs">Mem 2</div><div class="mem yours">Mem 1</div>
+            <div class="notch top"><div class="slot">Wpn</div><div class="hero">Their<br />champion</div><div class="slot round">—</div></div>
+            <div class="sand"><div class="units far"><div class="unit target">Ally</div><div class="unit">Champ</div></div></div>
+            <div class="preview"><strong>Preview</strong><span>Ally · life 4 · power 2. Release to return.</span></div>
+            <div class="stackcol"><div class="stackcard ghost">Ghost</div><div class="stackcard">Their spell</div></div>
+            <div class="notch bot"><div class="slot">Wpn</div><div class="hero">Your<br />champion</div><div class="slot round">—</div></div>
+            <div class="rail"><div class="deck">Deck</div><div class="deck">Mat</div><div class="pass">Cancel</div><div class="deck">Mat</div><div class="deck">Deck</div></div>
+          </div>
+          <div class="sentence">Choose a unit</div>
+        </div>
+      </article>
+
+      <article id="desktop-concede">
+        <h2>Desktop · Concede</h2>
+        <p class="note">The anchors freeze under the dialog. Nothing moves. Keep playing returns to the frame that was open.</p>
+        <div class="hs">
+          <div class="hs-frame">
+            <div class="mem theirs">Mem 2</div><div class="mem yours">Mem 1</div>
+            <div class="notch top"><div class="slot">Wpn</div><div class="hero">Their<br />champion</div><div class="slot round">—</div></div>
+            <div class="sand"></div>
+            <div class="notch bot"><div class="slot">Wpn</div><div class="hero">Your<br />champion</div><div class="slot round">—</div></div>
+            <div class="rail"><div class="deck">Deck</div><div class="deck">Mat</div><div class="pass">Pass</div><div class="deck">Mat</div><div class="deck">Deck</div></div>
+            <div class="veil"></div>
+            <div class="ask"><strong>Concede this match?</strong><span>The game ends as a loss.</span><div class="units far"><span class="pill">Keep playing</span><span class="pill">Concede</span></div></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="phone-idle">
+        <h2>Phone · Idle</h2>
+        <p class="note">Same anchors as the phone map. Pass and both decks on the right. Memory in the corners. Hand along the bottom.</p>
+        <div class="hs phone">
+          <div class="hs-frame">
+            <div class="mem theirs">2</div><div class="mem yours">1</div>
+            <div class="notch top"><div class="slot">Wpn</div><div class="hero">Them<small>18</small></div><div class="slot round">M</div></div>
+            <div class="sand"><div class="units far"><div class="unit">Ally</div></div><div class="units near"><div class="unit">Ally</div></div></div>
+            <div class="stackcol"><div class="stackcard">Spell</div></div>
+            <div class="notch bot"><div class="slot">Wpn</div><div class="hero">You<small>20</small></div><div class="slot round">M</div></div>
+            <div class="rail"><div class="deck">Deck</div><div class="pass">Pass</div><div class="deck">Deck</div></div>
+          </div>
+          <div class="hs-hand"><div class="unit">Ally</div><div class="unit">Fast</div><div class="unit">Atk</div></div>
+        </div>
+      </article>
+
+      <article id="phone-aim">
+        <h2>Phone · Aim</h2>
+        <p class="note">The stack column grows beside Pass and stops before the champions. The hand collapses to a count. The sentence is one line.</p>
+        <div class="hs phone">
+          <div class="hs-frame">
+            <div class="mem theirs">2</div><div class="mem yours">1</div>
+            <div class="notch top"><div class="hero">Them</div></div>
+            <div class="sand"><div class="units far"><div class="unit target">Ally</div></div></div>
+            <div class="stackcol"><div class="stackcard ghost">Ghost</div><div class="stackcard">Top</div></div>
+            <div class="notch bot"><div class="hero">You</div></div>
+            <div class="rail"><div class="deck">Deck</div><div class="pass">Cancel</div><div class="deck">Deck</div></div>
+          </div>
+          <div class="sentence">Choose a unit</div>
+          <div class="hs-hand"><div class="unit">Hand · 6</div></div>
+        </div>
+      </article>
+
+      <article id="phone-triggers">
+        <h2>Phone · Trigger tray, then its target</h2>
+        <p class="note">The tray is on the sand. The ghost is in the stack column. Commit is the Pass button.</p>
+        <div class="hs phone">
+          <div class="hs-frame">
+            <div class="mem theirs">2</div><div class="mem yours">1</div>
+            <div class="notch top"><div class="hero">Them</div></div>
+            <div class="sand"><div class="units far"><div class="unit target">Target</div></div><div class="tray"><div class="stackcard">On kill</div><div class="stackcard">On enter</div></div></div>
+            <div class="stackcol"><div class="stackcard ghost">On attack</div></div>
+            <div class="notch bot"><div class="hero">You</div></div>
+            <div class="rail"><div class="pass">Commit</div></div>
+          </div>
+          <div class="sentence">Choose a unit, then commit</div>
+        </div>
+      </article>
+
+      <article id="phone-attack">
+        <h2>Phone · Attack</h2>
+        <p class="note">No stack column. Intent is the center of the sand. Defender is the lit unit.</p>
+        <div class="hs phone">
+          <div class="hs-frame">
+            <div class="notch top"><div class="hero">Them</div></div>
+            <div class="sand"><div class="units far"><div class="unit target">Defender</div></div><div class="intent"><div class="unit">You</div><span>→</span><div class="unit">Intent</div></div></div>
+            <div class="notch bot"><div class="hero">You</div></div>
+            <div class="rail"><div class="pass">Cancel</div></div>
+          </div>
+          <div class="sentence">Attacker · Defender</div>
+        </div>
+      </article>
+
+      <article id="phone-sheet">
+        <h2>Phone · Material deck sheet</h2>
+        <p class="note">The sheet covers the sand only. Pass is Decline and stays on the right. Memory stays in the corner.</p>
+        <div class="hs phone">
+          <div class="hs-frame">
+            <div class="veil"></div>
+            <div class="mem yours">1</div>
+            <div class="notch top"><div class="hero">Them</div></div>
+            <div class="lift"><header>Material deck</header><div class="units far"><div class="unit target">Lv2</div><div class="unit inert">Lv3</div><div class="unit target">Regalia</div></div></div>
+            <div class="notch bot"><div class="hero">You</div></div>
+            <div class="rail"><div class="pass">Decline</div></div>
+          </div>
+          <div class="sentence">Materialize or decline</div>
+        </div>
+      </article>
+
+      <article id="phone-combat-response">
+        <h2>Phone · Respond during combat</h2>
+        <p class="note">Intent in the sand. Stack column beside Pass. Champions stay in the notches.</p>
+        <div class="hs phone">
+          <div class="hs-frame">
+            <div class="notch top"><div class="hero">Them</div></div>
+            <div class="sand"><div class="units far"><div class="unit target">Ally</div></div><div class="intent"><div class="unit">Atk</div><span>→</span><div class="unit">Card</div></div></div>
+            <div class="stackcol"><div class="stackcard ghost">Ghost</div></div>
+            <div class="notch bot"><div class="hero">You</div></div>
+            <div class="rail"><div class="pass">Cancel</div></div>
+          </div>
+          <div class="sentence">Choose a unit</div>
+        </div>
+      </article>
+
+      <article id="phone-stack-target">
+        <h2>Phone · The target is a stack layer</h2>
+        <p class="note">The sand is quiet. The stack column is the control.</p>
+        <div class="hs phone">
+          <div class="hs-frame">
+            <div class="notch top"><div class="hero">Them</div></div>
+            <div class="sand"></div>
+            <div class="stackcol"><div class="stackcard ghost">Ghost</div><div class="stackcard target">Spell</div></div>
+            <div class="notch bot"><div class="hero">You</div></div>
+            <div class="rail"><div class="pass">Cancel</div></div>
+          </div>
+          <div class="sentence">Choose a spell</div>
+        </div>
+      </article>
+
+      <article id="phone-retaliate">
+        <h2>Phone · Retaliation</h2>
+        <p class="note">Yes or no on the sand. No stack column. Done is the Pass button.</p>
+        <div class="hs phone">
+          <div class="hs-frame">
+            <div class="notch top"><div class="hero">Them</div></div>
+            <div class="sand"><div class="units near"><div class="yesno"><div class="unit target">Ally</div><span class="pill">Yes</span></div><div class="yesno"><div class="unit target">Ally</div><span class="pill">No</span></div></div></div>
+            <div class="notch bot"><div class="hero">You</div></div>
+            <div class="rail"><div class="pass">Done</div></div>
+          </div>
+          <div class="sentence">Rest to retaliate</div>
+        </div>
+      </article>
+
+      <article id="phone-order">
+        <h2>Phone · Order damage</h2>
+        <p class="note">The list sits in the middle of the sand. Confirm is Pass.</p>
+        <div class="hs phone">
+          <div class="hs-frame">
+            <div class="notch top"><div class="hero">Them</div></div>
+            <div class="sand"><div class="units far"><div class="unit">A</div><div class="unit">B</div></div></div>
+            <div class="orderbox"><div class="stackcard">1 · A</div><div class="stackcard">2 · B</div></div>
+            <div class="notch bot"><div class="hero">You</div></div>
+            <div class="rail"><div class="pass">Confirm</div></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="phone-concede">
+        <h2>Phone · Concede</h2>
+        <p class="note">The anchors freeze. The dialog is the only control.</p>
+        <div class="hs phone">
+          <div class="hs-frame">
+            <div class="notch top"><div class="hero">Them</div></div>
+            <div class="sand"></div>
+            <div class="notch bot"><div class="hero">You</div></div>
+            <div class="rail"><div class="pass">Pass</div></div>
+            <div class="veil"></div>
+            <div class="ask"><strong>Concede?</strong><span>The game ends as a loss.</span><div class="units far"><span class="pill">Stay</span><span class="pill">Concede</span></div></div>
+          </div>
+        </div>
+      </article>
+    </main>
+    <script>
+      const only = new URLSearchParams(location.search).get("only");
+      if (only) {
+        document.querySelector("header.page")?.remove();
+        document.querySelectorAll("article").forEach((el) => {
+          if (el.id !== only) el.remove();
+        });
+        document.body.style.background = "#f6f4ef";
+      }
+    </script>
+  </body>
+</html>

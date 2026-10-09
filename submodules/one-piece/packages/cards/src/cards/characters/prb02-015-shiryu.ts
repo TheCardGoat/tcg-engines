@@ -43,7 +43,7 @@ export const prb02Shiryu015: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Blackbeard Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -74,7 +74,7 @@ export const prb02Shiryu015: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Blackbeard Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

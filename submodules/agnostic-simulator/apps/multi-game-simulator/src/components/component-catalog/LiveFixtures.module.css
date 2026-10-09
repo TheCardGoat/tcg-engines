@@ -1,0 +1,109 @@
+.library {
+  --board-surface: #121c28;
+  --board-text: #edf3f8;
+  --board-muted: #aec0cf;
+  --board-border: #405365;
+  margin-top: 24px;
+  border-top: 1px solid #354657;
+  padding-top: 24px;
+}
+.library h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+.library button:not([class]),
+.library select {
+  min-height: 44px;
+  background: #202e40;
+  color: #f2f5f9;
+  border: 1px solid #61768a;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+.library button:focus-visible,
+.library select:focus-visible {
+  outline: 3px solid #79e4e8;
+  outline-offset: 2px;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+.controls label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+}
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+}
+.fixture {
+  border: 1px solid #405365;
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 0;
+  overflow: auto;
+  position: relative;
+}
+.fixture h4 {
+  font-size: 14px;
+  margin: 0 0 8px;
+}
+.source {
+  font: 11px/1.5 monospace;
+  color: #acc2d5;
+  overflow-wrap: anywhere;
+  margin-bottom: 16px;
+}
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: flex-start;
+}
+.card {
+  width: 140px;
+  aspect-ratio: 5 / 7;
+  position: relative;
+}
+.card > * {
+  max-width: 100%;
+}
+.stage {
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  gap: 80px;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+}
+.drop {
+  position: relative;
+  min-height: 220px;
+  width: 160px;
+  border: 1px dashed #6688a5;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+.result {
+  color: #b5eeee;
+  min-height: 24px;
+}
+@media (max-width: 560px) {
+  .stage {
+    gap: 28px;
+    padding: 8px;
+  }
+  .card {
+    width: 100px;
+  }
+}

@@ -23,7 +23,7 @@ export const pocahontasSteadfastTravelerEpic: CharacterCard = {
   franchise: "Pocahontas",
   set: "012",
   cardNumber: 220,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 4,
   strength: 4,

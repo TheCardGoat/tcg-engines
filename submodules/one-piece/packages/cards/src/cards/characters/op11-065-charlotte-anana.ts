@@ -43,7 +43,7 @@ export const op11CharlotteAnana065: CharacterCard = {
               {
                 filter: "trait",
                 value: "Big Mom Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "excludeName",

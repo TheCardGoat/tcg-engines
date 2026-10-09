@@ -1,0 +1,23 @@
+{
+  "aOff": [],
+  "bOff": [],
+  "aConfig": {
+    "replyPessimism": 0.5
+  },
+  "bConfig": {},
+  "aPoverride": {},
+  "bPoverride": {},
+  "games": 360,
+  "aWins": 181,
+  "aLosses": 179,
+  "draws": 0,
+  "aWinRate": 0.5028,
+  "pairs": 180,
+  "aSweeps": 67,
+  "bSweeps": 66,
+  "splits": 47,
+  "pairedImprovement": 0.0056,
+  "failures": [],
+  "avgSteps": 95.4,
+  "elapsedMs": 284741
+}

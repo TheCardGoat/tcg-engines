@@ -22,7 +22,7 @@ export const op13Franky033: CharacterCard = {
   setId: "OP13",
   cost: 3,
   power: 5000,
-  traits: ["FILM Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   attribute: "strike",
   effect: "[On K.O.] Rest up to 2 of your opponent's cards.",
   effects: {

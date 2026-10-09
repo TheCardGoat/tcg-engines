@@ -24,7 +24,7 @@ export const op15MonkeyDLuffy051: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 2000,
-  traits: ["Straw Hat Crew Dressrosa"],
+  traits: ["Dressrosa", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     '[Opponent\'s Turn] If your Leader has the "Dressrosa" type, this Character gains +3000 power.',
@@ -39,7 +39,7 @@ export const op15MonkeyDLuffy051: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Dressrosa",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

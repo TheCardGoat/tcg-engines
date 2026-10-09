@@ -18,7 +18,7 @@ export const unitGildedMatonBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitGildedMaton",
   label: "Gilded Maton - defeats friendly gear to defeat cheap rival unit",
   references: [
-    "packages/engine/src/cards/welcometonightcityretail/units/gilded-maton.test.ts",
+    "packages/engine/src/cards/units/gilded-maton.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {

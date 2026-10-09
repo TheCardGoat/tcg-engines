@@ -3,6 +3,7 @@ import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { Operations } from "../operations/index.ts";
 import { isOpeningHandDecisionWindow } from "../state/turn-info.ts";
 import { beginGainGigStep, readySpentCards } from "./gain-gig.ts";
+import { bothFixerAreasEmpty } from "./overtime.ts";
 
 export interface KeepHandInput extends MoveInput {
   args: Record<string, never>;
@@ -100,6 +101,16 @@ export function enterStartPhase(state: MatchState, operations: Operations): void
   }
 
   operations.game.setPhase("start");
+  state.G.turnMetadata.turnBeganWithEmptyFixer = bothFixerAreasEmpty(state);
+  if (state.G.turnMetadata.turnBeganWithEmptyFixer) {
+    operations.event.emit({
+      type: "actionLog",
+      messageKey: "game.overtimeFirstEmptyTurn",
+      params: {},
+      playerId: firstPlayerId,
+      category: "system",
+    });
+  }
 
   // Step 1: READY SPENT CARDS (skipped on first player's turn 1).
   const turnNumber = state.G.turnMetadata.turnNumber;

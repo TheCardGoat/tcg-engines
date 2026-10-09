@@ -23,7 +23,7 @@ export const op09Bepo074: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 2000,
-  traits: ["Heart Pirates Minks"],
+  traits: ["Minks", "Heart Pirates"],
   attribute: "strike",
   effect:
     "[Your Turn] [Once Per Turn] When a DON!! card on your field is returned to your DON!! deck, up to 1 of your Leader or Character cards gains +1000 power during this turn.",

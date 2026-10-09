@@ -73,4 +73,33 @@ describe("OP07-038 Boa Hancock", () => {
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     expect(engine.getView("south").players.south.deckCount).toBe(deckBefore);
   });
+  test("may activate without drawing above five cards and consumes the once-per-turn use", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op07BoaHancock038,
+        hand: [
+          op03ThreeThousandWorlds057,
+          op03ThreeThousandWorlds057,
+          ...Array.from({ length: 5 }, () => eb01Doma005),
+        ],
+        activeDon: 8,
+        deck: [eb01Doma005, eb01MountainGod018],
+      },
+      { character: [eb01Doma005, eb01Doma005] },
+    );
+    const targets = engine
+      .getView("north")
+      .players.north.characters.filter(Boolean)
+      .map((card) => card!.instanceId);
+    engine.asSouth().play(op03ThreeThousandWorlds057);
+    engine.asSouth().chooseTargets(targets[0]!);
+    engine.asSouth().acceptOptional();
+    expect(engine.getView("south").players.south.hand).toHaveLength(6);
+    expect(engine.getView("south").players.south.deckCount).toBe(2);
+    engine.asSouth().play(op03ThreeThousandWorlds057);
+    engine.asSouth().chooseTargets(targets[1]!);
+    expect(engine.getView("south").players.south.hand).toHaveLength(5);
+    expect(engine.getView("south").players.south.deckCount).toBe(2);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

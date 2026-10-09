@@ -68,45 +68,54 @@ describe("GundamServerEngine interaction submission", () => {
 });
 
 describe("GundamServerEngine undo", () => {
-  it("routes the generic undo move to the authoritative runtime undo", () => {
-    const calls: string[] = [];
-    const state = { ctx: { _stateID: 8, status: { turn: 2, gameEnded: false } } } as MatchState;
-    const engine = new GundamServerEngine(
-      {
-        getStateID: () => 8,
-        getState: () => state,
-        canUndo: () => true,
-        undo: (playerId: string) => {
-          calls.push(playerId);
-          return {
-            success: true,
-            stateID: 9,
-            state: { ...state, ctx: { ...state.ctx, _stateID: 9 } },
-            patches: [],
-            gameEvents: [],
-            logEntries: [],
-            processedCommand: {
-              commandID: "undo-p1-9",
-              move: "undo",
-              prevStateID: 8,
-              actorRole: "player",
-              args: {},
-            },
-            animations: [],
-            undoable: false,
-          };
-        },
-      } as unknown as LocalEngine,
-      {} as MatchStaticResources,
-    );
+  it.each(["undo", "undoToTurnStart"] as const)(
+    "routes %s as an authoritative undo transition",
+    (moveType) => {
+      const calls: string[] = [];
+      const state = { ctx: { _stateID: 8, status: { turn: 2, gameEnded: false } } } as MatchState;
+      const engine = new GundamServerEngine(
+        {
+          getStateID: () => 8,
+          getState: () => state,
+          canUndo: () => true,
+          [moveType]: (playerId: string) => {
+            calls.push(playerId);
+            return {
+              success: true,
+              stateID: 9,
+              state: { ...state, ctx: { ...state.ctx, _stateID: 9 } },
+              patches: [],
+              gameEvents: [],
+              logEntries: [],
+              processedCommand: {
+                commandID: `${moveType}-p1-9`,
+                move: moveType,
+                prevStateID: 8,
+                actorRole: "player",
+                args: {},
+              },
+              animations: [],
+              undoable: false,
+            };
+          },
+        } as unknown as LocalEngine,
+        {} as MatchStaticResources,
+      );
 
-    const result = engine.dispatch("undo", "p1", {}, { gameId: "g1", sourceAuthority: "server" });
+      const result = engine.dispatch(
+        moveType,
+        "p1",
+        {},
+        { gameId: "g1", sourceAuthority: "server" },
+      );
 
-    expect(calls).toEqual(["p1"]);
-    expect(result).toMatchObject({ success: true, stateID: 9, undoable: false });
-    if (!result.success) throw new Error("Expected the undo to succeed.");
-    expect(result.acceptedMoveRecord?.transitionType).toBe("undo");
-  });
+      expect(calls).toEqual(["p1"]);
+      expect(result).toMatchObject({ success: true, stateID: 9, undoable: false });
+      if (!result.success) throw new Error("Expected the undo to succeed.");
+      expect(result.acceptedMoveRecord?.transitionType).toBe("undo");
+      expect(result.acceptedMoveRecord?.undoneStateID).toBe(8);
+    },
+  );
 });
 
 describe("GundamServerEngine forfeit", () => {

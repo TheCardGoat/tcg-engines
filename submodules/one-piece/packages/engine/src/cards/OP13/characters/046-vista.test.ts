@@ -43,7 +43,7 @@ describe("OP13-046 Vista", () => {
     const attackerId = engine.findCardInZone("north", "character", op01Shanks120);
 
     engine.declareAttack(attackerId, vistaId, "north");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
     const trash = engine.pendingDecision("battleKoReplacement", "south").steps[0];
     if (trash?.kind !== "selectEntity") throw new Error("Expected Vista's replacement payment.");
     expect(trash.candidates.map((candidate) => candidate.ref.id)).toContain(eligibleId);

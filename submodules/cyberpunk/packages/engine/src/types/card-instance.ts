@@ -16,6 +16,8 @@ export interface CardMeta {
   attachedGearIds: CardInstanceId[];
   attachedToId: CardInstanceId | null;
   hasLag: boolean;
+  /** A played card can lose Lag without ceasing to have been played this turn. */
+  playedThisTurn?: boolean;
   hasAttackedThisTurn: boolean;
   hasStolenGigThisTurn: boolean;
 }

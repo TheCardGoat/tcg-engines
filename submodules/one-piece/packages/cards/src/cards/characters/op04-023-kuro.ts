@@ -23,7 +23,7 @@ export const op04Kuro023: CharacterCard = {
   cost: 6,
   power: 8000,
   counter: 1000,
-  traits: ["East Blue Black Cat Pirates"],
+  traits: ["East Blue", "Black Cat Pirates"],
   attribute: "slash",
   i18n: op04Kuro023I18n,
 };

@@ -30,7 +30,7 @@ export const op12RoronoaZoro020: LeaderCard = {
   setId: "OP12",
   power: 5000,
   life: 5,
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     "[DON!! x3] [Activate: Main] [Once Per Turn] If this Leader battles your opponent's Character during this turn, set this Leader as active. Then, this Leader cannot attack your opponent's Characters with a base cost of 7 or less during this turn.",

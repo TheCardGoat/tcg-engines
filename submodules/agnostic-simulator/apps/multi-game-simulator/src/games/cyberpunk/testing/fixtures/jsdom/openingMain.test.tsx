@@ -1,5 +1,6 @@
 import { describe, test, vi } from "vite-plus/test";
 import {
+  embracingPowerRetailStarterDeckMinotaur,
   welcomeToNightCityRetailFloorIt,
   welcomeToNightCityRetailMoxInciters,
 } from "@tcg/cyberpunk-cards";
@@ -64,7 +65,7 @@ describe("openingMain fixture behavior", () => {
     }
   });
 
-  test("first player sells a card, plays Ruthless Lowlife, then passes the turn", async () => {
+  test("first player sells a card, plays Mox Inciters, then passes the turn", async () => {
     const { pom, unmount } = renderOpeningMainPom();
     try {
       const floorIt = await pom.getCardInZoneByDefinitionId(
@@ -87,7 +88,16 @@ describe("openingMain fixture behavior", () => {
         CYBERPUNK_P1,
         welcomeToNightCityRetailMoxInciters.id,
       );
-      await pom.expectEddies(CYBERPUNK_P1, 4);
+      await pom.expectEddies(CYBERPUNK_P1, 3);
+
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+      const minotaur = await pom.getCardInZoneByDefinitionId(
+        "field",
+        CYBERPUNK_P2,
+        embracingPowerRetailStarterDeckMinotaur.id,
+      );
+      await pom.resolveEffectTarget([minotaur.instanceId], CYBERPUNK_P1);
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
 
       await pom.passPhase(CYBERPUNK_P1);
 
@@ -102,7 +112,7 @@ describe("openingMain fixture behavior", () => {
     }
   });
 
-  test("eddies sell cue is advertised exactly while the sell move is legal", async () => {
+  test("eddies sell reminder stays until the normal Sell action is used", async () => {
     const { pom, unmount } = renderOpeningMainPom();
     try {
       // Own turn, main phase, unsold, Floor It in hand → slot advertised.
@@ -129,6 +139,19 @@ describe("openingMain fixture behavior", () => {
       await pom.expectSellCue(CYBERPUNK_P2, false);
     } finally {
       unmount();
+    }
+  });
+
+  test("eddies sell reminder appears with no Sell-tag card in hand", async () => {
+    ensureJsdomAnimationSupport();
+    const view = renderCyberpunkSimulatorScenario({ scenarioId: "openingMainNoSellable" });
+    const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+    try {
+      await pom.expectHandSize(CYBERPUNK_P1, 2);
+      await pom.expectSellCue(CYBERPUNK_P1, true);
+      await pom.expectSellCue(CYBERPUNK_P2, false);
+    } finally {
+      view.unmount();
     }
   });
 });

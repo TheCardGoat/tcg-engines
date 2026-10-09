@@ -1,0 +1,52 @@
+.tcg-inspection {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  cursor: zoom-out;
+}
+.tcg-inspection__return {
+  flex-basis: auto;
+  border: 0;
+  padding: 10px 18px;
+  color: #d2c7ad;
+  background: radial-gradient(ellipse, #071019ed 35%, transparent 75%);
+  font: 500 12px system-ui, sans-serif;
+  letter-spacing: 0.06em;
+  text-shadow: 0 2px 5px #000;
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+.tcg-inspection__return:hover { color: #fff0cb; }
+.tcg-inspection__return kbd {
+  margin-left: 10px;
+  font: 10px system-ui, sans-serif;
+  opacity: 0.65;
+}
+.tcg-inspection__return:focus-visible {
+  outline: 2px solid #e7d7b3;
+  outline-offset: 3px;
+}
+.tcg-inspection__actions {
+  position: absolute;
+  bottom: 3%;
+  left: 25%;
+  right: 25%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.inspectHint {
+  flex-basis: 100%;
+  text-align: center;
+  color: #cfdbde;
+  font: 11px system-ui, sans-serif;
+  text-shadow: 0 2px 4px #000;
+}
+
+.tcg-spatial-targets { position: absolute; inset: 0; pointer-events: none; }
+.tcg-spatial-target {
+  position: absolute; pointer-events: auto; padding: 0;
+  background: transparent; border: 0; cursor: pointer;
+}
+.tcg-spatial-target:focus-visible { outline: 1px solid #9bcaca; outline-offset: 3px; }

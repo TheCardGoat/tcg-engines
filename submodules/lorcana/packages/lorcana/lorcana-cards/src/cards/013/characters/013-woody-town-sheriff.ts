@@ -31,6 +31,7 @@ export const woodyTownSheriff: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d36d4186954f47a99733811e692d8fea",
+    tcgPlayer: "704549",
   },
   text: [
     {

@@ -489,11 +489,8 @@ describe("review regressions", () => {
     const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
 
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision(
-      "battleCounter",
-      { selectedIds: [characterCounterId, eventCounterId] },
-      "north",
-    );
+    engine.asNorth().chooseCounter(characterCounterId);
+    engine.asNorth().chooseCounter(eventCounterId);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "north");
 
     const southTrash = engine.getView("south").players.south.trash.map((card) => card.instanceId);

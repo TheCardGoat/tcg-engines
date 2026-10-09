@@ -1,3 +1,4 @@
+import { systemChatMessageText } from "@tcg/simulator-runtime/chat";
 import { describe, expect, test, vi } from "vite-plus/test";
 import type { GatewayHandle } from "@tcg/gateway-client";
 import type { LiveGatewayMessage } from "../engine/live/liveGateway";
@@ -11,7 +12,6 @@ import {
   emitGatewayFreeTextRequest,
   reduceLiveBoardCorrectionPolicy,
   reduceLiveChatPolicy,
-  systemChatMessageText,
 } from "./LiveMatch.page";
 import type { LiveMatchContext } from "../engine/live/matchContext";
 
@@ -73,13 +73,16 @@ describe("live chat gateway helpers", () => {
     });
   });
 
-  test("does not emit free text chat approval requests until inbox handling exists", () => {
+  test("requests opponent approval for hosted free text chat", () => {
     const handle = fakeHandle();
 
     const sent = emitGatewayFreeTextRequest(handle, "game-1");
 
-    expect(sent).toBe(false);
-    expect(handle.emit).not.toHaveBeenCalled();
+    expect(sent).toBe(true);
+    expect(handle.emit).toHaveBeenCalledWith("proposal_send", {
+      gameId: "game-1",
+      actionType: "enable_free_text_chat",
+    });
   });
 
   test("emits a board-correction enable proposal", () => {

@@ -23,7 +23,7 @@ export const op11Shirahoshi030: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 1000,
-  traits: ["Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island"],
   attribute: "wisdom",
   effect:
     '[Activate: Main] You may rest 1 of your DON!! cards and this Character: Look at 5 cards from the top of your deck; reveal up to 1 "Neptunian" or "Fish-Man Island" type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
@@ -48,8 +48,8 @@ export const op11Shirahoshi030: CharacterCard = {
               {
                 filter: "anyOf",
                 filters: [
-                  { filter: "trait", value: "Neptunian", match: "includes" },
-                  { filter: "trait", value: "Fish-Man Island", match: "includes" },
+                  { filter: "trait", value: "Neptunian", match: "exact" },
+                  { filter: "trait", value: "Fish-Man Island", match: "exact" },
                 ],
               },
             ],

@@ -8,6 +8,23 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 import { SOUTH_ATTACKS_WITHOUT_TURN_SETUP } from "./battle-fixture.shared.ts";
 
 describe("OP14-076 Ever White", () => {
+  test("a wrong Leader still pays the optional rest cost without adding DON", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [op14eb04EverWhite076],
+      activeDon: 3,
+      donDeckCount: 5,
+    });
+    const south = engine.asSouth();
+    south.play(op14eb04EverWhite076);
+    south.acceptOptional();
+    expect(south.view().players.south).toMatchObject({
+      activeDon: 0,
+      restedDon: 3,
+      donDeckCount: 5,
+    });
+    expect(south.view().prompts).toHaveLength(0);
+  });
+
   test("Main rests two DON!! before a Donquixote Pirates Leader adds one rested DON!!", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: op01DonquixoteDoflamingo060,

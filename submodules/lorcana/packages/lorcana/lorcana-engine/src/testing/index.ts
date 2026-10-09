@@ -102,6 +102,8 @@ export interface TestInitialState {
   inkwell?: number | TestFixtureCardEntry[];
   discard?: number | TestFixtureCardEntry[];
   lore?: number;
+  /** Hyperia City ink drop counters for this player. */
+  inkDrops?: number;
 }
 
 export {

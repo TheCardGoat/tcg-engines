@@ -35,7 +35,7 @@ describe("V - Corporate Exile (The Heist) jsdom behavior", () => {
 
       await pom.goSolo(v.instanceId, CYBERPUNK_P1);
 
-      await pom.expectEddies(CYBERPUNK_P1, 1);
+      await pom.expectEddies(CYBERPUNK_P1, 2);
       await pom.expectFieldCardSpent(CYBERPUNK_P1, v.instanceId, false);
       await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, v.instanceId, 8);
       await pom.expectFieldCardGrantedRule(CYBERPUNK_P1, v.instanceId, "goSolo", true);

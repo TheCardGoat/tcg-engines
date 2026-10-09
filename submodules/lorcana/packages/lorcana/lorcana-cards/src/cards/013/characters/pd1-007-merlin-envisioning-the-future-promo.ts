@@ -30,14 +30,18 @@ export const merlinEnvisioningTheFuturePD1Promo: CharacterCard = {
   willpower: 4,
   lore: 2,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_ffac3ba82292480ba3fa2114f0c7a3f8",
+    tcgPlayer: "704645",
+  },
   text: [
     {
-      title: "Minor Trickery",
+      title: "MINOR TRICKERY",
       description:
         "When you play this character, you may draw a card from the bottom of your deck.",
     },
     {
-      title: "Age of Inconvenience",
+      title: "AGE OF INCONVENIENCE",
       description:
         "When this character is banished, put this card from your discard on the bottom of your deck.",
     },

@@ -1,3 +1,5 @@
+import { requestCommandDonPayment } from "./command-don-payment.ts";
+import { transferDonIdentities } from "./don-state.ts";
 import { getCard } from "../../../cards/src/runtime-catalog.ts";
 import { isPlayedRestedByPermanentEffect } from "../effects/permanent.ts";
 import {
@@ -8,7 +10,7 @@ import {
   enqueueEffectsForTrigger,
   enqueueInPlayEffectsForTrigger,
   enqueueMirroredInPlayEffectsForTrigger,
-  getCardCost,
+  getPaidPlayCost,
   getCardForInstance,
   getInstance,
   getPlayer,
@@ -16,21 +18,58 @@ import {
 import { consumeNextPlayCostModifiers, createChoicePrompt, moveCard } from "../state.ts";
 import type { EngineCommand, MatchSeat, MatchState, PromptState } from "../types.ts";
 
-// Pays the cost, places the card, and publishes every normal play-from-hand
-// event and trigger. Shared by the direct playCard path and the 3-7-6-1
-// replacement flow so both complete an identical play.
+export function revealCardPlay(state: MatchState, seat: MatchSeat, instanceId: string): void {
+  const instance = getInstance(state, instanceId);
+  if (instance.publicKnowledge) return;
+  instance.publicKnowledge = true;
+  const card = getCard(instance.cardId);
+  emitLog(
+    state,
+    seat,
+    `${getPlayer(state, seat).playerName} reveals ${cardName(card)} to ${card.cardType === "event" ? "activate" : "play"} it.`,
+    {
+      sourceCardId: card.id,
+      sourceInstanceId: instanceId,
+      targetIds: [instanceId],
+      visibility: "public",
+    },
+  );
+}
+
+// Cost is paid before playing (2-7-2), including before full-field rule trash.
+export function payCharacterPlayCost(
+  state: MatchState,
+  seat: MatchSeat,
+  instanceId: string,
+  selectedDonIds?: string[],
+): number {
+  const player = getPlayer(state, seat);
+  const cardCost = getPaidPlayCost(state, instanceId);
+  transferDonIdentities(
+    state,
+    { seat, area: "active" },
+    { seat, area: "rested" },
+    cardCost,
+    selectedDonIds,
+  );
+  player.activeDon -= cardCost;
+  player.restedDon += cardCost;
+  consumeNextPlayCostModifiers(state, instanceId);
+  return cardCost;
+}
+
+// The saved full-field continuation has already paid; never price/pay it again.
 export function completeCharacterPlayFromHand(
   state: MatchState,
   seat: MatchSeat,
   instanceId: string,
   slotIndex: number,
+  selectedDonIds?: string[],
+  paidCost?: number,
 ) {
   const player = getPlayer(state, seat);
   const card = getCard(getInstance(state, instanceId).cardId);
-  const cardCost = getCardCost(state, instanceId);
-  player.activeDon -= cardCost;
-  player.restedDon += cardCost;
-  consumeNextPlayCostModifiers(state, instanceId);
+  if (paidCost === undefined) payCharacterPlayCost(state, seat, instanceId, selectedDonIds);
   moveCard(state, instanceId, seat, "character", {
     slotIndex,
     faceUp: true,
@@ -82,16 +121,11 @@ export function projectCharacterReplacementPrompt(
   state: MatchState,
   seat: MatchSeat,
   instanceId: string,
+  paidCost?: number,
 ) {
   const player = getPlayer(state, seat);
   const card = getCard(getInstance(state, instanceId).cardId);
-  getInstance(state, instanceId).publicKnowledge = true;
-  emitLog(state, seat, `${player.playerName} reveals ${cardName(card)} to play it.`, {
-    sourceCardId: card.id,
-    sourceInstanceId: instanceId,
-    targetIds: [instanceId],
-    visibility: "public",
-  });
+  revealCardPlay(state, seat, instanceId);
   const candidateIds = player.characterArea.filter((entry): entry is string => Boolean(entry));
   createChoicePrompt(state, {
     choiceKind: "selectCards",
@@ -112,6 +146,8 @@ export function projectCharacterReplacementPrompt(
     context: {},
     resolutionContext: {
       intent: "playCharacterReplacement",
+      paidCost,
+      sourceGeneration: getInstance(state, instanceId).zoneChangeCounter,
       controller: seat,
       instanceId,
       candidateIds,
@@ -139,9 +175,26 @@ export function resolveCharacterReplacementPrompt(
     ) ||
     instance.controller !== context.controller ||
     instance.zone !== "hand" ||
-    player.activeDon < getCardCost(state, context.instanceId)
+    (context.sourceGeneration !== undefined &&
+      instance.zoneChangeCounter !== context.sourceGeneration) ||
+    (context.paidCost === undefined &&
+      player.activeDon < getPaidPlayCost(state, context.instanceId))
   ) {
     return false;
+  }
+  // Legacy saved prompts predate paidCost. Pay before any rule trash, and
+  // if physical selection is needed resume a fresh normal play first.
+  let paidCost = context.paidCost;
+  if (paidCost === undefined) {
+    const payment = requestCommandDonPayment(
+      state,
+      { type: "playCard", seat: context.controller, instanceId: context.instanceId },
+      getPaidPlayCost(state, context.instanceId),
+      context.instanceId,
+    );
+    if (payment === "prompt") return true;
+    if (payment === "invalid") return false;
+    paidCost = payCharacterPlayCost(state, context.controller, context.instanceId);
   }
   const trashedId = selectedIds[0]!;
   const slotIndex = player.characterArea.indexOf(trashedId);
@@ -150,6 +203,12 @@ export function resolveCharacterReplacementPrompt(
   // is not a K.O. (10-2-1-3) and dispatches no triggers or replacements.
   // Return any attached DON!! to the cost area before the Character leaves play.
   if (trashedInstance.attachedDon > 0) {
+    transferDonIdentities(
+      state,
+      { attachedTo: trashedId },
+      { seat: trashedInstance.owner, area: "rested" },
+      trashedInstance.attachedDon,
+    );
     getPlayer(state, trashedInstance.owner).restedDon += trashedInstance.attachedDon;
     trashedInstance.attachedDon = 0;
   }
@@ -158,6 +217,13 @@ export function resolveCharacterReplacementPrompt(
     publicKnowledge: true,
     actor: context.controller,
   });
-  completeCharacterPlayFromHand(state, context.controller, context.instanceId, slotIndex);
+  completeCharacterPlayFromHand(
+    state,
+    context.controller,
+    context.instanceId,
+    slotIndex,
+    undefined,
+    paidCost,
+  );
   return true;
 }

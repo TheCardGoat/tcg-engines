@@ -25,7 +25,7 @@ export const op12Pacifista109: CharacterCard = {
   counter: 1000,
   trigger:
     "K.O. up to 1 of your opponent's Characters with a cost of 1 or less and add this card to your hand.",
-  traits: ["Biological Weapon Navy Egghead"],
+  traits: ["Biological Weapon", "Egghead", "Navy"],
   attribute: "special",
   effect:
     "[Trigger] K.O. up to 1 of your opponent's Characters with a cost of 1 or less and add this card to your hand.",

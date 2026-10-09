@@ -51,7 +51,7 @@ export const op15Rebecca039: LeaderCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
             ],
           },
@@ -76,7 +76,7 @@ export const op15Rebecca039: LeaderCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

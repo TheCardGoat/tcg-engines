@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vite-plus/test";
 import type { CardTargetDSL } from "@tcg/cyberpunk-types";
+import { legendsInPlay, unitsAndLegendsInPlay } from "@tcg/cyberpunk-types";
 import {
+  theHeistRetailStarterDeckVCorporateExile,
   welcomeToNightCityRetailAdamSmasherEnderOfLegends,
+  welcomeToNightCityRetailGoroTakemuraVengefulBodyguard,
   welcomeToNightCityRetailKiroshiOptics,
   welcomeToNightCityRetailSketchyRipper,
   welcomeToNightCityRetailSwordwiseHuscle,
@@ -9,7 +12,7 @@ import {
 import { CyberpunkTestEngine, P1, P2 } from "../testing/index.ts";
 import type { CardInstanceId } from "../types/branded.ts";
 import type { ResolutionContext } from "./target-resolver.ts";
-import { evaluateCondition, resolveTarget } from "./target-resolver.ts";
+import { evaluateCondition, resolveNumericValue, resolveTarget } from "./target-resolver.ts";
 
 const hostUnit = welcomeToNightCityRetailSwordwiseHuscle;
 const unequippedUnit = welcomeToNightCityRetailSketchyRipper;
@@ -28,6 +31,114 @@ function createContext(engine: CyberpunkTestEngine, sourceCardId?: CardInstanceI
 }
 
 describe("target resolver DSL additions", () => {
+  it("counts exactly the friendly Gigs with value 8 or higher", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        field: [{ card: hostUnit }],
+        gigArea: [
+          { dieType: "d4", faceValue: 2 },
+          { dieType: "d12", faceValue: 9 },
+          { dieType: "d8", faceValue: 7 },
+          { dieType: "d10", faceValue: 10 },
+          { dieType: "d20", faceValue: 11 },
+        ],
+      },
+      { gigArea: [{ dieType: "d8", faceValue: 8 }] },
+    );
+
+    expect(
+      resolveTarget(
+        { selector: "gig", controller: "friendly", amount: "all", minValue: 8 },
+        createContext(engine),
+      ),
+    ).toHaveLength(3);
+  });
+
+  it("uses the same in-play membership for selection, numeric counts, and equipped conditions", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        field: [
+          { card: hostUnit, attachedGears: [gear] },
+          {
+            card: welcomeToNightCityRetailAdamSmasherEnderOfLegends,
+            faceDown: false,
+            attachedGears: [gear],
+          },
+        ],
+        legendArea: [
+          {
+            card: welcomeToNightCityRetailGoroTakemuraVengefulBodyguard,
+            faceDown: false,
+            attachedGears: [gear],
+          },
+          { card: theHeistRetailStarterDeckVCorporateExile, faceDown: true },
+        ],
+      },
+      {
+        field: [
+          {
+            card: welcomeToNightCityRetailAdamSmasherEnderOfLegends,
+            faceDown: false,
+            attachedGears: [gear],
+          },
+        ],
+      },
+    );
+    const context = createContext(engine);
+    const faceUpLegends = legendsInPlay("friendly", "faceUp");
+
+    expect(resolveTarget(faceUpLegends, context)).toHaveLength(2);
+    expect(
+      resolveNumericValue({ type: "perCount", multiplier: 1, target: faceUpLegends }, context),
+    ).toBe(2);
+    // A field Legend satisfies both types, but is still one equipped card.
+    expect(
+      resolveTarget({ ...unitsAndLegendsInPlay("friendly"), hasAttachedCards: true }, context),
+    ).toHaveLength(3);
+    expect(
+      evaluateCondition(
+        { condition: "hasEquippedUnitsOrLegends", controller: "friendly", minCount: 3 },
+        context,
+      ),
+    ).toBe(true);
+    expect(
+      evaluateCondition(
+        { condition: "hasEquippedUnitsOrLegends", controller: "friendly", minCount: 4 },
+        context,
+      ),
+    ).toBe(false);
+    expect(evaluateCondition({ condition: "allFriendlyLegendsFaceUp" }, context)).toBe(false);
+    expect(resolveTarget({ ...faceUpLegends, zones: ["legendArea"] }, context)).toHaveLength(1);
+  });
+
+  it("applies the same target filters when checking a fight opponent", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      { field: [{ card: hostUnit, spent: false, hasLag: false }] },
+      { field: [{ card: welcomeToNightCityRetailAdamSmasherEnderOfLegends, spent: true }] },
+    );
+    engine.attackUnit(hostUnit, welcomeToNightCityRetailAdamSmasherEnderOfLegends, { as: P1 });
+    const context = createContext(engine);
+    const opponent = legendsInPlay("rival");
+
+    expect(
+      evaluateCondition(
+        { condition: "fightKind", target: { selector: "self" }, kind: "fight", opponent },
+        context,
+      ),
+    ).toBe(true);
+    expect(
+      evaluateCondition(
+        {
+          condition: "fightKind",
+          target: { selector: "self" },
+          kind: "fight",
+          opponent: { ...opponent, minPower: 100 },
+        },
+        context,
+      ),
+    ).toBe(false);
+  });
+
   describe("effective card type", () => {
     it("treats a Legend on the field as both a Unit and a Legend", () => {
       const engine = CyberpunkTestEngine.createWithFixture({

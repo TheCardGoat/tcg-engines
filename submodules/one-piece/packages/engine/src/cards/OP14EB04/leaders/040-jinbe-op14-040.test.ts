@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op14eb04JinbeOp14040040 } from "../../../../../cards/src/cards/leaders/op14-040-jinbe-op14-040.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP14-040 Jinbe - OP14-040", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op14eb04JinbeOp14040040);
-  });
-});

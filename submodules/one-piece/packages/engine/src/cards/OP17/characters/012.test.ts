@@ -1,46 +1,39 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-// Auto-verified: Blenheim (OP17-012) cost=2 power=1000 counter=1000
 describe("OP17-012 Blenheim", () => {
-  test("[On K.O.] resolves when this Character is K.O.'d", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-012", rested: true }], activeDon: 5 },
-      { character: ["OP16-003"], activeDon: 5 },
-    );
-    const cardId = engine.findCardInZone("south", "character", "OP17-012");
-
-    engine.endTurn("south");
-    engine.asNorth().attack("OP16-003", "OP17-012");
-
-    // Resolve any follow-up prompts generically.
-    for (let i = 0; i < 3; i++) {
-      const view = engine.getView("south");
-      const remaining = view.prompts;
-      if (remaining.length === 0) break;
-      const d = (view.decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (!intent) break;
-      const step = engine.pendingDecision(intent, "south").steps[0];
-      if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { selectedIds: [step.candidates[0]!.ref.id] },
-          "south",
-        );
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
-      cardId,
-    );
-  });
+  test.each(["EB01-005", "OP03-020", "skip"])(
+    "blocks, then optionally plays a cost-1 Whitebeard Pirates card: %s",
+    (selection) => {
+      const engine = OnePieceTestEngine.create(
+        { character: ["OP17-012"], hand: ["EB01-005", "OP03-020", "OP17-012", "OP13-013"] },
+        {},
+        { activeSeat: "north" },
+      );
+      const blenheim = engine.findCardInZone("south", "character", "OP17-012");
+      const doma = engine.findCardInZone("south", "hand", "EB01-005");
+      const striker = engine.findCardInZone("south", "hand", "OP03-020");
+      const life = engine.getView("south").players.south.lifeCount;
+      engine.declareAttack(engine.leader("north"), engine.leader("south"), "north");
+      engine.resolveDecision("battleBlocker", { selectedIds: [blenheim] }, "south");
+      engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+      const step = engine.pendingDecision("effectPlaySelection", "south").steps[0];
+      if (step?.kind !== "selectEntity") throw new Error("Expected Blenheim play choice");
+      expect(step.candidates.map((c) => c.ref.id)).toEqual([doma, striker]);
+      expect(step.min).toBe(0);
+      engine.resolveDecision(
+        "effectPlaySelection",
+        { selectedIds: selection === "skip" ? [] : [selection === "EB01-005" ? doma : striker] },
+        "south",
+      );
+      const south = engine.getView("south").players.south;
+      expect(south.lifeCount).toBe(life);
+      expect(south.trash.some((c) => c.instanceId === blenheim)).toBe(true);
+      if (selection === "EB01-005")
+        expect(south.characters.some((c) => c?.instanceId === doma)).toBe(true);
+      else if (selection === "OP03-020") expect(south.stage?.instanceId).toBe(striker);
+      else expect(south.handCount).toBe(4);
+      expect(engine.getView("south").prompts).toHaveLength(0);
+    },
+  );
 });

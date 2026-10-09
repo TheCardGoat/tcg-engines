@@ -64,4 +64,36 @@ describe("OP17-046 Gloriosa", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test.each(["south", "north"] as const)(
+    "bottoms the selected cost5 Character into its %s owner's deck",
+    (seat) => {
+      const e = OnePieceTestEngine.create(
+        { hand: ["OP17-046"], activeDon: 4, character: ["OP16-012"] },
+        { character: ["OP16-012", "OP16-003"] },
+      );
+      const id = e.findCardInZone(seat, "character", "OP16-012");
+      const excluded = e.findCardInZone("north", "character", "OP16-003");
+      e.playCard("OP17-046");
+      const choice = e.pendingDecision("effectTargetSelection", "south").steps[0];
+      if (choice?.kind !== "selectEntity") throw new Error("Expected target");
+      expect(choice.candidates.map((c) => c.ref.id)).toContain(id);
+      expect(choice.candidates.map((c) => c.ref.id)).not.toContain(excluded);
+      e.resolveDecision("effectTargetSelection", { selectedIds: [id] }, "south");
+      expect(e.getState().players[seat].deck.at(-1)).toBe(id);
+      expect(e.getView("south").players[seat].characters.map((c) => c?.instanceId)).not.toContain(
+        id,
+      );
+      expect(e.getView("south").prompts).toHaveLength(0);
+    },
+  );
+  test("Blocker redirects the attack away from the Leader", () => {
+    const e = OnePieceTestEngine.create({ character: ["OP17-046"] }, {}, { activeSeat: "north" });
+    const id = e.findCardInZone("south", "character", "OP17-046");
+    const life = e.getView("south").players.south.lifeCount;
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.resolveDecision("battleBlocker", { selectedIds: [id] }, "south");
+    expect(e.getView("south").players.south.lifeCount).toBe(life);
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(id);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

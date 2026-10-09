@@ -68,6 +68,7 @@ export const acheronExpressOfficer: GrandArchiveCard<GrandArchiveAbilityDefiniti
               collection: {
                 zones: ["field"],
                 player: "controller",
+                excludingSource: true,
                 filter: {
                   kind: "all",
                   filters: [

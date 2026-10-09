@@ -49,7 +49,7 @@ export const op09RedForce021: StageCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Red-Haired Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

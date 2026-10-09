@@ -6,6 +6,7 @@ export {
   populatePlayerBoard,
   chooseFirstPlayer,
   applyOpeningHand,
+  isOpeningHandPlaceholderIdentity,
   getOpponentId,
 } from "./state/initial-state.ts";
 export type { CreateMatchStateOptions } from "./state/initial-state.ts";
@@ -26,6 +27,7 @@ export {
   getEffectiveActivePlayerId,
   isOpeningHandDecisionWindow,
 } from "./state/index.ts";
+export type { PriorityView } from "./state/turn-info.ts";
 export {
   processCommand,
   validateCommand,
@@ -43,8 +45,15 @@ export {
   type ManualMoveId,
 } from "./moves/index.ts";
 export { getProjectedDirectAttackGigStealCount } from "./moves/index.ts";
+export { bothFixerAreasEmpty, turnsUntilOvertime } from "./moves/overtime.ts";
 export { callLegendEddieCost, CALL_LEGEND_COST } from "./moves/call-legend.ts";
-export { legendCanPayEddie } from "./moves/eddie-resources.ts";
+export {
+  abilityEddieCost,
+  availableEddies,
+  legendCanPayEddie,
+  reservedLegendIdsForAbilityCosts,
+  spendReadyLegendsForEddies,
+} from "./moves/eddie-resources.ts";
 export { goSoloCost } from "./moves/go-solo.ts";
 export {
   computeEffectiveCost,
@@ -66,7 +75,12 @@ export {
   resolveTarget,
   evaluateCondition,
   resolveNumericValue,
+  hasValidGigCopyPair,
+  isValidGigCopyPair,
+  validateGigCopyPair,
   type ResolutionContext,
+  type GigCopyPairInvalidReason,
+  type GigCopyPairValidation,
 } from "./effects/index.ts";
 export {
   resolveEffect,
@@ -77,6 +91,7 @@ export {
   filterMatchView,
   type FilteredMatchView,
   type FilteredCardView,
+  type FilteredEffectView,
   type FilteredPlayerView,
 } from "./view/filter.ts";
 export type {
@@ -209,6 +224,7 @@ export {
   type ResolveCardToMoveLog,
   type ResolveDiscardFromHandLog,
   type ResolveStealGigsLog,
+  type StolenGigLogEntry,
   type ConcedeLog,
   type ActivateAbilityLog,
   type SearchDeckLog,
@@ -219,7 +235,7 @@ export {
   type GameEndedLog,
   type GenericActionLog,
 } from "./logging/index.ts";
-export { formatActionLog, enMessages } from "./logging/index.ts";
+export { formatActionLog, formatStolenGigSummary, enMessages } from "./logging/index.ts";
 export {
   CYBERPUNK_ENGINE_RUNTIME,
   type CyberpunkEngineRuntimeFingerprint,
@@ -242,6 +258,9 @@ export {
   type StepResultIllegal,
   type TurnResult,
   buildDecisionContext,
+  createExpertOracleStrategy,
+  expertOracleStrategy,
+  type ExpertOracleOptions,
   defaultChoiceResolvers,
   scryResolver,
   chooseTargetResolver,
@@ -307,3 +326,5 @@ export {
   type AutoMatchLogEntry,
   assertNever,
 } from "./automation/index.ts";
+
+export { COMBAT_STATE_VERSION, restoreCombatState } from "./state/combat-state-version.ts";

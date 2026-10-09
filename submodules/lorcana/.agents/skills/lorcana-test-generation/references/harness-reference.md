@@ -105,6 +105,7 @@ Each player state accepts:
 | `inkwell` | `number \| CardEntry[]` | Number = amount of generic ink available       |
 | `discard` | `number \| CardEntry[]` | Cards in discard pile                          |
 | `lore`    | `number`                | Starting lore for the player                   |
+| `inkDrops`| `number`                | Pre-banked Hyperia City ink drops for the player |
 
 ### Card State in Fixtures
 
@@ -138,6 +139,25 @@ Available state properties:
 - If `deck` is omitted entirely, the harness injects 10 placeholder cards.
 - Use `deck: []` when the test must avoid hidden draws.
 - `inkwell: N` creates N generic ink (number shorthand).
+- `inkDrops: N` pre-banks N Hyperia City ink drops for that player before turn one.
+
+### Staging Ink Drops Mid-Test
+
+For states that must change after setup, use the `manualSetInkDrops` debug move
+via the server handle (mirrors `manualSetLore`; bypasses priority, works in any
+main-game phase):
+
+```ts
+testEngine.asServer().manualSetInkDrops(PLAYER_ONE, 3);
+
+// Reading the counter:
+const state = testEngine.asServer().getState();
+state.G.inkDrops[PLAYER_ONE]; // → number
+```
+
+Note: player ids differ between harnesses — `PLAYER_ONE` from
+`@tcg/lorcana-engine/testing` (`"player_one"`) for the multiplayer engine,
+`"player-one"` from `unit-harness` for `createTestContext`.
 
 ## Mock Card Creators
 

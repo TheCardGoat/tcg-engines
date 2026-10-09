@@ -32,7 +32,7 @@ export const eb04MonkeyDLuffy061: CharacterCard = {
   setId: "EB04",
   cost: 10,
   power: 12000,
-  traits: ["Straw Hat Crew The Four Emperors Egghead"],
+  traits: ["Egghead", "The Four Emperors", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "If you have 1 or less Life cards, give this card in your hand -1 cost.\n[On Play] You may trash 1 card from your hand: Your Leader gains +2000 power until the end of your opponent's next End Phase. Then, this Character gains [Blocker] until the end of your opponent's next End Phase.",

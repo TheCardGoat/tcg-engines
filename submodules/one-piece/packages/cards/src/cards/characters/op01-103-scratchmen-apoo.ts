@@ -23,7 +23,7 @@ export const op01ScratchmenApoo103: CharacterCard = {
   cost: 4,
   power: 6000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates On-Air Pirates"],
+  traits: ["Animal Kingdom Pirates", "On-Air Pirates"],
   attribute: "ranged",
   i18n: op01ScratchmenApoo103I18n,
 };

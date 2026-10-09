@@ -118,7 +118,7 @@ describe("OP05-049 through OP05-064 parser regressions", () => {
     });
   });
 
-  test("builds Killer's inclusive trait search with same-name exclusion", () => {
+  test("builds Killer's exact trait search with same-name exclusion", () => {
     expect(
       buildCardEffects(
         "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 [Kid Pirates] type card other than [Killer] and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
@@ -135,7 +135,7 @@ describe("OP05-049 through OP05-064 parser regressions", () => {
               revealCount: { amount: 1, upTo: true },
               revealFilters: [
                 { filter: "excludeName", value: "Killer" },
-                { filter: "trait", value: "Kid Pirates", match: "includes" },
+                { filter: "trait", value: "Kid Pirates", match: "exact" },
               ],
               revealDestination: "hand",
               remainderPosition: "bottom",

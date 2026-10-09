@@ -23,7 +23,7 @@ export const op03Minozebra068: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Impel Down Jailer Beast"],
+  traits: ["Impel Down", "Jailer Beast"],
   attribute: "strike",
   effect:
     "[Banish] (When this card deals damage, the target card is trashed without activating its Trigger.) [On K.O.] If your Leader has the [Impel Down] type, add up to 1 DON!! card from your DON!! deck and rest it.",
@@ -36,7 +36,7 @@ export const op03Minozebra068: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Impel Down",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

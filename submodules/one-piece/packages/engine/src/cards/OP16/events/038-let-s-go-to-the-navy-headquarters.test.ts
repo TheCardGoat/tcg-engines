@@ -3,6 +3,36 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP16-038 Let's Go to the Navy Headquarters", () => {
+  test.each([false, true])("Main needs five distinct Impel Down names: repeated=%s", (repeated) => {
+    const cards = [
+      "OP16-023",
+      "OP16-024",
+      "OP16-025",
+      "OP16-026",
+      repeated ? "OP16-023" : "OP16-027",
+    ];
+    const e = OnePieceTestEngine.create(
+      {
+        hand: ["OP16-038"],
+        activeDon: 7,
+        character: cards.map((cardId) => ({ cardId, rested: true })),
+      },
+      {},
+    );
+    e.declareAttack(e.leader("south"), e.leader("north"));
+    e.playCard("OP16-038");
+    e.acceptLeadingOptional("south");
+    expect(e.getView("south").players.south.leader?.rested).toBe(repeated);
+    expect(
+      e
+        .getView("south")
+        .players.south.characters.filter(Boolean)
+        .every((c) => c?.rested === repeated),
+    ).toBe(true);
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[Counter] saves the Leader with +3000 power", () => {
     const engine = OnePieceTestEngine.create(
       { hand: ["OP16-038"], activeDon: 5 },
@@ -35,5 +65,12 @@ describe("OP16-038 Let's Go to the Navy Headquarters", () => {
 
     expect(engine.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP16-038");
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("paid Event keeps its official name in the public trash", () => {
+    const e = OnePieceTestEngine.create({ hand: ["OP16-038"], activeDon: 1 });
+    e.playCard("OP16-038");
+    expect(e.getView("south").players.south.trash.find((c) => c.cardId === "OP16-038")?.name).toBe(
+      "Let's Go!! To the Navy Headquarters!!",
+    );
   });
 });

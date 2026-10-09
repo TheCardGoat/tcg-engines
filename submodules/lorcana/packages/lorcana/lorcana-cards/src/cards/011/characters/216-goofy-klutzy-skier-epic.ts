@@ -22,7 +22,7 @@ export const goofyKlutzySkierEpic: CharacterCard = {
   inkType: ["ruby"],
   set: "011",
   cardNumber: 216,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 1,

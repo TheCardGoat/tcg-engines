@@ -23,7 +23,7 @@ export const eb04TrafalgarLaw005: CharacterCard = {
   cost: 3,
   power: 5000,
   counter: 2000,
-  traits: ["Heart Pirates Supernovas The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Supernovas", "Heart Pirates"],
   attribute: "slash",
   effect:
     "This Character cannot attack unless your opponent has 2 or more Characters with a base power of 5000 or more.",

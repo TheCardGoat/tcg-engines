@@ -39,7 +39,7 @@ export const op05DonquixoteRosinante022: LeaderCard = {
   setId: "OP05",
   power: 5000,
   life: 4,
-  traits: ["Donquixote Pirates Navy"],
+  traits: ["Navy", "Donquixote Pirates"],
   attribute: "special",
 
   effect:

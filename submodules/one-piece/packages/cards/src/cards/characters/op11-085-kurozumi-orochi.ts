@@ -23,7 +23,7 @@ export const op11KurozumiOrochi085: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Land of Wano Kurozumi Clan"],
+  traits: ["Land of Wano", "Kurozumi Clan"],
   attribute: "wisdom",
   effect:
     '[On Play] Add up to 1 "SMILE" type card with a cost of 5 or less from your trash to your hand.',
@@ -45,7 +45,7 @@ export const op11KurozumiOrochi085: CharacterCard = {
                 {
                   filter: "trait",
                   value: "SMILE",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",

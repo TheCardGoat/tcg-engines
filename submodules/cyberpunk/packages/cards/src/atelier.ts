@@ -1,5 +1,15 @@
 import type { AltArtRarityCode, CardPrinting, CardRarity } from "@tcg/cyberpunk-types";
 import { getMergedCyberpunkCards, getMergedCyberpunkCardsById, setPriority } from "./merged.ts";
+import { getCyberpunkFreeArtIdsForCanonical, isCyberpunkAlternateArtId } from "./artwork.ts";
+
+export {
+  CYBERPUNK_LEGACY_ART_ID_TO_ART_ID,
+  CYBERPUNK_LEGACY_ART_ID_TO_CANONICAL_ID,
+  getCyberpunkArtIdForPrinting,
+  getCyberpunkFreeArtIdsForCanonical,
+  isCyberpunkAlternateArtId,
+  isCyberpunkAlternateArtPrinting,
+} from "./artwork.ts";
 
 /**
  * Atelier (alt-art acquisition/rental) data export for Cyberpunk.
@@ -9,11 +19,9 @@ import { getMergedCyberpunkCards, getMergedCyberpunkCardsById, setPriority } fro
  * priced, and which printing is the free default. This module bridges the
  * Cyberpunk card pool into that view without leaking engine concerns.
  *
- * Calibration target (shared with Lorcana): the rarest printing in each game
- * prices at 120 marks permanent (`enchanted`). Cyberpunk satisfies this via
- * the alt-art-set bump (see {@link CYBERPUNK_ALT_ART_SET_CODES}) — every
- * printing in a flagged set is treated as top-tier (`enchanted`) alternate
- * art. Lorcana satisfies it natively via `specialRarity`.
+ * Every alternate appearance has one stable top-tier price, independent of
+ * which equivalent physical printing a player selects. Simple appearances are
+ * free, including duplicate printings from different product categories.
  *
  * Cyberpunk's art model is "cosmetic": art selections change only the displayed
  * image, never the engine `cardId`. The platform adapter enforces that — this
@@ -48,46 +56,6 @@ export const CYBERPUNK_RARITY_TO_CODE: Readonly<Record<CardRarity, CyberpunkRari
 };
 
 /**
- * Ordinal rank of each Cyberpunk rarity, lowest first. Used by
- * {@link defaultCyberpunkPrintingId} to pick the cheapest (lowest-rarity)
- * printing as the free default. Only the four rarities that actually appear in
- * Cyberpunk data are ranked.
- */
-export const CYBERPUNK_RARITY_RANK: Readonly<Record<CyberpunkRarityCode, number>> = {
-  common: 0,
-  uncommon: 1,
-  rare: 2,
-  epic: 3,
-};
-
-/**
- * Sets whose printings are ALL treated as top-tier (`enchanted`) alternate art.
- * Per the locked calibration: `promo`, `boxtoppersretail`, and `boxtoppersbeta`
- * printings are the rarest Cyberpunk art and are priced at 120 marks permanent
- * to match Lorcana's `enchanted`. `nightcitybrawls1` and `nightcityshowdowns1`
- * are the organized-play full-art Iconic Frame foil promos — the same product
- * class as box toppers — so they join the bump. Exported so the bump can be
- * tuned in one place.
- */
-export const CYBERPUNK_ALT_ART_SET_CODES: ReadonlySet<string> = new Set([
-  "PRM01",
-  "promo",
-  "boxtoppersretail",
-  "boxtoppersbeta",
-  "nightcitybrawls1",
-  "nightcityshowdowns1",
-]);
-
-/**
- * Minimal shape required to decide whether a printing lives in an alt-art set.
- * Accepts a raw {@link CardPrinting} (which carries `setCode`) or any adapter
- * projection of it.
- */
-export interface CyberpunkPrintingSetRef {
-  setCode: string;
-}
-
-/**
  * CDN base for Cyberpunk card images. Matches the catalog transform in
  * `platform/apps/general-api/src/modules/cyberpunk/service.ts` exactly so the
  * atelier / acquire modal surfaces the SAME image the deckbuilder shows.
@@ -117,19 +85,6 @@ function normalizeCollectorNumberForImagePath(collectorNumber: string): string {
  */
 export function getCyberpunkPrintingImageUrl(setCode: string, collectorNumber: string): string {
   return `${CYBERPUNK_CARD_IMAGE_BASE}/${setCode}/${normalizeCollectorNumberForImagePath(collectorNumber)}.webp`;
-}
-
-/**
- * True if the printing belongs to a Cyberpunk alt-art set
- * (see {@link CYBERPUNK_ALT_ART_SET_CODES}). Such printings are priced at the
- * top tier and require ownership to select in the deckbuilder.
- *
- * Note: the platform adapter additionally honors a `specialRarity`-based bump
- * for cross-game parity. Cyberpunk printings have no `specialRarity`, so this
- * set-membership check is the sole source of alt-art-ness here.
- */
-export function isCyberpunkAlternateArtPrinting(printing: CyberpunkPrintingSetRef): boolean {
-  return CYBERPUNK_ALT_ART_SET_CODES.has(printing.setCode);
 }
 
 /**
@@ -246,36 +201,16 @@ export function getCyberpunkPrintingInfo(printingId: string): CyberpunkPrintingI
 }
 
 /**
- * The free default printing for a canonical card: the lowest-rarity printing
- * that is NOT in an alt-art set (alt-art printings require ownership). Ties on
- * rarity are broken by LOWEST {@link setPriority} first (so the earliest-set
- * printing wins), then by ascending `collectorNumber` — per the locked Phase-1
- * design. The "lowest sortNumber" rule keeps the default stable even when a
- * card is reprinted in a higher-priority retail set later.
- *
- * If every printing is alt-art (rare — e.g. a promo-only card), the
- * lowest-rarity printing is returned anyway so the caller never gets `null`
- * for a valid canonical. Returns `null` only for an unknown canonical id or a
- * card with no printings.
+ * One printing for the explicitly free art identity of a canonical. The art
+ * identity is selected in the reviewed catalog manifest, so set/rareness
+ * heuristics cannot select a promotional treatment as the default. Returns
+ * null only for an unknown canonical id or a catalog integrity failure.
  */
 export function defaultCyberpunkPrintingId(canonicalId: string): string | null {
   const printings = getCyberpunkPrintingInfosForCanonical(canonicalId);
   if (printings.length === 0) return null;
-
-  const nonAltArt = printings.filter((p) => !isCyberpunkAlternateArtPrinting({ setCode: p.set }));
-  const candidates = nonAltArt.length > 0 ? nonAltArt : printings;
-
-  const sorted = candidates.toSorted((a, b) => {
-    const rarityDiff =
-      CYBERPUNK_RARITY_RANK[cyberpunkRarityCode(a)] - CYBERPUNK_RARITY_RANK[cyberpunkRarityCode(b)];
-    if (rarityDiff !== 0) return rarityDiff;
-    // Lowest sortNumber wins (earliest-defined set), then ascending collector
-    // number — see the JSDoc above for the rationale.
-    const sortDiff = setPriority(a.set) - setPriority(b.set);
-    if (sortDiff !== 0) return sortDiff;
-    return a.cardNumber.localeCompare(b.cardNumber);
-  });
-  return sorted[0]?.printingId ?? null;
+  const [freeArtId] = getCyberpunkFreeArtIdsForCanonical(canonicalId);
+  return printings.find((printing) => printing.artId === freeArtId)?.printingId ?? null;
 }
 
 /**
@@ -296,12 +231,9 @@ export function isCyberpunkPrintingOfCanonical(printingId: string, canonicalId: 
  * Atelier pricing code for a Cyberpunk printing — this is what the platform
  * atelier uses to price a printing in Marks.
  *
- * Composes {@link cyberpunkRarityCode} with the alt-art-set bump: a printing
- * whose set is in {@link CYBERPUNK_ALT_ART_SET_CODES} (`promo`,
- * `boxtoppersretail`, or `boxtoppersbeta`) is priced at `"enchanted"` (the top
- * tier = 120 Marks permanent), matching Lorcana's rarest alternate-art
- * printings so the cross-game calibration target holds. Every other printing is
- * priced at its raw normalized rarity.
+ * Pricing is appearance-level: equivalent printings always resolve to the same
+ * tier. Standard appearances have no Atelier price; every distinct alternate
+ * appearance uses the top tier (`enchanted`).
  *
  * Returns `"common"` for an unknown printing id (the safest default — never
  * grants ownership of a top-tier printing by accident).
@@ -309,10 +241,7 @@ export function isCyberpunkPrintingOfCanonical(printingId: string, canonicalId: 
 export function cyberpunkPrintingEffectiveRarityCode(printingId: string): AltArtRarityCode {
   const info = getCyberpunkPrintingInfo(printingId);
   if (!info) return "common";
-  if (isCyberpunkAlternateArtPrinting({ setCode: info.set })) {
-    return "enchanted";
-  }
-  return cyberpunkRarityCode(info);
+  return isCyberpunkAlternateArtId(info.artId) ? "enchanted" : "common";
 }
 
 /**

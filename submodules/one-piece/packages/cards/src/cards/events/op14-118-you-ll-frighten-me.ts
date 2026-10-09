@@ -5,7 +5,7 @@ export const op14eb04YouLlFrightenMe118: EventCard = {
   id: "OP14-118",
   canonicalId: "OP14-118",
   slug: "you-ll-frighten-me",
-  name: "You'll Frighten Me...",
+  name: "You'll Frighten Me... ♡",
   printings: [
     {
       id: "OP14-118",
@@ -22,7 +22,7 @@ export const op14eb04YouLlFrightenMe118: EventCard = {
       collectorNumber: "118",
       rarity: "R",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP14-118_p1_h4F7bDJ.jpg",
-      label: "You'll Frighten Me... (Alternate Art)",
+      label: "You'll Frighten Me... ♡ (Alternate Art)",
     },
   ],
   cardType: "event",
@@ -31,7 +31,7 @@ export const op14eb04YouLlFrightenMe118: EventCard = {
   setId: "OP14",
   cost: 1,
   trigger: "Play up to 1 Character card with 6000 power or less and a [Trigger] from your hand.",
-  traits: ["Kuja Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Kuja Pirates"],
   effect:
     "[Counter] If you have 2 or less Life cards, up to 1 of your opponent's active Characters cannot attack during this turn.",
   effects: {

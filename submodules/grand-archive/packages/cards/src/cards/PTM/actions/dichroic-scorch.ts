@@ -63,45 +63,20 @@ export const dichroicScorch: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
           id: "TlhsnnRhGK-a2",
           kind: "card-resolution",
           text: "Remove all sheen counters from all units on the field. Then deal X damage to each unit except for your champion, where X is the amount of counters removed this way.",
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              unique: true,
-              candidates: {
-                kind: "object",
-                zones: ["field"],
-                filter: {
-                  kind: "type",
-                  oneOf: ["ALLY", "CHAMPION"],
-                },
-              },
-            },
-          ],
-          variables: [
-            {
-              symbol: "X",
-              kind: "derived",
-              amount: {
-                kind: "modified-ability-result-amount",
-                metric: "counters-removed",
-              },
-            },
-          ],
           effect: {
             kind: "sequence",
             effects: [
               {
                 kind: "remove-counter",
                 subject: {
-                  kind: "bound",
-                  binding: "target-1",
+                  kind: "each",
+                  collection: {
+                    zones: ["field"],
+                    filter: {
+                      kind: "type",
+                      oneOf: ["ALLY", "CHAMPION"],
+                    },
+                  },
                 },
                 counter: {
                   named: "sheen",
@@ -109,7 +84,7 @@ export const dichroicScorch: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                 amount: {
                   kind: "all",
                 },
-                bindResultAs: "removed-counters",
+                bindResultAs: "removed-sheen",
               },
               {
                 kind: "deal-damage",
@@ -139,8 +114,8 @@ export const dichroicScorch: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                   },
                 },
                 amount: {
-                  kind: "variable",
-                  symbol: "X",
+                  kind: "binding",
+                  binding: "removed-sheen",
                 },
               },
             ],

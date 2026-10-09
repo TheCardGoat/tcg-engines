@@ -60,6 +60,12 @@ describe("OP17-039 Rocks.D.Xebec", () => {
     expect(view.hand).toHaveLength(1);
     expect(view.deckCount).toBe(3);
     expect(engine.getView("south").prompts).toHaveLength(0);
+    engine.endTurn("south");
+    engine.endTurn("north");
+    expect(engine.getView("south").players.south.hand.map((card) => card.cardId)).toContain(
+      eb01Doma005.id,
+    );
+    expect(engine.getView("south").players.south.deckCount).toBe(2);
   });
 
   test("declining leaves hand and deck untouched", () => {

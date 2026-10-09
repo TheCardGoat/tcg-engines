@@ -19,6 +19,7 @@ export function proveAllyCombatStats({
   hand = 0,
   memory = 0,
   graveyard = [],
+  attackReserveCost = 0,
 }: {
   card: Card;
   power: number;
@@ -29,6 +30,7 @@ export function proveAllyCombatStats({
   hand?: number;
   memory?: number;
   graveyard?: readonly Card[];
+  attackReserveCost?: number;
 }): void {
   it(`deals ${power} and survives until ${life} damage (class=${classBonus}, level=${level}, allies=${allies.length}, hand=${hand}, memory=${memory}, graveyard=${graveyard.length})`, () => {
     const champion = grantTestChampionLevel(
@@ -40,7 +42,7 @@ export function proveAllyCombatStats({
         champion,
         zones: {
           field: [card, ...allies],
-          hand: Array.from({ length: hand }, () => woodlandSquirrels),
+          hand: Array.from({ length: hand + attackReserveCost }, () => woodlandSquirrels),
           memory: Array.from({ length: memory }, () => woodlandSquirrels),
           graveyard,
           "main-deck": [woodlandSquirrels],
@@ -57,7 +59,12 @@ export function proveAllyCombatStats({
     const p = game.player("player-one"),
       q = game.player("player-two"),
       ally = p.card(card);
-    p.declareAttack(ally, q.card(champion));
+    p.declareAttack(ally, q.card(champion), {
+      reservePayment: p
+        .cards(woodlandSquirrels, { zone: "hand" })
+        .slice(0, attackReserveCost)
+        .map((ref) => ({ kind: "card", cardId: ref.objectId })),
+    });
     game.resolveCombatWithoutRetaliation();
     expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(power);
     advanceToMain(game, q.id);

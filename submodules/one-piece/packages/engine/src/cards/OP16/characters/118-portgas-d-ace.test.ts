@@ -3,32 +3,40 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP16-118 Portgas.D.Ace", () => {
-  test("the counter of 8000-power Characters in hand becomes +2000", () => {
+  test.each([0, 1, 2])(
+    "%i Ace copies on field set printed +2000 to +2000 without stacking",
+    (copies) => {
+      const engine = OnePieceTestEngine.create(
+        { character: Array.from({ length: copies }, () => "OP16-118"), hand: ["OP16-004"] },
+        { character: ["OP16-065"] },
+        { activeSeat: "north" },
+      );
+      const before = engine.getView("south").players.south.lifeCount;
+      engine.asNorth().attack("OP16-065", engine.asSouth().leader());
+      engine.asSouth().chooseCounter("OP16-004");
+      expect(engine.getView("south").players.south.lifeCount).toBe(before - 1);
+    },
+  );
+
+  test.each([true, false])("Ace's Counter aura applies only from the field: %s", (onField) => {
     const engine = OnePieceTestEngine.create(
-      { hand: ["OP16-118", "OP16-004"], activeDon: 5 },
-      { character: ["OP16-065"], activeDon: 5 },
+      {
+        character: onField ? ["OP16-118"] : [],
+        hand: onField ? ["OP16-014"] : ["OP16-118", "OP16-014"],
+      },
+      {},
+      { activeSeat: "north" },
     );
-    const lifeBefore = engine.getView("south").players.south.lifeCount;
-
-    // Sakazuki (8000) attacks the Leader (5000). With the boosted counter
-    // 5000 + 2000 (Curiel) + 2000 (Ace's boost) = 9000 >= 8000: saved.
-    engine.endTurn("south");
-    engine.asNorth().attack("OP16-065", engine.asSouth().leader());
-    engine.asSouth().chooseCounter("OP16-004");
-    expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore);
-  });
-
-  test("without Ace in hand the same counter no longer saves the Leader", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP16-004"], activeDon: 5 },
-      { character: ["OP16-065"], activeDon: 5 },
-    );
-    const lifeBefore = engine.getView("south").players.south.lifeCount;
-
-    engine.endTurn("south");
-    engine.asNorth().attack("OP16-065", engine.asSouth().leader());
-    engine.asSouth().chooseCounter("OP16-004");
-    expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore - 1);
+    const target = engine.findCardInZone("south", "hand", "OP16-014");
+    engine.asNorth().attack(engine.asNorth().leader(), engine.asSouth().leader());
+    const step = engine.pendingDecision("battleCounter", "south").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected Counter choice");
+    expect(step.candidates.find((c) => c.ref.id === target)?.legal).toBe(onField);
+    if (onField) {
+      const before = engine.getView("south").players.south.lifeCount;
+      engine.asSouth().chooseCounter("OP16-014");
+      expect(engine.getView("south").players.south.lifeCount).toBe(before);
+    }
   });
 
   test("[On Play] looks at 5, may take a Whitebeard Pirates card, and orders the rest", () => {
@@ -59,5 +67,26 @@ describe("OP16-118 Portgas.D.Ace", () => {
     const south = engine.getView("south").players.south;
     expect(south.hand.map((card) => card.cardId)).toContain("OP16-003");
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("FAQ: an 8000-power printed 1000 Counter becomes 2000, and two Aces do not make 4000", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP16-118", "OP16-118"], hand: ["OP16-005"] },
+      { activeDon: 1 },
+      { activeSeat: "north" },
+    );
+    e.attachDon(e.leader("north"), 1, "north");
+    const life = e.getView("south").players.south.lifeCount;
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.asSouth().chooseCounter("OP16-005");
+    expect(e.getView("south").players.south.lifeCount).toBe(life);
+    const stronger = OnePieceTestEngine.create(
+      { character: ["OP16-118", "OP16-118"], hand: ["OP16-005"] },
+      { character: ["OP16-065"] },
+      { activeSeat: "north" },
+    );
+    const before = stronger.getView("south").players.south.lifeCount;
+    stronger.asNorth().attack("OP16-065", stronger.leader("south"));
+    stronger.asSouth().chooseCounter("OP16-005");
+    expect(stronger.getView("south").players.south.lifeCount).toBe(before - 1);
   });
 });

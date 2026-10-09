@@ -31,7 +31,7 @@ export const eb01KouzukiHiyori013: CharacterCard = {
   cost: 4,
   power: 0,
   counter: 1000,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "wisdom",
   effect:
     "[Activate:Main] You may trash this Character: Play up to 1 [Land of Wano] type Character card with a cost of 5 or less other than [Kouzuki Hiyori] from your hand. Then, draw 1 card.",
@@ -68,7 +68,7 @@ export const eb01KouzukiHiyori013: CharacterCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

@@ -1,3 +1,4 @@
+import { PostGameRatingSchema, type PostGameRating } from "@tcg/game-page-contract";
 import type { GameSlug } from "@tcg/simulator-contract";
 import { primeAuthSession } from "../../auth/auth-store";
 import { CYBERPUNK_GAME_SLUG } from "../../engine/live/apiOrigin";
@@ -9,6 +10,7 @@ export interface CyberpunkPostGameRecord {
   matchId: string | null;
   note: string;
   canSaveNote: boolean;
+  rating?: PostGameRating;
   analytics?: CyberpunkAnalyticsEnvelope;
 }
 
@@ -38,7 +40,8 @@ export interface CyberpunkGameAnalyticsRecord {
     durationMs: number;
     createdAt: string;
     completedAt: string;
-    onThePlay: string;
+    onThePlay: string | null;
+    overtimeActive: boolean;
     finalGigs: { player1: number; player2: number };
     finalStreetCred: { player1: number; player2: number };
     finalEddies: { player1: number; player2: number };
@@ -52,7 +55,10 @@ export interface CyberpunkPlayerAnalytics {
   displayName: string | null;
   username: string | null;
   seat: 1 | 2;
-  onThePlay: boolean;
+  onThePlay: boolean | null;
+  defeatsRecorded?: boolean;
+  mmrAtMatch?: number;
+  bracket?: string;
   deckListId?: string;
   deckColors: string[];
   deckCardIds: string[];
@@ -95,7 +101,8 @@ export interface CyberpunkPlayerAnalytics {
   metrics: {
     avgCardsPlayedPerTurn: number;
     avgGigsGainedPerTurn: number;
-    avgTurnDurationMs: number;
+    /** Legacy action span, present in older saved records only. */
+    avgTurnDurationMs?: number;
     firstPlayTurn: number | null;
     firstGigTurn: number | null;
     firstDirectAttackTurn: number | null;
@@ -103,6 +110,7 @@ export interface CyberpunkPlayerAnalytics {
     firstLegendCallTurn: number | null;
     /** Derived highlights; older saved records predate them. */
     biggestSteal?: number;
+    biggestStealCardName?: string;
     stealEvents?: number;
     eddiesFloating?: number;
     lowestDeckCount?: number;
@@ -152,8 +160,11 @@ export interface CyberpunkPlayerAnalytics {
     fieldCount?: number;
     readyUnitCount?: number;
     spentUnitCount?: number;
-    durationMs: number;
+    /** Legacy action span, present in older saved records only. */
+    durationMs?: number;
   }>;
+  /** Present on matches saved with priority timing. Turn 0 is setup. */
+  priorityTimeByTurn?: Array<{ turn: number; thinkingTimeMs: number }>;
 }
 
 export async function fetchCyberpunkPostGameRecord(
@@ -278,6 +289,7 @@ function parsePostGameRecord(value: unknown): CyberpunkPostGameRecord {
     note: typeof value.note === "string" ? value.note : "",
     canSaveNote: value.canSaveNote === true,
     analytics: parseAnalyticsEnvelope(value.analytics),
+    rating: parsePostGameRating(value.rating),
   };
 }
 
@@ -310,4 +322,10 @@ function parseCyberpunkAnalytics(value: unknown): CyberpunkGameAnalyticsRecord |
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function parsePostGameRating(value: unknown): PostGameRating | undefined {
+  if (value === undefined) return undefined;
+  const parsed = PostGameRatingSchema.safeParse(value);
+  return parsed.success ? parsed.data : { status: "unavailable" };
 }

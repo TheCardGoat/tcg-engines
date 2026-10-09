@@ -1,7 +1,7 @@
 import type { GigDieId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { ChooseTargetPendingChoice } from "../types/match-state.ts";
-import { DIE_MAX_VALUES } from "../types/gig-die.ts";
+import { DIE_MAX_VALUES } from "@tcg/cyberpunk-types";
 import {
   continueTriggerResolution,
   enqueueEventTriggers,
@@ -105,10 +105,10 @@ export const resolveAdjustGigMove: MoveDefinition<ResolveAdjustGigInput> = {
     const delta = value - die.faceValue;
     const adjustment =
       typed.payload.type === "effectTarget" ? typed.payload.adjustGig : typed.payload;
-    if (delta === 0) {
+    if (delta === 0 && adjustment?.chooseUpTo !== true) {
       return {
         valid: false,
-        error: "Use noAdjustment instead of setting a Gig to its current value",
+        error: "An exact Gig adjustment must change its value",
         errorCode: "SAME_VALUE",
       };
     }
@@ -182,7 +182,16 @@ export const resolveAdjustGigMove: MoveDefinition<ResolveAdjustGigInput> = {
       }
     }
     const eventsBefore = operations.event.getEmittedEvents().length;
-    operations.gig.setGigValue(dieId, input.args.value);
+    // An up-to effect can choose zero (CR 2.8). Resolving that request must
+    // not emit a value-change event or trigger an adjustment payoff (CR 6.4.5).
+    if (previousValue !== input.args.value) {
+      operations.gig.setGigValue(
+        dieId,
+        input.args.value,
+        choice.payload.sourcePlayerId ?? playerId,
+        playerId,
+      );
+    }
     if (state.G.turnMetadata.currentTrigger && previousValue !== undefined) {
       state.G.turnMetadata.currentTrigger.lastGigAdjustment = {
         dieId,

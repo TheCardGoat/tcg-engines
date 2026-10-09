@@ -23,7 +23,7 @@ export const op12TrafalgarLaw106: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Heart Pirates Supernovas Dressrosa"],
+  traits: ["Dressrosa", "Supernovas", "Heart Pirates"],
   attribute: "slash",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

@@ -106,7 +106,7 @@ export const convergeReflections: GrandArchiveCard<GrandArchiveAbilityDefinition
                               property: "memory-cost",
                               basis: "base",
                             },
-                            operator: "lte",
+                            operator: "eq",
                             right: 0,
                           },
                         },

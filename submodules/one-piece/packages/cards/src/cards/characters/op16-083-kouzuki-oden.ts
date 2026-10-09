@@ -23,7 +23,7 @@ export const op16KouzukiOden083: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "slash",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] You may trash 1 Character card with a cost of 8 or more from your hand: Draw 2 cards.",

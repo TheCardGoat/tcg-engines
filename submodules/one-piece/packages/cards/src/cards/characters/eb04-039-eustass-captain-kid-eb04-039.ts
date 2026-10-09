@@ -32,7 +32,7 @@ export const op14eb04EustassCaptainKidEb04039039: CharacterCard = {
   setId: "EB04",
   cost: 7,
   power: 8000,
-  traits: ["Kid Pirates Supernovas"],
+  traits: ["Supernovas", "Kid Pirates"],
   attribute: "special",
   effect:
     "[On Play] Add up to 1 DON!! card from your DON!! deck and set it as active.\n[Activate: Main] You may trash this Character: Play up to 1 {Kid Pirates} type Character card with a cost of 5 or less from your hand.",
@@ -78,7 +78,7 @@ export const op14eb04EustassCaptainKidEb04039039: CharacterCard = {
               {
                 filter: "trait",
                 value: "Kid Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

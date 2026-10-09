@@ -2,6 +2,7 @@ import { describe, expect, test } from "vite-plus/test";
 import {
   eb01Doma005,
   eb01Sanji014,
+  op04Sanji104,
   eb02Jinbe055,
   eb02MonkeyDLuffy061,
   eb02MyskinaOlga053,
@@ -11,81 +12,93 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("EB02-059 Without Your Help I Can't Become the King of the Pirates!!!!", () => {
-  test("maps the Counter recipient and the low-Life yellow Straw Hat Crew-or-Sanji play union", () => {
-    const engine = OnePieceTestEngine.create(
-      {
-        character: [{ card: eb01Doma005, playedOnTurn: 0 }],
-      },
-      {
-        hand: [
-          eb02WithoutYourHelpICanTBecomeTheKingOfThePirates059,
-          eb02Jinbe055,
-          eb01Sanji014,
-          eb02MyskinaOlga053,
-          eb02MonkeyDLuffy061,
-        ],
-        activeDon: 4,
-        life: 1,
-      },
-    );
-    const attackerId = engine.findCardInZone("south", "character", eb01Doma005);
-    const eventId = engine.findCardInZone(
-      "north",
-      "hand",
-      eb02WithoutYourHelpICanTBecomeTheKingOfThePirates059,
-    );
-    const yellowStrawHatId = engine.findCardInZone("north", "hand", eb02Jinbe055);
-    const offColorSanjiId = engine.findCardInZone("north", "hand", eb01Sanji014);
-    const unrelatedYellowId = engine.findCardInZone("north", "hand", eb02MyskinaOlga053);
-    const tooExpensiveStrawHatId = engine.findCardInZone("north", "hand", eb02MonkeyDLuffy061);
+  test.each(["strawHat", "sanji"] as const)(
+    "plays the yellow %s branch and excludes non-yellow Sanji (FAQ Q881)",
+    (branch) => {
+      const engine = OnePieceTestEngine.create(
+        {
+          character: [{ card: eb01Doma005, playedOnTurn: 0 }],
+        },
+        {
+          hand: [
+            eb02WithoutYourHelpICanTBecomeTheKingOfThePirates059,
+            eb02Jinbe055,
+            eb01Sanji014,
+            op04Sanji104,
+            eb02MyskinaOlga053,
+            eb02MonkeyDLuffy061,
+          ],
+          activeDon: 4,
+          life: 1,
+        },
+      );
+      const attackerId = engine.findCardInZone("south", "character", eb01Doma005);
+      const eventId = engine.findCardInZone(
+        "north",
+        "hand",
+        eb02WithoutYourHelpICanTBecomeTheKingOfThePirates059,
+      );
+      const yellowStrawHatId = engine.findCardInZone("north", "hand", eb02Jinbe055);
+      const yellowSanjiId = engine.findCardInZone("north", "hand", op04Sanji104);
+      const selectedId = branch === "strawHat" ? yellowStrawHatId : yellowSanjiId;
+      const offColorSanjiId = engine.findCardInZone("north", "hand", eb01Sanji014);
+      const unrelatedYellowId = engine.findCardInZone("north", "hand", eb02MyskinaOlga053);
+      const tooExpensiveStrawHatId = engine.findCardInZone("north", "hand", eb02MonkeyDLuffy061);
 
-    engine.endTurn("south");
-    engine.endTurn("north");
-    const beforeCounter = engine.getView("north").players.north;
-    engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+      engine.endTurn("south");
+      engine.endTurn("north");
+      const beforeCounter = engine.getView("north").players.north;
+      engine.declareAttack(attackerId, engine.leader("north"), "south");
+      engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
 
-    const powerDecision = engine.pendingDecision("effectTargetSelection", "north");
-    expect(powerDecision).toMatchObject({ actorId: "north", kind: "selectTargets" });
-    engine.resolveDecision(
-      "effectTargetSelection",
-      { selectedIds: [engine.leader("north")] },
-      "north",
-    );
+      const powerDecision = engine.pendingDecision("effectTargetSelection", "north");
+      expect(powerDecision).toMatchObject({ actorId: "north", kind: "selectTargets" });
+      engine.resolveDecision(
+        "effectTargetSelection",
+        { selectedIds: [engine.leader("north")] },
+        "north",
+      );
 
-    const playDecision = engine.pendingDecision("effectPlaySelection", "north");
-    const playStep = playDecision.steps[0];
-    expect(playStep?.kind).toBe("selectEntity");
-    if (playStep?.kind !== "selectEntity") {
-      throw new Error("Expected the defender to receive the low-Life Character play choice.");
-    }
-    expect(playStep).toMatchObject({ min: 0, max: 1 });
-    expect(playStep.candidates.map((candidate) => candidate.ref.id)).toEqual([
-      yellowStrawHatId,
-      offColorSanjiId,
-    ]);
-    expect(playStep.candidates.map((candidate) => candidate.ref.id)).not.toContain(
-      unrelatedYellowId,
-    );
-    expect(playStep.candidates.map((candidate) => candidate.ref.id)).not.toContain(
-      tooExpensiveStrawHatId,
-    );
-    engine.resolveDecision("effectPlaySelection", { selectedIds: [yellowStrawHatId] }, "north");
+      const playDecision = engine.pendingDecision("effectPlaySelection", "north");
+      const playStep = playDecision.steps[0];
+      expect(playStep?.kind).toBe("selectEntity");
+      if (playStep?.kind !== "selectEntity") {
+        throw new Error("Expected the defender to receive the low-Life Character play choice.");
+      }
+      expect(playStep).toMatchObject({ min: 0, max: 1 });
+      expect(playStep.candidates.map((candidate) => candidate.ref.id)).toEqual([
+        yellowStrawHatId,
+        yellowSanjiId,
+      ]);
+      expect(playStep.candidates.map((candidate) => candidate.ref.id)).not.toContain(
+        offColorSanjiId,
+      );
+      expect(playStep.candidates.map((candidate) => candidate.ref.id)).not.toContain(
+        unrelatedYellowId,
+      );
+      expect(playStep.candidates.map((candidate) => candidate.ref.id)).not.toContain(
+        tooExpensiveStrawHatId,
+      );
+      engine.resolveDecision("effectPlaySelection", { selectedIds: [selectedId] }, "north");
+      engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
-    const view = engine.getView("north");
-    expect(
-      view.players.north.characters.some((card) => card?.instanceId === yellowStrawHatId),
-    ).toBe(true);
-    expect(view.players.north.hand.some((card) => card.instanceId === offColorSanjiId)).toBe(true);
-    expect(view.players.north.lifeCount).toBe(1);
-    expect(view.players.north).toMatchObject({
-      activeDon: beforeCounter.activeDon - 4,
-      restedDon: beforeCounter.restedDon + 4,
-    });
-    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(eventId);
-    expect(view.prompts).toHaveLength(0);
-    expect(engine.getState().capabilityHistory).toHaveLength(0);
-  });
+      const view = engine.getView("north");
+      expect(view.players.north.characters.some((card) => card?.instanceId === selectedId)).toBe(
+        true,
+      );
+      expect(view.players.north.hand.some((card) => card.instanceId === offColorSanjiId)).toBe(
+        true,
+      );
+      expect(view.players.north.lifeCount).toBe(1);
+      expect(view.players.north).toMatchObject({
+        activeDon: beforeCounter.activeDon - 4,
+        restedDon: beforeCounter.restedDon + 4,
+      });
+      expect(view.players.north.trash.map((card) => card.instanceId)).toContain(eventId);
+      expect(view.prompts).toHaveLength(0);
+      expect(engine.getState().capabilityHistory).toHaveLength(0);
+    },
+  );
 
   test("still grants the Counter power but skips the play clause above 1 Life", () => {
     const engine = OnePieceTestEngine.create(
@@ -115,11 +128,32 @@ describe("EB02-059 Without Your Help I Can't Become the King of the Pirates!!!!"
       { selectedIds: [engine.leader("north")] },
       "north",
     );
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.hand.some((card) => card.instanceId === playId)).toBe(true);
     expect(view.players.north.lifeCount).toBe(2);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+  test("actual Counter power saves against 5000 then expires before the next attack", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["EB01-025", "EB01-025"] },
+      { hand: ["EB02-059", "EB01-005"], activeDon: 4, life: 2 },
+    );
+    const attackers = e
+      .getView("south")
+      .players.south.characters.flatMap((c) => (c ? [c.instanceId] : []));
+    e.declareAttack(attackers[0]!, e.leader("north"), "south");
+    e.asNorth().chooseCounter("EB02-059");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [e.leader("north")] }, "north");
+    expect(e.getView("north").players.north.leader.power).toBe(6000);
+    e.asNorth().chooseCounter();
+    expect(e.getView("north").players.north.lifeCount).toBe(2);
+    expect(e.getView("north").players.north.leader.power).toBe(5000);
+    e.declareAttack(attackers[1]!, e.leader("north"), "south");
+    e.asNorth().chooseCounter();
+    expect(e.getView("north").players.north.lifeCount).toBe(1);
+    expect(e.getView("north").prompts).toHaveLength(0);
   });
 });

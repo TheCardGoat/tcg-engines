@@ -23,7 +23,7 @@ export const op07VinsmokeReiju062: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["The Vinsmoke Family Kingdom of GERMA"],
+  traits: ["Kingdom of GERMA", "The Vinsmoke Family"],
   attribute: "strike",
   effect:
     "[On Play] If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, return up to 1 of your [The Vinsmoke Family] type Characters with a cost of 1 to the owner's hand.",
@@ -51,7 +51,7 @@ export const op07VinsmokeReiju062: CharacterCard = {
                 {
                   filter: "trait",
                   value: "The Vinsmoke Family",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",

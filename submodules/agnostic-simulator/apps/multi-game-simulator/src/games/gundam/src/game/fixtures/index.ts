@@ -55,6 +55,8 @@ export const FIXTURES = {
   "mulligan-animation-demo": () =>
     import("./mulligan-animation-demo.ts").then((m) => m.loadMulliganAnimationDemo),
   "main-phase-demo": () => import("./main-phase-demo.ts").then((m) => m.loadMainPhaseDemo),
+  "red-gundam-shuji-link-demo": () =>
+    import("./red-gundam-shuji-link-demo.ts").then((m) => m.loadRedGundamShujiLinkDemo),
   "st10-development-lab": () =>
     import("./st10-development-lab.ts").then((m) => m.loadSt10DevelopmentLab),
   "st10-pair-link-lab": () => import("./st10-pair-link-lab.ts").then((m) => m.loadSt10PairLinkLab),
@@ -135,6 +137,8 @@ export const FIXTURES = {
     import("./prompt-interaction-demo.ts").then((m) => m.loadOptionalPromptDemo),
   "deck-look-prompt-demo": () =>
     import("./prompt-interaction-demo.ts").then((m) => m.loadDeckLookPromptDemo),
+  "deck-deploy-excess-demo": () =>
+    import("./deck-deploy-excess-demo.ts").then((m) => m.loadDeckDeployExcessDemo),
 } as const satisfies Record<string, LazyFixture>;
 
 export type FixtureName = keyof typeof FIXTURES;

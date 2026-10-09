@@ -12,7 +12,7 @@ describe("OP03-116 Shirahoshi", () => {
   test("On Play draws three, then trashes the two chosen physical hand cards", () => {
     const engine = OnePieceTestEngine.create({
       hand: [op03Shirahoshi116],
-      deck: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018],
+      deck: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018, "EB01-025"],
       activeDon: op03Shirahoshi116.cost,
     });
     const firstDrawId = engine.findCardInZone("south", "deck", eb01Doma005);
@@ -47,7 +47,7 @@ describe("OP03-116 Shirahoshi", () => {
       { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
       {
         life: [op03Shirahoshi116],
-        deck: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018],
+        deck: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018, "EB01-025"],
       },
       { firstPlayer: "north", activeSeat: "south" },
     );

@@ -35,7 +35,7 @@ export const op06IkarosMuch024: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "New Fish-Man Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -58,7 +58,7 @@ export const op06IkarosMuch024: CharacterCard = {
               {
                 filter: "trait",
                 value: "Fish-Man",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

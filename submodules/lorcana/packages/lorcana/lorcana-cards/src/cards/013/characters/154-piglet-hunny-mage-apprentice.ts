@@ -30,6 +30,10 @@ export const pigletHunnyMageApprentice: CharacterCard = {
   lore: 1,
   inkable: true,
   vanilla: true,
+  externalIds: {
+    lorcast: "crd_13f630d1cccb4913b54f560aa5df832e",
+    tcgPlayer: "704651",
+  },
   classifications: ["Dreamborn", "Ally", "Sorcerer", "Hunny"],
   i18n: pigletHunnyMageApprenticeI18n,
 };

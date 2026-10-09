@@ -1,3 +1,11 @@
+---
+official_source:
+  publisher: "Fantasy Flight Games"
+  url: "https://cdn.starwarsunlimited.com//SWH_Comp_Rules_2_0_abd621bde5.pdf"
+  relation: "exact_document"
+  copy_version: "2.0"
+---
+
 # Abilities And Effects
 
 Use for ability kinds, keyword abilities, triggered abilities, and effect

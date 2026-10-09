@@ -33,22 +33,15 @@ export const rabbitHunnyPaladin: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5126c6bc9b4d4c669b7edf2f2ceb32ba",
+    tcgPlayer: "704542",
   },
   text: [
     {
       title: "Bodyguard",
-      description: "(This character may enter play exerted.",
-    },
-    {
-      title:
-        "An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
     },
     {
       title: "HUNNY AURA",
-      description: "When you play this character,",
-    },
-    {
-      title: "chosen Hunny character gets +1 {L} this turn.",
+      description: "When you play this character, chosen Hunny character gets +1 {L} this turn.",
     },
   ],
   classifications: ["Dreamborn", "Ally", "Knight", "Hunny"],

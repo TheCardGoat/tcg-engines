@@ -23,7 +23,7 @@ export const op10Mansherry056: CharacterCard = {
   cost: 2,
   power: 0,
   counter: 1000,
-  traits: ["Dressrosa The Tontattas"],
+  traits: ["The Tontattas", "Dressrosa"],
   attribute: "special",
   effect:
     '[On Play] You may rest 1 of your "Dressrosa" type Leader or Stage cards, and return 1 of your "Dressrosa" type Characters with a cost of 4 or more to the owner\'s hand: Return up to 1 of your opponent\'s Characters with a cost of 4 or less to the owner\'s hand.',
@@ -39,7 +39,7 @@ export const op10Mansherry056: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "anyOf",
@@ -67,7 +67,7 @@ export const op10Mansherry056: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cost",

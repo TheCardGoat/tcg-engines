@@ -23,7 +23,7 @@ export const op13SunnyKun026: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["FILM Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   attribute: "wisdom",
   effect:
     "[Activate: Main] [Once Per Turn] You may rest 1 of your DON!! cards: This Character gains +2000 power until the end of your opponent's next turn.",

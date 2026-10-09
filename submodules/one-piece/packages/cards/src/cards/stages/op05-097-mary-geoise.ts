@@ -62,6 +62,7 @@ export const op05MaryGeoise097: StageCard = {
         actions: [
           {
             action: "modifyCost",
+            paymentOnly: true,
             target: {
               player: "self",
               zones: ["hand"],
@@ -72,7 +73,7 @@ export const op05MaryGeoise097: StageCard = {
                 {
                   filter: "trait",
                   value: "Celestial Dragons",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cardCategory",

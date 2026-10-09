@@ -330,6 +330,8 @@ export type GrandArchiveReplacementOperation =
 /** Replacement effects alter a proposed event before that event is committed. */
 export interface GrandArchiveReplacementEffect extends GrandArchiveEffectBase {
   readonly kind: "replacement";
+  /** Consume a next-event replacement or limited use once for all recipients damaged by that source in one game event. */
+  readonly consumptionScope?: "source-game-event";
   readonly event: GrandArchiveEventPattern;
   readonly condition?: GrandArchiveCondition;
   readonly optionalFor?: GrandArchiveRelativePlayer;
@@ -761,6 +763,11 @@ export type GrandArchiveEffect =
       readonly kind: "attempt";
       readonly effect: GrandArchiveEffect;
       readonly bindSucceededAs: string;
+    }
+  /** Queue a reflexive trigger after a separately completed action, such as damage prevention. */
+  | {
+      readonly kind: "create-reflexive-trigger";
+      readonly effect: GrandArchiveEffect;
     }
   /** “When you do” creates a reflexive trigger after the action succeeds. */
   | {

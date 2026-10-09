@@ -38,7 +38,7 @@ export const op07SlaveArrow056: EventCard = {
   rarity: "UC",
   setId: "OP07",
   cost: 1,
-  traits: ["Kuja Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Kuja Pirates"],
   effect:
     "[Counter] You may return 1 of your Characters with a cost of 2 or more to the owner's hand: Up to 1 of your Leader or Character cards gains +4000 power during this battle. [Trigger] Draw 2 cards and place 2 cards from your hand at the bottom of your deck in any order.",
   effects: {

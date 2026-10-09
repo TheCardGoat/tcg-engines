@@ -4,31 +4,25 @@ import { eb01Doma005, op07Foxy059, op07Foxy071 } from "@tcg/op-cards";
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP07-071 Foxy", () => {
-  test("with an included Foxy Pirates Leader reduces every opposing Character only on the opponent's turn", () => {
-    const originalTraits = op07Foxy059.traits;
-    op07Foxy059.traits = ["Special Foxy Pirates"];
-    try {
-      const opponentTurn = OnePieceTestEngine.create(
-        { leaderCardId: op07Foxy059, character: [op07Foxy071] },
-        { character: [eb01Doma005, eb01Doma005] },
-        { firstPlayer: "south", activeSeat: "north" },
-      );
-      expect(
-        opponentTurn
-          .getView("south")
-          .players.north.characters.filter(Boolean)
-          .map((card) => card?.power)
-          .filter((power): power is number => power !== undefined),
-      ).toEqual([2000, 2000]);
+  test("with a Foxy Pirates Leader reduces every opposing Character only on the opponent's turn", () => {
+    const opponentTurn = OnePieceTestEngine.create(
+      { leaderCardId: op07Foxy059, character: [op07Foxy071] },
+      { character: [eb01Doma005, eb01Doma005] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    expect(
+      opponentTurn
+        .getView("south")
+        .players.north.characters.filter(Boolean)
+        .map((card) => card?.power)
+        .filter((power): power is number => power !== undefined),
+    ).toEqual([2000, 2000]);
 
-      const ownTurn = OnePieceTestEngine.create(
-        { leaderCardId: op07Foxy059, character: [op07Foxy071] },
-        { character: [eb01Doma005] },
-      );
-      expect(ownTurn.getView("south").players.north.characters[0]?.power).toBe(3000);
-    } finally {
-      op07Foxy059.traits = originalTraits;
-    }
+    const ownTurn = OnePieceTestEngine.create(
+      { leaderCardId: op07Foxy059, character: [op07Foxy071] },
+      { character: [eb01Doma005] },
+    );
+    expect(ownTurn.getView("south").players.north.characters[0]?.power).toBe(3000);
   });
 
   test("adds up to one rested DON!! only once per turn", () => {

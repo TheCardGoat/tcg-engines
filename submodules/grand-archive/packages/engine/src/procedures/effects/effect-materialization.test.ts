@@ -115,11 +115,10 @@ function setup(
       (object) => object.ownerId === p2 && object.definitionId === materialCard.canonicalId,
     )!.id,
   };
-  const paymentCards = [p1, p2].map(
-    (playerId) =>
-      Object.values(initial.objects).find(
-        (object) => object.ownerId === playerId && object.definitionId === filler.canonicalId,
-      )!,
+  const paymentCards = [p1, p2].map((playerId) =>
+    Object.values(initial.objects).find(
+      (object) => object.ownerId === playerId && object.definitionId === filler.canonicalId,
+    )!,
   );
   const state = new GrandArchiveTransactionKernel().transact(initial, [
     ...(sourceObject.zone === "hand"
@@ -487,4 +486,95 @@ describe("effect-granted materialization", () => {
     expect(runtime.state.zones[grandArchivePlayerId("p1")].hand).toHaveLength(handBefore);
     expect(runtime.state.stack).toHaveLength(0);
   });
+});
+
+import { listGrandArchiveLegalCommands } from "../../commands/legal-commands.ts";
+
+describe("mandatory materialization with a fixed memory shortfall", () => {
+  for (const memoryCost of [0, 1, 2])
+    it(`allows cancellation only when one memory cannot pay cost ${memoryCost}, including after restore`, () => {
+      const materialCard = card(
+        `fixed-cost-regalia-${memoryCost}`,
+        "ITEM",
+        { kind: "memory", amount: memoryCost },
+        [],
+        { supertypes: ["REGALIA"] },
+      );
+      const source = card(
+        `fixed-cost-source-${memoryCost}`,
+        "ACTION",
+        { kind: "reserve", amount: 0 },
+        [
+          {
+            id: `fixed-cost-source-${memoryCost}-a1`,
+            kind: "card-resolution",
+            text: "Materialize a regalia. Then draw a card.",
+            effect: {
+              kind: "sequence",
+              effects: [
+                {
+                  kind: "choose",
+                  selection: {
+                    id: "regalia",
+                    kind: "choice",
+                    declared: "resolution",
+                    chooser: "controller",
+                    count: { kind: "exactly", amount: 1 },
+                    candidates: {
+                      kind: "card",
+                      zones: ["material-deck"],
+                      relationship: "zone-of",
+                      player: "controller",
+                      filter: { kind: "supertype", oneOf: ["REGALIA"] },
+                    },
+                  },
+                  effect: {
+                    kind: "materialize-card",
+                    subject: { kind: "bound", binding: "regalia" },
+                  },
+                },
+                { kind: "draw", player: "controller", amount: 1 },
+              ],
+            },
+          },
+        ],
+      );
+      const fixture = setup(source, materialCard);
+      let runtime = new GrandArchiveMatchRuntime(fixture.program, fixture.state);
+      resolveSourceToChoice(runtime, fixture.sourceId);
+      answerCurrentDecision(runtime, "p1", [fixture.materialCardIds.p1]);
+      const p1 = grandArchivePlayerId("p1");
+      expect(runtime.state.decision?.kind).toBe("announce-effect-materialization");
+      expect(
+        listGrandArchiveLegalCommands(fixture.program, runtime.state, p1).some(
+          ({ command }) => command.move === "answer-decision" && command.answer === false,
+        ),
+      ).toBe(memoryCost > 1);
+      const restored = restoreGrandArchiveMatchSnapshot(
+        fixture.program,
+        JSON.parse(JSON.stringify(serializeGrandArchiveMatchSnapshot(runtime.state))),
+      );
+      expect(restored).toEqual(runtime.state);
+      runtime = new GrandArchiveMatchRuntime(fixture.program, restored);
+      const before = runtime.state,
+        handSize = before.zones[p1].hand.length;
+      if (memoryCost > 1) {
+        expect(() => answerCurrentDecision(runtime, "p1", {})).toThrow("Memory payment");
+        expect(runtime.state).toEqual(before);
+        answerCurrentDecision(runtime, "p1", false);
+        expect(runtime.state.objects[fixture.materialCardIds.p1]?.zone).toBe("material-deck");
+        expect(runtime.state.zones[p1].memory).toHaveLength(1);
+        expect(runtime.state.stack).toHaveLength(0);
+      } else {
+        expect(() => answerCurrentDecision(runtime, "p1", false)).toThrow(
+          "requires the materialization",
+        );
+        expect(runtime.state).toEqual(before);
+        answerCurrentDecision(runtime, "p1", {});
+        expect(runtime.state.objects[fixture.materialCardIds.p1]?.zone).toBe("effects-stack");
+        expect(runtime.state.zones[p1].memory).toHaveLength(1 - memoryCost);
+      }
+      expect(runtime.state.zones[p1].hand).toHaveLength(handSize + 1);
+      expect(runtime.state.decision).toBeNull();
+    });
 });

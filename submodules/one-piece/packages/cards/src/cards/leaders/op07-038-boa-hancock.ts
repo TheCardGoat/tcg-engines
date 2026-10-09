@@ -39,7 +39,7 @@ export const op07BoaHancock038: LeaderCard = {
   setId: "OP07",
   power: 5000,
   life: 5,
-  traits: ["Kuja Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Kuja Pirates"],
   attribute: "special",
 
   effect:
@@ -56,16 +56,11 @@ export const op07BoaHancock038: LeaderCard = {
             condition: "turn",
             value: "your",
           },
-          {
-            condition: "handCount",
-            player: "self",
-            comparison: "lte",
-            value: 5,
-          },
         ],
         actions: [
           {
             action: "draw",
+            condition: { condition: "handCount", player: "self", comparison: "lte", value: 5 },
             player: "self",
             amount: 1,
           },

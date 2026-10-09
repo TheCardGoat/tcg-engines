@@ -67,6 +67,10 @@ export function proveGlimpsePlay({
           });
         expect(p.zone("main-deck")).toEqual(deck);
         passEffectsStack(game);
+        if (game.state.decision?.kind === "order-triggered-abilities") {
+          answerDecision(game, "order-triggered-abilities", game.state.decision.pendingTriggerIds);
+          passEffectsStack(game);
+        }
         if (classRestricted && !classBonus) {
           expect(game.state.decision).toBeNull();
           expect(p.zone("main-deck")).toEqual(deck);

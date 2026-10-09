@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-attacking-and-the-combat-phase"
+  relation: "current_index"
+---
+
 # Combat Phase - Attacking and the Combat Phase
 
 #### General Rules:

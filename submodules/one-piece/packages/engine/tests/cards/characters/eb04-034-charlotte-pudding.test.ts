@@ -4,6 +4,35 @@ import { eb01Doma005, op01RoundTable027, op14eb04CharlottePudding034 } from "@tc
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("EB04-034 Charlotte Pudding", () => {
+  test("FAQ: discarding the fourth Event enables the bonus and it expires after that battle", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [op14eb04CharlottePudding034],
+        hand: [op01RoundTable027],
+        trash: Array.from({ length: 3 }, () => op01RoundTable027),
+        life: 2,
+      },
+      { character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const pudding = engine.findCardInZone("south", "character", op14eb04CharlottePudding034);
+    engine.asNorth().attack("EB01-018", engine.leader("south"));
+    engine.asSouth().acceptOptional();
+    engine.asSouth().chooseTargets(pudding);
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === pudding)
+        ?.power,
+    ).toBe(3000);
+    expect(engine.getView("south").players.south.trash).toHaveLength(4);
+    engine.asSouth().chooseBlocker(null);
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === pudding)
+        ?.power,
+    ).toBe(1000);
+    expect(engine.getView("south").players.south.lifeCount).toBe(1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("blocks an opponent's attack", () => {
     const engine = OnePieceTestEngine.create(
       { character: [op14eb04CharlottePudding034] },

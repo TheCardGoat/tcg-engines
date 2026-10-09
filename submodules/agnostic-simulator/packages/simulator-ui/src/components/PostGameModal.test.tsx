@@ -2,6 +2,7 @@
 
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
+import { renderToStaticMarkup } from "react-dom/server";
 import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vite-plus/test";
 import confetti from "canvas-confetti";
@@ -16,6 +17,22 @@ vi.mock("canvas-confetti", () => {
 });
 
 describe("PostGameModal", () => {
+  test("renders the first match-detail section in the initial HTML", () => {
+    const html = renderToStaticMarkup(
+      <PostGameModal
+        open
+        outcome="win"
+        sections={[
+          { id: "overview", label: "Overview", content: <p>Match overview</p> },
+          { id: "turns", label: "Turns", content: <p>Turn details</p> },
+        ]}
+      />,
+    );
+
+    expect(html).toContain("Match overview");
+    expect(html).not.toContain("Turn details");
+  });
+
   beforeEach(() => {
     vi.stubGlobal(
       "requestAnimationFrame",
@@ -27,6 +44,31 @@ describe("PostGameModal", () => {
   afterEach(() => {
     vi.unstubAllGlobals();
     vi.clearAllMocks();
+  });
+
+  test("compact details are always visible and allow section selection", async () => {
+    const view = await renderClient(
+      <PostGameModal
+        open
+        layout="compact"
+        outcome="loss"
+        sections={[
+          { id: "overview", label: "Overview", content: <p>Match overview</p> },
+          { id: "turns", label: "Turns", content: <p>Turn details</p> },
+        ]}
+      />,
+    );
+    expect(view.container.querySelector("details")).toBeNull();
+    expect(view.container.querySelector("summary")).toBeNull();
+    expect(view.container.querySelector('section[aria-label="Match details"]')?.textContent).toContain("Match overview");
+    const turns = Array.from(view.container.querySelectorAll("button")).find(
+      (button) => button.textContent === "Turns",
+    );
+    await act(async () => turns?.click());
+    expect(view.container.textContent).toContain("Turn details");
+    expect(view.container.textContent).not.toContain("Match overview");
+    expect(view.container.querySelector("summary")).toBeNull();
+    view.unmount();
   });
 
   test("keeps win confetti running after the celebration key is recorded", async () => {

@@ -14,9 +14,7 @@ import {
 export const legendSaburoArasakaStubbornPatriachBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendSaburoArasakaStubbornPatriach",
   label: "Saburo Arasaka - Arasaka attacker power",
-  references: [
-    "packages/engine/src/cards/embracingpowerretailstarterdeck/legends/saburo-arasaka-stubborn-patriarch.test.ts",
-  ],
+  references: ["packages/engine/src/cards/legends/saburo-arasaka-stubborn-patriarch.test.ts"],
   async run(pom) {
     const minotaur = await pom.getCardInZoneByDefinitionId(
       "field",

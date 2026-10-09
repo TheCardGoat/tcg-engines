@@ -53,7 +53,7 @@ export const op02LittleSadi073: CharacterCard = {
               {
                 filter: "trait",
                 value: "Jailer Beast",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

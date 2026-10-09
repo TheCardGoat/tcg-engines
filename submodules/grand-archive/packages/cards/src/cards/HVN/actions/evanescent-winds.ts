@@ -38,8 +38,17 @@ export const evanescentWinds: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                 zones: ["field"],
                 player: "controller",
                 filter: {
-                  kind: "type",
-                  oneOf: ["PHANTASIA"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["PHANTASIA"],
+                    },
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY"],
+                    },
+                  ],
                 },
               },
             },

@@ -23,7 +23,7 @@ export const op03BellMere051: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Former Navy East Blue"],
+  traits: ["East Blue", "Former Navy"],
   attribute: "ranged",
   effect:
     "[DON!! x1] When this Character's attack deals damage to your opponent's Life, you may trash 7 cards from the top of your deck. [On K.O.] You may trash 3 cards from the top of your deck.",

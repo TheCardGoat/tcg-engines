@@ -1,4 +1,5 @@
 import type { MoveDefinition } from "../types/commands.ts";
+import { setCombatPriorityMove } from "./set-combat-priority.ts";
 import { playCardMove } from "./play-card.ts";
 import { sellCardMove } from "./sell-card.ts";
 import { callLegendMove } from "./call-legend.ts";
@@ -38,6 +39,7 @@ import { cancelPendingResolutionMove } from "./cancel-pending-resolution.ts";
  * switches in downstream code (e.g. the AI harness).
  */
 export const MOVE_IDS = [
+  "setCombatPriority",
   "playCard",
   "sellCard",
   "callLegend",
@@ -73,6 +75,7 @@ export const MOVE_IDS = [
 export type MoveId = (typeof MOVE_IDS)[number];
 
 export const allMoves: Record<MoveId, MoveDefinition<any>> = {
+  setCombatPriority: setCombatPriorityMove,
   playCard: playCardMove,
   sellCard: sellCardMove,
   callLegend: callLegendMove,

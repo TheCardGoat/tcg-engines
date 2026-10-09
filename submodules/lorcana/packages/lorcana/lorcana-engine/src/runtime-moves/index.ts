@@ -24,6 +24,7 @@ import {
   manualPassTurn,
   manualReadyCard,
   manualSetDamage,
+  manualSetInkDrops,
   manualSetLore,
   manualShuffleDeck,
 } from "./debug";
@@ -93,6 +94,7 @@ export const lorcanaRuntimeMoves = {
   manualDryCard,
   manualSetDamage,
   manualSetLore,
+  manualSetInkDrops,
   manualShuffleDeck,
   manualPassTurn,
 } satisfies LorcanaRuntimeMoveRegistry;
@@ -117,6 +119,7 @@ export {
   manualPassTurn,
   manualReadyCard,
   manualSetDamage,
+  manualSetInkDrops,
   manualSetLore,
   manualShuffleDeck,
 } from "./debug";

@@ -12,6 +12,10 @@ export type { CardInteractionFrameProps } from "./components/CardInteractionFram
 export { CardActionPicker, type CardActionPickerProps } from "./components/CardActionPicker";
 export { CardFace } from "./components/CardFace";
 export { CardFan } from "./components/CardFan";
+export {
+  TabletopAttachmentStack,
+  type TabletopAttachmentStackProps,
+} from "./components/TabletopAttachmentStack";
 export { FixedSlotCardZone, type FixedSlotCardZoneProps } from "./components/FixedSlotCardZone";
 export { CardGrid } from "./components/CardGrid";
 export { CardImage, STANDARD_CARD_IMAGE_ASPECT_RATIO } from "./components/CardImage";
@@ -20,6 +24,7 @@ export {
   type ViewerSafeCardImageProps,
 } from "./components/ViewerSafeCardImage";
 export {
+  hiddenCardEntity,
   projectSimulatorEntityForFace,
   type SimulatorEntityFace,
 } from "./components/entity-visibility";
@@ -48,6 +53,18 @@ export { ChoiceModal } from "./components/ChoiceModal";
 export { ChoiceResolutionOverlay } from "./components/ChoiceResolutionOverlay";
 export { PromptBanner } from "./components/PromptBanner";
 export { CardInspector } from "./components/CardInspector";
+export { CardInspectionDialog } from "./components/CardInspectionDialog";
+export {
+  CARD_PRESENTATION_LAYERS,
+  CardPresentationPlane,
+  type CardPresentationPlaneProps,
+} from "./components/CardPresentationPlane";
+export {
+  PendingResolutionCards,
+  RESOLUTION_EXIT_MS,
+  type PendingResolutionCard,
+  type PendingResolutionCardsProps,
+} from "./components/PendingResolutionCards";
 export { CardDetailSheet } from "./components/CardDetailSheet";
 export {
   CardContextMenu,
@@ -119,6 +136,10 @@ export {
   SimulatorRouteStatus,
   type SimulatorRouteStatusProps,
 } from "./components/SimulatorRouteStatus";
+export {
+  SimulatorCancelledMatch,
+  type SimulatorCancelledMatchProps,
+} from "./components/SimulatorCancelledMatch";
 export {
   TabletopStatementsPanel,
   type TabletopStatementsPanelProps,
@@ -248,6 +269,12 @@ export {
   TabletopCounterBadge,
   type TabletopCounterBadgeProps,
 } from "./components/TabletopCounterBadge";
+export {
+  TabletopDie,
+  TabletopDieButton,
+  type TabletopDieProps,
+  type TabletopDieButtonProps,
+} from "./components/TabletopDie";
 export { TargetingArrow } from "./components/TargetingArrow";
 export {
   CombatIntentOverlay,
@@ -284,11 +311,15 @@ export * from "./animation/index";
 export { isSimulatorAnimationDebugEnabled, simulatorAnimationDebug } from "./animation/debug";
 
 // Accessibility
-export { AccessibilityAnnouncer } from "./components/AccessibilityAnnouncer";
+export {
+  AccessibilityAnnouncer,
+  type AccessibilityAnnouncerProps,
+} from "./components/AccessibilityAnnouncer";
 export { KeyboardNavigator } from "./components/KeyboardNavigator";
 
 // Hooks
 export { DndContext, useDnd, useDndProvider } from "./hooks/useDnd";
+export { useSuppressClickAfterDrag } from "./hooks/useSuppressClickAfterDrag";
 export {
   useActiveLayout,
   type ActiveLayout,
@@ -299,3 +330,25 @@ export { useStickToBottom, type UseStickToBottomOptions } from "./hooks/useStick
 // Utilities
 export { cx } from "./class-names";
 export { buildCardImageUrl, resolveEntityImageUrl } from "./lib/urlBuilder";
+
+export {
+  createDragMotion,
+  type DragMotion,
+  type DragMotionSession,
+} from "./components/drag-motion";
+
+export {
+  EffectConnectionsContext,
+  type EffectArrowProps,
+} from "./animation/overlays/EffectOverlay";
+
+export {
+  InteractionWorkspace,
+  InteractionActionMenu,
+  InteractionDraftPrompt,
+  useInteractionBoard,
+  type InteractionActionMenuProps,
+} from "./interactions/InteractionWorkspace";
+
+export { createPromptVisibilityStore } from "./interactions/prompt-visibility";
+export { useInteractionSurface } from "./interactions/useInteractionSurface";

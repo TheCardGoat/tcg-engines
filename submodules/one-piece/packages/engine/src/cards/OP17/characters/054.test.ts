@@ -91,4 +91,55 @@ describe("OP17-054 Miss Buckingham Stussy", () => {
 
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("On Play uses basecost and prevents attack through the next opponent turn, then expires", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-054"], activeDon: 3 },
+      { character: ["OP17-119", "EB01-005"] },
+    );
+    const id = e.findCardInZone("north", "character", "OP17-119");
+    e.playCard("OP17-054");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [id] }, "south");
+    e.endTurn("south");
+    expect(() => e.declareAttack(id, e.leader("south"), "north")).toThrow();
+    e.endTurn("north");
+    e.endTurn("south");
+    e.declareAttack(id, e.leader("south"), "north");
+    expect(
+      e.getView("south").players.north.characters.find((c) => c?.instanceId === id)?.rested,
+    ).toBe(true);
+  });
+  test("Activate Main pays three DON and rests Stussy to stop a high-basecost Character", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP17-054"], activeDon: 3 },
+      { character: ["OP16-003"] },
+    );
+    const source = e.findCardInZone("south", "character", "OP17-054"),
+      target = e.findCardInZone("north", "character", "OP16-003");
+    e.activateEffect(source, "activateMain", "south");
+    e.acceptLeadingOptional("south");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(true);
+    e.endTurn("south");
+    expect(() => e.declareAttack(target, e.leader("south"), "north")).toThrow();
+    e.endTurn("north");
+    e.endTurn("south");
+    e.declareAttack(target, e.leader("south"), "north");
+    expect(e.getView("south").players.north.characters[0]?.rested).toBe(true);
+  });
+  test("declining Activate Main preserves all DON and the active source", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP17-054"], activeDon: 3 },
+      { character: ["OP16-003"] },
+    );
+    const source = e.findCardInZone("south", "character", "OP17-054");
+    e.activateEffect(source, "activateMain", "south");
+    e.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(3);
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(false);
+    expect(e.getView("south").prompts).toHaveLength(0);
+    e.endTurn("south");
+    e.asNorth().attack("OP16-003", e.leader("south"));
+    expect(e.getView("south").players.north.characters[0]?.rested).toBe(true);
+  });
 });

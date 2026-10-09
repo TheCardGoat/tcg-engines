@@ -1256,9 +1256,13 @@ describe("per-instance printing art", () => {
     weapon1: [] as string[],
     weapon2: [] as string[],
     heroZone: [] as string[],
+    soul: [] as string[],
+    inventory: [] as string[],
+    under: [] as string[],
   };
   const makeViewer = (faceDown = false): FabViewerState => ({
     playerIds: ["player-1", "player-2"],
+    firstTurnPlayerId: "player-1",
     optionalTriggerAutomation: [],
     automation: null,
     priorityManualOnly: null,

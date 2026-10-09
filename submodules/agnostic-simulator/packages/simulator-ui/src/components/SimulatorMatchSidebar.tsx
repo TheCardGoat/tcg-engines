@@ -22,7 +22,7 @@ interface SimulatorMatchParticipantBase {
   readonly id: string;
   readonly role: "opponent" | "self";
   /** Moves transient state beside the clock so narrow identity rows keep the player name readable. */
-  readonly layout?: "stacked";
+  readonly layout?: "stacked" | "compact";
   readonly ariaLabel?: string;
   readonly testId?: string;
   readonly clock?: ReactNode;
@@ -64,6 +64,7 @@ export type SimulatorActivityTab = "combined" | "log" | "chat" | "secondary";
 
 export interface SimulatorMatchActivity {
   readonly log: ReactNode;
+  readonly headerActions?: ReactNode;
   readonly chat?: ReactNode;
   /** A single chronological activity stream used by the All tab. */
   readonly combined?: ReactNode;
@@ -72,6 +73,8 @@ export interface SimulatorMatchActivity {
   readonly logLabel?: string;
   readonly chatLabel?: string;
   readonly secondaryLabel?: string;
+  /** Preserve local panel state, such as chat drafts and expanded log turns, across tab changes. */
+  readonly keepMounted?: boolean;
   readonly defaultTab?: SimulatorActivityTab;
   readonly activeTab?: SimulatorActivityTab;
   readonly onActiveTabChange?: (tab: SimulatorActivityTab) => void;
@@ -112,6 +115,9 @@ export function SimulatorMatchSidebar({
   return (
     <aside
       className={cx(classes.root, className)}
+      data-compact-layout={
+        opponent.layout === "compact" && self.layout === "compact" ? "true" : undefined
+      }
       data-has-automation={automation ? "true" : "false"}
       data-has-context={context ? "true" : "false"}
       data-compact-participants={hasCompactParticipants ? "true" : undefined}
@@ -249,6 +255,43 @@ export function SimulatorMatchParticipantView({
 }) {
   const hasVisibleName = participant.name !== undefined && participant.name !== null;
 
+  if (participant.layout === "compact") {
+    return (
+      <section
+        className={cx(classes.compactParticipant, className)}
+        data-role={participant.role}
+        data-active={participant.active ? "true" : undefined}
+        data-testid={participant.testId}
+        aria-label={
+          participant.ariaLabel ??
+          (participant.role === "self" ? "Your match status" : "Opponent match status")
+        }
+      >
+        <div className={classes.compactIdentity}>
+          {participant.connection}
+          <strong>{participant.name}</strong>
+        </div>
+        <div className={classes.compactState}>
+          {participant.status ? <span>{participant.status}</span> : null}
+          <div className={classes.compactMetrics}>
+            {participant.metrics?.map((metric) => (
+              <span key={metric.id}>
+                {metric.label} <strong>{metric.value}</strong>
+              </span>
+            ))}
+            {participant.meta ? <span>{participant.meta}</span> : null}
+          </div>
+          <span className={classes.clock} data-participant-clock="true">
+            {participant.clock}
+          </span>
+        </div>
+        {participant.actions ? (
+          <div className={classes.compactActions}>{participant.actions}</div>
+        ) : null}
+      </section>
+    );
+  }
+
   return (
     <section
       className={cx(classes.participant, className)}
@@ -333,6 +376,7 @@ export function SimulatorMatchParticipantView({
 
 export interface SimulatorActivityTabsProps extends HTMLAttributes<HTMLDivElement> {
   readonly log: ReactNode;
+  readonly headerActions?: ReactNode;
   readonly chat?: ReactNode;
   /** A single chronological activity stream used by the All tab. */
   readonly combined?: ReactNode;
@@ -341,6 +385,8 @@ export interface SimulatorActivityTabsProps extends HTMLAttributes<HTMLDivElemen
   readonly chatLabel?: string;
   readonly secondaryLabel?: string;
   readonly combinedLabel?: string;
+  /** Preserve local panel state, such as chat drafts and expanded log turns, across tab changes. */
+  readonly keepMounted?: boolean;
   readonly defaultTab?: SimulatorActivityTab;
   readonly activeTab?: SimulatorActivityTab;
   readonly onActiveTabChange?: (tab: SimulatorActivityTab) => void;
@@ -365,8 +411,8 @@ export type SimulatorMatchActionDockProps = SimulatorMatchActions;
 
 /**
  * Stable universal-action geometry. Games keep their native command and
- * confirmation behavior while the shared layer keeps Undo, Pass, and Concede
- * in the same order and at the same reachable size.
+ * confirmation behavior while the shared layer keeps primary and secondary
+ * controls at a stable, reachable size. Destructive actions may live in a menu.
  */
 export function SimulatorMatchActionDock(props: SimulatorMatchActionDockProps) {
   const { undo, primary, controls, danger, className, ...domProps } = props;
@@ -380,7 +426,7 @@ export function SimulatorMatchActionDock(props: SimulatorMatchActionDockProps) {
           <div data-action="primary">{primary}</div>
         </>
       )}
-      <div data-action="danger">{danger}</div>
+      {danger != null ? <div data-action="danger">{danger}</div> : null}
     </div>
   );
 }
@@ -388,6 +434,7 @@ export function SimulatorMatchActionDock(props: SimulatorMatchActionDockProps) {
 /** Shared Log/Chat surface used by the desktop activity region and phone sheet. */
 export function SimulatorActivityTabs({
   log,
+  headerActions,
   chat,
   combined,
   secondary,
@@ -396,6 +443,7 @@ export function SimulatorActivityTabs({
   secondaryLabel = "More",
   combinedLabel = "All",
   defaultTab = "combined",
+  keepMounted = false,
   activeTab: controlledActiveTab,
   onActiveTabChange,
   className,
@@ -414,7 +462,9 @@ export function SimulatorActivityTabs({
   const tabsId = useId();
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const availableTabs = [
-    ...(hasCombinedTab ? [{ id: "combined" as const, label: combinedLabel, content: null }] : []),
+    ...(hasCombinedTab
+      ? [{ id: "combined" as const, label: combinedLabel, content: combined }]
+      : []),
     { id: "log" as const, label: logLabel, content: log },
     ...(chat ? [{ id: "chat" as const, label: chatLabel, content: chat }] : []),
     ...(secondary ? [{ id: "secondary" as const, label: secondaryLabel, content: secondary }] : []),
@@ -423,7 +473,6 @@ export function SimulatorActivityTabs({
   const activeTab = availableTabs.some((tab) => tab.id === requestedActiveTab)
     ? requestedActiveTab
     : "log";
-  const activePanelId = `${tabsId}-${activeTab}-panel`;
   const selectTab = (tab: SimulatorActivityTab) => {
     if (controlledActiveTab === undefined) setUncontrolledActiveTab(tab);
     onActiveTabChange?.(tab);
@@ -445,42 +494,53 @@ export function SimulatorActivityTabs({
     tabRefs.current[nextIndex]?.focus();
   };
 
+  const tabList = (
+    <div className={classes.tabList} role="tablist" aria-label="Match activity">
+      {availableTabs.map((tab, index) => (
+        <button
+          key={tab.id}
+          ref={(node) => {
+            tabRefs.current[index] = node;
+          }}
+          type="button"
+          role="tab"
+          id={`${tabsId}-${tab.id}-tab`}
+          aria-selected={activeTab === tab.id}
+          aria-controls={`${tabsId}-${tab.id}-panel`}
+          tabIndex={activeTab === tab.id ? 0 : -1}
+          onClick={() => selectTab(tab.id)}
+          onKeyDown={(event) => onTabKeyDown(event, index)}
+        >
+          {tab.label}
+        </button>
+      ))}
+    </div>
+  );
+
   return (
     <div className={cx(classes.activityTabs, className)} {...props}>
-      <div className={classes.tabList} role="tablist" aria-label="Match activity">
-        {availableTabs.map((tab, index) => (
-          <button
+      {headerActions ? (
+        <div className={classes.tabHeader}>
+          {tabList}
+          <div className={classes.tabHeaderActions}>{headerActions}</div>
+        </div>
+      ) : (
+        tabList
+      )}
+      {availableTabs
+        .filter((tab) => keepMounted || tab.id === activeTab)
+        .map((tab) => (
+          <div
             key={tab.id}
-            ref={(node) => {
-              tabRefs.current[index] = node;
-            }}
-            type="button"
-            role="tab"
-            id={`${tabsId}-${tab.id}-tab`}
-            aria-selected={activeTab === tab.id}
-            aria-controls={`${tabsId}-${tab.id}-panel`}
-            tabIndex={activeTab === tab.id ? 0 : -1}
-            onClick={() => selectTab(tab.id)}
-            onKeyDown={(event) => onTabKeyDown(event, index)}
+            className={classes.tabPanel}
+            id={`${tabsId}-${tab.id}-panel`}
+            role="tabpanel"
+            aria-labelledby={`${tabsId}-${tab.id}-tab`}
+            hidden={activeTab !== tab.id}
           >
-            {tab.label}
-          </button>
+            {tab.content}
+          </div>
         ))}
-      </div>
-      <div
-        className={classes.tabPanel}
-        id={activePanelId}
-        role="tabpanel"
-        aria-labelledby={`${tabsId}-${activeTab}-tab`}
-      >
-        {activeTab === "combined" && combined
-          ? combined
-          : activeTab === "chat" && chat
-            ? chat
-            : activeTab === "secondary" && secondary
-              ? secondary
-              : log}
-      </div>
     </div>
   );
 }

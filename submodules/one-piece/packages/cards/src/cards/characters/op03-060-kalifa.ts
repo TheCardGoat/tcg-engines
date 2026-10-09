@@ -49,7 +49,7 @@ export const op03Kalifa060: CharacterCard = {
   cost: 4,
   power: 4000,
   counter: 2000,
-  traits: ["Galley-La Company Water Seven"],
+  traits: ["Water Seven", "Galley-La Company"],
   attribute: "wisdom",
   effect:
     "[When Attacking] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Draw 2 cards and trash 1 card from your hand.",

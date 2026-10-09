@@ -21,7 +21,7 @@ export const op15AndNoOneElseCanHaveItItSOurMementoOfHim054: EventCard = {
   rarity: "C",
   setId: "OP15",
   cost: 4,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   effect:
     "[Main] If your Leader is [Lucy], choose one:\n• Draw 2 cards and trash 1 card from your hand. Then, play up to 1 {Dressrosa} type Character card with a cost of 4 or less from your hand.\n• Return up to 1 Stage to the owner's hand.",
   effects: {
@@ -68,7 +68,7 @@ export const op15AndNoOneElseCanHaveItItSOurMementoOfHim054: EventCard = {
                     {
                       filter: "trait",
                       value: "Dressrosa",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "cardCategory",

@@ -28,6 +28,7 @@ export const aWholeNewWorldC1Challenge: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_94aea01bdb0a49a4aff52b8802388bb1",
+    tcgPlayer: "506088",
   },
   text: "Each player discards their hand and draws 7 cards.",
   actionSubtype: "song",

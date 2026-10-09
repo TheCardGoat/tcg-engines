@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-miscellaneous-topics/die-results-d-effects"
+  relation: "current_index"
+---
+
 # Die Results / D Effects
 
 #### General Rules

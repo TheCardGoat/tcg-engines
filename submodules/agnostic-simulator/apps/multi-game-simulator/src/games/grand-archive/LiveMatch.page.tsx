@@ -16,11 +16,13 @@ import {
   type InteractionSubmission,
   type ChatMessage as ProtocolChatMessage,
   type ChatPresetKey,
+  type PendingProposal,
 } from "@tcg/protocol";
 import type { SimulatorEventLogEntry } from "@tcg/simulator-contract";
 import {
   ChatPanel,
   DropClaimControl,
+  SimulatorCancelledMatch,
   SimulatorRouteStatus,
   type ChatMessage as UiChatMessage,
 } from "@tcg/simulator-ui";
@@ -32,7 +34,10 @@ import {
   describeLiveMatchWriteGate,
 } from "@tcg/game-page-contract";
 import { acquireRootGatewayHandle } from "../../lib/gateway/root-socket";
+import { LiveActionAttention } from "../../simulator/attention/LiveActionAttention";
+import { useLiveMatchDocumentTitle } from "../../simulator/attention/useLiveMatchDocumentTitle";
 import { useSimulatorRoute } from "../../simulator/providers";
+import { matchReturnUrl } from "../../routes/match-return-url";
 import { grandArchiveHarnessFixture } from "./fixtureProjection";
 import { GrandArchiveTabletop } from "./GrandArchiveTabletop";
 import { GrandArchiveGameSummary } from "./GrandArchiveGameSummary";
@@ -450,7 +455,15 @@ export function GrandArchiveLiveMatchPage() {
         />
       );
     case "cancelled":
-      return <SimulatorRouteStatus title="Match cancelled" message={session.reason} />;
+      return (
+        <SimulatorCancelledMatch
+          reason={session.reason}
+          matchmakingHref={matchReturnUrl(
+            "grand-archive",
+            typeof window === "undefined" ? "" : window.location.search,
+          )}
+        />
+      );
     case "playing":
     case "finished":
       return <GrandArchiveLiveGamePage key={session.game.gameId} />;
@@ -468,6 +481,22 @@ function GrandArchiveLiveGamePage() {
   const [state, setState] = useState<GrandArchiveViewerState | null>(() =>
     parseGrandArchiveLiveViewerState(bootstrap?.game.view),
   );
+  useLiveMatchDocumentTitle({
+    game: "Grand Archive",
+    turn:
+      state?.status === "playing" && viewerId
+        ? state.turn.playerId === viewerId
+          ? "self"
+          : "opponent"
+        : null,
+    priority:
+      state?.status === "playing" && state.opportunityHolderId && viewerId
+        ? state.opportunityHolderId === viewerId
+          ? "self"
+          : "opponent"
+        : null,
+    finished: state?.status === "finished",
+  });
   const [interactionView, setInteractionView] = useState<EngineInteractionViewType | null>(() =>
     parseInteractionView(bootstrap?.game.interactionView),
   );
@@ -478,6 +507,7 @@ function GrandArchiveLiveGamePage() {
     () => bootstrap?.history.engineLogs.map((entry) => entry.data) ?? [],
   );
   const [connectionError, setConnectionError] = useState<string | null>(null);
+  const [connectionReady, setConnectionReady] = useState(false);
   const [summaryOpen, setSummaryOpen] = useState(true);
   const [chatMessages, setChatMessages] = useState<ProtocolChatMessage[]>(() =>
     readChatMessages(bootstrap?.history.chatMessages ?? []),
@@ -486,6 +516,19 @@ function GrandArchiveLiveGamePage() {
     bootstrap?.history.freeTextEnabled ?? false,
   );
   const [canUndo, setCanUndo] = useState(bootstrap?.game.undoable === true);
+  const [canUndoTurn, setCanUndoTurn] = useState(bootstrap?.game.undoTurnAvailable === true);
+  const [undoProposal, setUndoProposal] = useState<PendingProposal | null>(null);
+  useEffect(() => {
+    if (!undoProposal) return;
+    const deadline = undoProposal.deadline;
+    const timeout = window.setTimeout(
+      () => {
+        setUndoProposal((current) => (current?.deadline === deadline ? null : current));
+      },
+      Math.max(0, deadline - Date.now()),
+    );
+    return () => window.clearTimeout(timeout);
+  }, [undoProposal]);
   const [playerConnections, setPlayerConnections] = useState<Readonly<Record<string, boolean>>>(
     () =>
       Object.fromEntries(
@@ -507,6 +550,8 @@ function GrandArchiveLiveGamePage() {
     if (!gameId || !viewerId) return;
     const handle = acquireRootGatewayHandle("grand-archive");
     gatewayHandleRef.current = handle;
+    const stopAuthenticated = handle.onAuthenticated(() => setConnectionReady(true));
+    const stopDisconnected = handle.onDisconnected(() => setConnectionReady(false));
     const accept = (payload: {
       readonly gameId: string;
       readonly state?: unknown;
@@ -516,6 +561,8 @@ function GrandArchiveLiveGamePage() {
       readonly engineLogs?: unknown;
       readonly matchInfo?: { readonly nextGameId?: string };
       readonly undoable?: boolean;
+      readonly undoTurnAvailable?: boolean;
+      readonly pendingProposal?: PendingProposal | null;
       readonly players?: readonly { readonly id: string; readonly connected: boolean }[];
     }) => {
       if (payload.gameId !== gameId) return;
@@ -530,6 +577,8 @@ function GrandArchiveLiveGamePage() {
       if (nextInteraction) setInteractionView(nextInteraction);
       else if (nextState) setInteractionView(null);
       if (typeof payload.undoable === "boolean") setCanUndo(payload.undoable);
+      if (typeof payload.undoTurnAvailable === "boolean") setCanUndoTurn(payload.undoTurnAvailable);
+      if (payload.pendingProposal?.actionType === "undo") setUndoProposal(payload.pendingProposal);
       if (payload.resources !== undefined) {
         setAuthorizedCards(parseAuthorizedCardResources(payload.resources));
       } else if (payload.cardsMaps !== undefined) {
@@ -558,6 +607,28 @@ function GrandArchiveLiveGamePage() {
       }),
       handle.on("state_sync", accept),
       handle.on("state_update", accept),
+      handle.on("proposal_received", (payload) => {
+        if (payload.gameId === gameId && payload.actionType === "undo") setUndoProposal({ ...payload, actionType: "undo" });
+      }),
+      handle.on("proposal_resolved", (payload) => {
+        if (payload.gameId === gameId && payload.actionType === "undo") setUndoProposal(null);
+      }),
+      handle.on("proposal_expired", (payload) => {
+        if (payload.gameId === gameId && payload.actionType === "undo") setUndoProposal(null);
+      }),
+      handle.on("proposal_send:response", (response) => {
+        if (response.status === "err") setConnectionError(response.data.message);
+        else if ("resolution" in response.data) setUndoProposal(null);
+        else if (response.data.actionType === "undo") setUndoProposal({ ...response.data, actionType: "undo" });
+      }),
+      handle.on("proposal_accept:response", (response) => {
+        if (response.status === "err") setConnectionError(response.data.message);
+        setUndoProposal(null);
+      }),
+      handle.on("proposal_decline:response", (response) => {
+        if (response.status === "err") setConnectionError(response.data.message);
+        setUndoProposal(null);
+      }),
       handle.on("move_accepted", accept),
       handle.on("game_recent_history", (payload) => {
         if (payload.gameId !== gameId) return;
@@ -610,6 +681,9 @@ function GrandArchiveLiveGamePage() {
     ];
     handle.join({ gameId });
     return () => {
+      stopAuthenticated();
+      stopDisconnected();
+      setConnectionReady(false);
       setGatewayAttached(false);
       if (gatewayHandleRef.current === handle) gatewayHandleRef.current = null;
       unsubscribers.forEach((unsubscribe) => unsubscribe());
@@ -651,6 +725,13 @@ function GrandArchiveLiveGamePage() {
     },
     [bootstrap, gameId, viewerId],
   );
+
+  const requestUndo = (undoScope: "last_move" | "turn_start") => {
+    const handle = gatewayHandleRef.current;
+    if (!handle || !connectionReady || !gameId) return;
+    setConnectionError(null);
+    handle.emit("proposal_send", { gameId, actionType: "undo", undoScope });
+  };
 
   const projectionOptions = useMemo<GrandArchiveViewerSimulatorProjectionOptions>(
     () => ({
@@ -730,6 +811,13 @@ function GrandArchiveLiveGamePage() {
 
   return (
     <>
+      <LiveActionAttention
+        gameId={gameId}
+        view={interactionView}
+        viewerId={viewerId}
+        stateVersion={state.stateVersion}
+        canAct={bootstrap.viewer.permissions.act && state.status !== "finished" && connectionReady}
+      />
       {dropEligibility ? (
         <div className="pointer-events-auto absolute right-4 top-4 z-20">
           <DropClaimControl
@@ -743,22 +831,34 @@ function GrandArchiveLiveGamePage() {
           />
         </div>
       ) : null}
+      {undoProposal ? (
+        <div className="pointer-events-auto absolute left-1/2 top-4 z-30 flex -translate-x-1/2 items-center gap-3 rounded-lg border border-amber-500 bg-slate-950 px-4 py-3 text-sm text-white shadow-xl" role="status">
+          <span>{undoProposal.senderPlayerId === viewerId
+            ? "Waiting for the opponent to approve undo."
+            : undoProposal.undoScope === "turn_start"
+              ? "Opponent requests to undo the turn."
+              : "Opponent requests to undo the last action."}</span>
+          {undoProposal.senderPlayerId !== viewerId ? (
+            <>
+              <button type="button" className="rounded bg-emerald-700 px-3 py-1" onClick={() =>
+                gatewayHandleRef.current?.emit("proposal_accept", { gameId, actionType: "undo" })}>
+                Approve
+              </button>
+              <button type="button" className="rounded bg-slate-700 px-3 py-1" onClick={() =>
+                gatewayHandleRef.current?.emit("proposal_decline", { gameId, actionType: "undo" })}>
+                Decline
+              </button>
+            </>
+          ) : null}
+        </div>
+      ) : null}
       <GrandArchiveTabletop
         fixture={fixture}
-        canUndo={canUndo}
+        canUndo={canUndo && !undoProposal}
+        canUndoTurn={canUndoTurn && !undoProposal}
         canConcede={bootstrap.capabilities.conceding}
-        onUndo={() => {
-          const handle = gatewayHandleRef.current;
-          if (!handle) return;
-          setConnectionError(null);
-          handle.emit("execute_move", {
-            gameId,
-            expectedVersion: state.stateVersion,
-            moveType: "undo",
-            payload: {},
-            correlationId: crypto.randomUUID(),
-          });
-        }}
+        onUndo={() => requestUndo("last_move")}
+        onUndoTurn={() => requestUndo("turn_start")}
         chat={
           <ChatPanel
             messages={chatMessages.map((message) => toUiChatMessage(message, viewerId))}

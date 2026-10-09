@@ -30,7 +30,7 @@ export const op01KinEmon040: CharacterCard = {
   setId: "OP01",
   cost: 6,
   power: 6000,
-  traits: ["Land of Wano The Akazaya Nine"],
+  traits: ["Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     '[On Play] If your Leader is [Kouzuki Oden], play up to 1 "The Akazaya Nine" type Character card with a cost of 3 or less from your hand. [DON!! x1] [When Attacking] [Once Per Turn] Set up to 1 of your "The Akazaya Nine" type Character cards with a cost of 3 or less as active.  This card has been officially errata\'d.',
@@ -64,7 +64,7 @@ export const op01KinEmon040: CharacterCard = {
               {
                 filter: "trait",
                 value: "The Akazaya Nine",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",
@@ -96,7 +96,7 @@ export const op01KinEmon040: CharacterCard = {
                 {
                   filter: "trait",
                   value: "The Akazaya Nine",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",

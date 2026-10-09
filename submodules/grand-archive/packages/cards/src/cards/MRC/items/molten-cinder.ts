@@ -110,8 +110,16 @@ export const moltenCinder: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
                 kind: "object",
                 zones: ["field"],
                 filter: {
-                  kind: "type",
-                  oneOf: ["CHAMPION"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["CHAMPION"],
+                    },
+                    {
+                      kind: "leveled-up-this-turn",
+                    },
+                  ],
                 },
               },
             },

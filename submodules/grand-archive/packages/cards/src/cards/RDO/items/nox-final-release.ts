@@ -50,7 +50,11 @@ export const noxFinalRelease: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                     kind: "count",
                     collection: {
                       zones: ["inner-lineage"],
-                      player: "controller",
+                      host: {
+                        kind: "champion",
+                        player: "controller",
+                      },
+                      relationship: "lineage-of",
                       filter: {
                         kind: "subtype",
                         oneOf: ["CURSE"],

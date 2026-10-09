@@ -1,5 +1,4 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { alert } from "../../../helpers/abilities/alert";
 import { syndromeEvilInventorI18n } from "./143-syndrome-evil-inventor.i18n";
 
 export const syndromeEvilInventor: CharacterCard = {
@@ -30,7 +29,8 @@ export const syndromeEvilInventor: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  abilities: [alert],
+  missingImplementation: true,
+  missingTests: true,
   externalIds: {
     lorcast: "crd_6a4abcb645cf41f282d3e6466283ea8d",
     tcgPlayer: "692064",

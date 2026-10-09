@@ -35,4 +35,25 @@ describe("OP12-115 I Love You!!", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("three Life prevents Law recovery even if battle damage then reduces Life to two", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      { hand: [op12ILoveYou115, "EB01-005"], trash: [op12TrafalgarLaw073], activeDon: 1, life: 3 },
+    );
+    const law = engine.findCardInZone("north", "trash", op12TrafalgarLaw073);
+    engine
+      .asSouth()
+      .attack(
+        engine.findCardInZone("south", "character", eb01MountainGod018),
+        engine.leader("north"),
+      );
+    engine.asNorth().chooseCounter(op12ILoveYou115);
+    engine.asNorth().chooseTargets(engine.leader("north"));
+    expect(engine.getView("north").players.north.leader.power).toBe(7000);
+    expect(engine.getView("north").players.north.trash.map((c) => c.instanceId)).toContain(law);
+    engine.asNorth().chooseCounter();
+    expect(engine.getView("north").players.north.lifeCount).toBe(2);
+    expect(engine.getView("north").players.north.hand.map((c) => c.instanceId)).not.toContain(law);
+    expect(engine.getView("north").prompts).toHaveLength(0);
+  });
 });

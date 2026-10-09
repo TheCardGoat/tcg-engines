@@ -32,7 +32,7 @@ export const op15Kuro025: CharacterCard = {
   cost: 7,
   power: 7000,
   counter: 1000,
-  traits: ["East Blue Black Cat Pirates"],
+  traits: ["East Blue", "Black Cat Pirates"],
   attribute: "slash",
   effect:
     "[Blocker]\n[On Play] Give up to 2 DON!! cards from your opponent's cost area to 1 of your opponent's Characters. Then, at the end of this turn, up to 1 rested Character with 3 or more DON!! cards given will not become active in your opponent's next Refresh Phase.",
@@ -63,8 +63,9 @@ export const op15Kuro025: CharacterCard = {
             actions: [
               {
                 action: "freeze",
+                refreshPlayer: "opponent",
                 target: {
-                  player: "opponent",
+                  player: "any",
                   zones: ["character"],
                   count: {
                     amount: 1,

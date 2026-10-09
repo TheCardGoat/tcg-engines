@@ -22,7 +22,7 @@ export const op14eb04Kaido030: CharacterCard = {
   setId: "EB04",
   cost: 7,
   power: 9000,
-  traits: ["Animal Kingdom Pirates The Four Emperors"],
+  traits: ["The Four Emperors", "Animal Kingdom Pirates"],
   attribute: "strike",
   effect:
     "If this Character would be K.O.'d, you may return 1 DON!! card from your field to your DON!! deck instead. [On Play] DON!! -2: If your Leader has the {Animal Kingdom Pirates} type, this Character gains Rush during this turn. Then, rest up to 1 of your opponent's Characters with a cost of 7 or less.",
@@ -30,6 +30,13 @@ export const op14eb04Kaido030: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        postCostConditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Animal Kingdom Pirates",
+            match: "exact",
+          },
+        ],
         costs: [
           {
             cost: "returnDon",
@@ -49,11 +56,6 @@ export const op14eb04Kaido030: CharacterCard = {
             },
             keyword: "rush",
             duration: "thisTurn",
-            condition: {
-              condition: "leaderTrait",
-              trait: "Animal Kingdom Pirates",
-              match: "includes",
-            },
           },
           {
             action: "rest",

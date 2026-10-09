@@ -37,40 +37,29 @@ export const op16RoronoaZoro035: CharacterCard = {
             target: {
               player: "opponent",
               zones: ["leader", "character", "stage", "costArea"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
+              count: { amount: 1, upTo: true },
             },
           },
-        ],
-      },
-      {
-        trigger: "onPlay",
-        costs: [
           {
-            cost: "trashFromHand",
-            amount: 1,
-          },
-        ],
-        actions: [
-          {
-            action: "giveDon",
-            target: {
-              player: "self",
-              zones: ["leader"],
-              count: {
+            action: "optional",
+            actions: [
+              {
+                action: "trashFromHand",
+                player: "self",
                 amount: 1,
+                thenRequiresFullAmount: true,
+                thenActions: [
+                  {
+                    action: "giveDon",
+                    target: { player: "self", zones: ["leader"], count: { amount: 1 } },
+                    count: { amount: 3, upTo: true },
+                    donState: "rested",
+                  },
+                ],
               },
-            },
-            count: {
-              amount: 3,
-              upTo: true,
-            },
-            donState: "rested",
+            ],
           },
         ],
-        optional: true,
       },
     ],
   },

@@ -33,7 +33,7 @@ describe("OP11-082 Aramaki", () => {
     engine.declareAttack(tashigiId, activeTargetId, "south");
   });
 
-  test("pays its cost and mills, but grants no attack benefit without a Navy Leader", () => {
+  test("pays its cost but neither mills nor grants an attack benefit without a Navy Leader", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [op11Aramaki082, { card: op11Tashigi007, playedOnTurn: 0 }],
@@ -52,7 +52,7 @@ describe("OP11-082 Aramaki", () => {
 
     const view = engine.getView("south");
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(aramakiId);
-    expect(view.players.south.deckCount).toBe(deckBefore - 2);
+    expect(view.players.south.deckCount).toBe(deckBefore);
     expect(view.prompts).toHaveLength(0);
     expect(
       engine.expectFailure({

@@ -29,9 +29,13 @@ export const booInDisguise: CharacterCard = {
   willpower: 2,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_e6e95b8abb1a479eb56d044ffaadb281",
+    tcgPlayer: "704553",
+  },
   text: [
     {
-      title: "You're Safe Now",
+      title: "YOU'RE SAFE NOW",
       description:
         "While you have an exerted character named Sulley in play, this character can't be challenged.",
     },

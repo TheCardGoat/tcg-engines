@@ -23,7 +23,7 @@ export const op01Babanuki107: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   attribute: "ranged",
   i18n: op01Babanuki107I18n,
 };

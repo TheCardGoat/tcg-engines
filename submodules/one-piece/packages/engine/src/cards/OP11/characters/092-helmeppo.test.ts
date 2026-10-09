@@ -32,6 +32,37 @@ describe("OP11-092 Helmeppo", () => {
     expect(engine.findCardInZone("south", "deck", op11Hibari010)).toBe(playedId);
   });
 
+  test("does not bottom-deck a new Grus object after KO and replay", () => {
+    let engine = OnePieceTestEngine.create({
+      leaderCardId: "OP05-001",
+      character: ["ST27-005", "EB04-047"],
+      hand: [op11Helmeppo092, eb01Doma005],
+      trash: ["OP11-013"],
+      deck: [eb01Fourtricks025, eb01Doma005, eb01Doma005],
+      activeDon: 6,
+    });
+    const grus = engine.findCardInZone("south", "trash", "OP11-013");
+    const teach = engine.findCardInZone("south", "character", "ST27-005");
+    const replaySource = engine.findCardInZone("south", "character", "EB04-047");
+    engine.asSouth().play(op11Helmeppo092);
+    engine.asSouth().acceptOptional();
+    engine.asSouth().choosePlay(grus);
+    engine.asSouth().activateMain(teach);
+    engine.asSouth().acceptOptional();
+    engine.asSouth().chooseTargets(grus);
+    expect(engine.findCardInZone("south", "trash", "OP11-013")).toBe(grus);
+    engine.asSouth().activateMain(replaySource);
+    engine.asSouth().acceptOptional();
+    engine.asSouth().choosePlay(grus);
+    engine = OnePieceTestEngine.fromState(JSON.parse(JSON.stringify(engine.getState())));
+    engine.asSouth().endTurn();
+    expect(
+      engine.getView("south").players.south.characters.map((card) => card?.instanceId),
+    ).toContain(grus);
+    expect(engine.getView("south").players.south.deckCount).toBe(2);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("may decline optional so paid effect does not apply", () => {
     const engine = OnePieceTestEngine.create({
       hand: [op11Helmeppo092, eb01Doma005],
@@ -56,5 +87,24 @@ describe("OP11-092 Helmeppo", () => {
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("FAQ: may play the same SWORD Character discarded as its cost", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [op11Helmeppo092, op11Hibari010],
+      activeDon: op11Helmeppo092.cost,
+      deck: [eb01Fourtricks025, eb01Doma005],
+    });
+    const hibari = engine.findCardInZone("south", "hand", op11Hibari010);
+    engine.asSouth().play(op11Helmeppo092);
+    engine.asSouth().acceptOptional();
+    engine.asSouth().choosePlay(hibari);
+    expect(
+      engine.getView("south").players.south.characters.map((card) => card?.instanceId),
+    ).toContain(hibari);
+    expect(engine.getView("south").players.south.hand.map((card) => card.cardId)).toEqual([
+      eb01Fourtricks025.id,
+    ]);
+    engine.asSouth().endTurn();
+    expect(engine.findCardInZone("south", "deck", op11Hibari010)).toBe(hibari);
   });
 });

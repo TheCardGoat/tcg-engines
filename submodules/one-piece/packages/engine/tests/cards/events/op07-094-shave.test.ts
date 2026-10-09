@@ -28,6 +28,7 @@ describe("OP07-094 Shave", () => {
       "north",
     );
     engine.resolveDecision("effectTargetSelection", { selectedIds: [returnId] }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
     expect(engine.getView("north").players.north.hand.map((card) => card.instanceId)).toContain(
       returnId,
     );

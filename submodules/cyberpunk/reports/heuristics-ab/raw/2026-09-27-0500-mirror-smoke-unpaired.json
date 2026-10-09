@@ -1,0 +1,12 @@
+{
+  "aOff": [],
+  "bOff": [],
+  "games": 48,
+  "aWins": 17,
+  "aLosses": 31,
+  "draws": 0,
+  "aWinRate": 0.3542,
+  "failures": [],
+  "avgSteps": 77.6,
+  "elapsedMs": 40479
+}

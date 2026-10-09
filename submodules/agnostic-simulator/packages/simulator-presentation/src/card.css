@@ -1,0 +1,124 @@
+.tcg-card-surface {
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 70px;
+  height: 98px;
+  transform-origin: center;
+  border-radius: 5px;
+  background: #101a18;
+  will-change: transform;
+  box-shadow:
+    0 1px 2px #000b,
+    0 4px 7px #0006;
+}
+.tcg-card-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+    3px 17px 22px 2px #0008,
+    1px 7px 9px #0005;
+  opacity: var(--flight-elevation, 0);
+  pointer-events: none;
+}
+.tcg-card-face,
+.tcg-card-back {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 5px;
+}
+.tcg-card-face img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.tcg-card-face {
+  visibility: hidden;
+  background: #22352c;
+}
+.tcg-card-surface[data-face="true"] .tcg-card-face {
+  visibility: visible;
+}
+.tcg-card-surface[data-face="true"] .tcg-card-back {
+  visibility: hidden;
+}
+.tcg-card-back {
+  padding: 7%;
+  background: repeating-linear-gradient(45deg, #263c36 0 3px, #233832 3px 6px);
+  border: 3px solid #a09675;
+  box-shadow:
+    inset 0 0 0 3px #1a3028,
+    inset 0 0 0 4px #a0967566;
+  display: grid;
+  place-content: center;
+}
+.tcg-card-back span {
+  color: #d4c3a2;
+  font: 32px Georgia;
+  border: 1px solid #9e9374;
+  width: 42px;
+  height: 42px;
+  text-align: center;
+  transform: rotate(45deg);
+  background: #21372e;
+}
+.tcg-card-surface[data-selected="true"][data-interactive="true"] {
+  outline: 2px solid var(--selection-rim);
+  box-shadow:
+    0 0 14px var(--selection-glow),
+    0 2px 4px #0009;
+}
+.tcg-card-surface[data-interactive="true"] {
+  outline: 3px solid transparent;
+  transition: outline-color 160ms ease-out;
+}
+
+[data-reduced-motion="true"] .tcg-card-surface::before {
+  transition: none;
+}
+@media (max-width: 700px) {
+  .tcg-card-back span {
+    width: 24px;
+    height: 24px;
+    font-size: 19px;
+  }
+}
+.tcg-resolution-value {
+  position: absolute;
+  z-index: 80;
+  pointer-events: none;
+  color: #fff0d7;
+  font:
+    700 34px/1 Georgia,
+    serif;
+  text-shadow:
+    0 2px 3px #160b05,
+    0 0 8px #773812;
+  animation: tcg-impact-value 720ms ease-out both;
+}
+@keyframes tcg-impact-value {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -60%) scale(1.05);
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -105%) scale(1);
+  }
+}
+[data-reduced-motion="true"] .tcg-resolution-value {
+  animation: none;
+  transform: translate(-50%, -50%);
+}

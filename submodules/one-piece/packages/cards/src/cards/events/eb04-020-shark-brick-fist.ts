@@ -22,7 +22,7 @@ export const op14eb04SharkBrickFist020: EventCard = {
   setId: "EB04",
   cost: 1,
   trigger: "Rest up to 1 of your opponent's Characters with a cost of 4 or less.",
-  traits: ["Fish-Man The Sun Pirates Fish-Man Island"],
+  traits: ["Fish-Man", "Fish-Man Island", "The Sun Pirates"],
   effect:
     "[Counter] Up to 1 of your {Fish-Man} type Leader or Character cards gains +3000 power during this battle. Then, set up to 1 of your {Fish-Man} type Characters as active.",
   effects: {
@@ -43,7 +43,7 @@ export const op14eb04SharkBrickFist020: EventCard = {
                 {
                   filter: "trait",
                   value: "Fish-Man",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -63,7 +63,7 @@ export const op14eb04SharkBrickFist020: EventCard = {
                 {
                   filter: "trait",
                   value: "Fish-Man",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

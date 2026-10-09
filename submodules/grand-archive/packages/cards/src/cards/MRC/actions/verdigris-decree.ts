@@ -94,7 +94,7 @@ export const verdigrisDecree: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                 text: "Up to one target ally gets +2 POWER until end of turn.",
                 targets: [
                   {
-                    id: "target-1",
+                    id: "mode-2:target-1",
                     kind: "target",
                     declared: "announcement",
                     chooser: "controller",
@@ -117,7 +117,7 @@ export const verdigrisDecree: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                   kind: "continuous",
                   subjects: {
                     kind: "bound",
-                    binding: "target-1",
+                    binding: "mode-2:target-1",
                   },
                   affectedSet: "locked",
                   duration: {
@@ -141,7 +141,7 @@ export const verdigrisDecree: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                 text: "Destroy up to one target phantasia",
                 targets: [
                   {
-                    id: "target-1",
+                    id: "mode-3:target-1",
                     kind: "target",
                     declared: "announcement",
                     chooser: "controller",
@@ -164,7 +164,7 @@ export const verdigrisDecree: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                   kind: "destroy",
                   subject: {
                     kind: "bound",
-                    binding: "target-1",
+                    binding: "mode-3:target-1",
                   },
                 },
               },

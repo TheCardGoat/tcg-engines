@@ -1,0 +1,4714 @@
+{
+  "schemaVersion": 2,
+  "source": "https://api.netdeck.gg/api/faqs/cyberpunk?scope=card",
+  "verifiedDate": "2026-10-08",
+  "entries": [
+    {
+      "id": "ed0b637f-567a-418c-a759-ab8deb631ce4",
+      "question": "If a friendly Unit steals two d6s simultaneously, can I increase two Gigs?",
+      "answer": "Yes, the effect triggers for each stolen d6.",
+      "sources": [
+        {
+          "id": "ed0b637f-567a-418c-a759-ab8deb631ce4",
+          "slug": "6th-street-recruits",
+          "name": "6th Street Recruits"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "6th-street-recruits FAQ 1",
+          "faqIds": ["ed0b637f-567a-418c-a759-ab8deb631ce4"]
+        }
+      ]
+    },
+    {
+      "id": "4dc5a7cb-cb53-4a44-bcd4-33e373dafbd3",
+      "question": "Does Adam Smasher’s [PLAY] effect trigger when he is called or flipped face-up as a Legend?",
+      "answer": "No, the [PLAY] effect only activates when you play Adam Smasher to the field area.",
+      "sources": [
+        {
+          "id": "4dc5a7cb-cb53-4a44-bcd4-33e373dafbd3",
+          "slug": "adam-smasher-ender-of-legends",
+          "name": "Adam Smasher: Ender of Legends"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/adam-smasher-ender-of-legends.test.ts",
+          "title": "does not fire PLAY when it is Called rather than played",
+          "faqIds": ["4dc5a7cb-cb53-4a44-bcd4-33e373dafbd3"]
+        }
+      ]
+    },
+    {
+      "id": "439b43af-068f-4296-923b-fd7a55ec73a9",
+      "question": "Does Adam Smasher’s [PLAY] effect trigger when he Goes Solo?",
+      "answer": "Yes. [GO SOLO] plays Adam Smasher to the field area and triggers the [PLAY] effect.",
+      "sources": [
+        {
+          "id": "439b43af-068f-4296-923b-fd7a55ec73a9",
+          "slug": "adam-smasher-ender-of-legends",
+          "name": "Adam Smasher: Ender of Legends"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/adam-smasher-ender-of-legends.test.ts",
+          "title": "pays for GO SOLO, becomes attack-ready, and defeats exactly one chosen rival Unit on PLAY",
+          "faqIds": ["439b43af-068f-4296-923b-fd7a55ec73a9"]
+        }
+      ]
+    },
+    {
+      "id": "89104f80-8329-4ad9-85ff-cb23f3320d53",
+      "question": "If Adam Smasher is removed from the field area after being played to the field area is Adam Smasher removed from the game instead of being placed in the designated area?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "89104f80-8329-4ad9-85ff-cb23f3320d53",
+          "slug": "adam-smasher-ender-of-legends",
+          "name": "Adam Smasher: Ender of Legends"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/adam-smasher-ender-of-legends.test.ts",
+          "title": "is removed from the game when another real card defeats it after GO SOLO",
+          "faqIds": ["89104f80-8329-4ad9-85ff-cb23f3320d53"]
+        }
+      ]
+    },
+    {
+      "id": "321ab46b-ddf1-4110-9078-9e691a8267e6",
+      "question": "If Adam Smasher’s cost is reduced does that also reduce cost to activate [GO SOLO]?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "321ab46b-ddf1-4110-9078-9e691a8267e6",
+          "slug": "adam-smasher-ender-of-legends",
+          "name": "Adam Smasher: Ender of Legends"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "adam-smasher-ender-of-legends FAQ 4",
+          "faqIds": ["321ab46b-ddf1-4110-9078-9e691a8267e6"]
+        }
+      ]
+    },
+    {
+      "id": "a40401c6-6467-486a-9e91-a0e95a95b210",
+      "question": "If I manage to play Adam Smasher on my Rival's turn. Does it still get the [PLAY] effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "a40401c6-6467-486a-9e91-a0e95a95b210",
+          "slug": "adam-smasher-metal-over-meat",
+          "name": "Adam Smasher: Metal Over Meat"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "adam-smasher-metal-over-meat FAQ 1",
+          "faqIds": ["a40401c6-6467-486a-9e91-a0e95a95b210"]
+        }
+      ]
+    },
+    {
+      "id": "fc82d674-d5c0-42f8-9fd9-a47a71be9ec7",
+      "question": "If my Rival controls exactly 2 more Gigs than me when I play Adrenline Converter but I steal a Gig before I attack with the equipped Unit,  does it still have [ADRENALINE]?",
+      "answer": "No, the Unit only has [ADRENALINE] while the conditions are met.",
+      "sources": [
+        {
+          "id": "fc82d674-d5c0-42f8-9fd9-a47a71be9ec7",
+          "slug": "adrenaline-converter",
+          "name": "Adrenaline Converter"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/gear/adrenaline-converter.test.ts",
+          "title": "continuously loses Adrenaline when another friendly Unit closes the Gig gap",
+          "faqIds": ["fc82d674-d5c0-42f8-9fd9-a47a71be9ec7"]
+        }
+      ]
+    },
+    {
+      "id": "e81b51a1-5dd8-4a2b-9bb8-28b93b227bee",
+      "question": "If I choose not to adjust a Gig, can I still draw 1 if I control 2 or more Gigs with different values?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "e81b51a1-5dd8-4a2b-9bb8-28b93b227bee",
+          "slug": "afterparty-at-lizzie-s",
+          "name": "Afterparty at Lizzie's"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "afterparty-at-lizzie-s FAQ 1",
+          "faqIds": ["e81b51a1-5dd8-4a2b-9bb8-28b93b227bee"]
+        }
+      ]
+    },
+    {
+      "id": "6f7d6a80-3536-4417-bbb8-c27485f07557",
+      "question": "If All is Lost trashes one or more Units, do I have to add them to my hand  even if I don't want to?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "6f7d6a80-3536-4417-bbb8-c27485f07557",
+          "slug": "all-is-lost",
+          "name": "All is Lost"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/all-is-lost.test.ts",
+          "title": "pays 1, trashes exactly the top 3, and offers only their Units to its controller",
+          "faqIds": ["6f7d6a80-3536-4417-bbb8-c27485f07557"]
+        }
+      ]
+    },
+    {
+      "id": "086fb943-7bfb-4fee-8645-01f3cf132232",
+      "question": "If All is Lost's effect trashes no Units, can I still add a Unit to my hand?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "086fb943-7bfb-4fee-8645-01f3cf132232",
+          "slug": "all-is-lost",
+          "name": "All is Lost"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/all-is-lost.test.ts",
+          "title": "trashes 3 non-Units and continues without offering an impossible Unit choice",
+          "faqIds": ["086fb943-7bfb-4fee-8645-01f3cf132232"]
+        }
+      ]
+    },
+    {
+      "id": "8227301d-f845-4e94-b4ff-556fd7c9e5d0",
+      "question": "If I have fewer than 3 cards in my deck, can I still play All is Lost?",
+      "answer": "Yes. Trash as many cards as possible, instead.",
+      "sources": [
+        {
+          "id": "8227301d-f845-4e94-b4ff-556fd7c9e5d0",
+          "slug": "all-is-lost",
+          "name": "All is Lost"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/all-is-lost.test.ts",
+          "title": "trashes as many as possible from a two-card deck and can recover its Unit",
+          "faqIds": ["8227301d-f845-4e94-b4ff-556fd7c9e5d0"]
+        }
+      ]
+    },
+    {
+      "id": "9c300537-ed1f-4196-a9c7-076dc5fd4603",
+      "question": "Do both effects work on either players turn?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "9c300537-ed1f-4196-a9c7-076dc5fd4603",
+          "slug": "alt-cunningham-mother-of-daemons",
+          "name": "Alt Cunningham: Mother of Daemons"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "alt-cunningham-mother-of-daemons FAQ 1",
+          "faqIds": ["9c300537-ed1f-4196-a9c7-076dc5fd4603"]
+        }
+      ]
+    },
+    {
+      "id": "f6e95797-6d5e-4a78-b1ab-dbc01b1821f4",
+      "question": "Does Alt Cunningham's first effect apply to Programs played from Trash, too?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "f6e95797-6d5e-4a78-b1ab-dbc01b1821f4",
+          "slug": "alt-cunningham-soulkiller-architect",
+          "name": "Alt Cunningham: Soulkiller Architect"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "alt-cunningham-soulkiller-architect FAQ 1",
+          "faqIds": ["f6e95797-6d5e-4a78-b1ab-dbc01b1821f4"]
+        }
+      ]
+    },
+    {
+      "id": "c2b026c3-6e44-4b3e-97db-abef28faa220",
+      "question": "If I ready Alt Cunningham after using her first effect and use it again before playing a Program, does the discount stack?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "c2b026c3-6e44-4b3e-97db-abef28faa220",
+          "slug": "alt-cunningham-soulkiller-architect",
+          "name": "Alt Cunningham: Soulkiller Architect"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "alt-cunningham-soulkiller-architect FAQ 2",
+          "faqIds": ["c2b026c3-6e44-4b3e-97db-abef28faa220"]
+        }
+      ]
+    },
+    {
+      "id": "dd4138dc-c8ee-4d08-899a-d3f69fb00fc7",
+      "question": "I activated Alt Cunningham's first effect with 2 friendly min Gigs, but before I play my next Program I acquire a 3rd min Gig. Does my next Program play for -3 €$ instead of -2€$?",
+      "answer": "No, the reduction amount is determined when you activate the effect.",
+      "sources": [
+        {
+          "id": "dd4138dc-c8ee-4d08-899a-d3f69fb00fc7",
+          "slug": "alt-cunningham-soulkiller-architect",
+          "name": "Alt Cunningham: Soulkiller Architect"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/alt-cunningham-soulkiller-architect.test.ts",
+          "title": "captures the friendly min-Gig count for the next Program only",
+          "faqIds": ["dd4138dc-c8ee-4d08-899a-d3f69fb00fc7"]
+        }
+      ]
+    },
+    {
+      "id": "f7e7ce23-ddae-4f92-a770-e2e7a0fe368e",
+      "question": "When I play Appetite for Destruction, do I choose a friendly Unit, or can any friendly Unit satisfy the effect later this turn?",
+      "answer": "You must choose a friendly Unit when you play this card. The condition will only be met when that Unit wins a fight.",
+      "sources": [
+        {
+          "id": "f7e7ce23-ddae-4f92-a770-e2e7a0fe368e",
+          "slug": "appetite-for-destruction",
+          "name": "Appetite for Destruction"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/appetite-for-destruction.test.ts",
+          "title": "lets the next friendly Unit that wins by 3 power steal a chosen Gig",
+          "faqIds": ["f7e7ce23-ddae-4f92-a770-e2e7a0fe368e"]
+        }
+      ],
+      "conflict": {
+        "reason": "The FAQ requires choosing one Unit when played. Current retail text applies to the next friendly Unit that wins a fight by 3+ power, without choosing one on play.",
+        "policy": "Awaiting source-policy decision; preserve current card text and CR behavior.",
+        "cardSource": "https://cyberpunktcg.com/cards/appetite-for-destruction",
+        "rulesSource": "https://cyberpunktcg.com/comprehensive-rules"
+      }
+    },
+    {
+      "id": "dd350a6e-8ee0-4c1f-9418-2d22a5160c40",
+      "question": "If a Unit steals a Gig because of Appetite for Destruction, does that count as that Unit stealing a Gig for effects that trigger when that Unit steals a Gig?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "dd350a6e-8ee0-4c1f-9418-2d22a5160c40",
+          "slug": "appetite-for-destruction",
+          "name": "Appetite for Destruction"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "appetite-for-destruction FAQ 2",
+          "faqIds": ["dd350a6e-8ee0-4c1f-9418-2d22a5160c40"]
+        }
+      ]
+    },
+    {
+      "id": "82802953-08ff-450a-8630-517546b3091a",
+      "question": "If the friendly Unit cannot defeat the rival Unit but still wins the fight, does it still steal a Gig?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "82802953-08ff-450a-8630-517546b3091a",
+          "slug": "appetite-for-destruction",
+          "name": "Appetite for Destruction"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "appetite-for-destruction FAQ 3",
+          "faqIds": ["82802953-08ff-450a-8630-517546b3091a"]
+        }
+      ]
+    },
+    {
+      "id": "d3587386-2389-4745-b6e9-8953bc790bfe",
+      "question": "If the equipped Unit or Legend is spent as part of an attack, can Arasaka Emergency Radioport Call a Legend before that Unit’s [ATTACK] effect resolves?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "d3587386-2389-4745-b6e9-8953bc790bfe",
+          "slug": "arasaka-emergency-radioport",
+          "name": "Arasaka Emergency Radioport"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "arasaka-emergency-radioport FAQ 1",
+          "faqIds": ["d3587386-2389-4745-b6e9-8953bc790bfe"]
+        }
+      ]
+    },
+    {
+      "id": "1dc1d892-bdbf-46a6-a217-ab452b6c0c63",
+      "question": "Can I use [BLOCKER] even if my Rival has no cards in their hand?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "1dc1d892-bdbf-46a6-a217-ab452b6c0c63",
+          "slug": "augmented-negotiators",
+          "name": "Augmented Negotiators"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/augmented-negotiators.test.ts",
+          "title": "resolves without a discard choice when the attacking Rival has no cards in hand",
+          "faqIds": ["1dc1d892-bdbf-46a6-a217-ab452b6c0c63"]
+        }
+      ]
+    },
+    {
+      "id": "b3bcae3f-acb3-4891-a985-4d69fea65fc7",
+      "question": "If a Rival controls at least 2 more Gigs than me, can I still choose to defeat only one Unit?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "b3bcae3f-acb3-4891-a985-4d69fea65fc7",
+          "slug": "bonnie-and-clyde",
+          "name": "Bonnie and Clyde"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/bonnie-and-clyde.test.ts",
+          "title": "only defeats 1 of the valid targets even when the condition is met (player's choice)",
+          "faqIds": ["b3bcae3f-acb3-4891-a985-4d69fea65fc7"]
+        }
+      ]
+    },
+    {
+      "id": "63c9a5f8-27f2-485d-a779-79587ac49d91",
+      "question": "Do I reveal or get to look at the card I am selling?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "63c9a5f8-27f2-485d-a779-79587ac49d91",
+          "slug": "bootleg-black-sapphire-show",
+          "name": "Bootleg Black Sapphire Show"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "Bootleg current Sell reveal behavior (source conflict)",
+          "faqIds": ["63c9a5f8-27f2-485d-a779-79587ac49d91"]
+        }
+      ],
+      "conflict": {
+        "reason": "The FAQ says to sell the top card without revealing it. CR 11.9.1 defines Sell as revealing the card before placing it face-down. Current retail text only says Sell the top card.",
+        "policy": "Awaiting source-policy decision; preserve current card text and CR behavior.",
+        "cardSource": "https://cyberpunktcg.com/cards/bootleg-black-sapphire-show",
+        "rulesSource": "https://cyberpunktcg.com/comprehensive-rules"
+      }
+    },
+    {
+      "id": "71cfd404-4021-41e1-bebe-a468e11f0a3d",
+      "question": "If the top card of my deck doesn't have a sell tag, do I still sell it for this effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "71cfd404-4021-41e1-bebe-a468e11f0a3d",
+          "slug": "bootleg-black-sapphire-show",
+          "name": "Bootleg Black Sapphire Show"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/bootleg-black-sapphire-show.test.ts",
+          "title": "still sells the top card but does not draw without both even and odd friendly Gigs",
+          "faqIds": ["71cfd404-4021-41e1-bebe-a468e11f0a3d"]
+        }
+      ]
+    },
+    {
+      "id": "68737f4d-0d40-42b9-b490-30d02b06544f",
+      "question": "If I already sold a card during my main phase, can I still sell a card from Bootleg Sapphire's effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "68737f4d-0d40-42b9-b490-30d02b06544f",
+          "slug": "bootleg-black-sapphire-show",
+          "name": "Bootleg Black Sapphire Show"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "bootleg-black-sapphire-show FAQ 3",
+          "faqIds": ["68737f4d-0d40-42b9-b490-30d02b06544f"]
+        }
+      ]
+    },
+    {
+      "id": "31c66530-6c62-4ba8-a521-e34ec9be6b01",
+      "question": "Do I have to defeat a rival Unit with cost 2 or less even if I don't want to?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "31c66530-6c62-4ba8-a521-e34ec9be6b01",
+          "slug": "caliber-totentanz-s-top-dog",
+          "name": "Caliber: Totentanz's Top Dog"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/caliber-totentanz-s-top-dog.test.ts",
+          "title": "on play defeats a rival unit with cost two or less",
+          "faqIds": ["31c66530-6c62-4ba8-a521-e34ec9be6b01"]
+        },
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "caliber-totentanz-s-top-dog FAQ 1",
+          "faqIds": ["31c66530-6c62-4ba8-a521-e34ec9be6b01"]
+        }
+      ]
+    },
+    {
+      "id": "03bc1552-a6ba-410b-8c26-4fbc895a57d5",
+      "question": "If the second card my Rival discards also has a cost equal to a friendly Gig, does my rival have to discard again?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "03bc1552-a6ba-410b-8c26-4fbc895a57d5",
+          "slug": "caliber-totentanz-s-top-dog",
+          "name": "Caliber: Totentanz's Top Dog"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/caliber-totentanz-s-top-dog.test.ts",
+          "title": "logs the additional discard when the discarded card cost matches a friendly Gig",
+          "faqIds": ["03bc1552-a6ba-410b-8c26-4fbc895a57d5"]
+        }
+      ]
+    },
+    {
+      "id": "31ed50ec-6a68-4eff-9f47-fc232e4e90e6",
+      "question": "When I play this Program for less because of it's effect does that change the cost of the card too?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "31ed50ec-6a68-4eff-9f47-fc232e4e90e6",
+          "slug": "carnage-at-the-colosseum",
+          "name": "Carnage at the Colosseum"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "carnage-at-the-colosseum FAQ 1",
+          "faqIds": ["31ed50ec-6a68-4eff-9f47-fc232e4e90e6"]
+        }
+      ]
+    },
+    {
+      "id": "42c38a1d-103c-4c9a-adf0-e199853a16e9",
+      "question": "Does Chrome Fang’s effect apply to all rival Units?",
+      "answer": "Yes. Including any new rival Units played after Chrome Fang.",
+      "sources": [
+        {
+          "id": "42c38a1d-103c-4c9a-adf0-e199853a16e9",
+          "slug": "chrome-fang",
+          "name": "Chrome Fang"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "chrome-fang FAQ 1",
+          "faqIds": ["42c38a1d-103c-4c9a-adf0-e199853a16e9"]
+        }
+      ]
+    },
+    {
+      "id": "eb37dc38-f33d-49c8-aade-383f879945c8",
+      "question": "Does Chrome Fang’s effect continue to apply if Chrome Fang leaves the field before your next turn?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "eb37dc38-f33d-49c8-aade-383f879945c8",
+          "slug": "chrome-fang",
+          "name": "Chrome Fang"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/chrome-fang.test.ts",
+          "title": "keeps its until-next-turn steal restriction after leaving the field",
+          "faqIds": ["eb37dc38-f33d-49c8-aade-383f879945c8"]
+        }
+      ]
+    },
+    {
+      "id": "28a0d1ab-e3a1-4dd4-a952-b0ad4403f831",
+      "question": "If my rival Unit has power 6 can it steal a friendly Gig with value 6?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "28a0d1ab-e3a1-4dd4-a952-b0ad4403f831",
+          "slug": "chrome-fang",
+          "name": "Chrome Fang"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/chrome-fang.test.ts",
+          "title": "still allows stealing a Gig whose value equals the attacker's power",
+          "faqIds": ["28a0d1ab-e3a1-4dd4-a952-b0ad4403f831"]
+        }
+      ]
+    },
+    {
+      "id": "18a0c359-400b-43de-9055-c7fc79baf415",
+      "question": "What happens if a rival Unit attacks my Gig area while Chrome Fang's effect is active, but all friendly Gig values are higher than its power?",
+      "answer": "The attack still happens, but the rival Unit does not steal any Gigs.",
+      "sources": [
+        {
+          "id": "18a0c359-400b-43de-9055-c7fc79baf415",
+          "slug": "chrome-fang",
+          "name": "Chrome Fang"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/chrome-fang.test.ts",
+          "title": "stops a rival Unit from stealing a Gig valued higher than its power",
+          "faqIds": ["18a0c359-400b-43de-9055-c7fc79baf415"]
+        }
+      ]
+    },
+    {
+      "id": "fa5d28f5-57df-451f-8246-cd8949f324ad",
+      "question": "If an effect says a Unit steals an additional Gig (like Gorilla Arms), does Chrome Fang's effect apply?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "fa5d28f5-57df-451f-8246-cd8949f324ad",
+          "slug": "chrome-fang",
+          "name": "Chrome Fang"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/chrome-fang.test.ts",
+          "title": "also filters a rival Unit's card-driven Gig steal",
+          "faqIds": ["fa5d28f5-57df-451f-8246-cd8949f324ad"]
+        }
+      ]
+    },
+    {
+      "id": "9caf46ed-3bf8-4dd7-9110-7d9e147e821e",
+      "question": "If I the chosen rival Unit that can't attack until my next turn is given the effect to attack. Can it?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "9caf46ed-3bf8-4dd7-9110-7d9e147e821e",
+          "slug": "chrome-reverie",
+          "name": "Chrome Reverie"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "chrome-reverie FAQ 1",
+          "faqIds": ["9caf46ed-3bf8-4dd7-9110-7d9e147e821e"]
+        }
+      ]
+    },
+    {
+      "id": "5139f71f-b1f8-4819-8a83-51880067dbea",
+      "question": "What is a min Gig?",
+      "answer": "A Gig showing it's 1 value.",
+      "sources": [
+        {
+          "id": "5139f71f-b1f8-4819-8a83-51880067dbea",
+          "slug": "chrome-reverie",
+          "name": "Chrome Reverie"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/chrome-reverie.test.ts",
+          "title": "may Call a Legend for free when it controls a min Gig",
+          "faqIds": ["5139f71f-b1f8-4819-8a83-51880067dbea"]
+        },
+        {
+          "file": "packages/engine/src/cards/programs/chrome-reverie.test.ts",
+          "title": "does not Call for a non-min friendly Gig or a min rival Gig",
+          "faqIds": ["5139f71f-b1f8-4819-8a83-51880067dbea"]
+        }
+      ]
+    },
+    {
+      "id": "1dc8b307-ebd1-43e8-9d14-d11a7893c1d1",
+      "question": "When resolving this effect and do not choose to Call a Legend for free. Can I call a Legend for free later in the turn from this effect?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "1dc8b307-ebd1-43e8-9d14-d11a7893c1d1",
+          "slug": "chrome-reverie",
+          "name": "Chrome Reverie"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "chrome-reverie FAQ 3",
+          "faqIds": ["1dc8b307-ebd1-43e8-9d14-d11a7893c1d1"]
+        }
+      ]
+    },
+    {
+      "id": "4496adf7-0641-4c06-a1f7-6eb120c075bf",
+      "question": "Can I play this card without a rival Unit on the field?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "4496adf7-0641-4c06-a1f7-6eb120c075bf",
+          "slug": "corporate-surveillance",
+          "name": "Corporate Surveillance"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/corporate-surveillance.test.ts",
+          "title": "resolves and moves to trash when no ready rival Unit costs 4 or less",
+          "faqIds": ["4496adf7-0641-4c06-a1f7-6eb120c075bf"]
+        }
+      ]
+    },
+    {
+      "id": "00513475-b873-4eec-b582-c8bb969fe1e5",
+      "question": "Can I choose a Unit that's already spent for this card's effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "00513475-b873-4eec-b582-c8bb969fe1e5",
+          "slug": "corporate-surveillance",
+          "name": "Corporate Surveillance"
+        },
+        {
+          "id": "5e7e7fa9-d975-45fd-aaaf-27cd449ac788",
+          "slug": "memory-relapse",
+          "name": "Memory Relapse"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/corporate-surveillance.test.ts",
+          "title": "targets an already-spent rival Unit: the spend no-ops and the program still resolves",
+          "faqIds": ["00513475-b873-4eec-b582-c8bb969fe1e5"]
+        },
+        {
+          "file": "packages/engine/src/cards/programs/memory-relapse.test.ts",
+          "title": "targets an already-spent rival Unit: the spend no-ops, the lock holds, and even Street Cred draws",
+          "faqIds": ["5e7e7fa9-d975-45fd-aaaf-27cd449ac788"]
+        }
+      ]
+    },
+    {
+      "id": "030e8902-1692-4ba3-86de-56b83c036897",
+      "question": "If this Unit gains [ADRENALINE] the turn it's played, can it attack?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "030e8902-1692-4ba3-86de-56b83c036897",
+          "slug": "corpo-security",
+          "name": "Corpo Security"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "corpo-security FAQ 1",
+          "faqIds": ["030e8902-1692-4ba3-86de-56b83c036897"]
+        }
+      ]
+    },
+    {
+      "id": "b59cc194-67ee-4b3e-9e4e-6858131f2903",
+      "question": "Can I choose an equipped rival Unit with this effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "b59cc194-67ee-4b3e-9e4e-6858131f2903",
+          "slug": "cyberpsychosis",
+          "name": "Cyberpsychosis"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/cyberpsychosis.test.ts",
+          "title": "can target a rival equipped attacker as a QUICK reaction and defeats it after it steals",
+          "faqIds": ["b59cc194-67ee-4b3e-9e4e-6858131f2903"]
+        }
+      ]
+    },
+    {
+      "id": "0f661d5c-bfc7-4c2a-8174-b4f98e7d8b61",
+      "question": "If I play this Program [QUICK] as a reaction and choose the attacking rival Unit for the effect, what happens?",
+      "answer": "The rival Unit gets the power boost for the ensuing fight and is defeated at the end of the turn.",
+      "sources": [
+        {
+          "id": "0f661d5c-bfc7-4c2a-8174-b4f98e7d8b61",
+          "slug": "cyberpsychosis",
+          "name": "Cyberpsychosis"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/cyberpsychosis.test.ts",
+          "title": "can target a rival equipped attacker as a QUICK reaction and defeats it after it steals",
+          "faqIds": ["0f661d5c-bfc7-4c2a-8174-b4f98e7d8b61"]
+        }
+      ]
+    },
+    {
+      "id": "0a4c62a0-f5aa-4b7e-9341-db86caf28c81",
+      "question": "If a Unit  under the effect of Cyberpsychosis attacks but does not make it to the Fight or Steal step, is it still defeated at the end of the turn?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "0a4c62a0-f5aa-4b7e-9341-db86caf28c81",
+          "slug": "cyberpsychosis",
+          "name": "Cyberpsychosis"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "cyberpsychosis FAQ 3",
+          "faqIds": ["0a4c62a0-f5aa-4b7e-9341-db86caf28c81"]
+        }
+      ]
+    },
+    {
+      "id": "307b211e-ebe4-46db-9baa-e652918576fe",
+      "question": "If a Unit or Legend with two or more Deadman Transmitters is defeated, do I have to defeat both Deadman Transmitters?",
+      "answer": "No, choose one of them.",
+      "sources": [
+        {
+          "id": "307b211e-ebe4-46db-9baa-e652918576fe",
+          "slug": "deadman-transmitter",
+          "name": "Deadman Transmitter"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/gear/deadman-transmitter.test.ts",
+          "title": "lets the affected player choose between multiple mandatory Transmitter replacements",
+          "faqIds": ["307b211e-ebe4-46db-9baa-e652918576fe"]
+        }
+      ]
+    },
+    {
+      "id": "4b85693e-f6d3-4895-8606-e9917f6c706a",
+      "question": "If Deadman Transmitter protects a Unit from being defeated in a fight did that Unit still lose the fight?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "4b85693e-f6d3-4895-8606-e9917f6c706a",
+          "slug": "deadman-transmitter",
+          "name": "Deadman Transmitter"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "deadman-transmitter FAQ 2",
+          "faqIds": ["4b85693e-f6d3-4895-8606-e9917f6c706a"]
+        }
+      ]
+    },
+    {
+      "id": "59552a2f-6661-4130-95cd-6f119a95f6b6",
+      "question": "If this Unit steals a Gig but is no longer in the field area at the end of the turn, do I still ready 1 Eddie?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "59552a2f-6661-4130-95cd-6f119a95f6b6",
+          "slug": "delamain-cab",
+          "name": "Delamain Cab"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/delamain-cab.test.ts",
+          "title": "does not trigger if it stole a Gig but left play before the end of turn",
+          "faqIds": ["59552a2f-6661-4130-95cd-6f119a95f6b6"]
+        }
+      ]
+    },
+    {
+      "id": "cdc01e4e-6e36-43a8-a193-90564776528d",
+      "question": "Do I have to Draw 2 with this card's [PLAY] effect even if I don't want to?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "cdc01e4e-6e36-43a8-a193-90564776528d",
+          "slug": "delamain-rideshare-ai",
+          "name": "Delamain: Rideshare AI"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/delamain-rideshare-ai.test.ts",
+          "title": "draws 2 on Play",
+          "faqIds": ["cdc01e4e-6e36-43a8-a193-90564776528d"]
+        }
+      ]
+    },
+    {
+      "id": "2ae2b855-aecf-4b12-9858-234649764cf1",
+      "question": "Can Detonate defeat Gear equipped to a face-up Legend?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "2ae2b855-aecf-4b12-9858-234649764cf1",
+          "slug": "detonate",
+          "name": "Detonate"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "detonate FAQ 1",
+          "faqIds": ["2ae2b855-aecf-4b12-9858-234649764cf1"]
+        }
+      ]
+    },
+    {
+      "id": "c459acd1-042d-47ae-9278-3cdd05d98283",
+      "question": "Can I play Detonate if there are no rival Gears in play?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "c459acd1-042d-47ae-9278-3cdd05d98283",
+          "slug": "detonate",
+          "name": "Detonate"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "detonate FAQ 2",
+          "faqIds": ["c459acd1-042d-47ae-9278-3cdd05d98283"]
+        }
+      ]
+    },
+    {
+      "id": "47feaf18-6dff-4cf7-b24f-ba01d2a92514",
+      "question": "If I don't have a friendly Unit on the field when I call Dexter Deshawn, do I have to choose Draw 1?",
+      "answer": "No, you can still choose the other effect, it just fails.",
+      "sources": [
+        {
+          "id": "47feaf18-6dff-4cf7-b24f-ba01d2a92514",
+          "slug": "dexter-deshawn-off-the-grid",
+          "name": "Dexter DeShawn: Off the Grid"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "dexter-deshawn-off-the-grid FAQ 1",
+          "faqIds": ["47feaf18-6dff-4cf7-b24f-ba01d2a92514"]
+        }
+      ]
+    },
+    {
+      "id": "f868fe18-6a35-457a-9ed5-004b48956db9",
+      "question": "If I call Dexter Deshawn as a reaction, can I play a [QUICK] card that I drew off of Dexter's effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "f868fe18-6a35-457a-9ed5-004b48956db9",
+          "slug": "dexter-deshawn-off-the-grid",
+          "name": "Dexter DeShawn: Off the Grid"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "dexter-deshawn-off-the-grid FAQ 2",
+          "faqIds": ["f868fe18-6a35-457a-9ed5-004b48956db9"]
+        }
+      ]
+    },
+    {
+      "id": "2a8619f2-2d2b-4b22-a190-623617b0b515",
+      "question": "Can Dexter Deshawn ’s [Spend Icon:] effect increase either a friendly Gig or a rival Gig?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "2a8619f2-2d2b-4b22-a190-623617b0b515",
+          "slug": "dexter-deshawn-off-the-grid",
+          "name": "Dexter DeShawn: Off the Grid"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/dexter-deshawn-off-the-grid.test.ts",
+          "title": "spends to increase any player's Gig by up to 2",
+          "faqIds": ["2a8619f2-2d2b-4b22-a190-623617b0b515"]
+        }
+      ]
+    },
+    {
+      "id": "ac95df60-d8dd-44bc-b04f-1246a08a8540",
+      "question": "With the [Play] and [Attack] effect. If I choose to adjust up to 0. Does that still count as adjusting a Gig?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "ac95df60-d8dd-44bc-b04f-1246a08a8540",
+          "slug": "dexter-deshawn-one-last-chance",
+          "name": "Dexter DeShawn: One Last Chance"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "dexter-deshawn-one-last-chance FAQ 1",
+          "faqIds": ["ac95df60-d8dd-44bc-b04f-1246a08a8540"]
+        }
+      ]
+    },
+    {
+      "id": "fc26a153-0d04-43ec-8f94-beaa97ce3a93",
+      "question": "If all rival Units are already spent, can I still use this card?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "fc26a153-0d04-43ec-8f94-beaa97ce3a93",
+          "slug": "don-t-fear-the-reaper",
+          "name": "(Don't Fear) The Reaper"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/don-t-fear-the-reaper.test.ts",
+          "title": "does not emit a spend event for a rival Unit that is already spent",
+          "faqIds": ["fc26a153-0d04-43ec-8f94-beaa97ce3a93"]
+        }
+      ]
+    },
+    {
+      "id": "1715a8ca-857b-4dcc-9c1c-4782ccd13c04",
+      "question": "Can I defeat a spent Unit that I did not spend with this effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "1715a8ca-857b-4dcc-9c1c-4782ccd13c04",
+          "slug": "don-t-fear-the-reaper",
+          "name": "(Don't Fear) The Reaper"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/don-t-fear-the-reaper.test.ts",
+          "title": "can defeat a friendly spent Unit after spending rivals",
+          "faqIds": ["1715a8ca-857b-4dcc-9c1c-4782ccd13c04"]
+        }
+      ]
+    },
+    {
+      "id": "94144c1c-7f0c-4bb0-898f-a9edaa1d0cd9",
+      "question": "Can Dum Dum’s [QUICK] effect choose a friendly Unit with no equipped Gear?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "94144c1c-7f0c-4bb0-898f-a9edaa1d0cd9",
+          "slug": "dum-dum-maelstrom-triggerman",
+          "name": "Dum Dum: Maelstrom Triggerman"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/dum-dum-maelstrom-triggerman.test.ts",
+          "title": "pays and spends for +0 when the chosen friendly Unit has no equipped Gear",
+          "faqIds": ["94144c1c-7f0c-4bb0-898f-a9edaa1d0cd9"]
+        }
+      ]
+    },
+    {
+      "id": "bfb1adc4-7e30-4d4c-8219-c62ee23df515",
+      "question": "If the chosen Unit gains or loses Gear after Dum Dum’s [QUICK] effect resolves, does the power bonus change?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "bfb1adc4-7e30-4d4c-8219-c62ee23df515",
+          "slug": "dum-dum-maelstrom-triggerman",
+          "name": "Dum Dum: Maelstrom Triggerman"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "dum-dum-maelstrom-triggerman FAQ 2",
+          "faqIds": ["bfb1adc4-7e30-4d4c-8219-c62ee23df515"]
+        }
+      ]
+    },
+    {
+      "id": "5f960b7a-2008-4b2c-bbfd-ec852848651f",
+      "question": "If I choose not to decrease a Gig, can I still ready 2 Eddies at the end of my turn if the equipped Unit is named \"V\"?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "5f960b7a-2008-4b2c-bbfd-ec852848651f",
+          "slug": "dying-night-v-s-pistol",
+          "name": "Dying Night: V's Pistol"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "dying-night-v-s-pistol FAQ 1",
+          "faqIds": ["5f960b7a-2008-4b2c-bbfd-ec852848651f"]
+        }
+      ]
+    },
+    {
+      "id": "881c635b-268e-4855-8617-a84587951a8f",
+      "question": "If this Gear is attached to a Unit named \"V\" and the Unit attacks but is defeated before the end of the turn, can I still ready 2 Eddies?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "881c635b-268e-4855-8617-a84587951a8f",
+          "slug": "dying-night-v-s-pistol",
+          "name": "Dying Night: V's Pistol"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "Dying Night current end-turn text needs its host in play (source conflict)",
+          "faqIds": ["881c635b-268e-4855-8617-a84587951a8f"]
+        }
+      ],
+      "conflict": {
+        "reason": "The FAQ keeps an end-of-turn Eddie ready effect after the host leaves. Current retail text is a separate end-of-turn ability, which needs the Gear and host in play to trigger.",
+        "policy": "Awaiting source-policy decision; preserve current card text and CR behavior.",
+        "cardSource": "https://cyberpunktcg.com/cards/dying-night-v-s-pistol",
+        "rulesSource": "https://cyberpunktcg.com/comprehensive-rules"
+      }
+    },
+    {
+      "id": "2984e648-802f-48da-9ecd-0e0c0434f9e3",
+      "question": "If I control multiple friendly max Gigs, can I choose which one El Sombrerón's effect uses?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "2984e648-802f-48da-9ecd-0e0c0434f9e3",
+          "slug": "el-sombrero-n-la-venganza-lenta",
+          "name": "El Sombrerón: La Venganza Lenta"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/el-sombreron-la-venganza-lenta.test.ts",
+          "title": "asks which friendly max Gig to use when multiple are available",
+          "faqIds": ["2984e648-802f-48da-9ecd-0e0c0434f9e3"]
+        }
+      ]
+    },
+    {
+      "id": "71386fef-475e-4a5f-9a81-084f6a32f02b",
+      "question": "If the value of my chosen friendly max Gig changes later in the turn, does El Sombrerón’s gained power change too?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "71386fef-475e-4a5f-9a81-084f6a32f02b",
+          "slug": "el-sombrero-n-la-venganza-lenta",
+          "name": "El Sombrerón: La Venganza Lenta"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "el-sombrero-n-la-venganza-lenta FAQ 2",
+          "faqIds": ["71386fef-475e-4a5f-9a81-084f6a32f02b"]
+        }
+      ]
+    },
+    {
+      "id": "a51b1f00-a914-4586-8baf-9926b76fcbec",
+      "question": "If I do not control a friendly max Gig can I still pay 2 €$ for El Sombrerón’s effect?",
+      "answer": "Yes, but El Sombrerón won't gain any power from it.",
+      "sources": [
+        {
+          "id": "a51b1f00-a914-4586-8baf-9926b76fcbec",
+          "slug": "el-sombrero-n-la-venganza-lenta",
+          "name": "El Sombrerón: La Venganza Lenta"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "el-sombrero-n-la-venganza-lenta FAQ 3",
+          "faqIds": ["a51b1f00-a914-4586-8baf-9926b76fcbec"]
+        }
+      ]
+    },
+    {
+      "id": "6f60b8fc-5126-488c-9aeb-5ee39226a5f0",
+      "question": "If a rival Unit chosen by Evenlyn Parker's second effect makes an attack and then readies in the same turn, is it forced to make another attack?",
+      "answer": "Yes; as long as the chosen Unit can attack, your Rival cannot end their turn until it attacks.",
+      "sources": [
+        {
+          "id": "6f60b8fc-5126-488c-9aeb-5ee39226a5f0",
+          "slug": "evelyn-parker-beautiful-enigma",
+          "name": "Evelyn Parker: Beautiful Enigma"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "evelyn-parker-beautiful-enigma FAQ 1",
+          "faqIds": ["6f60b8fc-5126-488c-9aeb-5ee39226a5f0"]
+        }
+      ]
+    },
+    {
+      "id": "99f345a2-35ad-4d4e-8f7b-c6da08c50b4a",
+      "question": "If I have a Unit chosen by Evelyn Parker's second effect, do I have to attack with it as soon as possible, or can I play other cards first?",
+      "answer": "You may do other actions but cannot end your turn if the Unit chosen by Evelyn Parker can still legally declare an attack.",
+      "sources": [
+        {
+          "id": "99f345a2-35ad-4d4e-8f7b-c6da08c50b4a",
+          "slug": "evelyn-parker-beautiful-enigma",
+          "name": "Evelyn Parker: Beautiful Enigma"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "evelyn-parker-beautiful-enigma FAQ 2",
+          "faqIds": ["99f345a2-35ad-4d4e-8f7b-c6da08c50b4a"]
+        }
+      ]
+    },
+    {
+      "id": "21199b77-ad4d-42ac-834c-416bf3d458b5",
+      "question": "Is Evelyn Parker's [ATTACK] effect mandatory?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "21199b77-ad4d-42ac-834c-416bf3d458b5",
+          "slug": "evelyn-parker-scheming-siren",
+          "name": "Evelyn Parker: Scheming Siren"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/evelyn-parker-scheming-siren.test.ts",
+          "title": "ATTACK draws 1, then discards 1 when friendly Street Cred is greater",
+          "faqIds": ["21199b77-ad4d-42ac-834c-416bf3d458b5"]
+        }
+      ]
+    },
+    {
+      "id": "e83fc5f6-3649-4162-9415-f1ff3fde56ed",
+      "question": "Does 0 count as an even number?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "e83fc5f6-3649-4162-9415-f1ff3fde56ed",
+          "slug": "field-operator",
+          "name": "Field Operator"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/field-operator.test.ts",
+          "title": "does not treat Null Street Cred as even when the controller has no Gigs",
+          "faqIds": ["e83fc5f6-3649-4162-9415-f1ff3fde56ed"]
+        }
+      ]
+    },
+    {
+      "id": "2c3ac370-03ca-4a5c-9cf3-a61e9789b515",
+      "question": "Can you play this with no rival Units in play?",
+      "answer": "Yes",
+      "sources": [
+        {
+          "id": "2c3ac370-03ca-4a5c-9cf3-a61e9789b515",
+          "slug": "floor-it",
+          "name": "Floor It"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/floor-it.test.ts",
+          "title": "still draws 1 when no rival Unit can be targeted (the Draw is independent of the debuff target)",
+          "faqIds": ["2c3ac370-03ca-4a5c-9cf3-a61e9789b515"]
+        }
+      ]
+    },
+    {
+      "id": "7cc65141-2888-4258-9e95-b77b60f43754",
+      "question": "When I reveal the top 2 cards of my deck, are they still considered part of my deck?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "7cc65141-2888-4258-9e95-b77b60f43754",
+          "slug": "fool-on-the-hill",
+          "name": "Fool on the Hill"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "fool-on-the-hill FAQ 1",
+          "faqIds": ["7cc65141-2888-4258-9e95-b77b60f43754"]
+        }
+      ]
+    },
+    {
+      "id": "db8d72b0-4892-45a9-82fb-9d7cf1df3791",
+      "question": "If my Rival does not have a Unit, may I still defeat a friendly Gear?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "db8d72b0-4892-45a9-82fb-9d7cf1df3791",
+          "slug": "gilded-mato-n",
+          "name": "Gilded Matón"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/gilded-maton.test.ts",
+          "title": "defeats the friendly Gear and resolves when no rival Unit costs 3 or less",
+          "faqIds": ["db8d72b0-4892-45a9-82fb-9d7cf1df3791"]
+        }
+      ]
+    },
+    {
+      "id": "978f0a21-058a-4676-8366-ce220a6f6aa4",
+      "question": "Who steals the Gig with this effect; the player, or the Unit equipped with Gorilla arms?",
+      "answer": "The Unit.",
+      "sources": [
+        {
+          "id": "978f0a21-058a-4676-8366-ce220a6f6aa4",
+          "slug": "gorilla-arms",
+          "name": "Gorilla Arms"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/gear/gorilla-arms.test.ts",
+          "title": "attributes a card-driven steal to the host Unit (Change A) and bounds the cascade",
+          "faqIds": ["978f0a21-058a-4676-8366-ce220a6f6aa4"]
+        }
+      ]
+    },
+    {
+      "id": "9ad7e1cf-9965-4ba0-8503-ac17c897ffbd",
+      "question": "Can I use this Legend's [Blocker] in the Legend area?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "9ad7e1cf-9965-4ba0-8503-ac17c897ffbd",
+          "slug": "goro-takemura-hands-unclean",
+          "name": "Goro Takemura: Hands Unclean"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "goro-takemura-hands-unclean FAQ 1",
+          "faqIds": ["9ad7e1cf-9965-4ba0-8503-ac17c897ffbd"]
+        }
+      ]
+    },
+    {
+      "id": "0c5b038a-705c-44ba-bff6-95403c35f032",
+      "question": "If all my friendly Legends become face-up after I declare an attack, does Goro Takemura's effect trigger?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "0c5b038a-705c-44ba-bff6-95403c35f032",
+          "slug": "goro-takemura-losing-his-way",
+          "name": "Goro Takemura: Losing His Way"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "goro-takemura-losing-his-way FAQ 1",
+          "faqIds": ["0c5b038a-705c-44ba-bff6-95403c35f032"]
+        }
+      ]
+    },
+    {
+      "id": "c40c2c04-c8eb-453b-8a04-2cb0cb4fd1a4",
+      "question": "If I manage to play a Unit during my React step and I give it [BLOCKER] from Goro Takemura, can that friendly Unit use [BLOCKER] immediately?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "c40c2c04-c8eb-453b-8a04-2cb0cb4fd1a4",
+          "slug": "goro-takemura-vengeful-bodyguard",
+          "name": "Goro Takemura: Vengeful Bodyguard"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "goro-takemura-vengeful-bodyguard FAQ 1",
+          "faqIds": ["c40c2c04-c8eb-453b-8a04-2cb0cb4fd1a4"]
+        }
+      ]
+    },
+    {
+      "id": "46be1b50-5788-41f0-92de-af2fb2f670be",
+      "question": "When a friendly Unit uses [BLOCKER] am I forced to discard 1?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "46be1b50-5788-41f0-92de-af2fb2f670be",
+          "slug": "goro-takemura-vengeful-bodyguard",
+          "name": "Goro Takemura: Vengeful Bodyguard"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/goro-takemura-vengeful-bodyguard.test.ts",
+          "title": "may decline the discard after BLOCKER and then does not draw",
+          "faqIds": ["46be1b50-5788-41f0-92de-af2fb2f670be"]
+        }
+      ]
+    },
+    {
+      "id": "3e703f01-25ac-4255-ae2f-b3c0fb7a816c",
+      "question": "If I have no cards in deck may I still discard 1?",
+      "answer": "Yes, but you must draw 1 after, so you will lose the game.",
+      "sources": [
+        {
+          "id": "3e703f01-25ac-4255-ae2f-b3c0fb7a816c",
+          "slug": "goro-takemura-vengeful-bodyguard",
+          "name": "Goro Takemura: Vengeful Bodyguard"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "goro-takemura-vengeful-bodyguard FAQ 3",
+          "faqIds": ["3e703f01-25ac-4255-ae2f-b3c0fb7a816c"]
+        }
+      ]
+    },
+    {
+      "id": "048e77d0-3873-4e27-a4ee-b419fc503d3d",
+      "question": "Does a friendly Unit using [BLOCKER] trigger Goro Takemura's second effect even if it's not a result of first effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "048e77d0-3873-4e27-a4ee-b419fc503d3d",
+          "slug": "goro-takemura-vengeful-bodyguard",
+          "name": "Goro Takemura: Vengeful Bodyguard"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/goro-takemura-vengeful-bodyguard.test.ts",
+          "title": "draws 1 if you discard after a friendly Unit uses BLOCKER",
+          "faqIds": ["048e77d0-3873-4e27-a4ee-b419fc503d3d"]
+        }
+      ]
+    },
+    {
+      "id": "2a901389-f319-4b65-ae4b-00483f4e80f5",
+      "question": "Can I choose the order of the two effects?",
+      "answer": "No. You must resolve the effect from top to bottom.",
+      "sources": [
+        {
+          "id": "2a901389-f319-4b65-ae4b-00483f4e80f5",
+          "slug": "gunpoint-diplomacy",
+          "name": "Gunpoint Diplomacy"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "gunpoint-diplomacy FAQ 1",
+          "faqIds": ["2a901389-f319-4b65-ae4b-00483f4e80f5"]
+        }
+      ]
+    },
+    {
+      "id": "e4e22bef-839b-49d6-9bed-8a34f59b95ce",
+      "question": "When my Rival chooses the effect for Gunpoint Diplomacy, do they also choose the friendly Unit?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "e4e22bef-839b-49d6-9bed-8a34f59b95ce",
+          "slug": "gunpoint-diplomacy",
+          "name": "Gunpoint Diplomacy"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/gunpoint-diplomacy.test.ts",
+          "title": "lets the Rival choose one effect when you have less Street Cred",
+          "faqIds": ["e4e22bef-839b-49d6-9bed-8a34f59b95ce"]
+        }
+      ]
+    },
+    {
+      "id": "d7f37678-fda8-4c98-b027-af22cc68b7c6",
+      "question": "After I trash 3 with this effect do I have to add a Program to hand from those 3?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "d7f37678-fda8-4c98-b027-af22cc68b7c6",
+          "slug": "hacked-corpo",
+          "name": "Hacked Corpo"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/hacked-corpo.test.ts",
+          "title": "requires recovery when a Program is available (min: 1)",
+          "faqIds": ["d7f37678-fda8-4c98-b027-af22cc68b7c6"]
+        }
+      ]
+    },
+    {
+      "id": "b9dffd87-5e0a-45a6-92c3-dae20f68df5f",
+      "question": "If either myself or my Rival controls 0 Gigs, can I swap?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "b9dffd87-5e0a-45a6-92c3-dae20f68df5f",
+          "slug": "hanako-arasaka-daughter-of-the-emperor",
+          "name": "Hanako Arasaka: Daughter of the Emperor"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/hanako-arasaka-daughter-of-the-emperor.test.ts",
+          "title": "cannot activate the swap without both a friendly and rival Gig and does not spend",
+          "faqIds": ["b9dffd87-5e0a-45a6-92c3-dae20f68df5f"]
+        }
+      ]
+    },
+    {
+      "id": "1b9a65e5-250a-446e-971f-867ab7f688fb",
+      "question": "Is swapping Gigs considered stealing?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "1b9a65e5-250a-446e-971f-867ab7f688fb",
+          "slug": "hanako-arasaka-daughter-of-the-emperor",
+          "name": "Hanako Arasaka: Daughter of the Emperor"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/hanako-arasaka-daughter-of-the-emperor.test.ts",
+          "title": "spends to swap a chosen friendly Gig with a chosen rival Gig",
+          "faqIds": ["1b9a65e5-250a-446e-971f-867ab7f688fb"]
+        }
+      ]
+    },
+    {
+      "id": "4b611db2-a369-4b7f-b074-377613c6cada",
+      "question": "When I activate this effect, do I get to choose the rival Gig too?",
+      "answer": "Yes, you choose both Gigs involved in the swap.",
+      "sources": [
+        {
+          "id": "4b611db2-a369-4b7f-b074-377613c6cada",
+          "slug": "hanako-arasaka-daughter-of-the-emperor",
+          "name": "Hanako Arasaka: Daughter of the Emperor"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/hanako-arasaka-daughter-of-the-emperor.test.ts",
+          "title": "spends to swap a chosen friendly Gig with a chosen rival Gig",
+          "faqIds": ["4b611db2-a369-4b7f-b074-377613c6cada"]
+        }
+      ]
+    },
+    {
+      "id": "89eca244-872c-4c28-bf2c-7dbf294e0e6c",
+      "question": "May I defeat a Gear if I don't have any Gigs that match cost with value?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "89eca244-872c-4c28-bf2c-7dbf294e0e6c",
+          "slug": "heywood-ripperdoc",
+          "name": "Heywood Ripperdoc"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/heywood-ripperdoc.test.ts",
+          "title": "does not draw when the defeated Gear cost does not match a friendly Gig",
+          "faqIds": ["89eca244-872c-4c28-bf2c-7dbf294e0e6c"]
+        }
+      ]
+    },
+    {
+      "id": "ad3b75f8-1401-485f-891d-7e54fdbfe30f",
+      "question": "Can I choose to increase a Gig by 0?",
+      "answer": "Yes, but it does not count as \"adjusting\" a Gig for effects triggered by \"adjusting a Gig.\"",
+      "sources": [
+        {
+          "id": "ad3b75f8-1401-485f-891d-7e54fdbfe30f",
+          "slug": "industrial-assembly",
+          "name": "Industrial Assembly"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/industrial-assembly.test.ts",
+          "title": "allows a zero increase and still draws for an existing friendly value 8",
+          "faqIds": ["ad3b75f8-1401-485f-891d-7e54fdbfe30f"]
+        }
+      ]
+    },
+    {
+      "id": "2f4ce47f-25ba-4321-a673-809fc8f75bd7",
+      "question": "Can I adjust a rival Gig?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "2f4ce47f-25ba-4321-a673-809fc8f75bd7",
+          "slug": "industrial-assembly",
+          "name": "Industrial Assembly"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/industrial-assembly.test.ts",
+          "title": "may increase a rival Gig but does not draw for the rival's 8+ value",
+          "faqIds": ["2f4ce47f-25ba-4321-a673-809fc8f75bd7"]
+        }
+      ]
+    },
+    {
+      "id": "39c1b729-a65b-4cf6-81dd-150719aa38b3",
+      "question": "If this Unit gains [ADRENALINE] the turn it's played , can it attack even if I haven't played a Program yet?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "39c1b729-a65b-4cf6-81dd-150719aa38b3",
+          "slug": "jacked-in-voodoo-boy",
+          "name": "Jacked-In Voodoo Boy"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "jacked-in-voodoo-boy FAQ 1",
+          "faqIds": ["39c1b729-a65b-4cf6-81dd-150719aa38b3"]
+        }
+      ]
+    },
+    {
+      "id": "739fcd51-c571-4770-9ceb-dc6d7c785842",
+      "question": "When I defeat Jackie Welles instead of a friendly Unit, does the Unit's [DEFEATED] effect trigger?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "739fcd51-c571-4770-9ceb-dc6d7c785842",
+          "slug": "jackie-welles-mama-s-favorite",
+          "name": "Jackie Welles: Mama's Favorite"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/jackie-welles-mama-s-favorite.test.ts",
+          "title": "may spend 1 Eddie and remove itself instead of a friendly Unit defeated in a fight",
+          "faqIds": ["739fcd51-c571-4770-9ceb-dc6d7c785842"]
+        }
+      ]
+    },
+    {
+      "id": "659dec0e-519c-445d-966e-6e27e4ad5c1f",
+      "question": "Can I use this effect if Jackie Welles is in the Field area as a Unit?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "659dec0e-519c-445d-966e-6e27e4ad5c1f",
+          "slug": "jackie-welles-mama-s-favorite",
+          "name": "Jackie Welles: Mama's Favorite"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/jackie-welles-mama-s-favorite.test.ts",
+          "title": "can replace its own defeat after going solo and is removed from the game",
+          "faqIds": ["659dec0e-519c-445d-966e-6e27e4ad5c1f"]
+        }
+      ]
+    },
+    {
+      "id": "2d22697d-50af-4372-bffb-29cae81f45cc",
+      "question": "Can I use this effect if Jackie Welles is in the Legends area?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "2d22697d-50af-4372-bffb-29cae81f45cc",
+          "slug": "jackie-welles-mama-s-favorite",
+          "name": "Jackie Welles: Mama's Favorite"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/jackie-welles-mama-s-favorite.test.ts",
+          "title": "may spend 1 Eddie and remove itself instead of a friendly Unit defeated in a fight",
+          "faqIds": ["2d22697d-50af-4372-bffb-29cae81f45cc"]
+        }
+      ]
+    },
+    {
+      "id": "ab195483-70b3-4bdf-9d42-488148b666ec",
+      "question": "If Jackie Welles would be defeated while it's a Unit, could I use Jackie Welle's effect to defeat himself instead of being defeated the other way?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "ab195483-70b3-4bdf-9d42-488148b666ec",
+          "slug": "jackie-welles-mama-s-favorite",
+          "name": "Jackie Welles: Mama's Favorite"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/jackie-welles-mama-s-favorite.test.ts",
+          "title": "can replace its own defeat after going solo and is removed from the game",
+          "faqIds": ["ab195483-70b3-4bdf-9d42-488148b666ec"]
+        }
+      ]
+    },
+    {
+      "id": "15b27a52-f1e8-48fb-9c59-ac9d2d4c6824",
+      "question": "If I've already played a Blue Unit or Gear this turn before Jackie Welles is face-up, then flip Jackie, can I trigger Jackie's effect that turn by playing another Blue Gear or Unit?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "15b27a52-f1e8-48fb-9c59-ac9d2d4c6824",
+          "slug": "jackie-welles-pour-one-out-for-me",
+          "name": "Jackie Welles: Pour One Out For Me"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "jackie-welles-pour-one-out-for-me FAQ 1",
+          "faqIds": ["15b27a52-f1e8-48fb-9c59-ac9d2d4c6824"]
+        }
+      ]
+    },
+    {
+      "id": "763356ba-0750-492a-86d2-2b7b75325208",
+      "question": "Does playing a Legend from the Legends area to the field, trigger Jackie Welles's effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "763356ba-0750-492a-86d2-2b7b75325208",
+          "slug": "jackie-welles-pour-one-out-for-me",
+          "name": "Jackie Welles: Pour One Out For Me"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "jackie-welles-pour-one-out-for-me FAQ 2",
+          "faqIds": ["763356ba-0750-492a-86d2-2b7b75325208"]
+        }
+      ]
+    },
+    {
+      "id": "c58d792f-af25-4060-b261-dc7369c18aa2",
+      "question": "If I choose an already min Gig for Jackie Welles's effect, can I draw 1?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "c58d792f-af25-4060-b261-dc7369c18aa2",
+          "slug": "jackie-welles-pour-one-out-for-me",
+          "name": "Jackie Welles: Pour One Out For Me"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/jackie-welles-pour-one-out-for-me.test.ts",
+          "title": "does not draw when a Gig was already min and the player chooses zero decrease",
+          "faqIds": ["c58d792f-af25-4060-b261-dc7369c18aa2"]
+        }
+      ]
+    },
+    {
+      "id": "801aa9c8-c507-44e9-89c1-3477c1f8a2b1",
+      "question": "If Gig becomes odd after Jackie attacks, does Jackie lose the +2 power?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "801aa9c8-c507-44e9-89c1-3477c1f8a2b1",
+          "slug": "jackie-welles-ride-or-die-choom",
+          "name": "Jackie Welles: Ride or Die Choom"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "jackie-welles-ride-or-die-choom FAQ 1",
+          "faqIds": ["801aa9c8-c507-44e9-89c1-3477c1f8a2b1"]
+        }
+      ]
+    },
+    {
+      "id": "c61101be-05ed-46e3-b027-d05f5981632f",
+      "question": "If I acquire another friendly even Gig after Jackie Welles attacks, does Jackie Welles get another +2 power this turn?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "c61101be-05ed-46e3-b027-d05f5981632f",
+          "slug": "jackie-welles-ride-or-die-choom",
+          "name": "Jackie Welles: Ride or Die Choom"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "jackie-welles-ride-or-die-choom FAQ 2",
+          "faqIds": ["c61101be-05ed-46e3-b027-d05f5981632f"]
+        }
+      ]
+    },
+    {
+      "id": "cce96f5d-9d4d-4a30-b6ba-5e49c53280dc",
+      "question": "Can Japantown Jonin choose itself with its own [PLAY] effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "cce96f5d-9d4d-4a30-b6ba-5e49c53280dc",
+          "slug": "japantown-jonin",
+          "name": "Japantown Jonin"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/japantown-jonin.test.ts",
+          "title": "can target itself with the power boost",
+          "faqIds": ["cce96f5d-9d4d-4a30-b6ba-5e49c53280dc"]
+        }
+      ]
+    },
+    {
+      "id": "3cfb42c3-4d87-44db-9b06-7f48c24b912f",
+      "question": "What \"This Unit wins all fights against CORPO Units\" mean?",
+      "answer": "When Johnny Silvlerhand attacks (or is attacked by) a CORPO Unit,  he always wins the fight, regardless of power. So, Johnny Silverhand defeats the opposing CORPO Unit (as long as he has power 1+).",
+      "sources": [
+        {
+          "id": "3cfb42c3-4d87-44db-9b06-7f48c24b912f",
+          "slug": "johnny-silverhand-never-stop-fighting",
+          "name": "Johnny Silverhand: Never Stop Fighting"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/johnny-silverhand-never-stop-fighting.test.ts",
+          "title": "wins a fight against a CORPO Unit even at lower power",
+          "faqIds": ["3cfb42c3-4d87-44db-9b06-7f48c24b912f"]
+        },
+        {
+          "file": "packages/engine/src/cards/units/johnny-silverhand-never-stop-fighting.test.ts",
+          "title": "also auto-wins as the defender when a CORPO Unit attacks it",
+          "faqIds": ["3cfb42c3-4d87-44db-9b06-7f48c24b912f"]
+        }
+      ]
+    },
+    {
+      "id": "e512816e-a856-491a-896b-fde16d661ea7",
+      "question": "If Johnny wins a fight during a Rival’s turn, does he still ready from his effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "e512816e-a856-491a-896b-fde16d661ea7",
+          "slug": "johnny-silverhand-never-stop-fighting",
+          "name": "Johnny Silverhand: Never Stop Fighting"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/johnny-silverhand-never-stop-fighting.test.ts",
+          "title": "also auto-wins as the defender when a CORPO Unit attacks it",
+          "faqIds": ["e512816e-a856-491a-896b-fde16d661ea7"]
+        }
+      ]
+    },
+    {
+      "id": "d33a4200-b3f8-48ee-8a83-35c113ee45da",
+      "question": "If Johnny wins his first fight this turn but is already ready, can I use the effect on his next attack instead?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "d33a4200-b3f8-48ee-8a83-35c113ee45da",
+          "slug": "johnny-silverhand-never-stop-fighting",
+          "name": "Johnny Silverhand: Never Stop Fighting"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "johnny-silverhand-never-stop-fighting FAQ 3",
+          "faqIds": ["d33a4200-b3f8-48ee-8a83-35c113ee45da"]
+        }
+      ]
+    },
+    {
+      "id": "69794180-6e80-4a4c-b0dc-df8c290bdc19",
+      "question": "If Johnny has power 0 when he fights a CORPO Unit., does he still defeat the opposing rival Unit?",
+      "answer": "No. Johnny Silverhand still wins the fight, but Units at power 0 can't defeat other Units in a fight, so neither Unit is defeated.",
+      "sources": [
+        {
+          "id": "69794180-6e80-4a4c-b0dc-df8c290bdc19",
+          "slug": "johnny-silverhand-never-stop-fighting",
+          "name": "Johnny Silverhand: Never Stop Fighting"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "johnny-silverhand-never-stop-fighting FAQ 4",
+          "faqIds": ["69794180-6e80-4a4c-b0dc-df8c290bdc19"]
+        }
+      ]
+    },
+    {
+      "id": "97a58f36-cd0e-4e0b-9be0-b1ff61a9d2b4",
+      "question": "Can I reduce Johnny Silverhand’s effect cost to 0 €$?",
+      "answer": "Yes, but you still need to spend Johnny Silverhand to activate it.",
+      "sources": [
+        {
+          "id": "97a58f36-cd0e-4e0b-9be0-b1ff61a9d2b4",
+          "slug": "johnny-silverhand-rocking-renegade",
+          "name": "Johnny Silverhand: Rocking Renegade"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/johnny-silverhand-rocking-renegade.test.ts",
+          "title": "activates for zero Eddies with two friendly 8+ Gigs",
+          "faqIds": ["97a58f36-cd0e-4e0b-9be0-b1ff61a9d2b4"]
+        }
+      ]
+    },
+    {
+      "id": "7af4302f-2f3e-4ddc-9445-fe0ac9f755d7",
+      "question": "Can I use Johnny's effect on a Unit that wasn't played this turn?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "7af4302f-2f3e-4ddc-9445-fe0ac9f755d7",
+          "slug": "johnny-silverhand-rocking-renegade",
+          "name": "Johnny Silverhand: Rocking Renegade"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "johnny-silverhand-rocking-renegade FAQ 2",
+          "faqIds": ["7af4302f-2f3e-4ddc-9445-fe0ac9f755d7"]
+        }
+      ]
+    },
+    {
+      "id": "e403c866-e7b1-4982-8c0c-0b7d672b7185",
+      "question": "Can a Unit played on a previous turn still attack the rival Gig area if I use Johnny's effect on it?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "e403c866-e7b1-4982-8c0c-0b7d672b7185",
+          "slug": "johnny-silverhand-rocking-renegade",
+          "name": "Johnny Silverhand: Rocking Renegade"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "johnny-silverhand-rocking-renegade FAQ 2",
+          "faqIds": ["e403c866-e7b1-4982-8c0c-0b7d672b7185"]
+        }
+      ]
+    },
+    {
+      "id": "3dbd8dd8-e076-4ca2-8103-e648718f35e6",
+      "question": "If I play a Program from my trash, does the first effect still trigger?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "3dbd8dd8-e076-4ca2-8103-e648718f35e6",
+          "slug": "judy-a-lvarez-braindance-maestro",
+          "name": "Judy Álvarez: Braindance Maestro"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "judy-a-lvarez-braindance-maestro FAQ 1",
+          "faqIds": ["3dbd8dd8-e076-4ca2-8103-e648718f35e6"]
+        }
+      ]
+    },
+    {
+      "id": "179be304-b54b-47f7-8358-eac64e44f31e",
+      "question": "Can I trigger the first effect multiple times in a turn by playing multiple BRAINDANCE Programs?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "179be304-b54b-47f7-8358-eac64e44f31e",
+          "slug": "judy-a-lvarez-braindance-maestro",
+          "name": "Judy Álvarez: Braindance Maestro"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "judy-a-lvarez-braindance-maestro FAQ 2",
+          "faqIds": ["179be304-b54b-47f7-8358-eac64e44f31e"]
+        }
+      ]
+    },
+    {
+      "id": "5822e4e8-3878-49b3-b0d0-fb241272ae6d",
+      "question": "Can I choose the same friendly Unit with this card's first effect each time I play a Program?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "5822e4e8-3878-49b3-b0d0-fb241272ae6d",
+          "slug": "judy-a-lvarez-braindance-maestro",
+          "name": "Judy Álvarez: Braindance Maestro"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "judy-a-lvarez-braindance-maestro FAQ 2",
+          "faqIds": ["5822e4e8-3878-49b3-b0d0-fb241272ae6d"]
+        }
+      ]
+    },
+    {
+      "id": "284c60bf-247b-4ff1-8bcb-d60361138dad",
+      "question": "If I play a [QUICK] BRAINDANCE Program as a reaction on my Rival's turn, does first effect trigger?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "284c60bf-247b-4ff1-8bcb-d60361138dad",
+          "slug": "judy-a-lvarez-braindance-maestro",
+          "name": "Judy Álvarez: Braindance Maestro"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "judy-a-lvarez-braindance-maestro FAQ 4",
+          "faqIds": ["284c60bf-247b-4ff1-8bcb-d60361138dad"]
+        }
+      ]
+    },
+    {
+      "id": "90d8581b-b42a-4061-a7d4-d589879389cc",
+      "question": "Can I activate this card's effect if I have no cards left in my deck?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "90d8581b-b42a-4061-a7d4-d589879389cc",
+          "slug": "judy-a-lvarez-nothing-to-doubt",
+          "name": "Judy Álvarez: Nothing to Doubt"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "judy-a-lvarez-nothing-to-doubt FAQ 1",
+          "faqIds": ["90d8581b-b42a-4061-a7d4-d589879389cc"]
+        }
+      ]
+    },
+    {
+      "id": "91ff465b-38fc-45b1-8db2-d8cbe6b465cc",
+      "question": "If I roll a 1 on a friendly Gig and choose to reroll with Kerry Eurodyne's effect, but don't roll a 1 or 20 on that Gig, do I still get the draw effect for the first result?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "91ff465b-38fc-45b1-8db2-d8cbe6b465cc",
+          "slug": "kerry-eurodyne-axe-attitude-audience",
+          "name": "Kerry Eurodyne: Axe, Attitude, Audience"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/kerry-eurodyne-axe-attitude-audience.test.ts",
+          "title": "uses only the final value after replacing an original boundary roll",
+          "faqIds": ["91ff465b-38fc-45b1-8db2-d8cbe6b465cc"]
+        }
+      ]
+    },
+    {
+      "id": "d23941b5-53c4-4036-b19d-cfa8bf059c5a",
+      "question": "Can I activate Kerry's [Spend Icon:] effect the turn I play him?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "d23941b5-53c4-4036-b19d-cfa8bf059c5a",
+          "slug": "kerry-eurodyne-the-last-rockerboy",
+          "name": "Kerry Eurodyne: The Last Rockerboy"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/kerry-eurodyne-the-last-rockerboy.test.ts",
+          "title": "cannot activate its Spend ability while Kerry has Lag",
+          "faqIds": ["d23941b5-53c4-4036-b19d-cfa8bf059c5a"]
+        }
+      ]
+    },
+    {
+      "id": "1da9b201-025a-487d-b49b-b1c8523579a8",
+      "question": "Can I activate Kerry’s [Spend Icon:] effect if I do not control an 8+ Gig?",
+      "answer": "Yes, but you won't get to draw 2.",
+      "sources": [
+        {
+          "id": "1da9b201-025a-487d-b49b-b1c8523579a8",
+          "slug": "kerry-eurodyne-the-last-rockerboy",
+          "name": "Kerry Eurodyne: The Last Rockerboy"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "kerry-eurodyne-the-last-rockerboy FAQ 2",
+          "faqIds": ["1da9b201-025a-487d-b49b-b1c8523579a8"]
+        }
+      ]
+    },
+    {
+      "id": "498e223a-b488-4fc8-a8cf-35f5e800543a",
+      "question": "If Kerry readies after I activated his [Spend Icon:] effect, can I activate  it again on the same turn?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "498e223a-b488-4fc8-a8cf-35f5e800543a",
+          "slug": "kerry-eurodyne-the-last-rockerboy",
+          "name": "Kerry Eurodyne: The Last Rockerboy"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "kerry-eurodyne-the-last-rockerboy FAQ 3",
+          "faqIds": ["498e223a-b488-4fc8-a8cf-35f5e800543a"]
+        }
+      ]
+    },
+    {
+      "id": "22d75516-cd32-4b86-bce5-915d075c3ec3",
+      "question": "Do I have to look at at friendly face-down Legend even if I don't want to?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "22d75516-cd32-4b86-bce5-915d075c3ec3",
+          "slug": "kiroshi-optics",
+          "name": "Kiroshi Optics"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/gear/kiroshi-optics.test.ts",
+          "title": "looks at a friendly face-down legend without revealing it",
+          "faqIds": ["22d75516-cd32-4b86-bce5-915d075c3ec3"]
+        }
+      ]
+    },
+    {
+      "id": "7cf45f7a-84df-4193-9f28-656d3054d183",
+      "question": "When La Llorona uses [BLOCKER], do I increase a Gig for her second effect before or after the ensuing fight?",
+      "answer": "Before.",
+      "sources": [
+        {
+          "id": "7cf45f7a-84df-4193-9f28-656d3054d183",
+          "slug": "la-llorona-ghost-of-the-past",
+          "name": "La Llorona: Ghost of the Past"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/la-llorona-ghost-of-the-past.test.ts",
+          "title": "uses Blocker, then may increase either player's Gig by up to 3",
+          "faqIds": ["7cf45f7a-84df-4193-9f28-656d3054d183"]
+        }
+      ]
+    },
+    {
+      "id": "10236d8a-b781-4d18-8857-57f7b3555983",
+      "question": "Can I use  a different Unit's [BLOCKER] effect after I block with La Llorna to redirect the attack again?",
+      "answer": "Yes. There is no limit of how many times you can use [BLOCKER] in one turn.",
+      "sources": [
+        {
+          "id": "10236d8a-b781-4d18-8857-57f7b3555983",
+          "slug": "la-llorona-ghost-of-the-past",
+          "name": "La Llorona: Ghost of the Past"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "la-llorona-ghost-of-the-past FAQ 2",
+          "faqIds": ["10236d8a-b781-4d18-8857-57f7b3555983"]
+        }
+      ]
+    },
+    {
+      "id": "287826c0-e5e6-4383-ab1a-a24314ebc44d",
+      "question": "Can La Llorona increase a Gig by 0, 1, 2, or 3, or must it increase by exactly 3?",
+      "answer": "Up to means 0, 1, 2, or 3.",
+      "sources": [
+        {
+          "id": "287826c0-e5e6-4383-ab1a-a24314ebc44d",
+          "slug": "la-llorona-ghost-of-the-past",
+          "name": "La Llorona: Ghost of the Past"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/la-llorona-ghost-of-the-past.test.ts",
+          "title": "uses Blocker, then may increase either player's Gig by up to 3",
+          "faqIds": ["287826c0-e5e6-4383-ab1a-a24314ebc44d"]
+        },
+        {
+          "file": "packages/engine/src/cards/units/la-llorona-ghost-of-the-past.test.ts",
+          "title": "may choose an increase of 0 because the effect says up to 3",
+          "faqIds": ["287826c0-e5e6-4383-ab1a-a24314ebc44d"]
+        },
+        {
+          "file": "packages/engine/src/cards/units/la-llorona-ghost-of-the-past.test.ts",
+          "title": "normalizes the increase to the selected Gig's maximum face",
+          "faqIds": ["287826c0-e5e6-4383-ab1a-a24314ebc44d"]
+        }
+      ]
+    },
+    {
+      "id": "9a85bf8b-c371-4d1a-8d13-22976fb78130",
+      "question": "Who chooses?",
+      "answer": "The Player activating the card Chooses.",
+      "sources": [
+        {
+          "id": "9a85bf8b-c371-4d1a-8d13-22976fb78130",
+          "slug": "les-e-le-mens",
+          "name": "Les Élémens"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/les-elemens.test.ts",
+          "title": "allows the player to choose among tied lowest-power Units",
+          "faqIds": ["9a85bf8b-c371-4d1a-8d13-22976fb78130"]
+        }
+      ]
+    },
+    {
+      "id": "072482a5-a9f6-4f39-9d18-53f483613eed",
+      "question": "Can I play this card if there is no Rival Unit?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "072482a5-a9f6-4f39-9d18-53f483613eed",
+          "slug": "les-e-le-mens",
+          "name": "Les Élémens"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/les-elemens.test.ts",
+          "title": "still pays and trashes itself without opening a choice when no rival Unit exists",
+          "faqIds": ["072482a5-a9f6-4f39-9d18-53f483613eed"]
+        }
+      ]
+    },
+    {
+      "id": "3c7f6d4d-2ff5-42a8-a56b-71767d912551",
+      "question": "Can I play this Program if I do not have a friendly Unit in the field area?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "3c7f6d4d-2ff5-42a8-a56b-71767d912551",
+          "slug": "live-with-the-aftermath",
+          "name": "Live with the Aftermath"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/live-with-the-aftermath.test.ts",
+          "title": "still lets the rival defeat their Unit when the controller controls no Unit",
+          "faqIds": ["3c7f6d4d-2ff5-42a8-a56b-71767d912551"]
+        }
+      ]
+    },
+    {
+      "id": "a391a6fc-a480-4d18-b451-438ba58948e1",
+      "question": "Can I play this Program if there is no rival Unit in the field area?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "a391a6fc-a480-4d18-b451-438ba58948e1",
+          "slug": "live-with-the-aftermath",
+          "name": "Live with the Aftermath"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/live-with-the-aftermath.test.ts",
+          "title": "still defeats the controller's Unit when the rival controls no Unit",
+          "faqIds": ["a391a6fc-a480-4d18-b451-438ba58948e1"]
+        }
+      ]
+    },
+    {
+      "id": "8ebfb418-5733-4153-a981-8076cb0e9f41",
+      "question": "Can I play this Program if there are no Units in the field area?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "8ebfb418-5733-4153-a981-8076cb0e9f41",
+          "slug": "live-with-the-aftermath",
+          "name": "Live with the Aftermath"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/live-with-the-aftermath.test.ts",
+          "title": "pays and trashes itself without a choice when neither player controls a Unit",
+          "faqIds": ["8ebfb418-5733-4153-a981-8076cb0e9f41"]
+        }
+      ]
+    },
+    {
+      "id": "bd1e1e2f-a20a-40dc-be90-265bfcb367aa",
+      "question": "If I steal more than 1 Gig at a time, does my Rival have to discard more than 1?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "bd1e1e2f-a20a-40dc-be90-265bfcb367aa",
+          "slug": "maelstrom-goons",
+          "name": "Maelstrom Goons"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "maelstrom-goons FAQ 1",
+          "faqIds": ["bd1e1e2f-a20a-40dc-be90-265bfcb367aa"]
+        }
+      ]
+    },
+    {
+      "id": "a40d7f07-d5ed-4ae5-88f7-f5e4e4d4b28f",
+      "question": "What is \"the opposing rival Unit?\"",
+      "answer": "It's the Unit in a fight with your friendly Unit.",
+      "sources": [
+        {
+          "id": "a40d7f07-d5ed-4ae5-88f7-f5e4e4d4b28f",
+          "slug": "maelstrom-zealots",
+          "name": "Maelstrom Zealots"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/maelstrom-zealots.test.ts",
+          "title": "defeats the opposing rival Unit when it loses a fight as the attacker",
+          "faqIds": ["a40d7f07-d5ed-4ae5-88f7-f5e4e4d4b28f"]
+        },
+        {
+          "file": "packages/engine/src/cards/units/maelstrom-zealots.test.ts",
+          "title": "defeats the opposing attacker when it loses a fight as the defender",
+          "faqIds": ["a40d7f07-d5ed-4ae5-88f7-f5e4e4d4b28f"]
+        }
+      ]
+    },
+    {
+      "id": "3dc2ff22-518e-4809-ae1e-f778621642f0",
+      "question": "If my Unit loses a fight but has an effect that it cannot be defeated, does it still lose the fight?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "3dc2ff22-518e-4809-ae1e-f778621642f0",
+          "slug": "maelstrom-zealots",
+          "name": "Maelstrom Zealots"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "muamar-reyes-el-capita-n FAQ 3",
+          "faqIds": ["3dc2ff22-518e-4809-ae1e-f778621642f0"]
+        }
+      ]
+    },
+    {
+      "id": "9d6d9ce9-9dca-42f9-bb90-0e89c5fed80b",
+      "question": "If I can't discard 2 Programs to gain the rest of the effect, can I choose to just discard 1 anyway?",
+      "answer": "No. You may discard 2 to resolve the full effect or none at all.",
+      "sources": [
+        {
+          "id": "9d6d9ce9-9dca-42f9-bb90-0e89c5fed80b",
+          "slug": "maman-brigitte-spirit-of-death",
+          "name": "Maman Brigitte: Spirit of Death"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "maman-brigitte-spirit-of-death FAQ 1",
+          "faqIds": ["9d6d9ce9-9dca-42f9-bb90-0e89c5fed80b"]
+        }
+      ]
+    },
+    {
+      "id": "9dfba4f9-6ebe-46ab-adcf-757a0e407d11",
+      "question": "Am I forced to Swap Gigs?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "9dfba4f9-6ebe-46ab-adcf-757a0e407d11",
+          "slug": "maxtac-av",
+          "name": "MaxTac AV"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/maxtac-av.test.ts",
+          "title": "may decline the Play trigger without swapping either Gig",
+          "faqIds": ["9dfba4f9-6ebe-46ab-adcf-757a0e407d11"]
+        }
+      ]
+    },
+    {
+      "id": "86289bd1-7a4f-4b3e-b588-b8acc2212ad7",
+      "question": "Does MaxTac Heavy's effect change the cost of the card?",
+      "answer": "No, only the amount you pay.",
+      "sources": [
+        {
+          "id": "86289bd1-7a4f-4b3e-b588-b8acc2212ad7",
+          "slug": "maxtac-heavy",
+          "name": "MaxTac Heavy"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "maxtac-heavy FAQ 1",
+          "faqIds": ["86289bd1-7a4f-4b3e-b588-b8acc2212ad7"]
+        }
+      ]
+    },
+    {
+      "id": "36ecf80a-cd64-4a27-91ac-a079e8d4250b",
+      "question": "If I ready my Maxtac Squadron with a different end-of-turn effect before I resolve this effect, can I still ready a friendly face-up Legend?",
+      "answer": "No. To avoid invalidating Maxtac Squadron's effect, resolve it before any effects that would ready it.",
+      "sources": [
+        {
+          "id": "36ecf80a-cd64-4a27-91ac-a079e8d4250b",
+          "slug": "maxtac-squadron",
+          "name": "MaxTac Squadron"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "maxtac-squadron FAQ 1",
+          "faqIds": ["36ecf80a-cd64-4a27-91ac-a079e8d4250b"]
+        }
+      ]
+    },
+    {
+      "id": "00a253c5-f0a2-4f13-a7a3-520c703c2402",
+      "question": "I played a friendly Legend to the field area with [GO SOLO] this turn. Can it attack even if my rival has a Maxtax Suppression Team?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "00a253c5-f0a2-4f13-a7a3-520c703c2402",
+          "slug": "maxtac-suppression-team",
+          "name": "MaxTac Suppression Team"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "maxtac-suppression-team FAQ 1",
+          "faqIds": ["00a253c5-f0a2-4f13-a7a3-520c703c2402"]
+        }
+      ]
+    },
+    {
+      "id": "ae3bd50b-b937-4a8a-8c8a-24dab0acd367",
+      "question": "If a Rival adjusts or swaps multiple friendly Gigs simultaneously, does Meredith Stout's effect trigger for each of them?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "ae3bd50b-b937-4a8a-8c8a-24dab0acd367",
+          "slug": "meredith-stout-stone-cold-corpo",
+          "name": "Meredith Stout: Stone Cold Corpo"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "meredith-stout-stone-cold-corpo FAQ 1",
+          "faqIds": ["ae3bd50b-b937-4a8a-8c8a-24dab0acd367"]
+        }
+      ]
+    },
+    {
+      "id": "a6bfa127-ff5b-4aed-a261-fac2be6a71c5",
+      "question": "Can I still play this card if I don't have more Street Cred than my Rival?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "a6bfa127-ff5b-4aed-a261-fac2be6a71c5",
+          "slug": "minotaur",
+          "name": "Minotaur"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "minotaur FAQ 1",
+          "faqIds": ["a6bfa127-ff5b-4aed-a261-fac2be6a71c5"]
+        }
+      ]
+    },
+    {
+      "id": "1528eec2-100f-4436-9874-d45f3589e9af",
+      "question": "Do I have to defeat a rival Unit with power 5 or less, even if I don't want to?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "1528eec2-100f-4436-9874-d45f3589e9af",
+          "slug": "minotaur",
+          "name": "Minotaur"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "minotaur FAQ 2",
+          "faqIds": ["1528eec2-100f-4436-9874-d45f3589e9af"]
+        }
+      ]
+    },
+    {
+      "id": "e82502be-aaff-4d75-bd4b-87e00e760fa1",
+      "question": "Do card types include Legends?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "e82502be-aaff-4d75-bd4b-87e00e760fa1",
+          "slug": "misty-olszewski-mender-of-broken-spirits",
+          "name": "Misty Olszewski: Mender of Broken Spirits"
+        },
+        {
+          "id": "1d61a391-26ad-484b-9ae5-621df7aa2adc",
+          "slug": "misty-olszewski-mender-of-broken-spirits",
+          "name": "Misty Olszewski: Mender of Broken Spirits",
+          "question": "Can I choose \"Legends\" for this effect?"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "misty-olszewski-mender-of-broken-spirits FAQ 2",
+          "faqIds": ["e82502be-aaff-4d75-bd4b-87e00e760fa1", "1d61a391-26ad-484b-9ae5-621df7aa2adc"]
+        }
+      ],
+      "consolidation": "Equivalent wording: both questions ask whether Legends are a valid card type choice."
+    },
+    {
+      "id": "e6eaf7b6-9d18-41a9-8e01-d2d060dafc03",
+      "question": "Can this effect be used in the trash?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "e6eaf7b6-9d18-41a9-8e01-d2d060dafc03",
+          "slug": "modded-kusanagi",
+          "name": "Modded Kusanagi"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "modded-kusanagi FAQ 1",
+          "faqIds": ["e6eaf7b6-9d18-41a9-8e01-d2d060dafc03"]
+        }
+      ]
+    },
+    {
+      "id": "d0a32e18-0674-4b46-ae37-e4f5dd4ab053",
+      "question": "If I have less (Street Cred) than a Rival at the end of my turn, am I forced to ready this Unit?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "d0a32e18-0674-4b46-ae37-e4f5dd4ab053",
+          "slug": "modded-muramasa",
+          "name": "Modded Muramasa"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/modded-muramasa.test.ts",
+          "title": "readies at the end of your turn when you have less Street Cred than a Rival",
+          "faqIds": ["d0a32e18-0674-4b46-ae37-e4f5dd4ab053"]
+        }
+      ]
+    },
+    {
+      "id": "993d5dde-b6f3-4e0a-b6de-48fe2efda10c",
+      "question": "I use this on my rival's Unit that has an effect that reads \"This Unit can't attack.\" will that Unit be able to make an attack?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "993d5dde-b6f3-4e0a-b6de-48fe2efda10c",
+          "slug": "mox-inciters",
+          "name": "Mox Inciters"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/mox-inciters.test.ts",
+          "title": "lets the rival pass and expires the rule if the incited Unit can't attack",
+          "faqIds": ["993d5dde-b6f3-4e0a-b6de-48fe2efda10c"]
+        }
+      ]
+    },
+    {
+      "id": "b0b79c55-4167-448c-8717-b9f9f60b7ea6",
+      "question": "Am I able to sell this card even if it is a Unit?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "b0b79c55-4167-448c-8717-b9f9f60b7ea6",
+          "slug": "mt0d12-flathead",
+          "name": "MT0D12 Flathead"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "mt0d12-flathead FAQ 1",
+          "faqIds": ["b0b79c55-4167-448c-8717-b9f9f60b7ea6"]
+        }
+      ]
+    },
+    {
+      "id": "4ab27f37-6192-43a3-97eb-cf81060bb6d3",
+      "question": "If I have lower Street Cred when I attack with MT0D12 Flathead, but triggered effects or reactions make my Rival's Street Cred lower than mine, can my Rival then block the MT0D12 Flathead's attack?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "4ab27f37-6192-43a3-97eb-cf81060bb6d3",
+          "slug": "mt0d12-flathead",
+          "name": "MT0D12 Flathead"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "mt0d12-flathead FAQ 2",
+          "faqIds": ["4ab27f37-6192-43a3-97eb-cf81060bb6d3"]
+        }
+      ]
+    },
+    {
+      "id": "63f515ca-17b9-40ee-83ae-30abb4404bb4",
+      "question": "If I do not have a friendly Unit, do I have to choose the Draw 1 effect?",
+      "answer": "No. You can still \"choose\" the other effect, it just fails.",
+      "sources": [
+        {
+          "id": "63f515ca-17b9-40ee-83ae-30abb4404bb4",
+          "slug": "muamar-reyes-el-capita-n",
+          "name": "Muamar Reyes: El Capitán"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/muamar-reyes-el-capitan.test.ts",
+          "title": "may choose protection with no friendly Unit and resolves as much as possible",
+          "faqIds": ["63f515ca-17b9-40ee-83ae-30abb4404bb4"]
+        }
+      ]
+    },
+    {
+      "id": "329babc2-5aa7-40ee-a760-126d86bdc2c5",
+      "question": "Does Muamar Reyes's effect each fight the Unit is in this turn?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "329babc2-5aa7-40ee-a760-126d86bdc2c5",
+          "slug": "muamar-reyes-el-capita-n",
+          "name": "Muamar Reyes: El Capitán"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "muamar-reyes-el-capita-n FAQ 2",
+          "faqIds": ["329babc2-5aa7-40ee-a760-126d86bdc2c5"]
+        }
+      ]
+    },
+    {
+      "id": "c155d52c-a1ee-42f6-8698-13721cb2b6b9",
+      "question": "If the chosen Unit with Muamar Reye's effect can't be defeated, can it still lose a fight?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "c155d52c-a1ee-42f6-8698-13721cb2b6b9",
+          "slug": "muamar-reyes-el-capita-n",
+          "name": "Muamar Reyes: El Capitán"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "muamar-reyes-el-capita-n FAQ 3",
+          "faqIds": ["c155d52c-a1ee-42f6-8698-13721cb2b6b9"]
+        }
+      ]
+    },
+    {
+      "id": "526169c5-08ff-4dfe-9690-c385754b658c",
+      "question": "If Nadia attacks the rival Gig area the turn she is played but an effect causes my Rival to have less Gig's than me, does that cancel Nadia's attack?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "526169c5-08ff-4dfe-9690-c385754b658c",
+          "slug": "nadia-fighting-through-grief",
+          "name": "Nadia: Fighting Through Grief"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "nadia-fighting-through-grief FAQ 1",
+          "faqIds": ["526169c5-08ff-4dfe-9690-c385754b658c"]
+        }
+      ]
+    },
+    {
+      "id": "44cc0af1-c683-4dd4-882e-7eefd4c443b3",
+      "question": "When I spend a Unit equipped with Netwatch Netdriver to declare an attack, do I get Netwatch Netdriver's effect before or after I resolve the attack?",
+      "answer": "Before.",
+      "sources": [
+        {
+          "id": "44cc0af1-c683-4dd4-882e-7eefd4c443b3",
+          "slug": "netwatch-netdriver",
+          "name": "NetWatch Netdriver"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "netwatch-netdriver FAQ 1",
+          "faqIds": ["44cc0af1-c683-4dd4-882e-7eefd4c443b3"]
+        }
+      ]
+    },
+    {
+      "id": "e7efa410-6ebf-4195-9e8e-8a31a00f20b2",
+      "question": "If I spend a Unit equipped with Netwatch Netdriver to declare an attack, and the Unit or Legend has an [ATTACK] effect, do I get Netwatch Netdriver's effect before or after the [ATTACK] effect?",
+      "answer": "You can choose the order you resolve these effects.",
+      "sources": [
+        {
+          "id": "e7efa410-6ebf-4195-9e8e-8a31a00f20b2",
+          "slug": "netwatch-netdriver",
+          "name": "NetWatch Netdriver"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "netwatch-netdriver FAQ 2 (spend first)",
+          "faqIds": ["e7efa410-6ebf-4195-9e8e-8a31a00f20b2"]
+        },
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "netwatch-netdriver FAQ 2 (attack first)",
+          "faqIds": ["e7efa410-6ebf-4195-9e8e-8a31a00f20b2"]
+        }
+      ]
+    },
+    {
+      "id": "6a903897-b1e2-486f-835e-3c702fcbe77c",
+      "question": "If I spend a Unit or Legend equipped with Netwatch Netdriver to activate the Unit/Legend's [Spend Icon:] effect, do I resolve Netwatch Netdriver's effect before or after the activated effect?",
+      "answer": "After. Resolve the activated [Spend Icon:] effect first.",
+      "sources": [
+        {
+          "id": "6a903897-b1e2-486f-835e-3c702fcbe77c",
+          "slug": "netwatch-netdriver",
+          "name": "NetWatch Netdriver"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "netwatch-netdriver FAQ 3",
+          "faqIds": ["6a903897-b1e2-486f-835e-3c702fcbe77c"]
+        }
+      ]
+    },
+    {
+      "id": "52e98457-4afa-4996-972b-5ec373a331c5",
+      "question": "If I spend a Legend equipped with Netwatch Netdriver to pay a card's cost, do I resolve Netwatch Netdriver's effect before or after I play the card?",
+      "answer": "After.",
+      "sources": [
+        {
+          "id": "52e98457-4afa-4996-972b-5ec373a331c5",
+          "slug": "netwatch-netdriver",
+          "name": "NetWatch Netdriver"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "netwatch-netdriver FAQ 4",
+          "faqIds": ["52e98457-4afa-4996-972b-5ec373a331c5"]
+        }
+      ]
+    },
+    {
+      "id": "d1fecc2d-4186-438c-9de7-de02184f0ad7",
+      "question": "How do I know if my fixer area is empty?",
+      "answer": "If there are no longer any Gig die in the fixer area then the fixer area is now empty.",
+      "sources": [
+        {
+          "id": "d1fecc2d-4186-438c-9de7-de02184f0ad7",
+          "slug": "nocturne-op55-n1",
+          "name": "Nocturne OP55 N1"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/nocturne-op55-n1.test.ts",
+          "title": "replaces its play cost with 1 €$ when the fixer area is empty",
+          "faqIds": ["d1fecc2d-4186-438c-9de7-de02184f0ad7"]
+        },
+        {
+          "file": "packages/engine/src/cards/programs/nocturne-op55-n1.test.ts",
+          "title": "keeps its printed 3 €$ cost while the fixer still has dice",
+          "faqIds": ["d1fecc2d-4186-438c-9de7-de02184f0ad7"]
+        }
+      ]
+    },
+    {
+      "id": "d9d3bf9e-e13a-4a19-9220-7fcc74e47eae",
+      "question": "May I chose an effect even if I cannot meet the requirements to fufill the effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "d9d3bf9e-e13a-4a19-9220-7fcc74e47eae",
+          "slug": "nocturne-op55-n1",
+          "name": "Nocturne OP55 N1"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/nocturne-op55-n1.test.ts",
+          "title": "keeps all three printed modes available even when no nested target currently exists",
+          "faqIds": ["d9d3bf9e-e13a-4a19-9220-7fcc74e47eae"]
+        }
+      ]
+    },
+    {
+      "id": "0bba2dd4-1887-48bc-a577-9411b1081a64",
+      "question": "If your fixer area is empty am I forced to play this for 1 eddie?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "0bba2dd4-1887-48bc-a577-9411b1081a64",
+          "slug": "nocturne-op55-n1",
+          "name": "Nocturne OP55 N1"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/nocturne-op55-n1.test.ts",
+          "title": "replaces its play cost with 1 €$ when the fixer area is empty",
+          "faqIds": ["0bba2dd4-1887-48bc-a577-9411b1081a64"]
+        }
+      ]
+    },
+    {
+      "id": "79a2970c-40e7-4d7f-a419-57a4b8eb3c76",
+      "question": "Does Octant's effect change the cost of the card?",
+      "answer": "No, only the amount you pay.",
+      "sources": [
+        {
+          "id": "79a2970c-40e7-4d7f-a419-57a4b8eb3c76",
+          "slug": "octant",
+          "name": "Octant"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "octant FAQ 1",
+          "faqIds": ["79a2970c-40e7-4d7f-a419-57a4b8eb3c76"]
+        }
+      ]
+    },
+    {
+      "id": "b91fa741-e2c0-4974-8663-74d7f661d3e3",
+      "question": "If my Rival does not have a Unit on the field when I play Offduty Malfini, do I still have to spend it?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "b91fa741-e2c0-4974-8663-74d7f661d3e3",
+          "slug": "offduty-malfini",
+          "name": "Offduty Malfini"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "offduty-malfini FAQ 1",
+          "faqIds": ["b91fa741-e2c0-4974-8663-74d7f661d3e3"]
+        }
+      ]
+    },
+    {
+      "id": "3aec4fa6-6b30-466a-a4a8-7449ce7ab078",
+      "question": "Can I use this to defeat a Unit with 0 power if I do not have a friendly D20?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "3aec4fa6-6b30-466a-a4a8-7449ce7ab078",
+          "slug": "over-the-edge",
+          "name": "Over the Edge"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/over-the-edge.test.ts",
+          "title": "ignores a rival d20 and resolves with no target when no friendly d20 exists",
+          "faqIds": ["3aec4fa6-6b30-466a-a4a8-7449ce7ab078"]
+        }
+      ]
+    },
+    {
+      "id": "6b61f796-5665-4ae0-bb6a-4b607cb20b28",
+      "question": "Can I defeat my own Unit with this effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "6b61f796-5665-4ae0-bb6a-4b607cb20b28",
+          "slug": "over-the-edge",
+          "name": "Over the Edge"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/over-the-edge.test.ts",
+          "title": "pays 3 and offers friendly and rival Units at or below the friendly d20 value",
+          "faqIds": ["6b61f796-5665-4ae0-bb6a-4b607cb20b28"]
+        }
+      ]
+    },
+    {
+      "id": "00b41165-2bad-41c3-8a4a-be0c6747f4d7",
+      "question": "If I do not control a friendly d20, can I play Over the Edge?",
+      "answer": "Yes, but you cannot defeat a Unit.",
+      "sources": [
+        {
+          "id": "00b41165-2bad-41c3-8a4a-be0c6747f4d7",
+          "slug": "over-the-edge",
+          "name": "Over the Edge"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/over-the-edge.test.ts",
+          "title": "ignores a rival d20 and resolves with no target when no friendly d20 exists",
+          "faqIds": ["00b41165-2bad-41c3-8a4a-be0c6747f4d7"]
+        }
+      ]
+    },
+    {
+      "id": "7f11608a-92cf-4b9f-a3b0-9d170ef231c7",
+      "question": "If I use this card's [Spend Icon:] effect but my hand is empty, can I still do the rest of the effect?",
+      "answer": "No, you must discard 1.",
+      "sources": [
+        {
+          "id": "7f11608a-92cf-4b9f-a3b0-9d170ef231c7",
+          "slug": "overwatch-panam-s-gift",
+          "name": "Overwatch: Panam's Gift"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "overwatch-panam-s-gift FAQ 1",
+          "faqIds": ["7f11608a-92cf-4b9f-a3b0-9d170ef231c7"]
+        }
+      ]
+    },
+    {
+      "id": "933f4b48-5e65-48a8-97ba-3a2e255a8b7d",
+      "question": "Do I have to choose a rival Unit with this effect when played?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "933f4b48-5e65-48a8-97ba-3a2e255a8b7d",
+          "slug": "pacifica-netrunner",
+          "name": "Pacifica Netrunner"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "pacifica-netrunner FAQ 1",
+          "faqIds": ["933f4b48-5e65-48a8-97ba-3a2e255a8b7d"]
+        }
+      ]
+    },
+    {
+      "id": "2376d51c-ae2c-4eb6-aed9-d25a05d56e09",
+      "question": "If there are no viable rival Units, do I have to choose the draw effect?",
+      "answer": "No. You can still \"choose\" the other effect, it just fails.",
+      "sources": [
+        {
+          "id": "2376d51c-ae2c-4eb6-aed9-d25a05d56e09",
+          "slug": "padre-man-of-the-cross",
+          "name": "Padre: Man of the Cross"
+        },
+        {
+          "id": "ab2739ef-ffc9-493d-b523-b6823ba1b618",
+          "slug": "wakako-okada-peace-and-harmony",
+          "name": "Wakako Okada: Peace and Harmony"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "padre-man-of-the-cross FAQ 1",
+          "faqIds": ["2376d51c-ae2c-4eb6-aed9-d25a05d56e09"]
+        },
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "wakako-okada-peace-and-harmony FAQ 1",
+          "faqIds": ["ab2739ef-ffc9-493d-b523-b6823ba1b618"]
+        }
+      ]
+    },
+    {
+      "id": "afa9a2eb-1766-49c4-95d5-2c1673aae7dd",
+      "question": "May I use this card's [Spend Icon:] if all Gigs are already the same value?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "afa9a2eb-1766-49c4-95d5-2c1673aae7dd",
+          "slug": "padre-man-of-the-cross",
+          "name": "Padre: Man of the Cross"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/padre-man-of-the-cross.test.ts",
+          "title": "allows a same-value pair, spends Padre, and leaves the Gig unchanged",
+          "faqIds": ["afa9a2eb-1766-49c4-95d5-2c1673aae7dd"]
+        }
+      ]
+    },
+    {
+      "id": "097a8261-ba28-407e-9f81-1cf59c8e995b",
+      "question": "Can I move a Gear from this Legend to an unequipped friendly Unit that's already ready?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "097a8261-ba28-407e-9f81-1cf59c8e995b",
+          "slug": "panam-palmer-nomad-cavalry",
+          "name": "Panam Palmer: Nomad Cavalry"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "panam-palmer-nomad-cavalry FAQ 1",
+          "faqIds": ["097a8261-ba28-407e-9f81-1cf59c8e995b"]
+        }
+      ]
+    },
+    {
+      "id": "5c29eb76-b653-47e4-a7c5-ad38e770890c",
+      "question": "For the second effect,  do I need both Units and Legends equipped?",
+      "answer": "No, a combination of any 5 equipped Units and equipped Legends satisfies the condition.",
+      "sources": [
+        {
+          "id": "5c29eb76-b653-47e4-a7c5-ad38e770890c",
+          "slug": "panam-palmer-nomad-cavalry",
+          "name": "Panam Palmer: Nomad Cavalry"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/panam-palmer-nomad-cavalry.test.ts",
+          "title": "at exactly five equipped friendly Units and Legends, readies all five at end of turn",
+          "faqIds": ["5c29eb76-b653-47e4-a7c5-ad38e770890c"]
+        }
+      ]
+    },
+    {
+      "id": "eb1edc97-4acc-49ca-b9e7-8c07cb28e1d9",
+      "question": "If I already Called a Legend this turn, can I call another Legend with Panam Palmer's effect?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "eb1edc97-4acc-49ca-b9e7-8c07cb28e1d9",
+          "slug": "panam-palmer-strength-through-family",
+          "name": "Panam Palmer: Strength Through Family"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "panam-palmer-strength-through-family FAQ 1",
+          "faqIds": ["eb1edc97-4acc-49ca-b9e7-8c07cb28e1d9"]
+        }
+      ]
+    },
+    {
+      "id": "070c816a-ea6e-43b6-9408-cf976ef42dac",
+      "question": "Does the Gig I set need to be part of the value-pair in order to draw 1?",
+      "answer": "No. Any friendly value-pair satisfies the conditions.",
+      "sources": [
+        {
+          "id": "070c816a-ea6e-43b6-9408-cf976ef42dac",
+          "slug": "peace-offering",
+          "name": "Peace Offering"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/peace-offering.test.ts",
+          "title": "may decline the copy and still performs the following value-pair draw",
+          "faqIds": ["070c816a-ea6e-43b6-9408-cf976ef42dac"]
+        },
+        {
+          "file": "packages/engine/src/cards/programs/peace-offering.test.ts",
+          "title": "allows selecting an invalid target and still draws from an existing friendly pair",
+          "faqIds": ["070c816a-ea6e-43b6-9408-cf976ef42dac"]
+        }
+      ]
+    },
+    {
+      "id": "1f2d750b-a776-4d1c-bc79-a4621ab2cf0d",
+      "question": "What's a value-pair?",
+      "answer": "Two Gigs with the same value within the same Gig area.",
+      "sources": [
+        {
+          "id": "1f2d750b-a776-4d1c-bc79-a4621ab2cf0d",
+          "slug": "pepe-najarro-working-doubles",
+          "name": "Pepe Najarro: Working Doubles"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/pepe-najarro-working-doubles.test.ts",
+          "title": "with a value-pair offers exactly the spent face-up MERC Legends",
+          "faqIds": ["1f2d750b-a776-4d1c-bc79-a4621ab2cf0d"]
+        },
+        {
+          "file": "packages/engine/src/cards/units/pepe-najarro-working-doubles.test.ts",
+          "title": "does not trigger the ready choice without a friendly value-pair",
+          "faqIds": ["1f2d750b-a776-4d1c-bc79-a4621ab2cf0d"]
+        }
+      ]
+    },
+    {
+      "id": "ae31fcd3-d3db-4bbe-b099-2a07cc0ba270",
+      "question": "May I discard 1 Program even if there's no rival Unit to bottom-deck?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "ae31fcd3-d3db-4bbe-b099-2a07cc0ba270",
+          "slug": "placide-voodoo-sentinel",
+          "name": "Placide: Voodoo Sentinel"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/placide-voodoo-sentinel.test.ts",
+          "title": "may discard a Program even when there is no rival Unit to bottom-deck",
+          "faqIds": ["ae31fcd3-d3db-4bbe-b099-2a07cc0ba270"]
+        }
+      ]
+    },
+    {
+      "id": "29b8e233-81e1-4660-9df8-eb9002af9562",
+      "question": "If I choose both effetcs, can I choose what order I resolve them?",
+      "answer": "No, you must resolve the top effect first, then the bottom one.",
+      "sources": [
+        {
+          "id": "29b8e233-81e1-4660-9df8-eb9002af9562",
+          "slug": "pyramid-song",
+          "name": "Pyramid Song"
+        },
+        {
+          "id": "cabf44d5-8f4c-420e-b149-e408e4fcc699",
+          "slug": "towerfall",
+          "name": "Towerfall"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/pyramid-song.test.ts",
+          "title": "both path continues after the first target prompt (power-down then bottom-deck)",
+          "faqIds": ["29b8e233-81e1-4660-9df8-eb9002af9562"]
+        },
+        {
+          "file": "packages/engine/src/cards/programs/towerfall.test.ts",
+          "title": "applies both modes when the caster has less Street Cred",
+          "faqIds": ["cabf44d5-8f4c-420e-b149-e408e4fcc699"]
+        }
+      ]
+    },
+    {
+      "id": "e18d31dd-7ee1-4494-8098-a72db45bfa2d",
+      "question": "If my Unit loses a fight but isn't defeated due to this effect, does it still count as losing the fight?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "e18d31dd-7ee1-4494-8098-a72db45bfa2d",
+          "slug": "reboot-optics",
+          "name": "Reboot Optics"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/reboot-optics.test.ts",
+          "title": "protects the friendly attacker when a stronger rival defender fights",
+          "faqIds": ["e18d31dd-7ee1-4494-8098-a72db45bfa2d"]
+        }
+      ]
+    },
+    {
+      "id": "06f40e31-2d2e-46d4-bfab-7670da4c189c",
+      "question": "Does this effect force my Rival to use [GO SOLO] on their turn if they have enough €$ available?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "06f40e31-2d2e-46d4-bfab-7670da4c189c",
+          "slug": "riot-shield",
+          "name": "Riot Shield"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/gear/riot-shield.test.ts",
+          "title": "registers a rival Go Solo cost increase while attached",
+          "faqIds": ["06f40e31-2d2e-46d4-bfab-7670da4c189c"]
+        },
+        {
+          "file": "packages/engine/src/cards/gear/riot-shield.test.ts",
+          "title": "lets a rival Go Solo once they pay the +2 €$ (the legend funds 1 itself, 6 eddies cover the rest)",
+          "faqIds": ["06f40e31-2d2e-46d4-bfab-7670da4c189c"]
+        },
+        {
+          "file": "packages/engine/src/cards/gear/riot-shield.test.ts",
+          "title": "rejects a rival Go Solo when only the printed base cost is available",
+          "faqIds": ["06f40e31-2d2e-46d4-bfab-7670da4c189c"]
+        }
+      ]
+    },
+    {
+      "id": "7b34456c-7332-4134-9650-5864aee59890",
+      "question": "If I have no cards left in my deck when I spend a friendly Rita Wheeler, do I lose the game?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "7b34456c-7332-4134-9650-5864aee59890",
+          "slug": "rita-wheeler-no-stupid-questions",
+          "name": "Rita Wheeler: No Stupid Questions"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "rita-wheeler-no-stupid-questions FAQ 1",
+          "faqIds": ["7b34456c-7332-4134-9650-5864aee59890"]
+        }
+      ]
+    },
+    {
+      "id": "88707f62-0eaf-4383-9304-c28a50c995e3",
+      "question": "Can I activate River Ward’s [QUICK] [Spend Icon:] effect if I have no Gear cards in hand?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "88707f62-0eaf-4383-9304-c28a50c995e3",
+          "slug": "river-ward-detective-on-the-hunt",
+          "name": "River Ward: Detective on the Hunt"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "river-ward-detective-on-the-hunt FAQ 1",
+          "faqIds": ["88707f62-0eaf-4383-9304-c28a50c995e3"]
+        }
+      ]
+    },
+    {
+      "id": "81489d83-54af-42d9-a5b3-8eb4e5399ae6",
+      "question": "Does the Gear have to be equipped to this Legend?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "81489d83-54af-42d9-a5b3-8eb4e5399ae6",
+          "slug": "river-ward-detective-on-the-hunt",
+          "name": "River Ward: Detective on the Hunt"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/river-ward-detective-on-the-hunt.test.ts",
+          "title": "can equip a cheap Gear from hand to a friendly face-up Legend",
+          "faqIds": ["81489d83-54af-42d9-a5b3-8eb4e5399ae6"]
+        }
+      ]
+    },
+    {
+      "id": "a6ed37cc-f3f9-42e6-8246-0edf668b0bc5",
+      "question": "Do you have to Trash the top card after searching?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "a6ed37cc-f3f9-42e6-8246-0edf668b0bc5",
+          "slug": "river-ward-detective-on-the-hunt",
+          "name": "River Ward: Detective on the Hunt"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/river-ward-detective-on-the-hunt.test.ts",
+          "title": "triggers from an equipped friendly Unit using the defeated event-time attached state",
+          "faqIds": ["a6ed37cc-f3f9-42e6-8246-0edf668b0bc5"]
+        }
+      ]
+    },
+    {
+      "id": "28a594b5-9188-4f9b-9d3d-8e0100d6ce5e",
+      "question": "Do I keep the card not Trashed on top of my deck?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "28a594b5-9188-4f9b-9d3d-8e0100d6ce5e",
+          "slug": "river-ward-detective-on-the-hunt",
+          "name": "River Ward: Detective on the Hunt"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/river-ward-detective-on-the-hunt.test.ts",
+          "title": "triggers from an equipped friendly Unit using the defeated event-time attached state",
+          "faqIds": ["28a594b5-9188-4f9b-9d3d-8e0100d6ce5e"]
+        }
+      ]
+    },
+    {
+      "id": "e4837808-b775-4bbb-8e98-6c5c8441324e",
+      "question": "Does Rogue Amendiares' effect trigger if she steals a Gig herself?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "e4837808-b775-4bbb-8e98-6c5c8441324e",
+          "slug": "rogue-amendiares-preem-solo",
+          "name": "Rogue Amendiares: Preem Solo"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/rogue-amendiares-preem-solo.test.ts",
+          "title": "resolves once per Gig when a friendly Legend simultaneously steals one even and one odd Gig",
+          "faqIds": ["e4837808-b775-4bbb-8e98-6c5c8441324e"]
+        }
+      ]
+    },
+    {
+      "id": "c66b9c47-a74d-4293-89ae-3d04bbb5bf92",
+      "question": "Does Rogue Amendiares' effect work while face-up in the Legend area?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "c66b9c47-a74d-4293-89ae-3d04bbb5bf92",
+          "slug": "rogue-amendiares-preem-solo",
+          "name": "Rogue Amendiares: Preem Solo"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/rogue-amendiares-preem-solo.test.ts",
+          "title": "draws 1 when a friendly Legend steals an even Gig",
+          "faqIds": ["c66b9c47-a74d-4293-89ae-3d04bbb5bf92"]
+        },
+        {
+          "file": "packages/engine/src/cards/legends/rogue-amendiares-preem-solo.test.ts",
+          "title": "makes a Rival discard 1 when a friendly Legend steals an odd Gig",
+          "faqIds": ["c66b9c47-a74d-4293-89ae-3d04bbb5bf92"]
+        }
+      ]
+    },
+    {
+      "id": "9ce8258b-6b6a-4157-9054-7923068292d5",
+      "question": "If I manage to play Rogue Amendiares on my Rival's turn, can I use her [QUICK] effect that turn?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "9ce8258b-6b6a-4157-9054-7923068292d5",
+          "slug": "rogue-amendiares-queen-of-the-afterlife",
+          "name": "Rogue Amendiares: Queen of the Afterlife"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "rogue-amendiares-queen-of-the-afterlife FAQ 1",
+          "faqIds": ["9ce8258b-6b6a-4157-9054-7923068292d5"]
+        }
+      ]
+    },
+    {
+      "id": "506cd2e9-d647-404d-a713-14e340241fcc",
+      "question": "Do I have to defeat a rival Unit even if I don't want to?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "506cd2e9-d647-404d-a713-14e340241fcc",
+          "slug": "royce-don-t-call-me-simon",
+          "name": "Royce: Don't Call Me Simon"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "royce-don-t-call-me-simon FAQ 1",
+          "faqIds": ["506cd2e9-d647-404d-a713-14e340241fcc"]
+        }
+      ]
+    },
+    {
+      "id": "3ae8916f-514c-47dd-b078-a5844f21277d",
+      "question": "If a rival Unit’s power is reduced to 2 or 3 by another effect this turn, can Royce defeat it?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "3ae8916f-514c-47dd-b078-a5844f21277d",
+          "slug": "royce-don-t-call-me-simon",
+          "name": "Royce: Don't Call Me Simon"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/royce-don-t-call-me-simon.test.ts",
+          "title": "uses the power-2 threshold at equal Street Cred and effective power",
+          "faqIds": ["3ae8916f-514c-47dd-b078-a5844f21277d"]
+        },
+        {
+          "file": "packages/engine/src/cards/units/royce-don-t-call-me-simon.test.ts",
+          "title": "offers only rival Units and uses their effective rather than printed power",
+          "faqIds": ["3ae8916f-514c-47dd-b078-a5844f21277d"]
+        }
+      ]
+    },
+    {
+      "id": "4c90424e-2603-4927-8bbd-067de4332a36",
+      "question": "Can I equip Gear to Royce in the Legends area?",
+      "answer": "Yes, you can equip face-up Legends in the Legends area.",
+      "sources": [
+        {
+          "id": "4c90424e-2603-4927-8bbd-067de4332a36",
+          "slug": "royce-psycho-on-the-edge",
+          "name": "Royce: Psycho on the Edge"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "royce-psycho-on-the-edge FAQ 1",
+          "faqIds": ["4c90424e-2603-4927-8bbd-067de4332a36"]
+        }
+      ]
+    },
+    {
+      "id": "46c436af-2ee0-4b1a-b7d5-03df43ed5203",
+      "question": "Does the Royce +2 power for each equipped Gear apply while he is still in the Legend area?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "46c436af-2ee0-4b1a-b7d5-03df43ed5203",
+          "slug": "royce-psycho-on-the-edge",
+          "name": "Royce: Psycho on the Edge"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "royce-psycho-on-the-edge FAQ 1",
+          "faqIds": ["46c436af-2ee0-4b1a-b7d5-03df43ed5203"]
+        }
+      ]
+    },
+    {
+      "id": "903ccbd0-d2d9-46e0-9ffc-cd5ebddef04a",
+      "question": "What happens to a Gear on a Legend when the Legend is removed from play?",
+      "answer": "When a Legend leaves the field or Legends area, its attached Gear follows the Legend to that area, then is no longer equipped in the new area. So, the Gear remains in that new area when you remove the Legend from play.",
+      "sources": [
+        {
+          "id": "903ccbd0-d2d9-46e0-9ffc-cd5ebddef04a",
+          "slug": "royce-psycho-on-the-edge",
+          "name": "Royce: Psycho on the Edge"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/royce-psycho-on-the-edge.test.ts",
+          "title": "is removed from the game rather than trashed after GO SOLO when it leaves the field",
+          "faqIds": ["903ccbd0-d2d9-46e0-9ffc-cd5ebddef04a"]
+        }
+      ]
+    },
+    {
+      "id": "76746ab1-b325-427c-a8ca-499dcff97fb3",
+      "question": "If this Unit is chosen by Mox Inciters to attack but there's no spent rival Unit, is this Unit forced to make an attack on the rival's Gig area?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "76746ab1-b325-427c-a8ca-499dcff97fb3",
+          "slug": "ruthless-lowlife",
+          "name": "Ruthless Lowlife"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "ruthless-lowlife FAQ 1",
+          "faqIds": ["76746ab1-b325-427c-a8ca-499dcff97fb3"]
+        }
+      ]
+    },
+    {
+      "id": "18318e94-6979-4623-9cf5-fee73924d728",
+      "question": "Do my Friendly Arasaka Units have +1 power while in the fight or steal step?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "18318e94-6979-4623-9cf5-fee73924d728",
+          "slug": "saburo-arasaka-stubborn-patriarch",
+          "name": "Saburo Arasaka: Stubborn Patriarch"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/saburo-arasaka-stubborn-patriarch.test.ts",
+          "title": "gives a friendly Arasaka Unit +1 power while it attacks",
+          "faqIds": ["18318e94-6979-4623-9cf5-fee73924d728"]
+        },
+        {
+          "file": "packages/engine/src/cards/legends/saburo-arasaka-stubborn-patriarch.test.ts",
+          "title": "crosses the 10-power breakpoint and steals exactly 2 Gigs",
+          "faqIds": ["18318e94-6979-4623-9cf5-fee73924d728"]
+        }
+      ]
+    },
+    {
+      "id": "6b38d8b1-470f-402a-aeca-024e1db97b4d",
+      "question": "Do I need to choose a Unit on the field for this Program to effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "6b38d8b1-470f-402a-aeca-024e1db97b4d",
+          "slug": "safety-override",
+          "name": "Safety Override"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/safety-override.test.ts",
+          "title": "is consumed after one friendly loss (single use)",
+          "faqIds": ["6b38d8b1-470f-402a-aeca-024e1db97b4d"]
+        }
+      ],
+      "conflict": {
+        "reason": "The FAQ requires choosing one Unit when played. Current retail text applies to the next friendly Unit that loses a fight, without choosing one on play.",
+        "policy": "Awaiting source-policy decision; preserve current card text and CR behavior.",
+        "cardSource": "https://cyberpunktcg.com/cards/safety-override",
+        "rulesSource": "https://cyberpunktcg.com/comprehensive-rules"
+      }
+    },
+    {
+      "id": "2507570b-3a3a-4c5e-bb34-451ebf248cc4",
+      "question": "Can this Unit attack ready Units with its effect?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "2507570b-3a3a-4c5e-bb34-451ebf248cc4",
+          "slug": "sandayu-oda-hanako-s-guardian",
+          "name": "Sandayu Oda: Hanako's Guardian"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "sandayu-oda-hanako-s-guardian FAQ 1",
+          "faqIds": ["2507570b-3a3a-4c5e-bb34-451ebf248cc4"]
+        }
+      ]
+    },
+    {
+      "id": "66f0aa50-b90c-4bf0-9a02-ddfbec146375",
+      "question": "At the end of my turn do I have to ready this Unit or Legend even if I don't want to?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "66f0aa50-b90c-4bf0-9a02-ddfbec146375",
+          "slug": "sandevistan",
+          "name": "Sandevistan"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/gear/sandevistan.test.ts",
+          "title": "readies the equipped Unit host at the end of its controller's turn",
+          "faqIds": ["66f0aa50-b90c-4bf0-9a02-ddfbec146375"]
+        },
+        {
+          "file": "packages/engine/src/cards/gear/sandevistan.test.ts",
+          "title": "readies an equipped face-up Legend at the end of its controller's turn",
+          "faqIds": ["66f0aa50-b90c-4bf0-9a02-ddfbec146375"]
+        }
+      ]
+    },
+    {
+      "id": "8b665720-9bdc-47ee-8930-9e8b6f6d41ef",
+      "question": "If I attack the rival Gig area with Sasha but she has 0 power, does she steal a Gig?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "8b665720-9bdc-47ee-8930-9e8b6f6d41ef",
+          "slug": "sasha-yakovleva-won-t-let-you-down",
+          "name": "Sasha Yakovleva: Won't Let You Down"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "sasha-yakovleva-won-t-let-you-down FAQ 1",
+          "faqIds": ["8b665720-9bdc-47ee-8930-9e8b6f6d41ef"]
+        }
+      ]
+    },
+    {
+      "id": "f548eacd-802d-4101-b47c-36cf1155e1df",
+      "question": "When I declare an attack with Sasha Yakovleva, can I use her [ATTACK] effect before I choose a target?",
+      "answer": "No. You must declare the attack target before revealing the card for her [ATTACK] effect.",
+      "sources": [
+        {
+          "id": "f548eacd-802d-4101-b47c-36cf1155e1df",
+          "slug": "sasha-yakovleva-won-t-let-you-down",
+          "name": "Sasha Yakovleva: Won't Let You Down"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/sasha-yakovleva-won-t-let-you-down.test.ts",
+          "title": "reveals and adds the top deck card when attacking, then gains power equal to its cost",
+          "faqIds": ["f548eacd-802d-4101-b47c-36cf1155e1df"]
+        }
+      ]
+    },
+    {
+      "id": "d9ad00b9-ab93-498f-a6fa-bab6d833d949",
+      "question": "If a friendly Unit equipped with Satori fights a Unit of the same power and they defeat each other, do I still draw 1?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "d9ad00b9-ab93-498f-a6fa-bab6d833d949",
+          "slug": "satori-sword-of-saburo",
+          "name": "Satori: Sword of Saburo"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "satori-sword-of-saburo FAQ 1",
+          "faqIds": ["d9ad00b9-ab93-498f-a6fa-bab6d833d949"]
+        }
+      ]
+    },
+    {
+      "id": "8ba81187-0232-4320-b876-cae87a389ea5",
+      "question": "If my Unit equipped with Satori is attacked by a rival Unit and my Unit wins the fight, do I draw 1?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "8ba81187-0232-4320-b876-cae87a389ea5",
+          "slug": "satori-sword-of-saburo",
+          "name": "Satori: Sword of Saburo"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/gear/satori-sword-of-saburo.test.ts",
+          "title": "draws 1 after the equipped defender wins a fight against a rival unit",
+          "faqIds": ["8ba81187-0232-4320-b876-cae87a389ea5"]
+        }
+      ]
+    },
+    {
+      "id": "1f7a2ac5-b236-4b1c-9f4b-6e0b34441174",
+      "question": "Do other Units keep the +2 power while fighting and stealing too?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "1f7a2ac5-b236-4b1c-9f4b-6e0b34441174",
+          "slug": "saul-bright-stormrider",
+          "name": "Saul Bright: Stormrider"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/saul-bright-stormrider.test.ts",
+          "title": "costs exactly 8 to play and enters with Lag",
+          "faqIds": ["1f7a2ac5-b236-4b1c-9f4b-6e0b34441174"]
+        }
+      ]
+    },
+    {
+      "id": "461379b1-06dd-4753-91b2-1fdabc5024e0",
+      "question": "If I have another Unit in my trash, do I have to add it to my hand  even if I don't want to?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "461379b1-06dd-4753-91b2-1fdabc5024e0",
+          "slug": "screw-lovelorn-fool",
+          "name": "Screw: Lovelorn Fool"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/screw-lovelorn-fool.test.ts",
+          "title": "offers exactly one other friendly Unit, excluding non-Units and rival trash",
+          "faqIds": ["461379b1-06dd-4753-91b2-1fdabc5024e0"]
+        }
+      ]
+    },
+    {
+      "id": "0db0dbe4-a10b-458b-9b5c-9e478b71c615",
+      "question": "Can Screw's effect add a different copy of Screw from my trash to my hand?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "0db0dbe4-a10b-458b-9b5c-9e478b71c615",
+          "slug": "screw-lovelorn-fool",
+          "name": "Screw: Lovelorn Fool"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "screw-lovelorn-fool FAQ 2",
+          "faqIds": ["0db0dbe4-a10b-458b-9b5c-9e478b71c615"]
+        }
+      ]
+    },
+    {
+      "id": "0d03437c-9149-4ee7-8006-7bb8fd044608",
+      "question": "If neither player has cards in hand when I play Shattered Memories, what happens?",
+      "answer": "Each player may still choose to draw 5, and the total number of discarded cards equals 0.",
+      "sources": [
+        {
+          "id": "0d03437c-9149-4ee7-8006-7bb8fd044608",
+          "slug": "shattered-memories",
+          "name": "Shattered Memories"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "shattered-memories FAQ 1",
+          "faqIds": ["0d03437c-9149-4ee7-8006-7bb8fd044608"]
+        }
+      ]
+    },
+    {
+      "id": "9e6de445-d9cb-42cc-8e94-20c941da7cd9",
+      "question": "When I search the top 3 cards of my deck, can I choose not to reveal any cards and bottom-deck them all even if there's a Gear among them?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "9e6de445-d9cb-42cc-8e94-20c941da7cd9",
+          "slug": "sketchy-ripper",
+          "name": "Sketchy Ripper"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/sketchy-ripper.test.ts",
+          "title": "searches the top 3 on attack, reveals a Gear, and adds it to hand",
+          "faqIds": ["9e6de445-d9cb-42cc-8e94-20c941da7cd9"]
+        }
+      ]
+    },
+    {
+      "id": "c41cdb0c-25d6-47ec-8c4c-5bb900a14b3e",
+      "question": "If this Unit gains 5+ power while fighting or after I declare an attack or in a fight. Do I draw 1?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "c41cdb0c-25d6-47ec-8c4c-5bb900a14b3e",
+          "slug": "swordwise-huscle",
+          "name": "Swordwise Huscle"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "swordwise-huscle FAQ 1",
+          "faqIds": ["c41cdb0c-25d6-47ec-8c4c-5bb900a14b3e"]
+        }
+      ]
+    },
+    {
+      "id": "9f5fa425-bb0f-4f5f-908c-d56b67d14862",
+      "question": "Does this effect count friendly face-up Legends in the field area?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "9f5fa425-bb0f-4f5f-908c-d56b67d14862",
+          "slug": "synapse-burnout",
+          "name": "Synapse Burnout"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/synapse-burnout.test.ts",
+          "title": "counts a friendly Legend that used Go Solo and is now on the field",
+          "faqIds": ["9f5fa425-bb0f-4f5f-908c-d56b67d14862"]
+        }
+      ]
+    },
+    {
+      "id": "2a2b9c9f-1076-493c-aa0f-24a274fbf85a",
+      "question": "If I use this on a friendly Legend in that field area that is now a also a Unit, does the Legend count itself for a +1?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "2a2b9c9f-1076-493c-aa0f-24a274fbf85a",
+          "slug": "synapse-burnout",
+          "name": "Synapse Burnout"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/synapse-burnout.test.ts",
+          "title": "lets a Go Solo Legend count itself when it receives the power bonus",
+          "faqIds": ["2a2b9c9f-1076-493c-aa0f-24a274fbf85a"]
+        }
+      ]
+    },
+    {
+      "id": "4e9fde1b-cbe0-4025-9a04-c61b13ecde02",
+      "question": "Does this apply to Units stealing Gigs through effects outside of attacking?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "4e9fde1b-cbe0-4025-9a04-c61b13ecde02",
+          "slug": "take-control",
+          "name": "Take Control"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "take-control FAQ 1",
+          "faqIds": ["4e9fde1b-cbe0-4025-9a04-c61b13ecde02"]
+        }
+      ]
+    },
+    {
+      "id": "b6be2042-7260-4c72-a7e0-0478c9cda9f9",
+      "question": "If I use Take Control on a rival Unit that would normally steal 1 Gig but is equipped with Gorilla Arms, how many Gigs does it actually steal?",
+      "answer": "0 Gigs. Take Control's effect prevents the rival Unit from stealing a Gig, which means Gorilla Arms does not activate.",
+      "sources": [
+        {
+          "id": "b6be2042-7260-4c72-a7e0-0478c9cda9f9",
+          "slug": "take-control",
+          "name": "Take Control"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "take-control FAQ 2",
+          "faqIds": ["b6be2042-7260-4c72-a7e0-0478c9cda9f9"]
+        }
+      ]
+    },
+    {
+      "id": "2110a5e9-a27c-42b5-b3e4-ca464f1d2dd0",
+      "question": "Do I have to reveal the friendly face-down Legends I look at?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "2110a5e9-a27c-42b5-b3e4-ca464f1d2dd0",
+          "slug": "t-bug-amateur-philosopher",
+          "name": "T-Bug: Amateur Philosopher"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/t-bug-amateur-philosopher.test.ts",
+          "title": "on defeat, may choose a friendly face-down Legend to Call for free (a/d)",
+          "faqIds": ["2110a5e9-a27c-42b5-b3e4-ca464f1d2dd0"]
+        },
+        {
+          "file": "packages/engine/src/cards/units/t-bug-amateur-philosopher.test.ts",
+          "title": "if a Legend was already Called this turn, the free Call is skipped but lookAt still occurs (c)",
+          "faqIds": ["2110a5e9-a27c-42b5-b3e4-ca464f1d2dd0"]
+        }
+      ]
+    },
+    {
+      "id": "2a1bca2f-eaca-4418-baeb-96aab1b4e476",
+      "question": "Do I have to look at my Legends even if I don't want to?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "2a1bca2f-eaca-4418-baeb-96aab1b4e476",
+          "slug": "t-bug-amateur-philosopher",
+          "name": "T-Bug: Amateur Philosopher"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/t-bug-amateur-philosopher.test.ts",
+          "title": "if a Legend was already Called this turn, the free Call is skipped but lookAt still occurs (c)",
+          "faqIds": ["2a1bca2f-eaca-4418-baeb-96aab1b4e476"]
+        }
+      ]
+    },
+    {
+      "id": "5ecbb33e-871b-40cd-bb66-6997a692e1a6",
+      "question": "When searching the top card of the deck is the card still currently counted as being in the deck?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "5ecbb33e-871b-40cd-bb66-6997a692e1a6",
+          "slug": "tetratronic-rippler",
+          "name": "Tetratronic Rippler"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "tetratronic-rippler FAQ 1",
+          "faqIds": ["5ecbb33e-871b-40cd-bb66-6997a692e1a6"]
+        }
+      ]
+    },
+    {
+      "id": "8151aa53-358f-4d39-b3f6-58b165127b8e",
+      "question": "If I trash 1 or more Gears from this effect, do I have to add one to my hand even if I don't want to?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "8151aa53-358f-4d39-b3f6-58b165127b8e",
+          "slug": "the-heist",
+          "name": "The Heist"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/the-heist.test.ts",
+          "title": "offers only Gear cards from among the trashed cards as the selection",
+          "faqIds": ["8151aa53-358f-4d39-b3f6-58b165127b8e"]
+        }
+      ]
+    },
+    {
+      "id": "4f2133a0-c3cc-4955-9815-6026ed16735d",
+      "question": "If I choose a Gear with cost equal to the value of a friendly Gig, do I have to play it for free, or can I just add it to my hand?",
+      "answer": "You may add it to your hand if you don't want to play it immediately. (But if you play it later, you must pay its cost normally.)",
+      "sources": [
+        {
+          "id": "4f2133a0-c3cc-4955-9815-6026ed16735d",
+          "slug": "the-heist",
+          "name": "The Heist"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/the-heist.test.ts",
+          "title": "keeps the recovered Gear in hand when the free attachment is declined",
+          "faqIds": ["4f2133a0-c3cc-4955-9815-6026ed16735d"]
+        }
+      ]
+    },
+    {
+      "id": "91373c98-159f-48e1-a231-045b5fe34631",
+      "question": "When a Unit or Legend equipped with The Relic is defeated, do I move any equipped Gear on it to the bottom-deck, too?",
+      "answer": "No. The Unit/Legend moves to the trash first, so any Gear (including The Relic) remains in the trash when you bottom-deck the Unit/Legend.",
+      "sources": [
+        {
+          "id": "91373c98-159f-48e1-a231-045b5fe34631",
+          "slug": "the-relic-experimental-biochip",
+          "name": "The Relic: Experimental Biochip"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/gear/the-relic-experimental-biochip.test.ts",
+          "title": "fires Defeated when its host is defeated, free-plays another Unit, and bottom-decks the host",
+          "faqIds": ["91373c98-159f-48e1-a231-045b5fe34631"]
+        }
+      ]
+    },
+    {
+      "id": "71b6fcd4-2bac-430b-8589-258ab1aae486",
+      "question": "When searching the top 3 cards of my deck, are the cards still considered part of the deck?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "71b6fcd4-2bac-430b-8589-258ab1aae486",
+          "slug": "three-mouths-one-desire",
+          "name": "Three Mouths, One Desire"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "three-mouths-one-desire FAQ 1",
+          "faqIds": ["71b6fcd4-2bac-430b-8589-258ab1aae486"]
+        }
+      ]
+    },
+    {
+      "id": "2a2fadce-85ca-49cd-a9a5-76a77e5cf615",
+      "question": "IfI have the same amount of Street Cred as a Rival, do I get both effects?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "2a2fadce-85ca-49cd-a9a5-76a77e5cf615",
+          "slug": "towerfall",
+          "name": "Towerfall"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "towerfall FAQ 1",
+          "faqIds": ["2a2fadce-85ca-49cd-a9a5-76a77e5cf615"]
+        }
+      ]
+    },
+    {
+      "id": "b7e62adb-5a98-482e-8ec7-39fc3d176aa1",
+      "question": "Does Trauma Team Operatives' effect change the cost of the card?",
+      "answer": "No, only the amount you pay.",
+      "sources": [
+        {
+          "id": "b7e62adb-5a98-482e-8ec7-39fc3d176aa1",
+          "slug": "trauma-team-operatives",
+          "name": "Trauma Team Operatives"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "trauma-team-operatives FAQ 1",
+          "faqIds": ["b7e62adb-5a98-482e-8ec7-39fc3d176aa1"]
+        }
+      ]
+    },
+    {
+      "id": "cc187a60-e949-4ff2-a8d2-38adf6ff32e9",
+      "question": "Does the Gig I decrease with the effect have to be the min Gig I use for the draw 1 effect condition?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "cc187a60-e949-4ff2-a8d2-38adf6ff32e9",
+          "slug": "trust-no-one",
+          "name": "Trust No One"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/trust-no-one.test.ts",
+          "title": "may decline the Gig decrease and still draws for an existing friendly min Gig",
+          "faqIds": ["cc187a60-e949-4ff2-a8d2-38adf6ff32e9"]
+        }
+      ]
+    },
+    {
+      "id": "0c12a0d1-b75a-4269-b1b5-68d5e80acf4b",
+      "question": "If I don't Call a Legend for free when I play this card, can I Call a Legend for free later instead?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "0c12a0d1-b75a-4269-b1b5-68d5e80acf4b",
+          "slug": "tyger-s-whisper",
+          "name": "Tyger's Whisper"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "tyger-s-whisper FAQ 1",
+          "faqIds": ["0c12a0d1-b75a-4269-b1b5-68d5e80acf4b"]
+        }
+      ]
+    },
+    {
+      "id": "1dcc06cf-2c53-4507-88d8-f5f002e2d656",
+      "question": "If I manage to play Tyger's Whisper on my Rival's turn, can I Call a Legend for free through its [PLAY] effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "1dcc06cf-2c53-4507-88d8-f5f002e2d656",
+          "slug": "tyger-s-whisper",
+          "name": "Tyger's Whisper"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "tyger-s-whisper FAQ 2",
+          "faqIds": ["1dcc06cf-2c53-4507-88d8-f5f002e2d656"]
+        }
+      ]
+    },
+    {
+      "id": "92d69f9f-e14d-491e-8589-7f79d56b5320",
+      "question": "If I already Called a Legend this turn, can I call another Legend with Tyger's Whisper's [PLAY] effect?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "92d69f9f-e14d-491e-8589-7f79d56b5320",
+          "slug": "tyger-s-whisper",
+          "name": "Tyger's Whisper"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/tyger-s-whisper.test.ts",
+          "title": "does not offer another Call after a Legend was already Called this turn",
+          "faqIds": ["92d69f9f-e14d-491e-8589-7f79d56b5320"]
+        }
+      ]
+    },
+    {
+      "id": "51314e7a-dea5-4d38-aeeb-52f58dc2a55a",
+      "question": "If I play this when there are no rival Units do I still have to bottom deck a friendly Unit?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "51314e7a-dea5-4d38-aeeb-52f58dc2a55a",
+          "slug": "unlikely-bond",
+          "name": "Unlikely Bond"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/unlikely-bond.test.ts",
+          "title": "still bottom-decks the ready friendly Unit when no spent rival Unit exists",
+          "faqIds": ["51314e7a-dea5-4d38-aeeb-52f58dc2a55a"]
+        }
+      ]
+    },
+    {
+      "id": "fbe43ae0-a606-4391-8183-342a43213365",
+      "question": "If Valentino Guerrera attacks a ready rival Unit with [BLOCKER], can the attacked Unit use its own [BLOCKER] effect?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "fbe43ae0-a606-4391-8183-342a43213365",
+          "slug": "valentino-guerrera",
+          "name": "Valentino Guerrera"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "valentino-guerrera FAQ 1",
+          "faqIds": ["fbe43ae0-a606-4391-8183-342a43213365"]
+        }
+      ]
+    },
+    {
+      "id": "c78f53c3-489c-4a0e-8d73-9ab7a8431419",
+      "question": "If I give a friendly Unit [ADRENALINE] on my Rival's turn, can it make an attack?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "c78f53c3-489c-4a0e-8d73-9ab7a8431419",
+          "slug": "valentino-street-racer",
+          "name": "Valentino Street Racer"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "valentino-street-racer FAQ 1",
+          "faqIds": ["c78f53c3-489c-4a0e-8d73-9ab7a8431419"]
+        }
+      ]
+    },
+    {
+      "id": "22eadcab-b88a-45cd-9e07-ef51084da8cf",
+      "question": "Can I play this Legend to the Field area without using the [GO SOLO] keyword?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "22eadcab-b88a-45cd-9e07-ef51084da8cf",
+          "slug": "v-corporate-exile",
+          "name": "V: Corporate Exile"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "v-corporate-exile FAQ 1",
+          "faqIds": ["22eadcab-b88a-45cd-9e07-ef51084da8cf"]
+        }
+      ]
+    },
+    {
+      "id": "80577b2c-f335-442e-9476-b2e38d0d03dd",
+      "question": "If I have a way to play a Gear on my rival's turn, do I still get the  -3 €$ discount?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "80577b2c-f335-442e-9476-b2e38d0d03dd",
+          "slug": "viktor-vektor-drop-your-illusions",
+          "name": "Viktor Vektor: Drop Your Illusions"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "viktor-vektor-drop-your-illusions FAQ 1",
+          "faqIds": ["80577b2c-f335-442e-9476-b2e38d0d03dd"]
+        }
+      ]
+    },
+    {
+      "id": "449ecd14-296c-4431-b445-261265f89c1d",
+      "question": "When I play my first Cyberware each turn, do I have to pay the reduced amount even if I would prefer to pay full price?",
+      "answer": "Yes, the discount is mandatory.",
+      "sources": [
+        {
+          "id": "449ecd14-296c-4431-b445-261265f89c1d",
+          "slug": "viktor-vektor-drop-your-illusions",
+          "name": "Viktor Vektor: Drop Your Illusions"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/viktor-vektor-drop-your-illusions.test.ts",
+          "title": "reduces the first Cyberware Gear played each turn by 3 €$, minimum 1",
+          "faqIds": ["449ecd14-296c-4431-b445-261265f89c1d"]
+        }
+      ]
+    },
+    {
+      "id": "03d7a874-2d53-4fc9-9f7d-905cebcedcc7",
+      "question": "When I search the top 5 cards of my deck, can I choose not to reveal any cards and bottom-deck them all even if there's a viable Gear among them?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "03d7a874-2d53-4fc9-9f7d-905cebcedcc7",
+          "slug": "viktor-vektor-sit-down-and-relax",
+          "name": "Viktor Vektor: Sit Down and Relax"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "viktor-vektor-sit-down-and-relax FAQ 1",
+          "faqIds": ["03d7a874-2d53-4fc9-9f7d-905cebcedcc7"]
+        }
+      ]
+    },
+    {
+      "id": "602f90aa-bda8-44dc-97b6-f3e23e59918f",
+      "question": "Can I choose not to use Viktor Vektor's [PLAY] effect?",
+      "answer": "No, the effect is mandatory. If you can do it, you must.",
+      "sources": [
+        {
+          "id": "602f90aa-bda8-44dc-97b6-f3e23e59918f",
+          "slug": "viktor-vektor-you-might-feel-a-little-pinch",
+          "name": "Viktor Vektor: You Might Feel a Little Pinch"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/viktor-vektor-you-might-feel-a-little-pinch.test.ts",
+          "title": "equips a cheap Cyberware Gear from trash to another friendly Unit",
+          "faqIds": ["602f90aa-bda8-44dc-97b6-f3e23e59918f"]
+        }
+      ]
+    },
+    {
+      "id": "9eee394b-2dc7-4750-a5ef-5cb0fc988ee9",
+      "question": "If V steals multiple Gigs in one attack, can V increase each stolen Gig?",
+      "answer": "Yes, as this card specifies 'A Gig' so each Gig that gets stolen may be increased by the effect.",
+      "sources": [
+        {
+          "id": "9eee394b-2dc7-4750-a5ef-5cb0fc988ee9",
+          "slug": "v-roamer-of-the-badlands",
+          "name": "V: Roamer of the Badlands"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/v-roamer-of-the-badlands.test.ts",
+          "title": "pends one increase for each Gig this Unit steals at the same time",
+          "faqIds": ["9eee394b-2dc7-4750-a5ef-5cb0fc988ee9"]
+        }
+      ]
+    },
+    {
+      "id": "1dd664ff-e61f-4b15-8e96-45f0dd31a13a",
+      "question": "When I trash 3, do I need to add a BRAINDANCE Program from the cards I trashed?",
+      "answer": "No. You can add any BRAINDANCE Program from your trash.",
+      "sources": [
+        {
+          "id": "1dd664ff-e61f-4b15-8e96-45f0dd31a13a",
+          "slug": "v-streetkid",
+          "name": "V: Streetkid"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/v-streetkid.test.ts",
+          "title": "trashes 3 on call and returns a Braindance Program from trash to hand",
+          "faqIds": ["1dd664ff-e61f-4b15-8e96-45f0dd31a13a"]
+        }
+      ]
+    },
+    {
+      "id": "ba7d3b2f-96f6-4570-8e03-b7f514512d9a",
+      "question": "If there are fewer than 3 cards in my deck, can I still call V?",
+      "answer": "Yes. Trash as many cards as possible, instead.",
+      "sources": [
+        {
+          "id": "ba7d3b2f-96f6-4570-8e03-b7f514512d9a",
+          "slug": "v-streetkid",
+          "name": "V: Streetkid"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "v-streetkid FAQ 2",
+          "faqIds": ["ba7d3b2f-96f6-4570-8e03-b7f514512d9a"]
+        }
+      ]
+    },
+    {
+      "id": "15ebfd43-82fa-4e07-a8e5-2432562e32ef",
+      "question": "If V’s [CALL] effect trashes multiple BRAINDANCE Programs,  can I choose more than 1?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "15ebfd43-82fa-4e07-a8e5-2432562e32ef",
+          "slug": "v-streetkid",
+          "name": "V: Streetkid"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "v-streetkid FAQ 3",
+          "faqIds": ["15ebfd43-82fa-4e07-a8e5-2432562e32ef"]
+        }
+      ]
+    },
+    {
+      "id": "8bbbcb97-0cb0-41b9-a674-7647d6085163",
+      "question": "Can I use this card's [Spend Icon:] effect on an already min Gig?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "8bbbcb97-0cb0-41b9-a674-7647d6085163",
+          "slug": "wakako-okada-peace-and-harmony",
+          "name": "Wakako Okada: Peace and Harmony"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/legends/wakako-okada-peace-and-harmony.test.ts",
+          "title": "may decrease the chosen Gig by zero",
+          "faqIds": ["8bbbcb97-0cb0-41b9-a674-7647d6085163"]
+        }
+      ]
+    },
+    {
+      "id": "972b7a64-cc96-4e31-8e7f-5718d319914a",
+      "question": "Does this card's effect change the cost of the card?",
+      "answer": "No, only the amount you pay.",
+      "sources": [
+        {
+          "id": "972b7a64-cc96-4e31-8e7f-5718d319914a",
+          "slug": "we-gotta-live-together",
+          "name": "We Gotta Live Together"
+        },
+        {
+          "id": "fc46987c-3869-4d97-b73b-686e1e08120e",
+          "slug": "zetatech-berserk",
+          "name": "Zetatech Berserk"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "we-gotta-live-together FAQ 1",
+          "faqIds": ["972b7a64-cc96-4e31-8e7f-5718d319914a"]
+        },
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "zetatech-berserk FAQ 1",
+          "faqIds": ["fc46987c-3869-4d97-b73b-686e1e08120e"]
+        }
+      ]
+    },
+    {
+      "id": "abf24590-be16-41a4-9314-05cf9964a483",
+      "question": "Can I choose to play this card for it's full cost if my Rival has 2 or more Gigs?",
+      "answer": "No, the discount is mandatory.",
+      "sources": [
+        {
+          "id": "abf24590-be16-41a4-9314-05cf9964a483",
+          "slug": "we-gotta-live-together",
+          "name": "We Gotta Live Together"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/we-gotta-live-together.test.ts",
+          "title": "costs 3 €$ when a Rival controls at least 2 more Gigs",
+          "faqIds": ["abf24590-be16-41a4-9314-05cf9964a483"]
+        }
+      ]
+    },
+    {
+      "id": "6a19fd88-c002-4d46-914c-dfe3b13fd27b",
+      "question": "If my Rival plays a Legend to the field after I play Westbrook Netrunner, can the Legend steal a Gig with value less than their power?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "6a19fd88-c002-4d46-914c-dfe3b13fd27b",
+          "slug": "westbrook-netrunner",
+          "name": "Westbrook Netrunner"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "westbrook-netrunner FAQ 1",
+          "faqIds": ["6a19fd88-c002-4d46-914c-dfe3b13fd27b"]
+        }
+      ]
+    },
+    {
+      "id": "5b17e2c5-e679-4dad-a131-815a6618dd48",
+      "question": "If Westbrook Netrunner is defeated before my next turn, is its effect still active?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "5b17e2c5-e679-4dad-a131-815a6618dd48",
+          "slug": "westbrook-netrunner",
+          "name": "Westbrook Netrunner"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "westbrook-netrunner FAQ 2",
+          "faqIds": ["5b17e2c5-e679-4dad-a131-815a6618dd48"]
+        }
+      ]
+    },
+    {
+      "id": "d0d1a60f-cb84-4dbf-b131-c2ee9f7bae22",
+      "question": "Can I play this card if there are no spent Units on the field?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "d0d1a60f-cb84-4dbf-b131-c2ee9f7bae22",
+          "slug": "wild-in-the-streets",
+          "name": "Wild in the Streets"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "wild-in-the-streets FAQ 1",
+          "faqIds": ["d0d1a60f-cb84-4dbf-b131-c2ee9f7bae22"]
+        }
+      ]
+    },
+    {
+      "id": "192c3c09-2160-4818-840a-ae6b1d9cf27f",
+      "question": "Can I choose a friendly Unit with this effect?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "192c3c09-2160-4818-840a-ae6b1d9cf27f",
+          "slug": "wild-in-the-streets",
+          "name": "Wild in the Streets"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/programs/wild-in-the-streets.test.ts",
+          "title": "can target either player's spent Unit but excludes every ready Unit",
+          "faqIds": ["192c3c09-2160-4818-840a-ae6b1d9cf27f"]
+        }
+      ]
+    },
+    {
+      "id": "7ea036d0-1f07-4425-9a47-198eec19fef1",
+      "question": "If I play this Program and there is only a spent friendly Unit in the Field areas. Will I have to choose my Unit?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "7ea036d0-1f07-4425-9a47-198eec19fef1",
+          "slug": "wild-in-the-streets",
+          "name": "Wild in the Streets"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "wild-in-the-streets FAQ 3",
+          "faqIds": ["7ea036d0-1f07-4425-9a47-198eec19fef1"]
+        }
+      ]
+    },
+    {
+      "id": "7ec76a28-572e-45e7-81b2-53c8f38b8ce3",
+      "question": "When this card steals a Gig do I have to ready another friendly Unit even if I don't want to?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "7ec76a28-572e-45e7-81b2-53c8f38b8ce3",
+          "slug": "wraith-marauders",
+          "name": "Wraith Marauders"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/wraith-marauders.test.ts",
+          "title": "readies another friendly spent unit whose power equals the stolen Gig value",
+          "faqIds": ["7ec76a28-572e-45e7-81b2-53c8f38b8ce3"]
+        }
+      ]
+    },
+    {
+      "id": "61ad63b3-47d9-48ee-a3f6-4c2842b11c66",
+      "question": "If I've already attacked with an ARASAKA Unit this turn before Yorinobu Arasaka is face-up, then flip Yorinobu, can I trigger Yorinobu's effect that turn by attacking with another ARASAKA Unit?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "61ad63b3-47d9-48ee-a3f6-4c2842b11c66",
+          "slug": "yorinobu-arasaka-embracing-destruction",
+          "name": "Yorinobu Arasaka: Embracing Destruction"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "yorinobu-arasaka-embracing-destruction FAQ 1",
+          "faqIds": ["61ad63b3-47d9-48ee-a3f6-4c2842b11c66"]
+        }
+      ]
+    },
+    {
+      "id": "16ff9b92-68eb-4215-9e05-eaa8bcd9afa4",
+      "question": "If the Unit played by Yorinobu has [ADRENALINE], can it attack the rival Gig area this turn?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "16ff9b92-68eb-4215-9e05-eaa8bcd9afa4",
+          "slug": "yorinobu-arasaka-steel-dragon",
+          "name": "Yorinobu Arasaka: Steel Dragon"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/yorinobu-arasaka-steel-dragon.test.ts",
+          "title": "lets the free Unit attack the rival Gig area when it gains Adrenaline",
+          "faqIds": ["16ff9b92-68eb-4215-9e05-eaa8bcd9afa4"]
+        }
+      ]
+    },
+    {
+      "id": "6e649617-ec75-42db-a1b0-a3c2b1ebee6c",
+      "question": "Does Yorinobu count itself for “the first time an ARASAKA Unit is defeated each turn”?",
+      "answer": "Yes.",
+      "sources": [
+        {
+          "id": "6e649617-ec75-42db-a1b0-a3c2b1ebee6c",
+          "slug": "yorinobu-arasaka-steel-dragon",
+          "name": "Yorinobu Arasaka: Steel Dragon"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/yorinobu-arasaka-steel-dragon.test.ts",
+          "title": "draws exactly one card when he is the first Arasaka Unit defeated in combat",
+          "faqIds": ["6e649617-ec75-42db-a1b0-a3c2b1ebee6c"]
+        },
+        {
+          "file": "packages/engine/src/cards/units/yorinobu-arasaka-steel-dragon.test.ts",
+          "title": "draws when he is the first Arasaka Unit defeated by an effect",
+          "faqIds": ["6e649617-ec75-42db-a1b0-a3c2b1ebee6c"]
+        }
+      ]
+    },
+    {
+      "id": "d2074e1b-4efa-4cfb-bc7a-0ca063fcf804",
+      "question": "If a friendly Arasaka Unit was defeated previusly during my turn and then play Yorinobu Arasaka. If another friendly Arasaka Unit is then defeated this turn. Will I draw 1 off Yorinobu's effect?",
+      "answer": "No.",
+      "sources": [
+        {
+          "id": "d2074e1b-4efa-4cfb-bc7a-0ca063fcf804",
+          "slug": "yorinobu-arasaka-steel-dragon",
+          "name": "Yorinobu Arasaka: Steel Dragon"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/src/cards/units/yorinobu-arasaka-steel-dragon.test.ts",
+          "title": "does not draw if an Arasaka Unit was defeated before Yorinobu entered play this turn",
+          "faqIds": ["d2074e1b-4efa-4cfb-bc7a-0ca063fcf804"]
+        }
+      ]
+    },
+    {
+      "id": "a4b85193-1647-4001-a076-846f54d54481",
+      "question": "When I spend a Unit equipped with Zetatech Faceplate to declare an attack, do I get Zetatech Faceplate's effect before or after I resolve the attack?",
+      "answer": "Before. Adjust the Gig for Zetatech Faceplate's effect before moving on to your Rival's react step.",
+      "sources": [
+        {
+          "id": "a4b85193-1647-4001-a076-846f54d54481",
+          "slug": "zetatech-faceplate",
+          "name": "Zetatech Faceplate"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "zetatech-faceplate FAQ 1",
+          "faqIds": ["a4b85193-1647-4001-a076-846f54d54481"]
+        }
+      ]
+    },
+    {
+      "id": "9f87591e-514c-44ee-bba4-515fc488fb77",
+      "question": "If I spend a Unit equipped with Zetatech Faceplate to declare an attack, and the Unit or Legend has an [ATTACK] effect, do I get Zetatech Faceplacte's effect before or after the [ATTACK] effect?",
+      "answer": "You can choose the order you resolve these effects.",
+      "sources": [
+        {
+          "id": "9f87591e-514c-44ee-bba4-515fc488fb77",
+          "slug": "zetatech-faceplate",
+          "name": "Zetatech Faceplate"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "zetatech-faceplate FAQ 2 (spend first)",
+          "faqIds": ["9f87591e-514c-44ee-bba4-515fc488fb77"]
+        },
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "zetatech-faceplate FAQ 2 (attack first)",
+          "faqIds": ["9f87591e-514c-44ee-bba4-515fc488fb77"]
+        }
+      ]
+    },
+    {
+      "id": "9b281489-5883-47ca-80a9-fa6707655b12",
+      "question": "If I spend a Unit or Legend equipped with Zetatech Faceplate to activate the Unit/Legend's [Spend Icon:] effect, do I get Zetatech Faceplate's effect before or after the activated effect?",
+      "answer": "After. Resolve the activated [Spend Icon:] effect first.",
+      "sources": [
+        {
+          "id": "9b281489-5883-47ca-80a9-fa6707655b12",
+          "slug": "zetatech-faceplate",
+          "name": "Zetatech Faceplate"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "zetatech-faceplate FAQ 3",
+          "faqIds": ["9b281489-5883-47ca-80a9-fa6707655b12"]
+        }
+      ]
+    },
+    {
+      "id": "62c60c04-72ec-4231-9ea7-f5b8048eb4d8",
+      "question": "If I spend a Legend equipped with Zetatech Faceplate to pay a card's cost, do I get Zetatech Faceplate's effect before or after I play the card?",
+      "answer": "After. Play the card first, then adjust the Gig.",
+      "sources": [
+        {
+          "id": "62c60c04-72ec-4231-9ea7-f5b8048eb4d8",
+          "slug": "zetatech-faceplate",
+          "name": "Zetatech Faceplate"
+        }
+      ],
+      "tests": [
+        {
+          "file": "packages/engine/tests/comprehensive-rules/card-faq-regressions.test.ts",
+          "title": "zetatech-faceplate FAQ 4",
+          "faqIds": ["62c60c04-72ec-4231-9ea7-f5b8048eb4d8"]
+        }
+      ]
+    }
+  ]
+}

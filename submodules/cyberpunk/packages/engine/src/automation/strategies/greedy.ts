@@ -6,6 +6,7 @@ import type {
 } from "../../view/player-prompt.ts";
 import type { FilteredCardView, FilteredMatchView } from "../../view/filter.ts";
 import type { MoveId } from "../../moves/index.ts";
+import { hasReadyUnitAdvantage } from "../util/board-presence.ts";
 import {
   gearHostMatch,
   isPreferSpendUnit,
@@ -251,7 +252,9 @@ export function createGreedyStrategy(
         const available = ctx.prompt.availableMoves.find((m) => m.moveId === moveId);
         if (!available) continue;
         const decision = pickArgsFor(available, ctx, strategyWeights, profile);
-        if (decision.kind === "command") return decision;
+        if (decision.kind === "command") {
+          return gearBeforeAttack(ctx, decision, profile) ?? decision;
+        }
       }
       return { kind: "stuck", reason: "greedy: no priority move yielded a command" };
     },
@@ -259,7 +262,34 @@ export function createGreedyStrategy(
 }
 
 export const greedyStrategy: AIStrategy = createGreedyStrategy();
-export const defaultStrategy: AIStrategy = createGreedyStrategy(DEFAULT_GREEDY_WEIGHTS, "default");
+
+/** Equip the planned host before spending it, then reconsider combat next step. */
+function gearBeforeAttack(
+  ctx: DecisionContext,
+  attack: Extract<MoveDecision, { kind: "command" }>,
+  profile?: DeckStrategyProfile,
+): MoveDecision | null {
+  if (attack.move !== "attackRival" && attack.move !== "attackUnit") return null;
+  const attackerId = attack.args?.attackerId;
+  if (typeof attackerId !== "string") return null;
+  const play = ctx.prompt.availableMoves.find((move) => move.moveId === "playCard");
+  if (play?.inputSpec.type !== "playCard") return null;
+
+  // Use legal, affordable candidates and the existing host preference. Do not
+  // redirect equipment intended for another Unit or a profile's engine Legend.
+  const gears = play.inputSpec.candidates.filter((candidate) => {
+    const card = findCard(ctx.view, candidate.cardId);
+    return (
+      card?.type === "gear" &&
+      (card.effectivePower ?? 0) > 0 &&
+      candidate.attachTargets?.includes(attackerId) &&
+      pickAttachTarget(candidate.attachTargets, ctx.view, candidate.cardId, profile) === attackerId
+    );
+  });
+  const pick = pickHighestBoardValuePlayable(gears, ctx.view, ctx.playerId as string, profile);
+  if (!pick) return null;
+  return { kind: "command", move: "playCard", args: { ...pick } };
+}
 
 /**
  * Mulligan heuristic. The opening hand is 6 cards, the rules give one shuffle-
@@ -466,6 +496,8 @@ function pickArgsFor(
         pickFromCandidates: (cands) => cands[0] ?? null,
         pickPair: () => null,
       });
+    case "setCombatPriority":
+      return { kind: "stuck", reason: "Combat priority is a player preference" };
     case "cancelPendingResolution":
       return { kind: "stuck", reason: "cancelPendingResolution is a human escape hatch" };
     default:
@@ -697,7 +729,18 @@ function pickSafeDirectAttacker(
           return (attacker?.effectivePower ?? 0) > strongestBlockerPower;
         });
 
-  return pickStrongestAttacker(safeCandidates, view, playerId);
+  if (safeCandidates.length > 0) return pickStrongestAttacker(safeCandidates, view, playerId);
+  if (!hasReadyUnitAdvantage(view, playerId)) return null;
+
+  // Lead with the least valuable attacker to make the rival spend its blocker.
+  return (
+    [...candidates]
+      .filter((id) => (findCard(view, id)?.effectivePower ?? 0) > 0)
+      .sort((a, b) => {
+        const value = cardStrategicValue(findCard(view, a)) - cardStrategicValue(findCard(view, b));
+        return value || a.localeCompare(b);
+      })[0] ?? null
+  );
 }
 
 function getRivalGigCount(view: FilteredMatchView, playerId: string): number {

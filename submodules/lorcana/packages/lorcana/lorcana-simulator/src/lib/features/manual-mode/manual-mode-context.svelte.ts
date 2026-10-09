@@ -20,6 +20,7 @@ export interface ManualModeController {
   requestEnable: () => void;
   requestDisable: () => void;
   setLore: (playerId: string, amount: number) => void;
+  setInkDrops: (playerId: string, amount: number) => void;
   setDamage: (cardId: string, damage: number) => void;
   moveCard: (cardId: string, targetZoneId: string, position?: "top" | "bottom" | number) => void;
 }
@@ -50,7 +51,7 @@ export function createManualModeController(opts: CreateOptions): ManualModeContr
   let enabled = $state(false);
 
   const sendExecuteMove = (
-    moveType: "manualSetLore" | "manualSetDamage" | "manualMoveCard",
+    moveType: "manualSetLore" | "manualSetInkDrops" | "manualSetDamage" | "manualMoveCard",
     payload: Record<string, unknown>,
   ): void => {
     const gateway = opts.getGateway();
@@ -109,6 +110,10 @@ export function createManualModeController(opts: CreateOptions): ManualModeContr
     setLore(playerId, amount): void {
       sendExecuteMove("manualSetLore", { playerId, amount: Math.max(0, amount) });
       trackEvent("manual_mode_correction_applied", { game_id: opts.gameId, kind: "lore" });
+    },
+    setInkDrops(playerId, amount): void {
+      sendExecuteMove("manualSetInkDrops", { playerId, amount: Math.max(0, amount) });
+      trackEvent("manual_mode_correction_applied", { game_id: opts.gameId, kind: "ink_drops" });
     },
     setDamage(cardId, damage): void {
       sendExecuteMove("manualSetDamage", { cardId, damage: Math.max(0, damage) });

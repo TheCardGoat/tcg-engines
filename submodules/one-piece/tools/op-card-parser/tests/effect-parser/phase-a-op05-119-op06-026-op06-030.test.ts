@@ -31,6 +31,7 @@ describe("Phase A parser regressions", () => {
         },
         {
           trigger: "activateMain",
+          optional: true,
           costs: [{ cost: "restDon", amount: 1 }],
           actions: [{ action: "addDon", count: { amount: 1, upTo: true }, state: "active" }],
           oncePerTurn: true,

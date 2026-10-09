@@ -1,6 +1,7 @@
 export {
   filterMatchView,
   type FilteredCardView,
+  type FilteredEffectView,
   type FilteredPlayerView,
   type FilteredMatchView,
 } from "./filter.ts";

@@ -121,6 +121,30 @@ export function grandArchiveLinkIsLegal(
   if (!filter || object.zone !== "field" || !object.hostId) return false;
   const linked = state.objects[object.hostId];
   if (!linked || linked.zone !== "field" || linked.id === object.id) return false;
+  // Link 4: leaving the field breaks the link even when the host returns
+  // before the next state-based check. Stop at this link's own field entry.
+  for (let index = state.eventHistory.length - 1; index >= 0; index -= 1) {
+    const event = state.eventHistory[index]!;
+    if (
+      (event.type === "object-moved" &&
+        event.objectId === object.id &&
+        event.from !== "field" &&
+        event.to === "field") ||
+      (event.type === "object-created" && event.object.id === object.id) ||
+      (event.type === "tokens-summoned" && event.objects.some((token) => token.id === object.id))
+    )
+      break;
+    if (
+      (event.type === "object-moved" &&
+        event.objectId === linked.id &&
+        event.from === "field" &&
+        event.to !== "field") ||
+      (event.type === "object-removed-from-game" &&
+        event.object.id === linked.id &&
+        event.object.zone === "field")
+    )
+      return false;
+  }
   const evaluation: GrandArchiveEvaluationContext = {
     program,
     state,

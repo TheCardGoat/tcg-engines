@@ -23,7 +23,7 @@ export const eb02GrandpaRyu029: CharacterCard = {
   cost: 3,
   power: 5000,
   counter: 1000,
-  traits: ["Animal East Blue"],
+  traits: ["Animal", "East Blue"],
   attribute: "wisdom",
   i18n: eb02GrandpaRyu029I18n,
 };

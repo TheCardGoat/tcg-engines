@@ -52,7 +52,7 @@ describe("OP17-073 Basil Hawkins", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
-  test("never opens under a different Leader", () => {
+  test("can decline its cost under a different Leader", () => {
     const engine = OnePieceTestEngine.create(
       {
         leaderCardId: "OP13-001",
@@ -64,6 +64,7 @@ describe("OP17-073 Basil Hawkins", () => {
     );
 
     engine.playCard(op17BasilHawkins073, "south");
+    engine.asSouth().declineOptional();
 
     const view = engine.getView("south").players.south;
     expect(view.donDeckCount).toBe(3);

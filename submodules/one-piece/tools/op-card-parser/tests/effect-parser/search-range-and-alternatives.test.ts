@@ -32,8 +32,8 @@ describe("search ranges and alternative card descriptions", () => {
         {
           filter: "anyOf",
           filters: [
-            { filter: "trait", value: "Animal Kingdom Pirates", match: "includes" },
-            { filter: "trait", value: "Big Mom Pirates", match: "includes" },
+            { filter: "trait", value: "Animal Kingdom Pirates", match: "exact" },
+            { filter: "trait", value: "Big Mom Pirates", match: "exact" },
           ],
         },
       ],

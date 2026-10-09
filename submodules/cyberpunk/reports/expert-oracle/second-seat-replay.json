@@ -1,0 +1,1386 @@
+{
+  "version": 1,
+  "strategyA": "tactical",
+  "strategyB": "expert-oracle",
+  "seed": "expert-comparison/authored-overwatch-recharge-control-vs-authored-overwatch-recharge-control/match-0",
+  "realCards": false,
+  "deckSource": "authored-botlab",
+  "deckA": {
+    "id": "authored-overwatch-recharge-control",
+    "archetype": "authored-botlab",
+    "title": "Overwatch — Recharge Control",
+    "legends": [
+      "hanako-arasaka-daughter-of-the-emperor",
+      "goro-takemura-hands-unclean",
+      "viktor-vektor-sit-down-and-relax"
+    ],
+    "mainDeck": [
+      "corpo-security",
+      "corpo-security",
+      "corpo-security",
+      "maxtac-squadron",
+      "maxtac-squadron",
+      "maxtac-squadron",
+      "goro-takemura-losing-his-way",
+      "goro-takemura-losing-his-way",
+      "goro-takemura-losing-his-way",
+      "panam-palmer-strength-through-family",
+      "panam-palmer-strength-through-family",
+      "panam-palmer-strength-through-family",
+      "sandayu-oda-hanako-s-guardian",
+      "sandayu-oda-hanako-s-guardian",
+      "maxtac-suppression-team",
+      "maxtac-suppression-team",
+      "overwatch-panam-s-gift",
+      "overwatch-panam-s-gift",
+      "overwatch-panam-s-gift",
+      "sandevistan",
+      "sandevistan",
+      "sandevistan",
+      "zetatech-faceplate",
+      "zetatech-faceplate",
+      "zetatech-faceplate",
+      "riot-shield",
+      "riot-shield",
+      "peace-offering",
+      "peace-offering",
+      "peace-offering",
+      "corporate-surveillance",
+      "corporate-surveillance",
+      "corporate-surveillance",
+      "afterparty-at-lizzie-s",
+      "afterparty-at-lizzie-s",
+      "afterparty-at-lizzie-s",
+      "synapse-burnout",
+      "synapse-burnout",
+      "the-heist",
+      "the-heist"
+    ],
+    "coveredSlugs": [
+      "afterparty-at-lizzie-s",
+      "corpo-security",
+      "corporate-surveillance",
+      "goro-takemura-losing-his-way",
+      "maxtac-squadron",
+      "maxtac-suppression-team",
+      "overwatch-panam-s-gift",
+      "panam-palmer-strength-through-family",
+      "peace-offering",
+      "riot-shield",
+      "sandayu-oda-hanako-s-guardian",
+      "sandevistan",
+      "synapse-burnout",
+      "the-heist",
+      "zetatech-faceplate"
+    ]
+  },
+  "deckB": {
+    "id": "authored-overwatch-recharge-control",
+    "archetype": "authored-botlab",
+    "title": "Overwatch — Recharge Control",
+    "legends": [
+      "hanako-arasaka-daughter-of-the-emperor",
+      "goro-takemura-hands-unclean",
+      "viktor-vektor-sit-down-and-relax"
+    ],
+    "mainDeck": [
+      "corpo-security",
+      "corpo-security",
+      "corpo-security",
+      "maxtac-squadron",
+      "maxtac-squadron",
+      "maxtac-squadron",
+      "goro-takemura-losing-his-way",
+      "goro-takemura-losing-his-way",
+      "goro-takemura-losing-his-way",
+      "panam-palmer-strength-through-family",
+      "panam-palmer-strength-through-family",
+      "panam-palmer-strength-through-family",
+      "sandayu-oda-hanako-s-guardian",
+      "sandayu-oda-hanako-s-guardian",
+      "maxtac-suppression-team",
+      "maxtac-suppression-team",
+      "overwatch-panam-s-gift",
+      "overwatch-panam-s-gift",
+      "overwatch-panam-s-gift",
+      "sandevistan",
+      "sandevistan",
+      "sandevistan",
+      "zetatech-faceplate",
+      "zetatech-faceplate",
+      "zetatech-faceplate",
+      "riot-shield",
+      "riot-shield",
+      "peace-offering",
+      "peace-offering",
+      "peace-offering",
+      "corporate-surveillance",
+      "corporate-surveillance",
+      "corporate-surveillance",
+      "afterparty-at-lizzie-s",
+      "afterparty-at-lizzie-s",
+      "afterparty-at-lizzie-s",
+      "synapse-burnout",
+      "synapse-burnout",
+      "the-heist",
+      "the-heist"
+    ],
+    "coveredSlugs": [
+      "afterparty-at-lizzie-s",
+      "corpo-security",
+      "corporate-surveillance",
+      "goro-takemura-losing-his-way",
+      "maxtac-squadron",
+      "maxtac-suppression-team",
+      "overwatch-panam-s-gift",
+      "panam-palmer-strength-through-family",
+      "peace-offering",
+      "riot-shield",
+      "sandayu-oda-hanako-s-guardian",
+      "sandevistan",
+      "synapse-burnout",
+      "the-heist",
+      "zetatech-faceplate"
+    ]
+  },
+  "monteCarloOptions": {
+    "rolloutsPerAction": 1,
+    "maxRolloutSteps": 10
+  },
+  "result": {
+    "winnerId": "p2",
+    "reason": "winCondition",
+    "turnCount": 15,
+    "stepCount": 123
+  },
+  "steps": [
+    {
+      "stepIndex": 0,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveFirstPlayer",
+      "args": {
+        "goFirst": true
+      },
+      "stateID": 1
+    },
+    {
+      "stepIndex": 1,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "mulligan",
+      "stateID": 2
+    },
+    {
+      "stepIndex": 2,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "keepHand",
+      "stateID": 3
+    },
+    {
+      "stepIndex": 3,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_80381585"
+      },
+      "stateID": 4
+    },
+    {
+      "stepIndex": 4,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_708247097"
+      },
+      "stateID": 5
+    },
+    {
+      "stepIndex": 5,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_610790826"
+      },
+      "stateID": 6
+    },
+    {
+      "stepIndex": 6,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_655058474"
+      },
+      "stateID": 7
+    },
+    {
+      "stepIndex": 7,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_80381585",
+        "value": 8
+      },
+      "stateID": 8
+    },
+    {
+      "stepIndex": 8,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "stateID": 9
+    },
+    {
+      "stepIndex": 9,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_202960290"
+      },
+      "stateID": 10
+    },
+    {
+      "stepIndex": 10,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_158850636"
+      },
+      "stateID": 11
+    },
+    {
+      "stepIndex": 11,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_226129421"
+      },
+      "stateID": 12
+    },
+    {
+      "stepIndex": 12,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_9778010"
+      },
+      "stateID": 13
+    },
+    {
+      "stepIndex": 13,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "stateID": 14
+    },
+    {
+      "stepIndex": 14,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_705240608"
+      },
+      "stateID": 15
+    },
+    {
+      "stepIndex": 15,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_930083409"
+      },
+      "stateID": 16
+    },
+    {
+      "stepIndex": 16,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "goSolo",
+      "args": {
+        "cardId": "ci_708247097"
+      },
+      "stateID": 17
+    },
+    {
+      "stepIndex": 17,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_708247097"
+      },
+      "stateID": 18
+    },
+    {
+      "stepIndex": 18,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "stateID": 19
+    },
+    {
+      "stepIndex": 19,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_366525429"
+      },
+      "stateID": 20
+    },
+    {
+      "stepIndex": 20,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_9778010"
+      },
+      "stateID": 21
+    },
+    {
+      "stepIndex": 21,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_80381585"]
+      },
+      "stateID": 22
+    },
+    {
+      "stepIndex": 22,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_487102897"
+      },
+      "stateID": 23
+    },
+    {
+      "stepIndex": 23,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_273791187"
+      },
+      "stateID": 24
+    },
+    {
+      "stepIndex": 24,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_356013712"
+      },
+      "stateID": 25
+    },
+    {
+      "stepIndex": 25,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveScry",
+      "args": {
+        "destinations": [
+          {
+            "zone": "hand",
+            "cardIds": []
+          }
+        ]
+      },
+      "stateID": 26
+    },
+    {
+      "stepIndex": 26,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "stateID": 27
+    },
+    {
+      "stepIndex": 27,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_158850636"]
+      },
+      "stateID": 28
+    },
+    {
+      "stepIndex": 28,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_139548362"
+      },
+      "stateID": 29
+    },
+    {
+      "stepIndex": 29,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_587687262",
+        "attachToId": "ci_708247097"
+      },
+      "stateID": 30
+    },
+    {
+      "stepIndex": 30,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_708247097"
+      },
+      "stateID": 31
+    },
+    {
+      "stepIndex": 31,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_94458569"
+      },
+      "stateID": 32
+    },
+    {
+      "stepIndex": 32,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_64815793"
+      },
+      "stateID": 33
+    },
+    {
+      "stepIndex": 33,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_125573998"
+      },
+      "stateID": 34
+    },
+    {
+      "stepIndex": 34,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveScry",
+      "args": {
+        "destinations": [
+          {
+            "zone": "hand",
+            "cardIds": ["ci_104545784"]
+          }
+        ]
+      },
+      "stateID": 35
+    },
+    {
+      "stepIndex": 35,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "stateID": 36
+    },
+    {
+      "stepIndex": 36,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_522304756"
+      },
+      "stateID": 37
+    },
+    {
+      "stepIndex": 37,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_487102897"
+      },
+      "stateID": 38
+    },
+    {
+      "stepIndex": 38,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_80381585"]
+      },
+      "stateID": 39
+    },
+    {
+      "stepIndex": 39,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_9778010"
+      },
+      "stateID": 40
+    },
+    {
+      "stepIndex": 40,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_202960290"]
+      },
+      "stateID": 41
+    },
+    {
+      "stepIndex": 41,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_175256781"
+      },
+      "stateID": 42
+    },
+    {
+      "stepIndex": 42,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_645671867"
+      },
+      "stateID": 43
+    },
+    {
+      "stepIndex": 43,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "stateID": 44
+    },
+    {
+      "stepIndex": 44,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_158850636"]
+      },
+      "stateID": 45
+    },
+    {
+      "stepIndex": 45,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_575013731"
+      },
+      "stateID": 46
+    },
+    {
+      "stepIndex": 46,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_104545784",
+        "attachToId": "ci_708247097"
+      },
+      "stateID": 47
+    },
+    {
+      "stepIndex": 47,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_404428261",
+        "attachToId": "ci_708247097"
+      },
+      "stateID": 48
+    },
+    {
+      "stepIndex": 48,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_781372327"
+      },
+      "stateID": 49
+    },
+    {
+      "stepIndex": 49,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_587687262",
+        "abilityIndex": 1
+      },
+      "stateID": 50
+    },
+    {
+      "stepIndex": 50,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_484738101"]
+      },
+      "stateID": 51
+    },
+    {
+      "stepIndex": 51,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_487102897"]
+      },
+      "stateID": 52
+    },
+    {
+      "stepIndex": 52,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_139548362",
+        "value": 2
+      },
+      "stateID": 53
+    },
+    {
+      "stepIndex": 53,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "stateID": 54
+    },
+    {
+      "stepIndex": 54,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_420742410"
+      },
+      "stateID": 55
+    },
+    {
+      "stepIndex": 55,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_175256781"
+      },
+      "stateID": 56
+    },
+    {
+      "stepIndex": 56,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAttack",
+      "args": {
+        "pass": true
+      },
+      "stateID": 57
+    },
+    {
+      "stepIndex": 57,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_705240608"]
+      },
+      "stateID": 58
+    },
+    {
+      "stepIndex": 58,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_9778010"
+      },
+      "stateID": 59
+    },
+    {
+      "stepIndex": 59,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "useBlocker",
+      "args": {
+        "blockerId": "ci_708247097"
+      },
+      "stateID": 60
+    },
+    {
+      "stepIndex": 60,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_139548362",
+        "value": 1
+      },
+      "stateID": 61
+    },
+    {
+      "stepIndex": 61,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_167798382",
+        "attachToId": "ci_356013712"
+      },
+      "stateID": 62
+    },
+    {
+      "stepIndex": 62,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_173384891"
+      },
+      "stateID": 63
+    },
+    {
+      "stepIndex": 63,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_94458569",
+        "abilityIndex": 0
+      },
+      "stateID": 64
+    },
+    {
+      "stepIndex": 64,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_705240608"]
+      },
+      "stateID": 65
+    },
+    {
+      "stepIndex": 65,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_139548362"]
+      },
+      "stateID": 66
+    },
+    {
+      "stepIndex": 66,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "stateID": 67
+    },
+    {
+      "stepIndex": 67,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_445463794"
+      },
+      "stateID": 68
+    },
+    {
+      "stepIndex": 68,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_887580022"
+      },
+      "stateID": 69
+    },
+    {
+      "stepIndex": 69,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_887580022",
+        "abilityIndex": 0
+      },
+      "stateID": 70
+    },
+    {
+      "stepIndex": 70,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_571302295"]
+      },
+      "stateID": 71
+    },
+    {
+      "stepIndex": 71,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_80381585"]
+      },
+      "stateID": 72
+    },
+    {
+      "stepIndex": 72,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_587687262",
+        "abilityIndex": 1
+      },
+      "stateID": 73
+    },
+    {
+      "stepIndex": 73,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_200079741"]
+      },
+      "stateID": 74
+    },
+    {
+      "stepIndex": 74,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_175256781"]
+      },
+      "stateID": 75
+    },
+    {
+      "stepIndex": 75,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_366525429",
+        "value": 6
+      },
+      "stateID": 76
+    },
+    {
+      "stepIndex": 76,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "stateID": 77
+    },
+    {
+      "stepIndex": 77,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "goSolo",
+      "args": {
+        "cardId": "ci_158850636"
+      },
+      "stateID": 78
+    },
+    {
+      "stepIndex": 78,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "stateID": 79
+    },
+    {
+      "stepIndex": 79,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_2532941",
+        "attachToId": "ci_708247097"
+      },
+      "stateID": 80
+    },
+    {
+      "stepIndex": 80,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_559417305",
+        "attachToId": "ci_708247097"
+      },
+      "stateID": 81
+    },
+    {
+      "stepIndex": 81,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_887580022",
+        "abilityIndex": 0
+      },
+      "stateID": 82
+    },
+    {
+      "stepIndex": 82,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_575013731"]
+      },
+      "stateID": 83
+    },
+    {
+      "stepIndex": 83,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_522304756"]
+      },
+      "stateID": 84
+    },
+    {
+      "stepIndex": 84,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_708247097"
+      },
+      "stateID": 85
+    },
+    {
+      "stepIndex": 85,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_522304756",
+        "value": 8
+      },
+      "stateID": 86
+    },
+    {
+      "stepIndex": 86,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "useBlocker",
+      "args": {
+        "blockerId": "ci_173384891"
+      },
+      "stateID": 87
+    },
+    {
+      "stepIndex": 87,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAttack",
+      "args": {
+        "pass": true
+      },
+      "stateID": 88
+    },
+    {
+      "stepIndex": 88,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "stateID": 89
+    },
+    {
+      "stepIndex": 89,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-22"
+      },
+      "stateID": 90
+    },
+    {
+      "stepIndex": 90,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_926199480",
+        "attachToId": "ci_158850636"
+      },
+      "stateID": 91
+    },
+    {
+      "stepIndex": 91,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_504012358"
+      },
+      "stateID": 92
+    },
+    {
+      "stepIndex": 92,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_158850636"
+      },
+      "stateID": 93
+    },
+    {
+      "stepIndex": 93,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "useBlocker",
+      "args": {
+        "blockerId": "ci_445463794"
+      },
+      "stateID": 94
+    },
+    {
+      "stepIndex": 94,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "useBlocker",
+      "args": {
+        "blockerId": "ci_708247097"
+      },
+      "stateID": 95
+    },
+    {
+      "stepIndex": 95,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_80381585",
+        "value": 9
+      },
+      "stateID": 96
+    },
+    {
+      "stepIndex": 96,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_94458569",
+        "abilityIndex": 0
+      },
+      "stateID": 97
+    },
+    {
+      "stepIndex": 97,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_139548362"]
+      },
+      "stateID": 98
+    },
+    {
+      "stepIndex": 98,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_80381585"]
+      },
+      "stateID": 99
+    },
+    {
+      "stepIndex": 99,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "stateID": 100
+    },
+    {
+      "stepIndex": 100,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_397670781",
+        "attachToId": "ci_708247097"
+      },
+      "stateID": 101
+    },
+    {
+      "stepIndex": 101,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_887580022",
+        "abilityIndex": 0
+      },
+      "stateID": 102
+    },
+    {
+      "stepIndex": 102,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_139548362"]
+      },
+      "stateID": 103
+    },
+    {
+      "stepIndex": 103,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_80381585"]
+      },
+      "stateID": 104
+    },
+    {
+      "stepIndex": 104,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_968454250"
+      },
+      "stateID": 105
+    },
+    {
+      "stepIndex": 105,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_911188259"
+      },
+      "stateID": 106
+    },
+    {
+      "stepIndex": 106,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_708247097"
+      },
+      "stateID": 107
+    },
+    {
+      "stepIndex": 107,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-29"
+      },
+      "stateID": 108
+    },
+    {
+      "stepIndex": 108,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_80381585",
+        "value": 10
+      },
+      "stateID": 109
+    },
+    {
+      "stepIndex": 109,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_930982992",
+        "value": 16
+      },
+      "stateID": 110
+    },
+    {
+      "stepIndex": 110,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_202960290", "gd_420742410", "gd_843166511"]
+      },
+      "stateID": 111
+    },
+    {
+      "stepIndex": 111,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "passPhase",
+      "stateID": 112
+    },
+    {
+      "stepIndex": 112,
+      "playerId": "p2",
+      "kind": "acted",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-31"
+      },
+      "stateID": 113
+    },
+    {
+      "stepIndex": 113,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_645487504"
+      },
+      "stateID": 114
+    },
+    {
+      "stepIndex": 114,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_94458569",
+        "abilityIndex": 0
+      },
+      "stateID": 115
+    },
+    {
+      "stepIndex": 115,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_139548362"]
+      },
+      "stateID": 116
+    },
+    {
+      "stepIndex": 116,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["gd_930982992"]
+      },
+      "stateID": 117
+    },
+    {
+      "stepIndex": 117,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_652072990"
+      },
+      "stateID": 118
+    },
+    {
+      "stepIndex": 118,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_63265117"
+      },
+      "stateID": 119
+    },
+    {
+      "stepIndex": 119,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_139548362",
+        "value": 2
+      },
+      "stateID": 120
+    },
+    {
+      "stepIndex": 120,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_694020520"
+      },
+      "stateID": 121
+    },
+    {
+      "stepIndex": 121,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_139548362",
+        "value": 1
+      },
+      "stateID": 122
+    },
+    {
+      "stepIndex": 122,
+      "playerId": "p1",
+      "kind": "acted",
+      "move": "passPhase",
+      "stateID": 123
+    }
+  ]
+}

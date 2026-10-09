@@ -47,21 +47,38 @@ describe("OP12-075 Ms. All Sunday", () => {
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
     // DON!! −1 is optional; accept and pay so the physical card is played.
     engine.accept("north");
-    try {
-      engine.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "north");
-    } catch {
-      // Cost auto-paid when selection is unambiguous.
-    }
-    // Opposing On Play K.O. may let the KO'd controller add DON!! (0 here).
-    try {
-      engine.resolveDecision("effectAddDon", { optionId: "0" }, "south");
-    } catch {
-      // No add-DON window when no Character was K.O.'d from the field by On Play.
-    }
+    // Equivalent active DON!! auto-pay; the opponent still decides its DON!! reward.
+    engine.asSouth().chooseAddDon(0);
 
     const view = engine.getView("north");
     expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(sundayId);
     expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(sundayId);
     expect(view.players.north.activeDon).toBe(1);
+  });
+  test("FAQ: opponent may decline DON even when the K.O. selection is skipped", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: [op12MsAllSunday075], activeDon: op12MsAllSunday075.cost },
+      { character: [eb01Doma005] },
+    );
+    e.asSouth().play(op12MsAllSunday075);
+    e.asSouth().chooseNoTargets();
+    expect(e.pendingDecision("effectAddDon", "north").actorId).toBe("north");
+    e.asNorth().chooseAddDon(0);
+    expect(e.getView("north").players.north.activeDon).toBe(0);
+    expect(e.getView("north").players.north.characters.filter(Boolean)).toHaveLength(1);
+  });
+  test("may decline the optional Trigger DON payment without playing the Life card", () => {
+    const e = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      { life: [op12MsAllSunday075], activeDon: 1 },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const id = e.findCardInZone("north", "life", op12MsAllSunday075);
+    e.asSouth().attack(eb01MountainGod018, e.leader("north"));
+    e.asNorth().activateLifeTrigger();
+    e.asNorth().declineOptional();
+    expect(e.getView("north").players.north.trash.map((c) => c.instanceId)).toContain(id);
+    expect(e.getView("north").players.north.activeDon).toBe(1);
+    expect(e.getView("north").players.north.characters.filter(Boolean)).toHaveLength(0);
   });
 });

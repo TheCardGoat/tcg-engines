@@ -150,15 +150,25 @@
 }
 
 .mobile {
+  --simulator-mobile-rail-height: clamp(44px, 6dvh, 48px);
+
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
+  /* The viewport shell owns the stable frame. Stateful rail content must never
+     resize the tabletop when priority or turn ownership changes. */
+  grid-template-rows:
+    calc(var(--simulator-mobile-rail-height) + env(safe-area-inset-top, 0px))
+    minmax(0, 1fr)
+    calc(var(--simulator-mobile-rail-height) + env(safe-area-inset-bottom, 0px));
 }
 
 .mobileTopRail,
 .mobileBottomRail,
 .mobileMenuButton {
+  box-sizing: border-box;
   z-index: 3;
   min-width: 0;
+  min-height: 0;
+  overflow: hidden;
   background: var(--board-surface, var(--surface, #0f172a));
 }
 

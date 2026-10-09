@@ -60,18 +60,18 @@ export function resolveReadyEffect(
       continue;
     }
 
-    ctx.cards.patchMeta(targetId, {
-      ...currentMeta,
-      state: "ready",
-    });
-    readiedAny = true;
-    if (playerId) {
-      emitTriggeredLorcanaEvent(
-        ctx,
-        "cardReadied",
-        { cardId: targetId },
-        { event: "ready", playerId, subjectCardId: targetId },
-      );
+    // CR 5.1.1.1: only an exerted card changes to the ready state.
+    if (currentMeta.state === "exerted") {
+      ctx.cards.patchMeta(targetId, { ...currentMeta, state: "ready" });
+      readiedAny = true;
+      if (playerId) {
+        emitTriggeredLorcanaEvent(
+          ctx,
+          "cardReadied",
+          { cardId: targetId },
+          { event: "ready", playerId, subjectCardId: targetId },
+        );
+      }
     }
 
     if (restriction) {

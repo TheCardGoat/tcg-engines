@@ -51,7 +51,7 @@ export const op05Killer064: CharacterCard = {
               {
                 filter: "trait",
                 value: "Kid Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

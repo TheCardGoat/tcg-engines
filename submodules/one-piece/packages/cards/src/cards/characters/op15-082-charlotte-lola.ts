@@ -49,6 +49,7 @@ export const op15CharlotteLola082: CharacterCard = {
               zones: ["trash"],
               count: {
                 amount: 1,
+                upTo: true,
               },
               filters: [
                 {

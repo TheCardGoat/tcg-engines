@@ -1,11 +1,36 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
+import type { InteractionAction } from "@tcg/protocol";
 import {
+  markPendingMoveAwaitingRecoverySync,
+  startPendingMoveStateSyncWatchdog,
+  shouldClearPendingAfterAuthoritativeMoveAccepted,
   shouldClearPendingAfterAuthoritativeState,
-  shouldClearPendingAfterSubmitInteractionOk,
   type PendingOptimisticMove,
 } from "./livePendingMove.js";
 
-type StateUpdateMessage = Parameters<typeof shouldClearPendingAfterAuthoritativeState>[1];
+type AuthoritativeStateMessage = Parameters<typeof shouldClearPendingAfterAuthoritativeState>[1];
+type MoveAcceptedMessage = Parameters<typeof shouldClearPendingAfterAuthoritativeMoveAccepted>[1];
+
+const actionStub = (id: string): InteractionAction => ({
+  id,
+  requestId: `cyberpunk:7:${id}`,
+  intent: "choose-option",
+  text: { key: "test.action" },
+  enabled: true,
+  inputs: [],
+});
+
+const interactionViewStub = (
+  stateVersion: number,
+  actions: InteractionAction[],
+): NonNullable<AuthoritativeStateMessage["interactionView"]> => ({
+  protocolVersion: 2,
+  gameSlug: "cyberpunk",
+  actorId: "player-1",
+  stateVersion,
+  status: "choosing",
+  actions,
+});
 
 const pendingRemoteMove = {
   correlationId: "corr_1",
@@ -13,34 +38,86 @@ const pendingRemoteMove = {
   startingVersion: 7,
   localOptimisticStateId: 7,
   optimisticApplied: false,
+  awaitingRecoverySync: false,
   actionId: "playCard",
+  startingInteractionSignature: JSON.stringify(
+    interactionViewStub(7, [actionStub("resolveTrigger")]),
+  ),
   side: "player",
 } satisfies PendingOptimisticMove;
 
 function stateUpdate(
-  patch: Partial<StateUpdateMessage> & { correlationId?: string } = {},
-): StateUpdateMessage {
+  patch: Partial<AuthoritativeStateMessage> & { correlationId?: string } = {},
+): AuthoritativeStateMessage {
   return {
     type: "state_update",
     gameId: "game_1",
     stateVersion: 8,
     patches: [],
     engineLogs: [],
-    animations: [],
+    animationPlan: null,
     state: {},
     ...patch,
-  } as StateUpdateMessage;
+  } as AuthoritativeStateMessage;
+}
+
+function moveAccepted(
+  state: MoveAcceptedMessage["state"],
+  patch: Partial<MoveAcceptedMessage> = {},
+): MoveAcceptedMessage {
+  return {
+    type: "move_accepted",
+    gameId: "game_1",
+    stateVersion: 8,
+    patches: [],
+    engineLogs: [],
+    animationPlan: null,
+    state,
+    moveType: "interaction:resolveFirstPlayer",
+    actorId: "player-1",
+    correlationId: "corr_1",
+    ...patch,
+  };
 }
 
 describe("LiveMatch pending remote move guards", () => {
-  test("keeps non-optimistic submissions pending through the early ok response", () => {
-    expect(shouldClearPendingAfterSubmitInteractionOk(pendingRemoteMove, "corr_1")).toBe(false);
+  test("clears only after the matching move response carries authoritative state", () => {
     expect(
-      shouldClearPendingAfterSubmitInteractionOk(
-        { ...pendingRemoteMove, optimisticApplied: true },
-        "corr_1",
-      ),
+      shouldClearPendingAfterAuthoritativeMoveAccepted(pendingRemoteMove, moveAccepted({})),
     ).toBe(true);
+    expect(
+      shouldClearPendingAfterAuthoritativeMoveAccepted(pendingRemoteMove, moveAccepted(null)),
+    ).toBe(false);
+    expect(
+      shouldClearPendingAfterAuthoritativeMoveAccepted(
+        pendingRemoteMove,
+        moveAccepted({}, { correlationId: "other_corr" }),
+      ),
+    ).toBe(false);
+    expect(
+      shouldClearPendingAfterAuthoritativeMoveAccepted(
+        pendingRemoteMove,
+        moveAccepted({}, { gameId: "other_game" }),
+      ),
+    ).toBe(false);
+    expect(
+      shouldClearPendingAfterAuthoritativeMoveAccepted(
+        pendingRemoteMove,
+        moveAccepted({}, { stateVersion: pendingRemoteMove.startingVersion }),
+      ),
+    ).toBe(false);
+    expect(
+      shouldClearPendingAfterAuthoritativeMoveAccepted(
+        pendingRemoteMove,
+        moveAccepted({}, { stateVersion: pendingRemoteMove.startingVersion - 1 }),
+      ),
+    ).toBe(false);
+    expect(
+      shouldClearPendingAfterAuthoritativeMoveAccepted(
+        pendingRemoteMove,
+        moveAccepted({}, { correlationId: undefined }),
+      ),
+    ).toBe(false);
   });
 
   test("clears non-optimistic submissions only after a matching state update advances the version", () => {
@@ -81,5 +158,101 @@ describe("LiveMatch pending remote move guards", () => {
         stateUpdate({ stateVersion: undefined, correlationId: "corr_1" }),
       ),
     ).toBe(true);
+  });
+
+  test("keeps the latch through a stale snapshot and clears it after a newer snapshot", () => {
+    expect(
+      shouldClearPendingAfterAuthoritativeState(
+        pendingRemoteMove,
+        stateUpdate({ type: "state_sync", stateVersion: pendingRemoteMove.startingVersion }),
+      ),
+    ).toBe(false);
+    expect(
+      shouldClearPendingAfterAuthoritativeState(
+        pendingRemoteMove,
+        stateUpdate({ type: "state_sync", stateVersion: pendingRemoteMove.startingVersion + 1 }),
+      ),
+    ).toBe(true);
+  });
+
+  test("clears after a same-version snapshot replaces the pending interaction", () => {
+    expect(
+      shouldClearPendingAfterAuthoritativeState(
+        pendingRemoteMove,
+        stateUpdate({
+          type: "state_sync",
+          stateVersion: pendingRemoteMove.startingVersion,
+          interactionView: interactionViewStub(7, [actionStub("resolveEffectTarget")]),
+        }),
+      ),
+    ).toBe(true);
+    expect(
+      shouldClearPendingAfterAuthoritativeState(
+        pendingRemoteMove,
+        stateUpdate({
+          type: "state_sync",
+          stateVersion: pendingRemoteMove.startingVersion,
+          interactionView: interactionViewStub(7, [actionStub("resolveTrigger")]),
+        }),
+      ),
+    ).toBe(false);
+  });
+
+  test("clears after the requested recovery sync confirms the same authoritative version", () => {
+    const rejectedPending = markPendingMoveAwaitingRecoverySync(pendingRemoteMove);
+    expect(
+      shouldClearPendingAfterAuthoritativeState(
+        rejectedPending,
+        stateUpdate({
+          type: "state_sync",
+          stateVersion: pendingRemoteMove.startingVersion,
+          interactionView: undefined,
+        }),
+      ),
+    ).toBe(false);
+    expect(
+      shouldClearPendingAfterAuthoritativeState(
+        rejectedPending,
+        stateUpdate({
+          type: "state_sync",
+          stateVersion: pendingRemoteMove.startingVersion + 1,
+          interactionView: undefined,
+        }),
+      ),
+    ).toBe(false);
+    expect(
+      shouldClearPendingAfterAuthoritativeState(
+        rejectedPending,
+        stateUpdate({
+          type: "state_sync",
+          stateVersion: pendingRemoteMove.startingVersion,
+          interactionView: interactionViewStub(7, [actionStub("resolveTrigger")]),
+        }),
+      ),
+    ).toBe(true);
+  });
+
+  test("requests snapshots while the submitted move still awaits authoritative state", () => {
+    vi.useFakeTimers();
+    let current: PendingOptimisticMove | null = pendingRemoteMove;
+    const requestStateSync = vi.fn();
+    const stop = startPendingMoveStateSyncWatchdog({
+      correlationId: pendingRemoteMove.correlationId,
+      readPending: () => current,
+      readStateVersion: () => 7,
+      requestStateSync,
+      retryMs: 100,
+    });
+
+    vi.advanceTimersByTime(200);
+    expect(requestStateSync).toHaveBeenNthCalledWith(1, 7);
+    expect(requestStateSync).toHaveBeenNthCalledWith(2, 7);
+
+    current = null;
+    vi.advanceTimersByTime(100);
+    expect(requestStateSync).toHaveBeenCalledTimes(2);
+
+    stop();
+    vi.useRealTimers();
   });
 });

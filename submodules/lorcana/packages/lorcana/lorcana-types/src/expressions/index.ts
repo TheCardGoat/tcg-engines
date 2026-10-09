@@ -112,6 +112,7 @@ export interface CardSelectionFilter {
   sameInstanceAsSource?: boolean;
   sameInstanceAsTriggerSubject?: boolean;
   inEventSnapshotCardsUnder?: boolean;
+  inEventSnapshotDiscardedCards?: boolean;
   excludeChosenCard?: boolean;
 }
 

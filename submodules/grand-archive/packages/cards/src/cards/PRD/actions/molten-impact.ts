@@ -83,6 +83,22 @@ export const moltenImpact: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
               },
             },
           ],
+          variables: [
+            {
+              symbol: "X",
+              kind: "derived",
+              amount: {
+                kind: "counter-count",
+                subject: {
+                  kind: "bound",
+                  binding: "sacrificed-object",
+                },
+                counter: "durability",
+                basis: "last-known",
+                missing: "zero",
+              },
+            },
+          ],
           effect: {
             kind: "deal-damage",
             source: {

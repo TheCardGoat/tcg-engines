@@ -23,7 +23,7 @@ export const op15Hyouzou030: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 2000,
-  traits: ["Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island"],
   attribute: "slash",
   i18n: op15Hyouzou030I18n,
 };

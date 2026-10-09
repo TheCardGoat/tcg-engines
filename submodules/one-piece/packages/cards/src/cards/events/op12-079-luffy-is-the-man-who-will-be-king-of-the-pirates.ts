@@ -37,6 +37,7 @@ export const op12LuffyIsTheManWhoWillBeKingOfThePirates079: EventCard = {
         actions: [
           {
             action: "search",
+            reveal: false,
             lookCount: 3,
             source: {
               player: "self",

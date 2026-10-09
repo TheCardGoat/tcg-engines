@@ -30,7 +30,7 @@ export const op02Nami036: CharacterCard = {
   setId: "OP02",
   cost: 3,
   power: 5000,
-  traits: ["Film Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   attribute: "special",
   effect:
     '[On Play]/[When Attacking] (1) (You may rest the specified number of DON!! cards in your cost area.): Look at 3 cards from the top of your deck; reveal up to 1 "FILM" type card other than [Nami] and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
@@ -64,7 +64,7 @@ export const op02Nami036: CharacterCard = {
               {
                 filter: "trait",
                 value: "FILM",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",
@@ -101,7 +101,7 @@ export const op02Nami036: CharacterCard = {
               {
                 filter: "trait",
                 value: "FILM",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

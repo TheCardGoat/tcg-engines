@@ -23,7 +23,7 @@ export const op07Monda074: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Animal Foxy Pirates"],
+  traits: ["Animal", "Foxy Pirates"],
   attribute: "strike",
   effect:
     "[Activate: Main] You may trash this Character: If your Leader has the [Foxy Pirates] type, add up to 1 DON!! card from your DON!! deck and rest it.",
@@ -47,7 +47,7 @@ export const op07Monda074: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Foxy Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

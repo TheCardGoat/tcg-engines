@@ -31,6 +31,21 @@ describe("OP13-097 The World's Equilibrium Cannot Be Maintained Forever", () => 
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
+  test("an empty Character field cannot K.O. after the cost is paid (FAQ Q1059)", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: [op13TheWorldSEquilibriumCannotBeMaintainedForever097], activeDon: 6 },
+      { character: [eb01MountainGod018] },
+    );
+    const target = engine.findCardInZone("north", "character", eb01MountainGod018);
+    engine.playCard(op13TheWorldSEquilibriumCannotBeMaintainedForever097);
+    engine.asSouth().acceptOptional();
+    expect(engine.getView("south").players.south).toMatchObject({ activeDon: 0, restedDon: 6 });
+    expect(
+      engine.getView("north").players.north.characters.some((card) => card?.instanceId === target),
+    ).toBe(true);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("Counter gives the defending Leader enough power to stop the attack", () => {
     const engine = OnePieceTestEngine.create(
       { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },

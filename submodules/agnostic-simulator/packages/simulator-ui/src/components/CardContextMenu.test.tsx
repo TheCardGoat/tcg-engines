@@ -92,21 +92,58 @@ afterEach(() => {
 });
 
 describe("CardContextMenuController", () => {
-  test("shows a single rule in full when there is no expansion control", () => {
-    renderController({ mode: "detailed", entity: { ...entity, activeEffects: [] } });
+  test("shows all printed rules in full without an expansion control", () => {
+    const secondRule = {
+      id: "rule-2",
+      kind: "ability" as const,
+      label: "Defeated",
+      text: "Draw 2 cards.",
+    };
+    renderController({
+      mode: "detailed",
+      entity: {
+        ...entity,
+        activeEffects: [],
+        details: { ...entity.details, rules: [...(entity.details?.rules ?? []), secondRule] },
+      },
+    });
     openCard();
     const rules = document.querySelector('[aria-label="Rules and abilities"]');
     expect(rules?.textContent).toContain("Then you may deploy 1 additional Unit token.");
-    expect(rules?.hasAttribute("data-collapsed")).toBe(false);
+    expect(rules?.textContent).toContain("Draw 2 cards.");
     expect(document.querySelector("[data-card-context-details-toggle]")).toBeNull();
   });
 
+  test("shows printed card text and image inspection in quick mobile view", () => {
+    renderController({ mode: "quick", layoutOverride: "mobile" });
+    openCard();
+
+    expect(document.querySelector('[aria-label="Rules and abilities"]')?.textContent).toContain(
+      "Deploy 1 Gundam Unit token",
+    );
+    expect(
+      document.querySelector(
+        '[data-card-context-menu] button[aria-label="Show Test Card card image"]',
+      ),
+    ).not.toBeNull();
+  });
+
   test("lets a game inject identity and icons without changing the shared fallback", () => {
+    const onInspect = vi.fn();
     const visualIdentity: CardContextMenuVisualIdentity = {
       className: "game-context",
       hideDisabledActionsInQuickMode: true,
-      renderIdentity: ({ entity: renderedEntity }) => (
-        <span data-testid="game-identity">{renderedEntity.title} identity</span>
+      renderIdentity: ({ entity: renderedEntity, onInspect: inspect }) => (
+        <button
+          type="button"
+          data-testid="game-identity"
+          onClick={() => {
+            onInspect();
+            inspect();
+          }}
+        >
+          {renderedEntity.title} identity
+        </button>
       ),
       renderActionIcon: ({ action }) => <span data-testid={`game-icon-${action.id}`} />,
       renderText: ({ text, kind }) => (
@@ -124,6 +161,11 @@ describe("CardContextMenuController", () => {
     expect(document.querySelector('[data-testid="game-identity"]')?.textContent).toContain(
       "Test Card identity",
     );
+    act(() =>
+      (document.querySelector('[data-testid="game-identity"]') as HTMLButtonElement).click(),
+    );
+    expect(onInspect).toHaveBeenCalledTimes(1);
+    expect(document.querySelector("[data-card-context-preview]")).not.toBeNull();
     expect(document.querySelector('[data-testid="game-icon-play"]')).not.toBeNull();
     expect(actionIds()).toEqual(["play"]);
 
@@ -242,7 +284,7 @@ describe("CardContextMenuController", () => {
     const detailsToggle = document.querySelector(
       "[data-card-context-details-toggle]",
     ) as HTMLButtonElement;
-    expect(detailsToggle.textContent).toContain("1 active effect");
+    expect(detailsToggle.textContent).toBe("Show 1 active effect");
     expect(document.body.textContent).not.toContain("prevents a rival from stealing");
     act(() => detailsToggle.click());
     expect(detailsToggle.getAttribute("aria-expanded")).toBe("true");
@@ -879,6 +921,29 @@ describe("CardContextMenuController", () => {
     expect(onPreviewEnd).toHaveBeenLastCalledWith(undefined);
   });
 
+  test("custom identity previews on hover and focus, and keeps click-pinned previews", () => {
+    const onPreviewEntity = vi.fn();
+    const onPreviewEnd = vi.fn();
+    renderController({ mode: "detailed", onPreviewEntity, onPreviewEnd,
+      visualIdentity: { renderIdentity: ({ onInspect, onPreviewStart, onPreviewEnd }) =>
+        <button aria-label="Preview title" onPointerEnter={onPreviewStart} onPointerLeave={onPreviewEnd}
+          onFocus={onPreviewStart} onBlur={onPreviewEnd} onClick={onInspect}>Test Card</button> },
+    });
+    openCard();
+    const title = document.querySelector('button[aria-label="Preview title"]') as HTMLButtonElement;
+    act(() => void title.dispatchEvent(new MouseEvent("pointerover", { bubbles: true })));
+    expect(onPreviewEntity).toHaveBeenLastCalledWith(entity, "hover");
+    act(() => void title.dispatchEvent(new MouseEvent("pointerout", { bubbles: true })));
+    expect(onPreviewEnd).toHaveBeenLastCalledWith(entity.id);
+    act(() => title.focus());
+    expect(onPreviewEntity).toHaveBeenLastCalledWith(entity, "hover");
+    act(() => title.click());
+    expect(onPreviewEntity).toHaveBeenLastCalledWith(entity, "pinned");
+    onPreviewEnd.mockClear();
+    act(() => title.blur());
+    expect(onPreviewEnd).not.toHaveBeenCalled();
+  });
+
   test("keeps a native preview active when its end callback changes", () => {
     const onPreviewEntity = vi.fn();
     const initialOnPreviewEnd = vi.fn();
@@ -934,6 +999,40 @@ describe("CardContextMenuController", () => {
     expect(relationship.textContent).toContain("Mantis Blades");
   });
 
+  test("shows attached cards in the mobile drawer and opens their image", () => {
+    const inspect = vi.fn();
+    const gear: SimulatorEntity = {
+      ...entity,
+      id: "gear-1",
+      title: "Kiroshi Optics",
+      subtitle: "Gear",
+      kind: "card",
+      imageUrl: "https://example.test/kiroshi.webp",
+    };
+    renderController({
+      mode: "quick",
+      layoutOverride: "mobile",
+      onPreviewEntity: inspect,
+      relatedEntities: [gear],
+      entity: {
+        ...entity,
+        details: {
+          rules: entity.details?.rules ?? [],
+          relationships: [{ id: "attached-gear", label: "Attached Gear", entityIds: [gear.id] }],
+        },
+      },
+    });
+    openCard();
+
+    const attached = document.querySelector(
+      '[data-card-context-menu] button[aria-label="Inspect Kiroshi Optics"]',
+    ) as HTMLButtonElement;
+    expect(attached).not.toBeNull();
+    expect(attached.querySelector("img")?.getAttribute("src")).toBe(gear.imageUrl);
+    act(() => attached.click());
+    expect(inspect).toHaveBeenCalledWith(gear, "pinned");
+  });
+
   test("does not repeat generated keyword and effective summaries already covered by printed text", () => {
     const duplicateRulesEntity: SimulatorEntity = {
       ...entity,
@@ -965,6 +1064,44 @@ describe("CardContextMenuController", () => {
 
     expect(document.querySelectorAll("[data-card-context-rule]")).toHaveLength(1);
     expect(document.body.textContent).not.toContain("This card has blocker.");
+  });
+
+  test("renders a label-only keyword rule", () => {
+    renderController({
+      mode: "detailed",
+      entity: {
+        ...entity,
+        details: { rules: [{ id: "keyword:quick", kind: "keyword", label: "QUICK" }] },
+      },
+    });
+    openCard();
+    expect(
+      document.querySelector('[data-card-context-rule="keyword:quick"]')?.textContent,
+    ).toContain("QUICK");
+  });
+
+  test("does not repeat an implemented ability covered by multi-timing printed text", () => {
+    const duplicateRulesEntity: SimulatorEntity = {
+      ...entity,
+      activeEffects: [],
+      details: {
+        rules: [
+          { id: "ability:0", kind: "text", text: "{Play} Adjust a Gig by up to 1." },
+          {
+            id: "printed-rules",
+            kind: "text",
+            text: "{Play} {Attack} Adjust a Gig by up to 1.\n{Defeated} Draw 2.",
+          },
+        ],
+      },
+    };
+    renderController({ mode: "detailed", entity: duplicateRulesEntity });
+    openCard();
+
+    expect(document.querySelectorAll("[data-card-context-rule]")).toHaveLength(1);
+    expect(
+      document.querySelector("[data-card-context-rule]")?.getAttribute("data-card-context-rule"),
+    ).toBe("printed-rules");
   });
 
   test("activates the focused action from the keyboard", () => {
@@ -1054,6 +1191,7 @@ function renderController({
   onPreviewEntity,
   onPreviewEnd,
   entity: renderedEntity = entity,
+  relatedEntities,
   actions: renderedActions = actions,
   autoActivationActions,
   autoActivateSingleEnabledAction = false,
@@ -1069,6 +1207,7 @@ function renderController({
   onPreviewEntity?: (entity: SimulatorEntity) => void;
   onPreviewEnd?: () => void;
   entity?: SimulatorEntity;
+  relatedEntities?: readonly SimulatorEntity[];
   actions?: readonly SimulatorCardAction[];
   autoActivationActions?: readonly SimulatorCardAction[];
   autoActivateSingleEnabledAction?: boolean;
@@ -1083,7 +1222,7 @@ function renderController({
   }
   const controller = (
     <CardContextMenuController
-      entities={[renderedEntity]}
+      entities={[renderedEntity, ...(relatedEntities ?? [])]}
       actionsForEntity={() => renderedActions}
       autoActivationActionsForEntity={
         autoActivationActions ? () => autoActivationActions : undefined

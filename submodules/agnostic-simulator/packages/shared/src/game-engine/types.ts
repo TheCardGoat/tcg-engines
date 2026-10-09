@@ -35,6 +35,8 @@ export type MoveHistorySourceAuthority = "server" | "client";
  * persistence layer remains shared across games.
  */
 export interface AcceptedMoveRecord {
+  /** Private preference commands are visible only to their actor. */
+  visibility?: "actor";
   gameId: string;
   stateVersion: number;
   turnNumber: number;
@@ -104,6 +106,8 @@ export type DispatchSuccess = DispatchSuccessState &
   );
 
 interface DispatchSuccessState {
+  /** Do not broadcast the command name or payload to other viewers. */
+  commandVisibility?: "actor";
   success: true;
   /**
    * Game-owned semantic outcome for an accepted command. The shared host
@@ -406,6 +410,11 @@ export interface ServerEngineCreateInput {
    * so in-match toggles and restores never re-read this field.
    */
   automation?: Readonly<Record<string, unknown>>;
+  /**
+   * Queue format id. Adapters that share one engine across formats use this
+   * for setup rules. Omitted for games with a single format.
+   */
+  formatId?: string;
 }
 
 /**

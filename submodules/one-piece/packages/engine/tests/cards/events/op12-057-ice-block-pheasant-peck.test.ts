@@ -27,6 +27,7 @@ describe("OP12-057 Ice Block Pheasant Peck", () => {
       "north",
     );
     engine.resolveDecision("effectTrashFromHandSelection", { selectedIds: [discardedId] }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     expect(engine.getView("north").players.north.lifeCount).toBe(lifeBefore);
     expect(engine.getView("north").players.north.trash.map((card) => card.instanceId)).toContain(
@@ -93,5 +94,25 @@ describe("OP12-057 Ice Block Pheasant Peck", () => {
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(lifeId);
     expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(paymentId);
     expect(view.prompts).toHaveLength(0);
+  });
+  test("can Counter as the only card in hand without a later discard", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      { hand: [op12IceBlockPheasantPeck057], activeDon: 1 },
+    );
+    engine
+      .asSouth()
+      .attack(
+        engine.findCardInZone("south", "character", eb01MountainGod018),
+        engine.leader("north"),
+      );
+    engine.asNorth().chooseCounter(op12IceBlockPheasantPeck057);
+    engine.asNorth().chooseTargets(engine.leader("north"));
+    expect(engine.getView("north").players.north.lifeCount).toBe(4);
+    expect(engine.getView("north").players.north.handCount).toBe(0);
+    expect(engine.getView("north").players.north.trash.map((c) => c.cardId)).toEqual([
+      op12IceBlockPheasantPeck057.id,
+    ]);
+    expect(engine.getView("north").prompts).toHaveLength(0);
   });
 });

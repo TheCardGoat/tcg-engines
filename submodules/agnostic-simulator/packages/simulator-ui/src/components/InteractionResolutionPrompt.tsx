@@ -14,7 +14,11 @@ import type {
   SimulatorTable,
   SimulatorTargetFilter,
 } from "@tcg/simulator-contract";
-import { buildInteractionSubmission, validateInteractionSubmission } from "@tcg/protocol";
+import {
+  buildInteractionSubmission,
+  inputAllowsOmission,
+  validateInteractionSubmission,
+} from "@tcg/protocol";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import {
   IconAdjustmentsHorizontal,
@@ -38,7 +42,7 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import type { CSSProperties, ReactNode } from "react";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import {
@@ -59,9 +63,11 @@ import {
   TargetFilterModal,
   type TargetFilterDuplicateFilter,
   type TargetFilterModalClassNames,
+  type TargetFilterModalProps,
 } from "./TargetFilterModal";
 
 export interface InteractionChoiceModalPresentation {
+  readonly crossOrigin?: TargetFilterModalProps["crossOrigin"];
   readonly title: string;
   readonly description?: string;
   readonly filter: SimulatorTargetFilter;
@@ -86,6 +92,7 @@ export interface InteractionResolutionPromptProps {
   readonly onChange?: (inputId: string, value: InteractionSubmissionValue) => void;
   readonly onClearInput?: (inputId: string) => void;
   readonly onConfirm?: () => void;
+  readonly onSkipInput?: () => void;
   readonly onSubmit?: (submission: InteractionSubmission) => void;
   readonly onTakeNone?: () => void;
   readonly onClear?: () => void;
@@ -101,6 +108,8 @@ export interface InteractionResolutionPromptProps {
   readonly preferredPlacement?: "top" | "bottom";
   /** Allow touch/keyboard vertical positioning of the compact mobile prompt. */
   readonly mobileDraggable?: boolean;
+  /** Render in document flow inside a sidebar or inspector instead of over a board. */
+  readonly embedded?: boolean;
   /**
    * Lets a game surface reserve room for direct-manipulation targets anchored
    * along the bottom edge, such as cards in the local player's hand.
@@ -119,6 +128,8 @@ export interface InteractionResolutionPromptProps {
   /** Game-owned choices rendered in the standard action rail. */
   readonly decisionControls?: ReactNode;
   readonly renderCandidate?: (input: InteractionInput, entityId: string) => ReactNode;
+  /** Viewer-safe identity or ownership shown with custom candidate art in the picker. */
+  readonly candidateCaption?: (input: InteractionInput, entityId: string) => string | undefined;
   /** Lets a game surface show its native card inspection while an ordered card is hovered. */
   readonly onOrderedCandidatePreview?: (input: EntityPartitionInput, entityId: string) => void;
   /** Clears the native card inspection when the pointer leaves an ordered card. */
@@ -241,18 +252,21 @@ export function InteractionResolutionPrompt({
   onChange,
   onClearInput,
   onConfirm,
+  onSkipInput,
   onSubmit,
   onTakeNone,
   onClear,
   selectionSummary,
   preferredPlacement = "bottom",
   mobileDraggable = false,
+  embedded = false,
   reserveBottomTargetArea = false,
   immediateDrawerSelection = false,
   immediateOptionalSingletons = false,
   instructionOnly = false,
   decisionControls,
   renderCandidate,
+  candidateCaption,
   onOrderedCandidatePreview,
   onOrderedCandidatePreviewEnd,
   choiceModal,
@@ -278,7 +292,18 @@ export function InteractionResolutionPrompt({
   const [instructionTooltipOpen, setInstructionTooltipOpen] = useState(false);
   const [optionQuery, setOptionQuery] = useState("");
   const rootRef = useRef<HTMLElement>(null);
-  const mobileDrag = useMobilePromptDrag(rootRef, mobileDraggable, placement);
+  const [portalTheme, setPortalTheme] = useState<Record<`--interaction-${string}`, string>>({});
+  useLayoutEffect(() => {
+    if ((!choicesOpen && !utilityMenuOpen) || !rootRef.current) return;
+    const computed = getComputedStyle(rootRef.current);
+    const theme: Record<`--interaction-${string}`, string> = {};
+    for (const token of ["accent", "surface", "surface-soft", "border", "text", "muted"] as const) {
+      const name = `--interaction-${token}` as const;
+      theme[name] = computed.getPropertyValue(name).trim();
+    }
+    setPortalTheme(theme);
+  }, [choicesOpen, utilityMenuOpen]);
+  const mobileDrag = useMobilePromptDrag(rootRef, mobileDraggable && !embedded, placement);
   const choiceDialogRef = useRef<HTMLElement>(null);
   const utilityTriggerRef = useRef<HTMLButtonElement>(null);
   const initializedNumberKeyRef = useRef<string | undefined>(undefined);
@@ -356,15 +381,21 @@ export function InteractionResolutionPrompt({
       ? resolveInteractionText(directOrderRoutes[0]!.text).replace(/\s*\([^)]*\)\s*$/, "")
       : undefined;
 
+  const inputSuspended = instructionOnly || !isActor || Boolean(animationRuntime?.activeTransition);
+
   useEffect(() => {
-    if (!isActor || minimized || inputs.length === 0) return;
+    if (inputSuspended) setChoicesOpen(false);
+  }, [inputSuspended]);
+
+  useEffect(() => {
+    if (inputSuspended || minimized || inputs.length === 0) return;
     const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     rootRef.current?.focus();
     return () => previous?.focus();
-  }, [inputs.length, isActor, minimized, promptId]);
+  }, [inputs.length, inputSuspended, minimized, promptId]);
 
   useEffect(() => {
-    if (!usesFocusedPartitionWorkspace || !isActor || minimized) return;
+    if (!usesFocusedPartitionWorkspace || inputSuspended || embedded || minimized) return;
     const prompt = rootRef.current;
     if (!prompt) return;
     const trapFocus = (event: KeyboardEvent) => {
@@ -403,7 +434,14 @@ export function InteractionResolutionPrompt({
       prompt.removeEventListener("keydown", trapFocus);
       window.removeEventListener("keydown", closeOnEscape, true);
     };
-  }, [choicesOpen, detailsExpanded, isActor, minimized, usesFocusedPartitionWorkspace]);
+  }, [
+    choicesOpen,
+    detailsExpanded,
+    inputSuspended,
+    embedded,
+    minimized,
+    usesFocusedPartitionWorkspace,
+  ]);
 
   useEffect(() => {
     if (!choicesOpen) return;
@@ -448,11 +486,11 @@ export function InteractionResolutionPrompt({
   }, [choicesOpen]);
 
   useEffect(() => {
-    if (!isActor || input?.kind !== "number" || input.max === undefined || !numberKey) return;
+    if (inputSuspended || input?.kind !== "number" || input.max === undefined || !numberKey) return;
     if (initializedNumberKeyRef.current === numberKey) return;
     initializedNumberKeyRef.current = numberKey;
     if (values[input.id] === undefined) onChange?.(input.id, input.max);
-  }, [input, isActor, numberKey, onChange, values]);
+  }, [input, inputSuspended, numberKey, onChange, values]);
 
   if ((!resolution && !isActionDraft) || animationRuntime?.activeTransition) return null;
 
@@ -623,9 +661,11 @@ export function InteractionResolutionPrompt({
               ? "Choose a card to continue, or skip this effect."
               : "Optional effect: select a highlighted card to continue, or skip it."
           : immediateEntitySelection && presentation === "spatial"
-            ? resolution
-              ? resolveInteractionText(resolution.currentStep.text)
-              : "Select a highlighted card to continue."
+            ? input?.kind === "entity-selection" && input.role === "cost"
+              ? instruction
+              : resolution
+                ? resolveInteractionText(resolution.currentStep.text)
+                : "Select a highlighted card to continue."
             : instruction;
   const requiresConfirm =
     input !== undefined &&
@@ -781,11 +821,18 @@ export function InteractionResolutionPrompt({
     selectionMax !== undefined &&
     min !== undefined &&
     (min !== selectionMax || selectionMax > 1);
+  const canSkipInput = Boolean(
+    onSkipInput &&
+    input?.required === false &&
+    inputAllowsOmission(input, values) &&
+    !optionalDecision &&
+    min !== 0,
+  );
   const railStatus = optionDirectPresentation
     ? null
     : !isActor
       ? contextLabel
-      : optionalDecision
+      : optionalDecision || canSkipInput
         ? "Optional"
         : input?.kind === "number"
           ? input.min !== undefined && input.max !== undefined
@@ -801,7 +848,12 @@ export function InteractionResolutionPrompt({
                 : "Required"
               : contextLabel;
   const isOptionalStatus = railStatus === "Optional";
-  const statusSelectionNoun = presentation === "spatial" ? "target" : selectionNoun;
+  const statusSelectionNoun =
+    input?.kind === "entity-selection" && input.role === "cost"
+      ? "card"
+      : presentation === "spatial"
+        ? "target"
+        : selectionNoun;
   const railStatusTooltip = isOptionalStatus
     ? "Optional — you can skip this effect."
     : railStatus === "Required" && input?.kind === "boolean"
@@ -839,10 +891,12 @@ export function InteractionResolutionPrompt({
   };
   const choiceDialogContents =
     choicesOpen &&
+    !inputSuspended &&
     hasChoiceBrowser &&
     (input?.kind === "entity-selection" || input?.kind === "ordering") ? (
       choiceModal ? (
         <TargetFilterModal
+          crossOrigin={choiceModal.crossOrigin}
           opened
           mode="select"
           title={choiceModal.title}
@@ -902,6 +956,7 @@ export function InteractionResolutionPrompt({
       ) : (
         <div
           className={classes.choiceBackdrop}
+          style={portalTheme}
           role="presentation"
           onClick={() => setChoicesOpen(false)}
         >
@@ -937,13 +992,15 @@ export function InteractionResolutionPrompt({
                 const selected = selection.includes(id);
                 const label = resolveInteractionText(candidate.text ?? { key: id });
                 const renderedCandidate = renderCandidate?.(input, id);
+                const caption = candidateCaption?.(input, id);
                 const matchingCandidates = input.candidates.filter(
                   (possibleMatch) =>
-                    resolveInteractionText(
-                      possibleMatch.text ?? {
-                        key: possibleMatch.entity.instanceId,
-                      },
-                    ) === label,
+                    (candidateCaption?.(input, possibleMatch.entity.instanceId) ??
+                      resolveInteractionText(
+                        possibleMatch.text ?? {
+                          key: possibleMatch.entity.instanceId,
+                        },
+                      )) === (caption ?? label),
                 );
                 const duplicateIndex = matchingCandidates.findIndex(
                   (possibleMatch) => possibleMatch.entity.instanceId === id,
@@ -963,7 +1020,7 @@ export function InteractionResolutionPrompt({
                     className={classes.candidate}
                     data-selected={selected}
                     data-rendered-candidate={renderedCandidate != null || undefined}
-                    aria-label={`${orderPosition}${label}${duplicateCopy}`}
+                    aria-label={`${orderPosition}${caption ?? label}${duplicateCopy}`}
                     disabled={candidate.enabled === false}
                     onClick={() => {
                       const nextSelection = toggleSelection(
@@ -998,6 +1055,12 @@ export function InteractionResolutionPrompt({
                       </span>
                     ) : null}
                     {renderedCandidate ?? renderText?.(label) ?? label}
+                    {caption && renderedCandidate != null ? (
+                      <span className={classes.candidateCaption}>
+                        {caption}
+                        {duplicateCopy}
+                      </span>
+                    ) : null}
                   </button>
                 );
               })}
@@ -1036,11 +1099,14 @@ export function InteractionResolutionPrompt({
         ref={rootRef}
         className={`${classes.root} ${isActor ? "" : classes.observer}`}
         data-testid="interaction-resolution-prompt"
+        data-embedded={embedded || undefined}
         data-presentation={presentation}
         data-option-presentation={optionPresentation?.kind}
         data-input-kind={input?.kind}
         data-placement={placement}
-        data-mobile-draggable={(mobileDraggable && !usesFocusedPartitionWorkspace) || undefined}
+        data-mobile-draggable={
+          (mobileDraggable && !embedded && !usesFocusedPartitionWorkspace) || undefined
+        }
         data-dragging={mobileDrag.dragging || undefined}
         style={{ "--prompt-drag-offset": `${mobileDrag.offset}px` } as CSSProperties}
         data-reserve-bottom-target-area={reserveBottomTargetArea || undefined}
@@ -1050,8 +1116,10 @@ export function InteractionResolutionPrompt({
         data-inline-title={actionPresentation?.inlineTitle || undefined}
         data-layout={usesFocusedPartitionWorkspace ? "focused" : "compact"}
         data-partition-layout={directOrderRoutes ? "direct-order" : undefined}
-        role={usesFocusedPartitionWorkspace && isActor ? "dialog" : "region"}
-        aria-modal={usesFocusedPartitionWorkspace && isActor ? true : undefined}
+        role={usesFocusedPartitionWorkspace && !inputSuspended && !embedded ? "dialog" : "region"}
+        aria-modal={
+          usesFocusedPartitionWorkspace && !inputSuspended && !embedded ? true : undefined
+        }
         tabIndex={isActor ? -1 : undefined}
         aria-labelledby={usesFocusedPartitionWorkspace ? headingId : undefined}
         aria-describedby={minimized ? undefined : instructionId}
@@ -1161,7 +1229,7 @@ export function InteractionResolutionPrompt({
           </div>
 
           <div className={classes.controls} data-slot="interaction-controls">
-            {mobileDraggable && !usesFocusedPartitionWorkspace ? (
+            {mobileDraggable && !embedded && !usesFocusedPartitionWorkspace ? (
               <button
                 type="button"
                 className={`${classes.iconButton} ${classes.dragHandle}`}
@@ -1212,6 +1280,7 @@ export function InteractionResolutionPrompt({
               <PopoverPrimitive.Portal>
                 <PopoverPrimitive.Content
                   className={classes.utilityMenu}
+                  style={portalTheme}
                   data-interaction-utility-menu
                   side={placement === "top" ? "bottom" : "top"}
                   align="end"
@@ -1250,7 +1319,7 @@ export function InteractionResolutionPrompt({
                         </span>
                       </button>
                     ) : null}
-                    {hasChoiceBrowser && isActor ? (
+                    {hasChoiceBrowser && !inputSuspended ? (
                       <button
                         type="button"
                         className={classes.utilityMenuItem}
@@ -1268,7 +1337,7 @@ export function InteractionResolutionPrompt({
                         </span>
                       </button>
                     ) : null}
-                    {!usesFocusedPartitionWorkspace ? (
+                    {!usesFocusedPartitionWorkspace && !embedded ? (
                       <button
                         type="button"
                         className={classes.utilityMenuItem}
@@ -1491,12 +1560,26 @@ export function InteractionResolutionPrompt({
                       className={`${classes.button} ${classes.primary}`}
                       onClick={() => setChoicesOpen(true)}
                     >
-                      {input.kind === "ordering" ? "Choose order" : "Choose card"}
+                      {input.kind === "ordering"
+                        ? "Choose order"
+                        : input.kind === "entity-selection" &&
+                            input.entityKinds.every((kind) => kind === "player")
+                          ? "Choose player"
+                          : input.kind === "entity-selection" && !input.entityKinds.includes("card")
+                            ? "Choose target"
+                            : "Choose card"}
                     </button>
                   ) : null}
                   {optionalDecision ? (
                     <button type="button" className={classes.button} onClick={skipOptionalDecision}>
                       Skip effect
+                    </button>
+                  ) : null}
+                  {canSkipInput ? (
+                    <button type="button" className={classes.button} onClick={onSkipInput}>
+                      {input.kind === "entity-selection" && input.role === "cost"
+                        ? "Use normal cost"
+                        : "Skip choice"}
                     </button>
                   ) : null}
                   {min === 0 && input.kind !== "number" ? (
@@ -1797,7 +1880,7 @@ export function InteractionResolutionPrompt({
           </div>
         ) : null}
 
-        {isActor && !minimized && partitionInput && usesFocusedPartitionWorkspace ? (
+        {!inputSuspended && !minimized && partitionInput && usesFocusedPartitionWorkspace ? (
           <PartitionWorkspace
             input={partitionInput}
             value={partitionValue ?? {}}
@@ -1858,38 +1941,83 @@ function AllocationWorkspace({
     onChange(next);
   };
   return (
-    <div className={classes.drawer} role="group" aria-label={`Allocation, ${total} assigned`}>
-      {input.candidates.map((candidate) => {
-        const id = candidate.entity.instanceId;
-        const amount = value[id] ?? 0;
-        const label = resolveInteractionText(candidate.text ?? { key: id });
-        return (
-          <div className={classes.candidate} key={id} data-selected={amount > 0 || undefined}>
-            {renderCandidate?.(input, id) ?? label}
-            <div className={classes.numberStepper} role="group" aria-label={`Allocate to ${label}`}>
-              <button
-                type="button"
-                aria-label={`Decrease allocation for ${label}`}
-                disabled={candidate.enabled === false || amount <= candidate.min}
-                onClick={() => setAmount(id, amount - 1)}
+    <div
+      className={classes.allocationWorkspace}
+      role="group"
+      aria-label={`Allocation, ${total} assigned`}
+    >
+      <div className={classes.allocationSummary} role="status" aria-live="polite">
+        <span>
+          Assigned <strong>{total}</strong> of{" "}
+          {input.totalMin === input.totalMax
+            ? input.totalMax
+            : `${input.totalMin}–${input.totalMax}`}
+        </span>
+        <span>
+          {total < input.totalMin
+            ? `${input.totalMin - total} more required`
+            : total > input.totalMax
+              ? "Reduce the assigned amount"
+              : input.candidates.some(
+                    (candidate) =>
+                      (value[candidate.entity.instanceId] ?? 0) < candidate.min ||
+                      (value[candidate.entity.instanceId] ?? 0) > candidate.max,
+                  )
+                ? "Check the individual limits"
+                : "Ready to confirm"}
+        </span>
+      </div>
+      <div className={classes.allocationGrid}>
+        {input.candidates.map((candidate) => {
+          const id = candidate.entity.instanceId;
+          const amount = value[id] ?? 0;
+          const label = resolveInteractionText(candidate.text ?? { key: id });
+          return (
+            <div
+              className={classes.allocationCard}
+              key={id}
+              data-selected={amount > 0 || undefined}
+              data-disabled={candidate.enabled === false || undefined}
+            >
+              <div className={classes.allocationIdentity}>
+                {renderCandidate?.(input, id) ?? <strong>{label}</strong>}
+                <span>
+                  {candidate.enabled === false
+                    ? "Unavailable"
+                    : `Min ${candidate.min} · Max ${candidate.max}`}
+                </span>
+              </div>
+              <div
+                className={classes.numberStepper}
+                role="group"
+                aria-label={`Allocate to ${label}`}
               >
-                <IconMinus size={18} aria-hidden="true" />
-              </button>
-              <output aria-label={`${label} allocation`}>{amount}</output>
-              <button
-                type="button"
-                aria-label={`Increase allocation for ${label}`}
-                disabled={
-                  candidate.enabled === false || amount >= candidate.max || total >= input.totalMax
-                }
-                onClick={() => setAmount(id, amount + 1)}
-              >
-                <IconPlus size={18} aria-hidden="true" />
-              </button>
+                <button
+                  type="button"
+                  aria-label={`Decrease allocation for ${label}`}
+                  disabled={candidate.enabled === false || amount <= candidate.min}
+                  onClick={() => setAmount(id, amount - 1)}
+                >
+                  <IconMinus size={18} aria-hidden="true" />
+                </button>
+                <output aria-label={`${label} allocation`}>{amount}</output>
+                <button
+                  type="button"
+                  aria-label={`Increase allocation for ${label}`}
+                  disabled={
+                    candidate.enabled === false ||
+                    amount >= candidate.max ||
+                    total >= input.totalMax
+                  }
+                  onClick={() => setAmount(id, amount + 1)}
+                >
+                  <IconPlus size={18} aria-hidden="true" />
+                </button>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }

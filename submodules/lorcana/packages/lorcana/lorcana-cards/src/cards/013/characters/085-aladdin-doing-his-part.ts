@@ -29,9 +29,13 @@ export const aladdinDoingHisPart: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_2314c23496b5405fa7a7630d604c9d62",
+    tcgPlayer: "704599",
+  },
   text: [
     {
-      title: "Clear It Out",
+      title: "CLEAR IT OUT",
       description: "When you play this character, you may pay 1 {I} to banish chosen item.",
     },
   ],

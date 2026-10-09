@@ -3,6 +3,7 @@ import {
   getGrandArchiveCard,
   spiritOfFortuitousFire,
   portSmuggler,
+  cooktechKnife,
   spiritOfWind,
   spiritOfFire,
   raiSpellcrafter,
@@ -311,7 +312,33 @@ const counterIdentity = projectGrandArchiveSimulator(
   p1,
 );
 
+const fieldRowsShowcase = GrandArchiveTestEngine.startFixture({
+  playerOne: {
+    id: "p1",
+    name: "You",
+    champion: spiritOfWind,
+    zones: { field: [portSmuggler, woodlandSquirrels, cooktechKnife] },
+  },
+  playerTwo: {
+    id: "p2",
+    name: "Opponent",
+    champion: spiritOfFire,
+    zones: { field: [portSmuggler, woodlandSquirrels, cooktechKnife] },
+  },
+});
+const fieldRowsServer = new GrandArchiveServerEngine(
+  fieldRowsShowcase.program,
+  new GrandArchiveMatchRuntime(fieldRowsShowcase.program, fieldRowsShowcase.state),
+);
+
 const WAIT_FIXTURES = [
+  [
+    "field-rows",
+    "Allies and equipment rows",
+    "Allies face the divider; equipment sits behind them, mirrored for each seat.",
+    "turn-flow",
+    ["field", "allies", "equipment", "layout"],
+  ],
   [
     "champion-lineage",
     "Champion lineage",
@@ -452,6 +479,12 @@ const lineageShowcase = GrandArchiveTestEngine.startFixture({
 });
 
 const PROJECTIONS = {
+  "field-rows": projectGrandArchiveSimulator(
+    fieldRowsServer.program,
+    fieldRowsServer.runtime.state,
+    p1,
+    fieldRowsServer.getViewerResources({ role: "player", actorId: p1 }),
+  ),
   "champion-lineage": projectGrandArchiveSimulator(
     lineageShowcase.program,
     lineageShowcase.state,
@@ -557,6 +590,9 @@ export const GRAND_ARCHIVE_VISUAL_FIXTURES: readonly GrandArchiveVisualFixture[]
       },
       get turnPlayerId() {
         return resolve().turnPlayerId;
+      },
+      get stackView() {
+        return resolve().stackView;
       },
       get combatView() {
         return resolve().combatView;

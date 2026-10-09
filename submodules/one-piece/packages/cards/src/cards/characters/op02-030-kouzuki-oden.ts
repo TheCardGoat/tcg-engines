@@ -30,7 +30,7 @@ export const op02KouzukiOden030: CharacterCard = {
   setId: "OP02",
   cost: 8,
   power: 8000,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "slash",
   effect:
     '[Activate:Main] [Once Per Turn] (3) (You may rest the specified number of DON!! cards in your cost area.): Set this Character as active. [On K.O.] Play up to 1 green "Land of Wano" type Character card with a cost of 3 from your deck. Then, shuffle your deck.',
@@ -85,7 +85,7 @@ export const op02KouzukiOden030: CharacterCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

@@ -107,7 +107,7 @@ export const op05IBid500Million096: EventCard = {
                 {
                   filter: "trait",
                   value: "Celestial Dragons",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

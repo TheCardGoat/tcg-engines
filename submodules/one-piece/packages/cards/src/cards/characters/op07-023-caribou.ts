@@ -23,7 +23,7 @@ export const op07Caribou023: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Caribou Pirates Supernovas"],
+  traits: ["Supernovas", "Caribou Pirates"],
   attribute: "special",
   effect:
     "If you have 6 or more rested DON!! cards, this Character gains +1000 power. [Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

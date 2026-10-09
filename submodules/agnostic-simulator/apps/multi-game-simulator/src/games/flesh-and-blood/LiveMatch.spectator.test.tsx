@@ -86,6 +86,7 @@ function spectatorRoute(userId?: string) {
         })),
       },
       presence: { players: [] },
+      history: { chatMessages: [], freeTextEnabled: false, engineLogs: [] },
       game: {
         gameId: "spectator-game",
         stateVersion: 1,
@@ -196,10 +197,15 @@ describe("FAB public live spectating", () => {
       }),
     );
     expect(await screen.findByRole("heading", { name: "Bob wins" })).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: "Inspect board" }));
+    expect(screen.getByTestId("fab-post-game-summary")).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Play again" })).toBeNull();
+    fireEvent.click(screen.getAllByRole("button", { name: "Inspect board" })[0]);
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     expect(screen.getByTestId("fab-tabletop")).toBeTruthy();
-    expect(fetch).not.toHaveBeenCalled();
+    expect(fetch).not.toHaveBeenCalledWith(
+      expect.stringContaining("/post-game"),
+      expect.anything(),
+    );
   });
 
   it("discards the seated player's private board when the same game becomes anonymous", async () => {

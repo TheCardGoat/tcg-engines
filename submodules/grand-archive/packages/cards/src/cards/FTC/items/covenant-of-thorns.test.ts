@@ -13,3 +13,10 @@ describe("Covenant of Thorns — Link", () => {
     invalidHost: potionOfHealing,
   });
 });
+
+import { proveClassBonusMaterializationDiscount } from "../../../testing/class-bonus-materialization-discount.ts";
+
+/** @covers 1vt1cn1tzg-a1 */
+describe("covenantOfThorns — Class Bonus materialization discount", () => {
+  proveClassBonusMaterializationDiscount(covenantOfThorns, true);
+});

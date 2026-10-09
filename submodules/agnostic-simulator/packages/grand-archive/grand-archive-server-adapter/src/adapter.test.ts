@@ -31,6 +31,7 @@ import {
   spiritOfWind,
   spiritOfFire,
   libraryWitch,
+  portSmuggler,
 } from "@tcg/grand-archive-cards";
 import { grandArchiveServerAdapter } from "./adapter.ts";
 import {
@@ -49,6 +50,38 @@ function engine() {
   const { program, initialState } = createGrandArchiveCatalogSmokeFixture(20260826);
   return new GrandArchiveServerEngine(program, new GrandArchiveMatchRuntime(program, initialState));
 }
+
+describe("Grand Archive hosted undo", () => {
+  it("restores a safe pass and replays the undo entry", () => {
+    const champion = structuredDecisionCard("undo-champion", "CHAMPION");
+    const fixture = GrandArchiveTestEngine.startFixture({
+      playerOne: { id: "p1", champion },
+      playerTwo: { id: "p2", champion },
+    });
+    const server = new GrandArchiveServerEngine(
+      fixture.program,
+      new GrandArchiveMatchRuntime(fixture.program, fixture.state),
+    );
+    const before = server.runtime.state;
+    const actor = server.getActivePlayerId();
+    if (!actor) throw new Error("Expected active player");
+    const moved = server.dispatch(
+      "pass",
+      actor,
+      { expectedStateVersion: server.getStateID() },
+      context,
+    );
+    expect(moved.success).toBe(true);
+    expect(server.canUndo(actor)).toBe(true);
+    const priorVersion = server.getStateID();
+    const undone = server.dispatch("undo", actor, {}, context);
+    expect(undone.success).toBe(true);
+    expect(server.getStateID()).toBe(priorVersion + 1);
+    expect(server.runtime.state.turn).toEqual(before.turn);
+    const replayed = restoreGrandArchiveReplayJournal(fixture.program, server.replayJournal);
+    expect(replayed.runtime.state).toEqual(server.runtime.state);
+  });
+});
 
 const context = { gameId: "ga-test", sourceAuthority: "server" as const };
 
@@ -239,9 +272,156 @@ describe("Grand Archive simulator adapter", () => {
     const stackId = projection.table.zones
       .find((zone) => zone.id === "effects-stack")!
       .entityIds.at(-1);
+    expect(projection.stackView).toMatchObject({
+      count: 1,
+      currentItemId: null,
+      nextItemId: stackId,
+      items: [
+        {
+          id: stackId,
+          effectText: "Draw a card.",
+          state: "awaiting-opportunity",
+          currentStep: null,
+        },
+      ],
+    });
     expect(projection.entities.find((entity) => entity.id === stackId)?.details?.rules).toEqual([
       { id: "printed-text", kind: "text", text: "Draw a card." },
     ]);
+    const opponent = fixture.player("p2");
+    player.pass();
+    opponent.activateAbility(opponent.card(champion), "response-other");
+    const updated = projectGrandArchiveSimulator(
+      fixture.program,
+      fixture.state,
+      player.id,
+    ).stackView;
+    expect(updated.count).toBe(2);
+    expect(updated.currentItemId).toBeNull();
+    expect(updated.nextItemId).toBe(updated.items[0]?.id);
+    expect(updated.items.map((item) => item.effectText)).toEqual([
+      "Unrelated ability text.",
+      "Draw a card.",
+    ]);
+  });
+
+  it("separates a suspended resolution from the next queued effect for both viewers", () => {
+    const fixture = realStructuredDecisionFixture();
+    const stackItem = fixture.state.stack.at(-1)!;
+    for (const viewerId of fixture.state.turnOrder) {
+      const projection = projectGrandArchiveSimulator(fixture.program, fixture.state, viewerId);
+      const replay = projectGrandArchiveViewerSimulator(
+        projectGrandArchiveViewerState(fixture.program, fixture.state, viewerId),
+      );
+      expect(replay.stackView).toEqual(projection.stackView);
+      expect(projection.stackView).toMatchObject({
+        count: 1,
+        currentItemId: stackItem.id,
+        nextItemId: null,
+        items: [
+          {
+            id: stackItem.id,
+            state: "waiting-for-decision",
+            effectText: "[REST]: Choose a champion.",
+            currentStep: { playerId: "p1", kind: "resolve-effect-choice", optionality: "required" },
+            targets: [
+              {
+                binding: "announced-champion",
+                required: true,
+                references: [
+                  {
+                    kind: "card",
+                    entityId: fixture.state.zones.p2.field[0],
+                    name: "adapter-choice-champion",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      });
+      expect(projection.interactionView?.resolution?.currentEffect.id).toBe(stackItem.id);
+      expect(projection.interactionView?.resolution?.currentEffect.text.key).toBe(
+        "[REST]: Choose a champion.",
+      );
+      expect(JSON.stringify(projection.stackView)).not.toContain("candidateIds");
+      expect(JSON.stringify(projection.stackView)).not.toContain("bindings");
+    }
+  });
+
+  it("does not name or identify a declared target concealed from the viewer", () => {
+    const fixture = realStructuredDecisionFixture();
+    const hiddenId = fixture.state.zones.p2.hand[0]!;
+    const viewer = projectGrandArchiveViewerState(
+      fixture.program,
+      fixture.state,
+      fixture.player("p1").id,
+    );
+    const projection = projectGrandArchiveViewerSimulator({
+      ...viewer,
+      stack: viewer.stack.map((item) => ({
+        ...item,
+        targets: [
+          {
+            binding: "private-target",
+            targetIds: [hiddenId],
+            required: true,
+            targetObjectIncarnations: {},
+          },
+        ],
+      })),
+    });
+    expect(projection.stackView.items[0]?.targets[0]?.references).toEqual([{ kind: "concealed" }]);
+    expect(JSON.stringify(projection.stackView)).not.toContain(hiddenId);
+    expect(JSON.stringify(projection.stackView)).not.toContain("adapter-choice-filler");
+  });
+
+  it("projects optional effect decisions equally to the actor and opponent", () => {
+    const champion = structuredDecisionCard("optional-stack-champion", "CHAMPION", [
+      {
+        id: "optional-stack",
+        kind: "activated",
+        activation: "ability",
+        text: "You may draw a card.",
+        cost: { kind: "pay-reserve", amount: 0 },
+        effect: {
+          kind: "optional",
+          player: "controller",
+          allOrNothing: true,
+          effect: { kind: "draw", player: "controller", amount: 1 },
+        },
+      },
+    ]);
+    const filler = structuredDecisionCard("optional-stack-filler", "ACTION");
+    const fixture = GrandArchiveTestEngine.startFixture({
+      playerOne: { id: "p1", champion, zones: { "main-deck": [filler] } },
+      playerTwo: { id: "p2", champion },
+    });
+    const actor = fixture.player("p1");
+    actor.activateAbility(actor.card(champion), "optional-stack");
+    const queued = projectGrandArchiveSimulator(fixture.program, fixture.state, actor.id).stackView;
+    expect(queued.currentItemId).toBeNull();
+    expect(queued.nextItemId).toBe(queued.items[0]?.id);
+    expect(queued.items[0]).toMatchObject({ state: "awaiting-opportunity", currentStep: null });
+    for (let i = 0; i < 4 && !fixture.state.decision; i++) {
+      const wait = fixture.waitState();
+      if (wait.kind !== "opportunity") throw new Error("Expected Opportunity");
+      fixture.player(wait.playerId).pass();
+    }
+    expect(fixture.state.decision?.kind).toBe("resolve-optional-effect");
+    const actorView = projectGrandArchiveSimulator(
+      fixture.program,
+      fixture.state,
+      actor.id,
+    ).stackView;
+    const opponentView = projectGrandArchiveSimulator(
+      fixture.program,
+      fixture.state,
+      fixture.player("p2").id,
+    ).stackView;
+    expect(actorView).toEqual(opponentView);
+    expect(actorView.items[0]?.currentStep).toMatchObject({ optionality: "optional-effect" });
+    expect(JSON.stringify(opponentView)).not.toContain(filler.canonicalId);
   });
 
   it("preserves memory facing independently of permission to inspect its identity", () => {
@@ -1238,5 +1418,36 @@ describe("Grand Archive bot decision dispatch", () => {
       expect(server.runtime.state).toEqual(fixture.state);
       expect(server.replayJournal.commands[0]?.command).toEqual(legal.command);
     },
+  );
+});
+
+it("keeps remote combat decision ownership public without exposing private answer choices", () => {
+  const game = GrandArchiveTestEngine.startFixture({
+    playerOne: { id: "p1", champion: spiritOfWind, zones: { field: [portSmuggler] } },
+    playerTwo: { id: "p2", champion: spiritOfWind, zones: { field: [portSmuggler] } },
+  });
+  game
+    .player("p1")
+    .declareAttack(portSmuggler, game.player("p2").card(portSmuggler, { zone: "field" }));
+  for (let count = 0; count < 12 && !game.state.decision; count++) {
+    const holder = game.state.opportunity?.holderId;
+    if (!holder) throw new Error("Expected combat Opportunity");
+    game.player(holder).pass();
+  }
+  expect(game.state.decision?.kind).toBe("choose-retaliators");
+  const viewer = projectGrandArchiveViewerState(
+    game.program,
+    game.state,
+    grandArchivePlayerId("p1"),
+  );
+  expect(viewer.decision).toBeFalsy();
+  const projected = projectGrandArchiveViewerSimulator(viewer);
+  expect(projected.waitState).toEqual({
+    kind: "decision",
+    playerId: "p2",
+    decisionKind: "choose-retaliators",
+  });
+  expect(projected.interactionView?.actions.some((action) => action.inputs.length > 0)).not.toBe(
+    true,
   );
 });

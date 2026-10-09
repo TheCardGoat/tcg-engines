@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/general-rules/general-rules-format-conventions"
+  relation: "current_index"
+---
+
 # General Rules - Format Conventions
 
 Each standard constructed game of Grand Archive is played between two players, each with their own main deck and material decks. The same is true for draft formats, including sealed draft or traditional draft.

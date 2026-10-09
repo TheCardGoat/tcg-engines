@@ -352,6 +352,47 @@ describe("resolveVariableAmount", () => {
     expect(resolved).toEqual({ mode: "aggregate", value: 3 });
   });
 
+  it("uses last known Strength only for the departed effect source", () => {
+    const source = "departed-source" as CardInstanceId;
+    const action = "other-action" as CardInstanceId;
+    const ctx = createTestContext({
+      definitions: {
+        [source]: { id: "departed-source", cardType: "character", strength: 4, willpower: 5 },
+        [action]: { id: "other-action", cardType: "action", cost: 0 },
+      },
+      zoneCards: { [`discard:${PLAYER_ONE}`]: [source, action] },
+      cardMeta: { [source]: { lastKnownStrength: 6 } },
+    });
+    expect(
+      resolveVariableAmount(
+        { type: "strength-of", target: "SELF" },
+        {
+          ctx,
+          sourceId: source,
+          controllerId: PLAYER_ONE,
+        },
+      ),
+    ).toEqual({ mode: "aggregate", value: 6 });
+    expect(
+      resolveVariableAmount(
+        {
+          type: "strength-of",
+          target: {
+            selector: "all",
+            count: "all",
+            owner: "you",
+            zones: ["discard"],
+            cardTypes: ["character"],
+          },
+        },
+        { ctx, sourceId: action, controllerId: PLAYER_ONE, targets: [source] },
+      ),
+    ).toEqual({
+      mode: "per-target",
+      perTarget: { [source]: 4 },
+    });
+  });
+
   it("uses rules-effective 0 for negative strength and lore values", () => {
     const target = "negative-target" as CardInstanceId;
     const ctx = createTestContext({

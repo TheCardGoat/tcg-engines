@@ -50,7 +50,7 @@ export const op14eb04Eleclaw019: EventCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Minks",
-              match: "includes",
+              match: "exact",
             },
           },
         ],
@@ -72,7 +72,7 @@ export const op14eb04Eleclaw019: EventCard = {
                 {
                   filter: "trait",
                   value: "Minks",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

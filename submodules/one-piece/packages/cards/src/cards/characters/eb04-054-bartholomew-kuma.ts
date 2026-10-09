@@ -24,7 +24,7 @@ export const eb04BartholomewKuma054: CharacterCard = {
   cost: 7,
   power: 7000,
   counter: 1000,
-  traits: ["Revolutionary Army Egghead"],
+  traits: ["Egghead", "Revolutionary Army"],
   attribute: "strike",
   effect:
     "[On Play] If you have 2 or less Life cards, add up to 1 card from the top of your deck to the top of your Life cards.\n[On K.O.] Add up to 1 card from the top of your opponent's Life cards to the owner's hand.",

@@ -870,6 +870,30 @@ describe("Grand Archive keyword effects", () => {
     expect(game.state.stack).toHaveLength(1);
   });
 
+  it("Fast Activation overrides an action's printed slow speed", () => {
+    const action = keywordCard(
+      { name: "fast-activation" },
+      {
+        canonicalId: "kw-fast-printed-slow-action",
+        type: "ACTION",
+        speed: "slow",
+      },
+    );
+    const pending = fillerCard("kw-fast-printed-slow-pending");
+    const game = keywordFixture({
+      phase: "main",
+      playerOne: { zones: { hand: [pending, action] } },
+    });
+    const player = game.player("player-one");
+    player.activate(pending);
+    player.activate(action);
+    expect(game.state.stack).toHaveLength(2);
+    drainStack(game);
+    expect(game.state.stack).toHaveLength(0);
+    expect(player.card(action).objectId).toBeDefined();
+    expect(game.state.objects[player.card(action).objectId]?.zone).toBe("graveyard");
+  });
+
   it("Ephemerate activates an action from the graveyard and banishes it as it resolves", () => {
     const ephemerateCard = withKeywords(targetedSpell("kw-ephemerate-card"), [
       { name: "ephemerate", cost: { kind: "pay-reserve", amount: 2 } },

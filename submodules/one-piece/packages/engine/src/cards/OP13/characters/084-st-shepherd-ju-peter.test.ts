@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import type { EventCard } from "@tcg/op-types";
-import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018, op01Kaido094 } from "@tcg/op-cards";
-import { op13StJaygarciaSaturn083 } from "../../../../../cards/src/cards/characters/op13-083-st-jaygarcia-saturn.ts";
+import { eb01Doma005, eb01Fourtricks025 } from "@tcg/op-cards";
 import { op13StShepherdJuPeter084 } from "../../../../../cards/src/cards/characters/op13-084-st-shepherd-ju-peter.ts";
 
 import { registerCards } from "../../../../../cards/src/runtime-catalog.ts";
@@ -43,34 +42,55 @@ const koByEffect: EventCard = {
 registerCards([koByEffect]);
 
 describe("OP13-084 St. Shepherd Ju Peter", () => {
-  test("may reveal no Five Elders card and bottom-orders all five looked cards", () => {
+  test("On Play does not search, and ten trash sets own Five Elders base power to 7000 only on your turn", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op13StShepherdJuPeter084],
+        character: ["OP13-082", eb01Doma005],
+        trash: Array.from({ length: 10 }, () => eb01Fourtricks025),
+        activeDon: 8,
+      },
+      { character: ["OP13-082"] },
+    );
+    const elder = engine.findCardInZone("south", "character", "OP13-082");
+    const other = engine.findCardInZone("south", "character", eb01Doma005);
+    engine.attachDon(elder, 1);
+    engine.playCard(op13StShepherdJuPeter084);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getView("south").players.south.handCount).toBe(0);
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === elder)?.power,
+    ).toBe(8000);
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.cardId === "OP13-084")?.power,
+    ).toBe(7000);
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === other)?.power,
+    ).toBe(eb01Doma005.power);
+    expect(engine.getView("south").players.north.characters[0]?.power).toBe(12000);
+    engine.endTurn("south");
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === elder)?.power,
+    ).toBe(12000);
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.cardId === "OP13-084")?.power,
+    ).toBe(5000);
+  });
+
+  test("nine trash does not set the base power of Five Elders", () => {
     const engine = OnePieceTestEngine.create({
-      hand: [op13StShepherdJuPeter084],
-      deck: [
-        op13StJaygarciaSaturn083,
-        eb01Doma005,
-        eb01MountainGod018,
-        op01Kaido094,
-        eb01Fourtricks025,
-      ],
-      activeDon: op13StShepherdJuPeter084.cost,
+      character: [op13StShepherdJuPeter084, "OP13-082"],
+      trash: Array.from({ length: 9 }, () => eb01Fourtricks025),
+      activeDon: 1,
     });
-
-    engine.playCard(op13StShepherdJuPeter084, "south");
-    const search = engine.pendingDecision("effectSearchSelection", "south").steps[0];
-    if (search?.kind !== "selectEntity") throw new Error("Expected Ju Peter's search choice.");
-    expect(search).toMatchObject({ min: 0, max: 1 });
-    engine.resolveDecision("effectSearchSelection", { selectedIds: [] }, "south");
-
-    const remainder = engine.pendingDecision("effectSearchRemainderOrder", "south").steps[0];
-    if (remainder?.kind !== "orderItems") throw new Error("Expected Ju Peter's remainder order.");
-    const order = remainder.candidates.map((candidate) => candidate.ref.id).reverse();
-    expect(order).toHaveLength(5);
-    engine.resolveDecision("effectSearchRemainderOrder", { selectedIds: order }, "south");
-
-    const view = engine.getView("south");
-    expect(view.players.south).toMatchObject({ handCount: 0, deckCount: 5 });
-    expect(view.prompts).toHaveLength(0);
+    const elder = engine.findCardInZone("south", "character", "OP13-082");
+    engine.attachDon(elder, 1);
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === elder)?.power,
+    ).toBe(13000);
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.cardId === "OP13-084")?.power,
+    ).toBe(5000);
   });
 
   test("at seven trash cards survives an opponent effect while another Character is removable", () => {
@@ -89,13 +109,14 @@ describe("OP13-084 St. Shepherd Ju Peter", () => {
     const target = engine.pendingDecision("effectTargetSelection", "north").steps[0];
     if (target?.kind !== "selectEntity") throw new Error("Expected the opposing removal choice.");
     const candidates = target.candidates.map((candidate) => candidate.ref.id);
-    expect(candidates).not.toContain(juPeterId);
+    expect(candidates).toContain(juPeterId);
     expect(candidates).toContain(unprotectedId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [unprotectedId] }, "north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [juPeterId] }, "north");
 
     const view = engine.getView("south");
     expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(juPeterId);
-    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(unprotectedId);
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(unprotectedId);
+    expect(view.players.south.trash.map((card) => card.instanceId)).not.toContain(juPeterId);
     expect(view.prompts).toHaveLength(0);
   });
 });

@@ -22,7 +22,7 @@ export const beKingUndisputedEpic: ActionCard = {
   franchise: "Lion King",
   set: "009",
   cardNumber: 216,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 4,
   inkable: false,

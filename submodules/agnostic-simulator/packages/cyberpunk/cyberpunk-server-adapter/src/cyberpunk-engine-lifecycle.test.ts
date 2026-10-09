@@ -19,6 +19,90 @@ import {
 const JACKIE = theHeistRetailStarterDeckJackieWellesPourOneOutForMe;
 
 describe("cyberpunk engine lifecycle", () => {
+  it("grants the series chooser the first-player decision and retains random setup when omitted", async () => {
+    const input = {
+      gameSlug: "cyberpunk" as const,
+      seed: "series-first-player-choice",
+      player1Id: "server_player_1",
+      player2Id: "server_player_2",
+      cardsMaps: cardsMaps(),
+    };
+    const randomGame = await cyberpunkCreateServerEngine(input);
+    const randomChooser = randomGame.getActivePlayerId();
+    expect(randomChooser).toMatch(/^server_player_[12]$/);
+
+    const designatedChooser = randomChooser === input.player1Id ? input.player2Id : input.player1Id;
+    const seriesGame = await cyberpunkCreateServerEngine({
+      ...input,
+      firstPlayerChooserId: designatedChooser,
+    });
+    expect(seriesGame.getActivePlayerId()).toBe(designatedChooser);
+
+    const choice = seriesGame.dispatch(
+      "resolveFirstPlayer",
+      designatedChooser,
+      { goFirst: false },
+      { gameId: "series-game-2", sourceAuthority: "server" },
+    );
+    expect(choice.success).toBe(true);
+    expect((seriesGame.getState() as MatchState).G.turnMetadata.activePlayerId).toBe(randomChooser);
+
+    const anotherRandomGame = await cyberpunkCreateServerEngine(input);
+    expect(anotherRandomGame.getActivePlayerId()).toBe(randomChooser);
+  });
+
+  it("rejects a series chooser who is not seated", async () => {
+    await expect(
+      cyberpunkCreateServerEngine({
+        gameSlug: "cyberpunk",
+        seed: "invalid-series-chooser",
+        player1Id: "server_player_1",
+        player2Id: "server_player_2",
+        cardsMaps: cardsMaps(),
+        firstPlayerChooserId: "someone_else",
+      }),
+    ).rejects.toThrow("is not seated in this game");
+  });
+
+  it("starts a hosted game with the pregame decision already applied", async () => {
+    const engine = await cyberpunkCreateServerEngine({
+      gameSlug: "cyberpunk",
+      seed: "hosted-pregame-decision",
+      player1Id: "server_player_1",
+      player2Id: "server_player_2",
+      cardsMaps: cardsMaps(),
+      firstPlayerChooserId: "server_player_1",
+      firstTurnPlayerId: "server_player_2",
+    });
+    const state = engine.getState() as MatchState;
+    expect(state.ctx.stateID).toBe(0);
+    expect(state.G.turnMetadata.pendingChoice).toBeUndefined();
+    expect(state.G.turnMetadata.activePlayerId).toBe("server_player_2");
+    expect(state.G.players.server_player_2?.firstPlayer).toBe(true);
+    expect(state.G.players.server_player_1?.firstPlayer).toBe(false);
+    for (const player of Object.values(state.G.players)) {
+      expect(player.zones.hand).toHaveLength(1);
+      expect(player.zones.legendArea).toHaveLength(3);
+      expect(player.zones.legendArea.every((id) => state.G.cardIndex[id]?.meta.faceDown)).toBe(
+        true,
+      );
+    }
+  });
+
+  it("rejects an unseated pregame first player", async () => {
+    await expect(
+      cyberpunkCreateServerEngine({
+        gameSlug: "cyberpunk",
+        seed: "invalid-hosted-first-player",
+        player1Id: "server_player_1",
+        player2Id: "server_player_2",
+        cardsMaps: cardsMaps(),
+        firstPlayerChooserId: "server_player_1",
+        firstTurnPlayerId: "someone_else",
+      }),
+    ).rejects.toThrow("Invalid first-player choice for this game");
+  });
+
   it("registers a catalog that accepts slug setup and UUID state lookups", async () => {
     await cyberpunkCreateServerEngine({
       gameSlug: "cyberpunk",
@@ -137,27 +221,27 @@ describe("cyberpunk engine lifecycle", () => {
     expect(state.ctx.stateID).toBe(2);
   });
 
-  it("does not invent a turn-start checkpoint for a legacy mid-turn snapshot", async () => {
+  it("rejects an unversioned legacy combat snapshot", async () => {
     const fixture = CyberpunkTestEngine.createWithFixture({
       hand: [createMockUnit({ name: "Legacy Unit", cost: 0 })],
       deck: 10,
     });
-    const restored = await cyberpunkRestoreEngine(
-      {
-        gameSlug: "cyberpunk",
-        state: structuredClone(fixture.getState()),
-        historyLength: 0,
-        cardsMaps: { cardInstances: {}, owners: {} },
-      },
-      {
-        gameSlug: "cyberpunk",
-        seed: "legacy-checkpoint",
-        player1Id: "p1",
-        player2Id: "p2",
-      },
-    );
-
-    expect(restored.canUndoToTurnStart?.("p1")).toBe(false);
+    await expect(
+      cyberpunkRestoreEngine(
+        {
+          gameSlug: "cyberpunk",
+          state: structuredClone(fixture.getState()),
+          historyLength: 0,
+          cardsMaps: { cardInstances: {}, owners: {} },
+        },
+        {
+          gameSlug: "cyberpunk",
+          seed: "legacy-checkpoint",
+          player1Id: "p1",
+          player2Id: "p2",
+        },
+      ),
+    ).rejects.toThrow("Unsupported Cyberpunk combat snapshot version");
   });
 });
 

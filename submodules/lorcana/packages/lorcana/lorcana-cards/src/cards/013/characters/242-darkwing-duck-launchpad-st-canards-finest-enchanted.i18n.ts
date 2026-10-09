@@ -73,19 +73,19 @@ export const darkwingDuckLaunchpadStCanardsFinestEnchantedI18n: Record<Languages
       ],
     },
     es: {
-      name: "Pato Darkwing y plataforma de lanzamiento",
-      version: "Lo mejor de St. Canard",
+      name: "Darkwing Duck & Launchpad",
+      version: "St. Canard's Finest",
       text: [
         {
-          title: "<Mayús> 5 {I}",
+          title: "<Shift> 5 {I}",
         },
         {
-          title: "<Guardián>",
+          title: "<Ward>",
         },
         {
-          title: "Postura de victoria",
+          title: "Victory Pose",
           description:
-            "Durante tu turno, cada vez que este personaje destierre a otro personaje en un desafío, gana 2 conocimientos.",
+            "During your turn, whenever this character banishes another character in a challenge, gain 2 lore.",
         },
       ],
     },

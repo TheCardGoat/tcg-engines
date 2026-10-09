@@ -39,6 +39,8 @@ export interface GrandArchiveCardInstance {
   };
   /** Printed definition currently supplying this object's characteristics (champion lineage top). */
   readonly activeDefinitionId?: string;
+  /** Original champion card made explicit when it leaves the persistent champion stack. */
+  readonly baseLineageCardId?: GrandArchiveObjectId;
   /** Name retained or assigned by an “except its name is …” copy instruction. */
   readonly nameOverride?: string;
   readonly ownerId: GrandArchivePlayerId;
@@ -550,6 +552,7 @@ export type GrandArchiveDecision =
       readonly playerId: GrandArchivePlayerId;
       readonly stackItemId: GrandArchiveStackItemId;
       readonly cardId: GrandArchiveObjectId;
+      readonly mayDecline?: true;
       readonly payCosts: boolean;
       readonly ignoreElementRequirements: boolean;
       readonly costModifiers: readonly {
@@ -566,6 +569,7 @@ export type GrandArchiveDecision =
       readonly playerId: GrandArchivePlayerId;
       readonly stackItemId: GrandArchiveStackItemId;
       readonly cardId: GrandArchiveObjectId;
+      readonly mayDecline?: true;
       readonly payCosts: boolean;
       readonly ignoreElementRequirements: boolean;
       readonly speed?: "fast" | "slow";
@@ -639,6 +643,8 @@ export type GrandArchiveResolutionFrame =
     }
   | {
       readonly kind: "effect";
+      /** An accepted optional play stays optional until its declaration is committed. */
+      readonly mayDeclinePlay?: true;
       /** Suppress replacement admission has already completed for this object. */
       readonly suppressAdmitted?: true;
       readonly effect: import("@tcg/grand-archive-types").GrandArchiveEffect;
@@ -688,6 +694,7 @@ export type GrandArchiveResolutionFrame =
       readonly kind: "announce-materialization";
       readonly playerId: GrandArchivePlayerId;
       readonly cardId: GrandArchiveObjectId;
+      readonly mayDecline?: true;
       readonly payCosts: boolean;
       readonly ignoreElementRequirements: boolean;
       readonly costModifiers: readonly {
@@ -700,6 +707,7 @@ export type GrandArchiveResolutionFrame =
       readonly kind: "announce-activation";
       readonly playerId: GrandArchivePlayerId;
       readonly cardId: GrandArchiveObjectId;
+      readonly mayDecline?: true;
       readonly payCosts: boolean;
       readonly ignoreElementRequirements: boolean;
       readonly speed?: "fast" | "slow";
@@ -710,6 +718,7 @@ export type GrandArchiveResolutionFrame =
     }
   | {
       readonly kind: "finish-reflexive";
+      readonly actionAlreadyPerformed?: true;
       readonly startedEventHistoryIndex: number;
       readonly targets?: readonly import("@tcg/grand-archive-types").GrandArchiveTargetDeclaration[];
       readonly cardinality?: "each-result-object";
@@ -875,6 +884,7 @@ export interface GrandArchiveEffectResolution {
   readonly pendingMaterialization?: {
     readonly playerId: GrandArchivePlayerId;
     readonly cardId: GrandArchiveObjectId;
+    readonly mayDecline?: true;
     readonly payCosts: boolean;
     readonly ignoreElementRequirements: boolean;
     readonly costModifiers: readonly {
@@ -886,6 +896,7 @@ export interface GrandArchiveEffectResolution {
   readonly pendingActivation?: {
     readonly playerId: GrandArchivePlayerId;
     readonly cardId: GrandArchiveObjectId;
+    readonly mayDecline?: true;
     readonly payCosts: boolean;
     readonly ignoreElementRequirements: boolean;
     readonly speed?: "fast" | "slow";
@@ -1072,6 +1083,11 @@ export interface GrandArchiveContinuousEffectInstance {
 /** Replacement effect created by a resolving card or ability rather than a static source. */
 export interface GrandArchiveReplacementEffectInstance {
   readonly id: string;
+  /** A consumed grouped replacement remains eligible only within its first source/event pair. */
+  readonly consumedBy?: {
+    readonly gameEventId: import("./identity.ts").GrandArchiveGameEventId;
+    readonly sourceId?: GrandArchiveObjectId;
+  };
   readonly sourceId?: GrandArchiveObjectId;
   readonly controllerId: GrandArchivePlayerId;
   /** Printed ability that created this replacement, used by event-cause references to “this”. */

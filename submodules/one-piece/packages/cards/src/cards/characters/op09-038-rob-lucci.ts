@@ -23,7 +23,7 @@ export const op09RobLucci038: CharacterCard = {
   cost: 4,
   power: 6000,
   counter: 1000,
-  traits: ["CP9 ODYSSEY"],
+  traits: ["ODYSSEY", "CP9"],
   attribute: "strike",
   i18n: op09RobLucci038I18n,
 };

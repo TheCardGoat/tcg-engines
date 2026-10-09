@@ -88,9 +88,10 @@ export function onePieceSubmissionToPayload(submission: InteractionSubmission): 
       values.selection !== undefined,
       values.cost !== undefined,
       values.order !== undefined,
+      values.iterations !== undefined,
     ].filter(Boolean).length;
     if (selectionFieldCount > 1) {
-      throw new Error("Only one of selection, cost, or order may be provided");
+      throw new Error("Only one of selection, cost, order, or iterations may be provided");
     }
 
     // Map generic interaction input keys to engine command fields. Prompt steps expose one
@@ -105,6 +106,15 @@ export function onePieceSubmissionToPayload(submission: InteractionSubmission): 
       payload.selectedIds = stringSelectionValues(values.cost);
     } else if (values.order !== undefined) {
       payload.selectedIds = stringSelectionValues(values.order);
+    }
+    if (values.iterations !== undefined) {
+      if (
+        typeof values.iterations !== "number" ||
+        !Number.isSafeInteger(values.iterations) ||
+        values.iterations < 0
+      )
+        throw new Error("Loop iterations must be a nonnegative safe integer");
+      payload.iterations = values.iterations;
     }
     if (values.confirm === true || values.confirm === false) {
       payload.confirm = values.confirm;
@@ -205,6 +215,7 @@ function intentForDecisionKind(kind: ProjectedDecisionKind): InteractionAction["
     case "selectTargets":
     case "selectCards":
       return "choose-targets";
+    case "chooseNumber":
     case "chooseOption":
       return "choose-option";
     case "payCost":
@@ -340,6 +351,18 @@ function slotChoiceInput(slotChoices: readonly number[]): InteractionInput {
 
 function inputsForStep(step: ProjectedDecisionStep): InteractionInput[] {
   switch (step.kind) {
+    case "chooseNumber":
+      return [
+        {
+          kind: "number",
+          id: "iterations",
+          text: { key: step.label },
+          required: true,
+          min: step.min,
+          max: step.max,
+          step: 1,
+        },
+      ];
     case "chooseOption": {
       const options: InteractionOption[] = step.options.map(
         (option: { id: string; label: string }) => ({

@@ -31,7 +31,7 @@ export const op12Koala086: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "strike",
   effect:
     '[On Play] If your Leader has the "Revolutionary Army" type, look at 3 cards from the top of your deck; reveal up to 1 "Revolutionary Army" type card other than [Koala] or up to 1 [Nico Robin] and add it to your hand. Then, trash the rest.',
@@ -43,7 +43,7 @@ export const op12Koala086: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Revolutionary Army",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -72,7 +72,7 @@ export const op12Koala086: CharacterCard = {
                       {
                         filter: "trait",
                         value: "Revolutionary Army",
-                        match: "includes",
+                        match: "exact",
                       },
                     ],
                   },

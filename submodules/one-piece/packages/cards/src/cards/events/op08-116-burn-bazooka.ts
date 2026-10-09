@@ -21,7 +21,7 @@ export const op08BurnBazooka116: EventCard = {
   rarity: "C",
   setId: "OP08",
   cost: 2,
-  traits: ["Sky Island Shandian Warrior"],
+  traits: ["Sky Island", "Shandian Warrior"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, you may add 1 card from the top or bottom of your Life cards to your hand. If you do, add up to 1 [Shandian Warrior] type card from your hand to the top of your Life cards face-up.",
   effects: {
@@ -55,7 +55,7 @@ export const op08BurnBazooka116: EventCard = {
               player: "self",
               zones: ["hand"],
               count: { amount: 1, upTo: true },
-              filters: [{ filter: "trait", value: "Shandian Warrior", match: "includes" }],
+              filters: [{ filter: "trait", value: "Shandian Warrior", match: "exact" }],
             },
             position: "top",
             faceUp: true,

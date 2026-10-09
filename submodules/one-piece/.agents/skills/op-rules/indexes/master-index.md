@@ -1,8 +1,16 @@
+---
+official_source:
+  publisher: "Bandai"
+  url: "https://en.onepiece-cardgame.com/pdf/rule_comprehensive.pdf?20260828="
+  relation: "current_index"
+  copy_version: "1.2.1"
+---
+
 # One Piece Rules Index
 
 Source: `../comprehensive-rules.md`
 
-Version: One Piece Card Game Comprehensive Rules 1.2.0, last updated January 16, 2026.
+Version: One Piece Card Game Comprehensive Rules 1.2.1, last updated August 28, 2026.
 
 ## How To Use
 

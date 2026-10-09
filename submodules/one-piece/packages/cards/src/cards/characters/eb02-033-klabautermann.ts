@@ -33,7 +33,7 @@ export const eb02Klabautermann033: CharacterCard = {
           {
             condition: "hasCard",
             player: "self",
-            zone: "stage",
+            zone: "field",
             filters: [
               {
                 filter: "name",

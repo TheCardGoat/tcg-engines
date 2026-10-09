@@ -20,7 +20,7 @@ import {
 
 describe("OnePieceTestEngine fixtures", () => {
   test("creates a fresh game with the official One Piece setup", () => {
-    const state = createMatch({
+    const initial = createMatch({
       firstPlayer: SOUTH,
       shuffleDecks: false,
       openingHandSize: 5,
@@ -31,6 +31,14 @@ describe("OnePieceTestEngine fixtures", () => {
         north: createSt01PlayerConfig("North"),
       },
     });
+
+    expect(initial.players.south.hand).toHaveLength(0);
+    expect(initial.players.north.hand).toHaveLength(0);
+    const engine = OnePieceTestEngine.fromState(initial);
+    engine.exec({ type: "chooseJoKenPo", seat: "south", choice: "paper" });
+    engine.exec({ type: "chooseJoKenPo", seat: "north", choice: "rock" });
+    engine.exec({ type: "chooseFirstPlayer", seat: "south", firstPlayer: "south" });
+    const state = engine.getState();
 
     const assertFreshPlayerSetup = (seat: "south" | "north") => {
       const player = state.players[seat];
@@ -124,6 +132,10 @@ describe("OnePieceTestEngine fixtures", () => {
     const played = engine.findCardInZone("south", "character", op13Otama043);
     expect(engine.getState().cards[played]?.zone).toBe("character");
     expect(engine.getState().players.south.restedDon).toBe(1);
+
+    const discardId = engine.getView("south").players.south.hand[0]?.instanceId;
+    if (!discardId) throw new Error("Expected a visible card to discard");
+    engine.resolveDecision("effectTrashFromHandSelection", { selectedIds: [discardId] }, "south");
 
     const failure = engine.expectFailure({
       type: "attachDon",

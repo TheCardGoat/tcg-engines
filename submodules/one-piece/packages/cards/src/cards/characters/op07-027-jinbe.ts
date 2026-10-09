@@ -23,7 +23,7 @@ export const op07Jinbe027: CharacterCard = {
   cost: 4,
   power: 6000,
   counter: 1000,
-  traits: ["Fish-Man The Sun Pirates"],
+  traits: ["Fish-Man", "The Sun Pirates"],
   attribute: "strike",
   effect: "NULL",
   i18n: op07Jinbe027I18n,

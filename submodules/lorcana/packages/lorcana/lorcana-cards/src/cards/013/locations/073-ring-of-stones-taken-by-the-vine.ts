@@ -31,11 +31,12 @@ export const ringOfStonesTakenByTheVine: LocationCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d6a16f7195a8417d86d5f7b407bb7836",
+    tcgPlayer: "704591",
   },
   text: [
     {
       title: "DEEP WISDOM",
-      description: "Your Floodborn characters get +1 lore.",
+      description: "Your Floodborn characters get +1 {L}.",
     },
   ],
   abilities: [

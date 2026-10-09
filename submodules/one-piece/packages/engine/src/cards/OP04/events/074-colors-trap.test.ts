@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op04ColorsTrap074 } from "../../../../../cards/src/cards/events/op04-074-colors-trap.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP04-074 Colors Trap", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op04ColorsTrap074);
-  });
-});

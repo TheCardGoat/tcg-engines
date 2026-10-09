@@ -494,7 +494,6 @@ describe("Comprehensive Rules 6: Game Progression", () => {
         .view()
         .players.south.characters.find((card) => card?.instanceId === southId)?.rested,
     ).toBe(true);
-    engine.asNorth().chooseCounter();
 
     engine.asSouth().endTurn();
     engine.asNorth().attack(northId, engine.asSouth().leader());

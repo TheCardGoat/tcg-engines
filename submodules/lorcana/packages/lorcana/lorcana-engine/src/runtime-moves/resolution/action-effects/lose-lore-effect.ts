@@ -1,3 +1,4 @@
+import { markLastEffectPerformed } from "./event-snapshot-utils";
 import type { LoseLoreEffect } from "@tcg/lorcana-types";
 import type { PlayerId } from "#core";
 import type { CardPlayedPayload } from "../../../types/index";
@@ -69,6 +70,7 @@ export function resolveLoseLoreEffect(
       ? resolvedInput.loseAmount
       : undefined;
   if (!loseAmount) {
+    markLastEffectPerformed(resolvedInput.eventSnapshot, false);
     return;
   }
 
@@ -118,6 +120,7 @@ export function resolveLoseLoreEffect(
     }
   }
 
+  markLastEffectPerformed(resolvedInput.eventSnapshot, loreLost > 0);
   if (resolvedInput.eventSnapshot) {
     resolvedInput.eventSnapshot.triggerAmount = loreLost;
   }

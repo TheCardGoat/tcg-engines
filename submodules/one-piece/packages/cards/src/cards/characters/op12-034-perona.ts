@@ -31,7 +31,7 @@ export const op12Perona034: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Thriller Bark Pirates Muggy Kingdom"],
+  traits: ["Muggy Kingdom", "Thriller Bark Pirates"],
   attribute: "special",
   effect:
     "[On Play] If your Leader has the (Slash) attribute, look at 5 cards from the top of your deck; reveal up to 1 (Slash) attribute card or green Event and add it to your hand. Then, place the rest at the bottom of your deck in any order.",

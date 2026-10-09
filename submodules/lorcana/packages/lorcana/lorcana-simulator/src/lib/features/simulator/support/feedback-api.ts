@@ -26,11 +26,11 @@ export type BugReportBoardSnapshot = {
 
 export function bugReportContextFromBoard(
   board: BugReportBoardSnapshot | null | undefined,
-  options?: { platform?: "mobile" | "desktop"; matchId?: string | null },
+  options?: { platform?: "mobile" | "desktop"; gameId?: string | null; matchId?: string | null },
 ): BugReportContext | undefined {
   if (!board) return undefined;
   return {
-    gameId: board.gameID,
+    gameId: options?.gameId || board.gameID,
     gameSlug: "lorcana",
     ...(options?.matchId ? { matchId: options.matchId } : {}),
     playerCount: board.playerOrder.length,

@@ -53,4 +53,31 @@ describe("EB01-001 Kouzuki Oden", () => {
     expect(engine.getView("south").players.south.leader.power).toBe(5000);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("the attack bonus remains after the qualifying Wano Character leaves during the opponent turn", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "EB01-001", character: ["EB01-018"], activeDon: 1 },
+      {
+        hand: ["OP02-099"],
+        activeDon: 4,
+        life: ["ST02-006", "ST02-003"],
+        deck: ["ST02-002", "ST02-003"],
+      },
+    );
+    e.asSouth().attachDon(e.leader("south"), 1);
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.endTurn("south");
+    e.asNorth().play("OP02-099");
+    e.asNorth().acceptOptional();
+    e.resolveDecision(
+      "effectCostTrashFromHand",
+      { selectedIds: [e.findCardInZone("north", "hand", "ST02-002")] },
+      "north",
+    );
+    e.asNorth().chooseTargets(e.findCardInZone("south", "character", "EB01-018"));
+    expect(e.getView("south").players.south.characters.filter(Boolean)).toHaveLength(0);
+    expect(e.getView("south").players.south.leader.power).toBe(6000);
+    e.endTurn("north");
+    expect(e.getView("south").players.south.leader.power).toBe(5000);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

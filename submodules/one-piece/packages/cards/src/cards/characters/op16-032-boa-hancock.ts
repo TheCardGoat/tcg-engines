@@ -31,7 +31,7 @@ export const op16BoaHancock032: CharacterCard = {
   setId: "OP16",
   cost: 7,
   power: 9000,
-  traits: ["Kuja Pirates The Seven Warlords of the Sea Impel Down"],
+  traits: ["Impel Down", "The Seven Warlords of the Sea", "Kuja Pirates"],
   attribute: "special",
   effect:
     "[Unblockable] (This card cannot be blocked.) [On Play] Up to 1 of your opponent's Characters other than [Monkey.D.Luffy] cannot be rested until the end of your opponent's next End Phase.",

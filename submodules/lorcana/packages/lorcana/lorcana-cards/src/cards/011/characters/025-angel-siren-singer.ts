@@ -18,7 +18,7 @@ export const angelSirenSinger: CharacterCard = {
       imageUrl: "",
     },
   ],
-  reprints: ["set11-025"],
+  reprints: ["set11-d23-010", "set11-025"],
   cardType: "character",
   name: "Angel",
   version: "Siren Singer",

@@ -32,7 +32,7 @@ export const eb02Nami017: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Straw Hat Crew East Blue"],
+  traits: ["East Blue", "Straw Hat Crew"],
   attribute: "wisdom",
   effect:
     '[On Play] Look at 5 cards from the top of your deck; reveal up to 1 "Straw Hat Crew" type card other than [Nami] and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
@@ -60,7 +60,7 @@ export const eb02Nami017: CharacterCard = {
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

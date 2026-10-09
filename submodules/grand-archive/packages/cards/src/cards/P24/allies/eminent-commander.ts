@@ -61,7 +61,7 @@ export const eminentCommander: GrandArchiveCard<GrandArchiveAbilityDefinition, "
                   oneOf: ["CHAMPION"],
                 },
                 combatDamage: true,
-                eventAmountMinimum: 3,
+                totalAmountMinimum: 3,
                 minimum: 1,
               },
               costKind: "reserve",

@@ -30,10 +30,10 @@ export const op01MonkeyDLuffy003: LeaderCard = {
   setId: "OP01",
   power: 5000,
   life: 4,
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   attribute: "strike",
   effect:
-    '[Activate:Main] [Once Per Turn] (4) (You may rest the specified number of DON!! cards in your cost area): Set up to 1 of your "Supernova" or "Straw Hat Crew" type Character cards with a cost of 5 or less as active. It gains +1000 power during this turn.  This card has been officially errata\'d.',
+    '[Activate:Main] [Once Per Turn] (4) (You may rest the specified number of DON!! cards in your cost area): Set up to 1 of your "Supernovas" or "Straw Hat Crew" type Character cards with a cost of 5 or less as active. It gains +1000 power during this turn.  This card has been officially errata\'d.',
   effects: {
     effects: [
       {
@@ -60,13 +60,13 @@ export const op01MonkeyDLuffy003: LeaderCard = {
                   filters: [
                     {
                       filter: "trait",
-                      value: "Supernova",
-                      match: "includes",
+                      value: "Supernovas",
+                      match: "exact",
                     },
                     {
                       filter: "trait",
                       value: "Straw Hat Crew",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                 },

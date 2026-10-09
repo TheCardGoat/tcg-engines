@@ -49,6 +49,8 @@ describe("EB04-015 Jinbe", () => {
     expect(cost?.kind).toBe("payCost");
     if (cost?.kind !== "payCost") throw new Error("Expected Jinbe's rest-card cost.");
     expect(cost.candidates.map((candidate) => candidate.ref.id)).toContain(costId);
+    // FAQ: the K.O. source is already in trash and cannot rest itself as payment.
+    expect(cost.candidates.map((candidate) => candidate.ref.id)).not.toContain(jinbeId);
     engine.resolveDecision("effectCostRestCards", { selectedIds: [costId] }, "south");
 
     const play = engine.pendingDecision("effectPlaySelection", "south").steps[0];

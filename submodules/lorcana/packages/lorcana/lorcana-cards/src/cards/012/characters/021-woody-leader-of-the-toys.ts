@@ -15,7 +15,7 @@ export const woodyLeaderOfTheToys: CharacterCard = {
       imageUrl: "",
     },
   ],
-  reprints: ["set12-021"],
+  reprints: ["set12-d23-009", "set12-021"],
   cardType: "character",
   name: "Woody",
   version: "Leader of the Toys",

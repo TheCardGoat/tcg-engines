@@ -1,3 +1,4 @@
+import { COMBAT_STATE_VERSION, restoreCombatState } from "../state/combat-state-version.ts";
 import type { MatchState } from "../types/match-state.ts";
 import type { PlayerId } from "../types/branded.ts";
 import { processCommand } from "../command/index.ts";
@@ -59,7 +60,7 @@ export class ReplayBuilder {
   build(): MatchReplayData {
     if (!this.initialState) throw new Error("Initial state not set");
     return {
-      version: "1.0.0",
+      version: "3.0.0",
       initialState: this.initialState,
       commands: this.commands,
       metadata: {
@@ -78,6 +79,8 @@ export class ReplayEngine {
   private currentStep = -1;
 
   constructor(data: MatchReplayData) {
+    if (data.version !== "3.0.0")
+      throw new Error(`Unsupported Cyberpunk replay version: ${data.version}`);
     this.data = data;
   }
 
@@ -92,7 +95,7 @@ export class ReplayEngine {
   jumpToStep(step: number): MatchState | undefined {
     if (step < 0 || step >= this.data.commands.length) return undefined;
 
-    let state = structuredClone(this.data.initialState);
+    let state = restoreCombatState(this.data.initialState, COMBAT_STATE_VERSION);
     for (let i = 0; i <= step; i++) {
       const cmd = this.data.commands[i]!;
       const result = processCommand(
@@ -104,6 +107,7 @@ export class ReplayEngine {
           timestamp: cmd.timestamp,
         },
         cmd.playerId as PlayerId,
+        "automatic",
       );
       if (!result.success) return undefined;
       state = result.state;

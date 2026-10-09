@@ -66,6 +66,53 @@ type GiveDonAction = Extract<Action, { action: "giveDon" }>;
 export function parseGiveDonAction(text: string): GiveDonAction | GiveDonAction[] | null {
   const cleaned = text.trim().replace(/\.+$/, "");
 
+  const explicitCostArea =
+    /^give up to (\d+) (rested )?DON!! cards? from (your opponent's|your) cost area to (.+)$/i.exec(
+      cleaned,
+    );
+  if (explicitCostArea) {
+    const target = parseGiveDonTarget(explicitCostArea[4]!);
+    if (target)
+      return {
+        action: "giveDon",
+        donorPlayer: explicitCostArea[3]!.includes("opponent") ? "opponent" : "self",
+        target,
+        count: { amount: Number(explicitCostArea[1]), upTo: true },
+        donState: explicitCostArea[2] ? "rested" : "any",
+      };
+  }
+  const ownerMatch =
+    /^give up to (\d+) (rested )?DON!! cards?(?: from its owner's cost area)? to its owner's Leader or 1 of their Characters$/i.exec(
+      cleaned,
+    );
+  if (ownerMatch) {
+    return {
+      action: "giveDon",
+      donorPlayer: "targetOwner",
+      target: { player: "both", zones: ["leader", "character"], count: { amount: 1 } },
+      count: { amount: Number(ownerMatch[1]), upTo: true },
+      donState: ownerMatch[2] ? "rested" : "any",
+    };
+  }
+
+  const eachBasePower =
+    /^give\s+up\s+to\s+(\d+)\s+of\s+your\s+Characters\s+with\s+(\d+)\s+base\s+power\s+up\s+to\s+(\d+)\s+rested\s+DON!!\s+cards?\s+each$/i.exec(
+      cleaned,
+    );
+  if (eachBasePower)
+    return {
+      action: "giveDon",
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: Number(eachBasePower[1]), upTo: true },
+        filters: [{ filter: "basePower", comparison: "eq", value: Number(eachBasePower[2]) }],
+      },
+      count: { amount: Number(eachBasePower[3]), upTo: true },
+      donState: "rested",
+      distribution: "each",
+    };
+
   // Pattern 4 (first to avoid greedy match in Pattern 1): "Give up to N rested DON!! card(s) to each of your [Trait] type Characters"
   const eachTraitMatch =
     /^give\s+up\s+to\s+(\d+)\s+rested\s+DON!!\s+cards?\s+to\s+each\s+of\s+your\s+(?:[[{"\u201c])([^\]}\u201d"]+)(?:[\]}\u201d"])\s+type\s+Characters?$/i.exec(
@@ -78,7 +125,7 @@ export function parseGiveDonAction(text: string): GiveDonAction | GiveDonAction[
         player: "self",
         zones: ["character"],
         count: { amount: "all", upTo: true },
-        filters: [{ filter: "trait", value: eachTraitMatch[2]!, match: "includes" }],
+        filters: [{ filter: "trait", value: eachTraitMatch[2]!, match: "exact" }],
       },
       count: { amount: parseInt(eachTraitMatch[1]!, 10), upTo: true },
       donState: "rested",
@@ -213,6 +260,7 @@ export function parseGiveDonAction(text: string): GiveDonAction | GiveDonAction[
       },
       count: { amount: parseInt(traitEachMatch[3]!, 10), upTo: true },
       donState: "rested",
+      distribution: "each",
     };
   }
 
@@ -270,7 +318,7 @@ export function parseGiveDonTarget(text: string): Target | null {
       // If the original text had "type" before "Leader", it's a trait filter;
       // otherwise it's a name filter
       if (/type\s+Leader$/i.test(text)) {
-        target.filters = [{ filter: "trait", value: val, match: "includes" }];
+        target.filters = [{ filter: "trait", value: val, match: "exact" }];
       } else {
         target.filters = [{ filter: "name", value: val }];
       }
@@ -313,7 +361,7 @@ export function parseGiveDonTarget(text: string): Target | null {
     const traitParts = traitZoneMatch[2]!.split(/\s+or\s+/i);
     const traitFilter = traitAlternativesFilter(
       traitParts.map((part) => part.replace(/^[[{]|[\]}]$/g, "").trim()),
-      "includes",
+      "ordinary",
     );
     const filters: TargetFilter[] = traitFilter ? [traitFilter] : [];
     const zonesText = traitZoneMatch[3]!;

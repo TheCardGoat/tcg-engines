@@ -1,67 +1,93 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-// Auto-verified: Captain John (OP17-044) cost=4 power=6000 counter=0
 describe("OP17-044 Captain John", () => {
-  test("[Activate: Main] resolves its activated ability", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: ["OP17-044", "EB01-005"], activeDon: 8 },
-      { character: ["OP13-013"], activeDon: 5 },
-    );
-    const cardId = engine.findCardInZone("south", "character", "OP17-044");
-
-    engine.activateEffect(cardId, "activateMain", "south");
-    engine.acceptLeadingOptional("south");
-
-    for (let i = 0; i < 3; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").prompts).toHaveLength(0);
+  test.each(["OP17-044", "OP01-051"])(
+    "two active attack constraints permit either named Character: %s",
+    (targetCard) => {
+      // OP01-051 has the same named attack constraint as the FAQ's P-067,
+      // plus a DON!! condition. P-067 is not currently in the catalog.
+      const e = OnePieceTestEngine.create(
+        {
+          leaderCardId: "OP17-039",
+          character: [
+            { cardId: "OP17-044", rested: true },
+            { cardId: "OP01-051", rested: true, attachedDon: 1 },
+            { cardId: "EB01-005", rested: true },
+          ],
+        },
+        {},
+        { activeSeat: "north" },
+      );
+      const ordinary = e.expectFailure({
+        type: "declareAttack",
+        seat: "north",
+        attackerId: e.leader("north"),
+        targetId: e.findCardInZone("south", "character", "EB01-005"),
+      });
+      expect(
+        OnePieceTestEngine.fromState(ordinary.state).getView("south").players.north.leader?.rested,
+      ).toBe(false);
+      const failed = e.expectFailure({
+        type: "declareAttack",
+        seat: "north",
+        attackerId: e.leader("north"),
+        targetId: e.leader("south"),
+      });
+      const resumed = OnePieceTestEngine.fromState(failed.state);
+      expect(resumed.getView("south").players.south.lifeCount).toBe(5);
+      resumed.declareAttack(
+        resumed.leader("north"),
+        resumed.findCardInZone("south", "character", targetCard),
+        "north",
+      );
+      expect(resumed.getView("south").players.north.leader?.rested).toBe(true);
+      expect(resumed.getView("south").players.south.lifeCount).toBe(5);
+      expect(resumed.getView("south").prompts).toHaveLength(0);
+    },
+  );
+  test("pays its rest cost, draws then discards, and prevents an attack on its Leader", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP17-039",
+      character: ["OP17-044"],
+      hand: ["EB01-005"],
+      deck: ["OP17-002", "OP17-006"],
+    });
+    const john = e.findCardInZone("south", "character", "OP17-044"),
+      doma = e.findCardInZone("south", "hand", "EB01-005");
+    e.activateEffect(john, "activateMain", "south");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    e.resolveDecision("effectTrashFromHandSelection", { selectedIds: [doma] }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["OP17-002"]);
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toEqual([doma]);
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === john)?.rested,
+    ).toBe(true);
+    e.endTurn("south");
+    const failed = e.expectFailure({
+      type: "declareAttack",
+      seat: "north",
+      attackerId: e.leader("north"),
+      targetId: e.leader("south"),
+    });
+    expect(
+      OnePieceTestEngine.fromState(failed.state).getView("south").players.south.lifeCount,
+    ).toBe(5);
   });
-
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-044", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
-    );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-044",
-    );
-    expect(engine.getView("south").prompts).toHaveLength(0);
+  test("declines optional rest cost with a card available to draw", () => {
+    const e = OnePieceTestEngine.create({
+      character: ["OP17-044"],
+      hand: ["EB01-005"],
+      deck: ["OP17-002"],
+    });
+    const john = e.findCardInZone("south", "character", "OP17-044");
+    e.activateEffect(john, "activateMain", "south");
+    e.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === john)?.rested,
+    ).toBe(false);
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["EB01-005"]);
+    expect(e.getView("south").players.south.deckCount).toBe(1);
+    expect(e.getView("south").players.south.trash).toHaveLength(0);
   });
 });

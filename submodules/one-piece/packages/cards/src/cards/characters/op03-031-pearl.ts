@@ -23,7 +23,7 @@ export const op03Pearl031: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Krieg Pirates East Blue"],
+  traits: ["East Blue", "Krieg Pirates"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

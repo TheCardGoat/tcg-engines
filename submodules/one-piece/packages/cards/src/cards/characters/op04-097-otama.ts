@@ -50,8 +50,8 @@ export const op04Otama097: CharacterCard = {
                 {
                   filter: "anyOf",
                   filters: [
-                    { filter: "trait", value: "Animal", match: "includes" },
-                    { filter: "trait", value: "SMILE", match: "includes" },
+                    { filter: "trait", value: "Animal", match: "exact" },
+                    { filter: "trait", value: "SMILE", match: "exact" },
                   ],
                 },
               ],

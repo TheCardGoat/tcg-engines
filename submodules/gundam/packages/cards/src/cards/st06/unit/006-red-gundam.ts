@@ -71,6 +71,7 @@ export const st06RedGundam006: UnitCard = {
   cost: 2,
   ap: 3,
   hp: 4,
+  linkCondition: "[Shuji Itō]",
   effect: "-",
   effects: [],
   keywordEffects: [],

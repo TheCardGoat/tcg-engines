@@ -22,7 +22,7 @@ export const op14eb04KouzukiSukiyaki014: CharacterCard = {
   setId: "EB04",
   cost: 3,
   power: 0,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "wisdom",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [Activate: Main] [Once Per Turn] Give up to 1 rested DON!! card to your {Land of Wano} type Leader.",
@@ -44,7 +44,7 @@ export const op14eb04KouzukiSukiyaki014: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

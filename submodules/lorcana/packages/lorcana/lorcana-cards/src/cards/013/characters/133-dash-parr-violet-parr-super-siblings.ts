@@ -1,8 +1,9 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { dashParrVioletParrSuperSiblingsI18n } from "./133-dash-parr-violet-parr-super-siblings.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { resist } from "../../../helpers/abilities/resist";
 import { comboShift } from "../../../helpers/abilities/shift";
-import { dashParrVioletParrSuperSiblingsI18n } from "./133-dash-parr-violet-parr-super-siblings.i18n";
 
 export const dashParrVioletParrSuperSiblings: CharacterCard = {
   id: "d3T",
@@ -32,6 +33,10 @@ export const dashParrVioletParrSuperSiblings: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_265cccda001b4d478baab353b45b23b6",
+    tcgPlayer: "704634",
+  },
   text: [
     {
       title: "Combo Shift 6 {I}",
@@ -40,7 +45,7 @@ export const dashParrVioletParrSuperSiblings: CharacterCard = {
       title: "Evasive, Resist +1",
     },
     {
-      title: "Incredible Tactics",
+      title: "INCREDIBLE TACTICS",
       description:
         "Whenever this character quests or challenges, draw a card for each card under them.",
     },

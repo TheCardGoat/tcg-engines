@@ -25,6 +25,10 @@ export const focusedSearch: ActionCard = {
   rarity: "common",
   cost: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_fb5a227df49048808d7de5cc6ff72455",
+    tcgPlayer: "704663",
+  },
   text: "Look at the top 4 cards of your deck. You may reveal a character card named Kevin or an item card and put it into your hand. Put the rest on the bottom of your deck in any order.",
   abilities: [
     {

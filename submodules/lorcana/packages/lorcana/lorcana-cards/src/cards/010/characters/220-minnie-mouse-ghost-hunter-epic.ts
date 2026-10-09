@@ -22,7 +22,7 @@ export const minnieMouseGhostHunterEpic: CharacterCard = {
   inkType: ["steel"],
   set: "010",
   cardNumber: 220,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 2,
   strength: 2,

@@ -31,6 +31,7 @@ export const poseyVampirePotato: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ab0dd349cb8546d38ae9a4bfc0afdb7a",
+    tcgPlayer: "704605",
   },
   text: [
     {

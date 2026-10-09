@@ -1,31 +1,34 @@
 import type { CardInteractionMode } from "@tcg/simulator-contract";
 import type { AnimationSpeed } from "@tcg/simulator-runtime/animation";
+import {
+  SIMULATOR_SOUND_PACKS,
+  type SimulatorSoundPackId,
+} from "@tcg/simulator-presentation/audio/sound-packs";
 
-export type { AnimationSpeed };
+export type { AnimationSpeed, SimulatorSoundPackId };
 
 export interface SimulatorSettings {
   soundVolume: number;
+  soundPack: SimulatorSoundPackId;
   cardInteractionMode: CardInteractionMode;
   animationSpeed: AnimationSpeed;
-  paymentSelectionMode: PaymentSelectionMode;
 }
 
-/** Shared preference. Games opt in when their engine exposes selectable costs. */
-export type PaymentSelectionMode = "automatic" | "choose";
-
 export const DEFAULT_SIMULATOR_SETTINGS: SimulatorSettings = {
-  soundVolume: 50,
+  soundVolume: 75,
+  soundPack: "original",
   cardInteractionMode: "detailed",
   animationSpeed: "normal",
-  paymentSelectionMode: "automatic",
 };
 
 export const SIMULATOR_SOUND_VOLUME_STORAGE_KEY = "matchmaking.player.soundVolume";
+export const SIMULATOR_SOUND_PACK_STORAGE_KEY = "matchmaking.player.soundPack";
+export const SIMULATOR_SOUND_PACK_SEEDED_KEY = "matchmaking.player.soundPackSeeded";
 export const SIMULATOR_CARD_INTERACTION_MODE_STORAGE_KEY = "matchmaking.player.cardInteractionMode";
 export const SIMULATOR_ANIMATION_SPEED_STORAGE_KEY = "matchmaking.player.animationSpeed";
-export const SIMULATOR_PAYMENT_SELECTION_MODE_STORAGE_KEY =
-  "matchmaking.player.paymentSelectionMode";
 export const LEGACY_CYBERPUNK_USER_CONFIG_STORAGE_KEY = "cyberpunk:userConfig";
+
+const SOUND_PACK_IDS: ReadonlySet<string> = new Set(SIMULATOR_SOUND_PACKS.map((pack) => pack.id));
 
 export function clampSoundVolume(
   value: unknown,
@@ -44,10 +47,19 @@ export function normalizeSimulatorSettings(raw: unknown): SimulatorSettings {
   const candidate = raw as Partial<SimulatorSettings>;
   return {
     soundVolume: clampSoundVolume(candidate.soundVolume),
+    soundPack: normalizeSoundPack(candidate.soundPack),
     cardInteractionMode: normalizeCardInteractionMode(candidate.cardInteractionMode),
     animationSpeed: normalizeAnimationSpeed(candidate.animationSpeed),
-    paymentSelectionMode: normalizePaymentSelectionMode(candidate.paymentSelectionMode),
   };
+}
+
+export function normalizeSoundPack(
+  value: unknown,
+  fallback: SimulatorSoundPackId = DEFAULT_SIMULATOR_SETTINGS.soundPack,
+): SimulatorSoundPackId {
+  return typeof value === "string" && SOUND_PACK_IDS.has(value)
+    ? (value as SimulatorSoundPackId)
+    : fallback;
 }
 
 export function normalizeCardInteractionMode(
@@ -66,46 +78,39 @@ export function normalizeAnimationSpeed(
     : fallback;
 }
 
-export function normalizePaymentSelectionMode(
-  value: unknown,
-  fallback: PaymentSelectionMode = DEFAULT_SIMULATOR_SETTINGS.paymentSelectionMode,
-): PaymentSelectionMode {
-  return value === "automatic" || value === "choose" ? value : fallback;
-}
-
 export function readLocalSimulatorSettings(storage: Storage | null | undefined): SimulatorSettings {
   if (!storage) {
     return DEFAULT_SIMULATOR_SETTINGS;
   }
 
   const stored = storage.getItem(SIMULATOR_SOUND_VOLUME_STORAGE_KEY);
+  const storedSoundPack = storage.getItem(SIMULATOR_SOUND_PACK_STORAGE_KEY);
   const storedCardInteractionMode = storage.getItem(SIMULATOR_CARD_INTERACTION_MODE_STORAGE_KEY);
   const storedAnimationSpeed = storage.getItem(SIMULATOR_ANIMATION_SPEED_STORAGE_KEY);
-  const storedPaymentSelectionMode = storage.getItem(SIMULATOR_PAYMENT_SELECTION_MODE_STORAGE_KEY);
+  const soundPack = normalizeSoundPack(storedSoundPack);
   const cardInteractionMode = normalizeCardInteractionMode(storedCardInteractionMode);
   const animationSpeed = normalizeAnimationSpeed(storedAnimationSpeed);
-  const paymentSelectionMode = normalizePaymentSelectionMode(storedPaymentSelectionMode);
   if (stored !== null) {
     const parsed = Number(stored);
     return {
       soundVolume: clampSoundVolume(parsed),
+      soundPack,
       cardInteractionMode,
       animationSpeed,
-      paymentSelectionMode,
     };
   }
 
   const legacy = readLegacyCyberpunkSoundVolume(storage);
   if (legacy !== null) {
     storage.setItem(SIMULATOR_SOUND_VOLUME_STORAGE_KEY, String(legacy));
-    return { soundVolume: legacy, cardInteractionMode, animationSpeed, paymentSelectionMode };
+    return { soundVolume: legacy, soundPack, cardInteractionMode, animationSpeed };
   }
 
   return {
     ...DEFAULT_SIMULATOR_SETTINGS,
+    soundPack,
     cardInteractionMode,
     animationSpeed,
-    paymentSelectionMode,
   };
 }
 
@@ -117,9 +122,9 @@ export function writeLocalSimulatorSettings(
     return;
   }
   storage.setItem(SIMULATOR_SOUND_VOLUME_STORAGE_KEY, String(settings.soundVolume));
+  storage.setItem(SIMULATOR_SOUND_PACK_STORAGE_KEY, settings.soundPack);
   storage.setItem(SIMULATOR_CARD_INTERACTION_MODE_STORAGE_KEY, settings.cardInteractionMode);
   storage.setItem(SIMULATOR_ANIMATION_SPEED_STORAGE_KEY, settings.animationSpeed);
-  storage.setItem(SIMULATOR_PAYMENT_SELECTION_MODE_STORAGE_KEY, settings.paymentSelectionMode);
 }
 
 function readLegacyCyberpunkSoundVolume(storage: Storage): number | null {

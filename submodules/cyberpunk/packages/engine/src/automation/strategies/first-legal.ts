@@ -4,6 +4,8 @@ import { decisionFromMove } from "./move-args.ts";
 
 /** A move is actionable if its inputSpec can be satisfied (no empty candidate lists). */
 function isActionable(move: AvailableMove, ctx: DecisionContext): boolean {
+  // Seat preferences are controls for the human, not gameplay decisions.
+  if (move.moveId === "setCombatPriority") return false;
   if (move.moveId === "useBlocker" && ctx.view.attackState?.redirectedByBlocker) return false;
 
   switch (move.inputSpec.type) {

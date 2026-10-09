@@ -1,6 +1,10 @@
 import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
-import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
+import {
+  continueTriggerResolution,
+  enqueueCardSpentEventsSince,
+  enqueueEventTriggers,
+} from "../ability-executor.ts";
 import { defOf } from "../state/lookups.ts";
 import { computeEffectiveCost, consumeCostModifierUse } from "./compute-effective-cost.ts";
 import { availableEddies, canSpendSelectedEddies } from "./eddie-resources.ts";
@@ -33,7 +37,15 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
       });
     }
 
-    return player.zones.hand.length > 0;
+    return (
+      player.zones.hand.length > 0 ||
+      player.zones.legendArea.some((id) => {
+        const card = state.G.cardIndex[id];
+        return (
+          card && defOf(card).type === "legend" && !card.meta.faceDown && defOf(card).cost !== null
+        );
+      })
+    );
   },
 
   validate({ state, playerId, input }) {
@@ -59,7 +71,14 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
       };
     }
 
-    if (!player.zones.hand.includes(cardId as CardInstanceId)) {
+    const playsLegend =
+      card &&
+      card.zone === "legendArea" &&
+      defOf(card).type === "legend" &&
+      !card.meta.faceDown &&
+      defOf(card).cost !== null &&
+      player.zones.legendArea.includes(cardId as CardInstanceId);
+    if (!player.zones.hand.includes(cardId as CardInstanceId) && !playsLegend) {
       return { valid: false, error: "Card not in hand", errorCode: "CARD_NOT_IN_HAND" };
     }
 
@@ -138,6 +157,18 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
       "playCard",
       paymentSourceIds === undefined ? {} : { sourceIds: paymentSourceIds as CardInstanceId[] },
     );
+    // CR 4.10 and 11.4.1: payment happens before a Gear is equipped. Match
+    // spend triggers now, while the played Gear's bottom textbox is not yet
+    // inherited by its future host, but resolve them after the play completes.
+    const triggersBeforePayment = new Set(state.G.turnMetadata.triggerQueue.map((t) => t.id));
+    enqueueCardSpentEventsSince(
+      eventsBeforePayment,
+      state as import("../types/match-state.ts").MatchState,
+      operations,
+    );
+    const paymentTriggers = state.G.turnMetadata.triggerQueue.filter(
+      (t) => !triggersBeforePayment.has(t.id),
+    );
     consumeCostModifierUse(
       state as import("../types/match-state.ts").MatchState,
       cardId as CardInstanceId,
@@ -149,7 +180,7 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
     } else if (def.type === "gear" && attachToId) {
       operations.zone.moveCard(cardId as CardInstanceId, "field", playerId);
       operations.card.attachGear(cardId as CardInstanceId, attachToId as CardInstanceId);
-    } else if (def.type === "unit") {
+    } else if (def.type === "unit" || def.type === "legend") {
       operations.zone.moveCard(cardId as CardInstanceId, "field", playerId);
       operations.card.moveAttachedGear(cardId as CardInstanceId, "field");
       operations.card.setHasLag(cardId as CardInstanceId, true);
@@ -178,16 +209,16 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
       playerId,
     });
 
-    processCardSpentEventsSince(
-      eventsBeforePayment,
-      state as import("../types/match-state.ts").MatchState,
-      operations,
-    );
-
-    processEventTriggers(
+    const triggersBeforePlay = new Set(state.G.turnMetadata.triggerQueue.map((t) => t.id));
+    enqueueEventTriggers(
       cardPlayedEvent,
       state as import("../types/match-state.ts").MatchState,
       operations,
     );
+    const playTriggerIds = state.G.turnMetadata.triggerQueue
+      .filter((t) => !triggersBeforePlay.has(t.id))
+      .map((t) => t.id);
+    for (const trigger of paymentTriggers) trigger.waitForTriggerIds = playTriggerIds;
+    continueTriggerResolution(state as import("../types/match-state.ts").MatchState, operations);
   },
 };

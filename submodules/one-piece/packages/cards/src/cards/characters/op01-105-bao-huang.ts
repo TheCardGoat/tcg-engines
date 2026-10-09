@@ -23,7 +23,7 @@ export const op01BaoHuang105: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   attribute: "wisdom",
   effect: "[On Play] Choose 2 cards from your opponent's hand; your opponent reveals those cards.",
   effects: {

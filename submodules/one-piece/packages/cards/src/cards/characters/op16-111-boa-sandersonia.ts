@@ -29,7 +29,24 @@ export const op16BoaSandersonia111: CharacterCard = {
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
   effects: {
     keywords: ["blocker"],
-    effects: [],
+    effects: [
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "lifeCount",
+            player: "self",
+            comparison: "lte",
+            value: 2,
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+      },
+    ],
   },
   i18n: op16BoaSandersonia111I18n,
 };

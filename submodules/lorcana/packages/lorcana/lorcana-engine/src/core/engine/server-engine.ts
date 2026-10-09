@@ -44,6 +44,7 @@ import type {
   EngineMoveHistoryEntry,
 } from "./contracts";
 import { getLogger } from "@logtape/logtape";
+import { resolveTurnOwnerId } from "../runtime/turn-owner";
 
 const logger = getLogger(["core-engine", "server-engine"]);
 
@@ -112,6 +113,8 @@ export class ServerEngine implements GameEngine {
   private postProcessClientCommand?: ServerEngineConfig["postProcessClientCommand"];
   private shouldPostProcessClientCommand?: ServerEngineConfig["shouldPostProcessClientCommand"];
   private undoStack: UndoStackEntry[] = [];
+  private turnStartCheckpoint: UndoStackEntry | null = null;
+  private turnStartStateID: number | null = null;
   private static readonly UNDO_STACK_MAX_ENTRIES = 25;
 
   constructor(config: ServerEngineConfig) {
@@ -157,6 +160,7 @@ export class ServerEngine implements GameEngine {
       state: this.runtime.getState(),
       timestamp: Date.now(),
     });
+    this.turnStartStateID = this.runtime.getCurrentStateID();
   }
 
   private resolveAuthoritativeActorPlayerId(): string {
@@ -328,6 +332,19 @@ export class ServerEngine implements GameEngine {
     return topEntry !== undefined && topEntry.playerId === playerId;
   }
 
+  canUndoToTurnStart(playerId: string): boolean {
+    const checkpoint = this.turnStartCheckpoint;
+    const state = this.runtime.getState();
+    return (
+      checkpoint !== null &&
+      checkpoint.playerId === playerId &&
+      resolveTurnOwnerId(state.ctx, state.G) === playerId &&
+      checkpoint.state.ctx.status.turn === state.ctx.status.turn &&
+      checkpoint.stateID === this.turnStartStateID &&
+      this.undoStack.some((entry) => entry.playerId === playerId)
+    );
+  }
+
   undo(playerId: string, prevStateID?: number, commandID?: string): boolean {
     if (typeof prevStateID === "number" && prevStateID !== this.runtime.getCurrentStateID()) {
       this.sendError(
@@ -344,14 +361,44 @@ export class ServerEngine implements GameEngine {
       return false;
     }
 
-    const checkpoint = this.undoStack.at(-1)!;
+    return this.restoreUndoCheckpoint(playerId, this.undoStack.at(-1)!, "undo", commandID);
+  }
+
+  undoToTurnStart(playerId: string, prevStateID?: number, commandID?: string): boolean {
+    if (typeof prevStateID === "number" && prevStateID !== this.runtime.getCurrentStateID()) {
+      this.sendError(
+        playerId,
+        "STALE_STATE",
+        `Expected state ${this.runtime.getCurrentStateID()}`,
+        true,
+      );
+      return false;
+    }
+    if (!this.canUndoToTurnStart(playerId)) {
+      this.sendError(playerId, "INVALID_MOVE", "Cannot undo: no clean turn start available", false);
+      return false;
+    }
+    return this.restoreUndoCheckpoint(
+      playerId,
+      this.turnStartCheckpoint!,
+      "undoToTurnStart",
+      commandID,
+    );
+  }
+
+  private restoreUndoCheckpoint(
+    playerId: string,
+    checkpoint: UndoStackEntry,
+    move: "undo" | "undoToTurnStart",
+    commandID?: string,
+  ): boolean {
     const previousState = this.runtime.getState();
     const previousStateID = this.runtime.getCurrentStateID();
     const timestamp = Date.now();
     const nextStateID = previousStateID + 1;
     const undoCommand: CommandEnvelope = {
-      commandID: commandID ?? `undo-${playerId}-${timestamp}`,
-      move: "undo",
+      commandID: commandID ?? `${move}-${playerId}-${timestamp}`,
+      move,
     };
 
     this.runtime.restoreState(checkpoint.state, checkpoint.runtimeSnapshot, {
@@ -365,7 +412,11 @@ export class ServerEngine implements GameEngine {
     );
     const restoredState = this.runtime.getState();
 
-    this.undoStack = this.undoStack.slice(0, -1);
+    this.undoStack = move === "undo" ? this.undoStack.slice(0, -1) : [];
+    if (move === "undoToTurnStart" || checkpoint.stateID === this.turnStartStateID) {
+      this.turnStartCheckpoint = null;
+      this.turnStartStateID = nextStateID;
+    }
     this.stateHistory.push({
       stateID: nextStateID,
       state: restoredState,
@@ -376,7 +427,7 @@ export class ServerEngine implements GameEngine {
       undoneMoveId: checkpoint.undoneMoveId,
     });
     this.moveHistory.push({
-      moveId: "undo",
+      moveId: move,
       playerId,
       role: "player",
       timestamp,
@@ -609,6 +660,14 @@ export class ServerEngine implements GameEngine {
     return [...this.undoStack];
   }
 
+  getTurnStartCheckpointSnapshot(): UndoStackEntry | null {
+    return this.turnStartCheckpoint;
+  }
+
+  getTurnStartStateID(): number | null {
+    return this.turnStartStateID;
+  }
+
   restoreUndoStackSnapshot(stack: UndoStackEntry[] | null | undefined): void {
     this.undoStack = stack ? [...stack] : [];
   }
@@ -616,6 +675,8 @@ export class ServerEngine implements GameEngine {
   restoreAuthoritativeSnapshot(snapshot: {
     state: MatchState;
     undoStack?: UndoStackEntry[];
+    turnStartCheckpoint?: UndoStackEntry | null;
+    turnStartStateID?: number | null;
   }): void {
     this.runtime.loadState(snapshot.state);
     this.stateHistory = [
@@ -627,6 +688,8 @@ export class ServerEngine implements GameEngine {
     ];
     this.moveHistory = [];
     this.undoStack = snapshot.undoStack ? [...snapshot.undoStack] : [];
+    this.turnStartCheckpoint = snapshot.turnStartCheckpoint ?? null;
+    this.turnStartStateID = snapshot.turnStartStateID ?? null;
 
     for (const connectedPlayerId of this.transports.keys()) {
       this.sendFullSync(connectedPlayerId);
@@ -741,6 +804,22 @@ export class ServerEngine implements GameEngine {
       runtimeSnapshotBeforeMove,
       undoable,
     });
+    if (newState.ctx.status.turn !== previousState.ctx.status.turn) {
+      this.turnStartStateID = newStateID;
+      this.turnStartCheckpoint = null;
+    } else if (
+      actorRole !== "player" ||
+      !undoable ||
+      (this.turnStartCheckpoint !== null && this.turnStartCheckpoint.playerId !== playerId)
+    ) {
+      this.turnStartStateID = null;
+      this.turnStartCheckpoint = null;
+    } else if (
+      previousStateID === this.turnStartStateID &&
+      resolveTurnOwnerId(previousState.ctx, previousState.G) === playerId
+    ) {
+      this.turnStartCheckpoint = this.undoStack.at(-1) ?? null;
+    }
   }
 
   private updateUndoStackAfterMove(args: {

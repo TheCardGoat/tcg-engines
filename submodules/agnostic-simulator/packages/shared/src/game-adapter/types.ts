@@ -118,23 +118,52 @@ export function parseJsonValue(value: unknown): JsonValue {
  */
 export interface GamePregameAdapter {
   readonly kind: string;
-  /** Duration of the one preparation timer, in milliseconds. */
+  /** Selection phase duration, in milliseconds. Choice uses its own deadline. */
   readonly deadlineMs: number;
+  /** Optional format-specific preparation window. */
+  deadlineMsForFormat?(matchFormat: string): number;
   readonly defaultFormatId: string;
   /** Omitted: choose turn order before selection. Other games randomize game one and allow later sideboarding before the loser declares order. */
   readonly turnOrderPolicy?: "random-then-loser-choice";
+  /** Require both private selections to be locked before the chooser may decide. */
+  readonly chooseAfterSelection?: boolean;
+  /** A distinct server deadline for the first-player decision. */
+  readonly firstPlayerChoiceMs?: number;
+  /** Fixed registered selections need no user confirmation (for example BO3 Game 1). */
+  readonly selectionMode?: (pool: JsonValue) => "fixed" | "editable";
+  /**
+   * When present, match creation enters this pregame only if the predicate
+   * returns true. Adapters that omit it always prepare (the previous contract).
+   */
+  appliesTo?(input: {
+    readonly format: string;
+    readonly queueFormatId?: string;
+    readonly matchType?: string;
+    readonly decks: readonly PregameDeckInput[];
+  }): boolean;
   /** Advance game-owned registration state while retaining the immutable match pool. */
   nextGamePool?(pool: JsonValue, previousSelection: JsonValue): JsonValue;
   /** Build the private, persisted pool. Runtime definitions must not be included. */
-  createPool(input: PregameDeckInput): JsonValue;
+  createPool(input: PregameDeckInput, context?: { readonly matchFormat: string }): JsonValue;
   /** Validate and normalize a pool loaded from an untrusted persistence boundary. */
   parsePool(value: unknown): JsonValue;
   /** Validate and normalize a player selection before it is persisted. */
   parseSelection(value: unknown): JsonValue;
   /** Build the private JSON response shown only to the owning player. */
-  projectPoolForPlayer(pool: JsonValue): JsonValue;
+  projectPoolForPlayer(pool: JsonValue, viewer?: { readonly locked?: boolean }): JsonValue;
+  /** Public facts the rival is allowed to see. Omit private boards. */
+  projectPublicSeat?(pool: JsonValue): JsonValue;
+  /** Owner-facing selection. A locked viewer must not receive hidden boards. */
+  projectSelectionForPlayer?(
+    selection: JsonValue,
+    viewer?: { readonly locked?: boolean },
+  ): JsonValue;
   createDefaultSelection(pool: JsonValue): JsonValue;
-  validateSelection(pool: JsonValue, selection: JsonValue): PregameValidationResult;
+  validateSelection(
+    pool: JsonValue,
+    selection: JsonValue,
+    viewer?: { readonly locked?: boolean },
+  ): PregameValidationResult;
   reconcileSelection(
     pool: JsonValue,
     selection: JsonValue,
@@ -224,6 +253,8 @@ export interface DeckFormatDefinition<
    * changes require a new id so persisted documents are never reinterpreted.
    */
   readonly label: string;
+  /** Formats with private registrations cannot be published. */
+  readonly visibility?: "private";
   readonly sections: readonly DeckFormatSectionDefinition<TSection>[];
   readonly declarationFields?: readonly DeckFormatExtensionFieldDefinition<TSection>[];
   readonly appearanceFields?: readonly DeckFormatExtensionFieldDefinition<TSection>[];
@@ -410,6 +441,13 @@ export interface GameRuntimeFingerprint {
 export interface DeckValidationContext {
   readonly declarations?: DeckDocumentJsonObject;
   readonly appearance?: DeckDocumentJsonObject;
+  /** Format id stored on the deck document, when the caller has one. */
+  readonly documentFormatId?: string;
+  /**
+   * Opened quantity by canonical card id. Limited formats use this to reject
+   * cards the player did not open. Constructed validation ignores it.
+   */
+  readonly cardPool?: Readonly<Record<string, number>>;
 }
 
 /**
@@ -437,6 +475,11 @@ export interface GamePresentationAdapter {
 
 export interface GameAdapter {
   presentation?: GamePresentationAdapter;
+  /** Schedule each bot decision after the preceding committed animation. */
+  readonly botTurnScheduling?: {
+    readonly kind: "continuation";
+    readonly minimumVisibleMs: number;
+  };
   /** Game-owned practice fixtures, already resolved to canonical deck entries. */
   readonly practiceDecks?: {
     readonly ids: readonly string[];
@@ -496,10 +539,36 @@ export interface GameAdapter {
   readonly matchmakingIdentity?: MatchmakingIdentityAdapter;
   /** Optional server-authoritative start-of-game selection lifecycle. */
   readonly pregame?: GamePregameAdapter;
+  /**
+   * Who receives the first-player choice in later games of a series.
+   * Omission retains the existing loser-choice policy. A game can opt into
+   * a fresh random chooser for every game without changing the play service.
+   */
+  readonly seriesFirstPlayerPolicy?: "loser-chooses" | "random-each-game";
   /** Optional versioned import/export bridge for builders and practice links. */
   readonly deckInterchange?: DeckInterchangeAdapter;
   /** Game-owned projection into the shared metadata analytics contract. */
   readonly metadata?: GameMetadataAdapter;
+  /**
+   * Rewrite a stored client-authority blob into a server engine snapshot at the
+   * Redis version. Games that were always server-authoritative omit this.
+   */
+  adoptClientAuthoritySnapshot?(input: {
+    serializedState: string | null;
+    storedVersion: number;
+    player1Id: string;
+    player2Id: string;
+    seed: string;
+    cardsMaps?: CardsMaps;
+  }): Promise<import("../game-engine/types.js").EngineSnapshot | null>;
+
+  /** Game-owned consent rules for shared match proposals. */
+  readonly proposalPolicy?: {
+    consentFor(
+      action: "undo",
+      context: { matchType: import("@tcg/game-page-contract").MatchType },
+    ): "automatic" | "opponent";
+  };
 
   // ── Server engine lifecycle (game-server only) ─────────────────────
   //

@@ -30,7 +30,7 @@ export const op11Helmeppo092: CharacterCard = {
   setId: "OP11",
   cost: 6,
   power: 7000,
-  traits: ["Navy SWORD"],
+  traits: ["Navy", "SWORD"],
   attribute: "slash",
   effect:
     '[On Play] You may trash 1 card from your hand: Draw 1 card and play up to 1 "SWORD" type Character card with a cost of 8 or less other than [Helmeppo] from your trash. Then, place the 1 Character played by this effect at the bottom of the owner\'s deck at the end of this turn.',
@@ -73,7 +73,7 @@ export const op11Helmeppo092: CharacterCard = {
               {
                 filter: "trait",
                 value: "SWORD",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

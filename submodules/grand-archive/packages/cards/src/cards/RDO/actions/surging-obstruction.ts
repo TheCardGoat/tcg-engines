@@ -53,6 +53,10 @@ export const surgingObstruction: GrandArchiveCard<GrandArchiveAbilityDefinition,
                       },
                       {
                         kind: "subtype",
+                        oneOf: ["CHESSMAN"],
+                      },
+                      {
+                        kind: "subtype",
                         oneOf: ["BISHOP"],
                       },
                     ],

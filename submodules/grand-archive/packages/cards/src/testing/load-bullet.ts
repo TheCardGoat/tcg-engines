@@ -23,6 +23,7 @@ export function proveLoadBullet({
         champion,
         zones: {
           field: [card, card, seekersRifle, magebaneLash],
+          graveyard: [seekersRifle],
           hand: Array.from({ length: reserveCost * 2 }, () => woodlandSquirrels),
         },
       },
@@ -91,14 +92,18 @@ export function proveLoadBullet({
     );
     expect(game.state.objects[bullet.objectId]?.zone).toBe("intent");
   });
-  for (const invalid of ["non-gun", "opponent-gun"] as const) {
+  for (const invalid of ["non-gun", "opponent-gun", "graveyard-gun", "non-weapon"] as const) {
     it(`rejects ${invalid} before paying any costs`, () => {
       const game = setup();
       const player = game.player("player-one");
       const target =
-        invalid === "non-gun"
-          ? player.card(magebaneLash, { zone: "field" })
-          : game.player("player-two").card(seekersRifle, { zone: "field" });
+        invalid === "graveyard-gun"
+          ? player.card(seekersRifle, { zone: "graveyard" })
+          : invalid === "non-weapon"
+            ? player.cards(card, { zone: "field" })[0]!
+            : invalid === "non-gun"
+              ? player.card(magebaneLash, { zone: "field" })
+              : game.player("player-two").card(seekersRifle, { zone: "field" });
       const before = game.state;
       expect(() =>
         player.activateAbility(player.cards(card, { zone: "field" })[0]!, abilityId, {

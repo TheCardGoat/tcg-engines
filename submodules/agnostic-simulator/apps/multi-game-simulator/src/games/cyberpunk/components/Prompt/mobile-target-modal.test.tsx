@@ -36,6 +36,35 @@ describe("mobile target prompt", () => {
 
       await playMobileHandCard(view.container, "Mox Inciters");
       await expectSpatialTargetPrompt(view.container, "Mox Inciters");
+
+      fireEvent.click(
+        requiredElement<HTMLButtonElement>(
+          view.container,
+          '[data-testid="prompt-target-modal-open"]',
+        ),
+      );
+      const sheet = await waitForTargetSheet("Choose target");
+      fireEvent.click(
+        requiredElement<HTMLButtonElement>(sheet, '[data-testid="choice-modal-minimize"]'),
+      );
+      await waitFor(() => {
+        expectEqual(
+          "Minimized target drawer is hidden",
+          getComputedStyle(sheet.parentElement!).display,
+          "none",
+        );
+        requiredElement<HTMLButtonElement>(view.container, '[data-testid="choice-modal-restore"]');
+      });
+      fireEvent.click(
+        requiredElement<HTMLButtonElement>(view.container, '[data-testid="choice-modal-restore"]'),
+      );
+      await waitFor(() =>
+        expectEqual(
+          "Restored target drawer is visible",
+          getComputedStyle(sheet.parentElement!).display !== "none",
+          true,
+        ),
+      );
     } finally {
       view.unmount();
     }
@@ -132,8 +161,56 @@ describe("mobile target prompt", () => {
 
       await playMobileHandCard(view.container, "Lizzy Wizzy: Delicate Weapon");
 
-      const sheet = await waitForTargetSheet("Lizzy Wizzy");
+      const sheet = await waitForTargetSheet("Choose target");
       expectEqual("Lizzy target drawer surface", sheet.getAttribute("data-surface"), "mobile");
+      const header = requiredElement<HTMLElement>(sheet, '[data-testid="choice-modal-header"]');
+      const requirement = requiredElement<HTMLElement>(
+        header,
+        '[data-testid="choice-modal-requirement"]',
+      );
+      expectEqual(
+        "Lizzy header names its source",
+        header.textContent?.includes("Lizzy Wizzy"),
+        true,
+      );
+      expectEqual(
+        "Lizzy optional icon explains the choice",
+        requirement.getAttribute("aria-label"),
+        "Optional effect — you may choose no target.",
+      );
+      expectEqual("Lizzy icon has no native tooltip", requirement.hasAttribute("title"), false);
+      expectEqual(
+        "Lizzy instruction omits repeated status",
+        sheet.textContent?.includes("Optional ·"),
+        false,
+      );
+      const printedText = requiredElement<HTMLElement>(
+        sheet,
+        '[data-testid="target-modal-source-rules"]',
+      );
+      expectEqual(
+        "Lizzy printed text keeps its effect",
+        printedText.textContent?.includes("You may play a Program"),
+        true,
+      );
+      expectEqual(
+        "Lizzy printed text replaces raw markers",
+        printedText.textContent?.includes("{Play}"),
+        false,
+      );
+      expectEqual(
+        "Lizzy printed text renders Play icon",
+        printedText.querySelector('img[alt="PLAY"]')?.getAttribute("src")?.endsWith("/play.svg"),
+        true,
+      );
+      expectEqual(
+        "Lizzy printed text renders Blocker icon",
+        printedText
+          .querySelector('img[alt="BLOCKER"]')
+          ?.getAttribute("src")
+          ?.endsWith("/blocker.svg"),
+        true,
+      );
       expectEqual(
         "Lizzy target drawer includes hand group",
         Array.from(
@@ -152,6 +229,81 @@ describe("mobile target prompt", () => {
         "Lizzy target drawer exposes Program choices",
         document.body.querySelectorAll('[data-testid="target-modal-card"]').length,
         2,
+      );
+
+      const firstChoice = requiredElement<HTMLButtonElement>(
+        sheet,
+        '[data-testid="target-modal-card"]',
+      );
+      const selectedCardId = firstChoice.dataset.cardId;
+      if (!selectedCardId) {
+        throw new Error("Missing card id on the first Lizzy target choice.");
+      }
+      const inspectButton = requiredElement<HTMLButtonElement>(
+        firstChoice.parentElement ?? sheet,
+        '[data-testid="choice-card-inspect"]',
+      );
+      fireEvent.click(inspectButton);
+      requiredElement<HTMLElement>(document.body, '[data-testid="card-inspect-modal"]');
+      expectEqual(
+        "Inspecting a choice does not submit it",
+        Boolean(
+          document.body.querySelector(
+            `[data-testid="target-modal-card"][data-card-id="${selectedCardId}"]`,
+          ),
+        ),
+        true,
+      );
+
+      fireEvent.click(
+        requiredElement<HTMLButtonElement>(document.body, '[aria-label="Close inspect"]'),
+      );
+      fireEvent.click(requiredElement<HTMLImageElement>(firstChoice, "img"));
+      await waitFor(() => {
+        expectEqual(
+          "Tapping the card image submits the choice",
+          document.body.querySelector(
+            `[data-testid="target-modal-card"][data-card-id="${selectedCardId}"]`,
+          ),
+          null,
+        );
+        expectEqual(
+          "Selecting the card does not open inspect",
+          document.body.querySelector('[data-testid="card-inspect-modal"]'),
+          null,
+        );
+      });
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("names the resolving card above The Heist Gear choice", async () => {
+    ensureJsdomAnimationSupport();
+    installResizeObserverStub();
+
+    const view = renderCyberpunkSimulatorScenario({
+      scenarioId: "progTheHeistFreePlay",
+      layout: "mobile",
+    });
+    try {
+      const harness = new WindowCyberpunkHarnessClient();
+      await harness.waitForReady();
+      await waitFor(() =>
+        requiredElement<HTMLElement>(view.container, '[data-testid="mobile-cyberpunk-board"]'),
+      );
+
+      await playMobileHandCard(view.container, "The Heist");
+      const sheet = await waitForTargetSheet("Choose target");
+      expectEqual(
+        "The Heist choice identifies its source card",
+        sheet.textContent?.includes("The Heist"),
+        true,
+      );
+      expectEqual(
+        "The Heist choice explains the required selection",
+        sheet.textContent?.includes("Pick the Gear to play from trash."),
+        true,
       );
     } finally {
       view.unmount();
@@ -200,7 +352,6 @@ describe("mobile target prompt", () => {
       await harness.dispatchEngine(
         (engine, payload) => {
           engine.attackRival(payload.attackerId, { as: payload.rivalId });
-          engine.resolveAttack({ as: payload.rivalId });
           engine.useBlocker(payload.blockerId, { as: payload.playerId });
         },
         {
@@ -449,11 +600,15 @@ async function expectSpatialTargetPrompt(container: HTMLElement, sourceName: str
   });
 }
 
-async function waitForTargetSheet(sourceName: string) {
+async function waitForTargetSheet(accessibleName: string) {
   const sheet = await waitFor(() =>
     requiredElement<HTMLElement>(document.body, '[data-testid="choice-modal-sheet"]'),
   );
-  expectEqual(`${sourceName} target sheet is open`, sheet.textContent?.includes(sourceName), true);
+  expectEqual(
+    `${accessibleName} target sheet is open`,
+    sheet.closest('[role="dialog"]')?.getAttribute("aria-label"),
+    accessibleName,
+  );
   return sheet;
 }
 

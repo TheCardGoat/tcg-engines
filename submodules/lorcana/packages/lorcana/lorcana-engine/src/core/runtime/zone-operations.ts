@@ -119,6 +119,14 @@ export function createZoneOperations(
 
   function updateZoneSummary(zoneId: string) {
     const cards = getZoneCards(zoneId);
+    // Moves and shuffles change other cards' positions as well as the moved card.
+    // Keep the index used by projections and targeting aligned with the zone list.
+    for (const [index, cardId] of cards.entries()) {
+      const entry = zones.private.cardIndex[cardId];
+      if (entry) {
+        entry.index = index;
+      }
+    }
     const summary = zones.public.zoneSummaries[zoneId];
     if (summary) {
       summary.count = cards.length;

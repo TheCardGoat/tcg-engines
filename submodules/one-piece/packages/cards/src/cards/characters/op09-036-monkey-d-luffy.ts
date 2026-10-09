@@ -23,7 +23,7 @@ export const op09MonkeyDLuffy036: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Straw Hat Crew Supernovas ODYSSEY"],
+  traits: ["ODYSSEY", "Supernovas", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[On Play] If you have 2 or more rested Characters, rest up to 1 of your opponent's DON!! cards or Characters with a cost of 6 or less.",

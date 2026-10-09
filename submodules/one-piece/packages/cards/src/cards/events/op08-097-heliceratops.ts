@@ -32,7 +32,7 @@ export const op08Heliceratops097: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Animal Kingdom Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

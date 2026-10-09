@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-statuses"
+  relation: "current_index"
+---
+
 # Game Mechanics - Statuses
 
 Statuses, like Masteries, are special non-object player functions and are typically granted by various effects. Unlike Masteries, a player can have multiple Statuses at the same time, but can only have one instance of any given status.

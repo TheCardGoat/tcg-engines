@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/general-rules/general-rules-parts-of-a-card/parts-of-a-card-stats"
+  relation: "current_index"
+---
+
 # Parts of a Card - Stats
 
 #### Durability

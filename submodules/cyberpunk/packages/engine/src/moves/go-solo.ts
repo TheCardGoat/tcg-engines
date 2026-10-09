@@ -108,6 +108,16 @@ export const goSoloMove: MoveDefinition<GoSoloInput> = {
       cost,
     } as const;
     operations.event.emit(cardPlayedEvent);
+    // Log the play BEFORE its payment/card-played triggers: projection closes
+    // the combat context at the primary action, so trigger logs emitted ahead
+    // of it would stay grouped under the attack's steal step instead of the
+    // play. It is also the natural reading order.
+    operations.event.emit({
+      type: "actionLog",
+      messageKey: "move.playCard",
+      params: { cardName: def.displayName, cost },
+      playerId,
+    });
 
     processCardSpentEventsSince(
       eventsBeforePayment,
@@ -119,13 +129,6 @@ export const goSoloMove: MoveDefinition<GoSoloInput> = {
       state as import("../types/match-state.ts").MatchState,
       operations,
     );
-
-    operations.event.emit({
-      type: "actionLog",
-      messageKey: "move.playCard",
-      params: { cardName: def.displayName, cost },
-      playerId,
-    });
   },
 };
 

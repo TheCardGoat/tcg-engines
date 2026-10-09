@@ -15,11 +15,13 @@ import {
 
 import { CardPreviewProvider } from "../components/CardPreview/CardPreviewContext";
 import type { LiveMatchSidebarParticipant } from "../components/BoardRuntimeContext";
-import { AI_STRATEGIES, UserConfigProvider, getScenario } from "../engine";
+import { AI_STRATEGIES, DEFAULT_SCENARIO, UserConfigProvider, getScenario } from "../engine";
+import { FIRST_GAME_TUTORIAL_STORAGE_KEY } from "../components/FirstGameTutorial/storage";
 import { createLiveMatchViewerEngine } from "../engine/live/liveState";
 import { theme } from "../theme";
 import { BoardSharedPage } from "./BoardShared.page";
 import { CYBERPUNK_PAYMENT_DISCOVERY_STORAGE_KEY } from "../components/PaymentSelection/PaymentSelectionPlayerAction";
+import { MemoryRouter } from "react-router";
 
 vi.mock("../animation", async () => {
   const actual = await vi.importActual<typeof import("../animation")>("../animation");
@@ -29,6 +31,9 @@ vi.mock("../animation", async () => {
     SoundPlayer: () => null,
   };
 });
+
+// The V2 board is lazy-loaded for routed ?ui=v2 renders; WebGL is not under test here.
+vi.mock("../components/BoardV2/Scene", () => ({ default: () => null }));
 
 function renderBoard(children: ReactNode) {
   return render(
@@ -41,7 +46,16 @@ function renderBoard(children: ReactNode) {
   );
 }
 
-function renderHumanMatchSidebar(options: { opponentUserId?: string } = {}) {
+function renderHumanMatchSidebar(
+  options: {
+    opponentUserId?: string;
+    pendingRemoteActionId?: string;
+    format?: "best_of_1" | "best_of_3" | "best_of_5";
+    gameNumber?: number;
+    player1Score?: number;
+    player2Score?: number;
+  } = {},
+) {
   return renderBoard(
     <BoardSharedPage
       scenarioId="gameStart"
@@ -51,12 +65,15 @@ function renderHumanMatchSidebar(options: { opponentUserId?: string } = {}) {
         player: { status: "connected", connected: true },
         opponent: { status: "connected", connected: true },
       }}
+      pendingRemoteActionId={options.pendingRemoteActionId}
       liveMatchSidebar={{
         matchId: "match_1",
         gameId: "game_1",
+        format: options.format ?? "best_of_3",
+        gameNumber: options.gameNumber ?? 2,
         localPlayerId: "gp_self",
-        player1Score: 1,
-        player2Score: 0,
+        player1Score: options.player1Score ?? 1,
+        player2Score: options.player2Score ?? 0,
         participants: [
           {
             id: "gp_self",
@@ -91,12 +108,14 @@ function renderLiveMatchSidebar(
     localPlayerId?: string;
     opponentStrategy?: boolean;
     initialEngineBuilder?: () => CyberpunkTestEngine;
+    initialHumanSide?: "player" | "opponent";
   } = {},
 ) {
   return renderBoard(
     <BoardSharedPage
       scenarioId="gameStart"
       initialEngineBuilder={options.initialEngineBuilder}
+      initialHumanSide={options.initialHumanSide}
       initialAi={{
         player: null,
         opponent: options.opponentStrategy ? (AI_STRATEGIES[0]?.strategy ?? null) : null,
@@ -109,6 +128,8 @@ function renderLiveMatchSidebar(
       liveMatchSidebar={{
         matchId: "match_1",
         gameId: "game_1",
+        format: "best_of_1",
+        gameNumber: 1,
         localPlayerId: options.localPlayerId,
         participants,
       }}
@@ -129,6 +150,92 @@ function fetchJsonBody(call: { init?: RequestInit } | undefined): unknown {
 }
 
 describe("BoardSharedPage sidebar", () => {
+  test("offers the guided game only on opted-in practice boards and saves a skip", async () => {
+    renderBoard(
+      <BoardSharedPage
+        showFirstGameInvitation
+        scenarioId={DEFAULT_SCENARIO}
+        initialAi={{ player: null, opponent: null }}
+        initialAiMode="step"
+      />,
+    );
+
+    const guide = await screen.findByLabelText("Your first game");
+    expect(within(guide).getByRole("link", { name: "Try the guided game" })).toBeTruthy();
+    fireEvent.click(within(guide).getByRole("button", { name: "Skip guide" }));
+    expect(screen.queryByLabelText("Your first game")).toBeNull();
+    expect(window.localStorage.getItem(FIRST_GAME_TUTORIAL_STORAGE_KEY)).toBe("dismissed");
+  });
+
+  test("does not interrupt a new player's live board with a guide invitation", () => {
+    renderBoard(
+      <BoardSharedPage
+        scenarioId={DEFAULT_SCENARIO}
+        initialAi={{ player: null, opponent: null }}
+        initialAiMode="step"
+      />,
+    );
+
+    expect(screen.queryByLabelText("Your first game")).toBeNull();
+    expect(window.localStorage.getItem(FIRST_GAME_TUTORIAL_STORAGE_KEY)).toBeNull();
+  });
+
+  test("still invites routed V1 practice boards to the guided game", async () => {
+    renderBoard(
+      <MemoryRouter initialEntries={["/cyberpunk/simulator/tests/demo"]}>
+        <BoardSharedPage
+          showFirstGameInvitation
+          scenarioId={DEFAULT_SCENARIO}
+          initialAi={{ player: null, opponent: null }}
+          initialAiMode="step"
+        />
+      </MemoryRouter>,
+    );
+
+    const guide = await screen.findByLabelText("Your first game");
+    expect(
+      within(guide).getByRole("link", { name: "Try the guided game" }).getAttribute("href"),
+    ).toBe("/cyberpunk/simulator/tutorial");
+  });
+
+  test("invites V2 boards to the guided game for their board version", async () => {
+    renderBoard(
+      <MemoryRouter initialEntries={["/cyberpunk/simulator/tests/demo?ui=v2"]}>
+        <BoardSharedPage
+          showFirstGameInvitation
+          scenarioId={DEFAULT_SCENARIO}
+          initialAi={{ player: null, opponent: null }}
+          initialAiMode="step"
+        />
+      </MemoryRouter>,
+    );
+
+    await screen.findByTestId("cyberpunk-board-v2");
+    const guide = await screen.findByLabelText("Your first game");
+    expect(
+      within(guide).getByRole("link", { name: "Try the guided game" }).getAttribute("href"),
+    ).toBe("/cyberpunk/simulator/tutorial?ui=v2");
+  });
+
+  test("invites V2 boards even when the V1 guide is already seen", async () => {
+    window.localStorage.setItem(FIRST_GAME_TUTORIAL_STORAGE_KEY, "completed");
+    renderBoard(
+      <MemoryRouter initialEntries={["/cyberpunk/simulator/tests/demo?ui=v2"]}>
+        <BoardSharedPage
+          showFirstGameInvitation
+          scenarioId={DEFAULT_SCENARIO}
+          initialAi={{ player: null, opponent: null }}
+          initialAiMode="step"
+        />
+      </MemoryRouter>,
+    );
+
+    await screen.findByTestId("cyberpunk-board-v2");
+    const guide = await screen.findByLabelText("Your first game");
+    expect(
+      within(guide).getByRole("link", { name: "Try the guided game" }).getAttribute("href"),
+    ).toBe("/cyberpunk/simulator/tutorial?ui=v2");
+  });
   beforeEach(() => {
     window.localStorage.clear();
     vi.stubGlobal(
@@ -164,10 +271,28 @@ describe("BoardSharedPage sidebar", () => {
 
     expect(screen.getByTestId("cyberpunk-human-match-sidebar")).toBeTruthy();
     expect(screen.queryByTestId("ai-control-panel")).toBeNull();
+    const selfPanel = within(screen.getByTestId("human-sidebar-self"));
+    expect(selfPanel.getByLabelText("Wazar Testing, Supporter")).toBeTruthy();
+    expect(selfPanel.queryByText("Priority")).toBeNull();
+    expect(selfPanel.queryByText("Connected")).toBeNull();
+    expect(selfPanel.queryByText("Score")).toBeNull();
+    expect(
+      within(screen.getByTitle("Match score"))
+        .getAllByRole("definition")
+        .map((value) => value.textContent),
+    ).toEqual(["1", "0"]);
+
     expect(screen.getByTestId("human-sidebar-opponent").textContent).toContain("MrGMBH");
     expect(screen.getByTestId("human-sidebar-self").textContent).toContain("Wazar Testing");
     expect(screen.getByTestId("human-sidebar-opponent").textContent).toContain("1510 MMR");
     expect(screen.getByTestId("human-sidebar-self").textContent).toContain("1425 MMR");
+    expect(screen.getByTestId("human-sidebar-opponent").textContent).not.toContain("Champion");
+    expect(screen.getByTestId("human-sidebar-self").textContent).not.toContain("Supporter");
+    expect(
+      within(screen.getByTestId("human-sidebar-opponent")).getByLabelText("On mobile"),
+    ).toBeTruthy();
+    expect(screen.getByTestId("human-sidebar-opponent").textContent).not.toContain("Mobile");
+    expect(screen.getByTestId("human-sidebar-self").textContent).not.toContain("Desktop");
     fireEvent.click(screen.getByRole("button", { name: "Open MrGMBH actions" }));
     expect(screen.getByRole("menuitem", { name: "Add friend" })).toBeTruthy();
     expect(screen.getByRole("menuitem", { name: "Report player" })).toBeTruthy();
@@ -176,7 +301,11 @@ describe("BoardSharedPage sidebar", () => {
     fireEvent.click(screen.getByRole("button", { name: "Close report mrgmbh" }));
 
     fireEvent.click(screen.getByRole("button", { name: "Open your player actions" }));
-    expect(screen.getByRole("menuitem", { name: "Choose payment for next cost" })).toBeTruthy();
+    expect(screen.getByRole("menuitem", { name: "Choose payment for every cost" })).toBeTruthy();
+    expect(screen.getByRole("menuitem", { name: "Enable Board State Correction" })).toBeTruthy();
+    expect(screen.getByRole("menuitem", { name: "Undo to turn start" })).toBeTruthy();
+    const guideLink = screen.getByRole("menuitem", { name: "Show first-game guide" });
+    expect(guideLink.getAttribute("href")).toBe("/cyberpunk/simulator/tutorial");
     expect(screen.getByRole("menuitem", { name: "Settings" })).toBeTruthy();
     expect(screen.getByRole("menuitem", { name: "Report bug" })).toBeTruthy();
     expect(screen.getByRole("menuitem", { name: "Request feature" })).toBeTruthy();
@@ -193,41 +322,75 @@ describe("BoardSharedPage sidebar", () => {
     fireEvent.click(screen.getByRole("button", { name: "Close settings" }));
 
     fireEvent.click(screen.getByRole("button", { name: "MrGMBH connection status: Connected" }));
-    expect(screen.getByRole("dialog", { name: "MrGMBH connection details" })).toBeTruthy();
+    const connectionDetails = screen.getByRole("dialog", { name: "MrGMBH connection details" });
+    expect(screen.getByTestId("human-sidebar-opponent").contains(connectionDetails)).toBe(false);
     expect(screen.getByText("Rival presence is live")).toBeTruthy();
     expect(screen.getAllByText("Connected").length).toBeGreaterThan(0);
     fireEvent.click(screen.getByText("Technical details"));
     expect(screen.queryByText("dl_secret_opp")).toBeNull();
   });
 
+  test.each([
+    { format: "best_of_1" as const, gameNumber: 1 },
+    { format: "best_of_1" as const, gameNumber: 2 },
+    { format: "best_of_3" as const, gameNumber: 1 },
+    { format: "best_of_5" as const, gameNumber: 1 },
+  ])("hides the match score in $format game $gameNumber", ({ format, gameNumber }) => {
+    renderHumanMatchSidebar({ format, gameNumber });
+
+    expect(screen.queryByTitle("Match score")).toBeNull();
+    expect(screen.getByTestId("human-sidebar-self").textContent).toContain("1425 MMR");
+  });
+
+  test("shows the match score from game two of a best-of-five match", () => {
+    renderHumanMatchSidebar({ format: "best_of_5", gameNumber: 2 });
+
+    expect(
+      within(screen.getByTitle("Match score"))
+        .getAllByRole("definition")
+        .map((value) => value.textContent),
+    ).toEqual(["1", "0"]);
+  });
+
+  test("shows the pending concession in the action dock and activity log", () => {
+    renderHumanMatchSidebar({
+      opponentUserId: "user_opp",
+      pendingRemoteActionId: "concede",
+    });
+
+    const concedingButton = screen.getByRole("button", { name: "Conceding…" });
+    expect((concedingButton as HTMLButtonElement).disabled).toBe(true);
+    expect(screen.getByText("Conceding the game…")).toBeTruthy();
+  });
+
   test("advertises manual payment once and keeps the control in Player Info", async () => {
     renderHumanMatchSidebar({ opponentUserId: "user_opp" });
 
     expect(await screen.findByLabelText("Choose how you pay")).toBeTruthy();
-    const shortcut = screen.getByRole("button", { name: "Choose payment for next cost" });
+    const shortcut = screen.getByRole("button", { name: "Choose payment for every cost" });
     expect(shortcut.getAttribute("aria-pressed")).toBe("false");
 
     fireEvent.pointerEnter(shortcut);
     expect((await screen.findByRole("tooltip")).textContent).toBe(
-      "Choose the eligible Eddies or Legends spent for your next cost instead of paying automatically.",
+      "Choose eligible Eddies or Legends for payment. Full-cost card plays pay automatically.",
     );
 
     fireEvent.click(shortcut);
     expect(window.localStorage.getItem(CYBERPUNK_PAYMENT_DISCOVERY_STORAGE_KEY)).toBe("dismissed");
     const armedShortcut = screen.getByRole("button", {
-      name: "Manual payment armed for next cost",
+      name: "Manual payment enabled",
     });
     expect(armedShortcut.getAttribute("aria-pressed")).toBe("true");
 
     fireEvent.click(screen.getByRole("button", { name: "Open your player actions" }));
     const armedPayment = screen.getByRole("menuitem", {
-      name: "Manual payment armed for next cost",
+      name: "Manual payment enabled",
     });
     expect(armedPayment.getAttribute("aria-pressed")).toBe("true");
     fireEvent.click(armedPayment);
     expect(
       screen
-        .getByRole("button", { name: "Choose payment for next cost" })
+        .getByRole("button", { name: "Choose payment for every cost" })
         .getAttribute("aria-pressed"),
     ).toBe("false");
   });
@@ -320,6 +483,38 @@ describe("BoardSharedPage sidebar", () => {
     expect(screen.getByTestId("prompt-banner").getAttribute("data-state")).toBe("mulligan");
   });
 
+  test("uses the authorized projection while the live sidebar seat is still unresolved", () => {
+    const source = getScenario("gameStart").build();
+    const state = source.getState();
+    const viewerId = state.ctx.playerIds[0]!;
+    const rivalId = state.ctx.playerIds[1]!;
+    for (const cardId of state.G.players[String(viewerId)]!.zones.hand) {
+      state.G.cardIndex[String(cardId)]!.meta.faceDown = true;
+    }
+    const playerProjection = source.getFilteredView(viewerId);
+
+    renderLiveMatchSidebar(
+      [
+        { id: String(viewerId), seat: 1, displayName: "Wazar Testing" },
+        { id: String(rivalId), seat: 2, displayName: "MrGMBH" },
+      ],
+      {
+        initialEngineBuilder: () =>
+          createLiveMatchViewerEngine(playerProjection, "unresolved-seat-opening-hand-test"),
+      },
+    );
+
+    const bottomHand = within(screen.getByTestId("player-hand-dock"));
+    const bottomCards = bottomHand.getAllByTestId("hand-card");
+    expect(bottomCards).toHaveLength(6);
+    for (const card of bottomCards) {
+      expect(card.getAttribute("data-face-down")).toBe("false");
+      expect(card.getAttribute("data-card-id")).not.toBeNull();
+      expect(card.getAttribute("data-definition-id")).not.toBeNull();
+    }
+    expect(bottomHand.getAllByAltText("Animals Wrecker")).toHaveLength(1);
+  });
+
   test("never renders the practice sidebar for spectators of a bot-free live match", () => {
     const source = getScenario("gameStart").build();
     const spectatorProjection = source.getFilteredView(createPlayerId("__public_spectator__"));
@@ -358,13 +553,13 @@ describe("BoardSharedPage sidebar", () => {
     expect(topHand.queryByAltText("Animals Wrecker")).toBeNull();
   });
 
-  test("keeps a seated player's setup hand visible while the rival mulligan is pending", () => {
+  test("keeps the first player's opening hand visible during their mulligan decision", () => {
     const source = getScenario("gameStart").build();
     const state = source.getState();
     const seatedPlayerId = state.ctx.playerIds[0]!;
     const rivalPlayerId = state.ctx.playerIds[1]!;
     state.G.players[String(seatedPlayerId)]!.firstPlayer = true;
-    state.G.players[String(seatedPlayerId)]!.mulliganDone = true;
+    state.G.players[String(seatedPlayerId)]!.mulliganDone = false;
     state.G.players[String(rivalPlayerId)]!.firstPlayer = false;
     state.G.players[String(rivalPlayerId)]!.mulliganDone = false;
     for (const cardId of state.G.players[String(seatedPlayerId)]!.zones.hand) {
@@ -390,6 +585,79 @@ describe("BoardSharedPage sidebar", () => {
     for (const card of bottomCards) {
       expect(card.getAttribute("data-face-down")).toBe("false");
       expect(card.getAttribute("data-card-id")).not.toBeNull();
+      expect(card.getAttribute("data-definition-id")).not.toBeNull();
+    }
+  });
+
+  test("keeps the second player's opening hand visible while waiting to mulligan", () => {
+    const source = getScenario("gameStart").build();
+    const state = source.getState();
+    const firstPlayerId = state.ctx.playerIds[0]!;
+    const seatedPlayerId = state.ctx.playerIds[1]!;
+    state.G.players[String(firstPlayerId)]!.firstPlayer = true;
+    state.G.players[String(firstPlayerId)]!.mulliganDone = true;
+    state.G.players[String(seatedPlayerId)]!.firstPlayer = false;
+    state.G.players[String(seatedPlayerId)]!.mulliganDone = false;
+    for (const cardId of state.G.players[String(seatedPlayerId)]!.zones.hand) {
+      state.G.cardIndex[String(cardId)]!.meta.faceDown = true;
+    }
+
+    const playerProjection = source.getFilteredView(seatedPlayerId);
+    renderLiveMatchSidebar(
+      [
+        { id: String(firstPlayerId), seat: 1, displayName: "Wazar Testing" },
+        { id: String(seatedPlayerId), seat: 2, displayName: "MrGMBH" },
+      ],
+      {
+        localPlayerId: String(seatedPlayerId),
+        initialHumanSide: "opponent",
+        initialEngineBuilder: () =>
+          createLiveMatchViewerEngine(playerProjection, "waiting-setup-hand-visibility-test"),
+      },
+    );
+
+    const bottomHand = within(screen.getByTestId("player-hand-dock"));
+    const bottomCards = bottomHand.getAllByTestId("hand-card");
+    expect(bottomCards).toHaveLength(6);
+    for (const card of bottomCards) {
+      expect(card.getAttribute("data-face-down")).toBe("false");
+      expect(card.getAttribute("data-card-id")).not.toBeNull();
+      expect(card.getAttribute("data-definition-id")).not.toBeNull();
+    }
+  });
+
+  test("keeps the replacement opening hand visible after a mulligan", async () => {
+    renderBoard(
+      <BoardSharedPage
+        scenarioId="gameStart"
+        initialAi={{ player: null, opponent: null }}
+        initialAiMode="step"
+      />,
+    );
+
+    const initialHand = within(screen.getByTestId("player-hand-dock"));
+    const initialDefinitionIds = initialHand
+      .getAllByTestId("hand-card")
+      .map((card) => card.getAttribute("data-definition-id"));
+
+    fireEvent.click(screen.getByRole("button", { name: "Mulligan" }));
+
+    await waitFor(() => {
+      expect(screen.getByTestId("prompt-banner").getAttribute("data-state")).toBe(
+        "waiting-opponent",
+      );
+    });
+
+    const replacementHand = within(screen.getByTestId("player-hand-dock"));
+    const replacementCards = replacementHand.getAllByTestId("hand-card");
+    const replacementDefinitionIds = replacementCards.map((card) =>
+      card.getAttribute("data-definition-id"),
+    );
+
+    expect(replacementCards).toHaveLength(6);
+    expect(replacementDefinitionIds).not.toEqual(initialDefinitionIds);
+    for (const card of replacementCards) {
+      expect(card.getAttribute("data-face-down")).toBe("false");
       expect(card.getAttribute("data-definition-id")).not.toBeNull();
     }
   });
@@ -532,6 +800,8 @@ describe("BoardSharedPage sidebar", () => {
         liveMatchSidebar={{
           matchId: "match_1",
           gameId: "game_1",
+          format: "best_of_1",
+          gameNumber: 1,
           localPlayerId: "gp_self",
           participants: [
             {
@@ -553,7 +823,8 @@ describe("BoardSharedPage sidebar", () => {
 
     fireEvent.click(screen.getByRole("tab", { name: "More" }));
     fireEvent.click(screen.getByRole("button", { name: "MrGMBH connection status: Disconnected" }));
-    expect(screen.getByRole("dialog", { name: "MrGMBH connection details" })).toBeTruthy();
+    const connectionDetails = screen.getByRole("dialog", { name: "MrGMBH connection details" });
+    expect(screen.getByTestId("human-sidebar-opponent").contains(connectionDetails)).toBe(false);
     expect(screen.getByText("Rival disconnected")).toBeTruthy();
     fireEvent.click(screen.getByText("Drop opponent"));
 
@@ -573,6 +844,8 @@ describe("BoardSharedPage sidebar", () => {
         liveMatchSidebar={{
           matchId: "match_1",
           gameId: "game_1",
+          format: "best_of_1",
+          gameNumber: 1,
           localPlayerId: "gp_self",
           participants: [
             {
@@ -633,6 +906,8 @@ describe("BoardSharedPage sidebar", () => {
         liveMatchSidebar={{
           matchId: "match_1",
           gameId: "game_1",
+          format: "best_of_1",
+          gameNumber: 1,
           localPlayerId: "gp_self",
           participants: [
             {
@@ -665,6 +940,7 @@ describe("BoardSharedPage sidebar", () => {
     expect(screen.queryByRole("tab", { name: "All" })).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "Open chat composer" }));
     expect(await screen.findByTestId("chat-presets")).toBeTruthy();
+    expect(screen.getByText("Quick replies").closest("details")?.open).toBe(true);
     fireEvent.click(screen.getAllByTestId("chat-quick")[0]);
     expect(sendPreset).toHaveBeenCalledTimes(1);
     expect(screen.getByTestId("chat-free-text-gate").textContent).toContain(
@@ -707,6 +983,12 @@ describe("BoardSharedPage sidebar", () => {
     expect(screen.getByTestId("cyberpunk-practice-quick-play")).toBeTruthy();
     expect(screen.queryByTestId("ai-control-panel")).toBeNull();
 
+    const initialHand = within(screen.getByTestId("player-hand-dock"));
+    for (const card of initialHand.getAllByTestId("hand-card")) {
+      expect(card.getAttribute("data-face-down")).toBe("false");
+      expect(card.getAttribute("data-definition-id")).not.toBeNull();
+    }
+
     fireEvent.click(screen.getByTestId("cyberpunk-practice-quick-play"));
     expect(screen.getByTestId("cyberpunk-practice-quick-pause")).toBeTruthy();
     expect(screen.queryByTestId("cyberpunk-practice-quick-next")).toBeNull();
@@ -725,6 +1007,11 @@ describe("BoardSharedPage sidebar", () => {
       "You control the opponent",
     );
     expect(screen.queryByTestId("ai-control-panel")).toBeNull();
+    const controlledOpponentHand = within(screen.getByTestId("player-hand-dock"));
+    for (const card of controlledOpponentHand.getAllByTestId("hand-card")) {
+      expect(card.getAttribute("data-face-down")).toBe("false");
+      expect(card.getAttribute("data-definition-id")).not.toBeNull();
+    }
 
     fireEvent.click(screen.getByTestId("cyberpunk-practice-quick-take-control"));
 
@@ -742,8 +1029,8 @@ describe("BoardSharedPage sidebar", () => {
     renderBoard(
       <BoardSharedPage
         practiceMode="self"
-        scenarioId="gameStart"
-        initialAi={{ player: null, opponent: AI_STRATEGIES[0]?.strategy ?? null }}
+        scenarioId="opponentTurn"
+        initialAi={{ player: null, opponent: null }}
         initialAiMode="step"
       />,
     );
@@ -755,12 +1042,8 @@ describe("BoardSharedPage sidebar", () => {
     ).toBe(true);
     expect(screen.queryByTestId("cyberpunk-practice-quick-next")).toBeNull();
     expect(screen.queryByTestId("cyberpunk-practice-quick-play")).toBeNull();
-    fireEvent.click(screen.getByRole("button", { name: "Opponent controls" }));
-    expect(screen.queryByTestId("ai-control-panel")).toBeNull();
-    expect(screen.getByTestId("cyberpunk-self-control-status").textContent).toContain(
-      "Automation is off",
-    );
-    fireEvent.click(screen.getByTestId("cyberpunk-practice-quick-take-control"));
+    expect(screen.getAllByTestId("self-practice-switch-seat")[0]?.textContent).toBe("Switch seat");
+    fireEvent.click(screen.getAllByTestId("self-practice-switch-seat")[0]!);
     await waitFor(() => {
       expect(
         screen
@@ -768,6 +1051,24 @@ describe("BoardSharedPage sidebar", () => {
           .some((status) => status.textContent?.includes("Controlling Player 2")),
       ).toBe(true);
     });
+    expect(screen.queryByTestId("self-practice-switch-seat")).toBeNull();
+    expect(screen.getByTestId("cyberpunk-practice-quick-take-control").textContent).toBe(
+      "Switch to your seat",
+    );
+    fireEvent.click(screen.getByTestId("cyberpunk-practice-quick-take-control"));
+    await waitFor(() => {
+      expect(
+        screen
+          .getAllByRole("status")
+          .some((status) => status.textContent?.includes("Controlling Player 1")),
+      ).toBe(true);
+    });
+    expect(screen.getAllByTestId("self-practice-switch-seat")).toHaveLength(1);
+    fireEvent.click(screen.getByRole("button", { name: "Opponent controls" }));
+    expect(screen.queryByTestId("ai-control-panel")).toBeNull();
+    expect(screen.getByTestId("cyberpunk-self-control-status").textContent).toContain(
+      "Automation is off",
+    );
   });
 
   test("identifies a deck-plan-bound strategy and keeps the plan across strategy changes", async () => {

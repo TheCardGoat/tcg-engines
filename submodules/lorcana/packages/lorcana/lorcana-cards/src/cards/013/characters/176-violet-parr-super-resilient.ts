@@ -1,7 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { violetParrSuperResilientI18n } from "./176-violet-parr-super-resilient.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 import { shift } from "../../../helpers/abilities/shift";
-import { violetParrSuperResilientI18n } from "./176-violet-parr-super-resilient.i18n";
 
 export const violetParrSuperResilient: CharacterCard = {
   id: "Fqd",
@@ -13,7 +14,7 @@ export const violetParrSuperResilient: CharacterCard = {
       artId: "set13-176",
       setCode: "set13",
       collectorNumber: "176",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -25,7 +26,7 @@ export const violetParrSuperResilient: CharacterCard = {
   franchise: "Incredibles",
   set: "013",
   cardNumber: 176,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 5,
   strength: 4,
   willpower: 4,
@@ -33,12 +34,11 @@ export const violetParrSuperResilient: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_42efa28cb93746cf9a64e8b2929ef069",
+    tcgPlayer: "704672",
   },
   text: [
     {
-      title: "Shift 3",
-      description:
-        "(You may pay 3 ink to play this on top of one of your characters named Violet Parr.)",
+      title: "Shift 3 {I}",
     },
     {
       title: "Resist +1",

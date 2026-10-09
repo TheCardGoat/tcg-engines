@@ -724,8 +724,13 @@ export class FabSimulatorPom {
         // Count the physical hand transfer, not a matching name: duplicate
         // copies legitimately remain and must not make a finished play look stale.
         if (options.handCountBefore !== undefined) {
-          return (await this.as(this.humanId).handCount()) < options.handCountBefore;
+          if ((await this.as(this.humanId).handCount()) < options.handCountBefore) return true;
         }
+        if (
+          (await this.dom.getByTestId("fab-practice-page").getAttribute("data-prompt-kind")) ===
+          "play-target"
+        )
+          return true;
         return (
           (await this.pendingEffectCount()) > 0 ||
           (await this.combatStep()) != null ||

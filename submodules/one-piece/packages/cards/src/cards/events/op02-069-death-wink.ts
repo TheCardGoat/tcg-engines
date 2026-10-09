@@ -21,7 +21,7 @@ export const op02DeathWink069: EventCard = {
   rarity: "C",
   setId: "OP02",
   cost: 3,
-  traits: ["Revolutionary Army Impel Down"],
+  traits: ["Impel Down", "Revolutionary Army"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +6000 power during this battle. Then, draw cards so that you have 2 cards in your hand. [Trigger] Return up to 1 Character with a cost of 7 or less to the owner's hand.",
   effects: {

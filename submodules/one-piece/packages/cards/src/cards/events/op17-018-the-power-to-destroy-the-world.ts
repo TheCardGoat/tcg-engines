@@ -21,7 +21,7 @@ export const op17ThePowerToDestroyTheWorld018: EventCard = {
   rarity: "UC",
   setId: "OP17",
   cost: 1,
-  traits: ["The Four Emperors Whitebeard Pirates"],
+  traits: ["The Four Emperors", "Whitebeard Pirates"],
   effect:
     "[Main] You may rest 2 of your DON!! cards: K.O. up to 1 of your opponent's Stages.  [Counter] If you have 2 or more Characters with 8000 base power or more, up to 1 of your Leader or Characters gains +4000 power during this battle.",
   effects: {

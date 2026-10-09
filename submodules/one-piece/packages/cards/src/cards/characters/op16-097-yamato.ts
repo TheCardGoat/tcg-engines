@@ -45,7 +45,7 @@ export const op16Yamato097: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cardCategory",

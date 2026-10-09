@@ -2,11 +2,13 @@ import { describe, expect, it } from "vitest";
 import { buildCyberpunkInteractionView } from "@tcg/cyberpunk-server-adapter/interaction-protocol";
 import { INTERACTION_PROTOCOL_VERSION, type EngineInteractionView } from "@tcg/protocol";
 import { defOf, type ActiveEffect } from "@tcg/cyberpunk-engine";
+import { viewerProjectionToMatchState } from "./live/liveState";
 
 import { DEFAULT_SCENARIO, getScenario, P1, P2 } from "./fixtures/scenarios.js";
 import {
   cyberpunkCardZoneToSimulatorZone,
   projectEntityForCard,
+  projectEntityForAnimationEntity,
   projectSimulator,
   projectToHarnessFixture,
   type Side,
@@ -31,6 +33,57 @@ function buildOpeningFixture() {
 }
 
 describe("projectSimulator", () => {
+  it("animates concealed cards absent from the viewer state as anonymous card backs", () => {
+    const source = getScenario(DEFAULT_SCENARIO).build();
+    const concealedId = String(source.getState().G.players[String(P2)]!.zones.deck[0]);
+    const matchState = viewerProjectionToMatchState(source.getFilteredView(P1));
+    expect(matchState.G.cardIndex[concealedId]).toBeUndefined();
+
+    const visual = projectEntityForAnimationEntity(concealedId, matchState, "player", "hidden");
+    expect(visual).toMatchObject({
+      id: "hidden-card",
+      kind: "card",
+      face: "hidden",
+    });
+    expect(visual?.backImageUrl).toContain("card-back.webp");
+    expect(JSON.stringify(visual)).not.toContain(concealedId);
+    expect(projectEntityForAnimationEntity(concealedId, matchState, "player", "public")).toBeNull();
+  });
+
+  it("uses printed icon markers instead of executable trigger text in card details", () => {
+    const engine = getScenario("retailGearLegendBench").build();
+    const matchState = engine.getState();
+    const placide = Object.values(matchState.G.cardIndex).find(
+      (card) => defOf(card).slug === "placide-voodoo-sentinel",
+    );
+    expect(placide).toBeDefined();
+
+    const entity = projectEntityForCard(String(placide!.instanceId), matchState, "player");
+    expect(entity?.details?.rules).toContainEqual(
+      expect.objectContaining({
+        id: "printed-rules",
+        text: "{Play} {Attack} You may discard 1 Program. If you do, bottom-deck a rival Unit.",
+      }),
+    );
+    expect(entity?.details?.rules.some((rule) => rule.id.startsWith("ability:"))).toBe(false);
+    expect(entity?.details?.rules).toContainEqual({
+      id: "effective:blocker",
+      kind: "ability",
+      text: "{Blocker}",
+    });
+  });
+
+  it("keeps printed keyword markers without duplicate keyword badges", () => {
+    const matchState = getScenario("openingMain").build().getState();
+    for (const [slug, marker] of [["floor-it", "{Quick}"], ["secondhand-bombus", "{Blocker}"]]) {
+      const card = Object.values(matchState.G.cardIndex).find(card => defOf(card).slug === slug);
+      expect(card).toBeDefined();
+      const rules = projectEntityForCard(String(card!.instanceId), matchState, "player")?.details?.rules ?? [];
+      expect(rules.some(rule => rule.text?.toLowerCase().includes(marker.toLowerCase()))).toBe(true);
+      expect(rules.filter(rule => rule.kind === "keyword")).toEqual([]);
+    }
+  });
+
   it("projects the opening scenario into a shared fixture", () => {
     const { matchState, interactionViews } = buildOpeningFixture();
     const projection = projectSimulator({

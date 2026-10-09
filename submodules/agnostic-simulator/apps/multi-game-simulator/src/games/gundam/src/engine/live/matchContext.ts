@@ -34,6 +34,7 @@ export interface LiveMatchView {
   interactionView?: EngineInteractionView;
   /** Server-authoritative eligibility for this seated player only. */
   canUndo: boolean;
+  canUndoTurn: boolean;
   /** Authoritative, viewer-safe packets delivered by the gateway. */
   animationPackets: readonly LiveAnimationPacket[];
   /**
@@ -87,6 +88,7 @@ export function createInitialLiveMatchView(input: {
     version: 0,
     state: null,
     canUndo: false,
+    canUndoTurn: false,
     animationPackets: [],
     engineLogRecords: [],
     ended: null,

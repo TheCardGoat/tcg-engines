@@ -31,7 +31,7 @@ export const op08SSnake112: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Egghead Seraphim"],
+  traits: ["Egghead", "Seraphim"],
   attribute: "special",
   effect:
     "[On Play] Up to 1 of your opponent's Characters with a cost of 6 or less other than [Monkey.D.Luffy] cannot attack until the end of your opponent's next turn. [Trigger] Activate this card's [On Play] effect.",

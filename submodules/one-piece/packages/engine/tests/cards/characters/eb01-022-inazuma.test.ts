@@ -27,4 +27,21 @@ describe("EB01-022 Inazuma", () => {
     expect(eligible.getState().capabilityHistory).toHaveLength(0);
     expect(ineligible.getState().capabilityHistory).toHaveLength(0);
   });
+  test("resolves Ivankov first then draws two more from the resulting two-card hand", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: "OP02-049",
+      character: [eb01Inazuma022],
+      hand: [],
+      deck: [eb01Doma005, eb01Doma005, eb01Doma005, eb01Doma005, eb01Doma005],
+    });
+    engine.endTurn("south");
+    const order = engine.pendingDecision("readyEffectOrder", "south").steps[0];
+    if (order?.kind !== "chooseOption") throw new Error("Expected simultaneous end-turn effects.");
+    const ivankov = order.options.find((option) => option.label.includes("Ivankov"));
+    expect(ivankov).toBeDefined();
+    engine.resolveDecision("readyEffectOrder", { optionId: ivankov!.id }, "south");
+    expect(engine.getView("south").players.south.hand).toHaveLength(4);
+    expect(engine.getView("south").players.south.deckCount).toBe(1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

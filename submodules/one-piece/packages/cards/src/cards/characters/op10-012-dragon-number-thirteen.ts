@@ -23,7 +23,7 @@ export const op10DragonNumberThirteen012: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Biological Weapon Punk Hazard"],
+  traits: ["Biological Weapon", "Punk Hazard"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

@@ -62,7 +62,7 @@ describe("OP08-079 Kaido", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("can pay while not newly played and still makes the opponent discard", () => {
+  test("can pay while not newly played but does not make the opponent discard", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [{ card: op08Kaido079, playedOnTurn: 0 }],
@@ -79,7 +79,8 @@ describe("OP08-079 Kaido", () => {
 
     const view = engine.getView("south");
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(paymentId);
-    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(opponentCardId);
+    expect(view.players.north.handCount).toBe(1);
+    expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(opponentCardId);
     expect(view.prompts).toHaveLength(0);
   });
 

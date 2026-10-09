@@ -30,7 +30,7 @@ export const op10Smoker001: LeaderCard = {
   setId: "OP10",
   power: 5000,
   life: 4,
-  traits: ["Navy Punk Hazard"],
+  traits: ["Punk Hazard", "Navy"],
   attribute: "slash",
   effect:
     "[Opponent's Turn] All of your {Navy} or {Punk Hazard} type Characters gain +1000 power.[Activate: Main] [Once Per Turn] If you have a Character with 7000 power or more, set up to 2 of your DON!! cards as active.",
@@ -92,12 +92,12 @@ export const op10Smoker001: LeaderCard = {
                     {
                       filter: "trait",
                       value: "Navy",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "trait",
                       value: "Punk Hazard",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                 },

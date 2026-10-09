@@ -24,7 +24,7 @@ export const op17RoronoaZoro035: CharacterCard = {
   cost: 7,
   power: 8000,
   counter: 2000,
-  traits: ["East Blue Straw Hat Crew"],
+  traits: ["East Blue", "Straw Hat Crew"],
   attribute: "slash",
   i18n: op17RoronoaZoro035I18n,
 };

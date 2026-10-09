@@ -423,6 +423,7 @@ export function extractActiveEffects(state: ProjectableState): EngineActiveEffec
       name?: string;
       text?: string;
       sourceId?: string;
+      instanceSourceIds?: string[];
       duration?: string;
     }>(meta.temporaryAbilityPayloads);
 
@@ -433,23 +434,28 @@ export function extractActiveEffects(state: ProjectableState): EngineActiveEffec
         continue;
       }
 
-      effects.push({
-        id: `temporary-ability:${cardId}:${ability}`,
-        type: "temporary-ability",
-        sourceId: payload?.sourceId,
-        targetCardId: cardId,
-        startsAtTurn,
-        expiresAtTurn,
-        payload: {
-          kind: "temporary-ability",
-          ability,
-          abilityName: payload?.name,
-          abilityText: payload?.text,
-          sourceId: payload?.sourceId,
-          duration: payload?.duration,
+      const sourceIds = payload?.instanceSourceIds?.length
+        ? payload.instanceSourceIds
+        : [payload?.sourceId];
+      for (const sourceId of sourceIds) {
+        effects.push({
+          id: `temporary-ability:${cardId}:${ability}:${sourceId ?? "none"}`,
+          type: "temporary-ability",
+          sourceId,
           targetCardId: cardId,
-        },
-      });
+          startsAtTurn,
+          expiresAtTurn,
+          payload: {
+            kind: "temporary-ability",
+            ability,
+            abilityName: payload?.name,
+            abilityText: payload?.text,
+            sourceId,
+            duration: payload?.duration,
+            targetCardId: cardId,
+          },
+        });
+      }
     }
 
     const temporaryRestrictions = normalizeNumberMap(meta.temporaryRestrictions);

@@ -57,6 +57,7 @@ describe("OP05-018 Emporio Energy Hormone", () => {
 
     expectCompoundBoundaryCandidates(engine, "north", selectedId, tooPowerfulId, wrongTraitId);
     engine.resolveDecision("effectPlaySelection", { selectedIds: [selectedId] }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.characters.some((card) => card?.instanceId === selectedId)).toBe(

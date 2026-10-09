@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/heavy-hitters/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Heavy Hitters"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/heavy-hitters/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: 23812c6dd38c41ae7efa2a12fa685a5b40948aed92687a9db9ec3696d6657d2c
 ---

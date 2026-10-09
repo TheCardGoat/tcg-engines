@@ -60,8 +60,18 @@ export const lilyMarineCastellan: GrandArchiveCard<GrandArchiveAbilityDefinition
                 kind: "source",
               },
               otherFilter: {
-                kind: "type",
-                oneOf: ["ALLY", "CHAMPION"],
+                kind: "all",
+                filters: [
+                  {
+                    kind: "type",
+                    oneOf: ["ALLY", "CHAMPION"],
+                  },
+                  {
+                    kind: "parity",
+                    property: "life",
+                    value: "even",
+                  },
+                ],
               },
             },
             then: {

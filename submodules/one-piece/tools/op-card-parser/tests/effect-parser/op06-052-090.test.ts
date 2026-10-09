@@ -12,7 +12,7 @@ describe("OP06-052 through OP06-090 parser regressions", () => {
       action: "play",
       differentNames: true,
       filters: expect.arrayContaining([
-        { filter: "trait", value: "GERMA 66", match: "includes" },
+        { filter: "trait", value: "GERMA 66", match: "exact" },
         { filter: "cardCategory", value: "character" },
         { filter: "power", comparison: "lte", value: 4000 },
       ]),
@@ -30,7 +30,7 @@ describe("OP06-052 through OP06-090 parser regressions", () => {
         {
           cost: "koCharacter",
           amount: 1,
-          filters: [{ filter: "trait", value: "Thriller Bark Pirates", match: "includes" }],
+          filters: [{ filter: "trait", value: "Thriller Bark Pirates", match: "exact" }],
         },
       ],
     });
@@ -46,7 +46,7 @@ describe("OP06-052 through OP06-090 parser regressions", () => {
         condition: "compound",
         operator: "and",
         conditions: [
-          { condition: "leaderTrait", trait: "GERMA 66", match: "includes" },
+          { condition: "leaderTrait", trait: "GERMA 66", match: "exact" },
           { condition: "donFieldComparison", selfComparison: "lte", difference: 2 },
         ],
       },
@@ -96,7 +96,7 @@ describe("OP06-052 through OP06-090 parser regressions", () => {
         condition: "compound",
         operator: "and",
         conditions: [
-          { condition: "leaderTrait", trait: "Dressrosa", match: "includes" },
+          { condition: "leaderTrait", trait: "Dressrosa", match: "exact" },
           {
             condition: "hasCard",
             player: "self",
@@ -120,7 +120,7 @@ describe("OP06-052 through OP06-090 parser regressions", () => {
           action: "returnToHand",
           target: {
             filters: [
-              { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
+              { filter: "trait", value: "Thriller Bark Pirates", match: "exact" },
               { filter: "excludeName", value: "Dr. Hogback" },
             ],
           },
@@ -157,7 +157,7 @@ describe("OP06-052 through OP06-090 parser regressions", () => {
       faceUp: true,
       target: {
         filters: [
-          { filter: "trait", value: "Land of Wano", match: "includes" },
+          { filter: "trait", value: "Land of Wano", match: "exact" },
           { filter: "excludeName", value: "Kouzuki Momonosuke" },
         ],
       },
@@ -176,7 +176,7 @@ describe("OP06-052 through OP06-090 parser regressions", () => {
           filter: "anyOf",
           filters: [
             { filter: "name", value: "Upper Yard" },
-            { filter: "trait", value: "Shandian Warrior", match: "includes" },
+            { filter: "trait", value: "Shandian Warrior", match: "exact" },
           ],
         },
       ],

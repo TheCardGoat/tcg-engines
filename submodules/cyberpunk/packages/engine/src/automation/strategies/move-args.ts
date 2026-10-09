@@ -135,6 +135,8 @@ export function decisionFromMove(available: AvailableMove, picker: ArgPicker): M
       return { kind: "stuck", reason: "resolveSacrificialGear must come from a resolver" };
     case "resolveFirstPlayer":
       return { kind: "stuck", reason: "resolveFirstPlayer must come from a resolver" };
+    case "setCombatPriority":
+      return { kind: "stuck", reason: "Combat priority is a player preference" };
     case "cancelPendingResolution":
       return { kind: "stuck", reason: "cancelPendingResolution is a human escape hatch" };
     default:

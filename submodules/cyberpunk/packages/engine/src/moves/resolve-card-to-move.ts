@@ -8,8 +8,11 @@ import {
 } from "../ability-executor.ts";
 import { bottomDeckCardsSimultaneously } from "../effects/bottom-deck.ts";
 import type { ResolutionContext } from "../effects/target-resolver.ts";
-import { removeFromGameIfGoSolo } from "./remove-from-game.ts";
+import { removeFromGameIfLegendMovesToInvalidArea } from "./remove-from-game.ts";
 import { tryDefOf } from "../state/lookups.ts";
+import { listLegalGearAttachHosts } from "../state/gear-attachment.ts";
+import { captureDefeatedCardSnapshot } from "../state/defeated-card-snapshot.ts";
+import type { MatchState } from "../types/match-state.ts";
 
 export interface ResolveCardToMoveInput extends MoveInput {
   args: {
@@ -47,6 +50,17 @@ export const resolveCardToMoveMove: MoveDefinition<ResolveCardToMoveInput> = {
     const typedChoice = choice as ChooseCardToMovePendingChoice;
     if (!typedChoice.payload.cardIds.includes(cardId as CardInstanceId)) {
       return { valid: false, error: "Card is not a valid choice", errorCode: "INVALID_CHOICE" };
+    }
+    const attachToId = typedChoice.payload.resolvedAttachToId;
+    if (
+      attachToId &&
+      !listLegalGearAttachHosts(
+        state as MatchState,
+        cardId as CardInstanceId,
+        typedChoice.payload.sourcePlayerId,
+      ).includes(attachToId)
+    ) {
+      return { valid: false, error: "Invalid gear attach host", errorCode: "INVALID_CHOICE" };
     }
     return { valid: true };
   },
@@ -113,8 +127,11 @@ export const resolveCardToMoveMove: MoveDefinition<ResolveCardToMoveInput> = {
       // CR 11.19.2 — the moved card and its attached Gear count as defeated:
       // emit cardDefeated and enqueue {Defeated} triggers like handleDefeat.
       const attachedGearIds = [...(card.meta.attachedGearIds ?? [])];
-      const hadAttachedCards = attachedGearIds.length > 0;
-      const defeatedHostId = card.meta.attachedToId as CardInstanceId | undefined;
+      const snapshot = captureDefeatedCardSnapshot(state, cardId as CardInstanceId);
+      const gearSnapshots = new Map(
+        attachedGearIds.map((gearId) => [gearId, captureDefeatedCardSnapshot(state, gearId)]),
+      );
+      const defeatedHostId = snapshot.attachedToId ?? undefined;
       if (card.meta.attachedToId) {
         operations.card.detachGear(cardId as CardInstanceId);
       }
@@ -125,7 +142,7 @@ export const resolveCardToMoveMove: MoveDefinition<ResolveCardToMoveInput> = {
         cardId: cardId as CardInstanceId,
         defeatedBy: sourceCardId,
         playerId: card.ownerId,
-        hadAttachedCards,
+        snapshot,
         // The card was detached above; carry the host so `selector: "host"`
         // still resolves for the defeated Gear's own {Defeated} effects.
         ...(defeatedHostId ? { hostId: defeatedHostId } : {}),
@@ -134,19 +151,20 @@ export const resolveCardToMoveMove: MoveDefinition<ResolveCardToMoveInput> = {
       enqueueEventTriggers(defeatedEvent, state, operations);
       for (const gearId of attachedGearIds) {
         const gear = state.G.cardIndex[gearId as string];
-        if (!gear) continue;
+        const gearSnapshot = gearSnapshots.get(gearId);
+        if (!gear || !gearSnapshot) continue;
         const gearEvent = {
           type: "cardDefeated" as const,
           cardId: gearId as CardInstanceId,
           defeatedBy: sourceCardId,
           playerId: gear.controllerId,
-          hadAttachedCards: false,
+          snapshot: gearSnapshot,
           hostId: cardId as CardInstanceId,
         };
         operations.event.emit(gearEvent);
         enqueueEventTriggers(gearEvent, state, operations);
       }
-      removeFromGameIfGoSolo(state, operations, cardId as CardInstanceId);
+      removeFromGameIfLegendMovesToInvalidArea(state, operations, cardId as CardInstanceId);
     } else {
       // Generic move to a destination zone (e.g. discard to trash).
       const destZone = (destination ?? "trash") as import("@tcg/cyberpunk-types").CardZone;
@@ -155,6 +173,7 @@ export const resolveCardToMoveMove: MoveDefinition<ResolveCardToMoveInput> = {
       }
       operations.card.moveAttachedGear(cardId as CardInstanceId, destZone);
       operations.zone.moveCard(cardId as CardInstanceId, destZone, card.ownerId);
+      removeFromGameIfLegendMovesToInvalidArea(state, operations, cardId as CardInstanceId);
     }
 
     const followupStatus = executeAbilityEffects(ifEffects, ctx, operations, 0, { nested: true });

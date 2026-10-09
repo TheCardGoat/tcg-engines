@@ -23,7 +23,7 @@ export const op01Caribou007: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Caribou Pirates Supernovas"],
+  traits: ["Supernovas", "Caribou Pirates"],
   attribute: "special",
   effect:
     "[On K.O.] K.O. up to 1 of your opponent's Characters with 4000 power or less.  This card has been officially errata'd.",

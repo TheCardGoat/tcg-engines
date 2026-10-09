@@ -23,7 +23,7 @@ export const eb03Shirahoshi052: CharacterCard = {
   cost: 3,
   power: 0,
   counter: 1000,
-  traits: ["Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island"],
   attribute: "wisdom",
   effect:
     "[Activate: Main] You may trash this Character: If your Leader is [Shirahoshi], add 1 card from the top of your deck to the top of your Life cards. Then, all of your {Neptunian} type Characters gain +1000 power during this turn.",
@@ -34,6 +34,12 @@ export const eb03Shirahoshi052: CharacterCard = {
         costs: [
           {
             cost: "trashThisCard",
+          },
+        ],
+        postCostConditions: [
+          {
+            condition: "leaderName",
+            name: "Shirahoshi",
           },
         ],
         actions: [
@@ -47,10 +53,6 @@ export const eb03Shirahoshi052: CharacterCard = {
               },
             },
             position: "top",
-            condition: {
-              condition: "leaderName",
-              name: "Shirahoshi",
-            },
           },
           {
             action: "modifyPower",
@@ -64,7 +66,7 @@ export const eb03Shirahoshi052: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Neptunian",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

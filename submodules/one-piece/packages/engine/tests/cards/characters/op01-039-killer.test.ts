@@ -12,7 +12,7 @@ describe("OP01-039 Killer", () => {
           eb01Doma005,
           eb01Doma005,
         ],
-        deck: [eb01Fourtricks025],
+        deck: [eb01Fourtricks025, "EB01-025"],
       },
       { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
       { firstPlayer: "south", activeSeat: "north" },

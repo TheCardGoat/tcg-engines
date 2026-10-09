@@ -3,6 +3,7 @@ import {
   eb01Doma005,
   eb01MountainGod018,
   op03Gaimon043,
+  op15Brook022,
   op03UsoppSRubberBandOfDoom054,
   op13Vista046,
 } from "@tcg/op-cards";
@@ -133,6 +134,7 @@ describe("OP03-043 Gaimon", () => {
   test("does not trash Gaimon when fewer than three deck cards can be trashed", () => {
     const engine = OnePieceTestEngine.create(
       {
+        leaderCardId: op15Brook022,
         character: [op03Gaimon043, { card: eb01MountainGod018, playedOnTurn: 0 }],
         deck: [eb01Doma005, eb01Doma005],
       },
@@ -146,9 +148,10 @@ describe("OP03-043 Gaimon", () => {
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
 
     const view = engine.getView("south");
-    expect(view.players.south.deckCount).toBe(2);
+    expect(view.players.south.deckCount).toBe(0);
     expect(view.players.south.characters.some((card) => card?.instanceId === gaimonId)).toBe(true);
-    expect(view.players.south.trash).toHaveLength(0);
+    expect(view.players.south.trash).toHaveLength(2);
+    expect(view.status).toBe("active");
     expect(view.prompts).toHaveLength(0);
   });
 });
@@ -172,7 +175,7 @@ describe("trashFromDeck continuations", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("does not run thenActions after choosing zero", () => {
+  test("runs independent thenActions after choosing zero", () => {
     const engine = OnePieceTestEngine.create({
       deck: Array.from({ length: 5 }, () => eb01Doma005),
     });
@@ -184,8 +187,8 @@ describe("trashFromDeck continuations", () => {
     engine.resolveDecision("effectTrashFromDeckCount", { optionId: "0" }, "south");
 
     const view = engine.getView("south");
-    expect(view.players.south.deckCount).toBe(viewBefore.players.south.deckCount);
-    expect(view.players.south.handCount).toBe(viewBefore.players.south.handCount);
+    expect(view.players.south.deckCount).toBe(viewBefore.players.south.deckCount - 1);
+    expect(view.players.south.handCount).toBe(viewBefore.players.south.handCount + 1);
     expect(view.players.south.trash).toHaveLength(0);
     expect(view.prompts).toHaveLength(0);
   });

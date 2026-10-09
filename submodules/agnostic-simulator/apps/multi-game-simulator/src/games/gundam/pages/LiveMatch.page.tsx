@@ -9,7 +9,7 @@ import {
 } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import type { MatchRuntime, MatchStaticResources } from "@tcg/gundam-engine";
-import type { ServerToClientEvents } from "@tcg/protocol";
+import type { PendingProposal, ServerToClientEvents } from "@tcg/protocol";
 import {
   LIVE_MATCH_HEARTBEAT_INTERVAL_MS,
   type NormalizedPresenceChange,
@@ -43,6 +43,9 @@ import {
 } from "../src/engine/live/liveGateway.ts";
 import type { GatewayHandle } from "@tcg/gateway-client";
 import { acquireRootGatewayHandle } from "../../../lib/gateway/root-socket.ts";
+import { LiveActionAttention } from "../../../simulator/attention/LiveActionAttention";
+import { useLiveMatchDocumentTitle } from "../../../simulator/attention/useLiveMatchDocumentTitle";
+import { projectGundamControlState } from "../src/game/labels";
 import {
   SimulatorLiveConnectionProvider,
   useSimulatorLiveConnection,
@@ -175,16 +178,42 @@ export function LiveMatchPage() {
       ? simulatorRoute.matchPageData.viewer.actorId
       : simulatorRoute.matchPageData.viewer.spectatorId
     : "";
-  const isRankedMatch = simulatorRoute.matchPageData?.match.matchType === "ranked";
   const searchString = useMemo(() => `?${search.toString()}`, [search]);
 
   const [loadState, setLoadState] = useState<LoadState>({ status: "idle" });
+  const liveView = loadState.status === "ready" ? loadState.view : null;
+  const control =
+    liveView?.state && simulatorRoute.matchPageData?.viewer.role === "player"
+      ? projectGundamControlState(
+          liveView.state.status,
+          playerId,
+          Boolean(liveView.interactionView?.resolution),
+        )
+      : null;
+  useLiveMatchDocumentTitle({
+    game: "Gundam",
+    turn: control?.turnOwner ?? null,
+    priority: control?.kind === "interactive" ? control.priorityHolder : null,
+    finished: liveView?.ended != null,
+  });
   const [chatState, setChatState] = useState<{
     messages: GundamChatMessage[];
     freeTextEnabled: boolean;
     freeTextProposalPending: boolean;
   }>({ messages: [], freeTextEnabled: false, freeTextProposalPending: false });
   const [gatewayHandle, setGatewayHandle] = useState<GatewayHandle | null>(null);
+  const [undoProposal, setUndoProposal] = useState<PendingProposal | null>(null);
+  useEffect(() => {
+    if (!undoProposal) return;
+    const deadline = undoProposal.deadline;
+    const timeout = window.setTimeout(
+      () => {
+        setUndoProposal((current) => (current?.deadline === deadline ? null : current));
+      },
+      Math.max(0, deadline - Date.now()),
+    );
+    return () => window.clearTimeout(timeout);
+  }, [undoProposal]);
   const [connectionStatus, setConnectionStatus] = useState<SimulatorConnectionStatus>("checking");
   const [connectionId, setConnectionId] = useState<string | null>(null);
   const [connectionError, setConnectionError] = useState<string | null>(null);
@@ -289,26 +318,31 @@ export function LiveMatchPage() {
     },
     [gameId],
   );
-  const remoteUndo: RemoteUndoFn = useCallback(
-    (expectedVersion) => {
+  const requestUndo = useCallback(
+    (undoScope: "last_move" | "turn_start") => {
       const handle = handleRef.current;
       if (!handle || handle.getState().status !== "connected") {
         throw new Error("Gateway is not connected.");
       }
-      handle.emit("execute_move", {
+      handle.emit("proposal_send", {
         gameId,
-        expectedVersion,
-        moveType: "undo",
-        payload: {},
-        correlationId: correlationId(),
+        actionType: "undo",
+        undoScope,
+      });
+      setUndoProposal({
+        actionType: "undo",
+        undoScope,
+        senderPlayerId: playerId,
+        deadline: Date.now() + 15_000,
       });
     },
-    [gameId],
+    [gameId, playerId],
   );
+  const remoteUndo: RemoteUndoFn = useCallback(() => requestUndo("last_move"), [requestUndo]);
   const getInteractionView = useCallback(() => latestViewRef.current?.interactionView, []);
   const getCanUndo = useCallback(
-    () => !isRankedMatch && latestViewRef.current?.canUndo === true,
-    [isRankedMatch],
+    () => latestViewRef.current?.canUndo === true && !undoProposal,
+    [undoProposal],
   );
   const getAnimationPackets = useCallback(() => latestViewRef.current?.animationPackets ?? [], []);
   const getEngineLogRecords = useCallback(() => latestViewRef.current?.engineLogRecords ?? [], []);
@@ -319,6 +353,16 @@ export function LiveMatchPage() {
 
   const handleLiveGatewayEvent = useCallback(
     (type: keyof ServerToClientEvents, payload: unknown) => {
+      if (type === "proposal_send:response" && payload && typeof payload === "object") {
+        const response = payload as Parameters<ServerToClientEvents["proposal_send:response"]>[0];
+        if (response.status === "err") {
+          setUndoProposal(null);
+          setConnectionError(response.data.message);
+        } else if ("resolution" in response.data && response.data.actionType === "undo") {
+          setUndoProposal(null);
+        }
+        return;
+      }
       if (type === "drop_eligibility" && payload && typeof payload === "object") {
         const record = payload as { gameId?: string; dropEligibility?: DropEligibility };
         if (record.gameId === gameId && record.dropEligibility) {
@@ -342,6 +386,21 @@ export function LiveMatchPage() {
 
       const message = parseLiveGatewayEvent(type, payload);
       if (!message) return;
+      if (
+        message.type === "proposal_received" &&
+        message.gameId === gameId &&
+        message.actionType === "undo"
+      ) {
+        setUndoProposal(parseUndoProposal(message));
+      } else if (
+        (message.type === "proposal_resolved" || message.type === "proposal_expired") &&
+        message.gameId === gameId &&
+        message.actionType === "undo"
+      ) {
+        setUndoProposal(null);
+      } else if (message.type === "game_joined" && message.gameId === gameId) {
+        setUndoProposal(parseUndoProposal(message.pendingProposal));
+      }
       appendConnectionEvent(setConnectionEvents, {
         type: message.type,
         message: message.type === "gateway_error" ? message.message : undefined,
@@ -619,6 +678,7 @@ export function LiveMatchPage() {
       version: bootstrap.game.stateVersion,
       state: projectedState,
       canUndo: bootstrap.game.undoable === true,
+      canUndoTurn: bootstrap.game.undoTurnAvailable === true,
       ...(bootstrapPresentation ? { presentation: bootstrapPresentation } : {}),
       ...(bootstrap.game.interactionView
         ? { interactionView: bootstrap.game.interactionView as LiveMatchView["interactionView"] }
@@ -697,24 +757,88 @@ export function LiveMatchPage() {
 
   const content =
     loadState.status === "ready" ? (
-      <LiveSimulatorShell
-        runtime={loadState.runtime}
-        staticResources={loadState.staticResources}
-        viewerId={asViewerId(playerId)}
-        presentation={loadState.view.presentation}
-        remoteSubmit={remoteSubmit}
-        remoteUndo={remoteUndo}
-        remoteStallRecovery={remoteStallRecovery}
-        dropEligibility={dropEligibility}
-        getCanUndo={getCanUndo}
-        getInteractionView={getInteractionView}
-        getAnimationPackets={getAnimationPackets}
-        getEngineLogRecords={getEngineLogRecords}
-        autoPassEnabled
-        ended={loadState.view.ended}
-        connectionDiagnostic={connectionDiagnostic}
-        chat={chatWiring}
-      />
+      <>
+        {simulatorRoute.matchPageData?.viewer.role === "player" ? (
+          <div className="flex justify-end gap-2 px-4 py-2">
+            <button
+              type="button"
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+              disabled={
+                !connectionAuthenticated || !loadState.view.canUndoTurn || Boolean(undoProposal)
+              }
+              onClick={() => requestUndo("turn_start")}
+            >
+              Undo turn
+            </button>
+          </div>
+        ) : null}
+        {undoProposal ? (
+          <div
+            role="alertdialog"
+            aria-label="Undo request"
+            className="mx-4 mb-2 rounded-lg border border-amber-500/40 bg-slate-950 p-3 text-white"
+          >
+            <p>
+              {undoProposal.senderPlayerId === playerId
+                ? "Waiting for your opponent to approve the undo."
+                : undoProposal.undoScope === "turn_start"
+                  ? "Your opponent requests an undo of their turn."
+                  : "Your opponent requests an undo of their last action."}
+            </p>
+            {undoProposal.senderPlayerId !== playerId ? (
+              <div className="mt-2 flex gap-2">
+                <button
+                  type="button"
+                  className={buttonVariants({ variant: "outline", size: "sm" })}
+                  onClick={() =>
+                    handleRef.current?.emit("proposal_decline", { gameId, actionType: "undo" })
+                  }
+                >
+                  Decline
+                </button>
+                <button
+                  type="button"
+                  className={buttonVariants({ variant: "outline", size: "sm" })}
+                  onClick={() =>
+                    handleRef.current?.emit("proposal_accept", { gameId, actionType: "undo" })
+                  }
+                >
+                  Accept
+                </button>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+        <LiveSimulatorShell
+          runtime={loadState.runtime}
+          staticResources={loadState.staticResources}
+          viewerId={asViewerId(playerId)}
+          presentation={loadState.view.presentation}
+          remoteSubmit={remoteSubmit}
+          remoteUndo={remoteUndo}
+          remoteStallRecovery={remoteStallRecovery}
+          dropEligibility={dropEligibility}
+          getCanUndo={getCanUndo}
+          getInteractionView={getInteractionView}
+          getAnimationPackets={getAnimationPackets}
+          getEngineLogRecords={getEngineLogRecords}
+          autoPassEnabled
+          ended={loadState.view.ended}
+          connectionDiagnostic={connectionDiagnostic}
+          chat={chatWiring}
+        />
+        <LiveActionAttention
+          gameId={gameId}
+          view={loadState.view.interactionView}
+          viewerId={playerId}
+          stateVersion={loadState.view.version}
+          canAct={
+            simulatorRoute.matchPageData?.viewer.role === "player" &&
+            connectionAuthenticated &&
+            loadState.view.ended === null
+          }
+        />
+      </>
     ) : (
       <StatusShell
         title={loadState.status === "error" ? "Match unavailable" : "Loading match"}
@@ -1027,6 +1151,24 @@ function liveChatPolicyChanged(
     previous.freeTextEnabled !== next.freeTextEnabled ||
     previous.freeTextProposalPending !== next.freeTextProposalPending
   );
+}
+
+function parseUndoProposal(value: unknown): PendingProposal | null {
+  if (!value || typeof value !== "object") return null;
+  const proposal = value as Record<string, unknown>;
+  if (
+    proposal.actionType !== "undo" ||
+    typeof proposal.senderPlayerId !== "string" ||
+    typeof proposal.deadline !== "number"
+  )
+    return null;
+  const undoScope = proposal.undoScope;
+  return {
+    actionType: "undo",
+    senderPlayerId: proposal.senderPlayerId,
+    deadline: proposal.deadline,
+    ...(undoScope === "turn_start" || undoScope === "last_move" ? { undoScope } : {}),
+  };
 }
 
 function correlationId(): string {

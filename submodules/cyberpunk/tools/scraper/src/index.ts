@@ -1,4 +1,5 @@
 import vm from "node:vm";
+import { getCyberpunkArtIdForPrinting } from "@tcg/cyberpunk-cards";
 
 import { load, type CheerioAPI } from "cheerio";
 
@@ -12,6 +13,7 @@ import type {
   RawCardColor,
   RawCardPrinting,
   RawCardRecord,
+  RawCardRuling,
   RawCardType,
   RawHighlightedLabel,
   TimingTrigger,
@@ -422,6 +424,20 @@ export function normalizeCard(rawCard: RawCardRecord): CardDefinition {
     keywords,
     abilities: [],
     reminderText: [],
+    ...(rawCard.rulings?.length
+      ? {
+          rulings: rawCard.rulings.map((ruling) => ({
+            id: ruling.id,
+            kind: ruling.kind,
+            question: ruling.question,
+            answer: ruling.answer,
+            languageCode: ruling.language_code,
+            cardPrintingId: ruling.card_printing_id,
+            source: ruling.source,
+            rulingDate: ruling.ruling_date,
+          })),
+        }
+      : {}),
   };
 
   switch (rawCard.card_type) {
@@ -614,7 +630,19 @@ export async function fetchRawCard(
 export async function scrapeCatalog(
   options: ScrapeCatalogOptions = {},
 ): Promise<ScrapedCatalogSnapshot> {
-  const rawCards = (await fetchAllRawCards(options)).map(foldAccentMangledSlug);
+  const scrapedCards = (await fetchAllRawCards(options)).map(foldAccentMangledSlug);
+  let rawCards: RawCardRecord[];
+  try {
+    rawCards = attachCardFaqs(scrapedCards, await fetchCardFaqs(options));
+  } catch (error) {
+    if (options.apiBaseUrl || !(error instanceof ApiRequestError)) throw error;
+    // The official-site card records already carry their detail rulings.
+    // Preserve those when the optional Netdeck FAQ feed is unavailable.
+    console.warn(
+      `Netdeck card FAQ feed unavailable; the scraped catalog will omit its card FAQs: ${error.message}`,
+    );
+    rawCards = scrapedCards;
+  }
 
   rawCards.sort((left, right) => left.slug.localeCompare(right.slug));
 
@@ -634,6 +662,118 @@ export async function scrapeCatalog(
     rawCards,
     cards,
   };
+}
+
+export function attachCardFaqs(
+  rawCards: readonly RawCardRecord[],
+  faqs: ReadonlyMap<string, readonly RawCardRuling[]>,
+): RawCardRecord[] {
+  const cardIds = new Set(rawCards.map((card) => card.external_id));
+  const unmatchedFaqs = [...faqs.keys()].filter((id) => !cardIds.has(id));
+  if (unmatchedFaqs.length > 0) {
+    throw new Error(`Card FAQs did not match catalog cards: ${unmatchedFaqs.join(", ")}`);
+  }
+
+  const canonicalBySlug = new Map<string, RawCardRecord>();
+  for (const card of rawCards) {
+    const current = canonicalBySlug.get(card.slug);
+    if (
+      !current ||
+      (SET_PRIORITY[card.set.code] ?? Infinity) < (SET_PRIORITY[current.set.code] ?? Infinity)
+    ) {
+      canonicalBySlug.set(card.slug, card);
+    }
+  }
+  const faqsBySlug = new Map<string, RawCardRuling[]>();
+  for (const [externalId, cardFaqs] of faqs) {
+    const slug = rawCards.find((card) => card.external_id === externalId)?.slug;
+    if (!slug) continue;
+    faqsBySlug.set(slug, [...(faqsBySlug.get(slug) ?? []), ...cardFaqs]);
+  }
+
+  return rawCards.map((card) => {
+    const cardFaqs =
+      card === canonicalBySlug.get(card.slug) ? faqsBySlug.get(card.slug) : undefined;
+
+    const { rulings: existingRulings, ...other } = card;
+    const rulings = new Map(
+      (existingRulings ?? [])
+        .filter((ruling) => ruling.kind !== "faq" || ruling.card_printing_id != null)
+        .map((ruling) => [ruling.id, ruling]),
+    );
+    for (const faq of cardFaqs ?? []) rulings.set(faq.id, faq);
+    return { ...other, ...(rulings.size ? { rulings: [...rulings.values()] } : {}) };
+  });
+}
+
+/** Replace only ruling fields in an existing catalog snapshot. */
+export function refreshCatalogFaqsOnly(
+  existingSnapshot: ScrapedCatalogSnapshot,
+  faqs: ReadonlyMap<string, readonly RawCardRuling[]>,
+): ScrapedCatalogSnapshot {
+  const rawCards = attachCardFaqs(existingSnapshot.rawCards, faqs);
+  const rawById = new Map(rawCards.map((card) => [card.id, card]));
+  const cards = existingSnapshot.cards.map((card) => {
+    const raw = rawById.get(card.id);
+    if (!raw) throw new Error(`No raw card found for ${card.id}.`);
+    const other = { ...card };
+    delete other.rulings;
+    const { rulings } = normalizeCard(raw);
+    return { ...other, ...(rulings?.length ? { rulings } : {}) };
+  });
+  return { rawCards, cards };
+}
+
+/** Card FAQs are loaded after the detail page from a separate Netdeck feed. */
+export async function fetchCardFaqs(
+  options: ScrapeCatalogOptions = {},
+): Promise<Map<string, RawCardRuling[]>> {
+  const apiBaseUrl = options.apiBaseUrl ?? NETDECK_API_BASE_URL;
+  const tenantId = options.tenantId ?? CYBERPUNK_TENANT_ID;
+  const fetchImpl = options.fetchImpl ?? fetch;
+  const url = `${apiBaseUrl}/faqs/cyberpunk?scope=card`;
+  const response = await fetchJson<unknown>(url, fetchImpl, tenantId);
+  const record = requireRecord(response, "card FAQs");
+  if (!Array.isArray(record.items)) throw new Error("Expected card FAQs.items to be an array.");
+  const total = requireNumber(record.total, "card FAQs.total");
+  if (record.items.length !== total) {
+    throw new Error(`Card FAQ feed is incomplete: received ${record.items.length} of ${total}.`);
+  }
+
+  const faqs = new Map<string, Array<{ sortOrder: number; ruling: RawCardRuling }>>();
+  const ids = new Set<string>();
+  for (const [index, item] of record.items.entries()) {
+    const context = `card FAQs.items[${index}]`;
+    const faq = requireRecord(item, context);
+    const id = requireString(faq.id, `${context}.id`);
+    if (ids.has(id)) throw new Error(`Duplicate card FAQ id: ${id}`);
+    ids.add(id);
+    if (requireString(faq.scope, `${context}.scope`) !== "card") {
+      throw new Error(`Unexpected FAQ scope at ${context}.`);
+    }
+    const card = requireRecord(faq.card, `${context}.card`);
+    const externalId = requireString(card.external_id, `${context}.card.external_id`);
+    const sortOrder = requireNumber(faq.sort_order, `${context}.sort_order`);
+    const ruling: RawCardRuling = {
+      id,
+      kind: "faq",
+      question: requireString(faq.question, `${context}.question`),
+      answer: requireString(faq.answer, `${context}.answer`),
+      language_code: "en",
+      card_printing_id: null,
+      source: null,
+      ruling_date: readOptionalNullableString(faq.published_at, `${context}.published_at`),
+    };
+    const cardFaqs = faqs.get(externalId) ?? [];
+    cardFaqs.push({ sortOrder, ruling });
+    faqs.set(externalId, cardFaqs);
+  }
+  return new Map(
+    [...faqs].map(([externalId, cardFaqs]) => [
+      externalId,
+      cardFaqs.toSorted((a, b) => a.sortOrder - b.sortOrder).map(({ ruling }) => ruling),
+    ]),
+  );
 }
 
 export function formatGeneratedCardsModule(snapshot: ScrapedCatalogSnapshot): string {
@@ -815,9 +955,14 @@ function normalizePrinting(rawPrinting: RawCardPrinting, setCode: string): CardP
     .replace(/^\u03b1/, "a")
     .replace(/^\u03b2/, "b");
 
+  const artId = getCyberpunkArtIdForPrinting(rawPrinting.id);
+  if (!artId) {
+    throw new Error(`Missing reviewed Cyberpunk artwork metadata for printing ${rawPrinting.id}`);
+  }
+
   return {
     id: rawPrinting.id,
-    artId: rawPrinting.id,
+    artId,
     collectorNumber,
     setCode: rawPrinting.set.code as CardPrinting["setCode"],
     rarity: rawPrinting.rarity ?? "",
@@ -991,6 +1136,7 @@ function slugFromCanonicalUrl(url: string | null): string {
 
 const SET_PRIORITY: Record<string, number> = {
   welcometonightcityretail: 1,
+  "welcometonightcityretail-fr": 2,
   theheistretailstarterdeck: 2,
   embracingpowerretailstarterdeck: 3,
   boxtoppersretail: 4,
@@ -1042,9 +1188,19 @@ export function deduplicateRawCardsById(rawCards: readonly RawCardRecord[]): Raw
       return left.collector_number.localeCompare(right.collector_number);
     });
 
+    const rulingsById = new Map<string, RawCardRuling>();
+    for (const card of group) {
+      for (const ruling of card.rulings ?? []) {
+        if (!rulingsById.has(ruling.id)) {
+          rulingsById.set(ruling.id, ruling);
+        }
+      }
+    }
+
     deduped.push({
       ...primary,
       printings: mergedPrintings,
+      ...(rulingsById.size ? { rulings: [...rulingsById.values()] } : {}),
     });
   }
 
@@ -1206,7 +1362,39 @@ function coerceRawCardRecord(value: unknown, context: string): RawCardRecord {
       `${context}.selected_printing_id`,
     ),
     legality: requireString(record.legality, `${context}.legality`) as RawCardRecord["legality"],
+    ...(record.rulings == null
+      ? {}
+      : { rulings: coerceRawRulings(record.rulings, `${context}.rulings`) }),
   };
+}
+
+function coerceRawRulings(value: unknown, context: string): RawCardRuling[] {
+  if (!Array.isArray(value)) {
+    throw new Error(`Expected ${context} to be an array.`);
+  }
+
+  return value.map((entry, index): RawCardRuling => {
+    const rulingContext = `${context}[${index}]`;
+    const record = requireRecord(entry, rulingContext);
+    const kind = requireString(record.kind, `${rulingContext}.kind`);
+    if (kind !== "faq" && kind !== "errata") {
+      throw new Error(`Unexpected ruling kind for ${rulingContext}: ${kind}`);
+    }
+
+    return {
+      id: requireString(record.id, `${rulingContext}.id`),
+      kind,
+      question: readOptionalNullableString(record.question, `${rulingContext}.question`),
+      answer: requireString(record.answer, `${rulingContext}.answer`),
+      language_code: requireString(record.language_code, `${rulingContext}.language_code`),
+      card_printing_id: readOptionalNullableString(
+        record.card_printing_id,
+        `${rulingContext}.card_printing_id`,
+      ),
+      source: readOptionalNullableString(record.source, `${rulingContext}.source`),
+      ruling_date: readOptionalNullableString(record.ruling_date, `${rulingContext}.ruling_date`),
+    };
+  });
 }
 
 function coerceRawSet(value: unknown, context: string): RawCardRecord["set"] {

@@ -78,13 +78,13 @@ describe("OP07-033 Monkey.D.Luffy", () => {
     const target = engine.pendingDecision("effectTargetSelection", "north").steps[0];
     expect(target?.kind).toBe("selectEntity");
     if (target?.kind !== "selectEntity") throw new Error("Expected Luffy's K.O. candidates.");
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(protectedId);
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(protectedId);
     expect(target.candidates.map((candidate) => candidate.ref.id)).toEqual(
       expect.arrayContaining([luffyId, highCostId]),
     );
     engine.resolveDecision(
       "effectTargetSelection",
-      { selectedIds: [luffyId, highCostId] },
+      { selectedIds: [luffyId, highCostId, protectedId] },
       "north",
     );
 

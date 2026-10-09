@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, within, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { afterEach, describe, expect, it } from "vitest";
 
@@ -27,7 +27,7 @@ function renderRoute(path: string, element: React.ReactNode) {
 }
 
 describe("Grand Archive simulator navigation", () => {
-  it("plays material cards and skips through Pass in the resettable material-hand fixture", () => {
+  it("plays material cards and skips through Pass in the resettable material-hand fixture", async () => {
     renderRoute(
       "/grand-archive/simulator/tests/materialization-hand",
       <GrandArchiveSimulatorProviders>
@@ -39,21 +39,29 @@ describe("Grand Archive simulator navigation", () => {
         </Routes>
       </GrandArchiveSimulatorProviders>,
     );
-    const material = screen.getByRole("region", { name: /Your material deck/ });
-    fireEvent.click(within(material).getByRole("button", { name: /Life Essence Amulet/ }));
-    expect(screen.queryByRole("region", { name: /Your material deck/ })).toBeNull();
-    expect(screen.getByRole("region", { name: /Your hand/ })).toBeTruthy();
-    expect(screen.getByRole("button", { name: /Life Essence Amulet, layer 1/ })).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: "Reset materialization" }));
-    expect(screen.getByRole("region", { name: /Your material deck/ })).toBeTruthy();
-    expect(screen.getAllByRole("button", { name: "Skip materialization" })).toHaveLength(2);
+    document.querySelector('.ga-scene-inventory[data-side="bottom"]')!.setAttribute("open", "");
+    const arena = screen.getByRole("region", { name: "Your arena" });
+    fireEvent.click(within(arena).getByRole("button", { name: /Material, \d+ cards/ }));
+    const pile = await screen.findByRole("dialog", { name: /Material ·/ });
+    fireEvent.click(within(pile).getByRole("button", { name: /^Life Essence Amulet,/ }));
+    const inspection = await screen.findByRole("dialog", { name: "Life Essence Amulet" });
     fireEvent.click(
-      within(screen.getByRole("group", { name: "Hand actions" })).getByRole("button", {
-        name: "Skip materialization",
-      }),
+      within(inspection).getByRole("button", { name: "Materialize Life Essence Amulet" }),
     );
-    expect(screen.queryByRole("region", { name: /Your material deck/ })).toBeNull();
-    expect(screen.getByRole("region", { name: /Your hand/ })).toBeTruthy();
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    expect(
+      screen.getByLabelText("Your hand").querySelectorAll(".ga-scene-card-control"),
+    ).toHaveLength(7);
+    expect(
+      within(screen.getByLabelText("Effects stack and intent")).getByRole("button", {
+        name: /^Life Essence Amulet,/,
+      }),
+    ).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Reset materialization" }));
+    expect(screen.getAllByRole("button", { name: "Skip materialization" })).toHaveLength(1);
+    fireEvent.click(screen.getByRole("button", { name: "Skip materialization" }));
+    expect(screen.queryByRole("button", { name: "Skip materialization" })).toBeNull();
+    expect(screen.getByRole("button", { name: "Pass Opportunity" })).toBeTruthy();
   });
 
   it("offers practice and fixture entry points from the simulator hub", () => {

@@ -19,7 +19,7 @@ describe("OP06 Character parser regressions for OP06-028 through OP06-033", () =
               options: [
                 {
                   zones: ["hand"],
-                  filters: [{ filter: "trait", value: "Fish-Man", match: "includes" }],
+                  filters: [{ filter: "trait", value: "Fish-Man", match: "exact" }],
                 },
                 {
                   zones: ["hand", "stage"],

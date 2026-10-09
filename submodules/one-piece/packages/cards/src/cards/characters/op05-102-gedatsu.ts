@@ -39,7 +39,7 @@ export const op05Gedatsu102: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Sky Island Vassals"],
+  traits: ["Sky Island", "Vassals"],
   attribute: "strike",
 
   effect:

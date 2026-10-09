@@ -52,7 +52,7 @@ export const op05CaptainMckinley112: CharacterCard = {
               {
                 filter: "trait",
                 value: "Sky Island",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

@@ -49,18 +49,9 @@ export const foundPower: GrandArchiveCard<GrandArchiveAbilityDefinition, "card">
                         zones: ["field"],
                         player: "controller",
                         filter: {
-                          kind: "all",
-                          filters: [
-                            {
-                              kind: "name",
-                              value: "Proto Key Crest",
-                              match: "exact",
-                            },
-                            {
-                              kind: "subtype",
-                              oneOf: ["CREST"],
-                            },
-                          ],
+                          kind: "name",
+                          value: "Proto Key Crest",
+                          match: "exact",
                         },
                       },
                     },

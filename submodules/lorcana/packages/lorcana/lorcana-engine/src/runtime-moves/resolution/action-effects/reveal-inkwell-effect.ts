@@ -5,6 +5,7 @@ import type { ActionResolutionInput, PlayCardExecutionContext } from "./types";
 import { createLorcanaGameLogEntry, createLorcanaLogMessage } from "../../../types";
 import { resolveTargetPlayerIds } from "./player-target-resolver";
 import { getEffectTargetSelectionInput } from "./selection-state";
+import { markLastEffectPerformed } from "./event-snapshot-utils";
 
 export function isRevealInkwellEffect(effect: unknown): effect is RevealInkwellEffect {
   return (
@@ -21,6 +22,8 @@ export function resolveRevealInkwellEffect(
   effect: RevealInkwellEffect,
   resolutionInput: ActionResolutionInput,
 ): void {
+  resolutionInput.eventSnapshot ??= {};
+  markLastEffectPerformed(resolutionInput.eventSnapshot, false);
   const targetPlayers = resolveTargetPlayerIds(
     ctx,
     cardPlayed,
@@ -43,6 +46,15 @@ export function resolveRevealInkwellEffect(
 
     // Private reveal: only the owner sees the card faces.
     ctx.framework.zones.reveal(inkwellCards, [playerId]);
+    markLastEffectPerformed(resolutionInput.eventSnapshot, true);
+
+    // Expose the revealed inkwell cards to downstream steps (e.g. a follow-up
+    // put-in-hand with source "revealed").
+    resolutionInput.eventSnapshot ??= {};
+    resolutionInput.eventSnapshot.revealedCardIds = [
+      ...(resolutionInput.eventSnapshot.revealedCardIds ?? []),
+      ...inkwellCards,
+    ];
 
     const visibility = {
       mode: "PUBLIC_WITH_OVERRIDES" as const,

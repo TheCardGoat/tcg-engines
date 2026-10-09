@@ -34,6 +34,7 @@ export const theMadrigalFamilyEveryGenerationEnchanted: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f82d2fbf598249eb924b2cdbdc915f62",
+    tcgPlayer: "704559",
   },
   text: [
     {

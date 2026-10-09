@@ -101,7 +101,7 @@ export const cracklingIncineration: GrandArchiveCard<GrandArchiveAbilityDefiniti
                               property: "memory-cost",
                               basis: "base",
                             },
-                            operator: "lte",
+                            operator: "eq",
                             right: 0,
                           },
                         },

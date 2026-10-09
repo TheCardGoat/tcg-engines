@@ -30,7 +30,7 @@ export const op13GolDRoger003: LeaderCard = {
   setId: "OP13",
   power: 7000,
   life: 5,
-  traits: ["Roger Pirates King of the Pirates"],
+  traits: ["King of the Pirates", "Roger Pirates"],
   attribute: "slash",
   effect:
     "If you have any DON!! cards on your field, 1 DON!! card placed during your DON!! Phase is given to your Leader.\nIf you have 9 or less DON!! cards on your field, give this Leader −2000 power.",

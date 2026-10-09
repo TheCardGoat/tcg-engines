@@ -1,0 +1,2845 @@
+.root {
+  --v2-cyan: #45d9ee;
+  --v2-red: #ff5365;
+  --v2-yellow: #ffe24e;
+  background: #0c1115;
+  color: #e7edf1;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: "Cyberpunk Blender Pro", "Arial Narrow", sans-serif;
+}
+/* The match-utilities cluster floats over the board's free top-right corner;
+   the shell injects its buttons, this side only positions and reports. The
+   zoom wrapper carries the column layout so the Board can shrink the plates
+   on small tables without scaling the slot's edge offsets. */
+.utilitiesSlot {
+  position: absolute;
+  /* Above the rotate-guidance scrim (160): the V1 escape hatch and match
+     controls must stay visible and tappable while portrait guidance shows. */
+  z-index: 170;
+  top: 10px;
+  right: 10px;
+}
+.utilitiesStack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+.connection {
+  display: none;
+  padding: 5px 10px;
+  border: 1px solid #50616a;
+  background: #10171cf0;
+  color: var(--v2-yellow);
+  font:
+    600 13px/1 "Cyberpunk Blender Pro",
+    sans-serif;
+  letter-spacing: 0.08em;
+}
+.connection:not(:empty) {
+  display: inline-block;
+}
+/* Board surface trigger; lives in the Match drawer footer since the header
+   strip went away. Fills the footer row next to "Return to V1". */
+.surfaceButton {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #66777e;
+  background: #141d21;
+  color: #c1d2da;
+  padding: 5px 12px;
+  cursor: pointer;
+  font:
+    600 13px/1 "Cyberpunk Blender Pro",
+    sans-serif;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.surfaceButton:hover {
+  border-color: #ffe24e;
+  color: #ffe24e;
+}
+.surfaceButton:focus-visible {
+  outline: 2px solid #f5d88c;
+  outline-offset: 1px;
+}
+.scroll {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  align-items: center;
+  overflow: auto;
+}
+.table {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  aspect-ratio: 16/9;
+  max-height: 100%;
+  container-type: inline-size;
+  overflow: clip;
+  background: radial-gradient(ellipse at 50% 45%, #293136, #080d10);
+}
+.scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.identity {
+  position: absolute;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 0.6cqw;
+  font-family: "Cyberpunk Refinery 25", sans-serif;
+  font-size: 1.1cqw;
+  letter-spacing: 0.1em;
+}
+.identity i {
+  width: 1.8cqw;
+  height: 0.35cqw;
+  background: currentColor;
+  opacity: 0.25;
+}
+.identity[data-active="true"] i {
+  opacity: 1;
+  box-shadow: 0 0 12px currentColor;
+}
+.identity small {
+  font-size: 0.65cqw;
+  opacity: 0.7;
+}
+.rivalIdentity {
+  top: 5%;
+  right: 4%;
+  color: var(--v2-red);
+}
+.localIdentity {
+  bottom: 5%;
+  left: 4%;
+  color: var(--v2-cyan);
+}
+.fieldDrop {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid transparent;
+  border-radius: 12px;
+}
+.fieldDrop span {
+  position: absolute;
+  inset-inline: 0;
+  top: 48%;
+  text-align: center;
+  opacity: 0.12;
+  letter-spacing: 0.4em;
+  font-size: 0.75cqw;
+}
+.cardHit {
+  position: absolute;
+  transform-origin: center;
+  transition: transform 0.12s ease-out;
+}
+.cardHit[data-zone-lane="field"][data-spent="true"]:not([data-mesh-ready="true"])
+  > :global([data-testid="card"])
+  > :global([data-sim-animation-face-target])
+  > :global(.sim-card-image-frame) {
+  filter: brightness(0.84);
+}
+.cardHit > :global([data-testid="card"]) {
+  width: 100%;
+  height: 100%;
+}
+.root
+  .cardHit[data-mesh-ready="true"]
+  > :global([data-testid="card"])
+  > :global([data-sim-animation-face-target])
+  > :global(.sim-card-image-frame) {
+  opacity: 0;
+}
+.cardHit :global([data-testid="card"]) {
+  filter: none;
+}
+.cardHit:focus-within {
+  outline: 2px solid var(--v2-yellow);
+  outline-offset: 4px;
+}
+/* Overlapped field rows keep only each Unit's right strip visible, so the
+   ability rail (blocker shield etc.) leaves the covered left corner and sits
+   on the visible edge. */
+.cardHit[data-rail-side="right"] :global([class*="abilityRail"]) {
+  left: auto;
+  right: 3%;
+  top: 13%;
+}
+.rivalFixer,
+.localFixer {
+  position: absolute;
+  z-index: 12;
+  width: 22%;
+  height: 8%;
+}
+.rivalFixer {
+  right: 11%;
+  top: 8%;
+}
+.localFixer {
+  left: 5%;
+  bottom: 10%;
+}
+.rivalFixer > div,
+.localFixer > div {
+  border: 0;
+  background: transparent;
+  height: 100%;
+}
+.status {
+  position: absolute;
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  gap: 1.2cqw;
+  padding: 0.4cqw 1cqw;
+  background: linear-gradient(170deg, #253035, #080c10 65%);
+  border: 1px solid #63757b;
+  border-bottom: 2px solid currentColor;
+  box-shadow:
+    0 4px 7px #000b,
+    inset 0 1px #ffffff20;
+  font-size: 1.8cqw;
+  line-height: 1;
+  clip-path: polygon(3% 0, 100% 0, 100% 80%, 97% 100%, 0 100%, 0 20%);
+}
+.status button {
+  border: 0;
+  background: transparent;
+  color: #eee;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+.status button span {
+  color: var(--v2-yellow);
+}
+.status small {
+  font-size: 0.7em;
+  opacity: 0.75;
+}
+.status button[data-over="true"] {
+  box-shadow: 0 0 16px var(--v2-yellow);
+}
+/* Payment-selection cue: same cyan family as the highlighted Legends and
+   Eddie cards, so the collapsed strip reads as a clickable source too. */
+.status button[data-payment-cue="true"] {
+  box-shadow:
+    0 0 14px rgb(74 217 255 / 86%),
+    inset 0 0 10px rgb(74 217 255 / 30%);
+}
+.status button[data-payment-cue="true"]:hover {
+  filter: brightness(1.25);
+}
+.rivalStatus {
+  left: 4%;
+  top: 3.3%;
+  color: var(--v2-red);
+}
+.localStatus {
+  right: 3.5%;
+  bottom: 4%;
+  color: var(--v2-cyan);
+}
+.rivalPiles,
+.localPiles {
+  position: absolute;
+  z-index: 11;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 1cqw;
+  width: 6.5%;
+  height: 29%;
+}
+.rivalPiles {
+  top: 17%;
+  right: 3.5%;
+}
+.localPiles {
+  left: 3.5%;
+  top: 56%;
+}
+.rivalPiles > div,
+.localPiles > div {
+  min-height: 0;
+  height: 100%;
+}
+.pass {
+  position: absolute;
+  right: 2%;
+  top: 44%;
+  width: 15%;
+  z-index: 30;
+  padding: 1.2cqw 0.9cqw;
+  background: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/components/button-housing.webp")
+    center/contain no-repeat;
+}
+.root .table .pass button {
+  width: 100%;
+  min-height: 2.8cqw;
+  background: linear-gradient(#ffe975, #e4b722);
+  color: #171b1d;
+  font-family: "Cyberpunk Refinery 25", sans-serif;
+  font-size: 1.1cqw;
+  border: 1px solid #ffed9e;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px #000;
+}
+.root .table .pass button:disabled {
+  opacity: 0.55;
+}
+.clock {
+  position: absolute;
+  right: 20%;
+  bottom: 5%;
+  z-index: 12;
+  font-size: 0.9cqw;
+}
+.prompts {
+  position: absolute;
+  z-index: 190;
+  bottom: 22%;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  width: min(38%, 560px);
+  max-height: min(45%, 54dvh);
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: #71868a #10191d;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  scrollbar-gutter: stable both-edges;
+  pointer-events: none;
+}
+.prompts > div {
+  pointer-events: auto;
+  background: #10191de8;
+  border: 1px solid #6c7d80;
+  box-shadow: 0 6px 24px #0009;
+}
+.prompts button {
+  font-family: "Cyberpunk Blender Pro", sans-serif;
+}
+.gigs {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+}
+.gigs > div {
+  display: contents;
+}
+.gigs > div > div:not(:global([data-testid="resolving-program"])) {
+  display: contents;
+}
+.gigs :global([data-sim-zone-id]) {
+  position: absolute;
+  width: 24%;
+  height: 10%;
+  border: 0;
+  background: transparent;
+  pointer-events: auto;
+}
+.table[data-human-side="player"] .gigs :global([data-sim-zone-id="p-gigArea"]),
+.table[data-human-side="opponent"] .gigs :global([data-sim-zone-id="opp-gigArea"]) {
+  right: 3.3%;
+  top: 57%;
+}
+.table[data-human-side="player"] .gigs :global([data-sim-zone-id="opp-gigArea"]),
+.table[data-human-side="opponent"] .gigs :global([data-sim-zone-id="p-gigArea"]) {
+  left: 3.3%;
+  top: 28%;
+}
+.localPages,
+.rivalPages {
+  position: absolute;
+  z-index: 39;
+  right: 28%;
+  display: flex;
+  gap: 8px;
+}
+.localPages {
+  bottom: 3%;
+}
+.rivalPages {
+  top: 11%;
+}
+.pageControl {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #10191dee;
+  padding: 4px;
+  font-size: 12px;
+}
+.actionPulse {
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+  z-index: 2;
+  animation: stateChange 0.65s ease-out;
+}
+@keyframes stateChange {
+  from {
+    box-shadow: inset 0 0 55px #5ae8ff38;
+  }
+  to {
+    box-shadow: inset 0 0 0 transparent;
+  }
+}
+.trashCards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+.trashCards > div {
+  width: 115px;
+  height: 161px;
+}
+.corrections {
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardHit {
+    transition: none;
+  }
+  .actionPulse {
+    animation: none;
+  }
+  .root .table .gigs :global([data-testid="gig-row"]) > div > div,
+  .rivalFixer :global([data-testid="fixer-die"]) > span > :global([data-cyberpunk-die-face]),
+  .localFixer :global([data-testid="fixer-die"]) > span > :global([data-cyberpunk-die-face]) {
+    transition: none;
+  }
+  .rivalFixer
+    :global([data-testid="fixer-zone"][data-picking="true"])
+    :global([data-testid="fixer-die"][data-candidate="true"])
+    > span
+    > div,
+  .localFixer
+    :global([data-testid="fixer-zone"][data-picking="true"])
+    :global([data-testid="fixer-die"][data-candidate="true"])
+    > span
+    > div {
+    animation: none;
+  }
+}
+/* V2 gives reused controls a game-board footprint without changing V1 styles. */
+.root {
+  --zone-pad: 3px;
+  --zone-gutter: 0px;
+  --side-accent-rgb: 135 163 175;
+}
+.scroll {
+  container-type: size;
+}
+.table {
+  width: min(100%, calc(100cqh * 16 / 9));
+  max-height: none;
+  margin: auto;
+}
+.rivalFixer :global([data-testid="fixer-zone"]) > div,
+.localFixer :global([data-testid="fixer-zone"]) > div {
+  flex-direction: row;
+  gap: 0.6cqw;
+}
+.rivalFixer :global([data-testid="fixer-zone"]),
+.localFixer :global([data-testid="fixer-zone"]) {
+  padding: 0;
+}
+.rivalFixer :global([data-testid="fixer-die"]) > span > :global([data-cyberpunk-die-face]),
+.localFixer :global([data-testid="fixer-die"]) > span > :global([data-cyberpunk-die-face]) {
+  width: 2.5cqw;
+  height: 2.7cqw;
+  background: linear-gradient(135deg, #74828f, #151b22 75%);
+  color: #e7f0fa;
+  box-shadow: inset 0 0 0 1px #9da6b1;
+}
+/* Selection cues belong to the control so its artwork and hit area grow
+   together. Face markup is shared with V1 through TabletopDie. */
+@keyframes v2-die-highlight {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0.3cqw rgb(245 230 66 / 65%));
+  }
+  50% {
+    filter: drop-shadow(0 0 0.6cqw rgb(245 230 66 / 95%));
+  }
+}
+.pass > div {
+  display: block;
+  width: 100%;
+}
+.pass > div > span {
+  width: 100%;
+}
+.gigs :global([data-testid="gig-row"]) {
+  overflow: visible;
+  min-width: 0;
+  min-height: 0;
+}
+.gigs :global([data-testid="gig-row"])::before {
+  display: none;
+}
+.gigs :global([data-testid="gig-row"]) > :global([data-score-variant]) {
+  display: none;
+}
+
+.rivalPiles > div,
+.localPiles > div {
+  grid-area: auto;
+  width: 100%;
+}
+.rivalPiles > :first-child {
+  order: 1;
+}
+/* Effect thumbnails need explicit height after the V1 row is flattened.
+   The combined dock docks below the rival gig column (clearing the gig label
+   that hangs under it) and shrink-wraps its content so idle docks never
+   reserve dead board space. Chips keep their owner's tone color via per-chip
+   currentColor. */
+.gigs :global([data-testid="active-effects-dock"]) {
+  position: absolute;
+  left: 1.5%;
+  top: calc(35.33% + 1.65cqw + 6px);
+  translate: calc(-1 * var(--edge-x)) calc(-1 * var(--edge-top));
+  width: max-content;
+  max-width: 27%;
+  height: 7%;
+  pointer-events: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  padding: 5px 7px;
+  border: 1px solid color-mix(in srgb, currentColor 48%, #53656c);
+  border-left-width: 3px;
+  background:
+    linear-gradient(105deg, color-mix(in srgb, currentColor 10%, #071014 90%), #070b0ee8 62%),
+    url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/components/rail-horizontal.webp")
+      center/cover;
+  box-shadow:
+    0 5px 14px #000a,
+    inset 0 1px #ffffff14;
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  color: var(--v2-cyan);
+}
+.gigs :global([data-testid="active-effects-dock"] > span:first-child) {
+  flex: 0 0 auto;
+  align-self: center;
+  writing-mode: horizontal-tb;
+  transform: none;
+  color: currentColor;
+  font:
+    700 10px/1 "Cyberpunk Refinery 25",
+    sans-serif;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.gigs :global([data-testid="active-effects-dock"] > div) {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  gap: 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.gigs :global([data-testid="active-effects-dock"] [data-tone]) {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  width: auto;
+  height: 100%;
+  padding: 2px;
+  border: 1px solid color-mix(in srgb, currentColor 38%, transparent);
+  background: #070c0fe8;
+}
+.gigs :global([data-testid="active-effects-dock"] [data-tone="rival"]) {
+  color: var(--v2-red);
+}
+.gigs :global([data-testid="active-effects-dock"] [data-tone] .sim-card-image-frame) {
+  width: auto;
+  height: 100%;
+  aspect-ratio: 5 / 7;
+}
+.gigs :global([data-testid="active-effects-dock"] [data-tone] img) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Chips are miniature-only; the count badge and tooltip are styled by
+   CenterRow.module.css. The flattened rail contributes placement (above). */
+/* Keep the adapter/debug panel out of the player and accessibility surfaces. */
+.prompts :global(.interaction-panel) {
+  display: none;
+}
+
+.root :global([data-die-type="d4"]) {
+  --v2-die-art: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/dice/d4.svg");
+}
+
+.root :global([data-die-type="d6"]) {
+  --v2-die-art: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/dice/d6.svg");
+}
+
+.root :global([data-die-type="d8"]) {
+  --v2-die-art: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/dice/d8.svg");
+}
+
+.root :global([data-die-type="d10"]) {
+  --v2-die-art: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/dice/d10.svg");
+}
+
+.root :global([data-die-type="d12"]) {
+  --v2-die-art: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/dice/d12.svg");
+}
+
+.root :global([data-die-type="d20"]) {
+  --v2-die-art: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/dice/d20.svg");
+}
+
+.root :global([data-testid="fixer-die"]) {
+  background: var(--v2-die-art) center/contain no-repeat;
+}
+.rivalFixer :global([data-testid="fixer-die"]) > span > :global([data-cyberpunk-die-face]),
+.localFixer :global([data-testid="fixer-die"]) > span > :global([data-cyberpunk-die-face]) {
+  background: transparent;
+  clip-path: none;
+  box-shadow: none;
+  border: none;
+  color: #eff7ff;
+  text-shadow: 0 1px 3px #000;
+}
+
+/* This plane uses the same view/projection matrix as the physical cards. */
+.projected {
+  position: absolute;
+  inset: 0;
+  transform-origin: 0 0;
+  transform-style: preserve-3d;
+}
+.cardHit {
+  transition: none;
+}
+.status {
+  background: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/components/resource-housing.webp")
+    center/100% 100% no-repeat;
+  border: 0;
+  clip-path: none;
+  box-shadow: none;
+  min-width: 23%;
+  height: 6%;
+  justify-content: space-evenly;
+  padding: 0.6cqw 1.2cqw;
+}
+.status > span {
+  color: var(--v2-cyan);
+  text-shadow: 0 0 10px #30dcff44;
+}
+.root .table .pass button {
+  background: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/states/button-idle.svg")
+    center/100% 100% no-repeat;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+.root .table .pass button:hover {
+  filter: brightness(1.18);
+}
+.rivalPiles,
+.localPiles {
+  padding: 0.5cqw;
+  background: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/components/instrument-housing.webp")
+    center/100% 100% no-repeat;
+}
+.prompts > div {
+  background: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/components/overlay-panel.webp")
+    center/100% 100% no-repeat;
+  border: 0;
+  padding: 1cqw;
+}
+
+/* Reserve dice are lit meshes; the original buttons retain keyboard and rule actions. */
+.rivalFixer :global([data-testid="fixer-zone"]) > div,
+.localFixer :global([data-testid="fixer-zone"]) > div {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  display: flex;
+  gap: 0;
+  align-items: start;
+}
+.rivalFixer :global([data-testid="fixer-zone"]) > div > *,
+.localFixer :global([data-testid="fixer-zone"]) > div > * {
+  flex: 1;
+  height: 100%;
+}
+.root :global([data-testid="fixer-die"]) {
+  background: transparent;
+  width: 100%;
+  height: 100%;
+}
+.rivalFixer :global([data-testid="fixer-die"]) > span > :global([data-cyberpunk-die-face]),
+.localFixer :global([data-testid="fixer-die"]) > span > :global([data-cyberpunk-die-face]) {
+  width: 100%;
+  height: 100%;
+  filter: none;
+  align-items: end;
+  font-size: 0.8cqw;
+  padding-bottom: 5%;
+}
+.root :global([data-testid="fixer-die"]) > span > :global([data-cyberpunk-die-face])::before {
+  display: none;
+}
+.rivalFixer :global([data-testid="fixer-zone"]) > span,
+.localFixer :global([data-testid="fixer-zone"]) > span {
+  bottom: -1cqw;
+}
+.prompts > div {
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+}
+.prompts > div:has(button:not(:global(.interaction-panel) button)) {
+  background: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/components/overlay-panel.webp")
+    center/100% 100% no-repeat;
+  padding: 1cqw;
+}
+
+.root .table .gigs :global([data-testid="gig-row"]) {
+  height: 10%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.root
+  .table
+  .gigs
+  :global([data-testid="gig-row"])
+  > div:not(:global([data-score-variant])):not(:global([data-testid="gig-selection-prompt"])) {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.root .table .gigs :global([data-testid="gig-row"]) > div > div {
+  display: flex;
+  flex-direction: row;
+  gap: 0.6cqw;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+.root .table .gigs :global([data-testid="gig-die-anchor"]) {
+  flex: 0 0 auto;
+}
+.root .table .gigs :global([data-testid="gig-die"]) {
+  width: 3.5cqw;
+  height: 3.5cqw;
+  background: var(--v2-die-art) center/contain no-repeat;
+}
+.root .table .gigs :global([data-testid="gig-die"]) > span > :global([data-cyberpunk-die-face]) {
+  /* Size lives in the later 52cqi rule (cascade: same specificity, later
+     source order wins) — keeping the declaration here too invited drift. */
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  clip-path: none;
+  filter: none;
+  color: #f4f8fa;
+  text-shadow: 0 2px 3px #000;
+}
+.root
+  .table
+  .gigs
+  :global([data-testid="gig-die"])
+  > span
+  > :global([data-cyberpunk-die-face])::before {
+  display: none;
+}
+.root .table .gigs :global([data-sim-zone-label]) {
+  background: transparent;
+  color: #93a7b0;
+  font-size: 0.65cqw;
+  border: 0;
+}
+/* Gig prompts keep only a slim caption; the lane itself becomes the prompt.
+   Eligible dice swell ~2x and carry the very same anchored amber pulse the
+   fixer candidates use during "Take a gig die", while ineligible dice fade
+   back so the click targets read at a glance. */
+.root .table .gigs :global([data-testid="gig-die"]) {
+  transition:
+    transform 280ms ease,
+    opacity 280ms ease;
+}
+.root .table .gigs :global([data-testid="gig-row"][data-selection-active="true"]) {
+  z-index: 14;
+}
+.root
+  .table
+  .gigs
+  :global([data-testid="gig-row"][data-selection-active="true"])
+  :global([data-testid="gig-die"][data-interactive="true"]) {
+  position: relative;
+  transform: scale(2);
+  /* The anchor reserves the enlarged footprint. Its centered half-width
+     control scales to fill it, including when a crowded lane shrinks. */
+  width: 50%;
+  margin: 0;
+  z-index: 2;
+}
+.root .table .gigs :global([data-testid="gig-die-anchor"]):has([data-interactive="true"]) {
+  flex: 0 1 8cqw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.root
+  .table
+  .gigs
+  :global([data-testid="gig-row"][data-selection-active="true"])
+  :global([data-testid="gig-die"][data-interactive="true"]) {
+  color: #f5e642;
+  animation: v2-die-highlight 1.4s ease-in-out infinite;
+}
+.root
+  .table
+  .gigs
+  :global([data-testid="gig-row"][data-selection-active="true"])
+  :global([data-testid="gig-die"][data-interactive="false"]) {
+  opacity: 0.45;
+}
+/* The swelled dice cover the lane's stat label; the prompt caption and the
+   on-lane STEAL/PICK chip carry that moment, so fade the label instead. */
+.root
+  .table
+  .gigs
+  :global([data-testid="gig-row"][data-selection-active="true"])
+  :global([data-sim-zone-label]) {
+  opacity: 0;
+}
+/* The selection chip used to float centered over the lane — exactly where the
+   swelled dice now reach. Per-side placement keeps it outside the dice band
+   entirely: above the rival lane (board edge), below the friendly lane (open
+   board), always left-aligned with the lane. */
+.root .table .gigs :global([data-testid="gig-row"]) :global([data-testid="gig-selection-prompt"]) {
+  left: 10px;
+  transform: none;
+  max-width: min(440px, calc(100% - 20px));
+  gap: 5px;
+  padding: 3px 7px 2px;
+  font-size: 9px;
+}
+.root
+  .table
+  .gigs
+  :global([data-testid="gig-row"][data-side="opponent"])
+  :global([data-testid="gig-selection-prompt"]) {
+  top: -46px;
+}
+.root
+  .table
+  .gigs
+  :global([data-testid="gig-row"][data-side="player"])
+  :global([data-testid="gig-selection-prompt"]) {
+  top: calc(100% + 46px);
+}
+/* data-side is the OWNER side; when the human sits on P2 the friendly lane is
+   the opponent-side row (bottom) and the rival lane is the player-side row
+   (top), so the outward placement flips with data-human-side — keying on the
+   owner side alone pushed both chips into the central play area. */
+.root
+  .table[data-human-side="opponent"]
+  .gigs
+  :global([data-testid="gig-row"][data-side="opponent"])
+  :global([data-testid="gig-selection-prompt"]) {
+  top: calc(100% + 46px);
+}
+.root
+  .table[data-human-side="opponent"]
+  .gigs
+  :global([data-testid="gig-row"][data-side="player"])
+  :global([data-testid="gig-selection-prompt"]) {
+  top: -46px;
+}
+.root
+  .table
+  .gigs
+  :global([data-testid="gig-row"])
+  :global([data-testid="gig-selection-prompt"])
+  strong {
+  padding: 1px 4px 0;
+  font-size: 9px;
+}
+.status,
+.rivalPiles,
+.localPiles {
+  background-size: cover;
+}
+
+.rivalPiles,
+.localPiles {
+  --zone-pad: 0px;
+}
+.root .table :global([data-testid="deck-zone"]),
+.root .table :global([data-testid="trash-zone"]) {
+  background: transparent;
+  border: none;
+}
+.root [data-deck-ready="true"] :global([data-testid="deck-zone"]) :global(.sim-card-image-frame),
+.root [data-trash-ready="true"] :global([data-testid="trash-zone"]) :global(.sim-card-image-frame) {
+  opacity: 0;
+}
+.root [data-deck-ready="true"] :global(.deck-stack-zone-layers),
+.root [data-trash-ready="true"] :global(.discard-pile-zone-layers) {
+  visibility: hidden;
+}
+.modal {
+  color: #e4ebf0;
+  background: #11191e var(--v2-surface-image, url("./assets/surface-weathered-v2.webp"))
+    center/cover;
+  border: 2px solid #56656d;
+  border-radius: 2px;
+  box-shadow: 0 20px 70px #000;
+}
+.modalHeader {
+  background: #131a1f;
+  color: #d6eaf4;
+  border-bottom: 1px solid #586973;
+  font-family: "Cyberpunk Refinery 25", sans-serif;
+  letter-spacing: 0.1em;
+}
+/* EddiesZone sizes its cards with height:100% down a chain rooted in the
+   board's grid tracks; inside a modal that chain is indefinite, so each card
+   falls back to its intrinsic image size and blows the modal up. Pin them to
+   the Trash review size and let the row wrap. */
+.modal [data-testid="eddies-drop-slot"] [data-testid="card"] {
+  height: 161px;
+}
+.modal [data-testid="eddies-drop-slot"] [role="list"] {
+  flex-wrap: wrap;
+}
+/* Keep the first card row clear of the zone's absolute counter chip. */
+.modal [data-testid="eddies-drop-slot"] [data-testid="eddies-zone"] {
+  padding-top: 30px;
+}
+
+.rivalPiles,
+.localPiles {
+  background: transparent;
+}
+.root
+  .table
+  .gigs
+  :global([data-testid="gig-row"])
+  > div:not(:global([data-score-variant])):not(:global([data-testid="gig-selection-prompt"])) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.root .table .gigs :global([data-testid="gig-row"]) > div > div {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.mobileMenu {
+  width: 100%;
+  min-height: 40px;
+  color: #a5c7d4;
+  font-family: "Cyberpunk Refinery 25", sans-serif;
+  letter-spacing: 0.12em;
+  border: 0;
+  border-bottom: 1px solid #53616c;
+  background: #161d22
+    url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/components/rail-horizontal.webp")
+    center/cover;
+  text-shadow: 0 2px 4px #000;
+  cursor: pointer;
+}
+
+.rivalIdentity :global([data-testid="pinfo-zone"]) {
+  min-width: 9cqw;
+  min-height: 3cqw;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  overflow: visible;
+}
+.rivalIdentity :global([data-testid="pinfo-zone"]) > div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6cqw;
+}
+.rivalIdentity :global([data-testid="pinfo-zone"])::before,
+.rivalIdentity :global([data-testid="pinfo-zone"])::after {
+  display: none;
+}
+.rivalIdentity :global([data-drop-hint="attackRival"]) {
+  background: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/states/button-idle.svg")
+    center/cover;
+  color: #101619;
+  min-width: 10cqw;
+  min-height: 4cqw;
+}
+/* V2 card inspector: quiet recessed metal, with live text on opaque surfaces. */
+:global(body):has(.root) :global([data-card-context-menu]) {
+  --board-text: #e1eaed;
+  --card-context-muted: #a7b8be;
+  --board-border: #435158;
+  --game-accent: #e6ce79;
+  background: linear-gradient(145deg, #1c282c, #10171b 55%);
+  border: 1px solid #657277;
+  border-radius: 4px;
+  font-family: "Cyberpunk Blender Pro", "Arial Narrow", sans-serif;
+  box-shadow:
+    inset 0 0 0 3px #0b1115,
+    inset 0 4px #88959755,
+    0 16px 48px #000c;
+}
+:global(body):has(.root) :global([data-card-context-menu]) > header {
+  background:
+    linear-gradient(#142025dd, #142025f5),
+    url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/components/rail-horizontal.webp")
+      center/cover;
+  border-bottom: 1px solid #546167;
+  text-shadow: none;
+}
+:global(body):has(.root) :global([data-card-context-menu] button[aria-label^="Inspect"]) {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 4px;
+  text-decoration-color: currentColor;
+}
+:global(body):has(.root) :global([data-card-context-menu] button[aria-label^="Inspect"] strong) {
+  font-family: "Cyberpunk Refinery 25", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.035em;
+}
+:global(body):has(.root) :global([data-card-context-menu] > header > button) {
+  color: #b2c4c9;
+  background: #111b20;
+  border-color: #42565e;
+}
+:global(body):has(.root) :global([data-card-context-menu] [data-card-context-rule-text]) {
+  color: #d6e0e3;
+  font-family: "Cyberpunk Blender Pro", sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  font-weight: 400;
+}
+:global(body):has(.root) :global([data-card-context-menu] [aria-label="Card actions"] > p) {
+  color: #9fb2b8;
+  font-family: "Cyberpunk Blender Pro", sans-serif;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+:global(body):has(.root) :global([data-card-context-menu] [data-action-id]) {
+  border-radius: 2px;
+  border: 1px solid #3e5057;
+  background: linear-gradient(110deg, #26383e, #19252b);
+  box-shadow:
+    inset 2px 0 #6e9ea8,
+    inset 0 1px #a8c4ce12;
+}
+:global(body):has(.root) :global([data-card-context-menu] [data-action-id] > span:first-child) {
+  background: #0e1b20;
+  color: #a5cdd4;
+  border-radius: 2px;
+}
+:global(body):has(.root) :global([data-card-context-menu] [data-action-id] strong) {
+  color: #edf4f5;
+  font-family: "Cyberpunk Blender Pro", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+:global(body):has(.root)
+  :global([data-card-context-menu] [data-cyberpunk-context-text="action-detail"]),
+:global(body):has(.root)
+  :global([data-card-context-menu] [data-cyberpunk-context-text="disabled-reason"]) {
+  color: #b2c3c9;
+  font-family: "Cyberpunk Blender Pro", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+:global(body):has(.root) :global([data-card-context-menu] [data-action-id] kbd) {
+  border-color: #586265;
+  border-radius: 2px;
+  color: #d5c58e;
+  background: #121a1e;
+}
+:global(body):has(.root) :global([data-card-context-menu] [data-action-id][aria-disabled="true"]) {
+  background: #151d21;
+  box-shadow: none;
+  border-color: #303e44;
+}
+:global(body):has(.root)
+  :global([data-card-context-menu] [data-action-id]:not([aria-disabled="true"]):hover) {
+  border-color: #d5c58e;
+  background: linear-gradient(110deg, #33474b, #203139);
+  box-shadow: inset 2px 0 #e6ce79;
+}
+
+.root
+  .cardHit[data-mesh-ready="true"][data-zone-lane="field"]
+  :global([data-testid="attached-gear"]):not(:hover):not([data-choice-eligible="true"])
+  :global(.sim-card-image-frame) {
+  opacity: 0;
+}
+
+/* Landscape art direction: quiet playfield, warm instrument light, clear silhouettes. */
+.root {
+  --v2-cyan: #80cad4;
+  --v2-red: #dd7b80;
+  --v2-yellow: #dfbd65;
+  position: relative;
+}
+.scroll {
+  overflow: hidden;
+}
+.table {
+  min-width: 0;
+  aspect-ratio: 16 / 9;
+}
+.identity {
+  font-family: "Cyberpunk Blender Pro", sans-serif;
+  font-weight: 700;
+  font-size: 1.45cqw;
+  letter-spacing: 0.08em;
+}
+.identity small {
+  font-size: 1cqw;
+  color: #d1dbe0;
+  opacity: 1;
+}
+.rivalIdentity {
+  right: 4.5%;
+  top: 4%;
+}
+.localIdentity {
+  right: 75.5%;
+  left: auto;
+  bottom: 6.8%;
+}
+.identity[data-active="true"] i {
+  box-shadow: 0 0 6px #80cad455;
+}
+.status {
+  background-size: 100% 100%;
+  width: 24%;
+  min-width: 0;
+  height: 7%;
+  font-size: 2.15cqw;
+  padding: 0.7cqw 1.8cqw;
+}
+.status > span {
+  color: #b1d9df;
+  text-shadow: none;
+}
+.status small {
+  opacity: 1;
+  color: #a9bac2;
+}
+.localStatus {
+  right: 3%;
+  bottom: 3%;
+}
+.rivalStatus {
+  left: 3%;
+  top: 2.8%;
+}
+.pass {
+  top: 41.5%;
+  right: 2.5%;
+  width: 17%;
+  padding: 0;
+  background: none;
+}
+.root .table .pass button {
+  min-height: 5.3cqw;
+  padding: 0.8cqw 3cqw 0.8cqw 1.6cqw;
+  font-family: "Cyberpunk Blender Pro", sans-serif;
+  font-size: 1.8cqw;
+  font-weight: 800;
+  color: #131c20;
+  letter-spacing: 0.06em;
+  filter: none;
+}
+.root .table .pass button:hover {
+  filter: brightness(1.08);
+}
+.root .table .pass button:disabled {
+  filter: saturate(0.25);
+  opacity: 0.7;
+}
+.pass :global([aria-label="Spacebar hotkey"]) {
+  border: 0;
+  background: none;
+  font-size: 0.8cqw;
+  opacity: 0.75;
+  box-shadow: none;
+  padding: 0;
+}
+.clock {
+  left: 75.5%;
+  right: auto;
+  bottom: 2%;
+  width: 20%;
+  font-size: 1.05cqw;
+}
+.fieldDrop span {
+  opacity: 0;
+}
+.fieldDrop[data-over="true"] span {
+  opacity: 0.9;
+}
+/* Attack drag: the field is not a drop target; quietly point at the units. */
+.fieldDrop[data-attack-hint="true"] > span {
+  opacity: 0.62;
+  font-size: 0.9cqw;
+  letter-spacing: 0.32em;
+  color: #ffc0da;
+  text-shadow: 0 1px 4px #000;
+}
+.rivalFixer,
+.localFixer {
+  bottom: auto;
+  left: auto;
+}
+.rivalFixer :global([data-testid="fixer-die"]) > span > :global([data-cyberpunk-die-face]),
+.localFixer :global([data-testid="fixer-die"]) > span > :global([data-cyberpunk-die-face]) {
+  font-family: "Cyberpunk Blender Pro", sans-serif;
+  font-size: 1.15cqw;
+  font-weight: 600;
+  text-shadow: 0 2px 3px #000;
+}
+.rivalFixer :global([data-testid="fixer-zone"]) > span,
+.localFixer :global([data-testid="fixer-zone"]) > span {
+  font-size: 0.95cqw;
+  letter-spacing: 0.18em;
+  color: #b5c3cb;
+  bottom: -1.1cqw;
+  background: #0c1419;
+}
+.rivalPiles,
+.localPiles {
+  left: auto;
+  padding: 0.5cqw;
+}
+.root .table :global([data-testid="deck-zone"]),
+.root .table :global([data-testid="trash-zone"]) {
+  --zone-label-size: 1cqw;
+}
+.root .table :global([data-sim-zone-label]) {
+  font-size: 1cqw;
+  font-family: "Cyberpunk Blender Pro", sans-serif;
+  letter-spacing: 0.08em;
+  color: #b5c3cb;
+  text-shadow: 0 1px 3px #000;
+}
+.root .table .gigs :global([data-testid="gig-row"]) {
+  width: 23%;
+  height: 9%;
+}
+.table[data-human-side="player"] .gigs :global([data-sim-zone-id="p-gigArea"]),
+.table[data-human-side="opponent"] .gigs :global([data-sim-zone-id="opp-gigArea"]) {
+  right: 3%;
+  top: 60%;
+}
+.table[data-human-side="player"] .gigs :global([data-sim-zone-id="opp-gigArea"]),
+.table[data-human-side="opponent"] .gigs :global([data-sim-zone-id="p-gigArea"]) {
+  left: 3%;
+  top: 31%;
+}
+.root .table .gigs :global([data-testid="gig-die"]) {
+  width: 4cqw;
+  height: 4cqw;
+}
+.root .table .gigs :global([data-sim-zone-label]) {
+  font-size: 0.95cqw;
+  color: #bccbd1;
+  background: #0c1419;
+  padding: 0 0.5cqw;
+}
+.root .table .gigs :global([data-testid="gig-die"]) > span > :global([data-cyberpunk-die-face]) {
+  /* cqi of the die box (see container-type above): crowded lanes shrink the
+     box, so a fixed cqw size would overflow across neighbouring dice. */
+  font-size: 52cqi;
+}
+/* Dicier glyphs (font display mode) run wider per em than plain digits —
+   two-digit ligature ink measures ~2.2em — so they need a smaller ratio of
+   the box to keep every face value contained. 42cqi keeps 2 digits ≤ ~92cqi
+   of the box, with headroom instead of the old 46cqi's ~101cqi overflow. */
+.root .table .gigs :global([data-testid="gig-die"]) > span > :global([class*="fontMd"]) {
+  font-size: 42cqi;
+}
+.root .cardHit :global([data-interaction-state="armable"]) {
+  transform: none;
+}
+.cardHit {
+  transition: transform 0.15s ease-out;
+}
+.localPages {
+  right: 30%;
+  bottom: 1.8%;
+}
+.rivalPages {
+  right: 30%;
+  top: 2%;
+}
+.actionPulse {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cardHit {
+    transition: none;
+  }
+}
+
+.rivalFixer :global([data-testid="fixer-zone"]) > span,
+.localFixer :global([data-testid="fixer-zone"]) > span {
+  top: -1.4cqw;
+  bottom: auto;
+}
+.root .table .pass button {
+  box-shadow: 0 0.3cqw 1cqw #0009;
+  border: 0;
+  border-radius: 0;
+}
+.root .table .pass button > span {
+  font-size: 1.9cqw;
+  font-weight: 800;
+}
+.root .table .pass :global([aria-label="Spacebar hotkey"]) {
+  font-size: 0.8cqw;
+  min-height: 0;
+  width: auto;
+  margin: 0;
+}
+.root .table .pass :global([aria-label="Spacebar hotkey"]) svg {
+  width: 1cqw;
+  height: 1cqw;
+}
+
+.root .table .gigs :global([data-testid="gig-die"]) {
+  max-width: none;
+  max-height: none;
+}
+.root .table .gigs :global([data-testid="gig-die-anchor"]) {
+  flex: 0 1 4cqw;
+  min-width: 0;
+}
+.root .table .gigs :global([data-testid="gig-die"]) {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  /* Crowded lanes shrink anchors via flex; making the die a container lets
+     the face number track the shrunken box (cqi below) instead of overflowing
+     across neighbouring dice. */
+  container-type: inline-size;
+}
+.root .table :global(.empty-zone) {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/components/card-well.webp")
+    center/contain no-repeat;
+  border-radius: 0;
+}
+.root .table :global(.empty-zone) > span {
+  opacity: 0;
+}
+.root .table :global(.tabletop-pile-count) {
+  border-radius: 50%;
+  border: 1px solid #b3c0c5;
+  color: #e5edf1;
+  background: #121b21;
+  font-size: 1.3cqw;
+  min-width: 1.9cqw;
+  height: 1.9cqw;
+  box-shadow: 0 2px 5px #000;
+}
+.root
+  .table
+  :global([data-testid="deck-zone"][data-side="opponent"])
+  :global(.tabletop-pile-count) {
+  top: 4px;
+  right: auto;
+  bottom: auto;
+  left: 4px;
+}
+.root
+  .cardHit
+  :global([data-sim-animation-face-target])
+  > :global([data-has-frame][aria-label$="power"]) {
+  width: 34%;
+  aspect-ratio: 1.35;
+  background: #18232cf5;
+  border: 1px solid #9cabb5;
+  box-shadow: 0 2px 3px #0009;
+  border-radius: 2px;
+}
+.root
+  .cardHit
+  :global([data-sim-animation-face-target])
+  > :global([data-has-frame][aria-label$="power"])
+  > img {
+  opacity: 0;
+}
+.root
+  .cardHit
+  :global([data-sim-animation-face-target])
+  > :global([data-has-frame][aria-label$="power"])
+  > span {
+  font-size: 1.65cqw;
+  font-weight: 600;
+  text-shadow: 0 1px 2px #000;
+}
+.root
+  .cardHit
+  :global([data-sim-animation-face-target])
+  > :global([data-has-frame][data-modified="true"][aria-label$="power"]) {
+  border-color: #dbbb6a;
+  color: #ffe0a0;
+}
+.rivalFixer :global([data-testid="fixer-zone"]) > div > *,
+.localFixer :global([data-testid="fixer-zone"]) > div > * {
+  min-width: 0;
+  flex: 1 1 0;
+}
+.root :global([data-testid="fixer-die"]) {
+  min-width: 0;
+}
+
+.root .table .pass button {
+  animation: none;
+}
+:global(body):has(.root) div:has(> button[aria-label="Close preview"]) {
+  border: 2px solid #72858e !important;
+  box-shadow:
+    inset 0 0 0 3px #0a1116,
+    0 12px 35px #000c !important;
+  border-radius: 3px;
+}
+:global(body):has(.root) button[aria-label="Close preview"] {
+  color: #d8e3e7;
+  background: #18242c;
+  border-color: #72858e;
+}
+/* The shared clock also scales with the landscape instruments. */
+.clock {
+  height: 5%;
+}
+.root .clock :global([data-testid="phase-clock"]) {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 40% 60%;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  gap: 0.2cqw 0.6cqw;
+  padding: 0;
+  font-size: 0.9cqw;
+}
+.root .clock :global([data-testid="phase-clock"]) > div {
+  min-height: 0;
+  min-width: 0;
+  padding: 0;
+  gap: 0.3cqw;
+  margin: 0;
+}
+.root .clock :global([data-testid="phase-clock"]) > div:last-child {
+  grid-column: 1 / -1;
+}
+.root .clock :global([data-testid="phase-clock"]) span {
+  font-size: inherit;
+  line-height: 1;
+}
+.root .clock :global([data-testid="turn-side-chip"]) {
+  padding: 0.1cqw 0.3cqw;
+}
+.root .clock :global(.clock-readout) {
+  min-height: 0;
+  padding: 0.1cqw 0.4cqw;
+  gap: 0.2cqw;
+}
+.root .clock :global(.clock-readout) strong {
+  font-size: 1.05cqw;
+  line-height: 1;
+}
+
+/* Keep the authored faction power frames visible on the projected V2 cards. */
+.root
+  .cardHit
+  :global([data-sim-animation-face-target])
+  > :global([data-has-frame][aria-label$="power"]) {
+  width: 36%;
+  aspect-ratio: 120 / 92;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.root
+  .cardHit
+  :global([data-sim-animation-face-target])
+  > :global([data-has-frame][aria-label$="power"])
+  > img {
+  opacity: 1;
+  filter: url("#cyberpunk-v2-power-frame")
+    drop-shadow(0 0 1px color-mix(in srgb, var(--stat-accent), transparent 55%));
+}
+.root
+  .cardHit
+  :global([data-sim-animation-face-target])
+  > :global([data-has-frame][aria-label$="power"])
+  > span {
+  font-size: 1.65cqw;
+  font-weight: 700;
+  text-shadow: 0 1px 3px #080c10;
+}
+
+/* Match printed card headings and stats with the available Cyberpunk display face. */
+.root .identity,
+.root .table .pass button,
+.root .table :global([data-sim-zone-label]),
+.root .table :global([data-testid="gig-row"]),
+.root .table :global([data-testid="fixer-zone"]) > span,
+.root .clock :global(.clock-readout) strong {
+  font-family: "Cyberpunk Refinery 25", "Cyberpunk Blender Pro", sans-serif;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.root .identity small,
+.root .table .pass :global([aria-label="Spacebar hotkey"]) {
+  font-family: "Cyberpunk Blender Pro", "Arial Narrow", sans-serif;
+  font-weight: 400;
+}
+.root
+  .cardHit
+  :global([data-sim-animation-face-target])
+  > :global([data-has-frame][aria-label$="power"])
+  > span {
+  font-family: "Cyberpunk Refinery 25", "Cyberpunk Blender Pro", sans-serif;
+  font-weight: 600;
+}
+.powerFrameFilter {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Published industrial hardware is rendered in Three.js. DOM supplies only live ink and input. */
+.root .table .status {
+  width: 23%;
+  height: 5.78%;
+  min-width: 0;
+  padding: 0 0.5cqw;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  gap: 0.65cqw;
+  font-size: 2.1cqw;
+  color: #e4ecef;
+}
+.root .table .localStatus {
+  right: 1%;
+  bottom: 2.44%;
+  justify-content: flex-start;
+}
+.root .table .rivalStatus {
+  left: 1%;
+  top: 2.44%;
+  justify-content: flex-end;
+}
+.root .table .status > span {
+  color: #b9d7de;
+  text-shadow: 0 1px 3px #000;
+}
+.root .table .status button {
+  text-shadow: 0 1px 3px #000;
+}
+.root .table .status small {
+  color: #acbdc4;
+}
+/* The rail leads with the Street Cred span, then the €$ button, then the Sell
+   slot — key the separator to "span after any header control" so it survives
+   child reorders. */
+.root .table .status > span + span,
+.root .table .status > button + span {
+  border-left: 1px solid #7e959955;
+  padding-left: 0.7cqw;
+}
+.root .table .localIdentity {
+  right: auto;
+  left: 1.5%;
+  bottom: 14%;
+  width: 19.75%;
+  height: 6%;
+  justify-content: center;
+  gap: 0.7cqw;
+  font-size: 1.5cqw;
+}
+.root .table .localIdentity small {
+  font-size: 0.95cqw;
+  white-space: nowrap;
+}
+.root .table .rivalIdentity {
+  right: 1.5%;
+  top: 3.2%;
+}
+.root .clock {
+  left: 1%;
+  top: 46%;
+  right: auto;
+  bottom: auto;
+  width: 19.75%;
+  height: 14.05%;
+}
+.root .clock :global([data-testid="phase-clock"]) {
+  font-size: 0.85cqw;
+}
+.root .clock :global([data-testid="turn-side-chip"]),
+.root .clock :global(.clock-readout) {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.root .clock :global(.clock-readout) strong {
+  font-size: 1.45cqw;
+}
+.root .clock :global(.clock-readout[data-active="true"]) {
+  color: #9fe3e7;
+}
+.root .table .gigs :global([data-testid="gig-row"]) {
+  width: 22%;
+  height: 7%;
+}
+.table[data-human-side="player"] .gigs :global([data-sim-zone-id="p-gigArea"]),
+.table[data-human-side="opponent"] .gigs :global([data-sim-zone-id="opp-gigArea"]) {
+  right: 1.5%;
+  top: 60%;
+}
+.table[data-human-side="player"] .gigs :global([data-sim-zone-id="opp-gigArea"]),
+.table[data-human-side="opponent"] .gigs :global([data-sim-zone-id="p-gigArea"]) {
+  left: 1.5%;
+  top: 33%;
+}
+.root .table .gigs :global([data-testid="gig-die-anchor"]) {
+  flex-basis: 3.4cqw;
+}
+.root .table .gigs :global([data-sim-zone-label]),
+.root .table .rivalFixer :global([data-testid="fixer-zone"]) > span,
+.root .table .localFixer :global([data-testid="fixer-zone"]) > span {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  clip-path: none;
+  color: #bfccd0;
+  text-shadow: 0 1px 3px #000;
+  letter-spacing: 0.12em;
+}
+.root .table .gigs :global([data-sim-zone-label]) {
+  font-size: 0.8cqw;
+  top: -1.15cqw;
+  bottom: auto;
+  left: 50%;
+  right: auto;
+  width: max-content;
+  max-width: 100%;
+  transform: translateX(-50%);
+  text-align: center;
+  white-space: nowrap;
+  padding: 0;
+}
+.root .table .rivalFixer :global([data-testid="fixer-zone"]) > span,
+.root .table .localFixer :global([data-testid="fixer-zone"]) > span {
+  top: -1.2cqw;
+  bottom: auto;
+  font-size: 0.85cqw;
+}
+.root .table .pass {
+  padding: 0;
+  background: none;
+}
+.root .table .pass :global([data-testid="phase-hud"]) {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+.root .table .pass :global([data-testid="phase-hud"]) > span:last-child {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.root .table .pass :global([data-testid="phase-hud-label"]) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.root .table .pass button {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  clip-path: none;
+  filter: none;
+  animation: none;
+  opacity: 1;
+}
+.root .table .pass button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("./assets/action-normal-v2.webp") center/cover no-repeat;
+  border: 0;
+  box-shadow: none;
+  opacity: 1;
+  pointer-events: none;
+}
+.root .table .pass button:hover:not(:disabled)::before {
+  background-image: url("./assets/action-hover-v2.webp");
+}
+.root .table .pass button:active:not(:disabled)::before {
+  transform: translateY(2px);
+  filter: brightness(0.85);
+}
+.root .table .pass button:disabled::before {
+  background-image: url("./assets/action-disabled-v2.webp");
+}
+.root .table .pass button[data-confirming-skip-block="true"]:not(:disabled)::before {
+  background-image: url("./assets/action-confirm-v2.webp");
+}
+.root .table .pass button:focus-visible {
+  outline: 2px solid #83e8ed;
+  outline-offset: -6px;
+}
+.root .table .pass button::after {
+  display: none;
+}
+.root .table .pass button > span {
+  position: absolute;
+  left: 17%;
+  top: 32%;
+  width: 73%;
+  height: 28%;
+  display: grid;
+  place-content: center;
+  font-size: 1.42cqw;
+  line-height: 1;
+  color: #f0ede3;
+  text-shadow: 0 1px 2px #000;
+}
+.root .table .pass button:disabled > span {
+  color: #b8b6ae;
+}
+.root .table .pass :global([aria-label="Spacebar hotkey"]) {
+  position: absolute;
+  bottom: 25%;
+  left: 44%;
+  padding: 0;
+  font-size: 0.65cqw;
+  background: none;
+  border: 0;
+  color: #a8b8ba;
+  opacity: 1;
+}
+.root .table .pass button:disabled :global([aria-label="Spacebar hotkey"]) {
+  color: #bcc7cc;
+}
+.root .table .clock :global(.clock-readout) strong {
+  font-size: 1.45cqw;
+}
+.root .table .clock :global(.clock-readout) > span {
+  display: inline;
+  font-size: 0.7cqw;
+  letter-spacing: 0.05em;
+}
+.root .table .pass :global([aria-label="Spacebar hotkey"]) {
+  bottom: 24%;
+  line-height: 1;
+  height: auto;
+}
+
+/* The hand sleeves own passive borders; DOM outlines must not show through other cards.
+   --rim-radius sits here so it inherits to the interaction rim drawn on the face target. */
+.root .cardHit[data-zone-lane="hand"] {
+  transition: transform 0.38s ease-out;
+  --rim-radius: 11px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .root .cardHit[data-zone-lane="hand"] {
+    transition: none;
+  }
+}
+
+/* The viewport owns the scenery; a single projected world plane owns gameplay. */
+.root .scroll {
+  position: relative;
+  display: block;
+}
+.root .table {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  margin: 0;
+}
+.root .projected {
+  inset: auto;
+  left: 0;
+  top: 0;
+  width: 1600px;
+  height: 900px;
+  container-type: inline-size;
+}
+/* Without the camera projection (WebGL unavailable) the authored layer would
+   stay pinned left while the flat hand/instrument layer self-centers; share
+   the same axis so field rows keep their vertical bands but sit on the
+   window midline. */
+.root .projected.projectedFallback {
+  left: max(0px, calc(50% - 800px));
+}
+.flatLegends {
+  position: absolute;
+  inset: 0;
+  z-index: 21;
+  container-type: inline-size;
+  pointer-events: none;
+}
+.legendRack {
+  position: absolute;
+  display: flex;
+  gap: clamp(6px, 0.75cqw, 12px);
+}
+.rivalLegendRack {
+  top: 11%;
+  left: clamp(16px, 1.5cqw, 24px);
+  flex-direction: row;
+}
+.localLegendRack {
+  bottom: 11.5%;
+  right: clamp(16px, 1.5cqw, 24px);
+}
+.flatLegends .legendHit {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(54px, 7cqw, 112px);
+  height: auto;
+  aspect-ratio: 5 / 7;
+  pointer-events: auto;
+}
+.flatLegends .legendHit :global([data-sim-animation-face-target]) {
+  border-radius: calc(var(--legend-size, 112px) * 0.07);
+  --rim-radius: calc(var(--legend-size, 112px) * 0.07 + 2px);
+  box-shadow:
+    0 8px 26px #0008,
+    0 0 0 2px #1b292d,
+    0 0 0 3px #47848b8c,
+    0 0 17px #58d6df24;
+}
+.flatLegends .legendHit :global(.sim-card-image-frame) img {
+  border-radius: calc(var(--legend-size, 112px) * 0.07);
+}
+.flatLegends .legendHit[data-rival="true"] :global([data-sim-animation-face-target]) {
+  box-shadow:
+    0 8px 26px #0008,
+    0 0 0 2px #2d2024,
+    0 0 0 3px #9a555b8c,
+    0 0 17px #ff697024;
+}
+.root .table .gigs :global([data-sim-zone-label]),
+.root .table .rivalFixer :global([data-testid="fixer-zone"]) > span,
+.root .table .localFixer :global([data-testid="fixer-zone"]) > span {
+  font-size: calc(0.85cqw * var(--hud-scale, 1));
+}
+.root .clock :global([data-testid="phase-clock"]) {
+  font-size: calc(0.85cqw * var(--hud-scale, 1));
+}
+.root .table .clock :global(.clock-readout) > span {
+  font-size: calc(0.7cqw * var(--hud-scale, 1));
+}
+.root .table .clock :global(.clock-readout) strong {
+  font-size: calc(1.45cqw * var(--hud-scale, 1));
+}
+@media (max-height: 540px) and (orientation: landscape) {
+  .root .scroll {
+    margin-left: env(safe-area-inset-left);
+    margin-right: env(safe-area-inset-right);
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+  .root .table .pass :global([aria-label="Spacebar hotkey"]) {
+    visibility: hidden;
+  }
+}
+@media (orientation: portrait) and (pointer: coarse) {
+  /* Portrait phones get the floating RotateGuidance card instead of the
+     landscape board; "peek at the board anyway" opts out via data attribute. */
+  .root:not([data-rotate-peek="true"]) .scroll {
+    visibility: hidden;
+  }
+}
+
+/* Viewport anchors move peripheral zones; the battlefield keeps its horizontal center. */
+.root .table .localStatus {
+  translate: var(--edge-x) var(--edge-bottom);
+}
+.root .table .rivalStatus {
+  translate: calc(-1 * var(--edge-x)) calc(-1 * var(--edge-top));
+}
+.root .table .localIdentity {
+  translate: calc(-1 * var(--edge-x)) var(--edge-bottom);
+}
+.root .table .rivalIdentity {
+  translate: var(--edge-x) calc(-1 * var(--edge-top));
+}
+
+.root .localPages {
+  translate: 0 var(--edge-bottom);
+}
+.root .rivalPages {
+  translate: 0 calc(-1 * var(--edge-top));
+}
+.table[data-human-side="player"] .gigs :global([data-sim-zone-id="p-gigArea"]),
+.table[data-human-side="opponent"] .gigs :global([data-sim-zone-id="opp-gigArea"]) {
+  translate: var(--edge-x) var(--edge-bottom);
+}
+.table[data-human-side="player"] .gigs :global([data-sim-zone-id="opp-gigArea"]),
+.table[data-human-side="opponent"] .gigs :global([data-sim-zone-id="p-gigArea"]) {
+  translate: calc(-1 * var(--edge-x)) calc(-1 * var(--edge-top));
+}
+.root .fieldDrop {
+  translate: 0 var(--field-shift);
+}
+
+/* The console artwork has three blank glass wells; all information stays live. */
+.root .table .clock :global([data-testid="phase-clock"]) {
+  position: relative;
+  display: block;
+  padding: 0;
+  background: url("./assets/clock-console-v2.webp") center/contain no-repeat;
+  color: #d6d3c9;
+  font-family: "Cyberpunk Blender Pro", sans-serif;
+  font-size: calc(0.8cqw * var(--hud-scale, 1));
+  /* Alert the affected seat, never fade the shared instrument or rival timer. */
+  animation: none;
+}
+.root .table .clock :global([data-testid="phase-clock"]) > div {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  gap: 0.4cqw;
+}
+.root .table .clock :global([data-testid="phase-clock"]) > :global([data-testid="clock-meta"]) {
+  left: 8%;
+  top: 17%;
+  width: 84%;
+  height: 10%;
+}
+.root
+  .table
+  .clock
+  :global([data-testid="phase-clock"])
+  > :global([data-testid="clock-combat-steps"]),
+.root .table .clock :global([data-testid="phase-clock"]) > :global([data-testid="clock-chips"]) {
+  left: 8%;
+  top: 28%;
+  width: 84%;
+  height: 11%;
+}
+.root .table .clock :global([data-testid="phase-clock"]) > div:last-child {
+  left: 7%;
+  top: 50%;
+  width: 86%;
+  height: 35%;
+  gap: 10%;
+}
+.root .table .clock :global([data-testid="turn-side-chip"]),
+.root .table .clock :global([data-testid="priority-side-chip"]),
+.root .table .clock :global([data-testid="phase-overtime"]) {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  white-space: nowrap;
+  font-size: inherit;
+  line-height: 1;
+}
+.root .table .clock :global([data-tone="friendly"]) {
+  color: #85dee4;
+}
+.root .table .clock :global([data-tone="rival"]) {
+  color: #d0c7bb;
+}
+.root .table .clock :global([data-testid="phase-overtime"]) {
+  color: #efb66b;
+}
+.root .table .clock :global(.clock-readout) {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.05cqw;
+  width: 0;
+  height: 100%;
+  padding: 0;
+  color: #b6b1a7;
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+.root .table .clock :global(.clock-readout[data-tone="friendly"]) {
+  order: -1;
+}
+.root .table .clock :global(.clock-readout) strong {
+  font-size: calc(1.7cqw * var(--hud-scale, 1));
+  letter-spacing: 0.025em;
+  color: inherit;
+  flex-shrink: 0;
+  text-shadow: 0 1px 2px #000;
+}
+.root .table .clock :global(.clock-readout[data-active="true"]) {
+  color: #8aecf1;
+}
+.root .table .clock :global(.clock-readout[data-active="true"])::before {
+  content: "";
+  position: absolute;
+  left: 1%;
+  top: 13%;
+  height: 63%;
+  width: 2px;
+  background: currentColor;
+  box-shadow: 0 0 5px #6bd6de55;
+}
+.root .table .clock :global(.clock-readout[data-urgency="warning"]) {
+  color: #edbe7b;
+}
+.root .table .clock :global(.clock-readout[data-urgency="critical"]) {
+  color: #f18c80;
+  animation: seat-clock-pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes seat-clock-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root .table .clock :global(.clock-readout[data-urgency="critical"]) {
+    animation: none;
+  }
+}
+
+.root .table .clock :global(.clock-readout) > span {
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+/* Align each nameplate with its Deck/Trash row in the same world coordinates. */
+.root .table .localIdentity {
+  top: 67.7778%;
+  bottom: auto;
+  left: 14.5%;
+  width: 14.75%;
+  height: 13.7778%;
+  min-height: 0;
+  align-items: center;
+}
+.root .table .rivalIdentity {
+  right: 14.5%;
+  top: 6.6667%;
+  width: 13.75%;
+  height: 13.7778%;
+  align-items: center;
+}
+.rivalIdentity :global([data-testid="pinfo-zone"]) {
+  width: 100%;
+  min-width: 0;
+}
+.rivalIdentity :global([data-testid="pinfo-zone"]) > div {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Two rows in combat: turn/priority, then progress. No repeated Main/turn owner. */
+.root
+  .table
+  .clock
+  :global([data-testid="phase-clock"]):has([data-testid="clock-combat-steps"])
+  > div:first-child {
+  top: 16%;
+  height: 11%;
+  gap: 0.8cqw;
+}
+.root
+  .table
+  .clock
+  :global([data-testid="phase-clock"])
+  > :global([data-testid="clock-combat-steps"]) {
+  left: 9%;
+  top: 29%;
+  width: 82%;
+  height: 11%;
+}
+.root .table .clock :global([aria-label="Attack step"]) {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  height: 100%;
+  gap: 0;
+}
+.root .table .clock :global([aria-label="Attack step"] [data-step]) {
+  display: grid;
+  place-content: center;
+  padding: 0;
+  min-width: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  font:
+    600 0.8cqw/1 "Cyberpunk Blender Pro",
+    sans-serif;
+  color: #c4c2bb;
+  letter-spacing: 0.06em;
+  opacity: 1;
+}
+.root .table .clock :global([aria-label="Attack step"] [data-step] + [data-step]) {
+  border-left: 1px solid #65757866;
+}
+.root .table .clock :global([aria-label="Attack step"] [aria-current="step"]) {
+  color: #071114;
+  background: #83e8ed;
+  font-weight: 800;
+  box-shadow:
+    inset 0 -2px 0 #d6ffff,
+    0 0 5px #5bcbd355;
+  text-shadow: none;
+}
+
+/* A measured, camera-projected stage for Programs awaiting resolution. */
+.root .table .gigs :global([data-testid="resolving-program"]) {
+  display: block;
+  position: absolute;
+  left: 27%;
+  top: 23%;
+  right: auto;
+  width: 8%;
+  aspect-ratio: 5 / 7;
+  height: auto;
+  transform: none;
+  animation: none;
+  z-index: 24;
+  pointer-events: none;
+}
+.root .table .gigs :global([data-testid="resolving-program-entity"]),
+.root .table .gigs :global([data-testid="resolving-program-entity"]) > div {
+  width: 100%;
+  height: 100%;
+}
+.root .table .gigs :global([data-testid="resolving-program-entity"]) {
+  filter: drop-shadow(0 4px 6px #000b) drop-shadow(0 0 4px #72d3e566);
+}
+
+/* Flat HUD: one uniform scale, 24-unit outer inset, 12-unit internal gap.
+   Only .projected and the Three.js field use the camera transform. */
+.flatOverlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1600px;
+  height: 900px;
+  transform-origin: 0 0;
+  container-type: inline-size;
+  pointer-events: none;
+  --hud-inset: 24px;
+  --hud-gap: 8px;
+  /* Field cards author at 144 units. Flat Legends sit smaller so the corner
+     rack, the resource strip and the gig lane stack inside the near edge. */
+  --legend-size: 100px;
+  /* Reserve the bottom-right action plate below the local seat controls. */
+  --local-action-space: 120px;
+}
+.flatOverlay > * {
+  pointer-events: auto;
+}
+.flatOverlay > .gigs,
+.flatOverlay > .flatLegends {
+  pointer-events: none;
+}
+/* Seat order runs corner → strip → gigs: Legends hug the table corner, the
+   resource strip sits above them (rack height + gap), and the gig lane keeps
+   its band nearer the field. */
+.flatOverlay .rivalLegendRack {
+  top: 12px;
+  left: var(--hud-inset);
+  translate: calc(-1 * var(--edge-x)) calc(-1 * var(--edge-top));
+  gap: var(--hud-gap);
+}
+.flatOverlay .localLegendRack {
+  flex-direction: row-reverse;
+  bottom: calc(12px + var(--local-action-space));
+  right: var(--hud-inset);
+  translate: var(--edge-x) var(--edge-bottom);
+  gap: var(--hud-gap);
+}
+.root .flatOverlay .localStatus {
+  flex-direction: row-reverse;
+  right: var(--hud-inset);
+  bottom: calc(12px + var(--local-action-space) + var(--legend-size) * 1.4 + 6px);
+}
+.root .flatOverlay .rivalStatus {
+  left: var(--hud-inset);
+  top: calc(12px + var(--legend-size) * 1.4 + 6px);
+  flex-direction: row;
+}
+.root .flatOverlay :global([data-testid="fixer-die"]) {
+  background: var(--v2-die-art) center top / auto 72% no-repeat;
+}
+.root .flatOverlay .cardHit[data-zone-lane="hand"] :global(.sim-card-image-frame) {
+  border-radius: 9px;
+  box-shadow:
+    0 8px 24px #0007,
+    0 0 0 2px #374448;
+}
+.root .flatOverlay .cardHit[data-zone-lane="hand"] :global(.sim-card-image-frame) img {
+  border-radius: 9px;
+}
+
+/* Card interaction comes from V1; the physical rim carries V2 feedback.
+   Challenge targets keep the V1 FIGHT tag and frame: during an attack drag
+   they are the only legal drops, and the rim alone was too easy to miss. */
+.root
+  .cardHit
+  :global([data-testid="card"][data-drop-hint]:not([data-drop-hint="attackUnit"]))::after {
+  content: none;
+}
+.root
+  .cardHit[data-mesh-ready="true"]
+  :global([data-testid="card"])
+  > :global([data-sim-animation-face-target])::after {
+  content: none;
+}
+.root
+  .cardHit:not([data-mesh-ready="true"])
+  :global([data-interaction-appearance])
+  > :global([data-sim-animation-face-target])::after {
+  content: "";
+  inset: -2px;
+  border: 2px solid var(--interaction-rim, transparent);
+  border-radius: var(--rim-radius, 4px);
+  box-shadow: 0 0 7px var(--interaction-glow, transparent);
+  pointer-events: none;
+}
+.root .cardHit :global([data-interaction-appearance="actionable"]) {
+  --interaction-rim: #4ad9ff;
+  --interaction-glow: #4ad9ff55;
+}
+.root .cardHit :global([data-interaction-appearance="target"]) {
+  --interaction-rim: #f5e642;
+  --interaction-glow: #f5e64288;
+}
+.root .cardHit :global([data-interaction-appearance="attackTarget"]) {
+  --interaction-rim: #ff2f92;
+  --interaction-glow: #ff2f92aa;
+}
+.root .cardHit :global([data-interaction-appearance="selected"]) {
+  --interaction-rim: var(--selection-rim);
+  --interaction-glow: var(--selection-glow);
+}
+/* Cards targeted by the effect chip under the cursor. */
+.root .table :global([data-instance-id][data-effect-target="true"]) {
+  outline: 2px solid var(--v2-yellow);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.root .cardHit :global([data-testid="card"])::before,
+.root .cardHit :global([data-testid="card"]) > :global([data-sim-animation-face-target])::before {
+  content: none;
+}
+/* Challenge targets keep the V1 hot-pink frame on top of the mesh rim. */
+.root
+  .cardHit
+  :global([data-testid="card"][data-drop-hint="attackUnit"])
+  > :global([data-sim-animation-face-target])::before {
+  content: "";
+}
+/* Reserve the full landscape footprint of spent Legends before spacing the rack. */
+.flatOverlay .legendRack {
+  align-items: center;
+}
+.flatOverlay .flatLegends .legendHit {
+  width: var(--legend-size);
+  height: calc(var(--legend-size) * 1.4);
+  aspect-ratio: auto;
+}
+.flatOverlay .flatLegends .legendHit[data-spent="true"] {
+  width: calc(var(--legend-size) * 1.4);
+}
+.root .flatOverlay .legendHit > :global([data-testid="card"]) {
+  width: var(--legend-size);
+  height: calc(var(--legend-size) * 1.4);
+  margin-inline: auto;
+}
+
+/* Stealing rival Gigs is the payoff move: cue it loud instead of letting it
+   whisper. Text scales with the HUD (cqw) so it stays readable on big boards. */
+.root
+  .gigs
+  :global([data-testid="gig-row"][data-drop-hint="attackRival"])
+  > :global([aria-hidden="true"]) {
+  border: 1px dashed rgb(245 230 66 / 78%);
+  background:
+    linear-gradient(90deg, rgb(255 61 138 / 22%), rgb(7 9 12 / 86%)),
+    repeating-linear-gradient(
+      90deg,
+      rgb(245 230 66 / 14%) 0,
+      rgb(245 230 66 / 14%) 1px,
+      transparent 1px,
+      transparent 8px
+    );
+  box-shadow:
+    inset 0 0 22px rgb(245 230 66 / 20%),
+    0 0 20px rgb(255 61 138 / 30%);
+  text-shadow: 0 1px 3px #000;
+  animation: attack-rival-cue-pulse 1.3s ease-in-out infinite;
+}
+.root
+  .gigs
+  :global([data-testid="gig-row"][data-drop-hint="attackRival"])
+  > :global([aria-hidden="true"])
+  span {
+  font-size: clamp(9px, 0.7cqw, 16px);
+}
+.root
+  .gigs
+  :global([data-testid="gig-row"][data-drop-hint="attackRival"])
+  > :global([aria-hidden="true"])
+  strong {
+  color: #ffe27a;
+  font-size: clamp(13px, 1.15cqw, 26px);
+  text-shadow:
+    0 0 14px rgb(255 61 138 / 70%),
+    0 1px 3px #000;
+}
+
+@keyframes attack-rival-cue-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.72;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root
+    .gigs
+    :global([data-testid="gig-row"][data-drop-hint="attackRival"])
+    > :global([aria-hidden="true"]) {
+    animation: none;
+  }
+}
+
+/* Equal seat sizing; spare dice no longer expand to fill an empty rail. */
+.root .flatOverlay .identity {
+  right: auto;
+  bottom: auto;
+}
+.root .flatOverlay :is(.rivalPiles, .localPiles) {
+  padding: 4px;
+  gap: 12px;
+}
+.root .flatOverlay :is(.rivalFixer, .localFixer) :global([data-testid="fixer-zone"]) {
+  width: max-content;
+  max-width: 100%;
+}
+.root .flatOverlay .localFixer :global([data-testid="fixer-zone"]) {
+  margin-right: auto;
+}
+.root .flatOverlay :is(.rivalFixer, .localFixer) :global([data-testid="fixer-zone"]) > div {
+  position: relative;
+  width: max-content;
+  height: 100%;
+  gap: 8px;
+}
+.root .flatOverlay :is(.rivalFixer, .localFixer) :global([data-testid="fixer-zone"]) > div > * {
+  flex: 0 0 40px;
+  width: 40px;
+}
+.root .flatOverlay .status {
+  font-size: 1.8cqw;
+}
+.table[data-human-side="player"] .flatOverlay .gigs :global([data-sim-zone-id="p-gigArea"]),
+.table[data-human-side="opponent"] .flatOverlay .gigs :global([data-sim-zone-id="opp-gigArea"]) {
+  /* Kept clear of the resource strip that now sits between here and the
+     Legend corner rack (strip top ≈ y542; this band ends at y536). */
+  top: calc(62.9% - var(--local-action-space));
+}
+.table[data-human-side="player"] .flatOverlay .gigs :global([data-sim-zone-id="opp-gigArea"]),
+.table[data-human-side="opponent"] .flatOverlay .gigs :global([data-sim-zone-id="p-gigArea"]) {
+  top: 28.3333%;
+}
+
+/* Read the rival ledger from their side: dice first, label below. */
+.root
+  .table
+  .flatOverlay
+  .gigs
+  :global([data-testid="gig-row"][data-side="opponent"] [data-sim-zone-label]) {
+  top: auto;
+  bottom: -1.65cqw;
+}
+
+/* Primary action sits outside the hand/HUD stacking context. Modals retain focus. */
+.actionLayer {
+  z-index: 100;
+  pointer-events: none;
+}
+.actionLayer .pass {
+  pointer-events: auto;
+}
+.root .table .actionLayer .pass button:not(:disabled) {
+  cursor: pointer;
+  filter: drop-shadow(0 0 5px #59d8e54d);
+}
+.root .table .actionLayer .pass button:not(:disabled) > span {
+  color: #e7ffff;
+  text-shadow:
+    0 0 8px #56ceda66,
+    0 1px 2px #000;
+}
+.root
+  .table
+  .actionLayer
+  .pass
+  button:not(:disabled):not([data-confirming-skip-block="true"])::before {
+  background-image: url("./assets/action-hover-v2.webp");
+}
+.root .table .actionLayer .pass button:hover:not(:disabled) {
+  filter: brightness(1.14) drop-shadow(0 0 7px #59d8e566);
+}
+.root .table .actionLayer .pass button:disabled {
+  cursor: not-allowed;
+  filter: none;
+}
+.root .table .actionLayer .pass button > span {
+  font-size: 1.7cqw;
+}
+
+/* The resource rail also carries the public sale record, the face-down Eddie
+   miniatures, and the Sell placeholder. */
+.root .flatOverlay .status {
+  width: 31%;
+  gap: 0.5cqw;
+  overflow: visible;
+}
+/* Keyed to the element type, not the child position: Street Cred leading the
+   rail made the €$ button the second child, and the old :first-child key
+   silently dropped the guard, letting the counter shrink and wrap out of the
+   fixed-height strip. .status has exactly one direct button child (the sale
+   rail's buttons nest inside .saleRail). */
+.root .flatOverlay .status > button,
+.root .flatOverlay .status > span:first-of-type {
+  flex: none;
+}
+/* V1's dashed "sell here" slot, miniaturized: it holds the place where the
+   next sold card lands and only exists while the normal Sell action is
+   unused — its absence reads as "already sold". A hand-card drag lights it
+   cyan like V1's cue. */
+.sellSlot {
+  position: relative;
+  display: block;
+  flex: 0 0 2.4cqw;
+  height: 3.4cqw;
+  border: 1px dashed rgb(245 230 66 / 32%);
+  background:
+    linear-gradient(rgb(245 230 66 / 34%), rgb(245 230 66 / 34%)) center / 36% 1px no-repeat,
+    linear-gradient(rgb(245 230 66 / 34%), rgb(245 230 66 / 34%)) center / 1px 36% no-repeat,
+    rgb(245 230 66 / 3%);
+}
+.status[data-sell-drag="true"] .sellSlot {
+  border-color: rgb(74 217 255 / 72%);
+  background:
+    linear-gradient(rgb(74 217 255 / 70%), rgb(74 217 255 / 70%)) center / 36% 1px no-repeat,
+    linear-gradient(rgb(74 217 255 / 70%), rgb(74 217 255 / 70%)) center / 1px 36% no-repeat,
+    rgb(74 217 255 / 8%);
+}
+.saleRail {
+  display: flex;
+  align-items: center;
+  gap: 0.18cqw;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 4.2cqw;
+  max-height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #8b9da877 transparent;
+  border-bottom: 1px solid #8b9da866;
+}
+/* The local strip reads right-to-left, so its rail mirrors too: the row's
+   first child stays the card nearest the counters on both seats. */
+.root .flatOverlay .localStatus .saleRail {
+  flex-direction: row-reverse;
+}
+.root .flatOverlay .status .saleCard,
+.root .flatOverlay .status .eddieMini {
+  flex: 0 0 2.4cqw;
+  width: 2.4cqw;
+  height: 3.4cqw;
+  padding: 0;
+  border: 1px solid #a6b6bb99;
+  background: #0d1418;
+  box-shadow: 0 1px 3px #000;
+}
+.root .flatOverlay .rivalStatus .saleCard,
+.root .flatOverlay .rivalStatus .eddieMini {
+  border-color: #c88a8eaa;
+}
+.root .flatOverlay .status .saleCard[data-sale-moving="true"],
+.root .flatOverlay .status .eddieMini[data-sale-moving="true"] {
+  visibility: hidden;
+}
+.root .flatOverlay .status .saleCard:hover,
+.root .flatOverlay .status .saleCard:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 1px;
+  filter: brightness(1.14);
+}
+.saleCard :global(.sim-card-image-frame),
+.eddieMini :global(.sim-card-image-frame) {
+  width: 100%;
+  height: 100%;
+}
+.saleCard img,
+.eddieMini img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* While a cost awaits payment the rail's ready Eddies are live sources: a
+   cyan rim marks them clickable and a yellow tapped spin marks the picks —
+   the same language the Eddies modal and ready Legends already use. */
+.root .flatOverlay .status .saleCard[data-payment-source="true"],
+.root .flatOverlay .status .eddieMini[data-payment-source="true"] {
+  cursor: pointer;
+  border-color: #4ad9ff;
+  box-shadow:
+    0 0 8px rgb(74 217 255 / 65%),
+    inset 0 0 6px rgb(74 217 255 / 20%);
+}
+.root .flatOverlay .status .saleCard[data-payment-source="true"]:hover,
+.root .flatOverlay .status .eddieMini[data-payment-source="true"]:hover,
+.root .flatOverlay .status .saleCard[data-payment-source="true"]:focus-visible,
+.root .flatOverlay .status .eddieMini[data-payment-source="true"]:focus-visible {
+  filter: brightness(1.22);
+}
+.root .flatOverlay .status .saleCard[data-payment-selected="true"],
+.root .flatOverlay .status .eddieMini[data-payment-selected="true"] {
+  transform: rotate(90deg);
+  border-color: #f5e642;
+  box-shadow:
+    0 0 10px rgb(245 230 66 / 75%),
+    inset 0 0 8px rgb(245 230 66 / 25%);
+  z-index: 3;
+}
+
+/* Compact phones: peripheral instruments redistribute down both edges and
+   cards grow; the match-utilities cluster doubles as the match menu. The
+   world rects for piles, nameplates, fixer, clock and action come from
+   layout.ts; CSS moves the flat HUD groups that are positioned in
+   percentages. */
+.root[data-compact] .flatOverlay {
+  --hud-inset: 16px;
+  --legend-size: 120px;
+}
+.root[data-compact] .flatOverlay .rivalLegendRack {
+  top: var(--hud-inset);
+}
+.root[data-compact] .flatOverlay .localLegendRack {
+  bottom: calc(var(--hud-inset) + var(--local-action-space));
+}
+.root[data-compact] .flatOverlay .rivalStatus {
+  top: calc(var(--hud-inset) + var(--legend-size) * 1.4 + 6px);
+}
+.root[data-compact] .flatOverlay .localStatus {
+  bottom: calc(var(--hud-inset) + var(--local-action-space) + var(--legend-size) * 1.4 + 6px);
+}
+.root[data-compact]
+  .table[data-human-side="player"]
+  .flatOverlay
+  .gigs
+  :global([data-sim-zone-id="p-gigArea"]),
+.root[data-compact]
+  .table[data-human-side="opponent"]
+  .flatOverlay
+  .gigs
+  :global([data-sim-zone-id="opp-gigArea"]) {
+  top: 56%;
+}
+.root[data-compact]
+  .table[data-human-side="player"]
+  .flatOverlay
+  .gigs
+  :global([data-sim-zone-id="opp-gigArea"]),
+.root[data-compact]
+  .table[data-human-side="opponent"]
+  .flatOverlay
+  .gigs
+  :global([data-sim-zone-id="p-gigArea"]) {
+  top: 32%;
+}
+/* Keep the dock below its relocated compact rival gig row (32% + 7% row). */
+.root[data-compact] .flatOverlay .gigs :global([data-testid="active-effects-dock"]) {
+  top: calc(39% + 1.65cqw + 6px);
+}
+
+/* Contact shadows keep the flat HUD artwork grounded on the rendered table. */
+.root .table .clock :global([data-testid="phase-clock"]) {
+  filter: drop-shadow(0 0.2cqw 0.9cqw #0009);
+}
+.root .table :global([data-testid="deck-zone"]),
+.root .table :global([data-testid="trash-zone"]) {
+  filter: drop-shadow(0 0.16cqw 0.8cqw #0008);
+}
+.root .table .gigs :global([data-testid="gig-die"]),
+.root .table .rivalFixer :global([data-testid="fixer-die"]),
+.root .table .localFixer :global([data-testid="fixer-die"]) {
+  filter: drop-shadow(0 0.1cqw 0.55cqw #0009);
+}
+
+/* ── Overtime + gig win-threat cues ───────────────────────────────────────
+   The rail clock carries the overtime band (see ClockDisplay `overtimeBand`),
+   so the center-row plaque stays suppressed — V2 has no central row. */
+
+.root .gigs :global([data-testid="overtime-status"]) {
+  display: none;
+}
+
+/* The overtime state gets its own console plate docked above the clock
+   instead of sharing the painted console slots. Geometry ties the slot rule
+   on specificity and wins on cascade order. */
+.root .table .clock :global([data-testid="phase-clock"]) {
+  overflow: visible;
+}
+
+/* V1 paints an overtime ring on the clock itself; the V2 console carries
+   overtime in the dedicated plate above it instead. */
+.root .table .clock :global([data-testid="phase-clock"])[data-overtime="true"] {
+  box-shadow: none;
+}
+
+.root
+  .table
+  .clock
+  :global([data-testid="phase-clock"])
+  > div:global([data-testid="clock-overtime-band"]) {
+  left: 2%;
+  right: 2%;
+  top: auto;
+  bottom: calc(100% + 0.55cqw);
+  width: auto;
+  height: auto;
+  justify-content: center;
+  gap: 0.45cqw;
+  padding: 0.42cqw 0.9cqw 0.5cqw;
+  border: 1px solid rgb(214 180 90 / 42%);
+  border-radius: 0.3cqw;
+  background:
+    repeating-linear-gradient(135deg, rgb(245 230 66 / 6%) 0 6px, transparent 6px 13px),
+    linear-gradient(180deg, #1a2126, #0b1013);
+  box-shadow:
+    inset 0 0 0 1px #000a,
+    inset 0 1px rgb(255 255 255 / 7%),
+    0 0 0 1px rgb(120 130 138 / 28%),
+    0 4px 14px #000c;
+  color: rgb(245 230 66 / 78%);
+  font-family: "Cyberpunk Blender Pro", sans-serif;
+  font-size: calc(0.9cqw * var(--hud-scale, 1));
+  letter-spacing: 0.06em;
+}
+
+.root
+  .table
+  .clock
+  :global([data-testid="phase-clock"])
+  > div:global([data-testid="clock-overtime-band"][data-state="active"]) {
+  border-color: rgb(245 230 66 / 82%);
+  color: #f5e642;
+  box-shadow:
+    inset 0 0 0 1px #000a,
+    inset 0 0 14px rgb(245 230 66 / 12%),
+    0 0 0 1px rgb(120 130 138 / 28%),
+    0 0 18px rgb(245 230 66 / 24%),
+    0 4px 14px #000c;
+}
+
+/* V2's lane sits on the raw table texture instead of the V1 row chrome, so the
+   win-condition stripes need a brighter rim to read at table distance. */
+.gigs :global([data-sim-zone-id][data-win-condition="true"])::before {
+  border-color: rgb(245 230 66 / 90%);
+  box-shadow:
+    inset 0 0 0 1px rgb(7 9 12 / 82%),
+    0 0 26px rgb(245 230 66 / 35%),
+    inset 0 0 26px rgb(245 230 66 / 18%);
+}
+
+.root .flatOverlay .localFixer {
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* The flat HUD keeps idle reserve dice compact. During a choice each legal
+   die gets its own larger control, separated from the adjacent controls. */
+.root
+  .flatOverlay
+  :is(.rivalFixer, .localFixer)
+  :global([data-testid="fixer-zone"][data-picking="true"]) {
+  max-width: none;
+}
+.root
+  .flatOverlay
+  :is(.rivalFixer, .localFixer)
+  :global([data-testid="fixer-zone"][data-picking="true"])
+  > div {
+  align-items: end;
+  gap: 0.8cqw;
+}
+.root
+  .flatOverlay
+  :is(.rivalFixer, .localFixer)
+  :global([data-testid="fixer-zone"][data-picking="true"])
+  > div
+  > :has([data-candidate="true"]) {
+  flex: 0 0 max(88px, 5.4cqw);
+  width: max(88px, 5.4cqw);
+  height: max(88px, 5.9cqw);
+}
+.root
+  .flatOverlay
+  :is(.rivalFixer, .localFixer)
+  :global([data-testid="fixer-die"][data-candidate="true"]) {
+  height: 100%;
+  background-size: contain;
+  border: 1px solid #f5e642;
+  border-radius: 8px;
+  box-shadow: inset 0 0 12px rgb(245 230 66 / 18%);
+  animation: v2-die-highlight 1.4s ease-in-out infinite;
+}
+.root
+  .flatOverlay
+  :is(.rivalFixer, .localFixer)
+  :global([data-testid="fixer-die"][data-candidate="true"])::after {
+  display: none;
+}
+.root
+  .flatOverlay
+  :is(.rivalFixer, .localFixer)
+  :global([data-testid="fixer-die"][data-candidate="true"])
+  > span
+  > :global([data-cyberpunk-die-face]) {
+  color: #f5e642;
+  font-size: 1.5cqw;
+  align-items: center;
+  padding: 0;
+}
+.root .flatOverlay :global([data-testid="fixer-die"][data-candidate="true"]):hover,
+.root .flatOverlay :global([data-testid="fixer-die"][data-candidate="true"]):focus-visible {
+  outline: 2px solid #f5e642;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .root .flatOverlay :global([data-testid="fixer-die"][data-candidate="true"]),
+  .root .table .gigs :global([data-testid="gig-die"][data-interactive="true"]) {
+    animation: none;
+    filter: drop-shadow(0 0 0.3cqw rgb(245 230 66 / 65%));
+  }
+}
+
+.root
+  .flatOverlay
+  :is(.rivalFixer, .localFixer)
+  :global([data-testid="fixer-zone"][data-picking="true"])
+  > span {
+  top: auto;
+  bottom: calc(max(88px, 5.9cqw) + 0.5cqw);
+}
+.root
+  .table
+  .gigs
+  :global([data-testid="gig-row"][data-selection-active="true"])
+  :global([data-testid="gig-die"][data-interactive="true"])
+  > span
+  > :global([data-cyberpunk-die-face]) {
+  color: #f5e642;
+}
+
+/* Reserve room above the enlarged fixer controls for the pile labels. */
+.root .flatOverlay:has(.localFixer [data-picking="true"]) .localPiles {
+  translate: 0 calc(-1 * (max(88px, 5.9cqw) - 56px + 16px));
+}

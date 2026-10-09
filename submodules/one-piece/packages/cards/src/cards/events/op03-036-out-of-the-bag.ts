@@ -21,7 +21,7 @@ export const op03OutOfTheBag036: EventCard = {
   rarity: "C",
   setId: "OP03",
   cost: 3,
-  traits: ["NULL"],
+  traits: ["East Blue", "Black Cat Pirates"],
   effect:
     "[Main] You may rest 1 of your [East Blue] type Characters: Set up to 1 of your [Kuro] cards as active. [Trigger] K.O. up to 1 of your opponent's rested Characters with a cost of 3 or less.",
   effects: {
@@ -36,7 +36,7 @@ export const op03OutOfTheBag036: EventCard = {
               {
                 filter: "trait",
                 value: "East Blue",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

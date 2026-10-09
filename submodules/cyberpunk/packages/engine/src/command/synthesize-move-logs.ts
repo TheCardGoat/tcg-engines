@@ -12,6 +12,7 @@
  * banners regardless of which move emitted them.
  */
 
+import { defOf } from "../state/lookups.ts";
 import type { MatchState } from "../types/match-state.ts";
 import type { GameEvent, ActionLogEvent } from "../types/game-events.ts";
 import type { PlayerId } from "../types/branded.ts";
@@ -38,31 +39,25 @@ interface SynthesizeArgs {
  */
 const SYSTEM_MIRRORED_MESSAGE_KEYS = new Set<string>(["move.turnEnded"]);
 const ADDITIONAL_GENERIC_MESSAGE_KEYS = new Set<string>([
+  "game.overtimeStarted",
+  "game.overtimeFirstEmptyTurn",
+  "game.overtimeFinalTurn",
   "move.searchDeck.reveal",
   "move.searchDeck.revealNamed",
   "move.searchDeck.revealSelected",
   "move.resolveSearchDeck",
   "move.resolveSearchDeckNamed",
-  "effect.draw.resolved",
-  "effect.draw.skipped",
-  "effect.discard.resolved",
-  "effect.trashFromDeck.resolved",
-  "effect.sellFromDeck.resolved",
-  "trigger.noValidTargets",
-  "trigger.autoResolved",
-  "trigger.resolved",
-  "trigger.orderPending",
-  "trigger.orderSelected",
-  "trigger.stealGig",
-  "trigger.targetResolved",
-  "trigger.targetResolved.deckBottom",
-  "trigger.targetResolved.rerollGig",
-  "trigger.defeatedTarget",
-  "trigger.grantRule.cantAttack",
-  "effect.callLegend.free",
-  "trigger.revealTopCardType.hit",
-  "trigger.revealTopCardType.miss",
+  "move.readyStep.cantReady",
 ]);
+
+function isAdditionalGenericMessageKey(key: ActionLogEvent["messageKey"]): boolean {
+  return (
+    key.startsWith("setup.") ||
+    key.startsWith("effect.") ||
+    key.startsWith("trigger.") ||
+    ADDITIONAL_GENERIC_MESSAGE_KEYS.has(key)
+  );
+}
 
 const EXPLICIT_TYPES_THAT_REPLACE_GENERIC = new Set<string>([
   "playCard",
@@ -112,7 +107,7 @@ export function synthesizeMoveLogs(args: SynthesizeArgs): MoveLog[] {
     const actionEvent = event as ActionLogEvent;
     if (SYSTEM_MIRRORED_MESSAGE_KEYS.has(actionEvent.messageKey)) continue;
 
-    const isAdditional = ADDITIONAL_GENERIC_MESSAGE_KEYS.has(actionEvent.messageKey);
+    const isAdditional = isAdditionalGenericMessageKey(actionEvent.messageKey);
     if (hasExplicitPlayerLog && !isAdditional) continue;
     if (!hasExplicitPlayerLog && emittedPrimaryGeneric && !isAdditional) continue;
 
@@ -128,6 +123,85 @@ export function synthesizeMoveLogs(args: SynthesizeArgs): MoveLog[] {
     if (!isAdditional) {
       emittedPrimaryGeneric = true;
     }
+  }
+
+  // Persist semantic defeats; zone exits also include sales and returns.
+  for (const [index, event] of events.entries()) {
+    if (event.type !== "cardDefeated") continue;
+    const card = state.G.cardIndex[event.cardId];
+    if (!card) throw new Error(`Defeated card missing from index: ${event.cardId}`);
+    const definition = defOf(card);
+    const movement = events
+      .slice(0, index)
+      .reverse()
+      .find((entry) => entry.type === "cardMoved" && entry.cardId === event.cardId);
+    out.push({
+      type: "cardDefeated",
+      wasUnit:
+        definition.type === "unit" ||
+        (definition.type === "legend" &&
+          movement?.type === "cardMoved" &&
+          movement.fromZone === "field"),
+      playerId: event.playerId,
+      turnNumber,
+      timestamp: now,
+      cardId: event.cardId,
+      cardName: defOf(card).displayName,
+    });
+  }
+
+  // Persist every public face change, including effects that do not emit a
+  // separate action message. Existing detailed adjustment/copy/reroll messages
+  // already contain the same transition and should not be repeated.
+  const detailedChanges = events
+    .filter((event): event is ActionLogEvent => event.type === "actionLog")
+    .filter((event) =>
+      [
+        "move.resolveAdjustGig",
+        "move.manualSetGigValue",
+        "trigger.copyGigValue",
+        "trigger.targetResolved.rerollGig",
+      ].includes(event.messageKey),
+    );
+  for (const event of events) {
+    if (event.type !== "gigValueChanged" || event.previousValue === event.newValue) continue;
+    const coveredIndex = detailedChanges.findIndex((action) => {
+      const params = action.params;
+      return (
+        params.dieId === event.dieId &&
+        params.previousValue === event.previousValue &&
+        (params.newValue ?? params.value) === event.newValue
+      );
+    });
+    if (coveredIndex >= 0) {
+      detailedChanges.splice(coveredIndex, 1);
+      continue;
+    }
+    const die = state.G.gigDice[event.dieId as string];
+    if (!die) throw new Error(`Changed Gig missing from index: ${event.dieId}`);
+    out.push({
+      type: "gigValueChanged",
+      playerId: event.adjustedByPlayerId ?? event.sourcePlayerId ?? event.playerId,
+      turnNumber,
+      timestamp: now,
+      dieId: event.dieId,
+      dieType: die.dieType,
+      previousValue: event.previousValue,
+      newValue: event.newValue,
+    });
+  }
+  for (const event of events) {
+    if (event.type !== "gigsSwapped") continue;
+    out.push({
+      type: "gigsSwapped",
+      playerId: event.playerId,
+      turnNumber,
+      timestamp: now,
+      friendlyDieType: event.dieTypes[0],
+      friendlyValue: event.dieValues[0],
+      rivalDieType: event.dieTypes[1],
+      rivalValue: event.dieValues[1],
+    });
   }
 
   // 3) Always synthesize system logs from their matching events.

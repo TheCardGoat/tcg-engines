@@ -55,6 +55,21 @@ export function getLegalCommands(
     });
   }
 
+  if (viewer !== "judge") {
+    for (const prompt of state.promptQueue.filter((candidate) => candidate.status === "pending")) {
+      if (prompt.seat !== viewer) {
+        continue;
+      }
+      legal.push({
+        type: "resolvePrompt",
+        seat: viewer,
+        label: prompt.label,
+        promptId: prompt.id,
+        options: prompt.options,
+      });
+    }
+  }
+
   if (state.status === "setup") {
     if (viewer !== "judge") {
       if (!state.setup.joKenPo.winner) {
@@ -111,21 +126,6 @@ export function getLegalCommands(
       }
     }
     return legal;
-  }
-
-  if (viewer !== "judge") {
-    for (const prompt of state.promptQueue.filter((candidate) => candidate.status === "pending")) {
-      if (prompt.seat !== viewer) {
-        continue;
-      }
-      legal.push({
-        type: "resolvePrompt",
-        seat: viewer,
-        label: prompt.label,
-        promptId: prompt.id,
-        options: prompt.options,
-      });
-    }
   }
 
   if (

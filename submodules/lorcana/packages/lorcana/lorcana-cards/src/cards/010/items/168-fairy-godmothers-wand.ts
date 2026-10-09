@@ -11,7 +11,7 @@ export const fairyGodmothersWand: ItemCard = {
       artId: "set10-168",
       setCode: "set10",
       collectorNumber: "168",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -22,7 +22,7 @@ export const fairyGodmothersWand: ItemCard = {
   franchise: "Cinderella",
   set: "010",
   cardNumber: 168,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 2,
   inkable: true,
   externalIds: {

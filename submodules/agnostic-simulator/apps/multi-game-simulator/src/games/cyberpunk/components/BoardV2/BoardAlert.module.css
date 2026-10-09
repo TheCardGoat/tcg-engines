@@ -1,0 +1,142 @@
+/* Floating board notices: the shared plate language of the V2 instruments
+   (dark gradient, steel border, notched corner) at toast scale. The stack
+   anchors to the top edge so notices never claim a layout row from the
+   table; it ignores pointer events so the board stays playable around them. */
+.stack {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  pointer-events: none;
+}
+
+.alert {
+  --accent: var(--v2-yellow, #ffe24e);
+  position: relative;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: min(94vw, 640px);
+  padding: 10px 12px 10px 14px;
+  border: 1px solid #5d6f78;
+  border-left: 3px solid var(--accent);
+  background: linear-gradient(150deg, #1a2429f0, #0b1014f7 70%);
+  color: #dbe6ec;
+  box-shadow:
+    0 14px 40px #000a,
+    inset 0 1px #ffffff14;
+  clip-path: polygon(
+    0 10px,
+    10px 0,
+    100% 0,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    0 100%
+  );
+}
+
+.alert[data-severity="error"] {
+  --accent: var(--v2-red, #ff5365);
+}
+
+.icon {
+  display: grid;
+  flex-shrink: 0;
+  width: 30px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+}
+
+.message {
+  margin: 0;
+  min-width: 0;
+  flex: 1;
+  font:
+    600 13px/1.45 "Cyberpunk Blender Pro",
+    "Arial Narrow",
+    sans-serif;
+  letter-spacing: 0.03em;
+  text-wrap: pretty;
+}
+
+.action,
+.close {
+  cursor: pointer;
+}
+
+.action {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 1px solid #ffe24e;
+  color: #111518;
+  background: linear-gradient(180deg, #ffe96d, #e4bd32);
+  box-shadow: 0 2px 0 #806820;
+  font:
+    800 12px/1 "Cyberpunk Blender Pro",
+    sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    filter 120ms ease,
+    transform 120ms ease;
+}
+
+.action:hover {
+  filter: brightness(1.08);
+}
+
+.action:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 #806820;
+}
+
+.close {
+  display: grid;
+  flex-shrink: 0;
+  width: 26px;
+  aspect-ratio: 1;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #5d6f78;
+  color: #9fb2bb;
+  background: #131c21;
+  transition:
+    color 120ms ease,
+    border-color 120ms ease;
+}
+
+.close:hover {
+  border-color: #ffe24e;
+  color: #ffe24e;
+}
+
+.action:focus-visible,
+.close:focus-visible {
+  outline: 2px solid var(--v2-cyan, #45d9ee);
+  outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .alert {
+    max-width: calc(100vw - 20px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .action,
+  .close {
+    transition: none;
+  }
+}

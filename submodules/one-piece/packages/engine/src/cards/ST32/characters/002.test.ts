@@ -2,6 +2,32 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("ST32-002", () => {
+  test("only base-cost-six-or-less Characters can receive the rest restriction", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["ST32-002"], activeDon: 5 },
+      { character: ["OP15-060", "OP16-063"] },
+    );
+    const enel = e.findCardInZone("north", "character", "OP15-060");
+    const kuzan = e.findCardInZone("north", "character", "OP16-063");
+    e.playCard("ST32-002");
+    const step = e.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected rest restriction targets");
+    expect(step.candidates.map((c) => c.ref.id)).toEqual([enel]);
+    expect(step.candidates.map((c) => c.ref.id)).not.toContain(kuzan);
+    e.resolveDecision("effectTargetSelection", { selectedIds: [enel] }, "south");
+    expect(e.getView("south").players.south.handCount).toBe(1);
+    e.endTurn("south");
+    expect(
+      e.expectFailure({
+        type: "declareAttack",
+        seat: "north",
+        attackerId: enel,
+        targetId: e.leader("south"),
+      }).accepted,
+    ).toBe(false);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[On Play] draws 1 and marks an opposing Character as unable to rest", () => {
     const engine = OnePieceTestEngine.create(
       { hand: ["ST32-002"], activeDon: 5 },

@@ -39,10 +39,22 @@ describe("regressionRedirectDefeatChoice fixture", () => {
     });
     try {
       await waitFor(() => {
-        expect(screen.getByText("Redirect this defeat?")).toBeTruthy();
+        expect(screen.getByTestId("prompt-banner-title").textContent).toContain(
+          "Jackie Welles: Mama's Favorite · Legends slot 1",
+        );
       });
       expect(screen.getByRole("button", { name: "Spend 1 €$" })).toBeTruthy();
-      expect(screen.getByRole("button", { name: "Let the Unit be defeated" })).toBeTruthy();
+      expect(
+        screen.getByRole("button", { name: "Let Corpo Security (Field card 1) be defeated" }),
+      ).toBeTruthy();
+      expect(
+        screen.getByText(
+          (_, element) =>
+            element?.tagName === "P" &&
+            element.textContent?.includes("instead of Corpo Security (Field card 1).") === true,
+        ),
+      ).toBeTruthy();
+      expect(screen.queryByRole("dialog", { name: "Redirect defeat" })).toBeNull();
       expect(screen.queryByText("Choosing a replacement")).toBeNull();
     } finally {
       view.unmount();
@@ -91,7 +103,11 @@ describe("regressionRedirectDefeatChoice fixture", () => {
     try {
       const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
       await pom.waitForReady();
-      await waitFor(() => expect(screen.getByText("Redirect this defeat?")).toBeTruthy());
+      await waitFor(() =>
+        expect(screen.getByTestId("prompt-banner-title").textContent).toContain(
+          "Jackie Welles: Mama's Favorite",
+        ),
+      );
 
       fireEvent.click(screen.getByRole("button", { name: "Spend 1 €$" }));
 
@@ -109,7 +125,7 @@ describe("regressionRedirectDefeatChoice fixture", () => {
           welcomeToNightCityRetailWildInTheStreets.id,
         );
       });
-      expect(screen.queryByText("Redirect this defeat?")).toBeNull();
+      expect(view.container.querySelector('[data-state="redirect-defeat"]')).toBeNull();
     } finally {
       view.unmount();
     }
@@ -129,11 +145,21 @@ describe("regressionRedirectDefeatChoice fixture", () => {
           screen.getByText("Choose which attached Gear is defeated instead of this Unit"),
         ).toBeTruthy();
       });
-      const choices = view.container.querySelectorAll<HTMLElement>(
-        '[data-choice-eligible="true"][data-card-id]',
+      // Gear replacement candidates are the attached-gear chips carrying
+      // data-instance-id; pick the Deadman Transmitter by identity.
+      const deadman = await pom.getCardInZoneByDefinitionId(
+        "field",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailDeadmanTransmitter.id,
       );
-      expect(choices).toHaveLength(2);
-      fireEvent.click(choices[1]!);
+      const deadmanChoice = await waitFor(() => {
+        const choice = view.container.querySelector<HTMLElement>(
+          `[data-instance-id="${deadman.instanceId}"][data-choice-label="Select"]`,
+        );
+        if (!choice) throw new Error("Expected the Deadman Transmitter chip to be selectable.");
+        return choice;
+      });
+      fireEvent.click(deadmanChoice);
 
       await waitFor(async () => {
         const field = await pom.getCardsInZone("field", CYBERPUNK_P1);

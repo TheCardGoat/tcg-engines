@@ -51,7 +51,7 @@ export const op06GildTesoro071: CharacterCard = {
                 {
                   filter: "trait",
                   value: "FILM",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cardCategory",
@@ -67,7 +67,7 @@ export const op06GildTesoro071: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "FILM",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

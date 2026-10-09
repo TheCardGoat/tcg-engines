@@ -55,7 +55,7 @@ export const op02EdwardNewgate004: CharacterCard = {
   setId: "OP02",
   cost: 9,
   power: 10000,
-  traits: ["The Four Emperors Whitebeard Pirates"],
+  traits: ["The Four Emperors", "Whitebeard Pirates"],
   attribute: "special",
 
   effect:

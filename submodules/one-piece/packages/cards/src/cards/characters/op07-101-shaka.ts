@@ -23,7 +23,7 @@ export const op07Shaka101: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Scientist Egghead"],
+  traits: ["Scientist", "Egghead"],
   attribute: "wisdom",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [Trigger] If your Leader is [Vegapunk], play this card.",

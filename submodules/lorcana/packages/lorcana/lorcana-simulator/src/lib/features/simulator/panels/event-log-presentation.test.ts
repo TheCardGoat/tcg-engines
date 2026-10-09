@@ -294,7 +294,7 @@ const FORMAT_CASES = {
   "lorcana.effect.resolve.optionalSelection.rejected": {
     moveId: "resolveEffect",
     values: { playerId: "player_one", sourceCardId: "card-primary" },
-    expected: "Resolved Ariel - On Human Legs by choosing no.",
+    expected: "Optional effect from Ariel - On Human Legs was not used.",
   },
   "lorcana.effect.resolve.nameCardSelection": {
     moveId: "resolveEffect",
@@ -335,6 +335,38 @@ const FORMAT_CASES = {
     },
     expected:
       "Finished ordering cards for Ariel - On Human Legs: Hand: Ariel - On Human Legs, Bottom of deck: Mickey Mouse - Detective.",
+  },
+  "lorcana.outcome.keywordGranted": {
+    moveId: "resolveBag",
+    values: { sourceId: "card-primary", targetId: "card-secondary", keyword: "Rush" },
+    expected: "Mickey Mouse - Detective gained Rush from Ariel - On Human Legs.",
+  },
+  "lorcana.outcome.strengthModified": {
+    moveId: "resolveEffect",
+    values: { sourceId: "card-primary", targetId: "card-secondary", modifier: -1 },
+    expected: "Mickey Mouse - Detective gets -1 strength from Ariel - On Human Legs.",
+  },
+  "lorcana.outcome.loreModifiedThisTurn": {
+    moveId: "resolveBag",
+    values: { sourceId: "card-primary", targetId: "card-secondary", modifier: 1 },
+    expected: "Mickey Mouse - Detective gets 1 lore this turn from Ariel - On Human Legs.",
+  },
+  "lorcana.outcome.singingBlockedUntilNextStart": {
+    moveId: "resolveEffect",
+    values: { sourceId: "card-primary", targetId: "card-secondary", playerId: "player_two" },
+    expected:
+      "Mickey Mouse - Detective can't sing songs until the start of the next turn for Opponent, from Ariel - On Human Legs.",
+  },
+  "lorcana.outcome.nextStartReadyBlocked": {
+    moveId: "resolveBag",
+    values: { sourceId: "card-primary", targetId: "card-secondary" },
+    expected:
+      "Mickey Mouse - Detective can't ready at the start of their next turn, from Ariel - On Human Legs.",
+  },
+  "lorcana.outcome.revealedCard": {
+    moveId: "resolveBag",
+    values: { playerId: "player_one", revealedCardId: "card-primary" },
+    expected: "You revealed Ariel - On Human Legs.",
   },
   "lorcana.effect.resolve.revealTopCard": {
     moveId: "resolveEffect",
@@ -409,6 +441,11 @@ const FORMAT_CASES = {
     },
     expected: "Ariel - On Human Legs dealt 4 damage to Mickey Mouse - Detective.",
   },
+  "lorcana.outcome.damageRemoved": {
+    moveId: "resolveEffect",
+    values: { playerId: "player_one", targetId: "card-primary", amount: 1 },
+    expected: "Removed 1 damage from Ariel - On Human Legs.",
+  },
   "lorcana.outcome.damageMoved": {
     moveId: "resolveBag",
     values: {
@@ -467,6 +504,16 @@ const FORMAT_CASES = {
     moveId: "resolveEffect",
     values: { playerId: "player_one", amount: 1 },
     expected: "You lost 1 lore.",
+  },
+  "lorcana.outcome.inkDropsGained": {
+    moveId: "resolveEffect",
+    values: { playerId: "player_one", amount: 2 },
+    expected: "You gained 2 ink drop(s).",
+  },
+  "lorcana.outcome.inkDropsRemoved": {
+    moveId: "resolveEffect",
+    values: { playerId: "player_one", amount: 1 },
+    expected: "You removed 1 ink drop(s).",
   },
   "lorcana.outcome.cardExerted": {
     moveId: "resolveEffect",
@@ -563,12 +610,13 @@ const FALLBACK_CASES = {
   manualDryCard: "Performed a fallback manual dry action.",
   manualSetDamage: "Performed a fallback damage action.",
   manualSetLore: "Performed a fallback lore action.",
+  manualSetInkDrops: "Performed a fallback ink-drops action.",
   manualShuffleDeck: "Performed a fallback shuffle action.",
   manualPassTurn: "Performed a fallback manual pass action.",
   turnSkipped: "Performed a fallback turn-skipped action.",
   playerDropped: "Performed a fallback player-dropped action.",
   forfeitGame: "Performed a fallback forfeit action.",
-} satisfies Record<MoveLogEntrySnapshot["moveId"], string>;
+} satisfies Record<Exclude<MoveLogEntrySnapshot["moveId"], "turnStart">, string>;
 
 function createTypedEntry(key: LorcanaLogMessageKey, formatCase: FormatCase): MoveLogEntrySnapshot {
   const primaryCard = createLogCardReference("playerOne", {
@@ -806,6 +854,15 @@ describe("event log presentation", () => {
       fallbackLabel: "Ariel - On Human Legs",
       fallbackInkType: ["sapphire"],
     });
+  });
+
+  it("formats a zero-target resolution without an empty targeting phrase", () => {
+    const entry = createTypedEntry("lorcana.effect.resolve.targetSelection", {
+      moveId: "resolveEffect",
+      values: { playerId: "player_one", sourceCardId: "card-primary", targets: [] },
+      expected: "Resolved an effect from Ariel - On Human Legs.",
+    });
+    expect(flattenRowText(entry)).toBe("Resolved an effect from Ariel - On Human Legs.");
   });
 
   it("formats typed play-card target selections by naming the play effect", () => {
@@ -1546,4 +1603,19 @@ describe("buildActivityFeed", () => {
     expect(chatItems).toHaveLength(1);
     expect((chatItems[0] as { epochMs: number }).epochMs).toBe(6000);
   });
+});
+
+it("shows confirmed Undo transitions while retaining the earlier play in audit order", () => {
+  const rows = buildEventLogRows([
+    createLogEntry("Played Ariel", { id: "played", moveId: "playCard", turnNumber: 7 }),
+    createLogEntry("", {
+      id: "undo",
+      moveId: "undo",
+      turnNumber: 7,
+      params: { restoredCheckpointStateID: 0 },
+    }),
+  ]);
+  const events = rows.filter((row) => row.kind === "event-row");
+  expect(events.map((row) => row.id)).toEqual(["played", "undo"]);
+  expect(events[1]?.segments).toEqual([{ kind: "text", text: "Undo" }]);
 });

@@ -7,7 +7,7 @@ describe("OP03-076 Rob Lucci", () => {
     const engine = OnePieceTestEngine.create(
       {
         leaderCardId: op03RobLucci076,
-        hand: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018],
+        hand: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018, "ST01-002"],
       },
       {
         character: [
@@ -22,6 +22,7 @@ describe("OP03-076 Rob Lucci", () => {
     const firstTrashId = engine.findCardInZone("south", "hand", eb01Doma005);
     const secondTrashId = engine.findCardInZone("south", "hand", eb01Fourtricks025);
     const unselectedId = engine.findCardInZone("south", "hand", eb01MountainGod018);
+    const secondUnselectedId = engine.findCardInZone("south", "hand", "ST01-002");
 
     engine.declareAttack(engine.leader("south"), firstTargetId, "south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
@@ -36,6 +37,7 @@ describe("OP03-076 Rob Lucci", () => {
       firstTrashId,
       secondTrashId,
       unselectedId,
+      secondUnselectedId,
     ]);
     engine.resolveDecision(
       "effectCostTrashFromHand",
@@ -44,6 +46,7 @@ describe("OP03-076 Rob Lucci", () => {
     );
 
     expect(engine.getView("south").players.south.leader.rested).toBe(false);
+    expect(engine.getView("south").players.south.handCount).toBe(2);
     engine.declareAttack(engine.leader("south"), secondTargetId, "south");
 
     const view = engine.getView("south");
@@ -55,7 +58,10 @@ describe("OP03-076 Rob Lucci", () => {
       firstTrashId,
       secondTrashId,
     ]);
-    expect(view.players.south.hand.map((card) => card.instanceId)).toEqual([unselectedId]);
+    expect(view.players.south.hand.map((card) => card.instanceId)).toEqual([
+      unselectedId,
+      secondUnselectedId,
+    ]);
     expect(view.players.south.leader.rested).toBe(true);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
@@ -93,5 +99,33 @@ describe("OP03-076 Rob Lucci", () => {
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("own Character K.O. does not offer the hand cost or reactivate the Leader", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op03RobLucci076,
+        character: [{ cardId: "OP05-087", attachedDon: 1 }, eb01Doma005],
+        hand: [eb01Doma005, eb01Fourtricks025],
+      },
+      { character: [{ card: eb01MountainGod018, rested: true }] },
+    );
+    const payment = engine.findCardInZone("south", "character", eb01Doma005);
+    engine.declareAttack(
+      engine.leader("south"),
+      engine.findCardInZone("north", "character", eb01MountainGod018),
+      "south",
+    );
+    engine.declareAttack(
+      engine.findCardInZone("south", "character", "OP05-087"),
+      engine.leader("north"),
+      "south",
+    );
+    engine.asSouth().acceptOptional();
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    const view = engine.getView("south");
+    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(payment);
+    expect(view.players.south.leader.rested).toBe(true);
+    expect(view.players.south.handCount).toBe(2);
+    expect(view.prompts).toHaveLength(0);
   });
 });

@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/arcane-rising/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Arcane Rising"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/arcane-rising/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: 3b67fe5f69bf444f661df4e6ca1f5c5b36463ea4f062b7a3472ac1daf396506d
 ---

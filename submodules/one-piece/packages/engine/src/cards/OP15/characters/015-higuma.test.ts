@@ -4,6 +4,25 @@ import { eb01Doma005, op15Higuma015 } from "@tcg/op-cards";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP15-015 Higuma", () => {
+  test("with no rested DON!! to give still reduces an already attached opponent", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: [op15Higuma015], activeDon: 1 },
+      { character: [{ card: eb01Doma005, attachedDon: 1 }], restedDon: 0 },
+    );
+    const targetId = engine.findCardInZone("north", "character", eb01Doma005);
+    engine.playCard(op15Higuma015, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [targetId] }, "south");
+    expect(
+      engine.getView("south").players.north.characters.find((card) => card?.instanceId === targetId)
+        ?.power,
+    ).toBe(2000);
+    expect(
+      engine.getView("south").players.north.characters.find((card) => card?.instanceId === targetId)
+        ?.attachedDon,
+    ).toBe(1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("clogs an opposing Character with their rested DON!!, then debuffs a DON!!-carrying Character", () => {
     const engine = OnePieceTestEngine.create(
       { hand: [op15Higuma015], activeDon: op15Higuma015.cost },

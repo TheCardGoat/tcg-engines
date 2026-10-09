@@ -87,6 +87,10 @@ describe("OP07-026 Jewelry Bonney", () => {
     engine.playCard(op02Magellan085, "south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
 
+    const returnChoice = engine.pendingDecision("effectOpponentReturnDon", "north");
+    expect(returnChoice).toBeDefined();
+    engine.resolveDecision("effectOpponentReturnDon", { selectedIds: ["rested-don:0"] }, "north");
+
     expect(engine.getView("south").players.north).toMatchObject({
       restedDon: 1,
       donDeckCount: donDeckBefore + 1,

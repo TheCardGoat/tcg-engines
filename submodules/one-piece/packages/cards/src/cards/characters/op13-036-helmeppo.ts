@@ -23,7 +23,7 @@ export const op13Helmeppo036: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 2000,
-  traits: ["FILM Navy"],
+  traits: ["FILM", "Navy"],
   attribute: "slash",
   i18n: op13Helmeppo036I18n,
 };

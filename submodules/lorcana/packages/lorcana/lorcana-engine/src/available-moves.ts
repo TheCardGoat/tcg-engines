@@ -72,6 +72,7 @@ export type MoveOptionAbility = {
 
 export type MoveOptionSelectableCostKind =
   | "discardCards"
+  | "revealCards"
   | "exertCharacters"
   | "exertItems"
   | "banishCharacters"
@@ -86,6 +87,8 @@ export type MoveOptionSelectableCost = {
   cardType?: string;
   cardName?: string;
   classification?: string;
+  /** Each group is a legal pool for this cost; selections must share a group. */
+  candidateGroups?: CardInstanceId[][];
 };
 
 export type MoveOption = MoveOptionTarget | MoveOptionAbility | MoveOptionSingTogether;

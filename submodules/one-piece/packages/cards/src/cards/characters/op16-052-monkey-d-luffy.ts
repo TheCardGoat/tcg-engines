@@ -24,7 +24,7 @@ export const op16MonkeyDLuffy052: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Straw Hat Crew Impel Down"],
+  traits: ["Impel Down", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[Activate:Main] [Once Per Turn] Give up to 1 rested DON!! card to your Leader or 1 of your Characters.",

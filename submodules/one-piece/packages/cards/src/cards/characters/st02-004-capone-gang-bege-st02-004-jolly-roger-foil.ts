@@ -39,7 +39,7 @@ export const prb01CaponeGangBegeSt02004JollyRogerFoil004: CharacterCard = {
   setId: "ST02",
   cost: 1,
   power: 1000,
-  traits: ["Firetank Pirates Supernovas"],
+  traits: ["Supernovas", "Firetank Pirates"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

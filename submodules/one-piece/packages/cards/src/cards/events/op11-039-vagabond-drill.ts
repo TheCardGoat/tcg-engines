@@ -22,7 +22,7 @@ export const op11VagabondDrill039: EventCard = {
   setId: "OP11",
   cost: 1,
   trigger: "Rest up to 1 of your opponent's Characters with a cost of 4 or less.",
-  traits: ["Fish-Man The Sun Pirates Fish-Man Island"],
+  traits: ["Fish-Man", "Fish-Man Island", "The Sun Pirates"],
   effect:
     '[Counter] Up to 1 of your "Fish-Man" or "Merfolk" type Leader or Character cards gains +3000 power during this battle. Then, rest up to 1 of your opponent\'s Characters with a cost of 3 or less.',
   effects: {
@@ -46,12 +46,12 @@ export const op11VagabondDrill039: EventCard = {
                     {
                       filter: "trait",
                       value: "Fish-Man",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "trait",
                       value: "Merfolk",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                 },

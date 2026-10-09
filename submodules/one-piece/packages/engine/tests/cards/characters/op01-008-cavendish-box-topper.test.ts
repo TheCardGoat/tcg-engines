@@ -9,6 +9,42 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP01-008 Cavendish (Box Topper)", () => {
+  test("is not a Straw Hat Crew card when Nami searches the deck", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: ["OP01-016"],
+      deck: [
+        op01CavendishBoxTopper008,
+        "ST01-002",
+        eb01Doma005,
+        eb01Doma005,
+        eb01Doma005,
+        eb01MountainGod018,
+      ],
+      activeDon: 1,
+    });
+    engine.playCard("OP01-016");
+    const step = engine.pendingDecision("effectSearchSelection", "south").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected Nami search.");
+    const eligible = step.candidates.filter((candidate) => candidate.legal);
+    expect(eligible.map((candidate) => candidate.publicInfo?.cardId)).toEqual(["ST01-002"]);
+    engine.resolveDecision(
+      "effectSearchSelection",
+      { selectedIds: [eligible[0]!.ref.id] },
+      "south",
+    );
+    const order = engine.pendingDecision("effectSearchRemainderOrder", "south").steps[0];
+    if (order?.kind !== "orderItems") throw new Error("Expected search remainder.");
+    engine.resolveDecision(
+      "effectSearchRemainderOrder",
+      { selectedIds: order.candidates.map((item) => item.ref.id) },
+      "south",
+    );
+    expect(engine.getView("south").players.south.hand.map((card) => card.cardId)).toEqual([
+      "ST01-002",
+    ]);
+    expect(engine.getView("south").players.south.deckCount).toBe(5);
+  });
+
   test("optionally adds one Life card to hand before gaining Rush for the turn", () => {
     const engine = OnePieceTestEngine.create(
       {

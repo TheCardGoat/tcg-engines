@@ -23,7 +23,7 @@ export const op07York110: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Scientist Egghead"],
+  traits: ["Scientist", "Egghead"],
   attribute: "wisdom",
   effect:
     "[On Play] You may add 1 card from the top or bottom of your Life cards to your hand: K.O. up to 1 of your opponent's Characters with a cost of 2 or less. [Trigger] If your Leader is [Vegapunk], play this card.",

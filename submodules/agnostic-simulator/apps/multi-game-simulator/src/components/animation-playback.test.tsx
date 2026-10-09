@@ -129,8 +129,10 @@ describe("shared animation timeline through rendered controls", () => {
   });
   it("bounds live backlog while keeping local playback ordered", async () => {
     const { unmount } = render(<Harness live />);
-    for (let i = 0; i < 6; i++) fireEvent.click(screen.getByText("Receive update"));
-    expect(screen.getByTestId("board").textContent).toBe("6");
+    // 9 transfers x (560ms + 168ms reflow) at normal speed = 6552ms > the 6s
+    // live-backlog bound, so the stream skips straight to the latest update.
+    for (let i = 0; i < 3; i++) fireEvent.click(screen.getByText("Receive batch"));
+    expect(screen.getByTestId("board").textContent).toBe("9");
     expect(screen.getByText("Game action").hasAttribute("disabled")).toBe(false);
     unmount();
     render(<Harness />);

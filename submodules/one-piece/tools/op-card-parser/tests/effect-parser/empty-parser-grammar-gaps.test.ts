@@ -83,8 +83,8 @@ describe("empty-parser grammar gap closures", () => {
             {
               filter: "anyOf",
               filters: [
-                { filter: "trait", value: "Animal", match: "includes" },
-                { filter: "trait", value: "SMILE", match: "includes" },
+                { filter: "trait", value: "Animal", match: "exact" },
+                { filter: "trait", value: "SMILE", match: "exact" },
               ],
             },
             { filter: "cost", comparison: "lte", value: 3 },
@@ -158,8 +158,8 @@ describe("empty-parser grammar gap closures", () => {
             {
               filter: "anyOf",
               filters: [
-                { filter: "trait", value: "Supernova", match: "includes" },
-                { filter: "trait", value: "Straw Hat Crew", match: "includes" },
+                { filter: "trait", value: "Supernova", match: "exact" },
+                { filter: "trait", value: "Straw Hat Crew", match: "exact" },
               ],
             },
             { filter: "cost", comparison: "lte", value: 5 },
@@ -270,7 +270,7 @@ describe("empty-parser grammar gap closures", () => {
           eventFilter: {
             player: "self",
             causedBy: "self",
-            sourceFilters: [{ filter: "trait", value: "Navy", match: "includes" }],
+            sourceFilters: [{ filter: "trait", value: "Navy", match: "exact" }],
             minimumAmount: 1,
           },
           actions: [

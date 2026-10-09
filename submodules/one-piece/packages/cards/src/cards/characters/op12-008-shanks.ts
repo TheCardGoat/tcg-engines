@@ -30,7 +30,7 @@ export const op12Shanks008: CharacterCard = {
   setId: "OP12",
   cost: 4,
   power: 6000,
-  traits: ["The Four Emperors Red-Haired Pirates"],
+  traits: ["The Four Emperors", "Red-Haired Pirates"],
   attribute: "slash",
   effect:
     "[Blocker]\n[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Give up to 1 of your opponent's Leader or Character cards −2000 power during this turn.",

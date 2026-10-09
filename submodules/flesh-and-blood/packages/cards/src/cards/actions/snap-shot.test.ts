@@ -45,7 +45,7 @@ describe("Snap Shot (ELE041) AAA", () => {
 
     // First bow activation of the turn: load an arrow, draw.
     game.as(azalea).activate(deathDealer);
-    game.helpers.resolveUntilIdle({ optionalBoolean: true, entityTargets: "minimum" });
+    game.helpers.resolveUntilIdle({ entityTargets: "maximum" });
     expect(game.as(azalea).zone("arsenal")).toEqual([searingShotRed.canonicalId]);
   });
 
@@ -69,7 +69,7 @@ describe("Snap Shot (ELE041) AAA", () => {
 
     // First bow activation of the turn: base once-per-turn limit (CR 5.2.3).
     Azalea.activate(deathDealer);
-    game.helpers.resolveUntilIdle({ optionalBoolean: true, entityTargets: "minimum" });
+    game.helpers.resolveUntilIdle({ entityTargets: "maximum" });
     expect(game.as(azalea).zone("arsenal")).toEqual([searingShotRed.canonicalId]);
 
     // Printed "an additional time this turn": the second activation is
@@ -77,7 +77,7 @@ describe("Snap Shot (ELE041) AAA", () => {
     // materialization raises the bow's limit to 2. Death Dealer's load needs
     // an empty arsenal, so the extra activation legally resolves as a no-op.
     Azalea.activate(deathDealer);
-    game.helpers.resolveUntilIdle({ optionalBoolean: true, entityTargets: "minimum" });
+    game.helpers.resolveUntilIdle({ entityTargets: "maximum" });
     expect(game.as(azalea).zone("arsenal")).toEqual([searingShotRed.canonicalId]);
 
     // Exactly ONE additional: the third activation is still limited.
@@ -108,7 +108,7 @@ describe("Snap Shot (ELE041) AAA", () => {
     // (outside the action phase) the attacker may {t} the bow — CR 8.1.1d
     // waives the timing gate and the action point.
     game.as(azalea).activate(deathDealer);
-    game.helpers.resolveUntilIdle({ optionalBoolean: true, entityTargets: "minimum" });
+    game.helpers.resolveUntilIdle({ entityTargets: "maximum" });
     expect(game.as(azalea).zone("arsenal")).toEqual([searingShotRed.canonicalId]);
 
     game.helpers.resolveRestOfCombat();
@@ -133,7 +133,7 @@ describe("Snap Shot (ELE041) AAA", () => {
     game.helpers.resolveRestOfCombat();
 
     Azalea.activate(deathDealer);
-    game.helpers.resolveUntilIdle({ optionalBoolean: true, entityTargets: "minimum" });
+    game.helpers.resolveUntilIdle({ entityTargets: "maximum" });
 
     // Without fusion no additional activation is granted, so rejecting the
     // second activation is correct behavior.

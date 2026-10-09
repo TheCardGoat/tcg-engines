@@ -23,7 +23,7 @@ export const op10Leo057: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Dressrosa The Tontattas"],
+  traits: ["The Tontattas", "Dressrosa"],
   attribute: "strike",
   effect:
     '[On Play] You may rest your Leader or 1 of your Stage cards: If your Leader is [Usopp], look at 5 cards from the top of your deck; reveal up to 2 "Dressrosa" type cards other than [Leo] and add them to your hand. Then, place the rest at the bottom of your deck in any order, and trash 1 card from your hand.',
@@ -83,7 +83,7 @@ export const op10Leo057: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Dressrosa",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
                 revealDestination: "hand",

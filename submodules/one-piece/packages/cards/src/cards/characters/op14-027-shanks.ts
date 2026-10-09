@@ -31,7 +31,7 @@ export const op14eb04Shanks027: CharacterCard = {
   setId: "OP14",
   cost: 7,
   power: 9000,
-  traits: ["The Four Emperors Red-Haired Pirates East Blue"],
+  traits: ["East Blue", "The Four Emperors", "Red-Haired Pirates"],
   attribute: "slash",
   effect:
     "[Your Turn] When this Character becomes rested, rest up to 1 of your opponent's Characters with 7000 base power or less.\n[Opponent's Turn] If this Character is rested, give all of your opponent's Characters −1000 power.",

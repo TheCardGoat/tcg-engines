@@ -1,5 +1,5 @@
 import type { Scenario } from "./types";
-import { c, CyberpunkTestEngine, scenarioSeed } from "./shared";
+import { c, CyberpunkTestEngine, P1, scenarioSeed } from "./shared";
 
 export const programScenarios: Scenario[] = [
   {
@@ -389,6 +389,34 @@ export const programScenarios: Scenario[] = [
         { seed: scenarioSeed("progFoolOnTheHill"), preserveDeckOrder: true, autoGainGig: false },
       ),
   },
+  {
+    id: "revealDestinationFoolOnTheHillPrompt",
+    group: "release-qa",
+    label: "Reveal destination prompt · Fool on the Hill",
+    description:
+      "Stops with two public cards revealed so the Rival can compare the hand and trash destinations.",
+    build: () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailFoolOnTheHill],
+          deck: [
+            c.welcomeToNightCityRetailSketchyRipper,
+            c.welcomeToNightCityRetailIndustrialAssembly,
+            c.welcomeToNightCityRetailPeaceOffering,
+          ],
+          eddies: 2,
+        },
+        undefined,
+        {
+          seed: scenarioSeed("revealDestinationFoolOnTheHillPrompt"),
+          preserveDeckOrder: true,
+          autoGainGig: false,
+        },
+      );
+      engine.playCard(c.welcomeToNightCityRetailFoolOnTheHill, { as: P1 });
+      return engine;
+    },
+  },
 
   // ── Program: Attack-triggered buff (Cyberpsychosis) ─────────────────────
   {
@@ -489,6 +517,38 @@ export const programScenarios: Scenario[] = [
       ),
   },
   {
+    id: "progPeaceOfferingInvalidCopyStillDraws",
+    group: "program-gig-manipulation",
+    label: "Peace Offering · invalid set still draws",
+    description:
+      "P1 has a d6 showing 6, a d4 showing 2, and a friendly 2 value-pair. Select d6 then d4: the d4 cannot show 6, so the set fails, but Peace Offering still draws 1 from the existing pair.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailPeaceOffering],
+          deck: [c.welcomeToNightCityRetailCorpoSecurity],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 1,
+          gigArea: [
+            { dieType: "d6", faceValue: 6 },
+            { dieType: "d4", faceValue: 2 },
+            { dieType: "d8", faceValue: 2 },
+          ],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+        },
+        {
+          seed: scenarioSeed("progPeaceOfferingInvalidCopyStillDraws"),
+          autoGainGig: false,
+          preserveDeckOrder: true,
+        },
+      ),
+  },
+  {
     id: "progCarnageAtTheColosseum",
     group: "program-cost-modifier",
     label: "Carnage At The Colosseum · defeat weaker rival Unit",
@@ -524,21 +584,27 @@ export const programScenarios: Scenario[] = [
   {
     id: "progBootlegBlackSapphireShowRetail",
     group: "program-gig-manipulation",
-    label: "Bootleg Black Sapphire Show (Retail) · sells deck and draws from odd/even Gigs",
+    label: "Bootleg Black Sapphire Show (Retail) · two sales in one turn",
     description:
-      "P1 holds Bootleg Black Sapphire Show retail and controls one even-value Gig plus one odd-value Gig. Tests selling the top deck card before drawing two from the conditional bonus.",
+      "P1 can play two copies of Bootleg Black Sapphire Show in one turn. Each copy sells a different top deck card, so the V2 sale rail can show both public cards.",
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.welcomeToNightCityRetailBootlegBlackSapphireShow],
+          hand: [
+            c.welcomeToNightCityRetailBootlegBlackSapphireShow,
+            c.welcomeToNightCityRetailBootlegBlackSapphireShow,
+          ],
           deck: [
             c.welcomeToNightCityRetailCorpoSecurity,
             c.welcomeToNightCityRetailMoxInciters,
             c.welcomeToNightCityRetailSwordwiseHuscle,
+            c.welcomeToNightCityRetailFieldOperator,
+            c.welcomeToNightCityRetailFloorIt,
+            c.welcomeToNightCityRetailMoxInciters,
           ],
           field: [{ card: c.welcomeToNightCityRetailSecondhandBombus, spent: false }],
           legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
-          eddies: 5,
+          eddies: 10,
           gigArea: [
             { dieType: "d4", faceValue: 2 },
             { dieType: "d6", faceValue: 3 },
@@ -929,6 +995,169 @@ export const programScenarios: Scenario[] = [
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
         { seed: scenarioSeed("progTheHeistFreePlay"), autoGainGig: false, preserveDeckOrder: true },
+      ),
+  },
+
+  // ── Program: Nocturne OP55 N1 (Retail) ───────────────────────────────────
+  {
+    id: "progNocturneOp55N1",
+    group: "program-choose-effect",
+    label: "Nocturne OP55 N1 · choose-effect resolution",
+    description:
+      "P1 plays Nocturne OP55 N1 and picks one of its three effects. Visual fixture for the choose-effect program flow.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailNocturneOp55N1],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 5,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("progNocturneOp55N1"), autoGainGig: false },
+      ),
+  },
+
+  // ── Program: Synapse Burnout (Retail) ────────────────────────────────────
+  {
+    id: "progSynapseBurnout",
+    group: "program-power",
+    label: "Synapse Burnout · friendly Unit power buff",
+    description:
+      "P1 plays Synapse Burnout and picks its friendly Unit; face-up Legends scale the fighting power bonus.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailSynapseBurnout],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [{ card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false }],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("progSynapseBurnout"), autoGainGig: false },
+      ),
+  },
+
+  // ── Program: Towerfall (Retail) ──────────────────────────────────────────
+  {
+    id: "progTowerfall",
+    group: "program-choose-effect",
+    label: "Towerfall · less Street Cred unlocks both effects",
+    description:
+      "P1 holds Towerfall with 1 Street Cred against the rival's 7, so both effects apply: rival Units get -5 power, then power-0 rival Units bottom-deck.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailTowerfall],
+          field: [{ card: c.welcomeToNightCityRetailSecondhandBombus, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 8,
+          gigArea: [{ dieType: "d4", faceValue: 1 }],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [
+            { dieType: "d6", faceValue: 3 },
+            { dieType: "d6", faceValue: 4 },
+          ],
+        },
+        { seed: scenarioSeed("progTowerfall"), autoGainGig: false },
+      ),
+  },
+
+  // ── Program: We Gotta Live Together (Retail) ─────────────────────────────
+  {
+    id: "progWeGottaLiveTogether",
+    group: "program-free-play",
+    label: "We Gotta Live Together · free-play Units from trash",
+    description:
+      "P1 plays We Gotta Live Together with two cheap Units in the trash, exercising the free-play-from-trash choices.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailWeGottaLiveTogether],
+          trash: [c.welcomeToNightCityRetailCorpoSecurity, c.welcomeToNightCityRetailFieldOperator],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 12,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [],
+        },
+        { seed: scenarioSeed("progWeGottaLiveTogether"), autoGainGig: false },
+      ),
+  },
+
+  // ── Program: Safety Override (Retail) ────────────────────────────────────
+  {
+    id: "progSafetyOverride",
+    group: "program-spend",
+    label: "Safety Override · next friendly fight loss defeats the rival Unit",
+    description:
+      "P1 plays Safety Override with ready Units on both fields, arming the fight-loss defeat trigger.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailSafetyOverride],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("progSafetyOverride"), autoGainGig: false },
+      ),
+  },
+
+  // ── Program: Wild in the Streets (Retail) ────────────────────────────────
+  {
+    id: "progWildInTheStreets",
+    group: "program-spend",
+    label: "Wild in the Streets · defeat a spent rival Unit",
+    description:
+      "P1 plays Wild in the Streets with a spent rival Unit on the field, exercising the defeat-target choice from hand.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailWildInTheStreets],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 7,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("progWildInTheStreets"), autoGainGig: false },
       ),
   },
 ];

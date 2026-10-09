@@ -23,7 +23,7 @@ export const op01Bepo049: CharacterCard = {
   cost: 4,
   power: 4000,
   counter: 2000,
-  traits: ["Heart Pirates Minks"],
+  traits: ["Minks", "Heart Pirates"],
   attribute: "strike",
   effect:
     '[DON!! x1] [When Attacking] Play up to 1 "Heart Pirates" type card other than [Bepo] with a cost of 4 or less from your hand.  This card has been officially errata\'d.',
@@ -61,7 +61,7 @@ export const op01Bepo049: CharacterCard = {
               {
                 filter: "trait",
                 value: "Heart Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

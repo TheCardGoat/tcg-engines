@@ -5,7 +5,7 @@ export const eb04BlackRopeDragonTwiste059: EventCard = {
   id: "EB04-059",
   canonicalId: "EB04-059",
   slug: "black-rope-dragon-twiste/eb04-059",
-  name: "Black Rope Dragon Twiste",
+  name: "Black Rope Dragon Twister",
   printings: [
     {
       id: "EB04-059",
@@ -21,7 +21,7 @@ export const eb04BlackRopeDragonTwiste059: EventCard = {
   rarity: "R",
   setId: "EB04",
   cost: 6,
-  traits: ["Straw Hat Crew Supernovas Fish-Man Island"],
+  traits: ["Fish-Man Island", "Supernovas", "Straw Hat Crew"],
   effect:
     "[Main] You may turn 1 card from the top of your Life cards face-up: If you have less Characters than your opponent, K.O. up to 1 of your opponent's Characters with a cost of 6 or less and up to 1 of your opponent's Characters with a cost of 5 or less. [Trigger] Draw 2 cards and trash 1 card from your hand.",
   effects: {
@@ -39,33 +39,52 @@ export const eb04BlackRopeDragonTwiste059: EventCard = {
         actions: [
           {
             action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: { amount: 1, upTo: true },
-              filters: [{ filter: "cost", comparison: "lte", value: 6 }],
-            },
             condition: {
               condition: "zoneCountComparison",
               zone: "character",
               selfComparison: "lt",
               difference: 1,
             },
-          },
-          {
-            action: "ko",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
-              count: { amount: 1, upTo: true },
-              filters: [{ filter: "cost", comparison: "lte", value: 5 }],
+              count: {
+                amount: 2,
+                upTo: true,
+              },
             },
-            condition: {
-              condition: "zoneCountComparison",
-              zone: "character",
-              selfComparison: "lt",
-              difference: 1,
-            },
+            targetGroups: [
+              {
+                player: "opponent",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 6,
+                  },
+                ],
+              },
+              {
+                player: "opponent",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 5,
+                  },
+                ],
+              },
+            ],
           },
         ],
       },

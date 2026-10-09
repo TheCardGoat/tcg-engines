@@ -3,6 +3,7 @@ import { Notifications } from "@mantine/notifications";
 import { render } from "@testing-library/react";
 import { TestingLibraryDomDriver } from "@tcg/simulator-testing/testing-library";
 import type { ReactNode } from "react";
+import { MemoryRouter } from "react-router";
 
 import { CardPreviewProvider } from "../components/CardPreview/CardPreviewContext";
 import { CardInspectProvider } from "../components/GameBoard/CardInspectContext";
@@ -15,6 +16,7 @@ import { WindowCyberpunkHarnessClient } from "./window-cyberpunk-harness-client"
 export interface RenderCyberpunkSimulatorOptions {
   readonly scenarioId: ScenarioId;
   readonly initialHumanSide?: Side;
+  readonly ui?: "v1" | "v2";
   readonly layout?: "desktop" | "mobile";
   readonly boardProps?: Partial<BoardSharedPageProps>;
 }
@@ -23,6 +25,7 @@ export function renderCyberpunkSimulatorScenario({
   scenarioId,
   initialHumanSide,
   layout = "desktop",
+  ui = "v1",
   boardProps,
 }: RenderCyberpunkSimulatorOptions): ReturnType<typeof render> {
   // The shared viewport shell moves game-owned chrome into rails in mobile
@@ -61,12 +64,14 @@ export function renderCyberpunkSimulatorScenario({
     </UserConfigProvider>,
     {
       wrapper: ({ children }: { children: ReactNode }) => (
-        <MantineProvider theme={theme} env="test">
-          <Notifications position="top-right" />
-          <CardInspectProvider>
-            <CardPreviewProvider>{children}</CardPreviewProvider>
-          </CardInspectProvider>
-        </MantineProvider>
+        <MemoryRouter initialEntries={[`/?ui=${ui}`]}>
+          <MantineProvider theme={theme} env="test">
+            <Notifications position="top-right" />
+            <CardInspectProvider>
+              <CardPreviewProvider>{children}</CardPreviewProvider>
+            </CardInspectProvider>
+          </MantineProvider>
+        </MemoryRouter>
       ),
     },
   );

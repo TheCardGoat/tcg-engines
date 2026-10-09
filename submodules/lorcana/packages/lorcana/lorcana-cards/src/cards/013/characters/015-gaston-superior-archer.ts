@@ -29,9 +29,13 @@ export const gastonSuperiorArcher: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_ea561561e96748fdab5fcca6c4f6766a",
+    tcgPlayer: "704551",
+  },
   text: [
     {
-      title: "Watch This!",
+      title: "WATCH THIS!",
       description:
         "When you play this character, you may banish chosen character with 5 {S} or more.",
     },

@@ -1,0 +1,2208 @@
+{
+  "schemaVersion": 1,
+  "automationRevision": "cyberpunk-automation-v15",
+  "sourceHash": "6f21b85ff1de08a93cccfbc0619ed2fcdad5043f2eeb14c6e324963b08d158b6",
+  "baseline": {
+    "games": 45,
+    "verified": 45,
+    "errors": {
+      "INSUFFICIENT_EDDIES": 2,
+      "NOT_QUICK": 17,
+      "ATTACK_IN_PROGRESS": 24,
+      "INVALID_ATTACH_TARGET": 1,
+      "NOT_YOUR_TURN": 1
+    }
+  },
+  "repair": {
+    "games": 45,
+    "validGames": 45,
+    "failures": 0
+  },
+  "holdout": {
+    "games": 12,
+    "validGames": 12,
+    "failures": 0,
+    "plan": [
+      {
+        "index": 10000,
+        "block": "authored-cyberpsychosis-deadman-burst-insurance/mcts-vs-expert-oracle/seed-0",
+        "seed": "mcts-legality-holdout-2026-10-07/authored-cyberpsychosis-deadman-burst-insurance/seed-0",
+        "swap": false,
+        "deckA": "authored-cyberpsychosis-deadman-burst-insurance",
+        "deckB": "authored-cyberpsychosis-deadman-burst-insurance",
+        "strategyA": "mcts",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null
+      },
+      {
+        "index": 10001,
+        "block": "authored-cyberpsychosis-deadman-burst-insurance/mcts-vs-expert-oracle/seed-0",
+        "seed": "mcts-legality-holdout-2026-10-07/authored-cyberpsychosis-deadman-burst-insurance/seed-0",
+        "swap": true,
+        "deckA": "authored-cyberpsychosis-deadman-burst-insurance",
+        "deckB": "authored-cyberpsychosis-deadman-burst-insurance",
+        "strategyA": "mcts",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null
+      },
+      {
+        "index": 10002,
+        "block": "authored-cyberpsychosis-deadman-burst-insurance/mcts-greedy-vs-expert-oracle/seed-0",
+        "seed": "mcts-legality-holdout-2026-10-07/authored-cyberpsychosis-deadman-burst-insurance/seed-0",
+        "swap": false,
+        "deckA": "authored-cyberpsychosis-deadman-burst-insurance",
+        "deckB": "authored-cyberpsychosis-deadman-burst-insurance",
+        "strategyA": "mcts-greedy",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null
+      },
+      {
+        "index": 10003,
+        "block": "authored-cyberpsychosis-deadman-burst-insurance/mcts-greedy-vs-expert-oracle/seed-0",
+        "seed": "mcts-legality-holdout-2026-10-07/authored-cyberpsychosis-deadman-burst-insurance/seed-0",
+        "swap": true,
+        "deckA": "authored-cyberpsychosis-deadman-burst-insurance",
+        "deckB": "authored-cyberpsychosis-deadman-burst-insurance",
+        "strategyA": "mcts-greedy",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null
+      },
+      {
+        "index": 10004,
+        "block": "authored-yorinobu-two-units-for-one/mcts-vs-expert-oracle/seed-0",
+        "seed": "mcts-legality-holdout-2026-10-07/authored-yorinobu-two-units-for-one/seed-0",
+        "swap": false,
+        "deckA": "authored-yorinobu-two-units-for-one",
+        "deckB": "authored-yorinobu-two-units-for-one",
+        "strategyA": "mcts",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null
+      },
+      {
+        "index": 10005,
+        "block": "authored-yorinobu-two-units-for-one/mcts-vs-expert-oracle/seed-0",
+        "seed": "mcts-legality-holdout-2026-10-07/authored-yorinobu-two-units-for-one/seed-0",
+        "swap": true,
+        "deckA": "authored-yorinobu-two-units-for-one",
+        "deckB": "authored-yorinobu-two-units-for-one",
+        "strategyA": "mcts",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null
+      },
+      {
+        "index": 10006,
+        "block": "authored-yorinobu-two-units-for-one/mcts-greedy-vs-expert-oracle/seed-0",
+        "seed": "mcts-legality-holdout-2026-10-07/authored-yorinobu-two-units-for-one/seed-0",
+        "swap": false,
+        "deckA": "authored-yorinobu-two-units-for-one",
+        "deckB": "authored-yorinobu-two-units-for-one",
+        "strategyA": "mcts-greedy",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null
+      },
+      {
+        "index": 10007,
+        "block": "authored-yorinobu-two-units-for-one/mcts-greedy-vs-expert-oracle/seed-0",
+        "seed": "mcts-legality-holdout-2026-10-07/authored-yorinobu-two-units-for-one/seed-0",
+        "swap": true,
+        "deckA": "authored-yorinobu-two-units-for-one",
+        "deckB": "authored-yorinobu-two-units-for-one",
+        "strategyA": "mcts-greedy",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null
+      },
+      {
+        "index": 10008,
+        "block": "authored-ryg-low-cost-value/mcts-vs-expert-oracle/seed-0",
+        "seed": "mcts-legality-holdout-2026-10-07/authored-ryg-low-cost-value/seed-0",
+        "swap": false,
+        "deckA": "authored-ryg-low-cost-value",
+        "deckB": "authored-ryg-low-cost-value",
+        "strategyA": "mcts",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null
+      },
+      {
+        "index": 10009,
+        "block": "authored-ryg-low-cost-value/mcts-vs-expert-oracle/seed-0",
+        "seed": "mcts-legality-holdout-2026-10-07/authored-ryg-low-cost-value/seed-0",
+        "swap": true,
+        "deckA": "authored-ryg-low-cost-value",
+        "deckB": "authored-ryg-low-cost-value",
+        "strategyA": "mcts",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null
+      },
+      {
+        "index": 10010,
+        "block": "authored-ryg-low-cost-value/mcts-greedy-vs-expert-oracle/seed-0",
+        "seed": "mcts-legality-holdout-2026-10-07/authored-ryg-low-cost-value/seed-0",
+        "swap": false,
+        "deckA": "authored-ryg-low-cost-value",
+        "deckB": "authored-ryg-low-cost-value",
+        "strategyA": "mcts-greedy",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null
+      },
+      {
+        "index": 10011,
+        "block": "authored-ryg-low-cost-value/mcts-greedy-vs-expert-oracle/seed-0",
+        "seed": "mcts-legality-holdout-2026-10-07/authored-ryg-low-cost-value/seed-0",
+        "swap": true,
+        "deckA": "authored-ryg-low-cost-value",
+        "deckB": "authored-ryg-low-cost-value",
+        "strategyA": "mcts-greedy",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null
+      }
+    ],
+    "results": [
+      {
+        "index": 10000,
+        "seed": "mcts-legality-holdout-2026-10-07/authored-cyberpsychosis-deadman-burst-insurance/seed-0",
+        "swap": false,
+        "deck": "authored-cyberpsychosis-deadman-burst-insurance",
+        "strategyA": "mcts",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null,
+        "verified": null,
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "stepCount": 84,
+        "turnCount": 15,
+        "finalHash": "fnv1a32:a0f8b578",
+        "traceHash": "fnv1a32:6c834505",
+        "collisions": []
+      },
+      {
+        "index": 10001,
+        "seed": "mcts-legality-holdout-2026-10-07/authored-cyberpsychosis-deadman-burst-insurance/seed-0",
+        "swap": true,
+        "deck": "authored-cyberpsychosis-deadman-burst-insurance",
+        "strategyA": "mcts",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null,
+        "verified": null,
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "stepCount": 47,
+        "turnCount": 9,
+        "finalHash": "fnv1a32:9468edc2",
+        "traceHash": "fnv1a32:778e0567",
+        "collisions": []
+      },
+      {
+        "index": 10002,
+        "seed": "mcts-legality-holdout-2026-10-07/authored-cyberpsychosis-deadman-burst-insurance/seed-0",
+        "swap": false,
+        "deck": "authored-cyberpsychosis-deadman-burst-insurance",
+        "strategyA": "mcts-greedy",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null,
+        "verified": null,
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "stepCount": 53,
+        "turnCount": 10,
+        "finalHash": "fnv1a32:a8433a87",
+        "traceHash": "fnv1a32:1d96d925",
+        "collisions": []
+      },
+      {
+        "index": 10003,
+        "seed": "mcts-legality-holdout-2026-10-07/authored-cyberpsychosis-deadman-burst-insurance/seed-0",
+        "swap": true,
+        "deck": "authored-cyberpsychosis-deadman-burst-insurance",
+        "strategyA": "mcts-greedy",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null,
+        "verified": null,
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "stepCount": 51,
+        "turnCount": 9,
+        "finalHash": "fnv1a32:db0e33be",
+        "traceHash": "fnv1a32:33fc52fd",
+        "collisions": []
+      },
+      {
+        "index": 10004,
+        "seed": "mcts-legality-holdout-2026-10-07/authored-yorinobu-two-units-for-one/seed-0",
+        "swap": false,
+        "deck": "authored-yorinobu-two-units-for-one",
+        "strategyA": "mcts",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null,
+        "verified": null,
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "stepCount": 61,
+        "turnCount": 11,
+        "finalHash": "fnv1a32:b09ec2de",
+        "traceHash": "fnv1a32:5801cb2c",
+        "collisions": []
+      },
+      {
+        "index": 10005,
+        "seed": "mcts-legality-holdout-2026-10-07/authored-yorinobu-two-units-for-one/seed-0",
+        "swap": true,
+        "deck": "authored-yorinobu-two-units-for-one",
+        "strategyA": "mcts",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null,
+        "verified": null,
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "stepCount": 44,
+        "turnCount": 10,
+        "finalHash": "fnv1a32:00b48e78",
+        "traceHash": "fnv1a32:5652b029",
+        "collisions": []
+      },
+      {
+        "index": 10006,
+        "seed": "mcts-legality-holdout-2026-10-07/authored-yorinobu-two-units-for-one/seed-0",
+        "swap": false,
+        "deck": "authored-yorinobu-two-units-for-one",
+        "strategyA": "mcts-greedy",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null,
+        "verified": null,
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "stepCount": 70,
+        "turnCount": 11,
+        "finalHash": "fnv1a32:dfc5f608",
+        "traceHash": "fnv1a32:4f45d433",
+        "collisions": []
+      },
+      {
+        "index": 10007,
+        "seed": "mcts-legality-holdout-2026-10-07/authored-yorinobu-two-units-for-one/seed-0",
+        "swap": true,
+        "deck": "authored-yorinobu-two-units-for-one",
+        "strategyA": "mcts-greedy",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null,
+        "verified": null,
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "stepCount": 58,
+        "turnCount": 10,
+        "finalHash": "fnv1a32:a98f3ba6",
+        "traceHash": "fnv1a32:fd5acac0",
+        "collisions": []
+      },
+      {
+        "index": 10008,
+        "seed": "mcts-legality-holdout-2026-10-07/authored-ryg-low-cost-value/seed-0",
+        "swap": false,
+        "deck": "authored-ryg-low-cost-value",
+        "strategyA": "mcts",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null,
+        "verified": null,
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "stepCount": 68,
+        "turnCount": 11,
+        "finalHash": "fnv1a32:e7702391",
+        "traceHash": "fnv1a32:18d8d441",
+        "collisions": []
+      },
+      {
+        "index": 10009,
+        "seed": "mcts-legality-holdout-2026-10-07/authored-ryg-low-cost-value/seed-0",
+        "swap": true,
+        "deck": "authored-ryg-low-cost-value",
+        "strategyA": "mcts",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null,
+        "verified": null,
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "stepCount": 76,
+        "turnCount": 10,
+        "finalHash": "fnv1a32:53c3d8d3",
+        "traceHash": "fnv1a32:76ea8148",
+        "collisions": []
+      },
+      {
+        "index": 10010,
+        "seed": "mcts-legality-holdout-2026-10-07/authored-ryg-low-cost-value/seed-0",
+        "swap": false,
+        "deck": "authored-ryg-low-cost-value",
+        "strategyA": "mcts-greedy",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null,
+        "verified": null,
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "stepCount": 56,
+        "turnCount": 11,
+        "finalHash": "fnv1a32:457ab16a",
+        "traceHash": "fnv1a32:a5c53825",
+        "collisions": []
+      },
+      {
+        "index": 10011,
+        "seed": "mcts-legality-holdout-2026-10-07/authored-ryg-low-cost-value/seed-0",
+        "swap": true,
+        "deck": "authored-ryg-low-cost-value",
+        "strategyA": "mcts-greedy",
+        "strategyB": "expert-oracle",
+        "failedStrategy": null,
+        "verified": null,
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "stepCount": 114,
+        "turnCount": 14,
+        "finalHash": "fnv1a32:2c5ff052",
+        "traceHash": "fnv1a32:5fc26f01",
+        "collisions": []
+      }
+    ]
+  },
+  "validation": {
+    "automationTests": 328,
+    "botLabTests": 9,
+    "regressionTests": 10,
+    "lintAndTypes": "passed",
+    "sourceDriftGuards": "passed"
+  },
+  "rules": {
+    "citations": ["11.1.2", "11.4.1.1"],
+    "behaviorConstraints": [
+      "All required costs must be payable in full.",
+      "The chosen command must be executable in the live position."
+    ],
+    "ambiguities": []
+  },
+  "rawRoot": "/tmp/cyberpunk-mcts-repair-2026-10-07",
+  "batchHashes": {
+    "before": "fb7f332ad5c28bc1648d07555a06e0c2048c113eaaa501953ed4be1ce2f64e32",
+    "after": "2d02bd48f2f3ae72d61a04e290df3c08c9a6ceab43d7995347d19023cbadb120",
+    "holdout": "fbbd42ee06bb8bdd24a17e20c7dac1377b8d79f757dc360e0f0a155f70a8632f"
+  },
+  "games": [
+    {
+      "index": 219,
+      "deck": "authored-cyberpsychosis-deadman-burst-insurance",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-cyberpsychosis-deadman-burst-insurance/seed-1",
+      "swap": true,
+      "strategyA": "first-legal",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "INSUFFICIENT_EDDIES",
+        "step": 38,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_461459414",
+            "attachToId": "ci_598749760"
+          }
+        },
+        "finalHash": "fnv1a32:2dd9905b",
+        "traceHash": "fnv1a32:ee5e493b",
+        "wrongBranch": {
+          "stateID": 38,
+          "liveHash": "fnv1a32:6f7b6b3e",
+          "branchHash": "fnv1a32:b6dbe9b5",
+          "samePosition": false,
+          "liveAvailableEddies": 0,
+          "branchAvailableEddies": 1
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 91,
+        "turns": 13,
+        "finalHash": "fnv1a32:d386766f",
+        "traceHash": "fnv1a32:39b4b3b8"
+      }
+    },
+    {
+      "index": 352,
+      "deck": "authored-cyberpsychosis-deadman-burst-insurance",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-cyberpsychosis-deadman-burst-insurance/seed-0",
+      "swap": false,
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 80,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_60251576",
+            "attachToId": "ci_263314450"
+          }
+        },
+        "finalHash": "fnv1a32:22597ec5",
+        "traceHash": "fnv1a32:53ebc704",
+        "wrongBranch": {
+          "stateID": 80,
+          "liveHash": "fnv1a32:2bb48745",
+          "branchHash": "fnv1a32:5f1c0185",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 7
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 109,
+        "turns": 14,
+        "finalHash": "fnv1a32:95d74c7c",
+        "traceHash": "fnv1a32:795939d2"
+      }
+    },
+    {
+      "index": 360,
+      "deck": "authored-cyberpsychosis-deadman-burst-insurance",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-cyberpsychosis-deadman-burst-insurance/seed-0",
+      "swap": false,
+      "strategyA": "mcts",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 42,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_276949220",
+            "attachToId": "ci_296721814"
+          }
+        },
+        "finalHash": "fnv1a32:4851cc49",
+        "traceHash": "fnv1a32:d6dc3fda",
+        "wrongBranch": {
+          "stateID": 42,
+          "liveHash": "fnv1a32:f06832df",
+          "branchHash": "fnv1a32:d411cead",
+          "samePosition": false,
+          "liveAvailableEddies": 6,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 87,
+        "turns": 15,
+        "finalHash": "fnv1a32:1dbbd260",
+        "traceHash": "fnv1a32:c3c9affd"
+      }
+    },
+    {
+      "index": 361,
+      "deck": "authored-cyberpsychosis-deadman-burst-insurance",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-cyberpsychosis-deadman-burst-insurance/seed-0",
+      "swap": true,
+      "strategyA": "mcts",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 38,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_613914210"
+          }
+        },
+        "finalHash": "fnv1a32:5b60d12e",
+        "traceHash": "fnv1a32:b8cf1017",
+        "wrongBranch": {
+          "stateID": 38,
+          "liveHash": "fnv1a32:2e225a8a",
+          "branchHash": "fnv1a32:8e433d57",
+          "samePosition": false,
+          "liveAvailableEddies": 0,
+          "branchAvailableEddies": 4
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 87,
+        "turns": 21,
+        "finalHash": "fnv1a32:23f56110",
+        "traceHash": "fnv1a32:0b24d368"
+      }
+    },
+    {
+      "index": 410,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": false,
+      "strategyA": "greedy",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 62,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_858640964"
+          }
+        },
+        "finalHash": "fnv1a32:f36499a5",
+        "traceHash": "fnv1a32:58e15f76",
+        "wrongBranch": {
+          "stateID": 62,
+          "liveHash": "fnv1a32:0d5587a6",
+          "branchHash": "fnv1a32:d8918bfc",
+          "samePosition": false,
+          "liveAvailableEddies": 2,
+          "branchAvailableEddies": 4
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 75,
+        "turns": 12,
+        "finalHash": "fnv1a32:8a6d3d2e",
+        "traceHash": "fnv1a32:655017b7"
+      }
+    },
+    {
+      "index": 459,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "strategyA": "tactical",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 70,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_347286737"
+          }
+        },
+        "finalHash": "fnv1a32:68c2c780",
+        "traceHash": "fnv1a32:5174180c",
+        "wrongBranch": {
+          "stateID": 70,
+          "liveHash": "fnv1a32:44417432",
+          "branchHash": "fnv1a32:6c2e7110",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 64,
+        "turns": 10,
+        "finalHash": "fnv1a32:a936aadc",
+        "traceHash": "fnv1a32:85919d4b"
+      }
+    },
+    {
+      "index": 463,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "strategyA": "tactical",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 69,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_834684308"
+          }
+        },
+        "finalHash": "fnv1a32:7958548e",
+        "traceHash": "fnv1a32:131c776a",
+        "wrongBranch": {
+          "stateID": 69,
+          "liveHash": "fnv1a32:de1a7cf0",
+          "branchHash": "fnv1a32:a0d4717e",
+          "samePosition": false,
+          "liveAvailableEddies": 6,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 120,
+        "turns": 15,
+        "finalHash": "fnv1a32:210937c8",
+        "traceHash": "fnv1a32:5528dd47"
+      }
+    },
+    {
+      "index": 503,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "strategyA": "tactical-ability-aware",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 70,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_347286737"
+          }
+        },
+        "finalHash": "fnv1a32:68c2c780",
+        "traceHash": "fnv1a32:5174180c",
+        "wrongBranch": {
+          "stateID": 70,
+          "liveHash": "fnv1a32:44417432",
+          "branchHash": "fnv1a32:6c2e7110",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 64,
+        "turns": 10,
+        "finalHash": "fnv1a32:a936aadc",
+        "traceHash": "fnv1a32:85919d4b"
+      }
+    },
+    {
+      "index": 507,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "strategyA": "tactical-ability-aware",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 69,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_834684308"
+          }
+        },
+        "finalHash": "fnv1a32:7958548e",
+        "traceHash": "fnv1a32:131c776a",
+        "wrongBranch": {
+          "stateID": 69,
+          "liveHash": "fnv1a32:de1a7cf0",
+          "branchHash": "fnv1a32:a0d4717e",
+          "samePosition": false,
+          "liveAvailableEddies": 6,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 120,
+        "turns": 15,
+        "finalHash": "fnv1a32:210937c8",
+        "traceHash": "fnv1a32:5528dd47"
+      }
+    },
+    {
+      "index": 542,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": false,
+      "strategyA": "expert-oracle",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 66,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_893115952"
+          }
+        },
+        "finalHash": "fnv1a32:b1f9f33c",
+        "traceHash": "fnv1a32:965237b6",
+        "wrongBranch": {
+          "stateID": 66,
+          "liveHash": "fnv1a32:4f02e0f7",
+          "branchHash": "fnv1a32:1fed9329",
+          "samePosition": false,
+          "liveAvailableEddies": 4,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 77,
+        "turns": 14,
+        "finalHash": "fnv1a32:12d43e6d",
+        "traceHash": "fnv1a32:700d1175"
+      }
+    },
+    {
+      "index": 544,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-0",
+      "swap": false,
+      "strategyA": "expert-oracle",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 79,
+        "decision": {
+          "kind": "command",
+          "move": "goSolo",
+          "args": {
+            "cardId": "ci_367473574"
+          }
+        },
+        "finalHash": "fnv1a32:2579abc9",
+        "traceHash": "fnv1a32:85d44269",
+        "wrongBranch": {
+          "stateID": 79,
+          "liveHash": "fnv1a32:c6450365",
+          "branchHash": "fnv1a32:5af65201",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 83,
+        "turns": 15,
+        "finalHash": "fnv1a32:85b8dd25",
+        "traceHash": "fnv1a32:fc661bac"
+      }
+    },
+    {
+      "index": 576,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-0",
+      "swap": false,
+      "strategyA": "first-legal",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "INVALID_ATTACH_TARGET",
+        "step": 48,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_430037528",
+            "attachToId": "ci_939756195"
+          }
+        },
+        "finalHash": "fnv1a32:859679e3",
+        "traceHash": "fnv1a32:be3f9726",
+        "wrongBranch": {
+          "stateID": 48,
+          "liveHash": "fnv1a32:13bafe96",
+          "branchHash": "fnv1a32:9d92bc0c",
+          "samePosition": false,
+          "liveAvailableEddies": 5,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 89,
+        "turns": 16,
+        "finalHash": "fnv1a32:95eda035",
+        "traceHash": "fnv1a32:20529853"
+      }
+    },
+    {
+      "index": 579,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "strategyA": "first-legal",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 66,
+        "decision": {
+          "kind": "command",
+          "move": "sellCard",
+          "args": {
+            "cardId": "ci_130107297"
+          }
+        },
+        "finalHash": "fnv1a32:ea578e54",
+        "traceHash": "fnv1a32:cc289aa9",
+        "wrongBranch": {
+          "stateID": 66,
+          "liveHash": "fnv1a32:01965162",
+          "branchHash": "fnv1a32:bec9d237",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 69,
+        "turns": 11,
+        "finalHash": "fnv1a32:ed0ae289",
+        "traceHash": "fnv1a32:cb83aadd"
+      }
+    },
+    {
+      "index": 709,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-0",
+      "swap": true,
+      "strategyA": "monte-carlo",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 54,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_318321931"
+          }
+        },
+        "finalHash": "fnv1a32:1c7f195e",
+        "traceHash": "fnv1a32:e4d7923a",
+        "wrongBranch": {
+          "stateID": 54,
+          "liveHash": "fnv1a32:82dfcbd5",
+          "branchHash": "fnv1a32:46e914ae",
+          "samePosition": false,
+          "liveAvailableEddies": 2,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 59,
+        "turns": 11,
+        "finalHash": "fnv1a32:38ff0c22",
+        "traceHash": "fnv1a32:ffd05d67"
+      }
+    },
+    {
+      "index": 711,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "strategyA": "monte-carlo",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 70,
+        "decision": {
+          "kind": "command",
+          "move": "activateAbility",
+          "args": {
+            "cardId": "ci_562434884",
+            "abilityIndex": 0
+          }
+        },
+        "finalHash": "fnv1a32:d19bb545",
+        "traceHash": "fnv1a32:7d59d2a2",
+        "wrongBranch": {
+          "stateID": 70,
+          "liveHash": "fnv1a32:7d2756d7",
+          "branchHash": "fnv1a32:d65050bf",
+          "samePosition": false,
+          "liveAvailableEddies": 3,
+          "branchAvailableEddies": 7
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 82,
+        "turns": 15,
+        "finalHash": "fnv1a32:240aa775",
+        "traceHash": "fnv1a32:76b948b5"
+      }
+    },
+    {
+      "index": 717,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-0",
+      "swap": true,
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 48,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_819932638"
+          }
+        },
+        "finalHash": "fnv1a32:55998008",
+        "traceHash": "fnv1a32:d9518dbf",
+        "wrongBranch": {
+          "stateID": 48,
+          "liveHash": "fnv1a32:8b6e4e95",
+          "branchHash": "fnv1a32:575f8c78",
+          "samePosition": false,
+          "liveAvailableEddies": 3,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 74,
+        "turns": 13,
+        "finalHash": "fnv1a32:e361011f",
+        "traceHash": "fnv1a32:411ace89"
+      }
+    },
+    {
+      "index": 718,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": false,
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 58,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_209101969",
+            "attachToId": "ci_766666854"
+          }
+        },
+        "finalHash": "fnv1a32:4afd71ec",
+        "traceHash": "fnv1a32:06b753d3",
+        "wrongBranch": {
+          "stateID": 58,
+          "liveHash": "fnv1a32:357d1deb",
+          "branchHash": "fnv1a32:f6793d96",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 76,
+        "turns": 12,
+        "finalHash": "fnv1a32:e88dba90",
+        "traceHash": "fnv1a32:70b1a80b"
+      }
+    },
+    {
+      "index": 719,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 62,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_736898441"
+          }
+        },
+        "finalHash": "fnv1a32:2a102cba",
+        "traceHash": "fnv1a32:85aa147b",
+        "wrongBranch": {
+          "stateID": 62,
+          "liveHash": "fnv1a32:9ca5963b",
+          "branchHash": "fnv1a32:13dbbd58",
+          "samePosition": false,
+          "liveAvailableEddies": 3,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 53,
+        "turns": 9,
+        "finalHash": "fnv1a32:aa0ac710",
+        "traceHash": "fnv1a32:43007735"
+      }
+    },
+    {
+      "index": 721,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-0",
+      "swap": true,
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 50,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_191618086"
+          }
+        },
+        "finalHash": "fnv1a32:e2d7c654",
+        "traceHash": "fnv1a32:08c893de",
+        "wrongBranch": {
+          "stateID": 50,
+          "liveHash": "fnv1a32:ec753d13",
+          "branchHash": "fnv1a32:3a33a5ee",
+          "samePosition": false,
+          "liveAvailableEddies": 2,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 114,
+        "turns": 15,
+        "finalHash": "fnv1a32:e340d4a7",
+        "traceHash": "fnv1a32:34956f46"
+      }
+    },
+    {
+      "index": 722,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": false,
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 62,
+        "decision": {
+          "kind": "command",
+          "move": "goSolo",
+          "args": {
+            "cardId": "ci_858640964"
+          }
+        },
+        "finalHash": "fnv1a32:a6587f5b",
+        "traceHash": "fnv1a32:4100675a",
+        "wrongBranch": {
+          "stateID": 62,
+          "liveHash": "fnv1a32:27d94020",
+          "branchHash": "fnv1a32:b01623fc",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 7
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 77,
+        "turns": 14,
+        "finalHash": "fnv1a32:a58a4523",
+        "traceHash": "fnv1a32:41afd138"
+      }
+    },
+    {
+      "index": 723,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 80,
+        "decision": {
+          "kind": "command",
+          "move": "sellCard",
+          "args": {
+            "cardId": "ci_502559140"
+          }
+        },
+        "finalHash": "fnv1a32:2fa0f975",
+        "traceHash": "fnv1a32:273e7c43",
+        "wrongBranch": {
+          "stateID": 80,
+          "liveHash": "fnv1a32:a5ea5f2b",
+          "branchHash": "fnv1a32:d0281d62",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 134,
+        "turns": 15,
+        "finalHash": "fnv1a32:32b109bb",
+        "traceHash": "fnv1a32:eb1bb54c"
+      }
+    },
+    {
+      "index": 725,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-0",
+      "swap": true,
+      "strategyA": "mcts",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 69,
+        "decision": {
+          "kind": "command",
+          "move": "sellCard",
+          "args": {
+            "cardId": "ci_72568678"
+          }
+        },
+        "finalHash": "fnv1a32:6a74cadd",
+        "traceHash": "fnv1a32:4cc727ca",
+        "wrongBranch": {
+          "stateID": 69,
+          "liveHash": "fnv1a32:1c61bb52",
+          "branchHash": "fnv1a32:ff18a56c",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 99,
+        "turns": 17,
+        "finalHash": "fnv1a32:378dcd31",
+        "traceHash": "fnv1a32:2fab4d6f"
+      }
+    },
+    {
+      "index": 726,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": false,
+      "strategyA": "mcts",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 94,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_469877960"
+          }
+        },
+        "finalHash": "fnv1a32:a9169a62",
+        "traceHash": "fnv1a32:6c15cb31",
+        "wrongBranch": {
+          "stateID": 94,
+          "liveHash": "fnv1a32:9fce5c64",
+          "branchHash": "fnv1a32:dbba753a",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 64,
+        "turns": 24,
+        "finalHash": "fnv1a32:9bdcf363",
+        "traceHash": "fnv1a32:137d9fd2"
+      }
+    },
+    {
+      "index": 727,
+      "deck": "authored-yorinobu-two-units-for-one",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "strategyA": "mcts",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 57,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_736898441"
+          }
+        },
+        "finalHash": "fnv1a32:abee4e1b",
+        "traceHash": "fnv1a32:ac1710b9",
+        "wrongBranch": {
+          "stateID": 57,
+          "liveHash": "fnv1a32:ed41fc50",
+          "branchHash": "fnv1a32:5a749353",
+          "samePosition": false,
+          "liveAvailableEddies": 2,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 57,
+        "turns": 13,
+        "finalHash": "fnv1a32:8d11924f",
+        "traceHash": "fnv1a32:f98f71c8"
+      }
+    },
+    {
+      "index": 773,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "strategyA": "greedy",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 52,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_531893018",
+            "attachToId": "ci_135830988"
+          }
+        },
+        "finalHash": "fnv1a32:cc616838",
+        "traceHash": "fnv1a32:0035e2c2",
+        "wrongBranch": {
+          "stateID": 52,
+          "liveHash": "fnv1a32:b78b8d19",
+          "branchHash": "fnv1a32:adfc7588",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 114,
+        "turns": 15,
+        "finalHash": "fnv1a32:6ccc561a",
+        "traceHash": "fnv1a32:57092d73"
+      }
+    },
+    {
+      "index": 774,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": false,
+      "strategyA": "greedy",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "INSUFFICIENT_EDDIES",
+        "step": 17,
+        "decision": {
+          "kind": "command",
+          "move": "callLegend",
+          "args": {
+            "legendId": "ci_544903614"
+          }
+        },
+        "finalHash": "fnv1a32:dfc5b1b2",
+        "traceHash": "fnv1a32:ce731e1d",
+        "wrongBranch": {
+          "stateID": 17,
+          "liveHash": "fnv1a32:4e3323e0",
+          "branchHash": "fnv1a32:8208118f",
+          "samePosition": false,
+          "liveAvailableEddies": 0,
+          "branchAvailableEddies": 1
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 77,
+        "turns": 12,
+        "finalHash": "fnv1a32:cbafa2e1",
+        "traceHash": "fnv1a32:e45a0dcf"
+      }
+    },
+    {
+      "index": 775,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": true,
+      "strategyA": "greedy",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 49,
+        "decision": {
+          "kind": "command",
+          "move": "sellCard",
+          "args": {
+            "cardId": "ci_253006106"
+          }
+        },
+        "finalHash": "fnv1a32:cb631a33",
+        "traceHash": "fnv1a32:4cc6076e",
+        "wrongBranch": {
+          "stateID": 49,
+          "liveHash": "fnv1a32:d2a7fcb0",
+          "branchHash": "fnv1a32:7b8b180e",
+          "samePosition": false,
+          "liveAvailableEddies": 2,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 67,
+        "turns": 11,
+        "finalHash": "fnv1a32:d7edc805",
+        "traceHash": "fnv1a32:32378373"
+      }
+    },
+    {
+      "index": 777,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "strategyA": "greedy",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 55,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_716552699"
+          }
+        },
+        "finalHash": "fnv1a32:2c9ec50d",
+        "traceHash": "fnv1a32:2510fee8",
+        "wrongBranch": {
+          "stateID": 55,
+          "liveHash": "fnv1a32:f6fa8796",
+          "branchHash": "fnv1a32:8954e047",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 128,
+        "turns": 15,
+        "finalHash": "fnv1a32:3296f681",
+        "traceHash": "fnv1a32:8666d1c9"
+      }
+    },
+    {
+      "index": 821,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "strategyA": "tactical",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 72,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_1833470"
+          }
+        },
+        "finalHash": "fnv1a32:4085c393",
+        "traceHash": "fnv1a32:020d8db1",
+        "wrongBranch": {
+          "stateID": 72,
+          "liveHash": "fnv1a32:58fbab28",
+          "branchHash": "fnv1a32:d560cdae",
+          "samePosition": false,
+          "liveAvailableEddies": 6,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 58,
+        "turns": 10,
+        "finalHash": "fnv1a32:6368e675",
+        "traceHash": "fnv1a32:4b9f1b71"
+      }
+    },
+    {
+      "index": 824,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": false,
+      "strategyA": "tactical",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 73,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_634062624"
+          }
+        },
+        "finalHash": "fnv1a32:670e16a0",
+        "traceHash": "fnv1a32:10c77d69",
+        "wrongBranch": {
+          "stateID": 73,
+          "liveHash": "fnv1a32:01259c33",
+          "branchHash": "fnv1a32:ca716068",
+          "samePosition": false,
+          "liveAvailableEddies": 4,
+          "branchAvailableEddies": 4
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 125,
+        "turns": 14,
+        "finalHash": "fnv1a32:1bf5dcb9",
+        "traceHash": "fnv1a32:e7f5458c"
+      }
+    },
+    {
+      "index": 865,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "strategyA": "tactical-ability-aware",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 72,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_1833470"
+          }
+        },
+        "finalHash": "fnv1a32:4085c393",
+        "traceHash": "fnv1a32:2c93f294",
+        "wrongBranch": {
+          "stateID": 72,
+          "liveHash": "fnv1a32:58fbab28",
+          "branchHash": "fnv1a32:d560cdae",
+          "samePosition": false,
+          "liveAvailableEddies": 6,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 58,
+        "turns": 10,
+        "finalHash": "fnv1a32:6368e675",
+        "traceHash": "fnv1a32:fe8b0e78"
+      }
+    },
+    {
+      "index": 868,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": false,
+      "strategyA": "tactical-ability-aware",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 73,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_634062624"
+          }
+        },
+        "finalHash": "fnv1a32:670e16a0",
+        "traceHash": "fnv1a32:10c77d69",
+        "wrongBranch": {
+          "stateID": 73,
+          "liveHash": "fnv1a32:01259c33",
+          "branchHash": "fnv1a32:ca716068",
+          "samePosition": false,
+          "liveAvailableEddies": 4,
+          "branchAvailableEddies": 4
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 124,
+        "turns": 14,
+        "finalHash": "fnv1a32:e8594b0c",
+        "traceHash": "fnv1a32:fb0cc128"
+      }
+    },
+    {
+      "index": 943,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": true,
+      "strategyA": "first-legal",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 62,
+        "decision": {
+          "kind": "command",
+          "move": "sellCard",
+          "args": {
+            "cardId": "ci_552524210"
+          }
+        },
+        "finalHash": "fnv1a32:08a6fd7f",
+        "traceHash": "fnv1a32:fef9ea6a",
+        "wrongBranch": {
+          "stateID": 62,
+          "liveHash": "fnv1a32:e1e4c89a",
+          "branchHash": "fnv1a32:201c8200",
+          "samePosition": false,
+          "liveAvailableEddies": 2,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 80,
+        "turns": 13,
+        "finalHash": "fnv1a32:c4177cbc",
+        "traceHash": "fnv1a32:cdb7271a"
+      }
+    },
+    {
+      "index": 945,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "strategyA": "first-legal",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 67,
+        "decision": {
+          "kind": "command",
+          "move": "attackUnit",
+          "args": {
+            "attackerId": "ci_135830988",
+            "defenderId": "ci_615199834"
+          }
+        },
+        "finalHash": "fnv1a32:1fd119ad",
+        "traceHash": "fnv1a32:e816ac01",
+        "wrongBranch": {
+          "stateID": 67,
+          "liveHash": "fnv1a32:8d7c5904",
+          "branchHash": "fnv1a32:d45e2337",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 96,
+        "turns": 15,
+        "finalHash": "fnv1a32:6e0b29dc",
+        "traceHash": "fnv1a32:582c0334"
+      }
+    },
+    {
+      "index": 946,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": false,
+      "strategyA": "first-legal",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 55,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_550536491"
+          }
+        },
+        "finalHash": "fnv1a32:6287856e",
+        "traceHash": "fnv1a32:ed89e04e",
+        "wrongBranch": {
+          "stateID": 55,
+          "liveHash": "fnv1a32:f8cd3d9f",
+          "branchHash": "fnv1a32:689923ed",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 119,
+        "turns": 20,
+        "finalHash": "fnv1a32:5d9ace88",
+        "traceHash": "fnv1a32:dc17abb0"
+      }
+    },
+    {
+      "index": 974,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": false,
+      "strategyA": "random",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_YOUR_TURN",
+        "step": 104,
+        "decision": {
+          "kind": "command",
+          "move": "passPhase"
+        },
+        "finalHash": "fnv1a32:ebb7cdec",
+        "traceHash": "fnv1a32:0c323201",
+        "wrongBranch": {
+          "stateID": 104,
+          "liveHash": "fnv1a32:9b728a03",
+          "branchHash": "fnv1a32:9d88508f",
+          "samePosition": false,
+          "liveAvailableEddies": 6,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 46,
+        "turns": 9,
+        "finalHash": "fnv1a32:6d0fb20f",
+        "traceHash": "fnv1a32:0baa1d8f"
+      }
+    },
+    {
+      "index": 1073,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "strategyA": "monte-carlo",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 59,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_716552699"
+          }
+        },
+        "finalHash": "fnv1a32:307905b5",
+        "traceHash": "fnv1a32:47056d5f",
+        "wrongBranch": {
+          "stateID": 59,
+          "liveHash": "fnv1a32:e51ea0cc",
+          "branchHash": "fnv1a32:cf18c3e9",
+          "samePosition": false,
+          "liveAvailableEddies": 3,
+          "branchAvailableEddies": 7
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 79,
+        "turns": 15,
+        "finalHash": "fnv1a32:bcafca95",
+        "traceHash": "fnv1a32:d15587bc"
+      }
+    },
+    {
+      "index": 1074,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": false,
+      "strategyA": "monte-carlo",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 54,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_586099358"
+          }
+        },
+        "finalHash": "fnv1a32:d2cfed58",
+        "traceHash": "fnv1a32:891e63a0",
+        "wrongBranch": {
+          "stateID": 54,
+          "liveHash": "fnv1a32:4a97af6d",
+          "branchHash": "fnv1a32:e74718b0",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 64,
+        "turns": 13,
+        "finalHash": "fnv1a32:7e79fde5",
+        "traceHash": "fnv1a32:cb151b74"
+      }
+    },
+    {
+      "index": 1080,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": false,
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 72,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_399092051",
+            "attachToId": "ci_246737548"
+          }
+        },
+        "finalHash": "fnv1a32:f26a4f16",
+        "traceHash": "fnv1a32:dc20701d",
+        "wrongBranch": {
+          "stateID": 72,
+          "liveHash": "fnv1a32:26849a83",
+          "branchHash": "fnv1a32:d97ac49e",
+          "samePosition": false,
+          "liveAvailableEddies": 3,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 59,
+        "turns": 10,
+        "finalHash": "fnv1a32:68552c4a",
+        "traceHash": "fnv1a32:b0cc0fd5"
+      }
+    },
+    {
+      "index": 1081,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 56,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_162456616"
+          }
+        },
+        "finalHash": "fnv1a32:9ba84c4a",
+        "traceHash": "fnv1a32:13de403f",
+        "wrongBranch": {
+          "stateID": 56,
+          "liveHash": "fnv1a32:1beb4e9b",
+          "branchHash": "fnv1a32:6f672512",
+          "samePosition": false,
+          "liveAvailableEddies": 2,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p2",
+        "steps": 82,
+        "turns": 13,
+        "finalHash": "fnv1a32:8bb7632d",
+        "traceHash": "fnv1a32:1b7d5455"
+      }
+    },
+    {
+      "index": 1084,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": false,
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 71,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_290851366"
+          }
+        },
+        "finalHash": "fnv1a32:edfb4d52",
+        "traceHash": "fnv1a32:6c8bf2e3",
+        "wrongBranch": {
+          "stateID": 71,
+          "liveHash": "fnv1a32:f53a3141",
+          "branchHash": "fnv1a32:7550ad4b",
+          "samePosition": false,
+          "liveAvailableEddies": 1,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 122,
+        "turns": 15,
+        "finalHash": "fnv1a32:faffe3d3",
+        "traceHash": "fnv1a32:e0252f92"
+      }
+    },
+    {
+      "index": 1085,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 59,
+        "decision": {
+          "kind": "command",
+          "move": "goSolo",
+          "args": {
+            "cardId": "ci_135830988"
+          }
+        },
+        "finalHash": "fnv1a32:bae110f2",
+        "traceHash": "fnv1a32:b9ed627b",
+        "wrongBranch": {
+          "stateID": 59,
+          "liveHash": "fnv1a32:16ec89d5",
+          "branchHash": "fnv1a32:b11edf0f",
+          "samePosition": false,
+          "liveAvailableEddies": 2,
+          "branchAvailableEddies": 6
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 139,
+        "turns": 15,
+        "finalHash": "fnv1a32:67d16949",
+        "traceHash": "fnv1a32:039171cc"
+      }
+    },
+    {
+      "index": 1086,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": false,
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 75,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_963513204",
+            "attachToId": "ci_34386937"
+          }
+        },
+        "finalHash": "fnv1a32:db9fa59a",
+        "traceHash": "fnv1a32:9a2b5266",
+        "wrongBranch": {
+          "stateID": 75,
+          "liveHash": "fnv1a32:693cabf0",
+          "branchHash": "fnv1a32:9a563eb5",
+          "samePosition": false,
+          "liveAvailableEddies": 2,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 100,
+        "turns": 15,
+        "finalHash": "fnv1a32:5646daa6",
+        "traceHash": "fnv1a32:fbbc7bc6"
+      }
+    },
+    {
+      "index": 1088,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": false,
+      "strategyA": "mcts",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts-greedy",
+      "before": {
+        "verified": true,
+        "errorCode": "NOT_QUICK",
+        "step": 49,
+        "decision": {
+          "kind": "command",
+          "move": "playCard",
+          "args": {
+            "cardId": "ci_642484238"
+          }
+        },
+        "finalHash": "fnv1a32:da2704ff",
+        "traceHash": "fnv1a32:5743eb12",
+        "wrongBranch": {
+          "stateID": 49,
+          "liveHash": "fnv1a32:10cf057e",
+          "branchHash": "fnv1a32:d583e3fe",
+          "samePosition": false,
+          "liveAvailableEddies": 4,
+          "branchAvailableEddies": 4
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 62,
+        "turns": 15,
+        "finalHash": "fnv1a32:82dd2533",
+        "traceHash": "fnv1a32:4475b93c"
+      }
+    },
+    {
+      "index": 1090,
+      "deck": "authored-ryg-low-cost-value",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": false,
+      "strategyA": "mcts",
+      "strategyB": "mcts-greedy",
+      "failedStrategy": "mcts",
+      "before": {
+        "verified": true,
+        "errorCode": "ATTACK_IN_PROGRESS",
+        "step": 37,
+        "decision": {
+          "kind": "command",
+          "move": "attackRival",
+          "args": {
+            "attackerId": "ci_739668840"
+          }
+        },
+        "finalHash": "fnv1a32:9feeaac2",
+        "traceHash": "fnv1a32:93bd267d",
+        "wrongBranch": {
+          "stateID": 37,
+          "liveHash": "fnv1a32:87cb6ebf",
+          "branchHash": "fnv1a32:0791ca36",
+          "samePosition": false,
+          "liveAvailableEddies": 3,
+          "branchAvailableEddies": 5
+        }
+      },
+      "after": {
+        "valid": true,
+        "reason": "winCondition",
+        "winnerId": "p1",
+        "steps": 76,
+        "turns": 26,
+        "finalHash": "fnv1a32:25ea8095",
+        "traceHash": "fnv1a32:29041816"
+      }
+    }
+  ]
+}

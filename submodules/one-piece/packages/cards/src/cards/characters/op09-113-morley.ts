@@ -23,7 +23,7 @@ export const op09Morley113: CharacterCard = {
   cost: 4,
   power: 6000,
   counter: 1000,
-  traits: ["Giant Revolutionary Army"],
+  traits: ["Giant", "Revolutionary Army"],
   attribute: "special",
   i18n: op09Morley113I18n,
 };

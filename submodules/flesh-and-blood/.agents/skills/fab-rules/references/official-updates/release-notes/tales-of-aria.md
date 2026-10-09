@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/tales-of-aria/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Tales of Aria"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/tales-of-aria/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: e84e4a5b6926ce52db030e8dc8bbbafec1f3f50db42d3c12cda5fc77bf71f38e
 ---

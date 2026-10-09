@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-damage"
+  relation: "current_index"
+---
+
 # Game Mechanics - Damage
 
 #### General Rules:

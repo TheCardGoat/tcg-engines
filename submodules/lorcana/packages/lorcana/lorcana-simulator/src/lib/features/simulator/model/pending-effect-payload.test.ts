@@ -1,6 +1,9 @@
 import { describe, expect, it } from "bun:test";
 
-import { getResolutionEffectInstanceReferences } from "./pending-effect-payload.js";
+import {
+  getBagEffectPayloadMeta,
+  getResolutionEffectInstanceReferences,
+} from "./pending-effect-payload.js";
 
 describe("getResolutionEffectInstanceReferences", () => {
   it("extracts trigger-subject references from instance-bound effects", () => {
@@ -50,5 +53,15 @@ describe("getResolutionEffectInstanceReferences", () => {
         cardIds: ["chosen_4"],
       },
     ]);
+  });
+});
+
+describe("getBagEffectPayloadMeta", () => {
+  it("preserves the text of an unindexed temporary trigger", () => {
+    const abilityName = "Whenever this character challenges another character, draw a card.";
+    const meta = getBagEffectPayloadMeta({ abilityName, effect: { type: "draw", amount: 1 } });
+    expect(meta.abilityName).toBe(abilityName);
+    expect(meta.abilityIndex).toBeUndefined();
+    expect(meta.effectType).toBe("draw");
   });
 });

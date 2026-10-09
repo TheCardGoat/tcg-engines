@@ -6,7 +6,9 @@ describe("OP16-089 Dracule Mihawk", () => {
   test("[On Play] draws 2, trashes 2, and gives an opposing Character -4 cost; [Rush] lets it attack", () => {
     const engine = OnePieceTestEngine.create(
       {
-        hand: ["OP16-089", "EB01-005", "OP16-004", "OP13-013", "OP13-013"],
+        leaderCardId: "ST06-001",
+        hand: ["OP16-089", "ST06-006"],
+        deck: ["OP16-095", "OP15-090", "ST06-006"],
         activeDon: 6,
       },
       { character: [{ cardId: "OP16-012", rested: true }] },
@@ -14,6 +16,12 @@ describe("OP16-089 Dracule Mihawk", () => {
     const bennId = engine.findCardInZone("north", "character", "OP16-012");
 
     engine.playCard("OP16-089");
+    expect(engine.getView("south").players.south.hand.map((card) => card.cardId)).toEqual([
+      "ST06-006",
+      "OP16-095",
+      "OP15-090",
+    ]);
+    expect(engine.getView("south").players.south.deckCount).toBe(1);
     const trash = engine.pendingDecision("effectTrashFromHandSelection", "south").steps[0];
     if (trash?.kind !== "selectEntity") throw new Error("Expected the trash choice.");
     engine.resolveDecision(
@@ -21,6 +29,13 @@ describe("OP16-089 Dracule Mihawk", () => {
       { selectedIds: trash.candidates.slice(0, 2).map((candidate) => candidate.ref.id) },
       "south",
     );
+    expect(engine.getView("south").players.south.hand.map((card) => card.cardId)).toEqual([
+      "OP15-090",
+    ]);
+    expect(engine.getView("south").players.south.trash.map((card) => card.cardId)).toEqual([
+      "ST06-006",
+      "OP16-095",
+    ]);
     const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     if (target?.kind !== "selectEntity") throw new Error("Expected the cost target.");
     engine.resolveDecision("effectTargetSelection", { selectedIds: [bennId] }, "south");

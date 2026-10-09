@@ -29,7 +29,7 @@ export const deathDealer = defineCard(fabCardIdentitiesByCanonicalId["Nnmtz6GrR6
           },
         },
         then: {
-          type: "optional",
+          type: "if-you-do",
           effect: {
             type: "move-card",
             target: {
@@ -43,6 +43,7 @@ export const deathDealer = defineCard(fabCardIdentitiesByCanonicalId["Nnmtz6GrR6
                 },
               },
               count: 1,
+              upTo: true,
             },
             to: {
               zone: "arsenal",

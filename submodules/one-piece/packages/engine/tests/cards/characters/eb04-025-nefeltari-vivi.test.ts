@@ -109,3 +109,19 @@ describe("EB04-025 Nefeltari Vivi", () => {
     expect(engine.getView("north").prompts).toHaveLength(0);
   });
 });
+
+test("printed +1000 Character Counter prevents an equal-power Leader attack", () => {
+  const e = OnePieceTestEngine.create(
+    { leaderCardId: "ST01-001", hand: ["EB04-025"] },
+    { leaderCardId: "ST01-001" },
+    { firstPlayer: "south", activeSeat: "north" },
+  );
+  const counter = e.findCardInZone("south", "hand", "EB04-025");
+  const life = e.getView("south").players.south.lifeCount;
+  e.asNorth().attack(e.leader("north"), e.leader("south"));
+  e.resolveDecision("battleCounter", { selectedIds: [counter] }, "south");
+  expect(e.getView("south").players.south.lifeCount).toBe(life);
+  expect(e.getView("south").players.south.handCount).toBe(0);
+  expect(e.getView("south").players.south.trash.some((c) => c.instanceId === counter)).toBe(true);
+  expect(e.getView("south").prompts).toHaveLength(0);
+});

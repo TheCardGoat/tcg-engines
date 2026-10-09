@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { eb03JewelryBonney017 } from "../../../../../cards/src/cards/characters/eb03-017-jewelry-bonney.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("EB03-017 Jewelry Bonney", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(eb03JewelryBonney017);
-  });
-});

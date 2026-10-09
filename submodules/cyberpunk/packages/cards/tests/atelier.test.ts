@@ -2,17 +2,17 @@ import { describe, expect, it } from "vite-plus/test";
 
 import {
   legacyAccentMangledSlugAliases,
-  CYBERPUNK_ALT_ART_SET_CODES,
-  CYBERPUNK_RARITY_RANK,
   CYBERPUNK_RARITY_TO_CODE,
   cyberpunkPrintingEffectiveRarityCode,
   cyberpunkRarityCode,
   defaultCyberpunkPrintingId,
   getCyberpunkCardDisplay,
+  getCyberpunkFreeArtIdsForCanonical,
   getCyberpunkPrintingImageUrl,
   getCyberpunkCanonicalForCardId,
   getCyberpunkPrintingInfo,
   getCyberpunkPrintingInfosForCanonical,
+  isCyberpunkAlternateArtId,
   isCyberpunkAlternateArtPrinting,
   isCyberpunkPrintingOfCanonical,
 } from "../src/index.ts";
@@ -26,10 +26,6 @@ import {
 const LUCYNA_PROMO_CARD_ID = "3f2e5d58-dea3-4090-8fe7-0f5f4af2d333";
 const LUCYNA_CANONICAL_ID = "lucyna-kushinada";
 const LUCYNA_PROMO_PRINTING_ID = "14dc2e38-a373-4b25-be12-e74b1f79e3b2";
-
-// Mandibular Upgrade — welcometonightcityretail gear, rarity Common across
-// every printing; none of its printings live in an alt-art set.
-const MANDIBULAR_CARD_ID = "6720e7fd-d1e8-4c8a-9ff2-f51f62241902";
 
 // Jackie Welles — Pour One Out For Me: exists in boxtoppers retail (Epic) and
 // the-heist retail starter deck (Epic). They share an id and slug, so they
@@ -66,47 +62,6 @@ describe("CYBERPUNK_RARITY_TO_CODE + cyberpunkRarityCode", () => {
   it("maps a populated rarity through the table", () => {
     expect(cyberpunkRarityCode({ rarity: "Epic" })).toBe("epic");
     expect(cyberpunkRarityCode({ rarity: "Rare" })).toBe("rare");
-  });
-});
-
-describe("CYBERPUNK_RARITY_RANK", () => {
-  it("ranks the four real Cyberpunk rarities ascending (common is cheapest)", () => {
-    expect(CYBERPUNK_RARITY_RANK.common).toBeLessThan(CYBERPUNK_RARITY_RANK.uncommon);
-    expect(CYBERPUNK_RARITY_RANK.uncommon).toBeLessThan(CYBERPUNK_RARITY_RANK.rare);
-    expect(CYBERPUNK_RARITY_RANK.rare).toBeLessThan(CYBERPUNK_RARITY_RANK.epic);
-  });
-});
-
-describe("CYBERPUNK_ALT_ART_SET_CODES + isCyberpunkAlternateArtPrinting", () => {
-  it("flags exactly the promo, PRM01, boxtoppers, and organized-play promo sets as alt-art", () => {
-    expect(CYBERPUNK_ALT_ART_SET_CODES.has("PRM01")).toBe(true);
-    expect(CYBERPUNK_ALT_ART_SET_CODES.has("promo")).toBe(true);
-    expect(CYBERPUNK_ALT_ART_SET_CODES.has("boxtoppersretail")).toBe(true);
-    expect(CYBERPUNK_ALT_ART_SET_CODES.has("boxtoppersbeta")).toBe(true);
-    expect(CYBERPUNK_ALT_ART_SET_CODES.has("nightcitybrawls1")).toBe(true);
-    expect(CYBERPUNK_ALT_ART_SET_CODES.has("nightcityshowdowns1")).toBe(true);
-    expect(CYBERPUNK_ALT_ART_SET_CODES.size).toBe(6);
-  });
-
-  it("treats promo/PRM01/boxtoppers/organized-play promo printings as alt-art", () => {
-    expect(isCyberpunkAlternateArtPrinting({ setCode: "PRM01" })).toBe(true);
-    expect(isCyberpunkAlternateArtPrinting({ setCode: "promo" })).toBe(true);
-    expect(isCyberpunkAlternateArtPrinting({ setCode: "boxtoppersretail" })).toBe(true);
-    expect(isCyberpunkAlternateArtPrinting({ setCode: "boxtoppersbeta" })).toBe(true);
-    expect(isCyberpunkAlternateArtPrinting({ setCode: "nightcitybrawls1" })).toBe(true);
-    expect(isCyberpunkAlternateArtPrinting({ setCode: "nightcityshowdowns1" })).toBe(true);
-  });
-
-  it("treats base-set printings as non-alt-art", () => {
-    expect(isCyberpunkAlternateArtPrinting({ setCode: "welcometonightcityretail" })).toBe(false);
-    expect(isCyberpunkAlternateArtPrinting({ setCode: "theheistretailstarterdeck" })).toBe(false);
-    expect(isCyberpunkAlternateArtPrinting({ setCode: "theheistbetastarterdeck" })).toBe(false);
-    expect(isCyberpunkAlternateArtPrinting({ setCode: "embracingpowerretailstarterdeck" })).toBe(
-      false,
-    );
-    expect(isCyberpunkAlternateArtPrinting({ setCode: "embracingpowerbetastarterdeck" })).toBe(
-      false,
-    );
   });
 });
 
@@ -193,97 +148,39 @@ describe("getCyberpunkPrintingInfosForCanonical + getCyberpunkPrintingInfo", () 
     );
   });
 
-  it("marks alt-art-set printings via the shared helper (parity with isAlternateArt)", () => {
+  it("marks appearance-level variants via the shared helper", () => {
     const infos = getCyberpunkPrintingInfosForCanonical(JACKIE_WELLES_CANONICAL_ID);
 
     const boxtoppers = infos.find((i) => i.printingId === JACKIE_WELLES_BOXTOPPERS_PRINTING_ID)!;
-    expect(isCyberpunkAlternateArtPrinting({ setCode: boxtoppers.set })).toBe(true);
+    expect(isCyberpunkAlternateArtPrinting({ printingId: boxtoppers.printingId })).toBe(true);
 
     const boxtoppersBeta = infos.find(
       (i) => i.printingId === JACKIE_WELLES_BOXTOPPERS_BETA_PRINTING_ID,
     )!;
-    expect(isCyberpunkAlternateArtPrinting({ setCode: boxtoppersBeta.set })).toBe(true);
+    expect(isCyberpunkAlternateArtPrinting({ printingId: boxtoppersBeta.printingId })).toBe(true);
 
     const theheist = infos.find((i) => i.printingId === JACKIE_WELLES_THEHEIST_PRINTING_ID)!;
-    expect(isCyberpunkAlternateArtPrinting({ setCode: theheist.set })).toBe(false);
+    expect(isCyberpunkAlternateArtPrinting({ printingId: theheist.printingId })).toBe(false);
+    expect(boxtoppers.artId).toBe(boxtoppersBeta.artId);
+    expect(isCyberpunkAlternateArtId(boxtoppers.artId)).toBe(true);
   });
 });
 
 describe("defaultCyberpunkPrintingId", () => {
-  it("picks a non-alt-art printing over alt-art printings for Jackie Welles", () => {
+  it("picks the explicitly free simple art for Jackie Welles", () => {
     const defaultId = defaultCyberpunkPrintingId(JACKIE_WELLES_CANONICAL_ID);
     const defaultInfo = getCyberpunkPrintingInfo(defaultId!)!;
 
-    // The boxtoppersretail and boxtoppersbeta printings are alt-art and must be
-    // skipped even though they share the Epic rarity with runtime base
-    // printings.
-    expect(defaultId).not.toBe(JACKIE_WELLES_BOXTOPPERS_PRINTING_ID);
-    expect(defaultId).not.toBe(JACKIE_WELLES_BOXTOPPERS_BETA_PRINTING_ID);
-    expect(cyberpunkRarityCode(defaultInfo)).toBe("epic");
-    expect(isCyberpunkAlternateArtPrinting({ setCode: defaultInfo.set })).toBe(false);
-  });
-
-  it("skips alt-art printings even when they are the lowest rarity", () => {
-    // Construct a canonical view where the only common printing is the promo
-    // (alt-art) one — the default must still avoid it and fall back to the
-    // lowest-rarity NON-alt-art printing. Mandibular Upgrade has no alt-art
-    // printings at all, so its default is just its lowest-rarity printing.
-    const canonical = getCyberpunkCanonicalForCardId(MANDIBULAR_CARD_ID)!;
-    const defaultId = defaultCyberpunkPrintingId(canonical);
-    expect(defaultId).not.toBeNull();
-
-    const defaultInfo = getCyberpunkPrintingInfo(defaultId!)!;
-    // No Mandibular printing is alt-art, and all are Common, so the default is a
-    // Common non-alt-art printing.
-    expect(cyberpunkRarityCode(defaultInfo)).toBe("common");
-    expect(isCyberpunkAlternateArtPrinting({ setCode: defaultInfo.set })).toBe(false);
-  });
-
-  it("breaks rarity ties by lowest sortNumber, then by collectorNumber", () => {
-    // Mandibular Upgrade printings across sets with distinct `setPriority`
-    // values make it a clean fixture for the tie-break rule:
-    //   - welcometonightcityretail (priority 100): collectorNumber "062"
-    //   - welcometonightcitybeta   (priority  50): collectorNumber "β062"
-    //   - theheistretailstarterdeck(priority  90): collectorNumber "008"
-    //   - theheistbetastarterdeck  (priority  50): collectorNumber "β008"
-    //   - nightcitybrawls1         (priority  50): "006" / "024" — Nova Rare
-    //     full-art promo foils, i.e. alt-art, so the default picker excludes
-    //     them and they must never win the tie-break.
-    // All non-alt-art printings are Common, so the rarity tie-break is
-    // inactive; lowest priority (50) ties the two beta printings, and ascending
-    // collectorNumber breaks the tie → "β008" wins.
-    const canonical = getCyberpunkCanonicalForCardId(MANDIBULAR_CARD_ID)!;
-    const defaultId = defaultCyberpunkPrintingId(canonical);
-    const defaultInfo = getCyberpunkPrintingInfo(defaultId!)!;
-
-    const allInfos = getCyberpunkPrintingInfosForCanonical(canonical);
-    const nonAltArtInfos = allInfos.filter(
-      (i) => !isCyberpunkAlternateArtPrinting({ setCode: i.set }),
+    expect(getCyberpunkFreeArtIdsForCanonical(JACKIE_WELLES_CANONICAL_ID)).toContain(
+      defaultInfo.artId,
     );
-    expect(nonAltArtInfos.length).toBeLessThan(allInfos.length);
-    // Sanity: every default-eligible Mandibular printing is Common so the
-    // rarity tie-break is inactive and the sortNumber tie-break is what
-    // selects the winner.
-    expect(nonAltArtInfos.every((i) => cyberpunkRarityCode(i) === "common")).toBe(true);
-
-    const minSort = Math.min(...nonAltArtInfos.map((i) => i.sortNumber));
-    const lowestSortInfos = nonAltArtInfos
-      .filter((i) => i.sortNumber === minSort)
-      .slice()
-      .sort((a, b) => a.cardNumber.localeCompare(b.cardNumber));
-    const expected = lowestSortInfos[0]!;
-
-    expect(defaultInfo.printingId).toBe(expected.printingId);
-    expect(defaultInfo.sortNumber).toBe(minSort);
-    expect(defaultInfo.cardNumber).toBe(expected.cardNumber);
+    expect(isCyberpunkAlternateArtPrinting({ printingId: defaultInfo.printingId })).toBe(false);
   });
 
-  it("falls back to the lowest-rarity printing when every printing is alt-art", () => {
-    // Lucyna Kushinada is promo-only: its single printing is alt-art, so the
-    // "exclude alt-art" filter leaves nothing. The default must still return a
-    // valid printing (the only one) rather than null.
+  it("keeps a valid free printing for a promo-only canonical", () => {
     const canonical = getCyberpunkCanonicalForCardId(LUCYNA_PROMO_CARD_ID)!;
     expect(defaultCyberpunkPrintingId(canonical)).toBe(LUCYNA_PROMO_PRINTING_ID);
+    expect(isCyberpunkAlternateArtPrinting({ printingId: LUCYNA_PROMO_PRINTING_ID })).toBe(false);
   });
 
   it("returns null for an unknown canonical id", () => {
@@ -336,31 +233,24 @@ describe("isCyberpunkPrintingOfCanonical", () => {
 });
 
 describe("cyberpunkPrintingEffectiveRarityCode", () => {
-  it("prices an Epic non-alt-art printing by its raw rarity (→ epic)", () => {
-    // Jackie Welles the-heist printing: rarity "Epic", set is not alt-art.
-    expect(cyberpunkPrintingEffectiveRarityCode(JACKIE_WELLES_THEHEIST_PRINTING_ID)).toBe("epic");
+  it("prices all simple appearances at the same free tier", () => {
+    expect(cyberpunkPrintingEffectiveRarityCode(JACKIE_WELLES_THEHEIST_PRINTING_ID)).toBe("common");
   });
 
-  it("applies the alt-art-set bump: boxtoppersretail printing → enchanted", () => {
-    // Jackie Welles boxtoppersretail printing is Epic in the data, but the
-    // set is an alt-art set, so the bump overrides it to `enchanted` (120 marks).
+  it("prices a distinct box-topper appearance at enchanted", () => {
     expect(cyberpunkPrintingEffectiveRarityCode(JACKIE_WELLES_BOXTOPPERS_PRINTING_ID)).toBe(
       "enchanted",
     );
   });
 
-  it("applies the alt-art-set bump: boxtoppersbeta printing → enchanted", () => {
-    // Jackie Welles boxtoppersbeta printing is Epic in the data, but the set is
-    // an alt-art set, so the bump overrides it to `enchanted` (120 marks).
+  it("uses the same price for equivalent box-topper printings", () => {
     expect(cyberpunkPrintingEffectiveRarityCode(JACKIE_WELLES_BOXTOPPERS_BETA_PRINTING_ID)).toBe(
       "enchanted",
     );
   });
 
-  it("applies the alt-art-set bump: promo printing (rarity null) → enchanted", () => {
-    // Lucyna Kushinada promo printing has rarity null (→ common raw), but the
-    // promo set is an alt-art set, so the bump overrides it to `enchanted`.
-    expect(cyberpunkPrintingEffectiveRarityCode(LUCYNA_PROMO_PRINTING_ID)).toBe("enchanted");
+  it("prices a promo-only canonical's simple free art at the free tier", () => {
+    expect(cyberpunkPrintingEffectiveRarityCode(LUCYNA_PROMO_PRINTING_ID)).toBe("common");
   });
 
   it("returns common for an unknown printing id (never silently grants top tier)", () => {

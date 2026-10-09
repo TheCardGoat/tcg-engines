@@ -23,7 +23,7 @@ export const op10EdwardNewgate024: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["The Four Emperors Whitebeard Pirates ODYSSEY"],
+  traits: ["ODYSSEY", "The Four Emperors", "Whitebeard Pirates"],
   attribute: "special",
   effect:
     "[On Play] If you have 2 or more rested Characters, rest up to 1 of your opponent's Characters with a cost of 5 or less. Then, K.O. up to 1 of your opponent's rested Characters with a cost of 3 or less.",

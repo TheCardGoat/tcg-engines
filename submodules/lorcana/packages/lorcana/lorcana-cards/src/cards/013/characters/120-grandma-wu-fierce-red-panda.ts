@@ -1,6 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { temporaryShift } from "../../../helpers/abilities/shift";
 import { grandmaWuFierceRedPandaI18n } from "./120-grandma-wu-fierce-red-panda.i18n";
+
+import { temporaryShift } from "../../../helpers/abilities/shift";
 
 export const grandmaWuFierceRedPanda: CharacterCard = {
   id: "ZQC",
@@ -30,6 +31,10 @@ export const grandmaWuFierceRedPanda: CharacterCard = {
   willpower: 7,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_a40fff3e37f8466ba3fdb4d530090071",
+    tcgPlayer: "704628",
+  },
   text: [
     {
       title: "Temporary Shift 4 {I}",
@@ -37,7 +42,7 @@ export const grandmaWuFierceRedPanda: CharacterCard = {
         "(You may pay 4 {I} to play this on top of one of your characters named Grandma Wu. At the end of your turn, remove all damage from this character and return only this card to your hand.)",
     },
     {
-      title: "Intimidating Charge",
+      title: "INTIMIDATING CHARGE",
       description:
         "Whenever this character challenges another character, you gain 2 lore and each opponent loses 2 lore.",
     },

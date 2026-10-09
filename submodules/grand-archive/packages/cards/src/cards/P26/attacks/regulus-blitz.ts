@@ -132,6 +132,7 @@ export const regulusBlitz: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
               kind: "this-turn",
             },
           },
+          functionalZones: ["hand"],
         },
       ],
     },

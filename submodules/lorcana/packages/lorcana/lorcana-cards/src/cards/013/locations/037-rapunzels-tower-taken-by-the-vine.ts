@@ -29,9 +29,13 @@ export const rapunzelsTowerTakenByTheVine: LocationCard = {
   moveCost: 1,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_de06027a64da41d1a231088a36c53586",
+    tcgPlayer: "704563",
+  },
   text: [
     {
-      title: "Embracing Change",
+      title: "EMBRACING CHANGE",
       description: "Your Floodborn characters get +2 {W}.",
     },
   ],

@@ -30,6 +30,10 @@ export const donaldDuckVinelingRider: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_ca7fbf058af645ddb423088f3b9c170e",
+    tcgPlayer: "704631",
+  },
   text: "Rush",
   classifications: ["Storyborn", "Ally"],
   abilities: [rush],

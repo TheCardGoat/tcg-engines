@@ -67,4 +67,15 @@ describe("OP11-086 Coribou", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: can be played with no hand card remaining to discard", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [op11Coribou086],
+      activeDon: op11Coribou086.cost,
+    });
+    engine.asSouth().play(op11Coribou086);
+    expect(engine.getView("south").players.south.hand).toHaveLength(0);
+    expect(engine.getView("south").players.south.trash).toHaveLength(0);
+    expect(engine.getView("south").players.south.characters.filter(Boolean)).toHaveLength(1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

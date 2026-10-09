@@ -23,7 +23,7 @@ export const op03Nami030: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Arlong Pirates East Blue"],
+  traits: ["East Blue", "Arlong Pirates"],
   attribute: "wisdom",
   effect:
     "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 green {East Blue} type card other than [Nami] and add it to your hand. Then, place the rest at the bottom of your deck in any order.\n[Trigger] Play this card.",
@@ -55,7 +55,7 @@ export const op03Nami030: CharacterCard = {
               {
                 filter: "trait",
                 value: "East Blue",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

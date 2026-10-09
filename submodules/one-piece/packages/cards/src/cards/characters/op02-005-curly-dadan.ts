@@ -52,6 +52,7 @@ export const op02CurlyDadan005: CharacterCard = {
           {
             action: "search",
             lookCount: 5,
+            lookCountUpTo: true,
             source: {
               player: "self",
               zone: "deck",

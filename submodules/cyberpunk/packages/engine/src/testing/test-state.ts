@@ -3,9 +3,10 @@ import type { StructuredCardDefinition, CardZone } from "@tcg/cyberpunk-types";
 import { cardBundle, structuredCards } from "@tcg/cyberpunk-cards";
 import type { MatchState, DeckList, CardCatalog } from "../types/match-state.ts";
 import type { CardInstance, CardMeta } from "../types/card-instance.ts";
+import { createDefaultMetaForZone } from "../types/card-instance.ts";
 import type { CardInstanceId, GigDieId, PlayerId } from "../types/branded.ts";
 import { createPlayerId } from "../types/branded.ts";
-import { DIE_MAX_VALUES } from "../types/gig-die.ts";
+import { DIE_MAX_VALUES } from "@tcg/cyberpunk-types";
 import { applyChooserGoesFirstIfPending, createMatchState } from "../state/initial-state.ts";
 import {
   extractCard,
@@ -280,7 +281,8 @@ function applyFixture(
 function applyOvertimeFixture(draft: MatchState): void {
   draft.G.overtime = true;
   draft.G.turnMetadata.overtimeActive = true;
-  draft.G.turnMetadata.previousTurnNoGigTaken = true;
+  draft.G.turnMetadata.previousTurnBeganWithEmptyFixer = true;
+  draft.G.turnMetadata.turnBeganWithEmptyFixer = true;
   draft.G.turnMetadata.gigTakenThisTurn = false;
   draft.G.turnMetadata.pendingChoice = undefined;
 
@@ -401,6 +403,9 @@ function configureFixtureTurnState(draft: MatchState, activePlayerId: PlayerId):
   draft.G.turnMetadata.pendingChoice = undefined;
   draft.G.turnMetadata.activePlayerId = activePlayerId;
   const activePlayer = draft.G.players[activePlayerId as string];
+  draft.G.turnMetadata.turnBeganWithEmptyFixer = draft.ctx.playerIds.every(
+    (id) => draft.G.players[id as string]?.fixerArea.length === 0,
+  );
   draft.G.turnMetadata.gigTakenThisTurn = Boolean(activePlayer?.fixerArea.length);
   for (const pid of draft.ctx.playerIds) {
     const player = draft.G.players[pid as string];
@@ -549,6 +554,9 @@ function applyPlayerFixture(
         const cardInst = draft.G.cardIndex[mapping.instanceId as string];
         if (cardInst) {
           cardInst.zone = zone;
+          // Setup starts Legends face-down. Fixture placement must use the
+          // destination area's default before applying explicit overrides.
+          cardInst.meta.faceDown = createDefaultMetaForZone(zone).faceDown;
           if (isFixtureCardState(item)) {
             const state = item as FixtureCardState;
             applyFixtureCardMeta(cardInst.meta, state);
@@ -598,6 +606,17 @@ function applyPlayerFixture(
     }
 
     player.zones[zone] = orderedZoneCards;
+  }
+
+  // A numeric hand is an opening-hand size, mirroring the numeric deck filler:
+  // deal that many cards off the top of the (auto-filled) deck. Without this
+  // branch a numeric hand silently produced an empty hand.
+  if (typeof fixture.hand === "number" && fixture.hand > 0) {
+    player.zones.hand = player.zones.deck.splice(0, fixture.hand);
+    for (const cardId of player.zones.hand) {
+      const card = draft.G.cardIndex[cardId as string];
+      if (card) card.zone = "hand";
+    }
   }
 }
 

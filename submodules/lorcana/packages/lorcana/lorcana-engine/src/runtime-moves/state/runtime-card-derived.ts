@@ -79,6 +79,7 @@ export function createLorcanaRuntimeCardDeriver(
       hasReckless: projected.hasReckless ?? false,
       hasEvasive: projected.hasEvasive ?? false,
       hasQuestRestriction: projected.hasQuestRestriction ?? false,
+      hasChallengeRestriction: projected.hasChallengeRestriction ?? false,
       fullName: projected.fullName ?? "",
       keywords: projected.keywords ?? [],
       keywordValues: projected.keywordValues ?? {},

@@ -67,4 +67,31 @@ describe("OP05-099 Amazon", () => {
       view.players.north.characters.find((card) => card?.instanceId === attackerId)?.power,
     ).toBe(attackerPowerBefore);
   });
+  test.each([0, 1])(
+    "with %i opponent Life, applies the power branch when no Life card is trashed",
+    (life) => {
+      const engine = OnePieceTestEngine.create(
+        { character: [op05Amazon099] },
+        { life, character: [{ card: eb01Doma005, playedOnTurn: 0 }] },
+        { firstPlayer: "south", activeSeat: "north" },
+      );
+      const attackerId = engine.findCardInZone("north", "character", eb01Doma005);
+      engine.asNorth().attack(attackerId, engine.leader("south"));
+      engine.asSouth().acceptOptional();
+      if (life > 0) engine.asNorth().chooseOption("effectActionChoice", "1");
+      const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+      if (target?.kind !== "selectEntity") throw new Error("Expected Amazon's power choice.");
+      expect(target.candidates.map((candidate) => candidate.ref.id)).toEqual([
+        engine.leader("north"),
+        attackerId,
+      ]);
+      engine.asSouth().chooseTargets(attackerId);
+      expect(
+        engine
+          .getView("south")
+          .players.north.characters.find((card) => card?.instanceId === attackerId)?.power,
+      ).toBe(1000);
+      expect(engine.getView("south").players.north.lifeCount).toBe(life);
+    },
+  );
 });

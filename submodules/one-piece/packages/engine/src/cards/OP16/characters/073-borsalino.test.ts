@@ -88,4 +88,15 @@ describe("OP16-073 Borsalino", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: already-active Borsalino still gains Blocker after payment", () => {
+    const e = OnePieceTestEngine.create({ character: ["OP16-073"], activeDon: 2 }, {});
+    const id = e.findCardInZone("south", "character", "OP16-073");
+    e.endTurn("south");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.resolveDecision("battleBlocker", { selectedIds: [id] }, "south");
+    expect(e.getView("south").players.south.lifeCount).toBe(4);
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(true);
+  });
 });

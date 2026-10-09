@@ -33,6 +33,9 @@ export const fightmasterKox = defineCard(fabCardIdentitiesByCanonicalId["rd8gCbP
             target: {
               selector: "object",
               declared: "at-resolution",
+              // Printed "your event deck" — explicit seat (no implicit
+              // controller default on private-zone scans).
+              player: "controller",
               zones: ["deck"],
               filter: {
                 unsupported: {

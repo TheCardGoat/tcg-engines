@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/the-hunted/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "The Hunted"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/the-hunted/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: 17121ed99d1f0d7ef38e72142200de7e256d06e110cbed6415e38673dd23a7be
 ---

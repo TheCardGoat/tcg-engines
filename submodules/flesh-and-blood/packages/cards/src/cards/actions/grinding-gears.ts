@@ -83,8 +83,12 @@ export const grindingGears = definePitchFamily(fabPitchFamilies["grinding-gears"
         type: "destroy",
         target: {
           selector: "object",
-          declared: "on-stack",
-          player: "any",
+          declared: "at-resolution",
+          // Printed "Target hero destroys the top card of their deck": only
+          // the hero is targeted (CR 1.8.5); the destroyed card is the top of
+          // that hero's deck, determined at resolution.
+          playerTarget: { selector: "any-hero" },
+          playerTargetBinding: "grinding-gears-target-hero",
           zones: ["deck"],
           position: "top",
           count: 1,

@@ -23,7 +23,7 @@ export const op08MontBlancCricket108: CharacterCard = {
   cost: 4,
   power: 6000,
   counter: 1000,
-  traits: ["Monkey Mountain Alliance Jaya"],
+  traits: ["Jaya", "Monkey Mountain Alliance"],
   attribute: "strike",
   effect: "NULL",
   i18n: op08MontBlancCricket108I18n,

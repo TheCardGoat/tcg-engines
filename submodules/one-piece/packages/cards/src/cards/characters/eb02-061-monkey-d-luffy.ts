@@ -57,7 +57,7 @@ export const eb02MonkeyDLuffy061: CharacterCard = {
   setId: "EB02",
   cost: 6,
   power: 7000,
-  traits: ["Straw Hat Crew Water Seven"],
+  traits: ["Water Seven", "Straw Hat Crew"],
   attribute: "strike",
 
   effect:
@@ -70,6 +70,7 @@ export const eb02MonkeyDLuffy061: CharacterCard = {
           {
             cost: "returnDon",
             amount: 2,
+            donState: "active",
           },
         ],
         actions: [

@@ -49,7 +49,7 @@ export const op07Crocodile040: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 2000,
-  traits: ["Baroque Works The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
   attribute: "special",
   effect:
     "[On Play] (1) (You may rest the specified number of DON!! cards in your cost area.): Return up to 1 Character with a cost of 2 or less to the owner's hand.",

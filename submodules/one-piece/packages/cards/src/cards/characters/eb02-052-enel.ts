@@ -45,6 +45,9 @@ export const eb02Enel052: CharacterCard = {
             amount: 1,
           },
         ],
+        postCostConditions: [
+          { condition: "lifeCount", player: "self", comparison: "lte", value: 1 },
+        ],
         actions: [
           {
             action: "addToLife",
@@ -57,12 +60,6 @@ export const eb02Enel052: CharacterCard = {
               },
             },
             position: "top",
-            condition: {
-              condition: "lifeCount",
-              player: "self",
-              comparison: "lte",
-              value: 1,
-            },
           },
           {
             action: "modifyPower",
@@ -87,7 +84,7 @@ export const eb02Enel052: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Sky Island",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

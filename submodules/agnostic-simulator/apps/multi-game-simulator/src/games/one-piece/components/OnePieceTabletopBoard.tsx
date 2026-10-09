@@ -115,7 +115,7 @@ interface PlayerMatProps {
   entityMap: Map<string, SimulatorEntity>;
 }
 
-function PlayerMat({ seatId, table, donTokens, entityMap }: PlayerMatProps) {
+export function PlayerMat({ seatId, table, donTokens, entityMap }: PlayerMatProps) {
   const seat = table.seats.find((candidate) => candidate.id === seatId);
   const zones = {
     hand: zone(table, seatId, "hand"),

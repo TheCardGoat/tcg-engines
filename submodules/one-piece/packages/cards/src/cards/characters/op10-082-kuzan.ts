@@ -38,7 +38,7 @@ export const op10Kuzan082: CharacterCard = {
   setId: "OP10",
   cost: 5,
   power: 5000,
-  traits: ["Blackbeard Pirates Former Navy"],
+  traits: ["Former Navy", "Blackbeard Pirates"],
   attribute: "special",
 
   effect:
@@ -81,7 +81,7 @@ export const op10Kuzan082: CharacterCard = {
               {
                 filter: "trait",
                 value: "Blackbeard Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

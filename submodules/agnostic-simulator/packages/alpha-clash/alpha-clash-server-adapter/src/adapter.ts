@@ -1,4 +1,4 @@
-import { allCards } from "@tcg/alpha-clash-cards";
+import { allCards, officialCatalog } from "@tcg/alpha-clash-cards";
 import type { AcCardDefinition } from "@tcg/alpha-clash-types";
 import type {
   CardSummary,
@@ -8,6 +8,7 @@ import type {
   DeckFormatResult,
   GameAdapter,
 } from "@tcg/shared/game-adapter";
+import { hostedUndoProposalPolicy } from "@tcg/shared/game-adapter";
 import {
   alphaClashCreateServerEngine,
   alphaClashExtractCardsMapsFromSnapshot,
@@ -31,6 +32,7 @@ function lookup(publicId: string): AcCardDefinition | undefined {
 
 export const alphaClashServerAdapter: GameAdapter = {
   slug: "alpha-clash",
+  proposalPolicy: hostedUndoProposalPolicy,
 
   createGameId(): string {
     return `alpha-clash-game-${crypto.randomUUID()}`;
@@ -185,15 +187,10 @@ export const alphaClashServerAdapter: GameAdapter = {
   extractCardsMapsFromSnapshot: alphaClashExtractCardsMapsFromSnapshot,
 };
 
-/**
- * The official catalog's 91 Contender records are still unauthored printed
- * data (AC-002 backlog), so practice decks use the two fully-authored
- * preview-fixture Contenders (original mechanics-coverage cards, playable
- * under the engine's real rules).
- */
+/** Keep preset identifiers stable for existing practice links; use official Contenders. */
 const PRACTICE_CONTENDERS: Readonly<Record<string, readonly string[]>> = {
-  "starter-titan": ["acx-contender-titan"],
-  "starter-warden": ["acx-contender-warden"],
+  "starter-titan": ["ac-st-001"], // Magnate, Awakened
+  "starter-warden": ["ac-ac1-096"], // Torque, the Diabolical
 };
 
 /**
@@ -206,8 +203,10 @@ function buildPracticeDeck(presetId: string): readonly DeckCard[] | undefined {
   const contender = contenderIds?.length === 1 ? lookup(contenderIds[0]) : undefined;
   if (!contender) return undefined;
 
-  const pool = allCards().filter(
+  // Practice needs a renderable printing; some promo records have no artwork metadata.
+  const pool = officialCatalog.filter(
     (card) =>
+      Boolean(card.printings?.[0]?.productId) &&
       card.id !== contender.id &&
       card.cardType !== "contender" &&
       card.colors.some((color) => contender.colors.includes(color)),

@@ -237,6 +237,9 @@ importers:
 
   tools/scraper:
     dependencies:
+      '@tcg/cyberpunk-cards':
+        specifier: workspace:*
+        version: link:../../packages/cards
       '@tcg/cyberpunk-types':
         specifier: workspace:*
         version: link:../../packages/types

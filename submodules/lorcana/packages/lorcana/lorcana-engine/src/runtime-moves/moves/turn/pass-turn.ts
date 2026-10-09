@@ -24,6 +24,7 @@ import { getEligibleChallengeAttackers } from "../../rules/challenge-rules";
 import { getEligibleQuestCharacters } from "../core/quest";
 import {
   cleanupDanglingTargetEffects,
+  cleanupEndOfTurnStatModifiers,
   cleanupExpiredEffects,
 } from "../../effects/continuous-effects";
 import type { LorcanaCardDerived } from "../../../types/projected-board";
@@ -53,7 +54,8 @@ import { invalidateStaticEffects } from "../../rules/static-effects-invalidation
 import { recordCardDrawnThisTurn } from "../../state/turn-metrics";
 import { detachTemporaryShiftTopCard } from "../../state/shift-stack";
 import { resolveTurnOwnerId } from "../../../core/runtime/turn-owner";
-import { checkDeckEmptyForPlayer } from "../../state/game-state-check";
+import { sweepLethalDamageInPlay } from "../../state/lethal-damage-sweep";
+import { checkDeckEmptyForPlayer, checkLoreWinCondition } from "../../state/game-state-check";
 import { gainLore, isCardInPlayZone } from "../../../operations";
 import {
   createPendingActionEffect,
@@ -225,6 +227,10 @@ function readyCardsForPlayer(
     return (
       currentMeta.state === "exerted" &&
       !hasTemporaryRestriction(currentMeta, currentTurn, "cant-ready", {
+        isSourceInPlay: (sourceId) => isCardInPlayZone(ctx, sourceId),
+        isCardAtLocation,
+      }) &&
+      !hasTemporaryRestriction(currentMeta, currentTurn, "cant-ready-at-start-of-turn", {
         isSourceInPlay: (sourceId) => isCardInPlayZone(ctx, sourceId),
         isCardAtLocation,
       }) &&
@@ -518,7 +524,13 @@ export function advanceTurnToNextPlayer(ctx: PassTurnExecutionContext): AdvanceT
     cardsPutIntoDiscardThisTurnByOwner: {},
     pendingCostReductionsByPlayer: {},
     cardsDrawnThisTurnByPlayer: {},
+    inkDropsGainedThisTurn: {},
+    inkDropsRemovedThisTurn: {},
   };
+
+  // Expired keywords/stat effects can remove static Willpower bonuses (§1.8.1.4).
+  invalidateStaticEffects(ctx);
+  sweepLethalDamageInPlay(ctx);
 
   gainLoreFromLocations(ctx, nextPlayer);
 
@@ -548,6 +560,12 @@ function createPendingTurnTransitionState(
   };
 }
 
+function stopTurnTransitionForGameEnd(ctx: PassTurnExecutionContext): boolean {
+  if (!ctx.framework.state.status.gameEnded && !checkLoreWinCondition(ctx.G)) return false;
+  ctx.G.pendingTurnTransition = undefined;
+  return true;
+}
+
 export function continuePendingTurnTransition(ctx: PassTurnExecutionContext): void {
   let transitionState = ctx.G.pendingTurnTransition;
   if (!transitionState) {
@@ -556,6 +574,8 @@ export function continuePendingTurnTransition(ctx: PassTurnExecutionContext): vo
 
   const maxTransitionSteps = 10;
   for (let step = 0; transitionState && step < maxTransitionSteps; step += 1) {
+    // An end-turn ability can win the game before the turn itself ends.
+    if (stopTurnTransitionForGameEnd(ctx)) return;
     switch (transitionState.stage) {
       case "end-of-turn": {
         ctx.framework.status.setPhase("end");
@@ -583,7 +603,39 @@ export function continuePendingTurnTransition(ctx: PassTurnExecutionContext): vo
           }
         }
 
-        cleanupTemporaryShiftCardsAtEndOfTurn(ctx, transitionState.previousPlayer);
+        if (stopTurnTransitionForGameEnd(ctx)) return;
+
+        if (!transitionState.statModifiersExpired) {
+          cleanupTemporaryShiftCardsAtEndOfTurn(ctx, transitionState.previousPlayer);
+          cleanupEndOfTurnStatModifiers(ctx, ctx.framework.state.status.turn ?? 1);
+          transitionState = { ...transitionState, statModifiersExpired: true };
+          ctx.G.pendingTurnTransition = transitionState;
+          invalidateStaticEffects(ctx);
+          sweepLethalDamageInPlay(ctx);
+          finalizeResolutionBoundary(ctx, {
+            playerId: transitionState.previousPlayer,
+            window: "end-of-turn",
+          });
+        }
+        if (
+          hasPendingBagItems(ctx) ||
+          ctx.framework.state.priority.pendingChoice ||
+          (ctx.G.pendingEffects?.length ?? 0) > 0
+        )
+          return;
+
+        if (stopTurnTransitionForGameEnd(ctx)) return;
+
+        // CR 3.4.1.1–3.4.2: finish end-turn abilities and stat expiry before deck loss.
+        if (checkDeckEmptyForPlayer(ctx, transitionState.previousPlayer)) {
+          const losingPlayer = transitionState.previousPlayer;
+          ctx.G.pendingTurnTransition = undefined;
+          ctx.framework.events.endGame({
+            winner: getOpponents(ctx, losingPlayer)[0],
+            reason: `${losingPlayer} ended their turn with no cards in their deck`,
+          });
+          return;
+        }
 
         transitionState = createPendingTurnTransitionState(
           transitionState.previousPlayer,
@@ -740,13 +792,21 @@ function getPassTurnFailure(ctx: PassTurnIntentContext): PassTurnFailure | null 
 
   // "Must quest if able" enforcement (e.g. This Growing Pressure, Cobra Bubbles
   // — Dedicated Official, Ariel — Curious Traveler). A character under the
-  // `must-quest` temporary restriction that is still a legal quester blocks
+  // `must-quest` restriction that is still a legal quester blocks
   // their controller from passing turn.
   const currentTurn = ctx.framework.state.status.turn ?? 1;
   const eligibleQuesters = getEligibleQuestCharacters(ctx);
   const mustQuestCharacterPending = eligibleQuesters.some((cardId) => {
     const meta = ctx.cards.require(cardId).meta;
-    return hasTemporaryRestriction(meta, currentTurn, "must-quest");
+    return (
+      hasTemporaryRestriction(meta, currentTurn, "must-quest") ||
+      hasStaticCardRestriction({
+        state: ctx.framework.state,
+        cardId,
+        restriction: "must-quest",
+        registry,
+      })
+    );
   });
   if (mustQuestCharacterPending) {
     return {
@@ -778,18 +838,10 @@ export const passTurn: LorcanaMoveDefinition<"passTurn"> = {
         "action",
       ),
     );
-    if (checkDeckEmptyForPlayer(ctx, currentPlayer)) {
-      const winner = getOpponents(ctx, currentPlayer)[0];
-      ctx.framework.events.endGame({
-        winner,
-        reason: `${currentPlayer} ended their turn with no cards in their deck`,
-      });
-      return;
-    }
 
     ctx.G.pendingTurnTransition = createPendingTurnTransitionState(currentPlayer, "end-of-turn");
     continuePendingTurnTransition(ctx);
   },
 
-  available: (ctx) => !getCheapPassTurnFailure(ctx),
+  available: (ctx) => !getPassTurnFailure(ctx),
 };

@@ -41,35 +41,27 @@ describe("OP16-077 Buddha Sengoku", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
-  test("[Main] resolves and moves to trash", () => {
-    const engine = OnePieceTestEngine.create({ hand: ["OP16-077"], activeDon: 3 }, {});
-
+  test("[Main] may take no searched card and still completes the remaining actions", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: ["OP16-077", "EB01-005"],
+      deck: ["OP16-063", "OP13-013", "OP13-013", "OP13-013", "OP13-013", "OP13-013"],
+      activeDon: 1,
+    });
     engine.playCard("OP16-077");
-    for (let i = 0; i < 3; i++) {
-      const pending = engine.getView("south").decisions?.[0] as
-        | { extensions?: { resolutionIntent?: string } }
-        | undefined;
-      if (!pending?.extensions?.resolutionIntent) break;
-      for (let i = 0; i < 3; i++) {
-        const pending = engine.getView("south").decisions?.[0] as
-          | { extensions?: { resolutionIntent?: string } }
-          | undefined;
-        if (!pending?.extensions?.resolutionIntent) break;
-        const intent = pending.extensions.resolutionIntent;
-        try {
-          const step = engine.pendingDecision(intent as never, "south").steps[0];
-          if (step?.kind === "selectEntity" || step?.kind === "orderItems") {
-            engine.resolveDecision(intent as never, { selectedIds: [] }, "south");
-          } else if (step?.kind === "chooseOption") {
-            engine.resolveDecision(intent as never, { optionId: "0" }, "south");
-          } else break;
-        } catch {
-          break;
-        }
-      }
-    }
-
-    expect(engine.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP16-077");
+    engine.resolveDecision("effectSearchSelection", { selectedIds: [] }, "south");
+    const order = engine.pendingDecision("effectSearchRemainderOrder", "south").steps[0];
+    if (order?.kind !== "orderItems") throw new Error("Expected the remainder order.");
+    expect(order.candidates).toHaveLength(5);
+    engine.resolveDecision(
+      "effectSearchRemainderOrder",
+      { selectedIds: order.candidates.map((candidate) => candidate.ref.id) },
+      "south",
+    );
+    const south = engine.getView("south").players.south;
+    expect(south.handCount).toBe(0);
+    expect(south.deckCount).toBe(6);
+    expect(south.trash.map((card) => card.cardId)).toContain("OP16-077");
+    expect(south.trash.map((card) => card.cardId)).toContain("EB01-005");
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

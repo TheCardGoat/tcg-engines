@@ -56,7 +56,7 @@ export const op09Laffitte095: CharacterCard = {
               {
                 filter: "trait",
                 value: "Blackbeard Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

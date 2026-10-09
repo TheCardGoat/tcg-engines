@@ -21,7 +21,7 @@ export const op08TheEarthWillNotLose115: EventCard = {
   rarity: "R",
   setId: "OP08",
   cost: 1,
-  traits: ["Sky Island Shandian Warrior"],
+  traits: ["Sky Island", "Shandian Warrior"],
   effect:
     "[Counter] If your Leader has the {Shandian Warrior} type, up to 1 of your Leader or Character cards gains +3000 power during this battle. Then, play up to 1 [Upper Yard] from your hand. [Trigger] Draw 2 cards and trash 1 card from your hand.",
   effects: {
@@ -32,7 +32,7 @@ export const op08TheEarthWillNotLose115: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Shandian Warrior",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

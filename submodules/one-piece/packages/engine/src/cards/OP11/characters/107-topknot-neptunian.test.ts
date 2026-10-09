@@ -1,10 +1,41 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb01Doma005, op11Shirahoshi022 } from "@tcg/op-cards";
+import { eb01Doma005, getCard, op11Shirahoshi022 } from "@tcg/op-cards";
 import { op11TopknotNeptunian107 } from "../../../../../cards/src/cards/characters/op11-107-topknot-neptunian.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP11-107 Topknot Neptunian", () => {
+  test("does not ready a new object after Law returns and replays it rested", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op11Shirahoshi022,
+      character: [{ card: op11TopknotNeptunian107, rested: true }],
+      hand: ["OP13-031"],
+      life: [{ card: getCard("ST02-006"), faceUp: true, publicKnowledge: true }],
+      activeDon: 6,
+    });
+    const south = engine.asSouth();
+    const topknotId = south.findOnField(op11TopknotNeptunian107);
+    south.activateMain(topknotId);
+    south.acceptOptional();
+    south.play("OP13-031");
+    south.acceptOptional();
+    engine.resolveDecision("effectCostReturnCharacter", { selectedIds: [topknotId] }, "south");
+    south.choosePlay(topknotId);
+    expect(
+      south.view().players.south.characters.find((card) => card?.instanceId === topknotId),
+    ).toMatchObject({ rested: true });
+
+    const restored = OnePieceTestEngine.fromState(JSON.parse(JSON.stringify(engine.getState())));
+    restored.asSouth().endTurn();
+    expect(
+      restored
+        .asSouth()
+        .view()
+        .players.south.characters.find((card) => card?.instanceId === topknotId),
+    ).toMatchObject({ rested: true });
+    expect(restored.getView("south").prompts).toHaveLength(0);
+  });
+
   test("turns the top face-up Life face-down and becomes active at turn end only once", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: op11Shirahoshi022,

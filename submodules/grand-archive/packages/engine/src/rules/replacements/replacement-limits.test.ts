@@ -266,3 +266,98 @@ describe("Grand Archive replacement application limits", () => {
     expect(Object.values(reentered.state.replacementLimitUsages).sort()).toEqual([1, 1, 1]);
   });
 });
+
+import { grandArchiveGameEventId } from "../../game/identity.ts";
+for (const mode of ["grouped", "single", "missing-id"] as const)
+  it(`counts a grouped limited prevention once and preserves it in snapshots: ${mode}`, () => {
+    const fixture = setup();
+    const sourceId = fixture.state.zones[fixture.p1].field[0]!;
+    const targetId = fixture.state.zones[fixture.p2].field[0]!;
+    const otherSourceId = objectIds(fixture.state, fixture.p1, spell.canonicalId)[0]!;
+    const group = grandArchiveGameEventId("limited-damage-group");
+    const created = createReplacement(
+      fixture,
+      fixture.state,
+      {
+        kind: "replacement",
+        ...(mode === "single" ? {} : { consumptionScope: "source-game-event" }),
+        event: { name: "damage-dealt" },
+        operation: { kind: "prevent", amount: 1 },
+        limit: { count: 1, per: "turn" },
+        duration: { kind: "while-source-on-field" },
+      },
+      sourceId,
+    );
+    const kernel = rulesKernel(fixture.program);
+    const first = kernel.transact(created, [
+      {
+        type: "damage-marked",
+        objectId: targetId,
+        sourceId,
+        amount: 2,
+        ...(mode === "missing-id" ? {} : { gameEventId: group }),
+      },
+    ]).state;
+    expect(first.objects[targetId]!.damage).toBe(1);
+    const restored = restoreGrandArchiveMatchSnapshot(
+      fixture.program,
+      JSON.parse(JSON.stringify(serializeGrandArchiveMatchSnapshot(first))),
+    );
+    const second = kernel.transact(restored, [
+      {
+        type: "damage-marked",
+        objectId: sourceId,
+        sourceId,
+        amount: 2,
+        ...(mode === "missing-id" ? {} : { gameEventId: group }),
+      },
+    ]).state;
+    expect(second.objects[sourceId]!.damage).toBe(mode === "grouped" ? 1 : 2);
+    const later = kernel.transact(second, [
+      {
+        type: "damage-marked",
+        objectId: targetId,
+        sourceId: otherSourceId,
+        amount: 2,
+        gameEventId: group,
+      },
+      {
+        type: "damage-marked",
+        objectId: targetId,
+        sourceId,
+        amount: 2,
+        gameEventId: grandArchiveGameEventId("later-group"),
+      },
+    ]).state;
+    expect(later.objects[targetId]!.damage).toBe(5);
+    const nextTurn = kernel.transact(later, [
+      { type: "turn-started", playerId: fixture.p2, turnNumber: 2 },
+      { type: "damage-marked", objectId: targetId, sourceId, amount: 2, gameEventId: group },
+    ]).state;
+    expect(nextTurn.objects[targetId]!.damage).toBe(6);
+  });
+
+it("gives a returned static replacement source a new use within the same turn", () => {
+  const fixture = setup();
+  const sourceId = objectIds(fixture.state, fixture.p1, floodwardSergeant.canonicalId)[0]!;
+  const staged = new GrandArchiveTransactionKernel().transact(fixture.state, [
+    { type: "object-moved", objectId: sourceId, from: "main-deck", to: "field" },
+  ]).state;
+  const kernel = rulesKernel(fixture.program);
+  const used = kernel.transact(staged, [
+    { type: "damage-marked", objectId: sourceId, amount: 2 },
+    { type: "damage-marked", objectId: sourceId, amount: 2 },
+  ]).state;
+  expect(used.objects[sourceId]!.damage).toBe(2);
+  const returned = kernel.transact(used, [
+    { type: "object-moved", objectId: sourceId, from: "field", to: "banishment" },
+    { type: "object-moved", objectId: sourceId, from: "banishment", to: "field" },
+    { type: "damage-marked", objectId: sourceId, amount: 2 },
+  ]).state;
+  expect(returned.turn.number).toBe(used.turn.number);
+  expect(returned.objects[sourceId]!.damage).toBe(0);
+  const repeated = kernel.transact(returned, [
+    { type: "damage-marked", objectId: sourceId, amount: 2 },
+  ]).state;
+  expect(repeated.objects[sourceId]!.damage).toBe(2);
+});

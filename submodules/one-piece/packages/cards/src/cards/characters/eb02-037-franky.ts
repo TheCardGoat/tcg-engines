@@ -23,7 +23,7 @@ export const eb02Franky037: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Straw Hat Crew Water Seven"],
+  traits: ["Water Seven", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     '[On Play]/[When Attacking] If your Leader has the "Straw Hat Crew" type and the number of DON!! cards on your field is equal to or less than the number on your opponent\'s field, add up to 1 DON!! card from your DON!! deck and rest it.',
@@ -39,7 +39,7 @@ export const eb02Franky037: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "donFieldComparison",
@@ -69,7 +69,7 @@ export const eb02Franky037: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "donFieldComparison",

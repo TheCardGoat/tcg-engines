@@ -1,4 +1,12 @@
-import { useCallback, useEffect, useRef, type MouseEvent } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  type MouseEvent,
+  type ReactNode,
+} from "react";
 import { AspectRatio } from "@mantine/core";
 import { STANDARD_CARD_IMAGE_ASPECT_RATIO, type SimulatorEntity } from "@tcg/simulator-contract";
 import { ViewerSafeCardImage } from "@tcg/simulator-ui";
@@ -6,11 +14,24 @@ import { useHasHover } from "../../../../lib/media-query";
 import { useCardPreview, type CardPreviewDetails } from "../CardPreview/CardPreviewContext";
 import { useCardInspect } from "./CardInspectContext";
 import classes from "./CardImage.module.css";
+import type { Side } from "../../engine/sides";
 
 export const CARD_BACK = "https://cdn.tcg.online/public/cyberpunk/cards/back/card-back.webp";
 export const LEGEND_CARD_BACK =
   "https://cdn.tcg.online/public/cyberpunk/cards/back/legend-card-back.webp";
 export const CARD_ASPECT_RATIO = STANDARD_CARD_IMAGE_ASPECT_RATIO;
+
+const CardBackContext = createContext<Partial<Record<Side, string>>>({});
+
+export function CardBackProvider({
+  children,
+  urls,
+}: {
+  children: ReactNode;
+  urls: Partial<Record<Side, string>>;
+}) {
+  return <CardBackContext.Provider value={urls}>{children}</CardBackContext.Provider>;
+}
 
 interface CardImageProps {
   imageUrl?: string;
@@ -18,6 +39,8 @@ interface CardImageProps {
   alt?: string;
   /** Card type — used to select the correct card-back image when face-down. */
   cardType?: "legend" | "unit" | "gear" | "program";
+  /** Owner side of a face-down card. */
+  side?: Side;
   /** Disable the global hover preview (e.g. for the card-back of an opponent's hand). */
   disablePreview?: boolean;
   /** Card frame color, forwarded to the hover preview as an accent border. */
@@ -36,6 +59,7 @@ export function CardImage({
   faceDown = false,
   alt = "",
   cardType,
+  side,
   disablePreview = false,
   color,
   previewDetails,
@@ -44,8 +68,10 @@ export function CardImage({
   onImageLoad,
   onImageError,
 }: CardImageProps) {
-  const src =
-    faceDown || !imageUrl ? (cardType === "legend" ? LEGEND_CARD_BACK : CARD_BACK) : imageUrl;
+  const cardBacks = useContext(CardBackContext);
+  const backImageUrl =
+    cardType === "legend" ? LEGEND_CARD_BACK : ((side ? cardBacks[side] : undefined) ?? CARD_BACK);
+  const src = faceDown || !imageUrl ? backImageUrl : imageUrl;
   const entity: SimulatorEntity = {
     id: faceDown ? "hidden-card" : alt || "card",
     title: faceDown ? "Hidden card" : alt || "Card",
@@ -57,7 +83,7 @@ export function CardImage({
     stats: [],
     traits: [],
     imageUrl,
-    backImageUrl: cardType === "legend" ? LEGEND_CARD_BACK : CARD_BACK,
+    backImageUrl,
     imageAspectRatio: CARD_ASPECT_RATIO,
   };
   const imageRef = useRef<HTMLImageElement | null>(null);

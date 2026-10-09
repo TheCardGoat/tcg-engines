@@ -8,6 +8,7 @@ import {
 import { princeJohnGreediestOfAll } from "./089-prince-john-greediest-of-all";
 import { suddenChill } from "../../001/actions/098-sudden-chill";
 import { youHaveForgottenMe } from "../../001/actions/031-you-have-forgotten-me";
+import { aVeryMerryUnbirthday } from "../../006/actions/060-a-very-merry-unbirthday";
 
 const discardFodder1 = createMockCharacter({
   id: "pj-discard-fodder-1",
@@ -174,6 +175,34 @@ describe("Prince John - Greediest of All", () => {
 
       // Prince John has no when-played trigger - bag should be empty
       expect(testEngine.asPlayerOne().getBagCount()).toBe(0);
+    });
+
+    it("regression: milling does NOT count as discarding (CR 7.3.4 — discard is from hand)", () => {
+      // A Very Merry Unbirthday mills the top 2 cards of each opponent's deck
+      // into their discard. Prince John's trigger is an UNRESTRICTED
+      // "whenever your opponent discards" — per CR 7.3.4 discarding means
+      // choosing cards from hand, so a mill must not fire it.
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+        {
+          play: [princeJohnGreediestOfAll],
+          hand: [aVeryMerryUnbirthday],
+          inkwell: aVeryMerryUnbirthday.cost,
+          deck: 3,
+        },
+        {
+          deck: 5,
+        },
+      );
+
+      expect(testEngine.asPlayerOne().playCard(aVeryMerryUnbirthday)).toBeSuccessfulCommand();
+
+      // The mill happened: player_two's deck shrank and discard grew by 2.
+      expect(testEngine.asPlayerTwo().getZonesCardCount("player_two").deck).toBe(3);
+      expect(testEngine.asPlayerTwo().getZonesCardCount("player_two").discard).toBe(2);
+
+      // …but no discard trigger fired for it.
+      expect(testEngine.asPlayerOne().getBagCount()).toBe(0);
+      expect(testEngine.asPlayerTwo().getBagCount()).toBe(0);
     });
 
     it("can decline the optional draw when opponent discards", () => {

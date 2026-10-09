@@ -162,6 +162,8 @@ export type CreateMockActionParams = {
   cost: number;
   text?: string;
   abilities?: ActionCard["abilities"];
+  /** Set to "song" for song mocks (affects song-only triggers and costs). */
+  actionSubtype?: "song";
 };
 
 export function createMockAction(params: CreateMockActionParams): ActionCard {
@@ -173,6 +175,7 @@ export function createMockAction(params: CreateMockActionParams): ActionCard {
     cardType: "action",
     name: params.name,
     cost: params.cost,
+    ...(params.actionSubtype ? { actionSubtype: params.actionSubtype } : {}),
     inkType: ["amber"] as InkType[],
     inkable: true,
     set: "TST",

@@ -38,7 +38,7 @@ describe("CR real-card: effect choices and spend-icon conditions", () => {
     expect(engine.getHandCount(P1)).toBe(handBefore);
   });
 
-  it("checks a Spend-icon condition at activation and resolution", () => {
+  it("pays a Spend-icon cost even when its conditional draw does not resolve", () => {
     cover("11.15.3.1", "10.3.2");
     const withGig = CyberpunkTestEngine.createWithFixture({
       deck: [welcomeToNightCityRetailCorpoSecurity, welcomeToNightCityRetailFieldOperator],
@@ -69,17 +69,16 @@ describe("CR real-card: effect choices and spend-icon conditions", () => {
       gigArea: [{ dieType: "d10", faceValue: 7 }],
     });
     const handBeforeMiss = withoutGig.getHandCount(P1);
-    const failure = withoutGig.expectFailure(() =>
+    expect(
       withoutGig.activateAbility(welcomeToNightCityRetailKerryEurodyneTheLastRockerboy, 0, {
         as: P1,
       }),
-    );
-    expect(failure.errorCode).toBe("NO_VALID_TARGETS");
+    ).toBeSuccessfulCommand();
     expect(withoutGig.getHandCount(P1)).toBe(handBeforeMiss);
     expect(
       withoutGig.getCard(welcomeToNightCityRetailKerryEurodyneTheLastRockerboy, "field", P1).meta
         .spent,
-    ).toBe(false);
+    ).toBe(true);
   });
 
   it("resolves a Spend-icon effect before a played card's pending Play trigger", () => {

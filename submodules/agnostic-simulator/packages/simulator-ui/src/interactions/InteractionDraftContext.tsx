@@ -1,7 +1,9 @@
 import {
   buildInteractionSubmission,
+  inputAllowsOmission,
   type EngineInteractionView,
   type InteractionInput,
+  type InteractionAction,
   type InteractionSubmission,
   type InteractionSubmissionValue,
   validateInteractionSubmission,
@@ -18,6 +20,7 @@ import {
 } from "react";
 
 import {
+  activeActionableInputs,
   currentActionableInput,
   implicitSubmissionValues,
   interactionInputComplete,
@@ -25,6 +28,7 @@ import {
 } from "./interaction-presentation";
 
 export interface InteractionDraftState {
+  readonly submissionRejected?: boolean;
   readonly actionId?: string;
   readonly requestId?: string;
   readonly values: Readonly<Record<string, InteractionSubmissionValue>>;
@@ -44,6 +48,7 @@ export interface InteractionDraftControls extends InteractionDraftState {
   readonly cancel: () => void;
   readonly submit: () => void;
   readonly confirmCurrent: () => void;
+  readonly skipCurrent: () => void;
 }
 
 const EMPTY_VALUES: Readonly<Record<string, InteractionSubmissionValue>> = {};
@@ -59,6 +64,7 @@ const DEFAULT: InteractionDraftControls = {
   cancel: () => undefined,
   submit: () => undefined,
   confirmCurrent: () => undefined,
+  skipCurrent: () => undefined,
 };
 
 const InteractionDraftContext = createContext<InteractionDraftControls>(DEFAULT);
@@ -66,10 +72,13 @@ const InteractionDraftContext = createContext<InteractionDraftControls>(DEFAULT)
 export function InteractionDraftProvider({
   view,
   onSubmit,
+  deferInitialSubmission,
   children,
 }: {
   readonly view: EngineInteractionView;
   readonly onSubmit: (submission: InteractionSubmission) => boolean;
+  /** Keep optional choices open instead of submitting their default when an action begins. */
+  readonly deferInitialSubmission?: (action: InteractionAction) => boolean;
   readonly children: ReactNode;
 }) {
   const [draft, setDraft] = useState<InteractionDraftState>({
@@ -82,6 +91,7 @@ export function InteractionDraftProvider({
   // uses this to recognize a draft that a child effect (for example a game
   // layer's decision auto-begin) opened after that render.
   const begunActionIdRef = useRef<string | undefined>(undefined);
+  const begunRequestIdRef = useRef<string | undefined>(undefined);
 
   const action = draft.actionId
     ? view.actions.find(
@@ -102,27 +112,40 @@ export function InteractionDraftProvider({
         values: nextValues,
       });
 
+      let submissionRejected = false;
       // Actions whose inputs are already fully determined (for example, deploying a
       // card that has no mode, target, or cost decision) do not need a draft UI.
       // Submitting them here avoids briefly rendering a redundant "Complete action"
       // prompt before the effect below submits the draft on the next render.
-      if (validateInteractionSubmission(view, submission).ok) {
+      const choicesComplete = activeActionableInputs(nextAction, nextValues).every((input) =>
+        interactionInputComplete(input, nextValues[input.id]),
+      );
+      // A legal omission is still a player decision, and games can defer even
+      // complete initial choices to keep their direct-selection flow open.
+      if (
+        choicesComplete &&
+        !deferInitialSubmission?.(nextAction) &&
+        validateInteractionSubmission(view, submission).ok
+      ) {
         const key = `${submission.requestId}:${JSON.stringify(submission.values)}`;
         if (submittedKeyRef.current === key) return;
         submittedKeyRef.current = key;
         if (onSubmit(submission)) return;
+        submissionRejected = true;
       }
 
       submittedKeyRef.current = null;
       begunActionIdRef.current = actionId;
+      begunRequestIdRef.current = nextAction.requestId;
       setDraft({
         actionId,
+        submissionRejected,
         requestId: nextAction.requestId,
         values: nextValues,
         confirmedInputIds: new Set(),
       });
     },
-    [onSubmit, view],
+    [onSubmit, view, deferInitialSubmission],
   );
 
   useEffect(() => {
@@ -147,21 +170,24 @@ export function InteractionDraftProvider({
     // this view before this parent effect runs, while this effect still closes
     // over the previous draft (child-before-parent effect ordering). Clearing
     // now would wipe the freshly begun draft in the same commit and strand the
-    // prompt. Skip when a newer draft was begun for a different action that is
+    // prompt. Skip when a newer draft was begun for a different action or request that is
     // still present in the view — only clear drafts whose own action no longer
     // exists in the view. Genuinely stale drafts (their action id gone from the
     // view) are still cleared on this pass or the next one.
     const begunActionId = begunActionIdRef.current;
     if (
       begunActionId !== undefined &&
-      begunActionId !== draft.actionId &&
-      view.actions.some((candidate) => candidate.id === begunActionId)
+      (begunActionId !== draft.actionId || begunRequestIdRef.current !== draft.requestId) &&
+      view.actions.some(
+        (candidate) =>
+          candidate.id === begunActionId && candidate.requestId === begunRequestIdRef.current,
+      )
     ) {
       return;
     }
     submittedKeyRef.current = null;
     setDraft({ values: EMPTY_VALUES, confirmedInputIds: new Set() });
-  }, [action, draft.actionId, view.actions, view.status]);
+  }, [action, draft.actionId, draft.requestId, view.actions, view.status]);
 
   const change = useCallback(
     (inputId: string, value: InteractionSubmissionValue) => {
@@ -183,6 +209,7 @@ export function InteractionDraftProvider({
             : current.values;
         return {
           ...current,
+          submissionRejected: false,
           values: {
             ...retainedValues,
             ...(acceptsOptionalDecision ? { [optionalDecision.decision.id]: true } : {}),
@@ -208,6 +235,7 @@ export function InteractionDraftProvider({
       return {
         ...current,
         values: nextValues,
+        submissionRejected: false,
         confirmedInputIds: new Set(
           [...current.confirmedInputIds].filter((confirmedId) => confirmedId !== inputId),
         ),
@@ -313,6 +341,7 @@ export function InteractionDraftProvider({
     submittedKeyRef.current = null;
     setDraft((current) => ({
       ...current,
+      submissionRejected: false,
       values: action ? implicitSubmissionValues(action) : {},
       confirmedInputIds: new Set(),
     }));
@@ -338,24 +367,46 @@ export function InteractionDraftProvider({
           : undefined;
       if (emptyAnswer !== undefined) {
         const values = { ...current.values, [input.id]: emptyAnswer };
-        if (
-          !validateInteractionSubmission(view, buildInteractionSubmission({ view, action, values }))
-            .ok
-        ) {
+        if (!interactionInputComplete(input, emptyAnswer)) {
           return current;
         }
         return {
           ...current,
           values,
+          submissionRejected: false,
           confirmedInputIds: new Set([...current.confirmedInputIds, input.id]),
         };
       }
       return {
         ...current,
+        submissionRejected: false,
         confirmedInputIds: new Set([...current.confirmedInputIds, input.id]),
       };
     });
   }, [action, draft.confirmedInputIds, draft.values, view]);
+
+  const skipCurrent = useCallback(() => {
+    if (!action) return;
+    const input = currentActionableInput(action, draft.values, draft.confirmedInputIds);
+    if (!input || !inputAllowsOmission(input, draft.values)) return;
+    submittedKeyRef.current = null;
+    const index = action.inputs.findIndex((candidate) => candidate.id === input.id);
+    const precedingIds = new Set(action.inputs.slice(0, index).map((candidate) => candidate.id));
+    setDraft((current) => ({
+      ...current,
+      submissionRejected: false,
+      values: {
+        ...implicitSubmissionValues(action),
+        ...Object.fromEntries(
+          Object.entries(current.values).filter(([id]) => precedingIds.has(id)),
+        ),
+      },
+      confirmedInputIds: new Set([
+        ...[...current.confirmedInputIds].filter((id) => precedingIds.has(id)),
+        input.id,
+      ]),
+    }));
+  }, [action, draft.values, draft.confirmedInputIds]);
 
   const submit = useCallback(() => {
     if (!action) return;
@@ -364,26 +415,36 @@ export function InteractionDraftProvider({
     const key = `${submission.requestId}:${JSON.stringify(submission.values)}`;
     if (submittedKeyRef.current === key) return;
     submittedKeyRef.current = key;
-    if (onSubmit(submission)) return;
+    if (onSubmit(submission)) {
+      setDraft((current) =>
+        current.submissionRejected ? { ...current, submissionRejected: false } : current,
+      );
+      return;
+    }
     submittedKeyRef.current = null;
     setDraft((current) => {
       const retryInput = [...action.inputs]
         .reverse()
         .find((input) => current.confirmedInputIds.has(input.id));
-      if (!retryInput) return current;
       return {
         ...current,
-        confirmedInputIds: new Set(
-          [...current.confirmedInputIds].filter((inputId) => inputId !== retryInput.id),
-        ),
+        submissionRejected: true,
+        confirmedInputIds: retryInput
+          ? new Set([...current.confirmedInputIds].filter((inputId) => inputId !== retryInput.id))
+          : current.confirmedInputIds,
       };
     });
   }, [action, draft.values, onSubmit, view]);
 
   useEffect(() => {
-    if (!action || currentActionableInput(action, draft.values, draft.confirmedInputIds)) return;
+    if (
+      !action ||
+      draft.submissionRejected ||
+      currentActionableInput(action, draft.values, draft.confirmedInputIds)
+    )
+      return;
     submit();
-  }, [action, draft.confirmedInputIds, draft.values, submit]);
+  }, [action, draft.confirmedInputIds, draft.values, draft.submissionRejected, submit]);
 
   const value = useMemo<InteractionDraftControls>(
     () => ({
@@ -397,8 +458,21 @@ export function InteractionDraftProvider({
       cancel,
       submit,
       confirmCurrent,
+      skipCurrent,
     }),
-    [action, begin, cancel, change, clear, confirmCurrent, draft, submit, toggleEntity, unset],
+    [
+      action,
+      begin,
+      cancel,
+      change,
+      clear,
+      confirmCurrent,
+      skipCurrent,
+      draft,
+      submit,
+      toggleEntity,
+      unset,
+    ],
   );
 
   return (

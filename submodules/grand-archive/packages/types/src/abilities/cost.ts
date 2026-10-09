@@ -65,6 +65,8 @@ export type GrandArchiveAtomicCost = GrandArchiveCostBase &
     | {
         readonly kind: "select-and-remove-counters";
         readonly player: import("./primitives.ts").GrandArchivePlayerSet;
+        /** All selected counter units must come from the same object. */
+        readonly singleObject?: true;
         readonly subject?: GrandArchiveSubject;
         readonly objectFilter?: GrandArchiveCardFilter;
         readonly counter: GrandArchiveCounterKind;

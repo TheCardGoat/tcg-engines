@@ -247,7 +247,7 @@ export interface SelfHasDamageCondition {
  */
 export interface RevealedIsCardTypeCondition {
   type: "revealed-is-card-type";
-  cardType: CardType | CardType[];
+  cardType: (CardType | "song") | (CardType | "song")[];
 }
 
 /**
@@ -286,6 +286,39 @@ export interface WhileInPlayCondition {
 export interface PlayedCardThisTurnCondition {
   type: "played-card-this-turn";
   cardType?: string;
+  /** Exclude the current cardPlayed (the card whose play fired the trigger). */
+  excludeSource?: boolean;
+}
+
+/**
+ * Check the revealed card (eventSnapshot.revealedCardIds[0]) for a keyword.
+ *
+ * @example "If it's a character card with Singer..."
+ */
+export interface RevealedHasKeywordCondition {
+  type: "revealed-has-keyword";
+  keyword: string;
+}
+
+/**
+ * True when the controller has a character in play whose cost is the highest
+ * among all characters in play (ties count — "or tied for highest cost").
+ *
+ * @example "While you have a character in play with the highest cost"
+ */
+export interface HasHighestCostCharacterCondition {
+  type: "has-character-with-highest-cost";
+}
+
+/**
+ * True when any card discarded earlier in this resolution
+ * (eventSnapshot.discardedCardIds) matches the given card type.
+ *
+ * @example "If you discarded a location card this way"
+ */
+export interface DiscardedCardIsCardTypeCondition {
+  type: "discarded-card-is-card-type";
+  cardType: string;
 }
 
 /**
@@ -525,7 +558,8 @@ export type CountableResource =
   | "cards-in-discard"
   | "damage-on-self"
   | "damaged-characters"
-  | "exerted-characters";
+  | "exerted-characters"
+  | "ink-drops";
 
 /**
  * Count-based condition for generic resources
@@ -946,7 +980,9 @@ export type TurnMetric =
   | "discard-cards-entered"
   | "quested-characters"
   | "played-cards"
-  | "cards-drawn-by-player";
+  | "cards-drawn-by-player"
+  | "ink-drops-gained"
+  | "ink-drops-removed";
 
 export interface TurnMetricCondition {
   type: "turn-metric";
@@ -967,7 +1003,7 @@ export interface TurnMetricCondition {
 
 export interface PlayContextCondition {
   type: "play-context";
-  context: "used-shift" | "characters-sang-this-song";
+  context: "used-shift" | "characters-sang-this-song" | "paid-with-ink-drop";
   comparison?: ConditionComparison;
 }
 
@@ -978,6 +1014,40 @@ export interface PlayedCardHasKeywordCondition {
 
 export interface FirstTurnNonOtpCondition {
   type: "first-turn-non-otp";
+}
+
+/**
+ * Compare the number of opponents the controller has (multiplayer support).
+ *
+ * @example "if you have 2 or more opponents"
+ */
+export interface OpponentCountCondition {
+  type: "opponent-count";
+  /** Comparison operator - REQUIRED */
+  comparison: ComparisonOperator;
+  /** Value to compare against - REQUIRED */
+  value: number;
+}
+
+/**
+ * Check the played card's name against cards in one of the controller's zones.
+ * The "played card" is the subject of the current play trigger (cardPlayed).
+ *
+ * @example "if it has the same name as a card in your discard"
+ * { type: "played-card-name", zone: "discard" }
+ * @example "if the item you played has a different name than each other item you have in play"
+ * { type: "played-card-name", zone: "play", cardTypes: ["item"], excludeSelf: true, requireAbsent: true }
+ */
+export interface PlayedCardNameCondition {
+  type: "played-card-name";
+  /** Controller zone to scan for matching names */
+  zone: "discard" | "play";
+  /** Restrict scanned cards to these card types */
+  cardTypes?: ("character" | "item" | "location" | "action")[];
+  /** Exclude the played card itself from the scan (for in-play checks) */
+  excludeSelf?: boolean;
+  /** When true the condition holds only if NO scanned card matches the name */
+  requireAbsent?: boolean;
 }
 
 // ============================================================================
@@ -1186,6 +1256,8 @@ export type Condition =
   | TurnMetricCondition
   | PlayContextCondition
   | PlayedCardHasKeywordCondition
+  | OpponentCountCondition
+  | PlayedCardNameCondition
   | FirstTurnNonOtpCondition
   // Parser catch-all
   | IfCondition
@@ -1232,6 +1304,9 @@ export type Condition =
   | SecondInkwellThisTurnCondition
   | WhileInPlayCondition
   | PlayedCardThisTurnCondition
+  | RevealedHasKeywordCondition
+  | HasHighestCostCharacterCondition
+  | DiscardedCardIsCardTypeCondition
   | OpponentHasMoreThanCardsCondition
   | OpponentHasLoreCondition
   | HasStrongestCharacterCondition

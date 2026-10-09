@@ -6,6 +6,26 @@ import { OnePieceTestEngine } from "../../../index.ts";
 const OPPONENTS_TURN = { firstPlayer: "south", activeSeat: "north" } as const;
 
 describe("OP17-023 Nami", () => {
+  test("FAQ: rests itself once to protect itself and an Straw Hat Character from simultaneous KO", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-016"], activeDon: 3 },
+      { character: ["OP17-023", "ST01-006"] },
+    );
+    const nami = e.findCardInZone("north", "character", "OP17-023"),
+      higuma = e.findCardInZone("north", "character", "ST01-006");
+    e.playCard("OP17-016");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [nami, higuma] }, "south");
+    e.resolveDecision("effectKoReplacement", { optionId: "yes" }, "north");
+    const v = e.getView("north");
+    expect(v.players.north.characters.filter(Boolean).map((c) => c?.instanceId)).toEqual([
+      nami,
+      higuma,
+    ]);
+    expect(v.players.north.characters.find((c) => c?.instanceId === nami)?.rested).toBe(true);
+    expect(v.players.north.trash).toHaveLength(0);
+    expect(v.prompts).toHaveLength(0);
+  });
+
   test("rests itself instead of letting a {Straw Hat Crew} Character be K.O.'d", () => {
     const engine = OnePieceTestEngine.create(
       {

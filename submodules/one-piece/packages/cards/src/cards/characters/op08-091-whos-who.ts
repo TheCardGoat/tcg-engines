@@ -5,7 +5,7 @@ export const op08WhosWho091: CharacterCard = {
   id: "OP08-091",
   canonicalId: "OP08-091",
   slug: "whos-who",
-  name: "Whos.Who",
+  name: "Who's.Who",
   printings: [
     {
       id: "OP08-091",
@@ -23,7 +23,7 @@ export const op08WhosWho091: CharacterCard = {
   cost: 5,
   power: 5000,
   counter: 2000,
-  traits: ["Animal Kingdom Pirates Former CP9"],
+  traits: ["Animal Kingdom Pirates", "Former CP9"],
   attribute: "slash",
   effect:
     "[On Play] You may trash 1 card from your hand: K.O. up to 1 of your opponent's Characters with a cost of 3 or less. [Trigger] K.O. up to 1 of your opponent's Characters with a cost of 3 or less.",

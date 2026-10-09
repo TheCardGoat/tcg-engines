@@ -1,14 +1,24 @@
 import { Button, Group, Popover, Stack, Text } from "@mantine/core";
 import { CircleDollarSign } from "lucide-react";
-import { useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
 import { SimulatorParticipantActionButton } from "../../../../simulator/participant-actions/SimulatorParticipantActions";
 import participantClasses from "../../../../simulator/participant-actions/SimulatorParticipantActions.module.css";
 import classes from "./PaymentSelectionPlayerAction.module.css";
-import { usePaymentSelection } from "./PaymentSelectionContext";
+import { useSetUserConfig, useUserConfig } from "../../engine/UserConfigContext";
 
 export const CYBERPUNK_PAYMENT_DISCOVERY_STORAGE_KEY =
   "tcg:cyberpunk:payment-selection-discovery:v1";
+
+const SuppressPaymentDiscoveryContext = createContext(false);
+
+export function SuppressPaymentDiscovery({ children }: { readonly children: ReactNode }) {
+  return (
+    <SuppressPaymentDiscoveryContext.Provider value>
+      {children}
+    </SuppressPaymentDiscoveryContext.Provider>
+  );
+}
 
 function persistDiscoveryDismissal(): void {
   try {
@@ -20,17 +30,21 @@ function persistDiscoveryDismissal(): void {
 
 /** One-time, non-modal discovery anchored to the real Player Info control. */
 export function CyberpunkPaymentSelectionDiscovery({ children }: { readonly children: ReactNode }) {
+  const suppressed = useContext(SuppressPaymentDiscoveryContext);
   const [opened, setOpened] = useState(false);
 
   useEffect(() => {
     try {
       setOpened(
-        window.localStorage.getItem(CYBERPUNK_PAYMENT_DISCOVERY_STORAGE_KEY) !== "dismissed",
+        !suppressed &&
+          window.localStorage.getItem(CYBERPUNK_PAYMENT_DISCOVERY_STORAGE_KEY) !== "dismissed",
       );
     } catch {
-      setOpened(true);
+      setOpened(!suppressed);
     }
-  }, []);
+  }, [suppressed]);
+
+  if (suppressed) return <>{children}</>;
 
   const dismiss = () => {
     setOpened(false);
@@ -62,8 +76,9 @@ export function CyberpunkPaymentSelectionDiscovery({ children }: { readonly chil
             Choose how you pay
           </Text>
           <Text size="sm">
-            Use the payment shortcut beside Player Info to choose the eligible Eddies or Legends
-            spent on your next cost. Automatic payment stays the default.
+            Use the payment shortcut beside Player Info to choose eligible Eddies or Legends. Card
+            plays that use all ready Eddies or all available resources pay automatically. This
+            setting is saved to your Cyberpunk profile.
           </Text>
           <Group justify="flex-end" gap="xs">
             <Button variant="light" size="compact-sm" onClick={dismiss}>
@@ -76,26 +91,31 @@ export function CyberpunkPaymentSelectionDiscovery({ children }: { readonly chil
   );
 }
 
-export function CyberpunkPaymentSelectionShortcut() {
-  const { nextPaymentSelectionArmed, toggleNextPaymentSelection } = usePaymentSelection();
-  const label = nextPaymentSelectionArmed
-    ? "Manual payment armed for next cost"
-    : "Choose payment for next cost";
-  const tooltip = nextPaymentSelectionArmed
-    ? "Manual payment is armed for your next cost. Click to return to automatic payment."
-    : "Choose the eligible Eddies or Legends spent for your next cost instead of paying automatically.";
+export function CyberpunkPaymentSelectionShortcut({ labeled = false }: { labeled?: boolean }) {
+  const { choosePaymentSources } = useUserConfig();
+  const setConfig = useSetUserConfig();
+  const label = choosePaymentSources ? "Manual payment enabled" : "Choose payment for every cost";
+  const tooltip = choosePaymentSources
+    ? "Manual payment is enabled. Full-cost card plays pay automatically. Click to restore automatic payment."
+    : "Choose eligible Eddies or Legends for payment. Full-cost card plays pay automatically.";
 
   return (
     <SimulatorParticipantActionButton
       type="button"
-      className={classes.shortcut}
+      className={`${classes.shortcut} ${labeled ? classes.labeled : ""}`}
       tooltip={tooltip}
-      aria-label={label}
-      aria-pressed={nextPaymentSelectionArmed}
-      data-active={nextPaymentSelectionArmed ? "true" : undefined}
-      onClick={toggleNextPaymentSelection}
+      aria-label={labeled ? "Manual payment" : label}
+      aria-pressed={choosePaymentSources}
+      data-active={choosePaymentSources ? "true" : undefined}
+      onClick={() => setConfig({ choosePaymentSources: !choosePaymentSources })}
     >
       <CircleDollarSign aria-hidden="true" size={18} />
+      {labeled && (
+        <>
+          <span>Manual payment</span>
+          <strong>{choosePaymentSources ? "On" : "Off"}</strong>
+        </>
+      )}
     </SimulatorParticipantActionButton>
   );
 }
@@ -105,24 +125,23 @@ export function CyberpunkPaymentSelectionPlayerAction({
 }: {
   readonly onComplete: () => void;
 }) {
-  const { nextPaymentSelectionArmed, toggleNextPaymentSelection } = usePaymentSelection();
+  const { choosePaymentSources } = useUserConfig();
+  const setConfig = useSetUserConfig();
 
   return (
     <button
       type="button"
       role="menuitem"
       className={participantClasses.menuItem}
-      aria-pressed={nextPaymentSelectionArmed}
+      aria-pressed={choosePaymentSources}
       onClick={() => {
-        toggleNextPaymentSelection();
+        setConfig({ choosePaymentSources: !choosePaymentSources });
         onComplete();
       }}
     >
       <CircleDollarSign aria-hidden="true" size={16} />
       <span>
-        {nextPaymentSelectionArmed
-          ? "Manual payment armed for next cost"
-          : "Choose payment for next cost"}
+        {choosePaymentSources ? "Manual payment enabled" : "Choose payment for every cost"}
       </span>
     </button>
   );

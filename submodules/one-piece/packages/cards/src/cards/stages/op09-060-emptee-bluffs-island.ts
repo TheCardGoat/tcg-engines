@@ -46,7 +46,7 @@ export const op09EmpteeBluffsIsland060: StageCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Cross Guild",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

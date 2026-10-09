@@ -30,7 +30,7 @@ export const op10CaesarClown002: LeaderCard = {
   setId: "OP10",
   power: 5000,
   life: 4,
-  traits: ["Punk Hazard Scientist"],
+  traits: ["Scientist", "Punk Hazard"],
   attribute: "special",
   effect:
     "[DON!! x2] [When Attacking] You may return 1 of your {Punk Hazard} type Characters with a cost of 2 or more to the owner's hand: K.O. up to 1 of your opponent's Characters with 4000 power or less.",
@@ -52,7 +52,7 @@ export const op10CaesarClown002: LeaderCard = {
               {
                 filter: "trait",
                 value: "Punk Hazard",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cost",

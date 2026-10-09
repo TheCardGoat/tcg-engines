@@ -66,6 +66,8 @@ export type BuildPlayerInteractionViewOptions = {
   pendingSelectedCardIds?: readonly CardInstanceId[];
   pendingSelectedPlayerIds?: readonly PlayerId[];
   pendingActiveSlotIndex?: number | null;
+  /** Bag ability the local chooser selected. Engine pending choices take priority. */
+  pendingRequestId?: string;
   /**
    * Scry destination assignments the chooser has staged locally but not yet
    * submitted. Each entry maps a destination rule id to the ordered cards
@@ -98,6 +100,18 @@ export function buildPlayerInteractionView(
   options: BuildPlayerInteractionViewOptions = {},
 ): PlayerInteractionView {
   const queue = buildPendingPromptQueue(board);
+  if (!board.pendingChoice && board.pendingEffects.length === 0 && options.pendingRequestId) {
+    const index = queue.entries.findIndex(
+      (entry) =>
+        entry.origin === "bag" &&
+        entry.requestId === options.pendingRequestId &&
+        entry.selectionContext.chooserId === viewerId,
+    );
+    if (index >= 0) {
+      queue.active = queue.entries[index] ?? null;
+      queue.activeIndex = index;
+    }
+  }
   const promptQueue: PromptQueueEntry[] = queue.entries.map(toQueueEntry);
 
   if (!queue.active) {
@@ -389,7 +403,9 @@ function buildSlots(
         slottedKind === "move-to-location" && key === "location"
           ? (fixedMoveLocation ?? moveToLocationSelection?.location ?? null)
           : slottedKind === "move-to-location" && key === "subject"
-            ? (moveToLocationSelection?.subjects[0] ?? selectedCardIds[filledIndex] ?? null)
+            ? moveToLocationSelection
+              ? (moveToLocationSelection.subjects[0] ?? null)
+              : (selectedCardIds[filledIndex] ?? null)
             : filledIndex < selectedCardIds.length
               ? selectedCardIds[filledIndex]
               : null;
@@ -494,6 +510,18 @@ function getFixedMoveToLocationId(
   if (engineResolvedLocation) {
     return engineResolvedLocation;
   }
+  const [onlyTarget] = context.targetDsl;
+  if (
+    onlyTarget &&
+    typeof onlyTarget === "object" &&
+    "cardTypes" in onlyTarget &&
+    Array.isArray(onlyTarget.cardTypes) &&
+    onlyTarget.cardTypes.includes("location")
+  ) {
+    // The engine asks the player to choose the destination. The source's
+    // current location is not a fixed destination for this prompt.
+    return null;
+  }
   const acknowledgedLocation = (context.currentSelection.targets ?? []).find(
     (cardId) => board && getProjectedCardType(board, cardId as CardInstanceId) === "location",
   );
@@ -512,6 +540,16 @@ function computeActiveSlotIndex(
     return null;
   }
   const keys = SLOTTED_TARGET_SLOT_KEYS[context.expectedSlottedKind];
+  if (
+    context.expectedSlottedKind === "move-to-location" &&
+    board &&
+    !isAutoResolvedSlotIndex(context, 0) &&
+    splitMoveToLocationSelection(board, selectedCardIds, getFixedMoveToLocationId(board, context))
+      .subjects.length === 0
+  ) {
+    // Selecting the destination first leaves the required character choice open.
+    return 0;
+  }
   if (
     typeof pendingActiveSlotIndex === "number" &&
     pendingActiveSlotIndex >= 0 &&
@@ -1118,7 +1156,7 @@ function fallbackScryDestinationLabel(zone: string): string {
  * `currentSelection.destinations`. This is what makes scry tap/drag
  * interactions render in real time (gap #18 / #3).
  */
-function resolveDestinationCards(
+function resolveExplicitDestinationCards(
   rule: ScryResolutionSelectionContext["destinationRules"][number],
   context: ScryResolutionSelectionContext,
   pending: BuildPlayerInteractionViewOptions["pendingScryAssignments"],
@@ -1131,6 +1169,33 @@ function resolveDestinationCards(
     (entry) => entry.zone === rule.zone,
   );
   return (engineMatch?.cards ?? []) as CardInstanceId[];
+}
+
+/** Show the engine's sequential, filtered remainder assignment before submit. */
+function resolveDestinationCards(
+  rule: ScryResolutionSelectionContext["destinationRules"][number],
+  context: ScryResolutionSelectionContext,
+  pending: BuildPlayerInteractionViewOptions["pendingScryAssignments"],
+): readonly CardInstanceId[] {
+  if (!context.destinationRules.some((entry) => entry.remainder && entry.filters?.length)) {
+    return resolveExplicitDestinationCards(rule, context, pending);
+  }
+  const assigned = new Set<CardInstanceId>();
+  for (const destination of context.destinationRules) {
+    const cards = [...resolveExplicitDestinationCards(destination, context, pending)];
+    cards.forEach((cardId) => assigned.add(cardId));
+    if (destination.remainder) {
+      for (const card of context.revealedCards) {
+        if (assigned.has(card.cardId) || !revealedCardMatchesScryFilters(destination.filters, card))
+          continue;
+        if (destination.max !== null && cards.length >= destination.max) break;
+        cards.push(card.cardId);
+        assigned.add(card.cardId);
+      }
+    }
+    if (destination.id === rule.id) return cards;
+  }
+  return [];
 }
 
 function buildScryDestinations(
@@ -1184,10 +1249,17 @@ function buildScryRevealed(
     const slot = placement.get(String(card.cardId));
     const eligibleDestinationIds: string[] = [];
     for (const rule of context.destinationRules) {
-      // Remainder destinations have no filter — anything unassigned lands
-      // there. Treat them as universally eligible so the UI can always offer
-      // them as a fallback drop target.
-      if (rule.remainder || revealedCardMatchesScryFilters(rule.filters, card)) {
+      const mandatoryRuleIndex = context.destinationRules.findIndex(
+        (entry) =>
+          entry.remainder &&
+          entry.filters?.length &&
+          resolveDestinationCards(entry, context, pending).includes(card.cardId),
+      );
+      const ruleIndex = context.destinationRules.indexOf(rule);
+      if (
+        (mandatoryRuleIndex < 0 || ruleIndex <= mandatoryRuleIndex) &&
+        revealedCardMatchesScryFilters(rule.filters, card)
+      ) {
         eligibleDestinationIds.push(rule.id);
       }
     }

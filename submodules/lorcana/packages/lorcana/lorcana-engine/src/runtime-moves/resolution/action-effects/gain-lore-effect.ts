@@ -98,7 +98,7 @@ export function resolveGainLoreEffect(
   cardPlayed: CardPlayedPayload,
   effect: GainLoreEffect,
   resolvedInput: ResolvedGainLoreEffectInput,
-): void {
+): boolean {
   const gainAmount =
     typeof resolvedInput.gainAmount === "number" &&
     Number.isFinite(resolvedInput.gainAmount) &&
@@ -106,7 +106,7 @@ export function resolveGainLoreEffect(
       ? resolvedInput.gainAmount
       : undefined;
   if (!gainAmount) {
-    return;
+    return false;
   }
 
   const targetPlayerIds = resolveGainLoreTargetPlayerIds(
@@ -116,10 +116,12 @@ export function resolveGainLoreEffect(
     resolvedInput.selectedPlayerIds,
     resolvedInput.selectedTargets,
   );
+  let gained = false;
   for (const playerId of targetPlayerIds) {
     if (isPlayerBlockedFromGainingLore(ctx, playerId)) {
       continue;
     }
+    gained = true;
     const currentLore = Number(ctx.G.lore[playerId] ?? 0);
     ctx.G.lore[playerId] = currentLore + gainAmount;
     emitTriggeredLorcanaEvent(
@@ -143,4 +145,5 @@ export function resolveGainLoreEffect(
       },
     );
   }
+  return gained;
 }

@@ -97,6 +97,27 @@ describe("OP03-016 Flame Emperor", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
+  test("a non-Ace Leader pays the Event cost without K.O., power, or Double Attack", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: [op03FlameEmperor016], activeDon: 7 },
+      {
+        character: [op01EustassCaptainKid051],
+        life: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018],
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const targetId = engine.findCardInZone("north", "character", op01EustassCaptainKid051);
+    const power = engine.getView("south").players.south.leader.power;
+    engine.playCard(op03FlameEmperor016);
+    const view = engine.getView("south");
+    expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 7 });
+    expect(view.players.south.leader.power).toBe(power);
+    expect(view.players.north.characters.some((card) => card?.instanceId === targetId)).toBe(true);
+    expect(view.prompts).toHaveLength(0);
+    engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
+    expect(engine.getView("south").players.north.lifeCount).toBe(2);
+  });
+
   test("Life Trigger K.O.s only an opposing Character at the power-6000 boundary", () => {
     const engine = OnePieceTestEngine.create(
       {

@@ -30,7 +30,7 @@ export const op12Sanji041: LeaderCard = {
   setId: "OP12",
   power: 5000,
   life: 4,
-  traits: ["Straw Hat Crew The Vinsmoke Family"],
+  traits: ["The Vinsmoke Family", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     '[Activate: Main] [Once Per Turn] DON!! −1: Activate up to 1 "Straw Hat Crew" type Event with a base cost of 3 or less from your hand.\n[When Attacking] If the number of DON!! cards on your field is equal to or less than the number on your opponent\'s field, add up to 1 DON!! card from your DON!! deck and rest it.',
@@ -48,7 +48,7 @@ export const op12Sanji041: LeaderCard = {
               count: { amount: 1, upTo: true },
               filters: [
                 { filter: "cardCategory", value: "event" },
-                { filter: "trait", value: "Straw Hat Crew", match: "includes" },
+                { filter: "trait", value: "Straw Hat Crew", match: "exact" },
                 { filter: "baseCost", comparison: "lte", value: 3 },
               ],
             },

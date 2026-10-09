@@ -1,23 +1,50 @@
 import { mkdir, writeFile } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { fileURLToPath } from "node:url";
 
 import {
   deduplicateRawCardsById,
+  fetchCardFaqs,
   formatGeneratedCardsModule,
   normalizeCard,
   preserveStableCardIds,
+  refreshCatalogFaqsOnly,
   scrapeCatalog,
   type ScrapedCatalogSnapshot,
 } from "./index.ts";
 
 async function main() {
+  const faqOnly = process.argv.slice(2).includes("--faqs-only");
   const outputPath = path.resolve(
     path.dirname(fileURLToPath(import.meta.url)),
     "../../../packages/cards/src/generated.ts",
   );
   const existingSnapshot = await readExistingSnapshot(outputPath);
+  const snapshot = faqOnly
+    ? await refreshFaqsOnly(existingSnapshot)
+    : await refreshCatalog(existingSnapshot);
+
+  await mkdir(path.dirname(outputPath), { recursive: true });
+  await writeFile(outputPath, formatGeneratedCardsModule(snapshot), "utf8");
+  execFileSync("vp", ["fmt", outputPath], { stdio: "inherit" });
+
+  console.log(
+    `Wrote ${snapshot.rawCards.length} raw cards and ${snapshot.cards.length} normalized cards to ${outputPath}.`,
+  );
+}
+
+async function refreshFaqsOnly(
+  existingSnapshot: ScrapedCatalogSnapshot | null,
+): Promise<ScrapedCatalogSnapshot> {
+  if (!existingSnapshot) throw new Error("An existing card catalog is required for --faqs-only.");
+  return refreshCatalogFaqsOnly(existingSnapshot, await fetchCardFaqs());
+}
+
+async function refreshCatalog(
+  existingSnapshot: ScrapedCatalogSnapshot | null,
+): Promise<ScrapedCatalogSnapshot> {
   const scrapedSnapshot = await scrapeCatalog();
   const mergedSnapshot = existingSnapshot
     ? mergeCatalogSnapshots(existingSnapshot, scrapedSnapshot)
@@ -27,16 +54,9 @@ async function main() {
     cards: mergedSnapshot.cards,
   };
   const normalizedSnapshot = normalizeCatalogSnapshot(dedupedSnapshot);
-  const snapshot = existingSnapshot
+  return existingSnapshot
     ? preserveStableCardIds(normalizedSnapshot, existingSnapshot)
     : normalizedSnapshot;
-
-  await mkdir(path.dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, formatGeneratedCardsModule(snapshot), "utf8");
-
-  console.log(
-    `Wrote ${snapshot.rawCards.length} raw cards and ${snapshot.cards.length} normalized cards to ${outputPath}.`,
-  );
 }
 
 function normalizeCatalogSnapshot(snapshot: ScrapedCatalogSnapshot): ScrapedCatalogSnapshot {

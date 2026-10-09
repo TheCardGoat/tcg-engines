@@ -88,22 +88,17 @@ export const signaltechXUltra: GrandArchiveCard<GrandArchiveAbilityDefinition, "
                       kind: "reveal",
                       player: "controller",
                       selection: {
-                        id: "chosen-ally",
+                        id: "revealed-ally",
                         kind: "choice",
                         declared: "resolution",
                         chooser: "controller",
                         count: {
-                          kind: "up-to",
-                          amount: 1,
+                          kind: "all",
                         },
                         unique: true,
                         candidates: {
                           kind: "card",
-                          binding: "looked-cards",
-                          filter: {
-                            kind: "type",
-                            oneOf: ["ALLY"],
-                          },
+                          binding: "chosen-ally",
                         },
                       },
                     },

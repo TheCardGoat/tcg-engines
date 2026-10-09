@@ -36,6 +36,12 @@ describe("OP07-118 Sabo", () => {
     expect(firstKo.candidates.map((candidate) => candidate.ref.id)).not.toContain(expensiveId);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [costFiveId] }, "south");
 
+    expect(
+      engine
+        .getView("south")
+        .players.north.characters.some((card) => card?.instanceId === costFiveId),
+    ).toBe(true);
+
     const secondKo = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     if (secondKo?.kind !== "selectEntity") throw new Error("Expected Sabo's cost-3 K.O.");
     expect(secondKo.candidates.map((candidate) => candidate.ref.id)).toEqual([costThreeId]);

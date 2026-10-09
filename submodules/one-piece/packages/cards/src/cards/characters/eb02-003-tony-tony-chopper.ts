@@ -32,7 +32,7 @@ export const eb02TonyTonyChopper003: CharacterCard = {
   cost: 3,
   power: 3000,
   counter: 1000,
-  traits: ["Animal Straw Hat Crew Drum Kingdom"],
+  traits: ["Animal", "Drum Kingdom", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     '[DON!! x2] [Opponent\'s Turn] This Character gains +2000 power.\n[On Play] If your Leader has the "Straw Hat Crew" type, give up to 1 rested DON!! card to your Leader or 1 of your Characters.',
@@ -44,7 +44,7 @@ export const eb02TonyTonyChopper003: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Straw Hat Crew",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

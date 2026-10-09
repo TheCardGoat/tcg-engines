@@ -39,7 +39,7 @@ export const op06GeckoMoria086: CharacterCard = {
   setId: "OP06",
   cost: 8,
   power: 9000,
-  traits: ["The Seven Warlords of the Sea Thriller Bark Pirates"],
+  traits: ["The Seven Warlords of the Sea", "Thriller Bark Pirates"],
   attribute: "special",
 
   effect:
@@ -95,7 +95,6 @@ export const op06GeckoMoria086: CharacterCard = {
               single: "active",
               multiple: ["active", "rested"],
             },
-            chooseOnPlayOrder: true,
           },
         ],
       },

@@ -55,4 +55,18 @@ describe("EB01-004 Koza", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("cannot pay the power cost after its Leader has attacked and is rested", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01Koza004, playedOnTurn: 0 }] },
+      { character: [eb01Doma005] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
+    expect(engine.getView("south").players.south.leader.rested).toBe(true);
+    const koza = engine.findCardInZone("south", "character", eb01Koza004);
+    engine.declareAttack(koza, engine.leader("north"), "south");
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getView("south").players.south.leader.power).toBe(5000);
+    expect(engine.getView("south").players.north.characters[0]?.power).toBe(3000);
+  });
 });

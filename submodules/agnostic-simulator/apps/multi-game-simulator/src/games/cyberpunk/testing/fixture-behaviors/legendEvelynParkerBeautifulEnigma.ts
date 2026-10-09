@@ -9,9 +9,7 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const legendEvelynParkerBeautifulEnigmaBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendEvelynParkerBeautifulEnigma",
   label: "Evelyn Parker - spend searches for Braindance",
-  references: [
-    "packages/engine/src/cards/welcometonightcityretail/legends/evelyn-parker-beautiful-enigma.test.ts",
-  ],
+  references: ["packages/engine/src/cards/legends/evelyn-parker-beautiful-enigma.test.ts"],
   async run(pom) {
     const evelyn = await pom.getCardInZoneByDefinitionId(
       "legendArea",

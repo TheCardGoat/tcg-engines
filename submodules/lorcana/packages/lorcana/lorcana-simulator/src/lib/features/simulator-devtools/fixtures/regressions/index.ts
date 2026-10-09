@@ -1,3 +1,5 @@
+import { mickeySurvivesChallengeRegression } from "./mickey-survives-challenge.js";
+import { alienRetroEvolutionDeviceRegression } from "./alien-retro-evolution-device.js";
 import type { LorcanaSimulatorFixture } from "@/features/simulator/model/contracts.js";
 import { taranDiscardPickerRegression } from "./taran-discard-picker.js";
 import { createFixtureRegistry } from "../registry.js";
@@ -88,6 +90,7 @@ import { lookWhatYouveDoneSingleReplayRegression } from "./2026-09-03/look-what-
 import { mulanCreatedByTheVineSelfTriggerRegression } from "./2026-09-03/mulan-created-by-the-vine-self-trigger.js";
 import { timerDeviceClockSkewRegression } from "./2026-09-03/timer-device-clock-skew.js";
 import { luisaZeroWithDamagedAlternative } from "./2026-09-04/luisa-zero-with-damaged-alternative.js";
+import { mulanEntryDamageRegression } from "./mulan-entry-damage.js";
 
 const regressionFixtureRegistry = createFixtureRegistry(
   [
@@ -95,6 +98,7 @@ const regressionFixtureRegistry = createFixtureRegistry(
     shiftingThenSingingUnderTheSea,
     moanaBlackCauldron,
     retroEvolutionDeviceGenie,
+    alienRetroEvolutionDeviceRegression,
     // --- 2026-04-22 QA validation batch ---
     bug01MadamMimSneakyMove,
     bug02DinkyHasTheBrains,
@@ -190,6 +194,8 @@ const regressionFixtureRegistry = createFixtureRegistry(
     timerDeviceClockSkewRegression,
     taranDiscardPickerRegression,
     luisaZeroWithDamagedAlternative,
+    mulanEntryDamageRegression,
+    mickeySurvivesChallengeRegression,
   ] satisfies LorcanaSimulatorFixture[],
   "simulator regression fixtures",
 );

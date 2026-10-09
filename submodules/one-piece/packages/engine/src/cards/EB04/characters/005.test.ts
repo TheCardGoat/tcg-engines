@@ -26,3 +26,24 @@ describe("EB04-005", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });
+
+test("current power raised by Kujyaku does not satisfy Law's base-power count", () => {
+  const e = OnePieceTestEngine.create(
+    { character: [{ cardId: "EB04-005", playedOnTurn: 0 }] },
+    { character: ["EB04-047", "EB03-041"] },
+    { firstPlayer: "north", activeSeat: "south" },
+  );
+  expect(
+    e.getView("south").players.north.characters.find((c) => c?.cardId === "EB04-047")?.power,
+  ).toBe(5000);
+  const result = e.expectFailure({
+    type: "declareAttack",
+    seat: "south",
+    attackerId: e.findCardInZone("south", "character", "EB04-005"),
+    targetId: e.leader("north"),
+  });
+  expect(result.reason).toBe("The selected attacker cannot attack.");
+  expect(
+    e.getView("south").players.south.characters.find((c) => c?.cardId === "EB04-005")?.rested,
+  ).toBe(false);
+});

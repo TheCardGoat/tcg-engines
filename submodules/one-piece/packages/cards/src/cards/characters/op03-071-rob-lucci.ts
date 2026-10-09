@@ -23,7 +23,7 @@ export const op03RobLucci071: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Galley-La Company Water Seven"],
+  traits: ["Water Seven", "Galley-La Company"],
   attribute: "strike",
   effect:
     "[When Attacking] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Rest up to 1 of your opponent's Characters with a cost of 5 or less.",

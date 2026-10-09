@@ -12,11 +12,15 @@ export interface EffectEventFilter {
   toZone?: Zone;
   targetSelf?: boolean;
   sourceSelf?: boolean;
+  /** Requires a completed power comparison, excluding battles aborted before the damage step. */
+  battlePowerCompared?: boolean;
   filters?: TargetFilter[];
   sourceFilters?: TargetFilter[];
   targetFilters?: TargetFilter[];
   sourceFromZone?: Zone;
   minimumAmount?: number;
+  /** Life count immediately after the triggering removal, not at effect resolution. */
+  lifeCountAfterRemoval?: number;
   /** Disjunctive alternate filters for one printed multi-predicate trigger. */
   anyOf?: EffectEventFilter[];
 }
@@ -27,6 +31,10 @@ export interface EffectBlock {
   eventFilter?: EffectEventFilter;
   conditions?: Condition[];
   costs?: Cost[];
+  /** Choose and pay one group, in addition to any common costs. */
+  alternativeCosts?: Cost[][];
+  /** Conditions evaluated after costs are paid, for printed "You may ...: If ..." effects. */
+  postCostConditions?: Condition[];
   actions: Action[];
   optional?: boolean;
   oncePerTurn?: boolean;
@@ -35,7 +43,9 @@ export interface EffectBlock {
 
 export interface PermanentEffect {
   conditions?: Condition[];
-  actions: Action[];
+  // Added conditions combine by conjunction. Permanent added costs still need
+  // a defined ordering contract with resolved cost grants.
+  actions: Exclude<Action, { action: "addActivationCosts" }>[];
 }
 
 export interface ReplacementEffect {
@@ -58,6 +68,8 @@ export type DeckBuildingRule =
   | { rule: "donDeckCount"; count: number };
 
 export interface CardEffects {
+  /** Before opening hands, optionally search for and play one matching Stage, then shuffle. */
+  startOfGame?: { playStageFromDeck: { filters: TargetFilter[] } };
   keywords?: Keyword[];
   effects?: EffectBlock[];
   permanentEffects?: PermanentEffect[];

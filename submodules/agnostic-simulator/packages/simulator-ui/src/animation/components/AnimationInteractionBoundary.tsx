@@ -6,7 +6,7 @@ export function AnimationInteractionBoundary({
   className,
 }: {
   readonly active: boolean;
-  readonly children: ReactNode;
+  readonly children?: ReactNode;
   readonly className?: string;
 }) {
   return (

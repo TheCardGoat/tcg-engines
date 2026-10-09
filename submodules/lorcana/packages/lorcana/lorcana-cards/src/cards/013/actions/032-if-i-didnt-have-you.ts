@@ -27,6 +27,7 @@ export const ifIDidntHaveYou: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_93ddde65a0ac4c4aa83ef2418e5472ae",
+    tcgPlayer: "704560",
   },
   text: "You and another chosen player each draw 2 cards.",
   actionSubtype: "song",

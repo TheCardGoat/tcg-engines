@@ -31,7 +31,7 @@ export const op07TrafalgarLaw047: CharacterCard = {
   cost: 4,
   power: 4000,
   counter: 2000,
-  traits: ["Heart Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Heart Pirates"],
   attribute: "slash",
   effect:
     "[Activate: Main] You may return this Character to the owner's hand: If your opponent has 6 or more cards in their hand, your opponent places 1 card from their hand at the bottom of their deck.",

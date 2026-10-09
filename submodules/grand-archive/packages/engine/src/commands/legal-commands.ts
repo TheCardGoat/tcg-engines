@@ -938,7 +938,24 @@ function paymentCandidates(
         : [];
     }),
   ];
-  const reserveChoices = combinations(reserveSources, 0, reserveSources.length, limit);
+  // Include a representative of every payment size before identity variants consume the budget.
+  // Otherwise large affordable costs disappear behind many small, invalid underpayments.
+  const representativePayments = Array.from(
+    { length: Math.min(reserveSources.length + 1, limit) },
+    (_, count) => reserveSources.slice(0, count),
+  );
+  const seenPayments = new Set<string>();
+  const reserveChoices = [
+    ...representativePayments,
+    ...combinations(reserveSources, 0, reserveSources.length, limit),
+  ]
+    .filter((payment) => {
+      const key = JSON.stringify(payment);
+      if (seenPayments.has(key)) return false;
+      seenPayments.add(key);
+      return true;
+    })
+    .slice(0, limit);
   const selectionCount = selectableCostCount(cost);
   const objectIds = Object.values(state.objects).map((object) => object.id);
   const rawSelectionChoices: readonly (readonly GrandArchiveObjectId[])[] =
@@ -2260,12 +2277,12 @@ function decisionAnswerCandidates(
         answer: { ...candidate.announcement, ...candidate.payment },
         label: "Materialize the selected card",
       }));
-      return decision.attemptBinding
+      return decision.attemptBinding || decision.mayDecline
         ? [{ answer: false, label: "Do not materialize" }, ...announcements].slice(0, limit)
         : announcements;
     }
-    case "announce-effect-activation":
-      return cardAnnouncementCandidates(
+    case "announce-effect-activation": {
+      const announcements = cardAnnouncementCandidates(
         program,
         state,
         decision.playerId,
@@ -2277,6 +2294,10 @@ function decisionAnswerCandidates(
         answer: { ...candidate.announcement, ...candidate.payment },
         label: "Activate the selected card",
       }));
+      return decision.mayDecline
+        ? [{ answer: false, label: "Do not activate" }, ...announcements].slice(0, limit)
+        : announcements;
+    }
     case "resolve-glimpse":
       return candidates(
         glimpseAnswerCandidates(program, state, decision, maximumChosenVariableValue, limit),

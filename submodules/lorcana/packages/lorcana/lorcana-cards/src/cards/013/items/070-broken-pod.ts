@@ -27,6 +27,7 @@ export const brokenPod: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c438445c14b24148818de7ef8e0f0ac0",
+    tcgPlayer: "704588",
   },
   text: [
     {

@@ -34,6 +34,7 @@ export const carlFredricksenRussellIntrepidExplorersEnchanted: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a11ca900e22b4319a66e50fe7cb8c504",
+    tcgPlayer: "702688",
   },
   text: [
     {

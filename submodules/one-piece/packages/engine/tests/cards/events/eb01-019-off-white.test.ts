@@ -97,6 +97,7 @@ describe("EB01-019 Off-White", () => {
       { selectedIds: [wrongTypeId, otherEligibleId] },
       "north",
     );
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.hand.some((card) => card.instanceId === selectedSearchId)).toBe(true);

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="112" height="144" viewBox="0 0 112 144">
+  <defs>
+    <linearGradient id="recess" x2="0" y2="1">
+      <stop stop-color="#0c1518" stop-opacity=".78"/>
+      <stop offset=".45" stop-color="#172125" stop-opacity=".58"/>
+      <stop offset="1" stop-color="#070d0f" stop-opacity=".82"/>
+    </linearGradient>
+    <linearGradient id="edge" x2="1" y2="1">
+      <stop stop-color="#83938f" stop-opacity=".48"/>
+      <stop offset=".52" stop-color="#1b292c" stop-opacity=".38"/>
+      <stop offset="1" stop-color="#7e9294" stop-opacity=".45"/>
+    </linearGradient>
+  </defs>
+  <path d="M9 2H103L110 9V135L103 142H9L2 135V9Z" fill="#080f11" fill-opacity=".4" stroke="url(#edge)" stroke-width="2"/>
+  <path d="M12 7H100L105 12V132L100 137H12L7 132V12Z" fill="url(#recess)" stroke="#020608" stroke-opacity=".58" stroke-width="2"/>
+  <path d="M16 11H96M16 133H96" stroke="#b3c6c2" stroke-opacity=".16" stroke-width="1"/>
+  <path d="M4 18V40M108 104V126" stroke="#6da9af" stroke-opacity=".36" stroke-width="2"/>
+  <path d="M12 4H30M82 140H100" stroke="#a85f53" stroke-opacity=".27" stroke-width="2"/>
+  <circle cx="9" cy="9" r="1.2" fill="#899897" fill-opacity=".48"/>
+  <circle cx="103" cy="135" r="1.2" fill="#899897" fill-opacity=".48"/>
+</svg>

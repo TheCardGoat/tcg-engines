@@ -28,7 +28,8 @@ export const songOfFrost: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
       abilities: [
         {
           id: "t1cn1tzgcx-a1",
-          kind: "card-resolution",
+          kind: "static",
+          staticKind: "effects",
           text: "[Class Bonus] You may banish a card with floating memory from your graveyard rather than pay this card's reserve cost.",
           restrictions: [
             {
@@ -40,35 +41,34 @@ export const songOfFrost: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
               },
             },
           ],
-          effect: {
-            kind: "optional",
-            player: "controller",
-            allOrNothing: true,
-            effect: {
-              kind: "banish",
-              player: "controller",
-              selection: {
-                id: "banished-cards",
-                kind: "choice",
-                declared: "resolution",
-                chooser: "controller",
+          effects: [
+            {
+              kind: "rule-modification",
+              mode: "replace-cost",
+              action: "pay-cost",
+              subject: {
+                kind: "source",
+              },
+              costKind: "reserve",
+              cost: {
+                kind: "select-and-move",
+                player: "controller",
+                from: "graveyard",
+                to: "banishment",
                 count: {
                   kind: "exactly",
                   amount: 1,
                 },
-                candidates: {
-                  kind: "card",
-                  zones: ["hand"],
-                  relationship: "zone-of",
-                  player: "controller",
-                  filter: {
-                    kind: "has-keyword",
-                    keyword: "floating-memory",
-                  },
+                filter: {
+                  kind: "has-keyword",
+                  keyword: "floating-memory",
                 },
               },
+              duration: {
+                kind: "while-source-in-functional-zone",
+              },
             },
-          },
+          ],
         },
         {
           id: "t1cn1tzgcx-a2",

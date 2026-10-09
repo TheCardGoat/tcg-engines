@@ -401,6 +401,17 @@
                       "detailLabel": {
                         "type": "string",
                         "minLength": 1
+                      },
+                      "sourceStatus": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "targetStatus": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "showText": {
+                        "type": "boolean"
                       }
                     },
                     "required": ["id", "type", "source", "target"],
@@ -769,6 +780,7 @@
             "flesh-and-blood",
             "grand-archive",
             "naruto",
+            "alpha-clash",
             "platform"
           ]
         },
@@ -1187,6 +1199,21 @@
             "required": ["id", "requestId", "intent", "text", "enabled", "inputs"],
             "additionalProperties": false
           }
+        },
+        "projectionFailure": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "const": "projection_failed"
+            },
+            "retryable": {
+              "type": "boolean",
+              "const": true
+            }
+          },
+          "required": ["code", "retryable"],
+          "additionalProperties": false
         }
       },
       "required": ["protocolVersion", "gameSlug", "actorId", "stateVersion", "status", "actions"],
@@ -1976,7 +2003,7 @@
     },
     "__schema85": {
       "type": "string",
-      "enum": ["replace", "overlay"]
+      "enum": ["replace", "overlay", "underlay"]
     },
     "__schema86": {
       "type": "string",

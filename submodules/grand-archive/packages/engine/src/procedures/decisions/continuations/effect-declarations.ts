@@ -42,7 +42,7 @@ export const resolveGrandArchiveEffectMaterializationAnnouncementDecision: Grand
   }
   const { pendingMaterialization: _pendingMaterialization, ...baseResolution } = resolution;
   if (command.answer === false) {
-    if (!pending.attemptBinding) {
+    if (!pending.attemptBinding && !pending.mayDecline) {
       return match.failure(
         "illegal-command",
         "This effect requires the materialization to be announced",
@@ -50,7 +50,9 @@ export const resolveGrandArchiveEffectMaterializationAnnouncementDecision: Grand
     }
     const resumed = {
       ...baseResolution,
-      bindings: { ...resolution.bindings, [pending.attemptBinding]: false },
+      bindings: pending.attemptBinding
+        ? { ...resolution.bindings, [pending.attemptBinding]: false }
+        : resolution.bindings,
     };
     const original = state;
     try {
@@ -155,13 +157,45 @@ export const resolveGrandArchiveEffectActivationAnnouncementDecision: GrandArchi
   if (!pending || pending.playerId !== decision.playerId || pending.cardId !== decision.cardId) {
     return match.failure("illegal-command", "Effect activation is no longer pending");
   }
+  const { pendingActivation: _pendingActivation, ...baseResolution } = resolution;
+  if (command.answer === false) {
+    if (!pending.mayDecline)
+      return match.failure(
+        "illegal-command",
+        "This effect requires the activation to be announced",
+      );
+    const original = state;
+    try {
+      const cleared = match.getKernel().transact(state, [
+        {
+          type: "decision-cleared",
+          decisionId: decision.id,
+          actorId: playerId,
+          cause: { kind: "command", move: "answer-decision" },
+        },
+      ]);
+      match.replaceState(cleared.state);
+      const continuation = resumeGrandArchiveEffectResolution(
+        match.getProgram(),
+        match.getState(),
+        match.getKernel(),
+        baseResolution,
+      );
+      match.replaceState(continuation.state);
+      const events = [...cleared.result.events, ...continuation.events];
+      if (continuation.paused) return { ok: true, state: match.getState(), events };
+      return match.stabilize(events, continuation.triggerEvents);
+    } catch (error) {
+      match.replaceState(original);
+      return declarationFailure(match, error);
+    }
+  }
   const answer = new GrandArchiveDecisionAnswerCodec(match).parseEffectActivationAnswer(
     command.answer,
   );
   if (!answer) {
     return match.failure("illegal-command", "Effect activation announcement is malformed");
   }
-  const { pendingActivation: _pendingActivation, ...baseResolution } = resolution;
   const original = state;
   try {
     const proposal = proposeGrandArchiveCardActivation(
@@ -340,8 +374,10 @@ export const grandArchiveEffectDeclarationDecisionResolvers = {
   "announce-effect-activation": resolveGrandArchiveEffectActivationAnnouncementDecision,
   "announce-effect-attack": resolveGrandArchiveEffectAttackAnnouncementDecision,
 } satisfies {
-  readonly [Kind in
-    | "announce-effect-materialization"
-    | "announce-effect-activation"
-    | "announce-effect-attack"]: GrandArchiveDecisionResolver<Kind>;
+  readonly [
+    Kind in
+      | "announce-effect-materialization"
+      | "announce-effect-activation"
+      | "announce-effect-attack"
+  ]: GrandArchiveDecisionResolver<Kind>;
 };

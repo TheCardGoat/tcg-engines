@@ -1,4 +1,9 @@
-import { diablerie, ordainedCharisma, pangTongYoungPhoenix } from "@tcg/grand-archive-cards";
+import {
+  diablerie,
+  grandCrusadersRing,
+  ordainedCharisma,
+  pangTongYoungPhoenix,
+} from "@tcg/grand-archive-cards";
 import type {
   GrandArchiveAbilityDefinition,
   GrandArchiveAnyCard,
@@ -72,6 +77,7 @@ function setup() {
     champion,
     ally,
     regalia,
+    grandCrusadersRing,
     ordainedCharisma,
     diablerie,
     pangTongYoungPhoenix,
@@ -82,6 +88,7 @@ function setup() {
     mainDeck: [
       { definitionId: ally.canonicalId, count: 2 },
       { definitionId: regalia.canonicalId, count: 2 },
+      { definitionId: grandCrusadersRing.canonicalId, count: 2 },
       { definitionId: ordainedCharisma.canonicalId, count: 1 },
       { definitionId: diablerie.canonicalId, count: 1 },
       { definitionId: pangTongYoungPhoenix.canonicalId, count: 1 },
@@ -396,10 +403,11 @@ describe("Grand Archive control and replacement effects", () => {
     const fixture = setup();
     const sourceId = objectIds(fixture.state, fixture.p1, diablerie.canonicalId)[0]!;
     const [unrelatedId] = objectIds(fixture.state, fixture.p2, ally.canonicalId);
+    const [ordinaryRegaliaId] = objectIds(fixture.state, fixture.p2, regalia.canonicalId);
     const [firstRegaliaId, secondRegaliaId] = objectIds(
       fixture.state,
       fixture.p2,
-      regalia.canonicalId,
+      grandCrusadersRing.canonicalId,
     );
     const created = executeEffect(
       fixture.program,
@@ -427,7 +435,12 @@ describe("Grand Archive control and replacement effects", () => {
       },
     ]).state;
     expect(unrelated.replacementEffects).toHaveLength(1);
-    const replaced = rulesKernel.transact(unrelated, [
+    const ordinary = rulesKernel.transact(unrelated, [
+      { type: "object-moved", objectId: ordinaryRegaliaId!, from: "main-deck", to: "field" },
+    ]).state;
+    expect(ordinary.objects[ordinaryRegaliaId!]?.controllerId).toBe(fixture.p2);
+    expect(ordinary.replacementEffects).toHaveLength(1);
+    const replaced = rulesKernel.transact(ordinary, [
       {
         type: "object-moved",
         objectId: firstRegaliaId!,

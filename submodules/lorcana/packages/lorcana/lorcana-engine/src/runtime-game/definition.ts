@@ -40,11 +40,15 @@ export const lorcanaRuntimeConfig: MatchRuntimeConfig = {
   name: "Disney Lorcana TCG",
 
   setup: ({ players }) => {
-    if (players.length !== 2) {
-      throw new Error("Lorcana requires exactly 2 players");
+    if (players.length < 2) {
+      throw new Error("Lorcana requires at least 2 players");
     }
 
-    return createInitialLorcanaG(players[0].id as PlayerId, players[1].id as PlayerId);
+    return createInitialLorcanaG(
+      players[0].id as PlayerId,
+      players[1].id as PlayerId,
+      ...players.slice(2).map((player) => player.id as PlayerId),
+    );
   },
 
   boardSetup: (draft: Draft<MatchState>, ctx: BoardSetupContext) => {

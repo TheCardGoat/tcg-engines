@@ -1,3 +1,20 @@
+@font-face {
+  font-family: "Cyberpunk Refinery 25";
+  src: url("https://cdn.tcg.online/public/cyberpunk/fonts/refinery-25-semi-bold.woff2")
+    format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cyberpunk Blender Pro";
+  src: url("https://cdn.tcg.online/public/cyberpunk/fonts/blender-pro-book.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 /*
   Card stack: a unit card with zero or more gear cards attached underneath.
   The unit sits on top; each gear is offset progressively further down so
@@ -65,6 +82,11 @@
   filter: brightness(1.12) saturate(1.15);
 }
 
+.stack[data-zone="p-legendArea"].armable:hover,
+.stack[data-zone="opp-legendArea"].armable:hover {
+  transform: translateY(-2px);
+}
+
 .armed .unit::after {
   content: "";
   position: absolute;
@@ -127,24 +149,6 @@
     0 0 16px rgb(245 230 66 / 90%),
     0 0 34px rgb(245 230 66 / 44%),
     inset 0 0 14px rgb(245 230 66 / 28%);
-}
-
-.paymentSelected::before {
-  content: "PAY";
-  position: absolute;
-  inset: auto 4px 4px auto;
-  z-index: 290;
-  padding: 2px 5px;
-  border: 1px solid #f5e642;
-  border-radius: 2px;
-  background: rgb(7 9 12 / 92%);
-  color: #fff9b2;
-  font-family: Rajdhani, "Arial Narrow", sans-serif;
-  font-size: 9px;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  line-height: 1;
-  pointer-events: none;
 }
 
 .selectable[data-choice-type="chooseTrigger"]::before,
@@ -319,51 +323,6 @@
   filter: brightness(1.3) saturate(1.3) contrast(1.1);
 }
 
-.validProgramDropTarget {
-  z-index: 270;
-  cursor: crosshair;
-  filter: brightness(1.22) saturate(1.2) contrast(1.06);
-}
-
-.validProgramDropTarget .unit::before {
-  content: "";
-  position: absolute;
-  inset: -7px;
-  border: 2px solid #4ad9ff;
-  border-radius: 5px;
-  pointer-events: none;
-  z-index: 75;
-  box-shadow:
-    0 0 16px rgb(74 217 255 / 82%),
-    0 0 34px rgb(74 217 255 / 36%),
-    inset 0 0 16px rgb(74 217 255 / 22%);
-}
-
-.validProgramDropTarget::after {
-  content: "TARGET";
-  position: absolute;
-  inset: -16px auto auto 50%;
-  transform: translateX(-50%);
-  padding: 2px 7px;
-  border: 1px solid rgb(245 230 66 / 62%);
-  border-radius: 2px;
-  background: rgb(7 9 12 / 88%);
-  color: #4ad9ff;
-  font-family: Rajdhani, sans-serif;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.16em;
-  line-height: 1;
-  pointer-events: none;
-  z-index: 230;
-  opacity: 0.86;
-  text-shadow: 0 0 10px rgb(74 217 255 / 64%);
-}
-
-.validProgramDropTarget.dropOver {
-  filter: brightness(1.32) saturate(1.32) contrast(1.1);
-}
-
 .unit {
   position: relative;
   z-index: 100;
@@ -379,20 +338,111 @@
   position: absolute;
   inset: 0;
   z-index: var(--gear-z-index);
+  /* Hit-testing belongs to the strip (the gear's visible sliver) and to the
+     selectable hit target; the full-size card box overlaps its siblings and
+     would steal hover from whichever gear sits above it. */
+  pointer-events: none;
+}
+
+.gearLayer {
+  display: contents;
+}
+
+.gearRider {
+  position: absolute;
+  inset: 0;
   transform: translateY(var(--gear-offset));
   transform-origin: 50% 90%;
+}
+
+.gearVisual {
+  position: absolute;
+  inset: 0;
   transition: transform 140ms ease;
 }
 
-.stack:has(.gear:hover) .gear,
-.stack:has(.gear:focus-within) .gear {
-  z-index: calc(200 + var(--gear-z-index));
-  transform: translate(var(--gear-fan-x), var(--gear-offset)) rotate(var(--gear-fan-rotation));
+.gearStrip {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 24%;
+  pointer-events: auto;
 }
 
-.gear:hover,
+/* Pointing at a gear's sliver lifts that one gear out of the stack onto the
+   host card, fanned toward its side. The sliver itself never moves, so the
+   cursor keeps hitting the gear it entered. */
+.gear:has(.gearStrip:hover),
 .gear:focus-within {
   z-index: 320;
+}
+
+.gear:has(.gearStrip:hover) .gearVisual {
+  transform: translate(var(--gear-fan-x), calc(-1 * var(--gear-offset)))
+    rotate(var(--gear-fan-rotation));
+}
+
+/* Legend attachments sit in a strip INSIDE the legend card. The old
+   left: 76% + width: 48% column overflowed the card by a quarter of its
+   width and swallowed hover meant for the next legend on the rack. */
+.legendGearStrip {
+  position: absolute;
+  top: 2%;
+  right: 3%;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 34%;
+  height: 96%;
+  pointer-events: none;
+}
+
+.legendGearStrip[data-gear-count="1"] {
+  top: 22%;
+  width: 56%;
+  height: 56%;
+}
+
+.legendGearCard {
+  position: relative;
+  inset: auto;
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  height: auto;
+  transform: none;
+  border: 1px solid #ff4b9c;
+  background: #07090c;
+  box-shadow:
+    0 0 0 1px rgb(7 9 12 / 95%),
+    0 0 8px rgb(255 75 156 / 70%);
+  cursor: pointer;
+  /* Mini cards are their own hover/click targets inside the pointer-transparent
+     `.gear` wrapper. */
+  pointer-events: auto;
+}
+
+.legendGearCard .gearRider,
+.legendGearCard .gearVisual {
+  position: static;
+  inset: auto;
+  transform: none;
+  transition: none;
+}
+
+/* While choosing Gear, expose every card as its own full-size target. */
+.gear.selectable {
+  z-index: calc(200 + var(--gear-z-index));
+}
+
+.stack:has(.gear.selectable) .gearVisual {
+  transform: translate(var(--gear-selection-x), calc(50% - var(--gear-offset)));
+}
+
+.stack:has(.gear.selectable) {
+  z-index: 900;
 }
 
 .gear.selectable {
@@ -441,7 +491,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  top: 0;
+  top: auto;
   height: 26%;
   padding: 0;
   border: 0;
@@ -455,6 +505,16 @@
   outline-offset: 2px;
 }
 
+.legendGearCard .gearHitTarget {
+  inset: 0;
+  height: auto;
+}
+
+.legendGearCard.selectable .gearHitTarget {
+  inset: -3px;
+  height: auto;
+}
+
 /* Stretches the .stack vertically to include the visible gear strips so the
    container reports its true rendered height to layouts that measure it. */
 .spacer {
@@ -463,24 +523,21 @@
 }
 
 /* Cost badge: top-left overlay shown only when the live play cost differs
-   from printed cost. Sized in cqi so it scales with the card container. */
+   from printed cost. Sized as a percentage of the card. */
 .costBadge {
+  --stat-accent: #fcee17;
+
   position: absolute;
-  top: -3%;
-  left: -4%;
+  top: 0;
+  left: 0;
   z-index: 190;
-  display: inline-grid;
-  grid-template-columns: auto auto;
-  align-items: baseline;
-  min-width: 38%;
-  border: 1px solid rgb(245 230 66 / 82%);
-  background:
-    linear-gradient(135deg, rgb(245 230 66 / 28%), rgb(7 9 12 / 92%) 44%), rgb(7 9 12 / 92%);
-  box-shadow:
-    0 0 0 1px rgb(7 9 12 / 92%) inset,
-    0 0 12px rgb(245 230 66 / 42%);
-  color: #fff8a8;
-  font-family: Rajdhani, sans-serif;
+  display: grid;
+  place-items: center;
+  width: 33%;
+  aspect-ratio: 1;
+  border: 0;
+  background: transparent;
+  color: #fff;
   font-variant-numeric: tabular-nums;
   line-height: 1;
   outline: none;
@@ -489,41 +546,55 @@
 }
 
 .costBadge[data-modified="true"] {
-  border-color: rgb(74 217 255 / 86%);
-  background:
-    linear-gradient(135deg, rgb(74 217 255 / 32%), rgb(7 9 12 / 94%) 47%), rgb(7 9 12 / 94%);
-  box-shadow:
-    0 0 0 1px rgb(7 9 12 / 92%) inset,
-    0 0 12px rgb(74 217 255 / 52%),
-    0 0 22px rgb(245 230 66 / 24%);
   cursor: help;
   pointer-events: auto;
 }
 
 .costBadge[data-modified="true"]:focus-visible {
-  box-shadow:
-    0 0 0 2px rgb(7 9 12 / 78%),
-    0 0 0 4px rgb(245 230 66 / 35%),
-    0 0 16px rgb(74 217 255 / 58%);
+  outline: 2px solid #4ad9ff;
+  outline-offset: 2px;
 }
 
-.costLabel {
-  padding: 3px 2px 3px 5px;
-  color: rgb(255 255 255 / 62%);
-  font-size: 7px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+.costBadge[data-color="blue"],
+.powerBadge[data-color="blue"] {
+  --stat-accent: #2cc3e8;
+}
+
+.costBadge[data-color="green"],
+.powerBadge[data-color="green"] {
+  --stat-accent: #00ae4d;
+}
+
+.costBadge[data-color="red"],
+.powerBadge[data-color="red"] {
+  --stat-accent: #ed1c24;
+}
+
+.costBadge[data-color="yellow"],
+.powerBadge[data-color="yellow"] {
+  --stat-accent: #fcee17;
+}
+
+.statFrame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--stat-accent), transparent 48%));
 }
 
 .costValue {
-  min-width: 1.4em;
-  padding: 2px 5px 2px 2px;
-  color: #f5e642;
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 0;
-  text-align: right;
-  text-shadow: 0 0 8px rgb(245 230 66 / 64%);
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  font-family: "Cyberpunk Refinery 25", Rajdhani, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-shadow: 0 0 5px rgb(255 255 255 / 58%);
 }
 
 .costMenu {
@@ -601,9 +672,12 @@
 /* When the card is unaffordable in this state, the parent hand-card slot sets
  * data-affordable="false" — we dim the entire card body and tint the badge. */
 :global([data-testid="hand-card"][data-affordable="false"]) .costBadge {
-  background: rgb(160 80 80 / 95%);
-  border-color: rgb(220 110 110 / 90%);
   color: #fff;
+}
+
+:global([data-testid="hand-card"][data-affordable="false"]) .costBadge .statFrame {
+  opacity: 0.62;
+  filter: grayscale(0.55) drop-shadow(0 0 7px rgb(255 61 94 / 72%));
 }
 
 .abilityRail {
@@ -723,6 +797,18 @@
   --ability-accent: #ff3d5e;
 }
 
+.abilityBadge[data-rule="defeatIfAttacksEndTurn"] {
+  --ability-accent: #ff9f1a;
+}
+
+.abilityBadge[data-rule="canAttackOnPlayedTurnAgainstUnits"] {
+  --ability-accent: #2bd8c0;
+}
+
+.abilityBadge[data-rule="adrenaline"] {
+  --ability-accent: #baff39;
+}
+
 .abilityBadge[data-rule="goSolo"] {
   --ability-accent: #f5e642;
 }
@@ -736,23 +822,20 @@
 }
 
 .powerBadge {
+  --stat-accent: #fcee17;
+
   position: absolute;
-  right: -4%;
-  bottom: -3%;
+  right: 0;
+  bottom: 0;
   z-index: 190;
   box-sizing: border-box;
-  display: inline-grid;
-  grid-template-columns: minmax(0, auto) auto;
-  align-items: baseline;
-  max-width: 50%;
-  border: 1px solid rgb(245 230 66 / 82%);
-  background:
-    linear-gradient(135deg, rgb(245 230 66 / 28%), rgb(7 9 12 / 92%) 44%), rgb(7 9 12 / 92%);
-  box-shadow:
-    0 0 0 1px rgb(7 9 12 / 92%) inset,
-    0 0 12px rgb(245 230 66 / 42%);
-  color: #fff8a8;
-  font-family: Rajdhani, sans-serif;
+  display: grid;
+  place-items: center;
+  width: 46%;
+  aspect-ratio: 120 / 92;
+  border: 0;
+  background: transparent;
+  color: #fff;
   line-height: 1;
   outline: none;
   pointer-events: none;
@@ -760,38 +843,22 @@
 }
 
 .powerBadge[data-modified="true"] {
-  grid-template-columns: minmax(0, auto) auto;
-  border-color: rgb(74 217 255 / 86%);
-  background:
-    linear-gradient(135deg, rgb(74 217 255 / 32%), rgb(7 9 12 / 94%) 47%), rgb(7 9 12 / 94%);
-  box-shadow:
-    0 0 0 1px rgb(7 9 12 / 92%) inset,
-    0 0 12px rgb(74 217 255 / 52%),
-    0 0 22px rgb(245 230 66 / 24%);
   cursor: help;
   pointer-events: auto;
 }
 
-.powerLabel {
-  min-width: 0;
-  overflow: hidden;
-  padding: 3px 2px 3px 4px;
-  color: rgb(255 255 255 / 62%);
-  font-size: 7px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-overflow: clip;
-}
-
 .powerValue {
-  min-width: 1.4em;
-  padding: 2px 4px 2px 1px;
-  color: #f5e642;
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 0;
-  text-align: right;
-  text-shadow: 0 0 8px rgb(245 230 66 / 64%);
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  font-family: "Cyberpunk Blender Pro", Rajdhani, sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-shadow:
+    0 0 3px #fff,
+    0 0 7px color-mix(in srgb, var(--stat-accent), transparent 28%);
 }
 
 .powerMenu {
@@ -810,6 +877,7 @@
     0 0 0 1px rgb(7 9 12 / 88%),
     0 0 14px rgb(74 217 255 / 34%);
   color: rgb(235 248 255 / 88%);
+  font-family: Rajdhani, sans-serif;
   opacity: 0;
   pointer-events: none;
   text-transform: none;
@@ -852,10 +920,8 @@
 }
 
 .powerBadge[data-modified="true"]:focus-visible {
-  box-shadow:
-    0 0 0 1px rgb(7 9 12 / 86%),
-    0 0 0 3px rgb(245 230 66 / 34%),
-    0 0 13px rgb(74 217 255 / 42%);
+  outline: 2px solid #4ad9ff;
+  outline-offset: 2px;
 }
 
 .powerMenuRow {
@@ -888,14 +954,8 @@
     cursor: pointer;
   }
 
-  .powerLabel {
-    padding-left: 7px;
-    font-size: 8px;
-  }
-
   .powerValue {
-    padding-right: 7px;
-    font-size: 16px;
+    font-size: 24px;
   }
 
   .powerMenu {
@@ -994,11 +1054,6 @@
   left: 50%;
   top: 6px;
   transform: translate(-50%, 0);
-}
-
-:global([data-testid="mobile-cyberpunk-board"]) .powerBadge {
-  right: 3%;
-  bottom: 3%;
 }
 
 :global([data-testid="mobile-cyberpunk-board"]) .powerLabel {

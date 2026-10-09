@@ -70,17 +70,30 @@ describe("Event and Stage shared parser grammar", () => {
             conditions: [
               { condition: "donFieldComparison", selfComparison: "lte" },
               {
-                condition: "zoneCount",
-                player: "self",
-                zone: "character",
-                comparison: "eq",
-                value: 0,
-                filters: [
+                condition: "compound",
+                operator: "and",
+                conditions: [
                   {
-                    filter: "trait",
-                    value: "GERMA",
-                    match: "includes",
-                    negate: true,
+                    condition: "zoneCount",
+                    player: "self",
+                    zone: "character",
+                    comparison: "gte",
+                    value: 1,
+                  },
+                  {
+                    condition: "zoneCount",
+                    player: "self",
+                    zone: "character",
+                    comparison: "eq",
+                    value: 0,
+                    filters: [
+                      {
+                        filter: "trait",
+                        value: "GERMA",
+                        match: "includes",
+                        negate: true,
+                      },
+                    ],
                   },
                 ],
               },
@@ -104,7 +117,7 @@ describe("Event and Stage shared parser grammar", () => {
         count: { amount: 1, upTo: true },
         filters: [
           { filter: "cost", comparison: "lte", value: 5 },
-          { filter: "trait", value: "Egghead", match: "includes" },
+          { filter: "trait", value: "Egghead", match: "exact" },
           { filter: "cardCategory", value: "character" },
         ],
       },

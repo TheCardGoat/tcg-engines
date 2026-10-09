@@ -30,7 +30,13 @@ export function maybeEndAttackIfParticipantsLeft(
   const attack = state.G.attackState;
   // Fight/Steal already own their end-of-step cleanup. Ending here would
   // overwrite a completed fight log when the loser leaves the field (9.19).
-  if (!attack || attack.step === "fight" || attack.step === "steal") return false;
+  if (
+    !attack ||
+    attack.step === "fight" ||
+    attack.step === "fightResult" ||
+    attack.step === "steal"
+  )
+    return false;
   if (!attackMustEnd(state, attack)) return false;
 
   const attacker = state.G.cardIndex[attack.attackerId as string];

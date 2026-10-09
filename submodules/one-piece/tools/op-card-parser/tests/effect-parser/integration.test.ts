@@ -160,9 +160,11 @@ describe("real card integration — batch 6", () => {
     );
     expect(effects).toBeDefined();
     const block = effects!.effects![0]!;
-    expect(block.actions).toHaveLength(2);
+    expect(block.actions).toHaveLength(1);
     expect(block.actions[0]).toMatchObject({ action: "returnToHand" });
-    expect(block.actions[1]).toMatchObject({ action: "returnToHand" });
+    expect(block.actions[0]).toMatchObject({
+      targetGroups: [{ count: { amount: 1 } }, { count: { amount: 1 } }],
+    });
   });
 
   test("cannot attack until end of opponent's next turn", () => {
@@ -266,6 +268,7 @@ describe("real card integration — batch 8", () => {
               action: "trashFromDeck",
               player: "self",
               amount: 3,
+              thenRequiresFullAmount: true,
               thenActions: [{ action: "trashThisCard" }],
             },
           ],

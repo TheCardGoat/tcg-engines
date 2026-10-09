@@ -114,6 +114,8 @@ export class MatchRuntime {
     animationCount: number;
   }[] = [];
   public undoBarriers: string[] = [];
+  /** Authoritative state version at the current turn's first clean action. */
+  public turnStartStateID: number | null = null;
   public moveHistory: MoveHistoryEntry[] = [];
   public moveLogHistory: GundamMoveLog[] = [];
   public gameLogHistory: { readonly entry: GameLogEntry; readonly turnNumber: number }[] = [];
@@ -170,6 +172,7 @@ export class MatchRuntime {
     this.commandHistory = [];
     this.undoStack = [];
     this.undoBarriers = [];
+    this.turnStartStateID = this.state.ctx._stateID;
     this.moveHistory = [];
     this.moveLogHistory = [];
     this.gameLogHistory = [];
@@ -210,6 +213,7 @@ export class MatchRuntime {
         animationCount?: number;
       }[];
       undoBarriers?: readonly string[];
+      turnStartStateID?: number | null;
       moveHistory?: readonly MoveHistoryEntry[];
       moveLogHistory?: readonly GundamMoveLog[];
       gameLogHistory?: readonly { readonly entry: GameLogEntry; readonly turnNumber: number }[];
@@ -234,6 +238,7 @@ export class MatchRuntime {
         }))
       : [];
     this.undoBarriers = options.undoBarriers ? [...options.undoBarriers] : [];
+    this.turnStartStateID = options.turnStartStateID ?? null;
     this.moveHistory = options.moveHistory ? [...options.moveHistory] : [];
     this.moveLogHistory = options.moveLogHistory ? [...options.moveLogHistory] : [];
     this.gameLogHistory = options.gameLogHistory ? [...options.gameLogHistory] : [];
@@ -370,6 +375,33 @@ export class MatchRuntime {
         timestamp,
         previousActivePlayerID,
       );
+      if (
+        secretZoneChanged(prevState, nextState) ||
+        nextState.ctx.zones.reveals.nextId > prevState.ctx.zones.reveals.nextId ||
+        logEntries.some((entry) => entry.type === "gundam.effect.deckRevealed") ||
+        nextState.ctx.playerIds.some((id) => {
+          const nextChoice = projectGundamBoardView(
+            nextState,
+            { role: "player", playerId: id },
+            this.staticResources,
+          ).pendingChoice;
+          if (nextChoice?.kind !== "deckLook" || nextChoice.revealedCardIds.length === 0)
+            return false;
+          const previousChoice = projectGundamBoardView(
+            prevState,
+            { role: "player", playerId: id },
+            this.staticResources,
+          ).pendingChoice;
+          return (
+            previousChoice?.kind !== "deckLook" ||
+            nextChoice.revealedCardIds.some(
+              (cardId) => !previousChoice.revealedCardIds.includes(cardId),
+            )
+          );
+        })
+      ) {
+        undoBarriersCollected.push("hidden-information-revealed");
+      }
 
       const moveLogs = projectGundamMoveLogs({
         command: envelope,
@@ -415,11 +447,9 @@ export class MatchRuntime {
       }
 
       // Apply new undo barriers
-      for (const barrier of undoBarriersCollected) {
-        if (!this.undoBarriers.includes(barrier)) {
-          this.undoBarriers.push(barrier);
-        }
-      }
+      // Barriers bound the retained checkpoint stack. They describe this
+      // command, not a permanent ban on undoing future safe commands.
+      this.undoBarriers = [...undoBarriersCollected];
 
       // 9. Push to command history, move history, and update state
       this.commandHistory.push(envelope);
@@ -449,6 +479,11 @@ export class MatchRuntime {
         this.gameLogHistory.push({ entry, turnNumber });
       }
       this.state = nextState;
+      if (nextState.ctx.status.turn !== prevState.ctx.status.turn) {
+        this.turnStartStateID = nextState.ctx._stateID;
+      } else if (undoBarriersCollected.length > 0 || !isUndoable) {
+        this.turnStartStateID = null;
+      }
 
       this.notifyGameEvents(gameEvents);
       this.notifyStateUpdate();
@@ -739,15 +774,46 @@ export class MatchRuntime {
   // ── Undo ───────────────────────────────────────────────────────────────
 
   canUndo(playerId: PlayerId): boolean {
-    if (this.undoBarriers.length > 0) return false;
     const topEntry = this.undoStack.at(-1);
     return topEntry !== undefined && topEntry.playerId === playerId;
   }
 
   undo(playerId: PlayerId): CommandResult | null {
     if (!this.canUndo(playerId)) return null;
+    return this.restoreUndoCheckpoint(playerId, this.undoStack.length - 1, "undo");
+  }
 
-    const entry = this.undoStack.pop()!;
+  canUndoToTurnStart(playerId: PlayerId): boolean {
+    return this.turnStartCheckpointIndex(playerId) !== null;
+  }
+
+  undoToTurnStart(playerId: PlayerId): CommandResult | null {
+    const index = this.turnStartCheckpointIndex(playerId);
+    return index === null ? null : this.restoreUndoCheckpoint(playerId, index, "undoToTurnStart");
+  }
+
+  private turnStartCheckpointIndex(playerId: PlayerId): number | null {
+    if (this.state.ctx.status.activePlayer !== playerId || !this.canUndo(playerId)) return null;
+    const currentTurn = this.state.ctx.status.turn;
+    if (this.turnStartStateID === null) return null;
+    const index = this.undoStack.findIndex(
+      (entry) =>
+        entry.playerId === playerId &&
+        entry.state.ctx._stateID === this.turnStartStateID &&
+        entry.state.ctx.status.turn === currentTurn &&
+        entry.state.ctx.status.activePlayer === playerId,
+    );
+    return index < 0 ? null : index;
+  }
+
+  private restoreUndoCheckpoint(
+    playerId: PlayerId,
+    index: number,
+    move: "undo" | "undoToTurnStart",
+  ): CommandResult {
+    const entries = this.undoStack.splice(index);
+    const entry = entries[0]!;
+
     // Undo is still an authoritative transition. Restoring the checkpoint
     // must not rewind the externally-observed state version, otherwise a
     // stale client can submit a command against a version it saw before the
@@ -769,16 +835,23 @@ export class MatchRuntime {
       { enablePatches: true },
     );
     this.state = restoredState;
-    this.commandHistory.pop();
-    this.moveHistory.pop();
-    if (entry.moveLogCount > 0) {
-      this.moveLogHistory.splice(-entry.moveLogCount, entry.moveLogCount);
+    this.undoBarriers = [];
+    if (entry.state.ctx._stateID === this.turnStartStateID) {
+      this.turnStartStateID = nextStateID;
     }
-    if (entry.gameLogCount > 0) {
-      this.gameLogHistory.splice(-entry.gameLogCount, entry.gameLogCount);
+    this.commandHistory.splice(-entries.length, entries.length);
+    this.moveHistory.splice(-entries.length, entries.length);
+    const moveLogCount = entries.reduce((count, item) => count + item.moveLogCount, 0);
+    const gameLogCount = entries.reduce((count, item) => count + item.gameLogCount, 0);
+    const animationCount = entries.reduce((count, item) => count + item.animationCount, 0);
+    if (moveLogCount > 0) {
+      this.moveLogHistory.splice(-moveLogCount, moveLogCount);
     }
-    if (entry.animationCount > 0) {
-      this.packetAnimationHistory.splice(-entry.animationCount, entry.animationCount);
+    if (gameLogCount > 0) {
+      this.gameLogHistory.splice(-gameLogCount, gameLogCount);
+    }
+    if (animationCount > 0) {
+      this.packetAnimationHistory.splice(-animationCount, animationCount);
     }
 
     this.notifyStateUpdate();
@@ -791,8 +864,8 @@ export class MatchRuntime {
       gameEvents: [],
       logEntries: [],
       processedCommand: {
-        commandID: `undo-${playerId}-${nextStateID}`,
-        move: "undo",
+        commandID: `${move}-${playerId}-${nextStateID}`,
+        move,
         prevStateID: nextStateID - 1,
         actorRole: "player",
         args: {},
@@ -1216,6 +1289,23 @@ export class MatchRuntime {
       status: statusAPI,
     };
   }
+}
+
+function secretZoneChanged(before: MatchState, after: MatchState): boolean {
+  const prefixes = Object.values(gundamZones)
+    .filter((zone) => zone.visibility === "secret")
+    .map((zone) => `${zone.id}:`);
+  const beforeZones = before.ctx.zones.private.zoneCards;
+  const afterZones = after.ctx.zones.private.zoneCards;
+  const keys = new Set([...Object.keys(beforeZones), ...Object.keys(afterZones)]);
+  for (const key of keys) {
+    if (!prefixes.some((prefix) => key.startsWith(prefix))) continue;
+    const oldCards = beforeZones[key] ?? [];
+    const newCards = afterZones[key] ?? [];
+    if (oldCards.length !== newCards.length || oldCards.some((id, index) => id !== newCards[index]))
+      return true;
+  }
+  return false;
 }
 
 // ── Internal error class ─────────────────────────────────────────────────────

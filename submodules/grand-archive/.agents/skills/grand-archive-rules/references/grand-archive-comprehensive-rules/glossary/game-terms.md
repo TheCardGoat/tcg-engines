@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/glossary/game-terms"
+  relation: "current_index"
+---
+
 # Game Terms
 
 #### Activate/Activating

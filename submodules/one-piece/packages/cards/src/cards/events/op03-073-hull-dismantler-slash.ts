@@ -21,7 +21,7 @@ export const op03HullDismantlerSlash073: EventCard = {
   rarity: "C",
   setId: "OP03",
   cost: 1,
-  traits: ["Water Seven The Franky Family"],
+  traits: ["Water Seven", "The Franky Family"],
   effect:
     "[Main] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your Leader has the [Water Seven] type, K.O. up to 1 of your opponent's Characters with a cost of 2 or less. [Trigger] Activate this card's [Main] effect.",
   effects: {
@@ -55,7 +55,7 @@ export const op03HullDismantlerSlash073: EventCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Water Seven",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

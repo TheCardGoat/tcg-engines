@@ -11,6 +11,37 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP14-079 Crocodile", () => {
+  test.each(["EB01-051", "OP03-122", "OP03-057", "OP06-092", "OP03-123"])(
+    "allows protected targets but prevents removal by %s",
+    (source) => {
+      const engine = OnePieceTestEngine.create(
+        {
+          leaderCardId: op14eb04CrocodileOp14079079,
+          hand: [source],
+          activeDon: 10,
+          deck: ["EB01-025", "EB01-018", "EB01-005"],
+        },
+        { character: ["EB01-005"] },
+      );
+      const targetId = engine.findCardInZone("north", "character", "EB01-005");
+      engine.playCard(source, "south");
+      if (source === "EB01-051")
+        engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+      if (source === "OP06-092")
+        engine.resolveDecision("effectActionChoice", { optionId: "0" }, "south");
+      const step = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+      if (step?.kind !== "selectEntity") throw new Error("Expected removal target.");
+      expect(step.candidates.map((candidate) => candidate.ref.id)).toContain(targetId);
+      engine.resolveDecision("effectTargetSelection", { selectedIds: [targetId] }, "south");
+      const view = engine.getView("south");
+      expect(view.players.north.characters.some((card) => card?.instanceId === targetId)).toBe(
+        true,
+      );
+      expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(targetId);
+      expect(view.prompts).toHaveLength(0);
+    },
+  );
+
   test("K.O.s a Baroque Works cost, reduces an opposing Character's cost, and may mill two", () => {
     const engine = OnePieceTestEngine.create(
       {
@@ -36,6 +67,14 @@ describe("OP14-079 Crocodile", () => {
       0,
     );
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(
+      engine.expectFailure({
+        type: "activateEffect",
+        seat: "south",
+        sourceInstanceId: engine.leader("south"),
+        trigger: "activateMain",
+      }).accepted,
+    ).toBe(false);
   });
 
   test("prevents its own effects from removing opposing Characters", () => {
@@ -59,9 +98,9 @@ describe("OP14-079 Crocodile", () => {
     engine.declareAttack(attackerId, spiderMiceId, "north");
     const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     if (target?.kind !== "selectEntity") throw new Error("Expected Spider Mice's K.O. target.");
-    expect(target.candidates).toEqual([]);
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(protectedId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(protectedId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [protectedId] }, "south");
 
     expect(
       engine.getView("south").players.north.characters.map((card) => card?.instanceId),
@@ -96,5 +135,31 @@ describe("OP14-079 Crocodile", () => {
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("finishes cost reduction and milling before the payment's On K.O. retrieval", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op14eb04CrocodileOp14079079,
+        character: ["OP14-093"],
+        deck: ["ST02-002", "ST02-012", "ST02-002"],
+      },
+      { character: [op14eb04Diamante066] },
+    );
+    const payment = engine.findCardInZone("south", "character", "OP14-093");
+    const target = engine.findCardInZone("north", "character", op14eb04Diamante066);
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    engine.accept("south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(engine.getView("south").players.south.handCount).toBe(0);
+    engine.resolveDecision("effectActionChoice", { optionId: "0" }, "south");
+    expect(engine.getView("south").players.south.deckCount).toBe(1);
+    expect(
+      engine.getView("south").players.north.characters.find((card) => card?.instanceId === target)
+        ?.cost,
+    ).toBe(0);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [payment] }, "south");
+    expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).toContain(
+      payment,
+    );
   });
 });

@@ -32,6 +32,7 @@ export const stitchCarefreeSnowboarderP3Promo: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_adca393d2367497aac99f2c4dd29b8ce",
+    tcgPlayer: "658221",
   },
   text: [
     {

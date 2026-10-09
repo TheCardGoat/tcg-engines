@@ -23,7 +23,7 @@ export const op10Nami013: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Straw Hat Crew Punk Hazard"],
+  traits: ["Punk Hazard", "Straw Hat Crew"],
   attribute: "strike",
   i18n: op10Nami013I18n,
 };

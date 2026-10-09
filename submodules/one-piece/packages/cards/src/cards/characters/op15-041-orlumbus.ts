@@ -23,7 +23,7 @@ export const op15Orlumbus041: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Dressrosa Yonta Maria Fleet"],
+  traits: ["Dressrosa", "Yonta Maria Fleet"],
   attribute: "strike",
   effect:
     "[On K.O.] Draw 1 card.\n[Activate: Main] [Once Per Turn] You may place 1 of your Characters at the bottom of the owner's deck: This Character gains [Rush] during this turn.",

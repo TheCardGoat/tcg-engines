@@ -1,42 +1,32 @@
-# Lorcana Submodule
+# Lorcana
 
-This submodule owns Lorcana cards, engine behavior, the legacy simulator,
-server adapters, replay tooling, and Lorcana-specific agent skills.
+Owns cards, engine, the dedicated simulator, runtime adapter, and replay tools.
+For rules-facing work, use `.agents/skills/lorcana-rules/SKILL.md`. Single-card
+work uses `lorcana-cards`; lookup and test guidance are in `lorcana-find-card`
+and `lorcana-test-generation`.
 
-Before rules-facing work, load
-`.agents/skills/lorcana-rules/references/glossary.md` and then
-`.agents/skills/lorcana-rules/SKILL.md`. For card work, also use the local
-`lorcana-find-card`, `lorcana-cards`, and `lorcana-test-generation` skills.
+## Main paths
 
-## Ownership
+Under `packages/lorcana/`:
 
-- `packages/lorcana/lorcana-engine/src` - engine moves, resolutions, effects,
-  prompts, automation, and tests.
-- `packages/lorcana/lorcana-cards/src` - card definitions and generated exports.
-- `packages/lorcana/lorcana-types/src` - shared Lorcana types.
-- `packages/lorcana/lorcana-simulator/src` - Svelte simulator, devtools,
-  fixtures, and local player flows.
-- `packages/lorcana/lorcana-server-adapter/src` - platform runtime adapter.
-- `packages/tools/replay-cli/src` - replay download and inspection tooling.
+- `lorcana-engine`: moves, effects, targeting, prompts, and automation.
+- `lorcana-cards` and `lorcana-types`: definitions and native types.
+- `lorcana-simulator`: Svelte UI, devtools, fixtures, and player flows.
+- `lorcana-server-adapter`: platform runtime adapter.
 
-Shared platform and multi-game simulator exposure belongs in sibling
-workspaces. Map Lorcana concepts through `../agnostic-simulator` contracts;
-keep Lorcana rules and engine semantics here.
+`packages/tools/replay-cli` owns replay inspection. Use `replay-debugging` for
+replay-backed reports; do not infer events missing from the evidence.
 
-## Triage
+Reuse simulator regression fixtures in
+`packages/lorcana/lorcana-simulator/src/lib/features/simulator-devtools/fixtures/regressions/`
+and the `/tests/regressions` route when they cover the reported state.
 
-- Start player reports from the exact replay/game id and turn when available.
-- Use `replay-debugging` for production evidence before changing behavior.
-- For card-specific reports, locate the exact definition and similar cards
-  before changing shared engine primitives.
-- Treat unavailable or malformed replay data as an evidence limit; do not infer
-  missing events.
-- For simulator repros, reuse the registry at
-  `packages/lorcana/lorcana-simulator/src/lib/features/simulator-devtools/fixtures/regressions/`
-  and its `/tests/regressions` route instead of creating parallel fixtures.
+## Validation scope
 
-## Validation
-
-Run the narrow card, engine, adapter, or simulator check first. From this
-workspace use `vp check`, `vp test`, or `pnpm run ci-check` as appropriate.
-From the integration root use `bun run ci:lorcana:check`.
+- Card and engine work uses focused package tests and relevant type checks.
+  Tests that need real cards plus the engine can run in the simulator's
+  `src/testing/` harness without starting a browser or dev server.
+- For UI work, run only `lorcana-simulator` and use its local devtools or
+  regression fixtures. See that package's guide for commands.
+- Add platform services only when the change requires a hosted flow or service
+  integration. Card and engine changes do not require a hosted-match smoke test.

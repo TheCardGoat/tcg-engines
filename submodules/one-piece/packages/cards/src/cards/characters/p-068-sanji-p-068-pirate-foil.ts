@@ -33,7 +33,7 @@ export const prb02SanjiP068PirateFoil068: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 2000,
-  traits: ["The Vinsmoke Family Kingdom of GERMA"],
+  traits: ["Kingdom of GERMA", "The Vinsmoke Family"],
   attribute: "strike",
   effect:
     "[Activate:Main] You may trash this Character: Look at 5 cards from the top of your deck and place them at the top or bottom of the deck in any order.",

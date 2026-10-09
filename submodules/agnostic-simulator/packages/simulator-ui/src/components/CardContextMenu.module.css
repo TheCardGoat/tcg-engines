@@ -16,6 +16,7 @@
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   width: min(330px, calc(100vw - var(--card-context-safe-inline)));
+  max-width: var(--radix-popover-content-available-width, calc(100vw - var(--card-context-safe-inline)));
   max-height: min(560px, var(--card-context-available-height));
   isolation: isolate;
   overflow-x: hidden;
@@ -42,13 +43,13 @@
 
 .mobileDrawerContent {
   max-width: 100dvw;
-  overflow: hidden;
   border-radius: 14px 14px 0 0;
   background: transparent;
 }
 
 .mobileDrawerBody {
-  height: 100%;
+  height: auto;
+  min-height: 0;
   overflow: hidden;
   padding: 0;
 }
@@ -65,8 +66,6 @@
 .mobileSurface,
 .mobileSurface[data-mode="detailed"] {
   width: 100%;
-  height: 100%;
-  max-height: none;
   border-right: 0;
   border-bottom: 0;
   border-left: 0;
@@ -175,20 +174,23 @@
 
 .closeButton {
   display: grid;
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
+  flex: none;
   place-items: center;
-  border: 0;
-  border-radius: 9px;
-  background: transparent;
-  color: var(--card-context-muted);
+  padding: 0;
+  border: 1px solid var(--board-border);
+  border-radius: 7px;
+  background: var(--board-surface-soft);
+  color: var(--board-text);
   cursor: pointer;
 }
 
 .closeButton:hover,
 .closeButton:focus-visible {
-  background: var(--pill-bg);
-  color: var(--board-text);
+  border-color: var(--game-accent);
+  outline: 0;
+  color: var(--game-accent);
 }
 
 .scrollRegion {
@@ -345,6 +347,58 @@
   cursor: help;
 }
 
+.relatedGroup {
+  display: grid;
+  gap: 5px;
+  width: 100%;
+}
+
+.relatedLabel {
+  color: var(--card-context-muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.relatedCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(145px, 100%), 1fr));
+  gap: 7px;
+}
+
+.relatedCard {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  min-height: 52px;
+  padding: 5px;
+  border: 1px solid var(--card-context-border);
+  border-radius: 8px;
+  background: var(--board-surface-soft);
+  color: var(--board-text);
+  font-size: 11px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.relatedCard:focus-visible {
+  outline: 2px solid var(--game-accent);
+  outline-offset: 2px;
+}
+
+.relatedCard img {
+  width: 30px;
+  height: auto;
+  aspect-ratio: 5 / 7;
+  object-fit: contain;
+}
+
+.relatedCard span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .relationshipTooltip {
   position: absolute;
   z-index: 2;
@@ -427,13 +481,6 @@
   letter-spacing: 0.005em;
   line-height: 1.5;
   white-space: pre-line;
-}
-
-.rules[data-collapsed="true"] p {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
 }
 
 .detailsToggle {
@@ -685,15 +732,17 @@
   }
 
   .header {
-    grid-template-columns: 4px minmax(0, 1fr) repeat(3, 44px);
+    grid-template-columns: 4px minmax(0, 1fr) repeat(3, auto);
+    align-items: start;
   }
 
   .frameMark {
-    grid-row: 1 / span 2;
+    grid-row: 1;
   }
 
   .identity {
-    grid-column: 2 / -1;
+    grid-column: 2;
+    grid-row: 1;
   }
 
   .identity p {
@@ -719,7 +768,7 @@
   .modeToggle,
   .closeButton,
   .previewToggle {
-    grid-row: 2;
+    grid-row: 1;
     width: 44px;
     height: 44px;
   }

@@ -131,3 +131,25 @@ describe("EB03-026 Boa Hancock", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });
+
+test("FAQ: Hancock can bottom herself and still give DON to both recipients", () => {
+  const e = OnePieceTestEngine.create({
+    character: ["EB03-026", "EB01-005"],
+    restedDon: 2,
+    deck: ["EB01-025", "EB01-018"],
+  });
+  const source = e.findCardInZone("south", "character", "EB03-026");
+  const recipient = e.findCardInZone("south", "character", "EB01-005");
+  e.activateEffect(source, "activateMain", "south");
+  e.asSouth().acceptOptional();
+  e.resolveDecision("effectCostReturnCharacterToDeck", { selectedIds: [source] }, "south");
+  e.resolveDecision("effectGiveDonCount", { optionId: "1" }, "south");
+  e.resolveDecision("effectGiveDonCount", { optionId: "1" }, "south");
+  const view = e.getView("south");
+  expect(view.players.south.leader.attachedDon).toBe(1);
+  expect(view.players.south.characters.find((c) => c?.instanceId === recipient)?.attachedDon).toBe(
+    1,
+  );
+  expect(view.players.south.characters.some((c) => c?.instanceId === source)).toBe(false);
+  expect(view.players.south.deckCount).toBe(3);
+});

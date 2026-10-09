@@ -65,6 +65,10 @@ export const aeneanFluxGenerator: GrandArchiveCard<GrandArchiveAbilityDefinition
                     },
                     {
                       kind: "subtype",
+                      oneOf: ["AENEAN"],
+                    },
+                    {
+                      kind: "subtype",
                       oneOf: ["SPELL"],
                     },
                   ],

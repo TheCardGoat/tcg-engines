@@ -31,6 +31,15 @@ export const op16VanAugur103: CharacterCard = {
   effects: {
     effects: [
       {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "onKo",
+          },
+        ],
+      },
+      {
         trigger: "onKo",
         conditions: [
           {
@@ -40,7 +49,7 @@ export const op16VanAugur103: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Blackbeard Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

@@ -3,7 +3,7 @@ import { describe, expect, test } from "vite-plus/test";
 import { buildCardEffects } from "../../src/effect-parser/index.ts";
 
 describe("OP04-080 through OP04-088 parser regressions", () => {
-  test("keeps Gyats's inclusive Dressrosa target", () => {
+  test("keeps Gyats's exact Dressrosa target", () => {
     expect(
       buildCardEffects(
         "[On Play] Up to 1 of your [Dressrosa] type Characters can also attack active Characters during this turn.",
@@ -19,7 +19,7 @@ describe("OP04-080 through OP04-088 parser regressions", () => {
                 player: "self",
                 zones: ["character"],
                 count: { amount: 1, upTo: true },
-                filters: [{ filter: "trait", value: "Dressrosa", match: "includes" }],
+                filters: [{ filter: "trait", value: "Dressrosa", match: "exact" }],
               },
               duration: "thisTurn",
             },
@@ -192,7 +192,7 @@ describe("OP04-080 through OP04-088 parser regressions", () => {
     });
   });
 
-  test("keeps both Suleiman triggers behind an inclusive Dressrosa Leader gate", () => {
+  test("keeps both Suleiman triggers behind an exact Dressrosa Leader gate", () => {
     const actions = [
       {
         action: "modifyCost",
@@ -214,12 +214,12 @@ describe("OP04-080 through OP04-088 parser regressions", () => {
       effects: [
         {
           trigger: "onPlay",
-          conditions: [{ condition: "leaderTrait", trait: "Dressrosa", match: "includes" }],
+          conditions: [{ condition: "leaderTrait", trait: "Dressrosa", match: "exact" }],
           actions,
         },
         {
           trigger: "whenAttacking",
-          conditions: [{ condition: "leaderTrait", trait: "Dressrosa", match: "includes" }],
+          conditions: [{ condition: "leaderTrait", trait: "Dressrosa", match: "exact" }],
           actions,
         },
       ],

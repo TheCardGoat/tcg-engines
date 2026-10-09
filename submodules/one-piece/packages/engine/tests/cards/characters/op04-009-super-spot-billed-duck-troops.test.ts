@@ -76,7 +76,7 @@ describe("OP04-009 Super Spot-Billed Duck Troops", () => {
     engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
     engine.declareAttack(troopsId, targetId, "south");
 
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    // No usable Counter remains, so the Counter Step ends automatically.
     const view = engine.getView("south");
     expect(view.players.south.leader).toMatchObject({ rested: true, power: 5000 });
     expect(view.prompts).toHaveLength(0);

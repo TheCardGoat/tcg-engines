@@ -44,7 +44,23 @@ describe("OP07-048 Donquixote Doflamingo", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("places an ineligible revealed top card at the bottom of the deck", () => {
+  test("bottom-decks an eligible revealed card when the player declines to play it", () => {
+    const engine = OnePieceTestEngine.create({
+      character: [op07DonquixoteDoflamingo048],
+      deck: [op07EdwardWeevil039, eb01Doma005],
+      activeDon: 2,
+    });
+    const sourceId = engine.findCardInZone("south", "character", op07DonquixoteDoflamingo048);
+    const revealedId = engine.findCardInZone("south", "deck", op07EdwardWeevil039);
+    engine.activateEffect(sourceId, "activateMain", "south");
+    engine.resolveDecision("effectPlaySelection", { selectedIds: [] }, "south");
+    // Physical hidden-zone order distinguishes decline from a failed condition.
+    expect(engine.getState().players.south.deck.at(-1)).toBe(revealedId);
+    expect(engine.getView("south").players.south.characters.filter(Boolean)).toHaveLength(1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("keeps an ineligible revealed card on top of the deck", () => {
     const engine = OnePieceTestEngine.create({
       character: [op07DonquixoteDoflamingo048],
       deck: [eb01Doma005, eb01Fourtricks025],
@@ -55,7 +71,7 @@ describe("OP07-048 Donquixote Doflamingo", () => {
 
     engine.activateEffect(doflamingoId, "activateMain", "south");
 
-    expect(engine.getState().players.south.deck.at(-1)).toBe(revealedId);
+    expect(engine.getState().players.south.deck[0]).toBe(revealedId);
     expect(
       engine.getView("north").logs.some((entry) => entry.message.includes("reveals Doma")),
     ).toBe(true);

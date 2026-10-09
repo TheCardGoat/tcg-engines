@@ -16,6 +16,11 @@ export type {
 export { AIPlayer, type AIPlayerOptions } from "./ai-player.ts";
 export { buildDecisionContext } from "./decision-context.ts";
 export {
+  createExpertOracleStrategy,
+  expertOracleStrategy,
+  type ExpertOracleOptions,
+} from "./search/expert-oracle.ts";
+export {
   runAutoMatch,
   type RunAutoMatchOptions,
   type AutoMatchResult,

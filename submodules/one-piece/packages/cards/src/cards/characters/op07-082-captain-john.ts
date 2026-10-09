@@ -23,7 +23,7 @@ export const op07CaptainJohn082: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Thriller Bark Pirates Former Rocks Pirates"],
+  traits: ["Thriller Bark Pirates", "Former Rocks Pirates"],
   attribute: "slash",
   effect:
     "[On Play] Trash 2 cards from the top of your deck and give up to 1 of your opponent's Characters -1 cost during this turn.",

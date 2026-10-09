@@ -3,6 +3,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import type { CardEffects, EventCard, StageCard } from "@tcg/op-types";
 import { buildCardEffects } from "../src/effect-parser/index.ts";
+import { assertTriggerPreserved } from "../src/trigger-preservation.ts";
 import { joinPrintedAbilityText } from "../src/printed-text.ts";
 
 type AuditedCard = EventCard | StageCard;
@@ -128,6 +129,12 @@ const file = findCardFile(options.cardType, options.cardId);
 const card = await loadCard(file, options.cardType, options.cardId);
 const text = printedText(card);
 const generated = text ? buildCardEffects(text) : undefined;
+assertTriggerPreserved({
+  cardId: options.cardId,
+  printedText: text,
+  current: card.effects,
+  generated,
+});
 
 console.log(`${options.cardId} ${card.name}`);
 console.log(`definition: ${file}`);

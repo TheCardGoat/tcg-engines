@@ -29,6 +29,22 @@ describe("OP12-039 Luffy Is the Man Who Will Become the King of Pirates!!!", () 
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
+  test("Main does not ready a differently named Leader", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: "ST01-001",
+        hand: [op12LuffyIsTheManWhoWillBecomeTheKingOfPirates039],
+        activeDon: 3,
+      },
+      {},
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
+    engine.playCard(op12LuffyIsTheManWhoWillBecomeTheKingOfPirates039);
+    expect(engine.getView("south").players.south.leader.rested).toBe(true);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("Life Trigger gives the chosen Leader +1000 for the turn", () => {
     const engine = OnePieceTestEngine.create(
       { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },

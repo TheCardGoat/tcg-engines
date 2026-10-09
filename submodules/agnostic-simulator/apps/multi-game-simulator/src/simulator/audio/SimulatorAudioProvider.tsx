@@ -6,10 +6,11 @@ import {
   disposeSimulatorSoundService,
   initSimulatorSoundService,
   playSimulatorSound,
+  setSimulatorSoundPack,
   setSimulatorSoundVolume,
-} from "./sound-service";
-import { collectScheduledSimulatorAudioCues } from "./scheduler";
-import { simulatorAudioDebug } from "./debug";
+} from "@tcg/simulator-presentation/audio/sound-service";
+import { collectScheduledSimulatorAudioCues } from "@tcg/simulator-presentation/audio/scheduler";
+import { simulatorAudioDebug } from "@tcg/simulator-presentation/audio/debug";
 
 export interface SimulatorAudioContextValue {
   readonly playCue: (cue: SimulatorAudioCueId) => void;
@@ -56,6 +57,24 @@ export function SimulatorAudioProvider({ children }: { readonly children: React.
       cancelScheduledCues();
     }
   }, [cancelScheduledCues, settings.soundVolume]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setSimulatorSoundPack(settings.soundPack).catch((error: unknown) => {
+      if (cancelled) return;
+      simulatorAudioDebug("sound-pack-load-failed", {
+        pack: settings.soundPack,
+        error: String(error),
+      });
+      // A pack that cannot be fetched must not leave the board silent.
+      if (settings.soundPack !== "original") {
+        void setSimulatorSoundPack("original").catch(() => undefined);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [settings.soundPack]);
 
   const playCue = useCallback((cue: SimulatorAudioCueId) => {
     playSimulatorSound(cue);

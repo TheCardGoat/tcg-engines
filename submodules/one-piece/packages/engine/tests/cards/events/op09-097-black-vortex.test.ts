@@ -64,4 +64,41 @@ describe("OP09-097 Black Vortex", () => {
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("FAQ: Counter negation preserves another card's power modifier", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP09-013"], activeDon: 5 },
+      { hand: ["OP09-097"], activeDon: 2, life: 3 },
+    );
+    e.asSouth().play("OP09-013");
+    e.asSouth().chooseTargets(e.leader("south"));
+    expect(e.getView("south").players.south.leader.power).toBe(6000);
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.resolveDecision(
+      "battleCounter",
+      { selectedIds: [e.findCardInZone("north", "hand", "OP09-097")] },
+      "north",
+    );
+    e.asNorth().chooseTargets(e.leader("south"));
+    expect(e.getView("south").players.south.leader.power).toBe(2000);
+    expect(e.getView("north").players.north.lifeCount).toBe(3);
+  });
+  test("FAQ: negated Nami loses instead of winning when own deck reaches zero", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP03-040", hand: ["P-096"], deck: ["ST02-012"], activeDon: 2 },
+      { hand: ["OP09-097"], activeDon: 2 },
+    );
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.resolveDecision(
+      "battleCounter",
+      { selectedIds: [e.findCardInZone("north", "hand", "OP09-097")] },
+      "north",
+    );
+    e.asNorth().chooseTargets(e.leader("south"));
+    e.asSouth().play("P-096");
+    expect(e.getView("south")).toMatchObject({
+      status: "finished",
+      winner: "north",
+      finishReason: "emptyDeck",
+    });
+  });
 });

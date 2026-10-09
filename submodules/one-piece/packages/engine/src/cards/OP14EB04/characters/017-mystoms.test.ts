@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op14eb04Mystoms017 } from "../../../../../cards/src/cards/characters/eb04-017-mystoms.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("EB04-017 Mystoms", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op14eb04Mystoms017);
-  });
-});

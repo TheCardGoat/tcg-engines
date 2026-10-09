@@ -73,7 +73,32 @@ export const cosmicBolt: GrandArchiveCard<GrandArchiveAbilityDefinition, "card">
               kind: "bound",
               binding: "target-1",
             },
-            amount: 4,
+            amount: {
+              kind: "calculate",
+              operator: "add",
+              operands: [
+                4,
+                {
+                  kind: "calculate",
+                  operator: "multiply",
+                  operands: [
+                    2,
+                    {
+                      kind: "count",
+                      collection: {
+                        zones: ["graveyard", "banishment"],
+                        player: "controller",
+                        filter: {
+                          kind: "name",
+                          value: "Cosmic Bolt",
+                          match: "exact",
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
           },
         },
       ],

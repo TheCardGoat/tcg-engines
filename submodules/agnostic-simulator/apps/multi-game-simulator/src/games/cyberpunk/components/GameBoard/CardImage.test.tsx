@@ -7,7 +7,7 @@ import type { ReactNode } from "react";
 import { CardPreviewProvider, useCardPreview } from "../CardPreview/CardPreviewContext";
 import { theme } from "../../theme";
 import { CardInspectProvider, useCardInspect } from "./CardInspectContext";
-import { CardImage } from "./CardImage";
+import { CardBackProvider, CardImage, LEGEND_CARD_BACK } from "./CardImage";
 
 const TEST_IMAGE_URL =
   "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/113.webp";
@@ -71,6 +71,28 @@ function LeakedHiddenInspectRequest() {
   );
 }
 
+function PreviewWithAttachments() {
+  const { show } = useCardPreview();
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        show({
+          imageUrl: TEST_IMAGE_URL,
+          face: "public",
+          alt: "Host Unit",
+          attachments: [
+            { imageUrl: "https://example.test/gear.webp", name: "Kiroshi Optics", face: "public" },
+            { imageUrl: "https://private.invalid/gear.webp", name: "Hidden Gear", face: "hidden" },
+          ],
+        })
+      }
+    >
+      Inspect equipped card
+    </button>
+  );
+}
+
 function renderCardImage(underlay?: ReactNode) {
   let optionClicks = 0;
   const view = render(
@@ -108,6 +130,24 @@ describe("Cyberpunk CardImage preview and inspect", () => {
     vi.useRealTimers();
   });
 
+  test("uses the owner's chosen back while Legend backs remain distinct", () => {
+    setHoverCapability(false);
+    const selected =
+      "https://cdn.tcg.online/public/thecardgoat/home/card-back/v3/card-back-400.webp";
+    const view = render(
+      <CardBackProvider urls={{ player: selected }}>
+        <CardImage faceDown side="player" alt="Player deck" />
+        <CardImage faceDown side="opponent" alt="Rival deck" />
+        <CardImage faceDown side="player" cardType="legend" alt="Legend" />
+      </CardBackProvider>,
+      { wrapper: Providers },
+    );
+    const images = view.container.querySelectorAll("img");
+    expect(images[0]?.getAttribute("src")).toBe(selected);
+    expect(images[1]?.getAttribute("src")).toContain("/cyberpunk/cards/back/card-back.webp");
+    expect(images[2]?.getAttribute("src")).toBe(LEGEND_CARD_BACK);
+  });
+
   test("never mounts leaked private art or opens previews for a face-down card", () => {
     setHoverCapability(true);
     const { container, getByAltText } = render(
@@ -126,7 +166,11 @@ describe("Cyberpunk CardImage preview and inspect", () => {
 
     expect(container.innerHTML).not.toContain("private.invalid");
     expect(container.innerHTML).not.toContain("Opponent Secret");
-    expect(document.body.querySelector('[class*="_preview_"][class*="_visible_"]')).toBeNull();
+    expect(
+      [...document.body.querySelectorAll("img")].some((img) =>
+        (img.getAttribute("alt") ?? "").includes("Opponent Secret"),
+      ),
+    ).toBe(false);
     expect(document.body.querySelector('[data-testid="card-inspect-modal"]')).toBeNull();
   });
 
@@ -155,16 +199,21 @@ describe("Cyberpunk CardImage preview and inspect", () => {
     setHoverCapability(true);
     const { imageWrap } = renderCardImage();
 
+    // The preview must surface the hovered card's own art: a SECOND img with
+    // the card's alt appears while hovering (the first is the card itself).
+    const altCount = () =>
+      [...document.body.querySelectorAll("img")].filter((img) =>
+        (img.getAttribute("alt") ?? "").includes("Evelyn Parker - Scheming Siren"),
+      ).length;
+
     fireEvent.mouseEnter(imageWrap);
     await waitFor(() => {
-      expect(
-        document.body.querySelector('[class*="_preview_"][class*="_visible_"]'),
-      ).not.toBeNull();
+      expect(altCount()).toBeGreaterThan(1);
     });
 
     fireEvent.mouseLeave(imageWrap);
     await waitFor(() => {
-      expect(document.body.querySelector('[class*="_preview_"][class*="_visible_"]')).toBeNull();
+      expect(altCount()).toBe(1);
     });
   });
 
@@ -179,6 +228,22 @@ describe("Cyberpunk CardImage preview and inspect", () => {
 
     expect(document.body.querySelector('[class*="_preview_"][class*="_visible_"]')).toBeNull();
     expect(optionClicks()).toBe(0);
+  });
+
+  test("shows public attached gear when inspecting a card on touch devices", async () => {
+    setHoverCapability(false);
+    const { getByRole } = render(<PreviewWithAttachments />, { wrapper: Providers });
+
+    fireEvent.click(getByRole("button", { name: "Inspect equipped card" }));
+    const gear = await waitFor(() =>
+      getByRole("button", { name: "View attached gear Kiroshi Optics" }),
+    );
+    expect(document.body.innerHTML).not.toContain("private.invalid");
+    expect(document.body.innerHTML).not.toContain("Hidden Gear");
+    fireEvent.click(gear);
+    expect(
+      document.querySelector('[data-testid="card-inspect-image"] img')?.getAttribute("src"),
+    ).toBe("https://example.test/gear.webp");
   });
 
   test("closes inspect from its own outside tap layer", async () => {

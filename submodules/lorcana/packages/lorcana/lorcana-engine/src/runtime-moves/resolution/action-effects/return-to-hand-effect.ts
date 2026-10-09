@@ -65,6 +65,20 @@ function moveCardToOwnerHand(
     zone: "hand",
     playerId: ownerId,
   });
+  if (typeof zoneKey === "string" && isDiscardZoneKey(zoneKey)) {
+    emitTriggeredLorcanaEvent(
+      ctx,
+      "cardLeftDiscard",
+      { cardId, ownerId, toZone: "hand" },
+      {
+        event: "leave-discard",
+        playerId: ownerId,
+        subjectCardId: cardId,
+        fromZone: "discard",
+        toZone: "hand",
+      },
+    );
+  }
 }
 
 export function resolveReturnToHandEffect(

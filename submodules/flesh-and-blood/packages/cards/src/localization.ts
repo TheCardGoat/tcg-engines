@@ -97,7 +97,7 @@ function localizeAbility(
   let localized: FleshAndBloodAbility = {
     ...ability,
     text: nonempty(override?.text) ?? nonempty(locale.text) ?? humanizeSemanticKey(path, "Ability"),
-    displayName: nonempty(override?.displayName) ?? humanizeSemanticKey(path, "Ability"),
+    displayName: nonempty(override?.displayName),
   };
 
   if (localized.kind === "modal") {

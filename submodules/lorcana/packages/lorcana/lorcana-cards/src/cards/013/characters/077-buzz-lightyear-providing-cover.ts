@@ -29,9 +29,13 @@ export const buzzLightyearProvidingCover: CharacterCard = {
   willpower: 2,
   lore: 2,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_2065f1050963463899d7664be3a54cc9",
+    tcgPlayer: "704593",
+  },
   text: [
     {
-      title: "Action Figure",
+      title: "ACTION FIGURE",
       description:
         "When you play this character, choose one of the following. If you have another Toy character in play, choose both instead:",
     },

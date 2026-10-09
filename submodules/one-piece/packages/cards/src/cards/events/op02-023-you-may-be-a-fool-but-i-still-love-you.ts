@@ -21,7 +21,7 @@ export const op02YouMayBeAFoolButIStillLoveYou023: EventCard = {
   rarity: "C",
   setId: "OP02",
   cost: 1,
-  traits: ["The Four Emperors Whitebeard Pirates"],
+  traits: ["The Four Emperors", "Whitebeard Pirates"],
   effect:
     "[Main] If you have 3 or less Life cards, you cannot add Life cards to your hand using your own effects during this turn. [Trigger] Up to 1 of your Leader gains +1000 power during this turn.",
   effects: {

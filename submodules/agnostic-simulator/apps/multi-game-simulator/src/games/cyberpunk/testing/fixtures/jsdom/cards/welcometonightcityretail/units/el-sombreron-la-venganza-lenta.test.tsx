@@ -6,7 +6,10 @@ import {
   welcomeToNightCityRetailSketchyRipper,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+import {
+  expectEqual,
+  resolveAttackSteps,
+} from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 import { ensureJsdomAnimationSupport } from "@cyberpunk/testing/fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
 import {
   createTestingLibraryCyberpunkSimulatorPom,
@@ -32,11 +35,22 @@ describe("El Sombreron (Retail) jsdom happy path", () => {
 
       await pom.attackRival(sketchyRipper.instanceId, CYBERPUNK_P1);
 
+      // The optional deck search now surfaces as a scry prompt even when the
+      // deck offers no Gear; submit the empty selection to decline it.
       await waitFor(async () => {
-        const pendingChoice = await pom.getPendingChoiceType(CYBERPUNK_P1);
-        if (pendingChoice !== null) {
-          throw new Error(`Expected Sketchy Ripper search to auto-resolve, got ${pendingChoice}.`);
-        }
+        expectEqual(
+          "Sketchy Ripper search prompts",
+          await pom.getPendingChoiceType(CYBERPUNK_P1),
+          "scry",
+        );
+      });
+      await pom.resolveScry([], CYBERPUNK_P1);
+      await waitFor(async () => {
+        expectEqual(
+          "Sketchy Ripper search resolves",
+          await pom.getPendingChoiceType(CYBERPUNK_P1),
+          null,
+        );
       });
       await pom.expectHandSize(CYBERPUNK_P1, initialHandSize);
 
@@ -103,9 +117,7 @@ describe("El Sombreron (Retail) jsdom happy path", () => {
       expectEqual("El Sombreron attack kind", attack.kind, "fight");
       expectEqual("El Sombreron attack defender", attack.defenderId, target.instanceId);
 
-      await pom.resolveAttack(CYBERPUNK_P1);
-      await pom.resolveAttack(CYBERPUNK_P2, { pass: true });
-      await pom.resolveAttack(CYBERPUNK_P1);
+      await resolveAttackSteps(pom, CYBERPUNK_P2, CYBERPUNK_P1);
 
       expectEqual("El Sombreron resolved attack", await pom.getAttackState(), null);
       await pom.expectTrashSize(CYBERPUNK_P2, 1);

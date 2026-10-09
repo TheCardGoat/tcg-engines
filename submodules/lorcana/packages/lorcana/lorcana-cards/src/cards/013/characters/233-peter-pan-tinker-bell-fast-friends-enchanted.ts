@@ -34,6 +34,7 @@ export const peterPanTinkerBellFastFriendsEnchanted: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_706270bcb64b4f08b79b4d50a9306ad4",
+    tcgPlayer: "702682",
   },
   text: [
     {

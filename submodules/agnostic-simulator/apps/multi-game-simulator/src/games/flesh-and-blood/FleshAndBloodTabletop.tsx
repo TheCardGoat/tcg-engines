@@ -1,5 +1,6 @@
 import { fabBoardTransfers } from "./transfers";
 import { FabActionNotice } from "./FabActionNotice";
+import { fabInteractionActorId } from "./interaction-actor";
 import settingsClasses from "../../simulator/participant-actions/SimulatorParticipantActions.module.css";
 import { useFabCardArt, useFabPresentationRegistry } from "./FabPresentationCatalog";
 import { fabInteractionControl } from "@tcg/flesh-and-blood-server-adapter";
@@ -715,6 +716,7 @@ export interface FleshAndBloodTabletopProps {
   conflict?: string | null;
   cardMetadata?: Map<string, FabCardMetadata>;
   sidebarExtra?: ReactNode;
+  chat?: ReactNode;
   replayControls?: ReactNode;
   matchActions?: ReactNode;
   /** Trusted return destination used in place of gameplay controls for spectators. */
@@ -1606,6 +1608,7 @@ function FleshAndBloodTabletopContent({
   conflict,
   cardMetadata,
   sidebarExtra,
+  chat,
   replayControls,
   matchActions,
   spectatorReturnHref,
@@ -1892,10 +1895,7 @@ function FleshAndBloodTabletopContent({
   // 7.3.2-7.3.3), so their decision owner supersedes rules priority. The
   // defense owner must come from public combat state rather than viewer-local
   // legality, otherwise only the defender sees the interaction signal.
-  const interactionActorPlayerId =
-    interactionView?.resolution?.actingPlayerId ??
-    defenseDeclarationActorPlayerId ??
-    state.priorityPlayerId;
+  const interactionActorPlayerId = fabInteractionActorId(state, interactionView);
   const combatPriorityPresentation = deriveFabCombatPriorityPresentation(state.priorityWindow);
   const closingCombatChain = combatPriorityPresentation.kind === "close-chain";
   const persistentPassLabel = defenseStagingActive
@@ -3915,6 +3915,7 @@ function FleshAndBloodTabletopContent({
     },
     status,
     sidebarExtra,
+    chat,
     matchActions,
     spectatorReturnHref,
     activity,
@@ -4539,6 +4540,9 @@ function FleshAndBloodTabletopContent({
                 }
                 density="compact"
                 fill
+                // The full printed art already carries the pitch value; the
+                // frame's numeric pitch badge would sit on top of it.
+                frameBadges="hide"
               />
             );
           }}
@@ -4738,6 +4742,8 @@ function FleshAndBloodTabletopContent({
           <SimulatorViewportShell
             className="fab-tabletop"
             data-testid="fab-tabletop"
+            data-action-attention-target
+            tabIndex={-1}
             data-fab-layout={isMobile ? "mobile" : "desktop"}
             mobileBreakpoint={FAB_MOBILE_BREAKPOINT}
             shortViewportBreakpoint={520}

@@ -1,5 +1,4 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { alert } from "../../../helpers/abilities/alert";
 import { violetParrAtWitsEndI18n } from "./178-violet-parr-at-wits-end.i18n";
 
 export const violetParrAtWitsEnd: CharacterCard = {
@@ -30,7 +29,8 @@ export const violetParrAtWitsEnd: CharacterCard = {
   willpower: 1,
   lore: 1,
   inkable: true,
-  abilities: [alert],
+  missingImplementation: true,
+  missingTests: true,
   externalIds: {
     lorcast: "crd_92fe9e279ebd46b5922826303ea92d27",
     tcgPlayer: "692077",

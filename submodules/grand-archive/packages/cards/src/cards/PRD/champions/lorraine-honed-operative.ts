@@ -52,43 +52,55 @@ export const lorraineHonedOperative: GrandArchiveCard<GrandArchiveAbilityDefinit
               },
             },
           },
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              unique: true,
-              candidates: {
-                kind: "object",
-                zones: ["field"],
-                relationship: "controlled-by",
-                player: "controller",
-                filter: {
-                  kind: "type",
-                  oneOf: ["WEAPON"],
-                },
-              },
-            },
-          ],
           effect: {
             kind: "sequence",
             effects: [
               {
-                kind: "banish",
-                player: "controller",
+                kind: "choose-value",
+                trackAs: "memory-refresh-count",
                 selection: {
-                  id: "banished-cards",
+                  id: "memory-refresh-count",
                   kind: "choice",
                   declared: "resolution",
                   chooser: "controller",
                   count: {
-                    kind: "up-to",
-                    amount: 3,
+                    kind: "exactly",
+                    amount: 1,
+                  },
+                  candidates: {
+                    kind: "number",
+                    minimum: 0,
+                    maximum: {
+                      kind: "calculate",
+                      operator: "minimum",
+                      operands: [
+                        3,
+                        {
+                          kind: "count",
+                          collection: {
+                            zones: ["memory"],
+                            player: "controller",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+              },
+              {
+                kind: "banish",
+                player: "controller",
+                selection: {
+                  id: "refreshed-memory-cards",
+                  kind: "choice",
+                  declared: "resolution",
+                  chooser: "controller",
+                  count: {
+                    kind: "exactly",
+                    amount: {
+                      kind: "binding",
+                      binding: "memory-refresh-count",
+                    },
                   },
                   candidates: {
                     kind: "card",
@@ -102,37 +114,102 @@ export const lorraineHonedOperative: GrandArchiveCard<GrandArchiveAbilityDefinit
               {
                 kind: "for-each",
                 collection: {
-                  binding: "banished-cards",
+                  binding: "refreshed-memory-cards",
                 },
-                bindEachAs: "that-card",
+                bindEachAs: "refreshed-memory-card",
                 effect: {
-                  kind: "draw",
-                  player: "controller",
-                  amount: 1,
-                  to: "memory",
-                },
-              },
-              {
-                kind: "conditional",
-                condition: {
-                  kind: "subject-matches",
-                  subject: {
-                    kind: "bound",
-                    binding: "referenced-cards",
-                  },
-                  filter: {
-                    kind: "element-category",
-                    value: "advanced",
-                  },
-                },
-                then: {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "bound",
-                    binding: "target-1",
-                  },
-                  counter: "durability",
-                  amount: 1,
+                  kind: "sequence",
+                  effects: [
+                    {
+                      kind: "draw",
+                      player: "controller",
+                      amount: 1,
+                      to: "memory",
+                      bindResultAs: "refreshed-drawn-card",
+                    },
+                    {
+                      kind: "conditional",
+                      condition: {
+                        kind: "subject-matches",
+                        subject: {
+                          kind: "bound",
+                          binding: "refreshed-drawn-card",
+                        },
+                        filter: {
+                          kind: "element-category",
+                          value: "advanced",
+                        },
+                      },
+                      then: {
+                        kind: "choose",
+                        selection: {
+                          id: "chosen-counter-object",
+                          kind: "choice",
+                          declared: "resolution",
+                          chooser: "controller",
+                          count: {
+                            kind: "exactly",
+                            amount: 1,
+                          },
+                          candidates: {
+                            kind: "object",
+                            zones: ["field"],
+                            relationship: "controlled-by",
+                            player: "controller",
+                            filter: {
+                              kind: "all",
+                              filters: [
+                                {
+                                  kind: "type",
+                                  oneOf: ["WEAPON"],
+                                },
+                                {
+                                  kind: "subtype",
+                                  oneOf: ["SWORD"],
+                                },
+                              ],
+                            },
+                          },
+                        },
+                        effect: {
+                          kind: "sequence",
+                          effects: [
+                            {
+                              kind: "add-counter",
+                              subject: {
+                                kind: "bound",
+                                binding: "chosen-counter-object",
+                              },
+                              counter: "durability",
+                              amount: 1,
+                            },
+                            {
+                              kind: "continuous",
+                              subjects: {
+                                kind: "bound",
+                                binding: "chosen-counter-object",
+                              },
+                              affectedSet: "locked",
+                              duration: {
+                                kind: "this-turn",
+                              },
+                              layer: {
+                                layer: "E",
+                                modifies: "stat",
+                                sublayer: "modifier",
+                              },
+                              change: {
+                                kind: "numeric",
+                                property: "power",
+                                operation: "add",
+                                amount: 1,
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    },
+                  ],
                 },
               },
             ],

@@ -31,7 +31,7 @@ export const op10Monet016: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Donquixote Pirates Punk Hazard"],
+  traits: ["Punk Hazard", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "[Activate: Main] You may rest this Character: Give up to 2 rested DON!! cards to your Leader or 1 of your Characters. Then, give up to 1 of your opponent's Characters −1000 power during this turn.",

@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op08Carrot021 } from "../../../../../cards/src/cards/leaders/op08-021-carrot.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP08-021 Carrot", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op08Carrot021);
-  });
-});

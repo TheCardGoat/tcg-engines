@@ -21,7 +21,7 @@ export const eb01ConquererOfThreeWorldsRagnaraku039: EventCard = {
   rarity: "R",
   setId: "EB01",
   cost: 5,
-  traits: ["Animal Kingdom Pirates The Four Emperors"],
+  traits: ["The Four Emperors", "Animal Kingdom Pirates"],
   effect:
     "[Main] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): K.O. up to 1 of your opponent's Characters with a cost of 8 or less.[Trigger] Ad up to 1 DON!! card from your DON!! deck and set it as active.",
   effects: {

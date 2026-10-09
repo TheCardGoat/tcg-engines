@@ -22,7 +22,7 @@ export const op07Aladine020: CharacterCard = {
   setId: "OP07",
   cost: 5,
   power: 6000,
-  traits: ["The Sun Pirates Merfolk"],
+  traits: ["Merfolk", "The Sun Pirates"],
   attribute: "slash",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On K.O.] If your Leader has the [Fish-Man] type, play up to 1 [Fish-Man] or [Merfolk] type Character card with a cost of 3 or less from your hand.",
@@ -35,7 +35,7 @@ export const op07Aladine020: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Fish-Man",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -61,12 +61,12 @@ export const op07Aladine020: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Fish-Man",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Merfolk",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

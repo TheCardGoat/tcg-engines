@@ -246,7 +246,7 @@ describe("OP06 Event and Stage regressions", () => {
                 zones: ["character"],
                 count: { amount: "all", upTo: true },
                 filters: [
-                  { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
+                  { filter: "trait", value: "Thriller Bark Pirates", match: "exact" },
                   { filter: "cost", comparison: "lte", value: 2 },
                 ],
               },
@@ -298,7 +298,7 @@ describe("OP06 Event and Stage regressions", () => {
     });
   });
 
-  test("OP06-116 keeps the shared post-choice Life continuation", () => {
+  test("OP06-116 gates the shared Then inside its conditional choice", () => {
     expect(
       buildCardEffects(
         "[Main] Choose one:\n• K.O. up to 1 of your opponent's Characters with a cost of 5 or less.\n• If your opponent has 1 Life card, deal 1 damage to your opponent.\nThen, add 1 card from the top of your Life cards to your hand.\n[Trigger] Draw 1 cards.",
@@ -321,28 +321,36 @@ describe("OP06 Event and Stage regressions", () => {
                       filters: [{ filter: "cost", comparison: "lte", value: 5 }],
                     },
                   },
+                  {
+                    action: "removeFromLife",
+                    player: "self",
+                    count: { amount: 1 },
+                    destination: "hand",
+                    position: "top",
+                  },
                 ],
                 [
                   {
-                    action: "dealDamage",
-                    player: "opponent",
-                    amount: 1,
-                    condition: {
+                    action: "conditional",
+                    predicate: {
                       condition: "lifeCount",
                       player: "opponent",
                       comparison: "eq",
                       value: 1,
                     },
+                    whenTrue: [
+                      { action: "dealDamage", player: "opponent", amount: 1 },
+                      {
+                        action: "removeFromLife",
+                        player: "self",
+                        count: { amount: 1 },
+                        destination: "hand",
+                        position: "top",
+                      },
+                    ],
                   },
                 ],
               ],
-            },
-            {
-              action: "removeFromLife",
-              player: "self",
-              count: { amount: 1 },
-              destination: "hand",
-              position: "top",
             },
           ],
         },

@@ -3,6 +3,22 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP16-065 Sakazuki", () => {
+  test("[On Play] may decline DON!! -1 without reducing power", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: ["OP16-065"], activeDon: 8 },
+      { character: ["OP13-013"] },
+    );
+    const deckBefore = engine.getView("south").players.south.donDeckCount;
+    engine.asSouth().play("OP16-065");
+    engine.asSouth().declineOptional();
+    const view = engine.getView("south");
+    expect(view.players.south.donDeckCount).toBe(deckBefore);
+    expect(view.players.south.activeDon).toBe(1);
+    expect(view.players.south.restedDon).toBe(7);
+    expect(view.players.north.characters[0]?.power).toBe(3000);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("[On Play] DON!! -1 pays for up to -6000 power on an opposing Character", () => {
     const engine = OnePieceTestEngine.create(
       { hand: ["OP16-065"], activeDon: 8 },
@@ -11,6 +27,7 @@ describe("OP16-065 Sakazuki", () => {
     const higumaId = engine.findCardInZone("north", "character", "OP13-013");
 
     engine.playCard("OP16-065");
+    engine.asSouth().acceptOptional();
     // Pay the DON!! -1 cost; the lone target is auto-selected.
     engine.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "south");
     const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
@@ -64,5 +81,16 @@ describe("OP16-065 Sakazuki", () => {
         engine.getView("south").players.south.restedDon,
     ).toBe(donBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("shares Sakazuki's printed name with other printings for Luffy's name count", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP16-034", "OP16-065", "OP02-099"], activeDon: 1 },
+      {},
+    );
+    const luffy = e.findCardInZone("south", "character", "OP16-034");
+    e.attachDon(luffy, 1, "south");
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === luffy)?.power,
+    ).toBe(3000);
   });
 });

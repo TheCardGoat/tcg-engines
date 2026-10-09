@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-abilities/abilities-ability-tracking"
+  relation: "current_index"
+---
+
 # Abilities - Ability Tracking
 
 Some abilities ask players to remember previously selected modes or options for abilities. Abilities tracked in this way depend on the card that creates and instances the ability.&#x20;

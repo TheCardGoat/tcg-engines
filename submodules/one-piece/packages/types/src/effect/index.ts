@@ -24,6 +24,7 @@ export type {
   PlayerFilter,
   PowerFilter,
   StateFilter,
+  FaceUpFilter,
   Target,
   TargetFilter,
   TotalConstraint,
@@ -32,6 +33,7 @@ export type {
 
 export type {
   CardStateCondition,
+  CardTrashedFromHandByEffectThisTurnCondition,
   CompareHandsCondition,
   Condition,
   DonAttachedCondition,
@@ -49,6 +51,7 @@ export type {
 
 export type {
   AddLifeToHandCost,
+  AddCharacterToLifeCost,
   CardCostOption,
   Cost,
   ModifyLeaderPowerCost,
@@ -66,9 +69,12 @@ export type {
 
 export type {
   Action,
+  AddActivationCostsAction,
+  AddActivationConditionsAction,
   ActivateEffectAction,
   AddDonAction,
   AddToLifeAction,
+  LifeToHandReplacementAction,
   AttackRestrictionAction,
   CanAttackActiveAction,
   CannotActivateAction,
@@ -82,6 +88,7 @@ export type {
   KoAction,
   ModifyCostAction,
   ModifyPowerAction,
+  ModifyLifeValueAction,
   NegateEffectsAction,
   PlayAction,
   PlayThisCardAction,
@@ -92,7 +99,9 @@ export type {
   ReturnToHandAction,
   SearchAction,
   SetActiveAction,
+  SimultaneousStateChangeAction,
   SetPowerAction,
+  SetBaseCostAction,
   ShuffleDeckAction,
   TrashFromFieldAction,
   TrashFromHandAction,

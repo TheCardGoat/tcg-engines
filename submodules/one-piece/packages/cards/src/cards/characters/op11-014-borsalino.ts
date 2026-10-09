@@ -23,7 +23,7 @@ export const op11Borsalino014: CharacterCard = {
   cost: 3,
   power: 3000,
   counter: 1000,
-  traits: ["FILM Navy"],
+  traits: ["FILM", "Navy"],
   attribute: "special",
   effect:
     '[Blocker]\n[Activate: Main] You may rest this Character: Up to 1 of your "Navy" type Leader or Character cards can also attack active Characters during this turn.',
@@ -51,7 +51,7 @@ export const op11Borsalino014: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Navy",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

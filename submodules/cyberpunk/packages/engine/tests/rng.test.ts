@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import { SeededRNG } from "../src/state/rng.ts";
-import type { DieType } from "../src/types/gig-die.ts";
+import type { DieType } from "@tcg/cyberpunk-types";
 
 describe("SeededRNG", () => {
   it("is deterministic for a given seed", () => {

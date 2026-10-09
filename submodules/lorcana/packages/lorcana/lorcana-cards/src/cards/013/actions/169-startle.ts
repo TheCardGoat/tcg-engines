@@ -25,6 +25,10 @@ export const startle: ActionCard = {
   rarity: "common",
   cost: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_e5719db31e67453caf5db99b45f07808",
+    tcgPlayer: "704665",
+  },
   text: "Chosen character gets -3 {S} this turn.",
   abilities: [
     {

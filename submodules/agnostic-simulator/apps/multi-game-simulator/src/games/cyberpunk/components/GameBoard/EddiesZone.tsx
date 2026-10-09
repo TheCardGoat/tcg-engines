@@ -34,7 +34,7 @@ interface EddiesZoneProps {
   /** Whether this side already sold a card this turn (sell is once per turn). */
   soldThisTurn?: boolean;
   /**
-   * Whether selling is legal for this side right now (see `canShowSellCue`).
+   * Whether the normal Sell action remains available this turn (see `canShowSellCue`).
    * Drives the desktop "sell here" slot cue; never set on the rival row.
    */
   sellCue?: boolean;
@@ -67,9 +67,12 @@ export function EddiesZone({
   const placeholderSpentCount = Math.max(0, spentCardCount - physicalSpentCount);
   const renderedCards = [
     ...physicalCards,
-    ...Array.from({ length: placeholderCount }, (_, i): EddieCardDisplay => ({
-      spent: i < placeholderSpentCount,
-    })),
+    ...Array.from(
+      { length: placeholderCount },
+      (_, i): EddieCardDisplay => ({
+        spent: i < placeholderSpentCount,
+      }),
+    ),
   ];
   // Pips stay in engine zone order: regrouping ready/spent moves every later
   // slot when a card flips, remounting them mid-animation and breaking the
@@ -165,6 +168,7 @@ export function EddiesZone({
           );
           const content = (
             <CardImage
+              side={resolvedSide}
               faceDown={!card?.revealed}
               imageUrl={card?.revealed ? card.imageUrl : undefined}
               alt={card?.revealed ? (card.name ?? "Sold card") : "Eddie"}
@@ -178,6 +182,7 @@ export function EddiesZone({
               <button
                 type="button"
                 className={`${classes.cardBody} ${classes.paymentButton}`}
+                data-sim-animation-orientation-target=""
                 aria-label={`${selected ? "Remove" : "Select"} Eddie for payment`}
                 aria-pressed={selected}
                 onClick={() => paymentSelection?.togglePaymentSource(sourceId)}
@@ -186,7 +191,11 @@ export function EddiesZone({
               </button>
             );
           }
-          return <div className={classes.cardBody}>{content}</div>;
+          return (
+            <div className={classes.cardBody} data-sim-animation-orientation-target="">
+              {content}
+            </div>
+          );
         }}
       />
     </div>

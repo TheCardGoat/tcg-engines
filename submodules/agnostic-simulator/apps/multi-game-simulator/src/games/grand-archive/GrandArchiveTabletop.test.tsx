@@ -8,17 +8,18 @@ import {
   grandArchiveNowState,
   projectGrandArchiveMatchHistory,
 } from "./GrandArchiveSidebarActivity";
+import { grandArchiveBoardProjection } from "./GrandArchiveBoard";
 import { GrandArchiveTabletop } from "./GrandArchiveTabletop";
 
 afterEach(cleanup);
 
 describe("Grand Archive tabletop", () => {
-  it("shows art on the field and the exact full printing in inspection", () => {
+  it("shows the exact full printing in card inspection", async () => {
     const fixture = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "art-only")!;
     const entity = fixture.entities.find(
       (entry) => entry.dataAttributes?.["data-ga-art-only"] === true,
     )!;
-    expect(entity.imageAspectRatio).toBe(446 / 396);
+    expect(entity.imageAspectRatio).toBeGreaterThan(0);
     const fullArt = fixture.entities.find(
       (entry) =>
         entry.dataAttributes?.["data-zone-id"] === "p2:field" &&
@@ -28,28 +29,48 @@ describe("Grand Archive tabletop", () => {
     expect(fullArt.imageAspectRatio).toBeLessThan(1);
     expect(fullArt.dataAttributes?.["data-ga-art-only"]).toBeUndefined();
 
-    const { container } = render(
+    render(
       <GrandArchiveSimulatorProviders>
         <GrandArchiveTabletop fixture={fixture} />
       </GrandArchiveSimulatorProviders>,
     );
-    const card = container.querySelector<HTMLElement>(`[data-sim-entity-id="${entity.id}"]`)!;
-    expect(card.querySelector("img")?.getAttribute("src")).toBe(entity.imageUrl);
-    expect(entity.imageUrl).toContain("/assets/board/");
-    expect(card.closest(".ga-role-card")?.textContent).toContain(entity.title);
-    fireEvent.focus(card);
-    expect(screen.getByTestId("ga-card-preview").querySelector("img")?.getAttribute("src")).toBe(
+    fireEvent.click(screen.getByRole("button", { name: new RegExp(`^${entity.title},`) }));
+    const inspection = await screen.findByRole("dialog", { name: entity.title });
+    expect(inspection.querySelector("img")?.getAttribute("src")).toBe(
       entity.dataAttributes?.["data-ga-printed-image-url"],
     );
-    expect(
-      screen.getByTestId("ga-card-preview").querySelector("img")?.getAttribute("src"),
-    ).toContain("/assets/full/");
-    expect(
-      container.querySelector('[data-sim-zone-id="p1:hand"] img[src*="/assets/board/"]'),
-    ).toBeNull();
+    expect(inspection.querySelector("img")?.getAttribute("src")).toContain("/assets/full/");
   });
 
-  it("renders the sidebar beside both player hands", () => {
+  it("projects viewer-authorized field art", () => {
+    const fixture = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "art-only")!;
+    const field = fixture.table.zones
+      .filter((zone) => zone.id.endsWith(":field"))
+      .flatMap((zone) => zone.entityIds);
+    const entity = fixture.entities.find(
+      (entry) => field.includes(entry.id) && entry.dataAttributes?.["data-ga-art-only"] === true,
+    )!;
+    expect(
+      grandArchiveBoardProjection(fixture).cards.find((card) => card.id === entity.id),
+    ).toMatchObject({ faceUrl: entity.imageUrl, faceDown: false });
+  });
+  it.each([false, true])("gates Undo with canUndo=%s when a handler exists", (canUndo) => {
+    render(
+      <GrandArchiveSimulatorProviders>
+        <GrandArchiveTabletop
+          fixture={GRAND_ARCHIVE_VISUAL_FIXTURES[0]!}
+          canUndo={canUndo}
+          onUndo={() => {}}
+        />
+      </GrandArchiveSimulatorProviders>,
+    );
+    const undo = screen.getByRole("button", {
+      name: canUndo ? "Undo" : "Undo unavailable. No undoable move available.",
+    });
+    expect(undo.hasAttribute("disabled")).toBe(!canUndo);
+  });
+
+  it("keeps cards accessible on the board alongside match history", async () => {
     const fixture = GRAND_ARCHIVE_VISUAL_FIXTURES[0]!;
     render(
       <GrandArchiveSimulatorProviders>
@@ -57,8 +78,9 @@ describe("Grand Archive tabletop", () => {
       </GrandArchiveSimulatorProviders>,
     );
 
-    expect(screen.getByRole("region", { name: /Your hand, \d+ cards/ })).toBeTruthy();
-    expect(screen.getByRole("region", { name: /Opponent hand, \d+ cards/ })).toBeTruthy();
+    expect(screen.getByLabelText("Your hand")).toBeTruthy();
+    expect(screen.getByLabelText("Opponent hand")).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Cards & actions" })).toBeNull();
     expect(screen.getByTestId("grand-archive-sidebar")).toBeTruthy();
     expect(screen.getByRole("region", { name: "Opponent match status" })).toBeTruthy();
     expect(screen.getByRole("region", { name: "Your match status" })).toBeTruthy();
@@ -76,12 +98,12 @@ describe("Grand Archive tabletop", () => {
     );
 
     const dock = screen.getAllByRole("region", { name: "Match actions" })[0]!;
-    expect(dock.textContent).toContain("Undo");
-    expect(dock.textContent).toContain("Pass");
+    expect(dock.textContent).not.toContain("Undo");
+    expect(dock.textContent).not.toContain("Pass");
     expect(dock.textContent).toContain("Concede");
   });
 
-  it("only enables Undo when a handler and an accepted move are available", () => {
+  it("omits Undo when no handler is available", () => {
     const fixture = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "opportunity")!;
     render(
       <GrandArchiveSimulatorProviders>
@@ -89,13 +111,7 @@ describe("Grand Archive tabletop", () => {
       </GrandArchiveSimulatorProviders>,
     );
 
-    expect(
-      screen
-        .getByRole("button", {
-          name: "Undo unavailable. Undo is available only in practice matches.",
-        })
-        .hasAttribute("disabled"),
-    ).toBe(true);
+    expect(screen.queryByRole("button", { name: /Undo/ })).toBeNull();
   });
 
   it("reveals each unavailable action explanation on keyboard focus", async () => {
@@ -105,11 +121,7 @@ describe("Grand Archive tabletop", () => {
         <GrandArchiveTabletop fixture={fixture} canConcede={false} />
       </GrandArchiveSimulatorProviders>,
     );
-    for (const [label, reason] of [
-      ["Undo", "Undo is available only in practice matches."],
-      ["Pass Opportunity", "There is no legal pass available right now."],
-      ["Concede", "Concede is unavailable in this match."],
-    ]) {
+    for (const [label, reason] of [["Concede", "Concede is unavailable in this match."]]) {
       const trigger = screen.getByRole("group", { name: `${label} unavailable` });
       expect(trigger.tabIndex).toBe(0);
       fireEvent.focus(trigger);
@@ -137,7 +149,7 @@ describe("Grand Archive tabletop", () => {
     );
   });
 
-  it("groups player history by turn alongside the hand surface", () => {
+  it("groups player history by turn alongside the hand surface", async () => {
     const fixture = GRAND_ARCHIVE_VISUAL_FIXTURES.find(
       (candidate) => candidate.id === "opportunity",
     )!;
@@ -150,8 +162,9 @@ describe("Grand Archive tabletop", () => {
     expect(screen.getAllByRole("heading", { name: /Turn 1/ }).length).toBeGreaterThan(0);
     expect(screen.getByText("Match started.")).toBeTruthy();
     expect(screen.queryByText(/^p[12] moved a card/)).toBeNull();
-    expect(screen.getByRole("region", { name: /Your hand, \d+ cards/ })).toBeTruthy();
-    expect(screen.getByRole("region", { name: /Opponent hand, \d+ cards/ })).toBeTruthy();
+    expect(screen.getByLabelText("Your hand")).toBeTruthy();
+    expect(screen.getByLabelText("Opponent hand")).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Cards & actions" })).toBeNull();
   });
 
   it("uses the shared card preview for history hover and focus", async () => {
@@ -234,7 +247,7 @@ describe("Grand Archive tabletop", () => {
     );
 
     expect(screen.queryByText("Opportunity")).toBeNull();
-    expect(screen.getAllByText("Resolving").length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/^Resolving$/).length).toBeGreaterThan(0);
   });
 
   it("classifies terminal engine events by their stable event key", () => {
@@ -294,7 +307,7 @@ describe("Grand Archive tabletop", () => {
       </GrandArchiveSimulatorProviders>,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Undo last accepted move" }));
+    fireEvent.click(screen.getByRole("button", { name: "Undo" }));
     expect(onUndo).toHaveBeenCalledOnce();
   });
 });

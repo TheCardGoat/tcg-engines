@@ -59,7 +59,7 @@ export const op08Queen080: CharacterCard = {
               {
                 filter: "trait",
                 value: "Animal Kingdom Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

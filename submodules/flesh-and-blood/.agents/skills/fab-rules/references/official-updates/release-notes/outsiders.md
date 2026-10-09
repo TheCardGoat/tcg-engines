@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/outsiders/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Outsiders"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/outsiders/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: c5ab0ee7691fde1262435adb85bde4a37b427fd747d51fb0d8ee595d72bb1e66
 ---

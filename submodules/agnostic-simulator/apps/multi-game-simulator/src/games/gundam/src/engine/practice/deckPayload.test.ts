@@ -1,7 +1,7 @@
 import {
   encodeDeckDocumentToUrlParam,
   encodeDeckToUrlParam,
-  type DeckDocumentV1,
+  type DeckDocument,
 } from "@tcg/game-page-contract";
 import { GUNDAM_MAIN_DECK_SIZE, GUNDAM_RESOURCE_DECK_SIZE } from "@tcg/gundam-engine";
 import {
@@ -174,6 +174,7 @@ describe("resolveGundamPracticePayload", () => {
 
   it("hands unresolved cards through as warnings and sanitizes only unusable entries", () => {
     const document = gundamDeckListToDocument(SAMPLE_DECKS["seed-aggro"]);
+    if (!document.sections.main) throw new Error("Expected a main deck section");
     document.sections.main.push({
       card: { canonicalId: "GD99-999", quantity: 1 },
     });
@@ -268,7 +269,7 @@ describe("resolveGundamPracticePayload", () => {
   });
 });
 
-function encodeDocument(document: DeckDocumentV1): string {
+function encodeDocument(document: DeckDocument): string {
   const encoded = encodeDeckDocumentToUrlParam(document);
   if (!encoded.ok)
     throw new Error(encoded.diagnostics.map((diagnostic) => diagnostic.message).join("\n"));

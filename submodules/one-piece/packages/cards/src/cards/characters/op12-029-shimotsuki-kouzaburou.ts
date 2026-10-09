@@ -23,7 +23,7 @@ export const op12ShimotsukiKouzaburou029: CharacterCard = {
   cost: 3,
   power: 2000,
   counter: 2000,
-  traits: ["Land of Wano East Blue Frost Moon Village"],
+  traits: ["East Blue", "Frost Moon Village", "Land of Wano"],
   attribute: "slash",
   effect:
     "[On Play] Rest up to 1 of your opponent's Characters with a cost of 2 or less. Then, K.O. up to 1 of your opponent's rested Characters with a base cost of 1 or less.",

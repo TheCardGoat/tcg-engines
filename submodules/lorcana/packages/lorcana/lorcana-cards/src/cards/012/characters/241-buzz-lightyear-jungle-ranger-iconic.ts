@@ -25,7 +25,7 @@ export const buzzLightyearJungleRangerIconic: CharacterCard = {
   franchise: "Toy Story",
   set: "012",
   cardNumber: 241,
-  rarity: "common",
+  rarity: "iconic",
   specialRarity: "iconic",
   cost: 7,
   strength: 7,

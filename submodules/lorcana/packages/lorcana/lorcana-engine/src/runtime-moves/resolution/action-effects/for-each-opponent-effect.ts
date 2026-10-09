@@ -30,11 +30,11 @@ const RESOLVED_ACTION_EFFECT: ActionResolutionResult = {
  * This is needed for conditions like "opponent has more lore than you" to evaluate
  * correctly per-opponent in multiplayer games with 3+ players.
  */
-function buildPerOpponentContext(
-  ctx: PlayCardExecutionContext,
+function buildPerOpponentContext<T extends { framework: { state: { playerIds: PlayerId[] } } }>(
+  ctx: T,
   controllerId: PlayerId,
   opponentId: PlayerId,
-): PlayCardExecutionContext {
+): T {
   if (ctx.framework.state.playerIds.length <= 2) {
     // 2-player: the existing context already resolves "opponent" correctly
     return ctx;
@@ -42,10 +42,7 @@ function buildPerOpponentContext(
 
   // For 3+ players: reorder playerIds so `opponentId` appears immediately
   // after `controllerId`, ensuring `playerIdForScope("opponent")` picks it up.
-  const remainingIds = ctx.framework.state.playerIds.filter(
-    (id) => id !== controllerId && id !== opponentId,
-  );
-  const reorderedPlayerIds = [controllerId, opponentId, ...remainingIds];
+  const reorderedPlayerIds = [controllerId, opponentId];
 
   return {
     ...ctx,
@@ -66,45 +63,90 @@ export function resolveForEachOpponentEffect(
   resolutionInput: ActionResolutionInput,
   options?: ActionEffectResolutionOptions,
 ): ActionResolutionResult {
+  const originalSeats = resolutionInput.eventSnapshot?.opponentIterationPlayerIds;
+  if (originalSeats) {
+    ctx = {
+      ...ctx,
+      framework: {
+        ...ctx.framework,
+        state: { ...ctx.framework.state, playerIds: [...originalSeats] },
+      },
+    };
+  }
   const currentPlayerId = cardPlayed.playerId;
-  const allPlayerIds = ctx.framework.state.playerIds;
-  const opponentIds = allPlayerIds.filter((playerId) => playerId !== currentPlayerId);
-
+  const opponentIds = effect.remainingOpponentIds
+    ? effect.remainingOpponentIds.filter(
+        (id) => ctx.framework.state.playerIds.includes(id as PlayerId) && id !== currentPlayerId,
+      )
+    : (() => {
+        const seats = ctx.framework.state.playerIds;
+        const active = seats.indexOf(ctx.framework.state.currentPlayer ?? currentPlayerId);
+        const ordered = [...seats.slice(active), ...seats.slice(0, active)];
+        return ordered.filter((playerId) => playerId !== currentPlayerId);
+      })();
+  resolutionInput.eventSnapshot ??= {};
+  resolutionInput.eventSnapshot.opponentIterationPlayerIds ??= [...ctx.framework.state.playerIds];
   if (opponentIds.length === 0) {
+    delete resolutionInput.eventSnapshot.iteratedOpponentId;
     return RESOLVED_ACTION_EFFECT;
   }
 
-  // Resolve the inner effect for each opponent sequentially
-  for (const opponentId of opponentIds) {
-    // Evaluate the optional per-opponent condition before applying the effect
-    if (effect.condition) {
-      const perOpponentCtx = buildPerOpponentContext(ctx, currentPlayerId, opponentId);
-      const conditionMet = evaluateActionCondition(
-        effect.condition,
-        perOpponentCtx,
-        cardPlayed,
-        resolutionInput,
-      );
-      if (!conditionMet) {
-        continue;
-      }
+  for (let index = 0; index < opponentIds.length; index++) {
+    const opponentId = opponentIds[index] as PlayerId;
+    const perOpponentCtx = buildPerOpponentContext(ctx, currentPlayerId, opponentId);
+    resolutionInput.eventSnapshot.iteratedOpponentId = opponentId;
+    resolutionInput.eventSnapshot.lastEffectPerformed = undefined;
+    resolutionInput.eventSnapshot.discardResolvedPlayerIds = undefined;
+    if (index > 0 || effect.remainingOpponentIds !== undefined) {
+      resolutionInput.resolveOptional = undefined;
+      resolutionInput.choiceIndex = undefined;
+      resolutionInput.chooserPlayerId = undefined;
+      resolutionInput.targets = undefined;
+      resolutionInput.currentTargets = undefined;
+      resolutionInput.targetSelectionResolved = undefined;
     }
+    if (
+      effect.condition &&
+      !evaluateActionCondition(effect.condition, perOpponentCtx, cardPlayed, resolutionInput)
+    )
+      continue;
 
-    const isLastOpponent = opponentId === opponentIds[opponentIds.length - 1];
-    const result = resolveActionEffect(ctx, cardPlayed, effect.effect, resolutionInput, {
+    // Encode all later opponents in a serialized cursor. The empty cursor also
+    // clears this iteration's scope before an outer sequence resumes.
+    const continuation = {
+      ...options?.continuation,
+      remainingEffects: [
+        { ...effect, remainingOpponentIds: opponentIds.slice(index + 1) },
+        ...(options?.continuation?.remainingEffects ?? []),
+      ],
+    };
+    const result = resolveActionEffect(perOpponentCtx, cardPlayed, effect.effect, resolutionInput, {
       ...options,
-      // An optional wrapper was accepted by its chooser before execution reached
-      // this per-opponent consequence. Do not let that earlier choice make the
-      // opponent's mandatory child effect declineable. An explicitly optional
-      // child will establish its own optional context when it resolves.
       originatesFromOptional: undefined,
-      continuation: isLastOpponent ? options?.continuation : undefined,
+      continuation,
     });
-
-    if (result.status === "suspended") {
-      return result;
-    }
+    if (result.status === "suspended") return result;
   }
-
+  delete resolutionInput.eventSnapshot.iteratedOpponentId;
   return RESOLVED_ACTION_EFFECT;
+}
+
+/** Reapply the serialized opponent scope when a pending child effect resumes. */
+export function scopeResolutionToOpponent<
+  T extends { framework: { state: { playerIds: PlayerId[] } } },
+>(ctx: T, cardPlayed: CardPlayedPayload, resolutionInput: ActionResolutionInput): T {
+  const opponentId = resolutionInput.eventSnapshot?.iteratedOpponentId;
+  const originalPlayerIds = resolutionInput.eventSnapshot?.opponentIterationPlayerIds;
+  const originalCtx = originalPlayerIds
+    ? {
+        ...ctx,
+        framework: {
+          ...ctx.framework,
+          state: { ...ctx.framework.state, playerIds: [...originalPlayerIds] },
+        },
+      }
+    : ctx;
+  return opponentId
+    ? buildPerOpponentContext(originalCtx, cardPlayed.playerId, opponentId)
+    : originalCtx;
 }

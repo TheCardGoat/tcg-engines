@@ -31,16 +31,16 @@ export const eb04Ginny045: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        oncePerTurn: true,
+        optional: true,
         costs: [
           {
             cost: "restThisCard",
           },
         ],
-        conditions: [
+        postCostConditions: [
           {
             condition: "zoneCount",
-            player: "self",
+            player: "any",
             zone: "character",
             comparison: "gte",
             value: 2,
@@ -64,7 +64,7 @@ export const eb04Ginny045: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Revolutionary Army",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

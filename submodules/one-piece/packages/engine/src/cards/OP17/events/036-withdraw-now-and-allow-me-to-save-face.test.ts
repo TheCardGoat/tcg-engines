@@ -3,6 +3,42 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP17-036 Withdraw Now and Allow Me to Save Face", () => {
+  test("Counter does not grant power without its printed eligibility", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP01-001", hand: ["OP17-036"], character: [], activeDon: 3 },
+      {},
+      { activeSeat: "north" },
+    );
+    const before = e.getView("south").players.south.lifeCount;
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.resolveDecision(
+      "battleCounter",
+      { selectedIds: [e.findCardInZone("south", "hand", "OP17-036")] },
+      "south",
+    );
+    expect(e.getView("south").players.south.lifeCount).toBe(before - 1);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("Counter executes the printed power bonus through battle", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP17-020", hand: ["OP17-036"], character: [], activeDon: 3 },
+      {},
+      { activeSeat: "north" },
+    );
+    const lifeBefore = e.getView("south").players.south.lifeCount;
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.resolveDecision(
+      "battleCounter",
+      { selectedIds: [e.findCardInZone("south", "hand", "OP17-036")] },
+      "south",
+    );
+    e.resolveDecision("effectTargetSelection", { selectedIds: [e.leader("south")] }, "south");
+    expect(e.getView("south").players.south.lifeCount).toBe(lifeBefore);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP17-036");
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[Main] resting 6 DON!! rests a Character then K.O.s up to 2 rested cost-6-or-less", () => {
     const engine = OnePieceTestEngine.create(
       {

@@ -407,7 +407,7 @@ export function FabCardPreviewFallback({
           rules.map((rule) => (
             <p key={rule.id}>
               {rule.label ? <strong>{rule.label}: </strong> : null}
-              <FabSymbolText text={rule.text} />
+              {rule.text !== undefined ? <FabSymbolText text={rule.text} /> : null}
             </p>
           ))
         ) : (

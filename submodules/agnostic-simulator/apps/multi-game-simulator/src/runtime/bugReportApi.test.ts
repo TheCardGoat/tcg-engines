@@ -29,7 +29,7 @@ describe("bug report API", () => {
 
   it("submits replay-identifying Gundam context to the shared feedback endpoint", async () => {
     const fetcher = vi.fn(
-      async () =>
+      async (_input: RequestInfo | URL, _init?: RequestInit) =>
         new Response(JSON.stringify({ id: "bugrep-1", createdAt: "2026-08-13T12:00:00.000Z" }), {
           status: 200,
           headers: { "Content-Type": "application/json" },

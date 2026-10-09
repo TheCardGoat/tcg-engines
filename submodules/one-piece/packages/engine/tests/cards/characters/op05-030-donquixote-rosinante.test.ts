@@ -35,6 +35,66 @@ describe("OP05-030 Donquixote Rosinante", () => {
     expect(view.players.south.trash.map((card) => card.instanceId)).not.toContain(allyId);
   });
 
+  test.each(["battle", "effect"] as const)(
+    "chooses either physical Rosinante or declines all replacements for a %s K.O.",
+    (cause) => {
+      for (const choice of [0, 1, "no"] as const) {
+        const engine = OnePieceTestEngine.create(
+          {
+            character: [
+              op05DonquixoteRosinante030,
+              op05DonquixoteRosinante030,
+              { card: eb01Doma005, rested: true },
+            ],
+          },
+          {
+            character: [{ card: op04Kaido044, playedOnTurn: 0 }],
+            hand: [op02Koby098, eb01Fourtricks025],
+            activeDon: op02Koby098.cost,
+          },
+          { firstPlayer: "south", activeSeat: "north" },
+        );
+        const rosinanteIds = engine
+          .getView("south")
+          .players.south.characters.filter((card) => card?.cardId === op05DonquixoteRosinante030.id)
+          .map((card) => card!.instanceId);
+        const allyId = engine.findCardInZone("south", "character", eb01Doma005);
+        if (cause === "battle") {
+          engine.declareAttack(
+            engine.findCardInZone("north", "character", op04Kaido044),
+            allyId,
+            "north",
+          );
+          engine.resolveDecision("battleBlocker", { selectedIds: [] }, "south");
+        } else {
+          engine.playCard(op02Koby098, "north");
+          engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
+          engine.resolveDecision("effectTargetSelection", { selectedIds: [allyId] }, "north");
+        }
+        const intent = cause === "battle" ? "battleKoReplacement" : "effectKoReplacement";
+        const decision = engine.pendingDecision(intent, "south").steps[0];
+        if (decision?.kind !== "chooseOption") throw new Error("Expected replacement choices.");
+        const optionIds = rosinanteIds.map((id) => `replacement:${id}:0`);
+        expect(decision.options.map((option) => option.id)).toEqual(
+          expect.arrayContaining([...optionIds, "no"]),
+        );
+        engine.resolveDecision(
+          intent,
+          { optionId: choice === "no" ? "no" : optionIds[choice] },
+          "south",
+        );
+        const view = engine.getView("south");
+        expect(view.players.south.trash.map((card) => card.instanceId)).toEqual([
+          choice === "no" ? allyId : rosinanteIds[choice],
+        ]);
+        expect(view.players.south.characters.some((card) => card?.instanceId === allyId)).toBe(
+          choice !== "no",
+        );
+        expect(view.prompts).toHaveLength(0);
+      }
+    },
+  );
+
   test("one trash replaces both simultaneous K.O.s of rested allies", () => {
     const engine = OnePieceTestEngine.create(
       {

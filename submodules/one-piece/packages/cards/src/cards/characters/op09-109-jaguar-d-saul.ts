@@ -23,7 +23,7 @@ export const op09JaguarDSaul109: CharacterCard = {
   cost: 3,
   power: 5000,
   trigger: "If your Leader is [Nico Robin], play this card.",
-  traits: ["Giant Navy Ohara"],
+  traits: ["Ohara", "Giant", "Navy"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

@@ -22,7 +22,7 @@ export const op10Bartolomeo052: CharacterCard = {
   setId: "OP10",
   cost: 5,
   power: 6000,
-  traits: ["Dressrosa Barto Club"],
+  traits: ["Dressrosa", "Barto Club"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] Place up to 1 Character with a cost of 1 or less at the bottom of the owner's deck.",

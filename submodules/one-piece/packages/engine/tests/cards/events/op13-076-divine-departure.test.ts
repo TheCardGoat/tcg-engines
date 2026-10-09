@@ -52,6 +52,7 @@ describe("OP13-076 Divine Departure", () => {
       { selectedIds: [engine.leader("north")] },
       "north",
     );
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(paymentId);
@@ -86,6 +87,20 @@ describe("OP13-076 Divine Departure", () => {
       activeDon: activeDonBefore,
       restedDon: restedDonBefore,
     });
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("pays five DON!! but does not reduce power without any given DON!!", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: [op13DivineDeparture076], activeDon: 5 },
+      { character: [eb01MountainGod018] },
+    );
+    const target = engine.findCardInZone("north", "character", eb01MountainGod018);
+    engine.asSouth().play(op13DivineDeparture076);
+    engine.asSouth().acceptOptional();
+    expect(engine.getView("south").players.south).toMatchObject({ activeDon: 0, restedDon: 5 });
+    expect(
+      engine.getView("south").players.north.characters.find((c) => c?.instanceId === target)?.power,
+    ).toBe(7000);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

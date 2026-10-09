@@ -5,6 +5,16 @@ import { prb02MonkeyDLuffyP075PirateFoil075 } from "../../../../../cards/src/car
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("P-075 Monkey.D.Luffy - P-075 (Pirate Foil)", () => {
+  test("On Play can decline the available rested DON without attaching it", () => {
+    const e = OnePieceTestEngine.create({ hand: ["P-075"], activeDon: 7 });
+    e.playCard("P-075");
+    e.resolveDecision("effectGiveDonCount", { optionId: "0" }, "south");
+    expect(e.getView("south").players.south).toMatchObject({ activeDon: 0, restedDon: 7 });
+    expect(e.getView("south").players.south.leader.attachedDon).toBe(0);
+    expect(e.getView("south").players.south.characters[0]?.attachedDon).toBe(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+
   test("on play gives up to one rested DON!! to a selected own Leader or Character", () => {
     const engine = OnePieceTestEngine.create(
       {

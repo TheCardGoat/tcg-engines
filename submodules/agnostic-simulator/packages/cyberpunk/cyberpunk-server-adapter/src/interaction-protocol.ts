@@ -27,7 +27,19 @@ export function buildCyberpunkInteractionView(input: {
   const actions =
     input.prompt.choice === null
       ? actionsFromAvailableMoves(input.prompt, input.stateVersion, input.state, input.actorId)
-      : [actionFromChoice(input.prompt.choice, input.stateVersion)];
+      : [
+          actionFromChoice(input.prompt.choice, input.stateVersion, input.state, input.actorId),
+          ...input.prompt.availableMoves
+            .filter(
+              (move) =>
+                move.moveId === "setCombatPriority" ||
+                move.moveId === "cancelPendingResolution" ||
+                move.moveId === "concede",
+            )
+            .map((move) =>
+              actionFromAvailableMove(move, input.stateVersion, input.state, input.actorId),
+            ),
+        ];
 
   return {
     protocolVersion: INTERACTION_PROTOCOL_VERSION,
@@ -213,6 +225,11 @@ export function cyberpunkSubmissionToPayload(submission: InteractionSubmission):
   payload: NativePayload;
 } {
   switch (submission.actionId) {
+    case "setCombatPriority":
+      return {
+        moveType: submission.actionId,
+        payload: { mode: optionalBoolean(submission, "hold") ? "hold" : "automatic" },
+      };
     case "playCard": {
       const cardId = requireString(submission, "cardId");
       const attachToId = optionalString(submission, "attachToId");
@@ -245,9 +262,9 @@ export function cyberpunkSubmissionToPayload(submission: InteractionSubmission):
       return {
         moveType: submission.actionId,
         payload: withOptional(
-          { cardId: requireString(submission, "cardId") },
-          "attachToId",
-          attachToId,
+          withOptional({ cardId: requireString(submission, "cardId") }, "attachToId", attachToId),
+          "paymentSourceIds",
+          optionalStringArray(submission, "paymentSourceIds"),
         ),
       };
     }
@@ -286,10 +303,14 @@ export function cyberpunkSubmissionToPayload(submission: InteractionSubmission):
     case "activateAbility":
       return {
         moveType: submission.actionId,
-        payload: {
-          cardId: requireString(submission, "cardId"),
-          abilityIndex: requireAbilityIndex(submission),
-        },
+        payload: withOptional(
+          {
+            cardId: requireString(submission, "cardId"),
+            abilityIndex: requireAbilityIndex(submission),
+          },
+          "paymentSourceIds",
+          optionalStringArray(submission, "paymentSourceIds"),
+        ),
       };
     case "gainGig":
       return {
@@ -302,6 +323,13 @@ export function cyberpunkSubmissionToPayload(submission: InteractionSubmission):
         payload: { dieIds: requireStringArray(submission, "dieIds") },
       };
     case "resolveEffectTarget": {
+      const rerollDieIds = optionalStringArray(submission, "rerollDieIds");
+      if (rerollDieIds !== undefined) {
+        return {
+          moveType: submission.actionId,
+          payload: rerollDieIds.length === 0 ? { pass: true } : { targetIds: rerollDieIds },
+        };
+      }
       const pass = optionalBoolean(submission, "pass") ?? false;
       return {
         moveType: submission.actionId,
@@ -368,7 +396,11 @@ export function cyberpunkSubmissionToPayload(submission: InteractionSubmission):
       const pass = optionalBoolean(submission, "pass") ?? false;
       return {
         moveType: submission.actionId,
-        payload: { pass },
+        payload: withOptional(
+          { pass },
+          "paymentSourceIds",
+          optionalStringArray(submission, "paymentSourceIds"),
+        ),
       };
     }
     case "resolveSacrificialGear":
@@ -469,16 +501,23 @@ function shouldExposeMustAttackBlockedPass(prompt: PlayerPrompt): boolean {
   return moveIds.has("attackRival") || moveIds.has("attackUnit");
 }
 
-function actionFromChoice(choice: ChoicePrompt, stateVersion: number): InteractionAction {
+function actionFromChoice(
+  choice: ChoicePrompt,
+  stateVersion: number,
+  state?: MatchState,
+  actorId?: string,
+): InteractionAction {
   switch (choice.type) {
     case "scry": {
       const destination =
         choice.payload.destinations.find((entry) => !entry.remainder) ??
         choice.payload.destinations[0];
+      if (!destination) throw new Error("Scry choice requires a destination");
       const remainder = choice.payload.destinations.find((entry) => entry.remainder);
-      const eligibilityLabel = scryEligibilityLabel(destination?.target ?? null);
+      const eligibilityLabel = destination.eligibilityLabel;
+      const eligibleCardIds = new Set(destination.eligibleCardIds);
       const revealedCardCandidates = choice.payload.revealedCards.map((card) => {
-        const enabled = scryCardMatchesTarget(card, destination?.target ?? null);
+        const enabled = eligibleCardIds.has(card.instanceId);
         return {
           entity: { kind: "card" as const, instanceId: card.instanceId },
           enabled,
@@ -603,6 +642,53 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
       ) {
         return atomicAdjustGigAction(choice, stateVersion);
       }
+      if (
+        choice.payload.type === "effectTarget" &&
+        choice.payload.effect?.effect === "rerollGig" &&
+        choice.payload.targetKind === "gig" &&
+        choice.payload.min === 0 &&
+        choice.payload.max === 1 &&
+        choice.payload.eligibleIds?.length === 1
+      ) {
+        const dieId = choice.payload.eligibleIds[0]!;
+        const die = state?.G.gigDice[dieId];
+        const dieLabel = die?.dieType.toUpperCase() ?? "Gig";
+        const result = die?.faceValue;
+        return choiceAction({
+          stateVersion,
+          id: "resolveEffectTarget",
+          intent: "choose-option",
+          ...(choice.payload.source
+            ? { source: { kind: "card", instanceId: choice.payload.source.cardId } }
+            : {}),
+          textParams: {
+            sourceDisplayName: choice.payload.source?.displayName ?? "",
+            sourceRulesText: choice.payload.source?.rulesText ?? "",
+            dieLabel,
+            result: result ?? "",
+          },
+          inputs: [
+            {
+              kind: "option-selection",
+              id: "rerollDieIds",
+              text: { key: "Keep this Gig roll?" },
+              min: 0,
+              max: 1,
+              options: [
+                {
+                  id: dieId,
+                  text: { key: `Reroll ${dieLabel}` },
+                  enabled: true,
+                },
+              ],
+              presentation: {
+                kind: "direct",
+                emptyText: { key: `Keep ${result ?? "result"}` },
+              },
+            },
+          ],
+        });
+      }
       const ids = choice.payload.eligibleIds ?? [];
       const inputId = choice.payload.type === "discardFromHand" ? "cardIds" : "targetIds";
       const actionId =
@@ -645,6 +731,9 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
               }
             : {}),
           ...(choice.payload.targetPurpose ? { targetPurpose: choice.payload.targetPurpose } : {}),
+          ...(choice.payload.pairConstraint
+            ? { gigCopyPairConstraint: choice.payload.pairConstraint }
+            : {}),
           ...(typeof choice.payload.availableEddiesAfterCosts === "number"
             ? { availableEddiesAfterCosts: choice.payload.availableEddiesAfterCosts }
             : {}),
@@ -664,7 +753,7 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
             choice.payload.targetKind === "gig" ? "die" : "card",
             canDecline ? { ...inputBounds, min: 0 } : inputBounds,
             playCardTargetCandidates(choice.payload, ids, choice.payload.targetKind === "gig"),
-            { ordered: isOrderedGigCopyChoice(choice) },
+            { ordered: choice.payload.pairConstraint !== undefined },
           ),
           ...(canDecline
             ? [
@@ -717,6 +806,16 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
               enabled: true,
             })),
           },
+          ...(choice.payload.canPass
+            ? [
+                booleanInput(
+                  "pass",
+                  { key: "cyberpunk.input.pass" },
+                  { key: "cyberpunk.choice.pass" },
+                  { key: "cyberpunk.choice.continue" },
+                ),
+              ]
+            : []),
         ],
       });
     case "chooseGigsToSteal":
@@ -761,6 +860,7 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
                 },
               ]
             : []),
+          ...(state && actorId ? paymentSourceInput("resolveCardToPlay", state, actorId) : []),
         ],
       });
     }
@@ -858,6 +958,15 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
         stateVersion,
         id: "resolveChooseEffect",
         intent: "choose-option",
+        textParams: choice.payload.source
+          ? {
+              sourceCardId: choice.payload.source.cardId,
+              sourceDisplayName: choice.payload.source.displayName,
+            }
+          : undefined,
+        source: choice.payload.source
+          ? { kind: "card", instanceId: choice.payload.source.cardId }
+          : undefined,
         inputs: [
           {
             kind: "option-selection",
@@ -902,6 +1011,7 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
             { key: "cyberpunk.input.pass.true" },
             { key: "cyberpunk.input.pass.false" },
           ),
+          ...(state && actorId ? paymentSourceInput("resolveRedirectDefeat", state, actorId) : []),
         ],
       });
     case "chooseSacrificialGear":
@@ -994,6 +1104,16 @@ function inputsForMove(
 ): InteractionInput[] {
   switch (move.inputSpec.type) {
     case "none":
+      if (move.moveId === "setCombatPriority") {
+        return [
+          booleanInput(
+            "hold",
+            { key: "cyberpunk.input.holdCombatPriority" },
+            { key: "cyberpunk.input.holdCombatPriority.true" },
+            { key: "cyberpunk.input.holdCombatPriority.false" },
+          ),
+        ];
+      }
       if (move.moveId === "resolveAttack") {
         return [
           booleanInput(
@@ -1048,6 +1168,7 @@ function inputsForMove(
             enabled: true,
           })),
         },
+        ...paymentSourceInput(move.moveId, state, actorId),
       ];
     case "playCard":
       const playableCandidates = playableCardCandidates(move.inputSpec.candidates);
@@ -1070,7 +1191,16 @@ function paymentSourceInput(
   state: MatchState | undefined,
   actorId: string,
 ): InteractionInput[] {
-  if (moveId !== "playCard" && moveId !== "callLegend" && moveId !== "goSolo") return [];
+  if (
+    moveId !== "playCard" &&
+    moveId !== "callLegend" &&
+    moveId !== "goSolo" &&
+    moveId !== "activateAbility" &&
+    moveId !== "resolveCardToPlay" &&
+    moveId !== "resolveRedirectDefeat"
+  ) {
+    return [];
+  }
   const player = state?.G.players[actorId];
   if (!state || !player) return [];
   const ids = [...player.eddieCardIds, ...player.zones.legendArea].filter((id) => {
@@ -1283,6 +1413,7 @@ function entityInput(
   ids: readonly string[],
   options: { ordered?: boolean } = {},
 ): InteractionInput {
+  assertSatisfiableEntitySelection(id, limit, ids.length);
   return {
     kind: "entity-selection",
     id,
@@ -1291,7 +1422,9 @@ function entityInput(
     role,
     entityKinds: [kind],
     min: limit.min,
-    max: limit.max,
+    // Protocol bounds describe the available selection, not the printed ceiling.
+    // Do not reduce min: an impossible mandatory choice must fail validation.
+    max: Math.min(limit.max, ids.length),
     ordered: options.ordered ?? false,
     candidates: ids.map((instanceId) => ({ entity: { kind, instanceId }, enabled: true })),
   };
@@ -1309,6 +1442,10 @@ function entityInputFromCandidates(
   candidates: readonly EntityCandidate[],
   options: { ordered?: boolean } = {},
 ): InteractionInput {
+  const enabledCandidateCount = candidates.filter(
+    (candidate) => candidate.enabled !== false,
+  ).length;
+  assertSatisfiableEntitySelection(id, limit, enabledCandidateCount);
   return {
     kind: "entity-selection",
     id,
@@ -1317,10 +1454,27 @@ function entityInputFromCandidates(
     role,
     entityKinds: [kind],
     min: limit.min,
-    max: limit.max,
+    max: Math.min(limit.max, enabledCandidateCount),
     ordered: options.ordered ?? false,
     candidates: [...candidates],
   };
+}
+
+function assertSatisfiableEntitySelection(
+  id: string,
+  limit: { min: number; max: number },
+  enabledCandidateCount: number,
+): void {
+  if (limit.max < limit.min) {
+    throw new RangeError(
+      `Cyberpunk interaction input "${id}" has invalid bounds ${limit.min}-${limit.max}`,
+    );
+  }
+  if (limit.min > enabledCandidateCount) {
+    throw new RangeError(
+      `Cyberpunk interaction input "${id}" requires ${limit.min} selections but has ${enabledCandidateCount} enabled candidates`,
+    );
+  }
 }
 
 function booleanInput(
@@ -1339,21 +1493,6 @@ function booleanInput(
   };
 }
 
-function isOrderedGigCopyChoice(choice: Extract<ChoicePrompt, { type: "chooseTarget" }>): boolean {
-  if (choice.payload.targetKind !== "gig") {
-    return false;
-  }
-  const min = choice.payload.min ?? 1;
-  const max = choice.payload.max ?? min;
-  const text = choice.payload.source?.rulesText?.toLowerCase() ?? "";
-  return (
-    min === 2 &&
-    max === 2 &&
-    (choice.payload.source?.displayName === "Peace Offering" ||
-      text.includes("value of another gig"))
-  );
-}
-
 function bounds(min: number | undefined, max: number | undefined): { min: number; max: number } {
   return { min: min ?? 1, max: max ?? min ?? 1 };
 }
@@ -1367,59 +1506,6 @@ function boundsForScryDestination(
   max: number;
 } {
   return { min: destination?.min ?? 0, max: destination?.max ?? Number.MAX_SAFE_INTEGER };
-}
-
-function scryCardMatchesTarget(
-  card: Extract<ChoicePrompt, { type: "scry" }>["payload"]["revealedCards"][number],
-  target: Extract<ChoicePrompt, { type: "scry" }>["payload"]["destinations"][number]["target"],
-): boolean {
-  return (
-    (!target?.cardTypes || (card.type !== null && target.cardTypes.includes(card.type))) &&
-    (!target?.classifications ||
-      target.classifications.some((classification) =>
-        card.classifications.includes(classification),
-      )) &&
-    (target?.minCost === undefined || (card.cost !== null && card.cost >= target.minCost)) &&
-    (target?.maxCost === undefined || (card.cost !== null && card.cost <= target.maxCost)) &&
-    (!target?.allowedCosts || (card.cost !== null && target.allowedCosts.includes(card.cost))) &&
-    (target?.minPower === undefined || card.effectivePower >= target.minPower) &&
-    (target?.maxPower === undefined || card.effectivePower <= target.maxPower)
-  );
-}
-
-function scryEligibilityLabel(
-  target: Extract<ChoicePrompt, { type: "scry" }>["payload"]["destinations"][number]["target"],
-): string {
-  if (!target) return "any card";
-
-  const parts: string[] = [];
-  if (target.cardTypes?.length) {
-    parts.push(
-      target.cardTypes
-        .map((type) => `${type[0]?.toUpperCase() ?? ""}${type.slice(1)}`)
-        .join(" or "),
-    );
-  }
-  if (target.classifications?.length) {
-    parts.push(target.classifications.join(" or "));
-  }
-  if (target.allowedCosts?.length) {
-    parts.push(`cost matching a friendly Gig value (${target.allowedCosts.join(", ")})`);
-  } else if (target.minCost !== undefined && target.maxCost !== undefined) {
-    parts.push(`cost ${target.minCost}-${target.maxCost}`);
-  } else if (target.maxCost !== undefined) {
-    parts.push(`cost ${target.maxCost} or less`);
-  } else if (target.minCost !== undefined) {
-    parts.push(`cost ${target.minCost} or more`);
-  }
-  if (target.minPower !== undefined && target.maxPower !== undefined) {
-    parts.push(`power ${target.minPower}-${target.maxPower}`);
-  } else if (target.maxPower !== undefined) {
-    parts.push(`power ${target.maxPower} or less`);
-  } else if (target.minPower !== undefined) {
-    parts.push(`power ${target.minPower} or more`);
-  }
-  return parts.length > 0 ? parts.join(" with ") : "any card";
 }
 
 function scrySelectionLimitLabel(

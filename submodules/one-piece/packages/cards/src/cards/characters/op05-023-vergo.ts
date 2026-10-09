@@ -23,7 +23,7 @@ export const op05Vergo023: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Donquixote Pirates Navy"],
+  traits: ["Navy", "Donquixote Pirates"],
   attribute: "strike",
   effect:
     "[DON!! x1][When Attacking] K.O. up to 1 of your opponent's rested Characters with a cost of 3 or less.",

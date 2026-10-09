@@ -22,7 +22,7 @@ export const op02Daifugo078: CharacterCard = {
   setId: "OP02",
   cost: 3,
   power: 5000,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   attribute: "ranged",
   effect:
     "[On Play] DON!! -2 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Play up to 1 [SMILE] type Character card other than [Daifugo] with a cost of 3 or less from your hand.",
@@ -60,7 +60,7 @@ export const op02Daifugo078: CharacterCard = {
               {
                 filter: "trait",
                 value: "SMILE",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

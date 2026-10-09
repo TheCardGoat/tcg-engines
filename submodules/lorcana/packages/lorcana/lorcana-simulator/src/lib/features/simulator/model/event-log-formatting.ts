@@ -128,9 +128,24 @@ export type CardReferenceResolver = (
 
 export function composeMoveLogForViewer(log: MoveLog, viewerId?: string | null): MoveLog {
   const privateMessages = viewerId ? (log.privateByPlayerId?.[viewerId as PlayerId] ?? []) : [];
+  const privateScrySources = new Set(
+    privateMessages.flatMap((message) =>
+      message.key === "lorcana.private.effect.resolve.scrySelection.detail"
+        ? [message.values.sourceCardId]
+        : [],
+    ),
+  );
+  const publicMessages = log.public.filter(
+    (message) =>
+      !(
+        (message.key === "lorcana.effect.resolve.scrySelection" ||
+          message.key === "lorcana.effect.resolve.scrySelection.detail") &&
+        privateScrySources.has(message.values.sourceCardId)
+      ),
+  );
   return {
     ...log,
-    public: [...log.public, ...privateMessages],
+    public: [...publicMessages, ...privateMessages],
     privateByPlayerId: undefined,
   };
 }
@@ -214,6 +229,7 @@ const MARKER_BY_LOG_KEY: Partial<Record<LorcanaLogMessageKey, EventLogMarkerId>>
   "lorcana.effect.cancelled": "ability",
   "lorcana.outcome.combatDamage": "challenge",
   "lorcana.outcome.effectDamage": "challenge",
+  "lorcana.outcome.damageRemoved": "ability",
   "lorcana.outcome.damageMoved": "ability",
   "lorcana.outcome.damagePrevented": "ability",
   "lorcana.outcome.cardBanished": "challenge",
@@ -224,6 +240,9 @@ const MARKER_BY_LOG_KEY: Partial<Record<LorcanaLogMessageKey, EventLogMarkerId>>
   "lorcana.outcome.loreGained": "quest",
   "lorcana.outcome.locationLoreGained": "quest",
   "lorcana.outcome.loreLost": "quest",
+  "lorcana.outcome.inkDropsGained": "ink",
+  "lorcana.outcome.inkDropsRemoved": "ink",
+  "lorcana.outcome.triggeredAbilitySkipped": "ability",
   "lorcana.outcome.cardExerted": "ability",
   "lorcana.outcome.inkwellCardsExerted": "ability",
   "lorcana.outcome.cardReadied": "ability",
@@ -295,6 +314,7 @@ const STAT_VALUE_KEYS = new Set([
  */
 const MANUAL_MOVE_LABELS: Record<string, string> = {
   manualSetLore: "Manual: set lore",
+  manualSetInkDrops: "Manual: set ink drops",
   manualSetDamage: "Manual: set damage",
   manualMoveCard: "Manual: moved card",
   manualExertCard: "Manual: exerted card",
@@ -380,6 +400,24 @@ function buildManualMoveSegments(
       segments.push({ kind: "text", text: "." });
       return segments;
     }
+    case "manualSetInkDrops": {
+      const targetPlayerId =
+        typeof params["playerId"] === "string" ? params["playerId"] : undefined;
+      const amount = params["amount"];
+      const segments: EventLogSegment[] = [...actorPrefix, { kind: "text", text: "manually set " }];
+      if (targetPlayerId) {
+        segments.push(playerSegmentForPlayerId(entry, targetPlayerId, viewerSide, locale));
+        segments.push({ kind: "text", text: "'s ink drops" });
+      } else {
+        segments.push({ kind: "text", text: "ink drops" });
+      }
+      if (typeof amount === "number") {
+        segments.push({ kind: "text", text: " to " });
+        segments.push({ kind: "stat", text: String(amount) });
+      }
+      segments.push({ kind: "text", text: "." });
+      return segments;
+    }
     case "manualMoveCard": {
       if (!cardId) return undefined;
       const segments: EventLogSegment[] = [
@@ -448,6 +486,10 @@ export function formatEventLogBody(
   resolveCard?: CardReferenceResolver,
 ): EventLogBody {
   if (!entry.typedLogEntry) {
+    if (entry.moveId === "undo" && typeof entry.params?.restoredCheckpointStateID === "number") {
+      const text = m["sim.actions.label.undo"]({}, { locale: locale ?? getLocale() });
+      return { marker: "move", segments: [{ kind: "text", text }], source: "fallback", text };
+    }
     let segments = buildManualMoveSegments(entry, viewerSide, locale);
     if (segments && resolveCard) {
       segments = applyCardFallbackLabels(segments, resolveCard);
@@ -773,6 +815,17 @@ function buildMessagesFromMoveLog(
       break;
     case "passTurn":
       messages.push(createLogMessage("lorcana.move.passTurn", { playerId: moveLog.playerId }));
+      // Suppressed triggered abilities surface here — the pass-turn transition
+      // deliberately renders no other generic outcomes.
+      for (const skipped of moveLog.outcomes?.triggeredAbilitiesSkipped ?? []) {
+        messages.push(
+          createLogMessage("lorcana.outcome.triggeredAbilitySkipped", {
+            playerId: skipped.playerId,
+            sourceCardId: skipped.sourceCardId,
+            abilityName: skipped.abilityName,
+          }),
+        );
+      }
       break;
     case "concede":
       messages.push(createLogMessage("lorcana.move.concede", { playerId: moveLog.playerId }));
@@ -1120,6 +1173,16 @@ function appendOutcomeMessages(
     }
   }
 
+  for (const removed of outcomes.damageRemoved ?? []) {
+    messages.push(
+      createLogMessage("lorcana.outcome.damageRemoved", {
+        playerId: actorPlayerId,
+        targetId: removed.targetId,
+        amount: removed.amount,
+      }),
+    );
+  }
+
   for (const moved of outcomes.damageMoved ?? []) {
     messages.push(
       createLogMessage("lorcana.outcome.damageMoved", {
@@ -1143,6 +1206,30 @@ function appendOutcomeMessages(
             playerId: loreChanged.playerId,
             amount: loreChanged.amount,
           }),
+    );
+  }
+
+  for (const inkDropsChanged of outcomes.inkDropsChanged ?? []) {
+    messages.push(
+      inkDropsChanged.operation === "add"
+        ? createLogMessage("lorcana.outcome.inkDropsGained", {
+            playerId: inkDropsChanged.playerId,
+            amount: inkDropsChanged.amount,
+          })
+        : createLogMessage("lorcana.outcome.inkDropsRemoved", {
+            playerId: inkDropsChanged.playerId,
+            amount: inkDropsChanged.amount,
+          }),
+    );
+  }
+
+  for (const skipped of outcomes.triggeredAbilitiesSkipped ?? []) {
+    messages.push(
+      createLogMessage("lorcana.outcome.triggeredAbilitySkipped", {
+        playerId: skipped.playerId,
+        sourceCardId: skipped.sourceCardId,
+        abilityName: skipped.abilityName,
+      }),
     );
   }
 
@@ -1498,12 +1585,6 @@ const BAG_RESOLVE_COMPLETED_KEYS = new Set<LorcanaLogMessageKey>([
   "lorcana.bag.resolve.completed.targets.named",
 ]);
 
-const SCRY_SELECTION_KEYS = new Set<LorcanaLogMessageKey>([
-  "lorcana.effect.resolve.scrySelection",
-  "lorcana.effect.resolve.scrySelection.detail",
-  "lorcana.private.effect.resolve.scrySelection.detail",
-]);
-
 function renderTypedLogMessage(
   entry: MoveLogEntrySnapshot,
   message: LorcanaLogMessage,
@@ -1542,6 +1623,16 @@ function renderTypedLogMessage(
 
   if (
     message.key === "lorcana.effect.resolve.targetSelection" &&
+    message.values.targets.length === 0
+  ) {
+    return interpolateTemplateSegments(
+      getLorcanaLogTemplate("lorcana.bag.resolve.completed", resolveEngineLogLocale(locale)),
+      { sourceId: [cardSegment(message.values.sourceCardId)] },
+    );
+  }
+
+  if (
+    message.key === "lorcana.effect.resolve.targetSelection" &&
     message.values.effectType === "play-card"
   ) {
     return renderPlayedTargetSelectionSegments(message.values.sourceCardId, message.values.targets);
@@ -1561,7 +1652,9 @@ function renderTypedLogMessage(
     return injectInkableIcon(renderedSegments, resolveCard, message.values.cardId);
   }
 
-  if (BAG_RESOLVE_COMPLETED_KEYS.has(message.key) || SCRY_SELECTION_KEYS.has(message.key)) {
+  // Scry messages carry viewer-filtered destinations themselves. Raw move
+  // input includes private deck choices and must not restore those identities.
+  if (BAG_RESOLVE_COMPLETED_KEYS.has(message.key)) {
     const detailSegments = renderBagResolveDestinationDetail(entry);
     if (detailSegments.length > 0) {
       return [...renderedSegments, { kind: "text", text: " " }, ...detailSegments];
@@ -2046,9 +2139,8 @@ function entitySegment(
   locale?: LorcanaSimulatorLocale,
 ): EventLogSegment {
   const resolvedSide = resolveSideForPlayerId(entry, value);
-  if (resolvedSide) {
-    const actor = buildActor(resolvedSide, viewerSide, locale);
-    return { kind: "player", text: actor.label, tone: actor.tone, playerId: value };
+  if (resolvedSide || entry.knownPlayerIds?.includes(value)) {
+    return playerSegmentForPlayerId(entry, value, viewerSide, locale);
   }
 
   return cardSegment(value);
@@ -2061,7 +2153,9 @@ function playerSegmentForPlayerId(
   locale?: LorcanaSimulatorLocale,
 ): EventLogSegment {
   const side = resolveSideForPlayerId(entry, playerId);
-  const actor = buildActor(side, viewerSide, locale);
+  const actor = side
+    ? buildActor(side, viewerSide, locale)
+    : { label: playerId, tone: "opponent" as const };
   return { kind: "player", text: actor.label, tone: actor.tone, playerId };
 }
 

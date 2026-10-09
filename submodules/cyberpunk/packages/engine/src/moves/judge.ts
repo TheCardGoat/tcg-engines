@@ -23,7 +23,7 @@ import type {
   PendingChoice,
   TurnMetadata,
 } from "../types/match-state.ts";
-import type { DieType } from "../types/gig-die.ts";
+import type { DieType } from "@tcg/cyberpunk-types";
 
 export interface JudgeSpendCardInput extends MoveInput {
   args: { cardId: string };
@@ -227,7 +227,7 @@ const judgeAddGigDie: MoveDefinition<JudgeAddGigDieInput> = {
 const judgeSetGigValue: MoveDefinition<JudgeSetGigValueInput> = {
   available: () => false,
   execute({ input, operations }) {
-    operations.gig.setGigValue(input.args.dieId as GigDieId, input.args.value);
+    operations.gig.setGigValue(input.args.dieId as GigDieId, input.args.value, null);
   },
 };
 

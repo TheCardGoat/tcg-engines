@@ -78,4 +78,36 @@ describe("OP10-071 Donquixote Doflamingo", () => {
       engine.getView("south").prompts.some((prompt) => prompt.label.includes("optional effect")),
     ).toBe(false);
   });
+  test("two copies can each use the active DON supplied by the preceding reaction", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP10-071", "OP10-071"], activeDon: 1, donDeckCount: 2 },
+      {},
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    const order = e.pendingDecision("readyEffectOrder", "south").steps[0];
+    if (order?.kind !== "chooseOption") throw new Error("Expected source order");
+    e.resolveDecision("readyEffectOrder", { optionId: order.options[0]!.id }, "south");
+    for (let i = 0; i < 2; i++) {
+      e.asSouth().acceptOptional();
+      e.resolveDecision("effectAddDon", { optionId: "1" }, "south");
+    }
+    expect(e.getView("south").players.south).toMatchObject({
+      activeDon: 1,
+      restedDon: 2,
+      donDeckCount: 0,
+    });
+  });
+  test("may decline an attack reaction without resting or adding DON", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP10-071"], activeDon: 1, donDeckCount: 2 },
+      {},
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().declineOptional();
+    expect(e.getView("south").players.south.activeDon).toBe(1);
+    expect(e.getView("south").players.south.restedDon).toBe(0);
+    expect(e.getView("south").players.south.donDeckCount).toBe(2);
+  });
 });

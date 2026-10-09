@@ -18,8 +18,7 @@ import { getAllCards, getCard, validateDeckForFormat } from "@tcg/op-cards";
 // engine command; validateDeckForFormat is their executable analog and is
 // exercised below. 5-2-1-4-1 ("no intervention" in the first/second decision)
 // is a meta-rule with no executable surface. 5-2-1-5-1 and 5-2-1-5-2 are
-// vacuous: no card in the current catalog has an "At the start of the game"
-// effect (grep over packages/cards/src finds no such text or trigger).
+// exercised with Imu in src/cards/OP13/leaders/079-imu.test.ts.
 //
 // Fluency note: this chapter intentionally uses createMatch / applyCommand /
 // projectStateForSeat rather than asSouth()/asNorth() play-battle helpers —
@@ -277,16 +276,15 @@ describe("5-2 Pre-Game Preparations", () => {
       (instanceId) => state.cards[instanceId]!.cardId,
     );
 
-    // 50 - 5 opening hand = 45 cards remain face-down in each deck. Starting
-    // Life (5-2-1-7) is placed from the deck only after the mulligan step.
-    expect(state.players.south.deck).toHaveLength(45);
-    expect(southDeckOrder).not.toEqual([...ST01_MAIN_DECK].slice(5));
+    // Before the first-player choice and start-of-game effects, no hand or Life is drawn.
+    expect(state.players.south.deck).toHaveLength(50);
+    expect(southDeckOrder).not.toEqual([...ST01_MAIN_DECK]);
     expect(northDeckOrder).not.toEqual(southDeckOrder);
 
     const southView = projectStateForSeat(state, "south");
     const northView = projectStateForSeat(state, "north");
     for (const view of [southView, northView]) {
-      expect(view.players.south.deckCount).toBe(45);
+      expect(view.players.south.deckCount).toBe(50);
       expect(view.players.south.deckTop?.hidden).toBe(true);
       expect(view.players.south.deckTop?.name).toBeNull();
       expect(view.players.north.deckTop?.hidden).toBe(true);
@@ -348,7 +346,9 @@ describe("5-2 Pre-Game Preparations", () => {
   });
 
   test("5-2-1-6: each player draws 5 cards from their deck as their opening hand", () => {
-    const state = createMatch(createSt01MirrorPracticeConfig({ firstPlayer: "south" }));
+    const created = createMatch(createSt01MirrorPracticeConfig({ firstPlayer: "south" }));
+    expect(projectStateForSeat(created, "south").players.south.handCount).toBe(0);
+    const state = decideFirstPlayer(created, "south");
 
     const southView = projectStateForSeat(state, "south");
     expect(southView.players.south.hand).toHaveLength(5);

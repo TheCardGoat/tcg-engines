@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { prb01DuvalJollyRogerFoil014 } from "../../../../../cards/src/cards/characters/st12-014-duval-jolly-roger-foil.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("ST12-014 Duval (Jolly Roger Foil)", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(prb01DuvalJollyRogerFoil014);
-  });
-});

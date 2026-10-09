@@ -25,7 +25,7 @@ export const lyleTiberiusRourkeCrystallizedCommanderEpic: CharacterCard = {
   franchise: "Atlantis",
   set: "012",
   cardNumber: 214,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 6,
   strength: 6,

@@ -102,6 +102,7 @@ function createFixtureSummary(
   const heldCard = handCards[3] ?? { id: "mock-held", name: "Held card" };
 
   return {
+    kind: "analytics",
     viewer: {
       id: "fixture-viewer",
       label: "Layout reviewer with a deliberately long display name",
@@ -313,17 +314,33 @@ export function FabPostGameSummaryFixturePage({
     () => createFixtureSummary(viewerSeat, opponentSeat, outcome, premium, artResolver),
     [opponentSeat, outcome, premium, artResolver, viewerSeat],
   );
+  const resultOnly = searchParams.get("data") === "unavailable";
+  const result = {
+    kind: "result" as const,
+    viewer: summary.viewer,
+    opponent: summary.opponent,
+    outcome: summary.outcome,
+    outcomeTitle: summary.outcomeTitle,
+    outcomeDetail: summary.outcomeDetail,
+    reason: summary.reason,
+    turnNumber: summary.turnNumber,
+    formatLabel: summary.formatLabel,
+    spectator: false,
+  };
 
   return (
     <div data-testid="fab-post-game-summary-fixture">
       <FabPostGameSummary
-        summary={summary}
+        summary={resultOnly ? result : summary}
         initialScope={scope}
         initialGameTab={gameTab}
         initialMatchTab={matchTab}
         onInspectBoard={() => undefined}
         onMainMenu={() => window.location.assign(`${FAB_SIMULATOR_BASE}/tests`)}
         onPlayAgain={() => window.location.reload()}
+        onWatchReplay={() => undefined}
+        onSaveReplay={() => undefined}
+        onDownloadReplay={() => undefined}
       />
     </div>
   );

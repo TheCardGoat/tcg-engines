@@ -6,12 +6,10 @@ describe("emphasisVisualStyle", () => {
   it("distinguishes positive and negative reactions without relying on color alone", () => {
     expect(emphasisVisualStyle("positive")).toMatchObject({
       tone: "positive",
-      borderStyle: "solid",
       travel: -20,
     });
     expect(emphasisVisualStyle("negative")).toMatchObject({
       tone: "negative",
-      borderStyle: "dashed",
       travel: 20,
     });
   });

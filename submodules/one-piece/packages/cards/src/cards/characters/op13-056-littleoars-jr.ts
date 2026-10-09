@@ -23,7 +23,7 @@ export const op13LittleoarsJr056: CharacterCard = {
   cost: 7,
   power: 7000,
   counter: 1000,
-  traits: ["Giant Whitebeard Pirates Allies"],
+  traits: ["Giant", "Whitebeard Pirates Allies"],
   attribute: "strike",
   effect: '[When Attacking] If your Leader\'s type includes "Whitebeard Pirates", draw 1 card.',
   effects: {

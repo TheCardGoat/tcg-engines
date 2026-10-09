@@ -4,6 +4,7 @@ import {
   type MatchStaticResources,
   type Player,
   type PlayerId,
+  type MatchRuntimeConfig,
 } from "#core";
 
 import type { LorcanaCard } from "./types";
@@ -15,6 +16,8 @@ export type LorcanaCardsMaps = {
 };
 
 export type LorcanaBaseEngineParams = {
+  /** Internal setup injection for bounded engine fixtures, not normal match admission. */
+  _fixtureSetup?: MatchRuntimeConfig["setup"];
   seed: string;
   instanceIdPrefix?: string;
   matchID?: string;

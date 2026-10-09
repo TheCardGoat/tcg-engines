@@ -66,4 +66,59 @@ describe("OP17-090 Franky", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("opponent cost-twelve Character enables the K.O. of a cost-two target", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-090"], activeDon: 10 },
+      { character: ["OP17-089", "EB01-005"] },
+    );
+    const target = e.findCardInZone("north", "character", "EB01-005");
+    e.asSouth().play("OP17-090");
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.cardId === "OP17-090")?.power,
+    ).toBe(5000);
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.north.trash.map((c) => c.instanceId)).toContain(target);
+  });
+
+  test("without a cost-twelve Character, On Play does nothing and power stays at 2000", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-090"], activeDon: 2 },
+      { character: ["OP01-094", "EB01-005"], hand: ["OP17-089", "ST02-006"] },
+    );
+    e.asSouth().play("OP17-090");
+    expect(
+      e.getView("south").players.south.characters.find((card) => card?.cardId === "OP17-090")
+        ?.power,
+    ).toBe(2000);
+    expect(e.getView("south").players.north.characters.map((card) => card?.cardId)).toContain(
+      "EB01-005",
+    );
+    expect(e.getView("north").players.north.hand.map((card) => card.cardId)).toEqual([
+      "OP17-089",
+      "ST02-006",
+    ]);
+    expect(e.getView("south").players.north.trash).toHaveLength(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("loses the continuous bonus when the last cost-twelve Character leaves", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP17-090"], activeDon: 2 },
+      { character: [{ cardId: "OP17-089", rested: true }], hand: [] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const saul = e.findCardInZone("north", "character", "OP17-089");
+    expect(
+      e.getView("south").players.south.characters.find((card) => card?.cardId === "OP17-090")
+        ?.power,
+    ).toBe(5000);
+    e.attachDon(e.leader("south"), 2);
+    e.declareAttack(e.leader("south"), saul);
+    expect(e.getView("south").players.north.trash.map((card) => card.instanceId)).toContain(saul);
+    expect(
+      e.getView("south").players.south.characters.find((card) => card?.cardId === "OP17-090")
+        ?.power,
+    ).toBe(2000);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

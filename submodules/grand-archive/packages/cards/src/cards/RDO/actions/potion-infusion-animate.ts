@@ -77,8 +77,20 @@ export const potionInfusionAnimate: GrandArchiveCard<GrandArchiveAbilityDefiniti
                 kind: "object",
                 zones: ["field"],
                 filter: {
-                  kind: "supertype",
-                  oneOf: ["REGALIA"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "not",
+                      filter: {
+                        kind: "supertype",
+                        oneOf: ["REGALIA"],
+                      },
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["POTION"],
+                    },
+                  ],
                 },
               },
             },

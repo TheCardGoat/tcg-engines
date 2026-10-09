@@ -1,5 +1,6 @@
 import type { FilteredAbilityHint, AbilityRequirementHint } from "../../view/ability-hints.ts";
 import type { FilteredCardView, FilteredMatchView } from "../../view/filter.ts";
+import { gigConditionSatisfied, isGigCondition } from "./gig-conditions.ts";
 
 export type AbilityGameStage = "early" | "mid" | "late";
 
@@ -63,6 +64,23 @@ export function scoreCardAbilitiesForPlay(
   return Math.round(score);
 }
 
+/** Only on-play effects whose public requirements and conditions are ready now. */
+export function scoreReadyOnPlayAbilities(
+  card: FilteredCardView,
+  view: FilteredMatchView,
+  playerId: string,
+): number {
+  const board = snapshot(view, playerId);
+  return Math.round(
+    card.abilityHints.reduce((total, hint) => {
+      if (hint.timing !== "play" || (hint.reactive && !board.attackInProgress)) return total;
+      if (!requirementsSatisfied(hint.requirements, board)) return total;
+      if (conditionSupport(hint, board, null) !== 1) return total;
+      return total + scoreRoles(hint, board);
+    }, 0),
+  );
+}
+
 /** Public board-fit score for choosing between currently legal activated abilities. */
 export function scoreActivatedAbility(
   card: FilteredCardView | null,
@@ -78,6 +96,34 @@ export function scoreActivatedAbility(
   return Math.min(
     40,
     Math.round(scoreRoles(hint, board) * requirements * conditionSupport(hint, board, host)),
+  );
+}
+
+/** Whether public requirements and known conditions can resolve in the planned timing window. */
+export function abilityHintCanResolveInPlan(
+  hint: FilteredAbilityHint,
+  view: FilteredMatchView,
+  playerId: string,
+  options: {
+    gigValues?: readonly number[];
+    assumeOwnTiming?: boolean;
+    host?: FilteredCardView | null;
+  } = {},
+): boolean {
+  const board = snapshot(view, playerId);
+  const attackInProgress =
+    board.attackInProgress || (options.assumeOwnTiming === true && hint.timing === "attack");
+  if (!requirementsSatisfied(hint.requirements, board, attackInProgress)) return false;
+  return hint.conditions.every(
+    (condition) =>
+      conditionSatisfied(
+        condition,
+        hint,
+        board,
+        options.host ?? null,
+        options.gigValues ?? board.ownGigs.map((gig) => gig.effectivePower),
+        attackInProgress,
+      ) !== false,
   );
 }
 
@@ -120,30 +166,46 @@ function conditionSupport(
   host: FilteredCardView | null,
 ): number {
   let factor = 1;
+  const gigValues = board.ownGigs.map((gig) => gig.effectivePower);
   for (const condition of hint.conditions) {
-    let supported: boolean | null = null;
-    if (condition === "hasGigPair") supported = hasGigPair(board.ownGigs);
-    else if (condition === "hasDistinctGigValues") {
-      supported = distinctGigValues(board.ownGigs) >= conditionMinimum(hint, condition, 2);
-    } else if (condition === "hasMinGig") supported = board.ownGigs.some((gig) => gig.power === 1);
-    else if (condition === "hasEvenAndOddGigValues") supported = hasEvenAndOdd(board.ownGigs);
-    else if (condition === "hasEquippedUnitsOrLegends") {
-      supported =
-        board.ownBoard.filter((card) => card.attachedGearIds.length > 0).length >=
-        conditionMinimum(hint, condition, 1);
-    } else if (condition === "allFriendlyLegendsFaceUp") {
-      supported = board.ownFaceDownLegendCount === 0;
-    } else if (condition === "attacking" || condition === "fightKind") {
-      supported = board.attackInProgress;
-    } else if (condition === "cardName" && hint.requiredHostNames.length > 0) {
-      supported = host !== null && hint.requiredHostNames.includes(host.cardName ?? "");
-    } else if (condition === "targetExists") {
-      supported = requirementsSatisfied(hint.requirements, board);
-    }
+    const supported = conditionSatisfied(
+      condition,
+      hint,
+      board,
+      host,
+      gigValues,
+      board.attackInProgress,
+    );
     if (supported === false) factor *= 0.1;
     else if (supported === null) factor *= 0.85;
   }
   return factor;
+}
+
+function conditionSatisfied(
+  condition: string,
+  hint: FilteredAbilityHint,
+  board: BoardSnapshot,
+  host: FilteredCardView | null,
+  gigValues: readonly number[],
+  attackInProgress: boolean,
+): boolean | null {
+  if (isGigCondition(condition)) return gigConditionSatisfied(condition, gigValues, hint);
+  if (condition === "hasEquippedUnitsOrLegends") {
+    return (
+      board.ownBoard.filter((card) => card.attachedGearIds.length > 0).length >=
+      conditionMinimum(hint, condition, 1)
+    );
+  }
+  if (condition === "allFriendlyLegendsFaceUp") return board.ownFaceDownLegendCount === 0;
+  if (condition === "attacking" || condition === "fightKind") return attackInProgress;
+  if (condition === "cardName" && hint.requiredHostNames.length > 0) {
+    return host !== null && hint.requiredHostNames.includes(host.cardName ?? "");
+  }
+  if (condition === "targetExists") {
+    return requirementsSatisfied(hint.requirements, board, attackInProgress);
+  }
+  return null;
 }
 
 function conditionMinimum(hint: FilteredAbilityHint, condition: string, fallback: number): number {
@@ -157,15 +219,18 @@ function conditionMinimum(hint: FilteredAbilityHint, condition: string, fallback
 function requirementsSatisfied(
   requirements: AbilityRequirementHint[],
   board: BoardSnapshot,
+  attackInProgress = board.attackInProgress,
 ): boolean {
   return requirements.every((requirement) => {
     switch (requirement) {
       case "attackContext":
-        return board.attackInProgress;
+        return attackInProgress;
       case "equippedBoard":
         return board.ownBoard.some((card) => card.attachedGearIds.length > 0);
       case "friendlyBoard":
         return board.ownBoard.length > 0;
+      case "friendlyFaceDownLegend":
+        return board.ownFaceDownLegendCount > 0;
       case "friendlyGig":
         return board.ownGigs.length > 0;
       case "friendlyTrash":
@@ -207,18 +272,6 @@ function visibleBoard(player: FilteredMatchView["players"][string]): FilteredCar
     ...zoneCards(player.zones.field),
     ...zoneCards(player.zones.legendArea).filter((card) => !card.faceDown),
   ];
-}
-
-function hasGigPair(gigs: FilteredCardView[]): boolean {
-  return new Set(gigs.map((gig) => gig.power)).size < gigs.length;
-}
-
-function distinctGigValues(gigs: FilteredCardView[]): number {
-  return new Set(gigs.map((gig) => gig.power)).size;
-}
-
-function hasEvenAndOdd(gigs: FilteredCardView[]): boolean {
-  return gigs.some((gig) => gig.power % 2 === 0) && gigs.some((gig) => gig.power % 2 !== 0);
 }
 
 function stageValue(stage: AbilityGameStage, early: number, mid: number, late: number): number {

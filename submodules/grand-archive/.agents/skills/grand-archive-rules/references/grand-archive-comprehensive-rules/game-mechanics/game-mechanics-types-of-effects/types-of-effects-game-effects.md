@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-types-of-effects/types-of-effects-game-effects"
+  relation: "current_index"
+---
+
 # Types of Effects - Game Effects
 
 #### General Rules:

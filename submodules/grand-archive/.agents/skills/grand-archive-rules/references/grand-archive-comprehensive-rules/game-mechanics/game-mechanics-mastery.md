@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-mastery"
+  relation: "current_index"
+---
+
 # Game Mechanics - Mastery
 
 Masteries are special non-object player functions and are typically granted by various effects. Players can only have one mastery at a time.

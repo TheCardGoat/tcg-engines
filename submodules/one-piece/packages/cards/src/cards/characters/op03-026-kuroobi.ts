@@ -23,7 +23,7 @@ export const op03Kuroobi026: CharacterCard = {
   cost: 4,
   power: 3000,
   counter: 1000,
-  traits: ["Fish-Man Arlong Pirates East Blue"],
+  traits: ["Fish-Man", "East Blue", "Arlong Pirates"],
   attribute: "strike",
   effect:
     "[On Play] If your Leader has the {East Blue} type, rest up to 1 of your opponent's Characters.\n[Trigger] Play this card.",
@@ -35,7 +35,7 @@ export const op03Kuroobi026: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "East Blue",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

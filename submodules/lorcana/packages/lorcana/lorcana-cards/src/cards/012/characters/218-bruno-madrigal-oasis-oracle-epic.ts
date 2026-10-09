@@ -23,7 +23,7 @@ export const brunoMadrigalOasisOracleEpic: CharacterCard = {
   franchise: "Encanto",
   set: "012",
   cardNumber: 218,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 5,
   strength: 4,

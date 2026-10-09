@@ -1,15 +1,22 @@
+import { normalizeLorcanaTarget } from "@tcg/lorcana-types/targeting";
 import { getLogger } from "@logtape/logtape";
 import type { CardInstanceId, MoveInput, PlayerId, RuntimeValidationResult } from "#core";
 import type {
   LorcanaCardDefinition,
+  LorcanaPlayerTarget,
   LorcanaCardTarget,
   LorcanaTargetDSL,
 } from "@tcg/lorcana-types";
 import type { MoveEnumerationContext, MoveValidationContext } from "#core";
 import type { LorcanaG } from "../../types";
 import type { DynamicAmountEventSnapshot } from "../../types/domain-events";
-import { hasKeyword } from "../../card-utils";
-import { normalizeTargetDescriptor, resolveCandidateTargets } from "./target-resolver";
+import { hasKeyword, isSong } from "../../card-utils";
+import {
+  normalizeTargetDescriptor,
+  resolveCandidateTargets,
+  isPlayerTargetDescriptor,
+  resolveTargetPlayerIds,
+} from "./target-resolver";
 import type { TargetDescriptor } from "./target-resolver";
 import { flattenSlottedTargets, isSlottedTargetInput } from "../slotted-targets";
 
@@ -17,6 +24,7 @@ type DiscardTargetSourceZone = "deck" | "hand" | "play" | "discard" | "inkwell";
 type ActionSelectionZone = "deck" | "hand" | "play" | "discard" | "inkwell" | "limbo";
 
 type RemoveDamageTargetDescriptor = {
+  zones?: TargetDescriptor["zones"];
   owner: "you" | "opponent" | "any";
   cardTypes?: readonly string[];
   filter?: TargetDescriptor["filter"];
@@ -25,6 +33,7 @@ type RemoveDamageTargetDescriptor = {
 };
 
 type ReturnToHandTargetDescriptor = {
+  zones?: TargetDescriptor["zones"];
   owner: "you" | "opponent" | "any";
   cardTypes?: readonly string[];
   filter?: TargetDescriptor["filter"];
@@ -47,6 +56,7 @@ type ReturnFromDiscardTargetDescriptor = {
 };
 
 type DiscardTargetDescriptor = {
+  songOnly?: boolean;
   owner: "you" | "opponent" | "any";
   sourceZone: DiscardTargetSourceZone;
   minAmount: number;
@@ -73,6 +83,7 @@ type PlayCardSelectionDescriptor = {
     sameNameAsChosenCard?: boolean;
     sameInstanceAsTriggerSubject?: boolean;
     inEventSnapshotCardsUnder?: boolean;
+    inEventSnapshotDiscardedCards?: boolean;
   };
 };
 
@@ -109,6 +120,7 @@ type TargetAnalysisOptions = {
 };
 
 export type TargetAnalysis = {
+  movementTargetPairs?: Array<{ subject: TargetDescriptor; location: TargetDescriptor }>;
   targetDsl: LorcanaTargetDSL[];
   cardCandidates: CardInstanceId[];
   playerCandidates: PlayerId[];
@@ -135,6 +147,10 @@ export type TargetAnalysis = {
     minSelections: number;
     maxSameOwnerSelections: number;
   }[];
+  /** Per-descriptor same-name constraints (all selected cards must share a name). */
+  sameNameTargetGroups?: {
+    candidateIds: CardInstanceId[];
+  }[];
 };
 
 export type NormalizedTargetSelection = {
@@ -153,6 +169,8 @@ type TargetValidationResult = TargetValidationSuccess | TargetValidationFailure;
 type TargetSelectionRestrictionContext = {
   currentPlayer: PlayerId;
   ctx: ActionTargetRuntimeContext;
+  movementTargetDsl?: readonly unknown[];
+  sourceCardId?: CardInstanceId;
 };
 
 const logger = getLogger(["lorcana-engine", "target-analysis"]);
@@ -412,6 +430,7 @@ function buildDiscardTargetDsl(descriptor: DiscardTargetDescriptor): LorcanaCard
     zones: [descriptor.sourceZone],
   };
 
+  if (descriptor.songOnly) target = appendTargetFilter(target, { type: "is-song" });
   if (descriptor.filter?.cardType) {
     target = {
       ...target,
@@ -516,6 +535,7 @@ function collectRemoveDamageTargetDescriptors(effect: unknown): RemoveDamageTarg
 
   const effectRecord = effect as Record<string, unknown>;
   if (effectRecord.type === "remove-damage") {
+    const normalizedTarget = normalizeTargetDescriptor(effectRecord.target);
     const targetRecord =
       effectRecord.target && typeof effectRecord.target === "object"
         ? (effectRecord.target as Record<string, unknown>)
@@ -523,9 +543,11 @@ function collectRemoveDamageTargetDescriptors(effect: unknown): RemoveDamageTarg
     return [
       {
         owner: normalizeTargetOwner(effectRecord.target),
-        cardTypes: ["character", "location"],
-        filter: targetRecord?.filter,
-        filters: targetRecord?.filters,
+        zones: normalizedTarget?.zones,
+        cardTypes: normalizedTarget?.cardTypes ?? ["character", "location"],
+        filter: normalizedTarget?.filter ?? targetRecord?.filter,
+        filters: normalizedTarget?.filters ?? targetRecord?.filters,
+        excludeSelf: normalizedTarget?.excludeSelf,
       },
     ];
   }
@@ -603,10 +625,16 @@ function collectReturnToHandTargetDescriptors(effect: unknown): ReturnToHandTarg
   const effectRecord = effect as Record<string, unknown>;
   if (effectRecord.type === "return-to-hand") {
     const normalizedTarget = normalizeTargetDescriptor(effectRecord.target);
+    // A reference consumes a previous selection. It must not add unrestricted
+    // play-zone candidates to the selection that produced that reference.
+    if (normalizedTarget?.reference) {
+      return [];
+    }
     return normalizedTarget
       ? [
           {
             owner: (normalizedTarget.owner ?? "any") as "you" | "opponent" | "any",
+            zones: normalizedTarget.zones,
             cardTypes: normalizedTarget.cardTypes,
             filter: normalizedTarget.filter,
             filters: normalizedTarget.filters,
@@ -789,6 +817,7 @@ function normalizeDiscardTargetDescriptor(
   return {
     owner,
     sourceZone,
+    songOnly: rawFilter?.type === "is-song",
     minAmount: anyNumberChosen || isComputedAmount ? 0 : amount,
     maxAmount: anyNumberChosen || isComputedAmount ? Number.MAX_SAFE_INTEGER : amount,
     ...(normalizedFilter ? { filter: normalizedFilter } : {}),
@@ -1168,15 +1197,25 @@ function collectChosenCardTargetDescriptors(
   ];
 }
 
-function hasChosenPlayerTarget(effect: unknown): boolean {
+function collectChosenPlayerTargets(effect: unknown): LorcanaPlayerTarget[] {
   if (!effect || typeof effect !== "object") {
-    return false;
+    return [];
   }
 
   const effectRecord = effect as Record<string, unknown>;
-  if (effectRecord.target === "CHOSEN_PLAYER" || effectRecord.chooser === "CHOSEN_PLAYER") {
-    return true;
+  const chooser = normalizeLorcanaTarget(effectRecord.chooser);
+  // A chosen mode chooser owns the player selection. Nested CHOSEN_PLAYER
+  // effects consume that selection; they must not widen its candidates.
+  if (chooser && isPlayerTargetDescriptor(chooser) && chooser.selector === "chosen") {
+    return [chooser];
   }
+  const target = normalizeLorcanaTarget(effectRecord.target);
+  const direct: LorcanaPlayerTarget[] =
+    target && isPlayerTargetDescriptor(target) && target.selector === "chosen"
+      ? [target as LorcanaPlayerTarget]
+      : effectRecord.chooser === "CHOSEN_PLAYER"
+        ? [{ selector: "chosen", count: 1 }]
+        : [];
 
   const nestedCandidates = [
     effectRecord.effect,
@@ -1192,7 +1231,10 @@ function hasChosenPlayerTarget(effect: unknown): boolean {
     effectRecord.else,
   ];
 
-  return nestedCandidates.some((candidate) => hasChosenPlayerTarget(candidate));
+  return [
+    ...direct,
+    ...nestedCandidates.flatMap((candidate) => collectChosenPlayerTargets(candidate)),
+  ];
 }
 
 function resolveActionTargetCandidates(
@@ -1221,7 +1263,7 @@ function resolveActionTargetCandidates(
       selector: "chosen",
       count: "all",
       owner: targetDescriptor.owner,
-      zones: ["play"],
+      zones: targetDescriptor.zones ?? ["play"],
       cardTypes: targetDescriptor.cardTypes,
       filter: targetDescriptor.filter,
       filters: targetDescriptor.filters,
@@ -1333,6 +1375,10 @@ function resolveActionDiscardSelectionCandidates(
         playerId: ownerId,
       }) as CardInstanceId[];
       for (const cardId of sourceCards) {
+        if (targetDescriptor.songOnly) {
+          const definition = getCardDefinition(ctx, cardId);
+          if (!definition || !isSong(definition)) continue;
+        }
         if (targetDescriptor.sourceZone === "hand" && cardId === sourceCardId) {
           continue;
         }
@@ -1484,6 +1530,13 @@ function matchesPlayCardSelectionCriteria(
     }
   }
 
+  if (filter.inEventSnapshotDiscardedCards === true) {
+    const discardedCardIds = eventSnapshot?.discardedCardIds;
+    if (!Array.isArray(discardedCardIds) || !discardedCardIds.includes(cardId)) {
+      return false;
+    }
+  }
+
   return true;
 }
 
@@ -1621,6 +1674,24 @@ function descriptorMaxSelections(
   return fallback;
 }
 
+function collectMovementTargetPairs(
+  effect: unknown,
+): NonNullable<TargetAnalysis["movementTargetPairs"]> {
+  if (!effect || typeof effect !== "object") return [];
+  const record = effect as Record<string, unknown>;
+  if (record.type === "move-to-location") {
+    const subject = normalizeTargetDescriptor(record.character);
+    const location = normalizeTargetDescriptor(record.location);
+    return subject && location ? [{ subject, location }] : [];
+  }
+  const nested = [
+    record.effect,
+    ...(Array.isArray(record.steps) ? record.steps : []),
+    ...(Array.isArray(record.options) ? record.options : []),
+  ];
+  return nested.flatMap(collectMovementTargetPairs);
+}
+
 export function analyzeEffectTargets(
   effect: unknown,
   playerId: PlayerId,
@@ -1628,6 +1699,7 @@ export function analyzeEffectTargets(
   sourceCardId?: CardInstanceId,
   options?: TargetAnalysisOptions,
 ): TargetAnalysis {
+  const movementTargetPairs = collectMovementTargetPairs(effect);
   const removeDamageTargetDescriptors = collectRemoveDamageTargetDescriptors(effect);
   const returnToHandTargetDescriptors = collectReturnToHandTargetDescriptors(effect);
   const returnFromDiscardTargetDescriptors = collectReturnFromDiscardTargetDescriptors(effect);
@@ -1657,7 +1729,8 @@ export function analyzeEffectTargets(
       : baseChosenCardTargetDescriptors,
   );
   const playCardSelectionDescriptors = collectPlayCardSelectionDescriptors(effect);
-  const chosenPlayerTarget = hasChosenPlayerTarget(effect);
+  const chosenPlayerTargets = collectChosenPlayerTargets(effect);
+  const chosenPlayerTarget = chosenPlayerTargets.length > 0;
   const targetDsl = [
     ...chosenCardTargetDescriptors,
     ...returnFromDiscardTargetDescriptors.map((descriptor) =>
@@ -1668,7 +1741,7 @@ export function analyzeEffectTargets(
     ...playCardSelectionDescriptors.map((descriptor) =>
       buildPlayCardSelectionTargetDsl(descriptor),
     ),
-    ...(chosenPlayerTarget ? [{ selector: "chosen", count: 1 } satisfies LorcanaTargetDSL] : []),
+    ...chosenPlayerTargets,
   ];
 
   const playCandidates = resolveActionTargetCandidates(
@@ -1711,7 +1784,17 @@ export function analyzeEffectTargets(
     sourceCardId,
     options?.eventSnapshot,
   );
-  const playerCandidates = chosenPlayerTarget ? [...ctx.framework.state.playerIds] : [];
+  const playerCandidates = [
+    ...new Set(
+      chosenPlayerTargets.flatMap((target) =>
+        resolveTargetPlayerIds(
+          ctx,
+          { ...target, count: undefined },
+          { controllerId: playerId, sourceCardId, eventSnapshot: options?.eventSnapshot },
+        ),
+      ),
+    ),
+  ];
 
   const cardCandidates = [
     ...new Set([
@@ -1841,6 +1924,18 @@ export function analyzeEffectTargets(
     declaredMaxSelections: explicitDescriptorCount > 0 ? Math.max(1, maxSelections) : 0,
     requiresExplicitSelection: explicitDescriptorCount > 0,
     allowsDeferredResolutionWithoutInitialSelection: hasDeferredHandDiscardSelection,
+    sameNameTargetGroups: chosenCardTargetDescriptors
+      .filter((descriptor) => descriptor.requireSameName)
+      .map((descriptor) => ({
+        candidateIds: resolveActionChosenTargetCandidates(
+          [descriptor],
+          playerId,
+          ctx,
+          sourceCardId,
+          options?.eventSnapshot,
+        ),
+      })),
+    movementTargetPairs,
     sameOwnerTargetGroups: chosenCardTargetDescriptors
       .filter((descriptor) => descriptor.requireSameOwner)
       .map((descriptor) => {
@@ -1944,10 +2039,65 @@ export function validateAndNormalizeTargetSelection(
     };
   }
 
+  // Validate each typed movement choice before executing the sequence.
+  if (context?.movementTargetDsl) {
+    for (const target of context.movementTargetDsl) {
+      const descriptor = normalizeTargetDescriptor(target);
+      if (descriptor?.selector !== "chosen" || typeof descriptor.count !== "number") continue;
+      const candidates = resolveCandidateTargets(context.ctx, descriptor, {
+        controllerId: context.currentPlayer,
+        sourceCardId: context.sourceCardId,
+      });
+      const selected = new Set(cardIds.filter((id) => candidates.includes(id)));
+      if (selected.size < descriptor.count && totalSelections >= analysis.minSelections) {
+        return {
+          valid: false,
+          error: "Select a target for each required movement choice",
+          errorCode: "INVALID_ACTION_TARGETS",
+        };
+      }
+    }
+  }
+  if (context)
+    for (const pair of analysis.movementTargetPairs ?? []) {
+      const selectionContext = {
+        controllerId: context.currentPlayer,
+        sourceCardId: context.sourceCardId,
+      };
+      const subjects = resolveCandidateTargets(context.ctx, pair.subject, selectionContext);
+      const destinations = resolveCandidateTargets(
+        context.ctx,
+        pair.location,
+        selectionContext,
+      ).filter((id) => cardIds.includes(id));
+      const characters =
+        pair.subject.selector === "chosen"
+          ? subjects.filter((id) => cardIds.includes(id))
+          : subjects;
+      if (
+        characters.some((id) =>
+          destinations.some(
+            (destination) => destination === context.ctx.cards.require(id).meta?.atLocationId,
+          ),
+        )
+      ) {
+        return {
+          valid: false,
+          error: "Choose a different location for the character to move to",
+          errorCode: "INVALID_MOVEMENT_DESTINATION",
+        };
+      }
+    }
+
   for (const { candidateIds: candidates } of analysis.sameOwnerTargetGroups ?? []) {
-    const selected = cardIds.filter((id) => candidates.includes(id));
-    if (selected.length < 2) continue;
-    const owners = selected.map(
+    // The co-ownership constraint is scoped to the group's own slot: every
+    // GROUP member that got selected must share an owner, while cards picked
+    // for other descriptors don't participate in this constraint. Comparing
+    // the whole selection instead would reject legal multi-descriptor picks
+    // once a card combines this group with an independent second descriptor.
+    const selectedInGroup = cardIds.filter((id) => candidates.includes(id));
+    if (selectedInGroup.length <= 1) continue;
+    const owners = selectedInGroup.map(
       (id) => context?.ctx.framework.state._zonesPrivate?.cardIndex?.[id]?.ownerID,
     );
     if (owners.some((owner) => !owner || owner !== owners[0])) {
@@ -1955,6 +2105,22 @@ export function validateAndNormalizeTargetSelection(
         valid: false,
         error: "Chosen cards must belong to the same player",
         errorCode: "TARGETS_MUST_SHARE_OWNER",
+      };
+    }
+  }
+
+  for (const { candidateIds: candidates } of analysis.sameNameTargetGroups ?? []) {
+    if (!context) continue;
+    // Same slot-scoping as the owner check above: only the group's selected
+    // members must share a name.
+    const selectedInGroup = cardIds.filter((id) => candidates.includes(id));
+    if (selectedInGroup.length <= 1) continue;
+    const names = selectedInGroup.map((id) => getCardDefinition(context.ctx, id)?.name);
+    if (names.some((name) => !name || name !== names[0])) {
+      return {
+        valid: false,
+        error: "Chosen cards must share the same name",
+        errorCode: "TARGETS_MUST_SHARE_NAME",
       };
     }
   }

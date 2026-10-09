@@ -14,7 +14,7 @@ describe("EB03-003 Uta (SP)", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: op06Uta001,
       hand: [eb03UtaSp003, eb01Doma005, eb02FakeStrawHatCrew005, eb01MountainGod018],
-      deck: [eb02FakeStrawHatCrew005, eb01MountainGod018],
+      deck: [eb02FakeStrawHatCrew005, eb01MountainGod018, "EB01-025"],
       activeDon: 5,
     });
     const vanillaId = engine.findCardInZone("south", "hand", eb01Doma005);
@@ -32,9 +32,24 @@ describe("EB03-003 Uta (SP)", () => {
     engine.resolveDecision("effectPlaySelection", { selectedIds: [vanillaId] }, "south");
 
     const view = engine.getView("south");
-    expect(view.players.south.deckCount).toBe(0);
+    expect(view.players.south.deckCount).toBe(1);
     expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(vanillaId);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+  test("a non-Uta Leader receives neither the draw nor the trailing play (FAQ Q1072)", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [eb03UtaSp003, eb01Doma005],
+      activeDon: 5,
+    });
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    engine.playCard(eb03UtaSp003, "south");
+    const view = engine.getView("south");
+    expect(view.players.south.deckCount).toBe(deckBefore);
+    expect(view.players.south.hand.map((card) => card.cardId)).toEqual([eb01Doma005.id]);
+    expect(view.players.south.characters.filter(Boolean).map((card) => card?.cardId)).toEqual([
+      eb03UtaSp003.id,
+    ]);
+    expect(view.prompts).toHaveLength(0);
   });
 });

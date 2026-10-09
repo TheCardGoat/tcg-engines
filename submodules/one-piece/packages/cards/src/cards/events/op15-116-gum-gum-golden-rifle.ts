@@ -30,7 +30,7 @@ export const op15GumGumGoldenRifle116: EventCard = {
   rarity: "R",
   setId: "OP15",
   cost: 1,
-  traits: ["Straw Hat Crew Sky Island"],
+  traits: ["Sky Island", "Straw Hat Crew"],
   effect:
     "[Main] If your Leader has the {Straw Hat Crew} type, trash 1 card from the top of your Life cards. Then, add up to 1 card from the top of your deck to the top of your Life cards and trash 1 card from your hand.\n[Counter] Your Leader gains +4000 power during this battle.",
   effects: {
@@ -41,7 +41,7 @@ export const op15GumGumGoldenRifle116: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Straw Hat Crew",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

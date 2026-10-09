@@ -23,7 +23,7 @@ export const op13Hera074: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Big Mom Pirates Homies"],
+  traits: ["Homies", "Big Mom Pirates"],
   attribute: "special",
   effect:
     "[On Play] Play up to 1 [Homies] type Character card with 3000 power or less from your hand.",
@@ -51,7 +51,7 @@ export const op13Hera074: CharacterCard = {
               {
                 filter: "trait",
                 value: "Homies",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

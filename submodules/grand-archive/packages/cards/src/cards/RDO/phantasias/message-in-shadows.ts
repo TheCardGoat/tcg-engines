@@ -63,7 +63,7 @@ export const messageInShadows: GrandArchiveCard<GrandArchiveAbilityDefinition, "
             {
               kind: "continuous",
               subjects: {
-                kind: "source",
+                kind: "linked-object",
               },
               affectedSet: "dynamic",
               condition: {

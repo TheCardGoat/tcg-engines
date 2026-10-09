@@ -15,8 +15,8 @@ import type { FabLocalPracticeMatchInput } from "./data/create-local-practice-ma
 import type {
   FabAnalyticsPlayerSeedV2,
   FabAnalyticsTransitionReceiptV2,
-} from "@tcg/flesh-and-blood-server-adapter";
-import { parseFabAnalyticsTransitionReceiptV2 } from "@tcg/flesh-and-blood-server-adapter";
+} from "@tcg/flesh-and-blood-server-adapter/analytics";
+import { parseFabAnalyticsTransitionReceiptV2 } from "@tcg/flesh-and-blood-server-adapter/analytics";
 
 export interface StoredFabPracticeConfig {
   readonly playerDeckId: string;

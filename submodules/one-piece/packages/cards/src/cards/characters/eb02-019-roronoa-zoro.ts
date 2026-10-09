@@ -23,7 +23,7 @@ export const eb02RoronoaZoro019: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Straw Hat Crew East Blue"],
+  traits: ["East Blue", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     'If your opponent has 2 or more Characters, this Character can attack Characters on the turn in which it is played.\n[On Play] If your Leader has the "Straw Hat Crew" type, rest up to 1 of your opponent\'s Characters with a cost of 4 or less.',
@@ -35,7 +35,7 @@ export const eb02RoronoaZoro019: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Straw Hat Crew",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

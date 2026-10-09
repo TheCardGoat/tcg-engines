@@ -131,7 +131,12 @@ function clashSequenceLabInstantDefinition(): FabCardDefinitionInput {
             {
               type: "clash",
               with: { selector: "opponent" },
-              prize: { type: "create-token", token: "might", controller: "winner" },
+              prize: {
+                type: "create-token",
+                token: "might",
+                creator: "token-controller",
+                controller: "winner",
+              },
             },
             {
               type: "move-card",

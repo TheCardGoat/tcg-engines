@@ -22,7 +22,7 @@ export const op07GeckoMoria042: CharacterCard = {
   setId: "OP07",
   cost: 5,
   power: 6000,
-  traits: ["The Seven Warlords of the Sea Thriller Bark Pirates"],
+  traits: ["The Seven Warlords of the Sea", "Thriller Bark Pirates"],
   attribute: "special",
   effect:
     "[Once Per Turn] If your Leader has the [The Seven Warlords of the Sea] type and this Character would be removed from the field by your opponent's effect, you may place 1 of your Characters other than [Gecko Moria] at the bottom of the owner's deck instead.",
@@ -55,7 +55,7 @@ export const op07GeckoMoria042: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "The Seven Warlords of the Sea",
-            match: "includes",
+            match: "exact",
           },
         ],
         oncePerTurn: true,

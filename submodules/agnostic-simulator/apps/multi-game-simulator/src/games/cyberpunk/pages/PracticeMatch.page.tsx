@@ -7,6 +7,7 @@ import {
   getPracticeDeckFixture,
   getStrategyById,
   loadPracticeMatchConfig,
+  type AiSpeed,
 } from "../engine";
 import { BoardSharedPage } from "./BoardShared.page";
 import type { LocalCommandCommit } from "../engine";
@@ -17,7 +18,7 @@ import { cyberpunkSimulatorPath } from "./simulatorPaths";
 
 export function PracticeMatchPage() {
   const { matchId = "" } = useParams<{ matchId: string }>();
-  const config = loadPracticeMatchConfig(matchId);
+  const config = useMemo(() => loadPracticeMatchConfig(matchId), [matchId]);
 
   if (!config) {
     return <PracticeRecovery message="Practice match not found or expired." />;
@@ -37,13 +38,16 @@ export function PracticeMatchPage() {
   return <ReadyPracticeMatch config={config} />;
 }
 
-function ReadyPracticeMatch({
+export function ReadyPracticeMatch({
   config,
+  initialAiSpeed = "balanced",
 }: {
   readonly config: NonNullable<ReturnType<typeof loadPracticeMatchConfig>>;
+  readonly initialAiSpeed?: AiSpeed;
 }) {
+  const buildEngine = useCallback(() => createPracticeEngine(config), [config]);
   const debugHistory = useMemo(() => {
-    const initialEngine = createPracticeEngine(config);
+    const initialEngine = buildEngine();
     return new LocalSimulatorDebugHistoryRecorder(
       {
         slug: "cyberpunk",
@@ -55,7 +59,7 @@ function ReadyPracticeMatch({
       },
       initialEngine.getState(),
     );
-  }, [config]);
+  }, [buildEngine, config]);
   useRegisterSimulatorDebugExportSource(debugHistory);
   const recordCommit = useCallback(
     (commit: LocalCommandCommit) => {
@@ -85,14 +89,15 @@ function ReadyPracticeMatch({
         {config.seed}
       </div>
       <BoardSharedPage
+        showFirstGameInvitation
         practiceMode={config.mode ?? "bot"}
         key={config.matchId}
         scenarioId={DEFAULT_SCENARIO}
-        initialEngineBuilder={() => createPracticeEngine(config)}
+        initialEngineBuilder={buildEngine}
         initialAi={createPracticeAiConfig(config)}
         initialHumanSide="player"
         initialAiMode={config.mode === "self" ? "step" : "auto"}
-        initialAiSpeed="balanced"
+        initialAiSpeed={initialAiSpeed}
         onLocalCommandCommitted={recordCommit}
       />
     </>

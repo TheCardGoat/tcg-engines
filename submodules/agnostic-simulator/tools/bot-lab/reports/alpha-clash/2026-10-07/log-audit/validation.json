@@ -1,0 +1,17 @@
+{
+  "engine": {
+    "passed": 1568,
+    "failed": 0,
+    "command": "pnpm exec vp test run",
+    "workspace": "submodules/alpha-clash/packages/engine"
+  },
+  "serverAdapter": {
+    "passed": 19
+  },
+  "botLabAndRegistry": {
+    "passed": 16
+  },
+  "typeChecks": ["engine", "alpha-clash-server-adapter", "bot-lab src and audit scripts"],
+  "fullRulesReady": false,
+  "engineRevision": "fnv1a32:497198d2"
+}

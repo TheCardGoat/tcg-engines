@@ -23,7 +23,7 @@ export const eb01ArmyWolves032: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Animal Impel Down"],
+  traits: ["Animal", "Impel Down"],
   attribute: "strike",
   i18n: eb01ArmyWolves032I18n,
 };

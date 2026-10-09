@@ -31,7 +31,7 @@ export const eb02PortgasDAce028: CharacterCard = {
   cost: 5,
   power: 5000,
   counter: 1000,
-  traits: ["Alabasta Whitebeard Pirates"],
+  traits: ["Alabasta", "Whitebeard Pirates"],
   attribute: "special",
   effect:
     '[On Play] If your Leader\'s type includes "Whitebeard Pirates", look at 5 cards from the top of your deck; reveal up to 1 Character card with a cost of 2 and add it to your hand. Then, place the rest at the bottom of your deck in any order and play up to 1 Character card with a cost of 2 from your hand rested.',

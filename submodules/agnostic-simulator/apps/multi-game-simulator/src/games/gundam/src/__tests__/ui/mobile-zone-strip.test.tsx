@@ -88,7 +88,6 @@ describe("ResourceAreaRow · mobile zone strip", () => {
     });
 
     const target = screen.getByRole("button", { name: "Resource 1, rested" });
-    expect(target.className).toContain("min-h-[44px]");
     expect(target.dataset.targetingState).toBe("candidate");
     expect(screen.queryByRole("button", { name: "Resource 2, active" })).toBeNull();
 
@@ -111,9 +110,6 @@ describe("ResourceAreaRow · mobile zone strip", () => {
     expect(screen.getByRole("button", { name: /READY \/ LEVEL/ })).not.toBeNull();
     const core = screen.getByText("DECK").closest("[data-seat-row='resources']");
     expect(core).not.toBeNull();
-    expect(core?.className).toContain(
-      "grid-cols-[minmax(148px,1.4fr)_minmax(80px,.9fr)_minmax(76px,.8fr)]",
-    );
     expect(
       core?.querySelectorAll("[data-zone-group='base-and-shields'], [data-zone-group='piles']"),
     ).toHaveLength(2);

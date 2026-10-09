@@ -18,7 +18,16 @@ export const captainHookRuthlessPirateI18n: Record<Languages, I18nProperties> = 
   de: {
     name: "Käpt'n Hook",
     version: "Skrupelloser Pirat",
-    text: "<Rasant> \\Du Feigling!\\ Solange dieser Charakter erschöpft ist, erhalten gegnerische Charaktere mit Wendig zusätzlich Impulsiv. (Sie können nicht erkunden und müssen herausfordern, wenn möglich.)",
+    text: [
+      {
+        title: "<Rasant>",
+      },
+      {
+        title: "Du Feigling!",
+        description:
+          "Solange dieser Charakter erschöpft ist, erhalten gegnerische Charaktere mit Wendig zusätzlich Impulsiv. (Sie können nicht erkunden und müssen herausfordern, wenn möglich.)",
+      },
+    ],
   },
   fr: {
     name: "CAPITAINE CROCHET",

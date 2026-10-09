@@ -2,18 +2,22 @@ import type { GrandArchiveAbilityDefinition, GrandArchiveAnyCard } from "@tcg/gr
 import { GrandArchiveTestEngine } from "@tcg/grand-archive-engine/testing";
 import { expect, it } from "vitest";
 
+import { woodlandSquirrels } from "../cards/DOA/allies/woodland-squirrels.ts";
+import { passEffectsStack, advanceToMain } from "./decisions.ts";
 import { lineageTestChampion } from "./champion-lineage.ts";
-import { grandArchiveTestFace } from "./class-bonus-test-champion.ts";
+import { enableAllTestElements, grandArchiveTestFace } from "./class-bonus-test-champion.ts";
 
 /** Parameterized Pride N is card-specific: prove attack legality at the printed threshold. */
 export function provePrideAlly({
   card,
   pride,
   power,
+  reserveCost,
 }: {
   readonly card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>;
   readonly pride: number;
   readonly power: number;
+  readonly reserveCost?: number;
 }): void {
   const face = grandArchiveTestFace(card);
   if (typeof face.stats.power !== "number") {
@@ -21,17 +25,37 @@ export function provePrideAlly({
   }
 
   function setup(level: number) {
-    const starter = lineageTestChampion("Pride", 0);
-    return GrandArchiveTestEngine.startFixture({
+    const starter = enableAllTestElements(lineageTestChampion("Pride", 0));
+    const game = GrandArchiveTestEngine.startFixture({
       playerOne: {
         champion: starter,
         lineage: Array.from({ length: level }, (_, index) =>
-          lineageTestChampion("Pride", index + 1),
+          enableAllTestElements(lineageTestChampion("Pride", index + 1)),
         ),
-        zones: { field: [card] },
+        zones:
+          reserveCost === undefined
+            ? { field: [card] }
+            : {
+                hand: [card, ...Array.from({ length: reserveCost }, () => woodlandSquirrels)],
+                "main-deck": [woodlandSquirrels, woodlandSquirrels],
+              },
       },
-      playerTwo: { champion: lineageTestChampion("Pride opponent", 0) },
+      playerTwo: {
+        champion: lineageTestChampion("Pride opponent", 0),
+        zones: { "main-deck": [woodlandSquirrels, woodlandSquirrels] },
+      },
     });
+    if (reserveCost !== undefined) {
+      const player = game.player("player-one");
+      player.activate(card, {
+        reservePayment: player
+          .cards(woodlandSquirrels)
+          .map((ref) => ({ kind: "card", cardId: ref.objectId })),
+      });
+      passEffectsStack(game);
+      advanceToMain(game, player.id, game.state.turn.number);
+    }
+    return game;
   }
 
   it(`rejects an attack while the champion is below Pride ${pride}`, () => {

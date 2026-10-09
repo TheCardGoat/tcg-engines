@@ -40,7 +40,7 @@ export const op07Franky107: CharacterCard = {
   power: 5000,
   counter: 2000,
   trigger: "Draw 1 card. Then, if you have 1 or less Life cards, play this card.",
-  traits: ["Straw Hat Crew Egghead"],
+  traits: ["Egghead", "Straw Hat Crew"],
   attribute: "strike",
 
   effect: "[Trigger] Draw 1 card. Then, if you have 1 or less Life cards, play this card.",

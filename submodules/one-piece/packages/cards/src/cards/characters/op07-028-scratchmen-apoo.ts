@@ -23,7 +23,7 @@ export const op07ScratchmenApoo028: CharacterCard = {
   cost: 6,
   power: 8000,
   counter: 1000,
-  traits: ["On-Air Pirates Supernovas"],
+  traits: ["Supernovas", "On-Air Pirates"],
   attribute: "ranged",
   effect: "NULL",
   i18n: op07ScratchmenApoo028I18n,

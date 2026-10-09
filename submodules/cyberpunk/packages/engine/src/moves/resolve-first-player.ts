@@ -1,5 +1,5 @@
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
-import { applyOpeningHand } from "../state/initial-state.ts";
+import { applyFirstPlayerChoice } from "../state/initial-state.ts";
 
 export interface ResolveFirstPlayerInput extends MoveInput {
   args: {
@@ -36,12 +36,28 @@ export const resolveFirstPlayerMove: MoveDefinition<ResolveFirstPlayerInput> = {
     const rivalId = state.ctx.playerIds.find((id) => id !== playerId);
     if (!rivalId) return;
     const firstPlayerId = input.args.goFirst ? playerId : rivalId;
-    for (const pid of state.ctx.playerIds) {
-      const player = state.G.players[pid as string];
-      if (player) player.firstPlayer = pid === firstPlayerId;
+    const { events, blankEddieCounts } = applyFirstPlayerChoice(state, firstPlayerId);
+    operations.event.emit({
+      type: "actionLog",
+      messageKey: "setup.firstPlayerChoice",
+      params: { order: input.args.goFirst ? "first" : "second" },
+      playerId,
+      category: "setup",
+    });
+    for (const event of events) {
+      operations.event.emit(event);
     }
     operations.game.setTurnMetadata({ activePlayerId: firstPlayerId });
     operations.game.setPendingChoice(undefined);
-    applyOpeningHand(state, firstPlayerId);
+    for (const [pid, count] of Object.entries(blankEddieCounts)) {
+      if (count <= 0) continue;
+      operations.event.emit({
+        type: "actionLog",
+        messageKey: "setup.blankEddie",
+        params: { count },
+        playerId: pid as typeof playerId,
+        category: "setup",
+      });
+    }
   },
 };

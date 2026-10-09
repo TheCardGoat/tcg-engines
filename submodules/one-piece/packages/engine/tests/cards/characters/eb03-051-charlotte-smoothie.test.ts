@@ -49,6 +49,51 @@ describe("EB03-051 Charlotte Smoothie", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
+  test.each(["declined", "no eligible target"])(
+    "turns every Life face-down when K.O. is %s (FAQ Q1086/Q1087)",
+    (boundary) => {
+      const engine = OnePieceTestEngine.create(
+        {
+          hand: [eb03CharlotteSmoothie051, eb03CharlotteSmoothie051],
+          life: [
+            { card: eb01Doma005, faceUp: true, publicKnowledge: true },
+            { card: eb01Fourtricks025, faceUp: true, publicKnowledge: true },
+          ],
+          activeDon: 6,
+        },
+        {
+          character: boundary === "declined" ? [eb01Doma005] : [eb01MountainGod018],
+          hand: [eb01Doma005],
+          activeDon: 2,
+        },
+      );
+      const fieldBefore = engine.getView("south").players.north.characters;
+      const lifeBefore = engine.getView("south").players.south.life;
+      engine.playCard(eb03CharlotteSmoothie051);
+      if (boundary === "declined") {
+        engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+      }
+      expect(engine.getView("south").players.north.characters).toEqual(fieldBefore);
+      expect(engine.getView("south").players.south.life).toEqual(lifeBefore);
+      expect(engine.getView("south").prompts).toHaveLength(0);
+
+      // Known Life identities stay public after flipping. A second Smoothie's
+      // face-up-Life gate proves orientation without inspecting internal state.
+      engine.endTurn("south");
+      engine.playCard(eb01Doma005, "north");
+      engine.endTurn("north");
+      const eligibleId = engine.findCardInZone("north", "character", eb01Doma005);
+      engine.playCard(eb03CharlotteSmoothie051);
+      expect(engine.getView("south").prompts).toHaveLength(0);
+      expect(
+        engine
+          .getView("south")
+          .players.north.characters.some((card) => card?.instanceId === eligibleId),
+      ).toBe(true);
+      expect(engine.getView("south").players.south.lifeCount).toBe(2);
+    },
+  );
+
   test("does not K.O. or turn Life face-down without a face-up Life card", () => {
     const engine = OnePieceTestEngine.create(
       {

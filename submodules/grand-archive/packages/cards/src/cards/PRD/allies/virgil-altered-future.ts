@@ -84,24 +84,31 @@ export const virgilAlteredFuture: GrandArchiveCard<GrandArchiveAbilityDefinition
                 property: "power",
                 operation: "add",
                 amount: {
-                  kind: "count",
-                  collection: {
-                    zones: ["field"],
-                    player: "controller",
-                    filter: {
-                      kind: "all",
-                      filters: [
-                        {
-                          kind: "type",
-                          oneOf: ["ITEM"],
+                  kind: "calculate",
+                  operator: "minimum",
+                  operands: [
+                    {
+                      kind: "count",
+                      collection: {
+                        zones: ["field"],
+                        player: "controller",
+                        filter: {
+                          kind: "all",
+                          filters: [
+                            {
+                              kind: "type",
+                              oneOf: ["ITEM"],
+                            },
+                            {
+                              kind: "subtype",
+                              oneOf: ["POWERCELL"],
+                            },
+                          ],
                         },
-                        {
-                          kind: "subtype",
-                          oneOf: ["POWERCELL"],
-                        },
-                      ],
+                      },
                     },
-                  },
+                    2,
+                  ],
                 },
               },
             },
@@ -124,24 +131,31 @@ export const virgilAlteredFuture: GrandArchiveCard<GrandArchiveAbilityDefinition
                 property: "life",
                 operation: "add",
                 amount: {
-                  kind: "count",
-                  collection: {
-                    zones: ["field"],
-                    player: "controller",
-                    filter: {
-                      kind: "all",
-                      filters: [
-                        {
-                          kind: "type",
-                          oneOf: ["ITEM"],
+                  kind: "calculate",
+                  operator: "minimum",
+                  operands: [
+                    {
+                      kind: "count",
+                      collection: {
+                        zones: ["field"],
+                        player: "controller",
+                        filter: {
+                          kind: "all",
+                          filters: [
+                            {
+                              kind: "type",
+                              oneOf: ["ITEM"],
+                            },
+                            {
+                              kind: "subtype",
+                              oneOf: ["POWERCELL"],
+                            },
+                          ],
                         },
-                        {
-                          kind: "subtype",
-                          oneOf: ["POWERCELL"],
-                        },
-                      ],
+                      },
                     },
-                  },
+                    2,
+                  ],
                 },
               },
             },

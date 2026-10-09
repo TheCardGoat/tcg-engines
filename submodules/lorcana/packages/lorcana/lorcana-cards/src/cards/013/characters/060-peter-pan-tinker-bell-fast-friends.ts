@@ -13,7 +13,7 @@ export const peterPanTinkerBellFastFriends: CharacterCard = {
       artId: "set13-060",
       setCode: "set13",
       collectorNumber: "60",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -25,7 +25,7 @@ export const peterPanTinkerBellFastFriends: CharacterCard = {
   franchise: "Peter Pan",
   set: "013",
   cardNumber: 60,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 6,
   strength: 5,
   willpower: 4,
@@ -33,6 +33,7 @@ export const peterPanTinkerBellFastFriends: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_706270bcb64b4f08b79b4d50a9306ad4",
+    tcgPlayer: "702682",
   },
   text: [
     {

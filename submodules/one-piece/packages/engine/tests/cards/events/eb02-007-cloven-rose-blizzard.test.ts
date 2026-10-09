@@ -102,7 +102,6 @@ describe("EB02-007 Cloven Rose Blizzard", () => {
     engine.endTurn("south");
     engine.endTurn("north");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
 
     const targetDecision = engine.pendingDecision("effectTargetSelection", "north");
@@ -126,5 +125,18 @@ describe("EB02-007 Cloven Rose Blizzard", () => {
     );
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+  test("skipping all power recipients still K.O.s the selected low-power opponent", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["EB02-007"], activeDon: 3 },
+      { character: ["EB01-005"] },
+    );
+    const target = e.findCardInZone("north", "character", "EB01-005");
+    e.playCard("EB02-007");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.north.trash.map((c) => c.instanceId)).toContain(target);
+    expect(e.getView("south").players.south.leader.power).toBe(5000);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

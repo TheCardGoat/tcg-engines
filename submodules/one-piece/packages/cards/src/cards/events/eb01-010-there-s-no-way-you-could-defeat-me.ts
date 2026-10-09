@@ -21,7 +21,7 @@ export const eb01ThereSNoWayYouCouldDefeatMe010: EventCard = {
   rarity: "R",
   setId: "EB01",
   cost: 3,
-  traits: ["Straw Hat Crew Water Seven"],
+  traits: ["Water Seven", "Straw Hat Crew"],
   effect:
     "[Counter] K.O. up to 1 of your opponent's Characters with 6000 base power or less. [Trigger] K.O. up to 1 of your opponent's Characters with 5000 base power or less.",
   effects: {

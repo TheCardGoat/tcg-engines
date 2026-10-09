@@ -31,6 +31,7 @@ export const gopherHunnyCook: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_2775897b3f6f41599550c6264cc831a2",
+    tcgPlayer: "704594",
   },
   text: [
     {

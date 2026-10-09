@@ -126,4 +126,36 @@ describe("OP17-059 Aramaki", () => {
     expect(engine.getView("south").players.south.handCount).toBe(Math.max(before.handCount - 1, 0));
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("paying DON draws a card and K.O.s two cost-two Characters, excluding cost three", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-059"], activeDon: 7, deck: ["ST02-002", "ST02-006"] },
+      { character: ["OP13-013", "ST01-006", "ST02-002"] },
+    );
+    const a = e.findCardInZone("north", "character", "OP13-013"),
+      b = e.findCardInZone("north", "character", "ST01-006");
+    e.asSouth().play("OP17-059");
+    e.asSouth().acceptOptional();
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["ST02-002"]);
+    const step = e.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (step.kind !== "selectEntity") throw new Error("Expected KO targets");
+    expect(step.candidates.map((c) => c.ref.id)).toEqual([a, b]);
+    e.resolveDecision("effectTargetSelection", { selectedIds: [a, b] }, "south");
+    expect(e.getView("south").players.north.trash.map((c) => c.instanceId)).toEqual([a, b]);
+  });
+  test("Blocker redirects a real attack and protects Life", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP17-059"], hand: [] },
+      {},
+      { activeSeat: "north" },
+    );
+    const life = e.getView("south").players.south.lifeCount;
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.resolveDecision(
+      "battleBlocker",
+      { selectedIds: [e.findCardInZone("south", "character", "OP17-059")] },
+      "south",
+    );
+    expect(e.getView("south").players.south.lifeCount).toBe(life);
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(true);
+  });
 });

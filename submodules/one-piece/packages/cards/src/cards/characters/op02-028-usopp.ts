@@ -23,7 +23,7 @@ export const op02Usopp028: CharacterCard = {
   cost: 3,
   power: 5000,
   counter: 1000,
-  traits: ["Film Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   attribute: "ranged",
   i18n: op02Usopp028I18n,
 };

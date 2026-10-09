@@ -36,6 +36,8 @@ export type ScenarioGroup =
   | "program-gig"
   | "program-power"
   | "program-gig-manipulation"
+  | "program-choose-effect"
+  | "program-free-play"
   | "program-cost-modifier"
   | "program-legend-call"
   | "gear-attack-trigger"
@@ -67,6 +69,8 @@ export type ScenarioGroup =
   | "release-qa";
 
 export type ScenarioId =
+  | "fightResultBeforeDefeats"
+  | "pendingFightEffectOrder"
   | "pendingEffectsRiverRelicAdamSmasher"
   | "deckSearchThreeMouthsPrompt"
   | "deckSearchHanakoPrompt"
@@ -74,8 +78,15 @@ export type ScenarioId =
   | "deckSearchViktorPrompt"
   | "deckSearchRiverWardPrompt"
   | "deckSearchTetratronicPrompt"
+  | "revealDestinationFoolOnTheHillPrompt"
   | "gameStart"
+  | "firstPlayerChoice"
   | "boardTappedResourcesQa"
+  | "paymentAllResourcesQa"
+  | "paymentFullEddiesQa"
+  | "paymentQuickAbilityQa"
+  | "paymentOnlyEddiesQa"
+  | "paymentPhysicalEddiesQa"
   | "retailCardCatalog"
   | "retailProgramTargetBench"
   | "retailCombatGigBench"
@@ -84,16 +95,25 @@ export type ScenarioId =
   | "mobileLedgerOneLegend"
   | "mobileLedgerTwoLegends"
   | "mobileLedgerThreeLegends"
+  | "overtimeCenterRow"
+  | "overtimeCountdown"
+  | "gigWinThreatHud"
   | "mobileLedgerFriendlyOneRivalThree"
   | "mobileLedgerFriendlyZeroRivalTwo"
   | "retailPr2295Cards"
   | "retailNewCardAbilities"
   | "pepeReadyLegendsPrompt"
   | "openingMain"
+  | "trashProgramPreview"
+  | "emptyFieldPlayTargets"
+  | "openingMainNoSellable"
+  | "combatPriorityHold"
   | "attackStep"
   | "stealGigTest"
   | "reactStep"
   | "chooseCardTarget"
+  | "chooseDiscardFromHand"
+  | "handFanOverflow"
   | "opponentTurn"
   | "endGame"
   | "progCorporateSurveillance"
@@ -130,6 +150,8 @@ export type ScenarioId =
   | "regressionRedirectDefeatChoice"
   | "regressionCardEffectRedirectDefeatChoice"
   | "regressionCardEffectSacrificialGearChoice"
+  | "regressionDetonateDetachesGear"
+  | "regressionCarnageTargetsFieldedLegend"
   | "legendAltCunninghamSoulkillerArchitect"
   | "legendSaburoArasakaStubbornPatriach"
   | "legendYorinobuArasakaEmbracingDestruction"
@@ -159,6 +181,7 @@ export type ScenarioId =
   | "progChromeReverieRetail"
   | "progCyberpsychosisRetail"
   | "progPeaceOfferingRetail"
+  | "progPeaceOfferingInvalidCopyStillDraws"
   | "progLiveWithTheAftermathRetail"
   | "progLiveWithTheAftermathActiveOnlyRetail"
   | "progLiveWithTheAftermathRivalOnlyRetail"
@@ -241,6 +264,7 @@ export type ScenarioId =
   | "unitLaLloronaGhostOfThePastRetail"
   | "unitLizzyWizzyDelicateWeaponRetail"
   | "unitMistyOlszewskiMenderOfBrokenSpiritsRetail"
+  | "unitRogueReadyEddiesAfterSteal"
   | "unitNadiaFightingThroughGriefRetail"
   | "unitOffdutyMalfiniRetail"
   | "unitSaulBrightStormriderRetail"
@@ -260,6 +284,12 @@ export type ScenarioId =
   | "progTheHeist"
   | "progTheHeistFreePlay"
   | "progTrustNoOne"
+  | "progNocturneOp55N1"
+  | "progSynapseBurnout"
+  | "progTowerfall"
+  | "progWeGottaLiveTogether"
+  | "progSafetyOverride"
+  | "progWildInTheStreets"
   | "legendJudyAlvarezBraindanceMaestro"
   | "unitAltCunninghamMotherOfDaemons"
   | "unitMaelstromZealots"
@@ -284,6 +314,7 @@ export type ScenarioId =
  * (e.g. `{ type: "mulligan", as: P1 }`) instead of stringly-typed `Record`s.
  */
 export type EngineAction =
+  | { type: "setCombatPriority"; mode: "automatic" | "hold"; as?: PlayerId }
   | {
       type: "playCard";
       cardId: string;
@@ -302,7 +333,13 @@ export type EngineAction =
     }
   | { type: "attackRival"; attackerId: string; as?: PlayerId }
   | { type: "useBlocker"; blockerId: string; as?: PlayerId; success?: boolean }
-  | { type: "activateAbility"; cardId: string; abilityIndex: number; as?: PlayerId }
+  | {
+      type: "activateAbility";
+      cardId: string;
+      abilityIndex: number;
+      paymentSourceIds?: string[];
+      as?: PlayerId;
+    }
   | { type: "resolveAttack"; pass?: boolean; as?: PlayerId }
   | { type: "resolveStealGigs"; dieIds: string[]; as?: PlayerId }
   | { type: "resolveTrigger"; triggerId?: string; pass?: boolean; as?: PlayerId }
@@ -332,12 +369,13 @@ export type EngineAction =
       type: "resolveCardToPlay";
       cardId?: string;
       attachToId?: string;
+      paymentSourceIds?: string[];
       pass?: boolean;
       as?: PlayerId;
     }
   | { type: "resolveChooseEffect"; optionId: string; as?: PlayerId }
   | { type: "resolveCardToMove"; cardId?: string; pass?: boolean; as?: PlayerId }
-  | { type: "resolveRedirectDefeat"; pass?: boolean; as?: PlayerId }
+  | { type: "resolveRedirectDefeat"; pass?: boolean; paymentSourceIds?: string[]; as?: PlayerId }
   | { type: "resolveSacrificialGear"; cardId: string; as?: PlayerId }
   | { type: "resolveFirstPlayer"; goFirst: boolean; as?: PlayerId }
   | { type: "cancelPendingResolution"; as?: PlayerId }

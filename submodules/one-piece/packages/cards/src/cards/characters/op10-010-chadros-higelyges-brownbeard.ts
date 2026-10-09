@@ -22,7 +22,7 @@ export const op10ChadrosHigelygesBrownbeard010: CharacterCard = {
   setId: "OP10",
   cost: 3,
   power: 5000,
-  traits: ["Punk Hazard Brownbeard Pirates"],
+  traits: ["Punk Hazard", "Brownbeard Pirates"],
   attribute: "slash",
   effect:
     "[When Attacking] If you have 1 or less Characters with 6000 power or more, this Character gains +1000 power during this turn.",

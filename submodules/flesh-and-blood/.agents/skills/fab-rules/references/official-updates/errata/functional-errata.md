@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://legacy.fabtcg.com/en/resources/rules-and-policy-center/errata-bulletins/functional-errata/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Functional Errata (Errata Bulletin #2)"
-source: https://legacy.fabtcg.com/en/resources/rules-and-policy-center/errata-bulletins/functional-errata/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: legacy-source-summary
 ---

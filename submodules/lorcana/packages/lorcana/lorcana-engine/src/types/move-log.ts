@@ -58,7 +58,7 @@ export interface DamageEntry {
   sourceId: CardInstanceId;
   targetId: CardInstanceId;
   amount: number;
-  kind: "combat" | "effect";
+  kind: "combat" | "effect" | "put";
 }
 
 export interface MovedDamageEntry {
@@ -77,8 +77,21 @@ export interface MoveOutcomes {
   cardsBanished?: CardInstanceId[];
   damageDealt?: DamageEntry[];
   damageMoved?: MovedDamageEntry[];
+  damageRemoved?: Array<{ targetId: CardInstanceId; amount: number }>;
   loreChanged?: { playerId: PlayerId; amount: number; operation: "add" | "remove" };
   loreChanges?: Array<{ playerId: PlayerId; amount: number; operation: "add" | "remove" }>;
+  /** Hyperia City ink-drop counters gained/removed during the move (effects and payments). */
+  inkDropsChanged?: Array<{ playerId: PlayerId; amount: number; operation: "add" | "remove" }>;
+  /**
+   * Triggered abilities that were suppressed without prompting the player
+   * because their target step had no valid candidates (e.g. an end-of-turn
+   * look-at-deck with an empty deck).
+   */
+  triggeredAbilitiesSkipped?: Array<{
+    playerId: PlayerId;
+    sourceCardId: CardInstanceId;
+    abilityName: string;
+  }>;
   cardsExerted?: CardInstanceId[];
   inkwellCardsExerted?: Array<{ playerId: PlayerId; amount: number }>;
   cardsReadied?: CardInstanceId[];
@@ -87,6 +100,8 @@ export interface MoveOutcomes {
   cardsReturnedToHand?: CardInstanceId[];
   cardsMovedToZone?: Array<{ cardId: CardInstanceId; zone: string }>;
   cardsInked?: Array<{
+    /** Ink destination owner, independent of who is allowed to know its identity. */
+    playerId?: PlayerId;
     /**
      * Public when from a public zone (play). Private when from a private zone
      * (hand/deck via an effect); projected into private appendices by the log factory.

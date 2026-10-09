@@ -31,6 +31,10 @@ export const dashParrDodgeballDynamo: CharacterCard = {
   willpower: 1,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_8c249d35d6ec4904b10f4d9641cf5914",
+    tcgPlayer: "704623",
+  },
   text: "Evasive",
   classifications: ["Storyborn", "Super", "Hero"],
   abilities: [evasive],

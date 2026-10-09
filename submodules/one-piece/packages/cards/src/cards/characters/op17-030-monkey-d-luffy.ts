@@ -24,7 +24,7 @@ export const op17MonkeyDLuffy030: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["East Blue Straw Hat Crew"],
+  traits: ["East Blue", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[On Play] You may rest 1 of your DON!! cards: This Character gains [Rush] during this turn.\n\n[Activate: Main] [Once Per Turn] If you have 5 or less cards in your hand, set up to 1 of your DON!! cards as active.",

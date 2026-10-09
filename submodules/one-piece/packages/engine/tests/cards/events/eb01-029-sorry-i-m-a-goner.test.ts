@@ -60,6 +60,7 @@ describe("EB01-029 Sorry. I'm a Goner.", () => {
     }
 
     engine.resolveDecision("effectTargetSelection", { selectedIds: [returnedId] }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.hand.some((card) => card.instanceId === returnedId)).toBe(true);
@@ -74,6 +75,38 @@ describe("EB01-029 Sorry. I'm a Goner.", () => {
     expect(engine.getState().players.north.deck).toEqual([untouchedDeckId, revealedId]);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("keeps a revealed cost-3-or-less card on top when the condition fails", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: op01Hajrudin018, playedOnTurn: 0 }] },
+      {
+        hand: [eb01SorryIMAGoner029],
+        deck: [eb01Sanji014, op13Otama043, eb01Hamlet024],
+        character: [eb01Doma005],
+        activeDon: 1,
+        life: 4,
+      },
+    );
+    const attackerId = engine.findCardInZone("south", "character", op01Hajrudin018);
+    const eventId = engine.findCardInZone("north", "hand", eb01SorryIMAGoner029);
+    const revealedId = engine.findCardInZone("north", "deck", op13Otama043);
+    const characterId = engine.findCardInZone("north", "character", eb01Doma005);
+    engine.endTurn("south");
+    engine.endTurn("north");
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    expect(engine.getView("north").prompts).toHaveLength(0);
+    expect(
+      engine
+        .getView("north")
+        .players.north.characters.some((card) => card?.instanceId === characterId),
+    ).toBe(true);
+    engine.endTurn("south");
+    expect(
+      engine.getView("north").players.north.hand.some((card) => card.instanceId === revealedId),
+    ).toBe(true);
   });
 
   test("lets the damaged player use its Life Trigger to return a cost-8-or-less Character", () => {
@@ -94,7 +127,6 @@ describe("EB01-029 Sorry. I'm a Goner.", () => {
     engine.endTurn("south");
     engine.endTurn("north");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const triggerDecision = engine.pendingDecision("lifeTrigger", "north");
     const activeDonBeforeTrigger = engine.getView("north").players.north.activeDon;

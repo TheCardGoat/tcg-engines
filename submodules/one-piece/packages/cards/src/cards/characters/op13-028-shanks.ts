@@ -30,7 +30,7 @@ export const op13Shanks028: CharacterCard = {
   setId: "OP13",
   cost: 10,
   power: 12000,
-  traits: ["FILM The Four Emperors Red-Haired Pirates"],
+  traits: ["FILM", "The Four Emperors", "Red-Haired Pirates"],
   attribute: "slash",
   effect:
     "[On Play] Set all of your DON!! cards as active. Then, you cannot play cards from your hand during this turn.",
@@ -54,6 +54,7 @@ export const op13Shanks028: CharacterCard = {
             restriction: "cannotPlay",
             filters: [],
             sourceZones: ["hand"],
+            origin: "command",
             duration: "thisTurn",
           },
         ],

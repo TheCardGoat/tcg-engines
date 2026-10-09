@@ -31,7 +31,7 @@ export const eb01KidKiller003: CharacterCard = {
   setId: "EB01",
   cost: 4,
   power: 5000,
-  traits: ["Kid Pirates Supernovas"],
+  traits: ["Supernovas", "Kid Pirates"],
   attribute: ["slash", "special"],
   effect:
     "[Rush] (This card can attack on the turn in which it is played.)[When Attacking] If your opponent has 2 or less Life cards, this Character gains +2000 power during this turn.",

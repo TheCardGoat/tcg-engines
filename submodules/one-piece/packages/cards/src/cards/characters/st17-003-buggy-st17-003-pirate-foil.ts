@@ -33,7 +33,7 @@ export const prb02BuggySt17003PirateFoil003: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 2000,
-  traits: ["Buggy's Delivery The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Buggy's Delivery"],
   attribute: "slash",
   effect:
     "[On Play] Look at 3 cards from the top of your deck and place them at the top of your deck in any order.",

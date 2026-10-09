@@ -35,7 +35,7 @@ export const op15DrHogback084: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Thriller Bark Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

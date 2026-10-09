@@ -23,7 +23,7 @@ export const op14eb04Cavendish004: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Beautiful Pirates Supernovas Dressrosa"],
+  traits: ["Dressrosa", "Supernovas", "Beautiful Pirates"],
   attribute: "slash",
   effect:
     "If this Character has 5000 power or more, this Character gains [Rush].\n(This card can attack on the turn in which it is played.)",

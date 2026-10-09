@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op12BrochetteBlow078 } from "../../../../../cards/src/cards/events/op12-078-brochette-blow.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP12-078 Brochette Blow", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op12BrochetteBlow078);
-  });
-});

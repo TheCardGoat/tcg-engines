@@ -32,6 +32,7 @@ export const mataMeatHutWaitress: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_cb65850b765245e1b3f1e7b4f6a42a5c",
+    tcgPlayer: "704677",
   },
   classifications: ["Storyborn"],
   i18n: mataMeatHutWaitressI18n,

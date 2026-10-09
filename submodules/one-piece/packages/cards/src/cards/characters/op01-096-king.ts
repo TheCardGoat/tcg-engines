@@ -47,39 +47,39 @@ export const op01King096: CharacterCard = {
         actions: [
           {
             action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 3,
+            target: { player: "opponent", zones: ["character"], count: { amount: 2, upTo: true } },
+            targetGroups: [
+              {
+                player: "opponent",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
                 },
-              ],
-            },
-          },
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 3,
+                  },
+                ],
               },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 2,
+              {
+                player: "opponent",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
                 },
-              ],
-            },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 2,
+                  },
+                ],
+              },
+            ],
           },
         ],
         optional: true,

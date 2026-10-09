@@ -9,7 +9,7 @@ import {
 import { declaredObjectTargetBounds } from "./declared-target-bounds.ts";
 import type { FabMatchState } from "../state.ts";
 import type { FabPendingTrigger } from "../rules/process.ts";
-import type { CommittedEvent, FabProcessId, ProposedEvent } from "../rules/events.ts";
+import type { FabProcessId, ProposedEvent } from "../rules/events.ts";
 import { commitFabKernelBatch } from "./commit.ts";
 import { nextFabDestinationRef } from "../rules/snapshots.ts";
 import {
@@ -25,7 +25,6 @@ import {
   type FabDeclaredTarget,
 } from "../rules/conditional-targets.ts";
 import type { FabTargetMap, FabTargetRef } from "../rules/targets.ts";
-import type { FabPlayerLogFact } from "../player-log.ts";
 import { fabDeclaredPlayerBindings } from "../rules/layers.ts";
 import { distinctPrintedNameCount, targetRequiresDifferentNames } from "./different-names.ts";
 import { transitionFabRulesProcessStage } from "./process-state.ts";
@@ -45,6 +44,12 @@ export interface FabTargetCandidate {
   readonly target: FabTargetRef;
   /** Compact printed-name key (`snatch`) for `differentNames` set checks. */
   readonly printedName?: string;
+  /**
+   * The candidate object is not public to the chooser (CR 1.8.6b — e.g. a
+   * face-down arsenal card). Its label is anonymized and `printedName` is
+   * withheld; adapters must not attach card metadata to the payload.
+   */
+  readonly hidden?: boolean;
 }
 
 export interface FabDeclarationContext {

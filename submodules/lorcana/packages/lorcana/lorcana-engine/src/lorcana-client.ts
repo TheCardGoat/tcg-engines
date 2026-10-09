@@ -50,7 +50,10 @@ export class LorcanaClient extends LorcanaEngineBase {
     const clientEngineConfig: ClientEngineConfig = {
       playerId: params.playerId,
       role: params.role || "spectator",
-      runtimeConfig: lorcanaRuntimeConfig as unknown as MatchRuntimeConfig,
+      runtimeConfig: {
+        ...lorcanaRuntimeConfig,
+        ...(params._fixtureSetup ? { setup: params._fixtureSetup } : {}),
+      },
       staticResources: staticResources,
       players: params.players,
       seed: params.seed,
@@ -188,6 +191,12 @@ export class LorcanaClient extends LorcanaEngineBase {
   // because the engine path would either reject or apply optimistically
   // without the server gate; both are wrong for Manual Mode.
   override manualSetLore(playerId: PlayerId, amount: number): CommandResult {
+    void playerId;
+    void amount;
+    return this.rejectManualMove();
+  }
+
+  override manualSetInkDrops(playerId: PlayerId, amount: number): CommandResult {
     void playerId;
     void amount;
     return this.rejectManualMove();

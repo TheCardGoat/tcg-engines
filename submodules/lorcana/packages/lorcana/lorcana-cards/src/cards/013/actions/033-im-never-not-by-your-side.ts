@@ -29,6 +29,7 @@ export const imNeverNotByYourSide: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_92181e78a3aa43c98284aab9ca52368f",
+    tcgPlayer: "702675",
   },
   text: [
     {

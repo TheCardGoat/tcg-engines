@@ -31,6 +31,7 @@ export const antonioMadrigalAnimalDoctor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c0013cabd524455db8ef541c176fb3b3",
+    tcgPlayer: "704654",
   },
   text: [
     {

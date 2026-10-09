@@ -106,8 +106,6 @@ export const gleamingSmolder: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                   candidates: {
                     kind: "object",
                     zones: ["field"],
-                    relationship: "zone-of",
-                    player: "controller",
                     filter: {
                       kind: "type",
                       oneOf: ["ALLY", "CHAMPION"],

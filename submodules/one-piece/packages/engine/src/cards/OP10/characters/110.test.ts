@@ -39,4 +39,25 @@ describe("OP10-110", () => {
     expect(rested?.rested).toBe(false);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("Life Trigger counts remaining Life after damage and resolves the played card's rest effect", () => {
+    for (const remaining of [2, 3]) {
+      const e = OnePieceTestEngine.create(
+        { character: [{ cardId: "EB01-018", playedOnTurn: 0 }, "EB01-005"], life: 1 },
+        { life: ["OP10-110", ...Array.from({ length: remaining }, () => "EB01-005")] },
+        { firstPlayer: "north", activeSeat: "south" },
+      );
+      const trigger = e.findCardInZone("north", "life", "OP10-110");
+      const target = e.findCardInZone("south", "character", "EB01-005");
+      e.asSouth().attack(e.findCardInZone("south", "character", "EB01-018"), e.leader("north"));
+      e.asNorth().activateLifeTrigger();
+      if (remaining === 2) e.asNorth().chooseTargets(target);
+      expect(
+        e.getView("north").players.north.characters.some((c) => c?.instanceId === trigger),
+      ).toBe(remaining === 2);
+      expect(
+        e.getView("south").players.south.characters.find((c) => c?.instanceId === target)?.rested,
+      ).toBe(remaining === 2);
+      expect(e.getView("north").players.north.lifeCount).toBe(remaining);
+    }
+  });
 });

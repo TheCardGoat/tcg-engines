@@ -9,6 +9,7 @@ import {
   randomStrategy,
   runAutoMatch,
   tacticalStrategy,
+  expertOracleStrategy,
   type AIStrategy,
   type DeckList,
 } from "@tcg/cyberpunk-engine";
@@ -45,6 +46,7 @@ import { runSelfImproveBatch } from "./self-improve-batch.ts";
 import { recordKeep } from "./self-improve-journal.ts";
 
 const SAVEABLE_STRATEGIES: Record<string, AIStrategy> = {
+  "expert-oracle": expertOracleStrategy,
   default: getSafeAutomatedActionStrategyOption().strategy,
   "attack-rival-only": attackRivalOnlyStrategy,
   "first-legal": firstLegalStrategy,
@@ -115,6 +117,8 @@ interface ParsedArgs {
   opponent?: string;
   /** self-improve-keep: keep or reject the last heuristic miss. */
   keep?: "keep" | "reject";
+  /** Print engine move logs and game events for every match in a batch. */
+  printGameLog: boolean;
 }
 
 function parsePositiveInt(flag: string, raw: string | undefined): number {
@@ -150,6 +154,7 @@ function parseArgs(argv: string[]): ParsedArgs {
   let pairedSeeds = false;
   let workers = 1;
   let seedsPerSeat = 8;
+  let printGameLog = false;
   let strategy: string | undefined;
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
@@ -187,6 +192,9 @@ function parseArgs(argv: string[]): ParsedArgs {
       case "--verbose":
       case "-v":
         verbose = true;
+        break;
+      case "--print-game-log":
+        printGameLog = true;
         break;
       case "--real-cards":
         realCards = true;
@@ -340,6 +348,7 @@ function parseArgs(argv: string[]): ParsedArgs {
     failOnMaxSteps,
     reportJson: args.reportJson,
     workers,
+    printGameLog,
     saveLog: args.saveLog,
     replayPath: args.replayPath,
     iterations: args.iterations,
@@ -403,6 +412,7 @@ Modes:
 
 Common options:
   --matches <n>         Matches per pairing (default: 10)
+  --print-game-log      Print each match's engine move logs and game events
   --seed <string>       Base seed (default: cli-<timestamp>)
   --max-steps <n>       Hard cap on per-match decision steps
   -v, --verbose         Dump the per-step log of the first failing match
@@ -774,10 +784,13 @@ async function main() {
     maxSteps: parsed.maxSteps,
     realCards: parsed.realCards,
     deckSource: parsed.deckSource,
+    deckAId: parsed.deckAId,
+    deckBId: parsed.deckBId,
     deckLimit: parsed.deckLimit,
     deckPairLimit: parsed.deckPairLimit,
     monteCarloRollouts: parsed.monteCarloRollouts,
     monteCarloRolloutSteps: parsed.monteCarloRolloutSteps,
+    printGameLog: parsed.printGameLog,
   };
   const summary =
     parsed.workers > 1 ? await runBatchParallel(opts, parsed.workers) : runBatch(opts);

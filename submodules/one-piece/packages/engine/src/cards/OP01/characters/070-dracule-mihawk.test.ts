@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op01DraculeMihawk070 } from "../../../../../cards/src/cards/characters/op01-070-dracule-mihawk.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP01-070 Dracule Mihawk", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op01DraculeMihawk070);
-  });
-});

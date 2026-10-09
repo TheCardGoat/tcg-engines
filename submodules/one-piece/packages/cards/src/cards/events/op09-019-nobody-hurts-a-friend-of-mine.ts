@@ -33,7 +33,7 @@ export const op09NobodyHurtsAFriendOfMine019: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Red-Haired Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

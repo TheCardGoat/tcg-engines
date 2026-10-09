@@ -1,69 +1,31 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-// Auto-verified: Rakuyo (OP17-016) cost=3 power=2000 counter=2000
 describe("OP17-016 Rakuyo", () => {
-  test("[On Play] resolves its play effects", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-016"], activeDon: 5 },
-      { character: ["OP13-013"], activeDon: 5 },
+  test.each([0, 1, 2])("On Play K.O.s %i eligible Characters using base power", (count) => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-016"], activeDon: 3 },
+      { character: ["ST01-006", "OP01-019", "ST01-003"], activeDon: 2 },
+      { activeSeat: "north", firstPlayer: "south" },
     );
-
-    engine.playCard("OP17-016");
-    engine.acceptLeadingOptional("south");
-
-    // Resolve any remaining prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-016",
+    const eligible = [
+      e.findCardInZone("north", "character", "ST01-006"),
+      e.findCardInZone("north", "character", "OP01-019"),
+    ];
+    e.asNorth().attachDon(eligible[1]!, 2);
+    e.endTurn("north");
+    expect(
+      e.getView("south").players.north.characters.find((c) => c?.instanceId === eligible[1])?.power,
+    ).toBe(5000);
+    e.playCard("OP17-016");
+    const step = e.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (step.kind !== "selectEntity") throw new Error("Expected K.O. selection");
+    expect(step.candidates.filter((c) => c.legal).map((c) => c.ref.id)).toEqual(eligible);
+    e.asSouth().chooseTargets(...eligible.slice(0, count));
+    expect(e.getView("south").players.north.trash.map((c) => c.instanceId)).toEqual(
+      eligible.slice(0, count),
     );
-  });
-
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-016", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
-    );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-016",
-    );
-    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(e.getView("south").players.north.characters.filter(Boolean)).toHaveLength(3 - count);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

@@ -1,8 +1,8 @@
 Public export generated from:
-  private repository: /Users/wazar/projects/tcgo-op-public-sync
-  private commit: 6145dbf5b89a13e7c8e4ea0a3af6c1ae6ae4e0d2
-  export branch: public-sync/2026-W39
-  generated at: 2026-09-21T17:03:53Z
+  private repository: /private/tmp/tcg-sync-w41.cpkFO0/private-main
+  private commit: 2081d71d65cb301111749374f2d8055fa9f14b57
+  export branch: public-sync/2026-W41
+  generated at: 2026-10-09T08:36:50Z
 
 Allowlisted source:
   - submodules/agnostic-simulator

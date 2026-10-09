@@ -1,5 +1,6 @@
 import { useDraggable } from "@dnd-kit/core";
-import type { CSSProperties, HTMLAttributes, ReactNode } from "react";
+import type { CSSProperties, HTMLAttributes, MouseEvent, PointerEvent, ReactNode } from "react";
+import { useSuppressClickAfterDrag } from "../hooks/useSuppressClickAfterDrag";
 
 export interface PointerDraggableState {
   readonly isDragging: boolean;
@@ -28,12 +29,23 @@ export function PointerDraggable({
   transformBehavior = "move-source",
   children,
   style,
+  onClickCapture,
+  onPointerDownCapture,
   ...props
 }: PointerDraggableProps) {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id,
     disabled,
   });
+  const { resetOnPointerDown, suppressOnClick } = useSuppressClickAfterDrag(isDragging);
+  const handlePointerDownCapture = (event: PointerEvent<HTMLDivElement>) => {
+    resetOnPointerDown();
+    onPointerDownCapture?.(event);
+  };
+  const handleClickCapture = (event: MouseEvent<HTMLDivElement>) => {
+    if (suppressOnClick(event)) return;
+    onClickCapture?.(event);
+  };
   const dragStyle: CSSProperties = {
     ...style,
     transform:
@@ -48,6 +60,8 @@ export function PointerDraggable({
       {...props}
       {...listeners}
       {...attributes}
+      onPointerDownCapture={handlePointerDownCapture}
+      onClickCapture={handleClickCapture}
       style={dragStyle}
       data-dragging={isDragging || undefined}
       data-drag-disabled={disabled || undefined}

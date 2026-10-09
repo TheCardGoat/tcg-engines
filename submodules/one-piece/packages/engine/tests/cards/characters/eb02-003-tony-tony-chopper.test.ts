@@ -50,4 +50,20 @@ describe("EB02-003 Tony Tony.Chopper", () => {
     ).toBe(5000);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("one attached DON does not meet the opponent-turn threshold", () => {
+    const e = OnePieceTestEngine.create({ character: [{ cardId: "EB02-003", attachedDon: 1 }] });
+    e.asSouth().endTurn();
+    expect(e.getView("south").players.south.characters[0]?.power).toBe(3000);
+  });
+  test("wrong Leader prevents On Play DON transfer", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "ST02-001",
+      hand: ["EB02-003"],
+      activeDon: 3,
+    });
+    e.asSouth().play("EB02-003");
+    expect(e.getView("south").players.south.restedDon).toBe(3);
+    expect(e.getView("south").players.south.leader.attachedDon).toBe(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

@@ -1,0 +1,4118 @@
+[
+  {
+    "id": "alpha-clash:AlphaClashArena3D:src/games/alpha-clash/components/Arena3D/AlphaClashArena3D.tsx",
+    "name": "AlphaClashArena3D",
+    "game": "alpha-clash",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/alpha-clash/components/Arena3D/AlphaClashArena3D.tsx"
+  },
+  {
+    "id": "alpha-clash:AlphaClashHomePage:src/games/alpha-clash/pages/Home.page.tsx",
+    "name": "AlphaClashHomePage",
+    "game": "alpha-clash",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/alpha-clash/pages/Home.page.tsx"
+  },
+  {
+    "id": "alpha-clash:AlphaClashLiveMatchLandingPage:src/games/alpha-clash/pages/LiveMatchLanding.page.tsx",
+    "name": "AlphaClashLiveMatchLandingPage",
+    "game": "alpha-clash",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/alpha-clash/pages/LiveMatchLanding.page.tsx"
+  },
+  {
+    "id": "alpha-clash:AlphaClashLiveMatchPage:src/games/alpha-clash/pages/LiveMatch.page.tsx",
+    "name": "AlphaClashLiveMatchPage",
+    "game": "alpha-clash",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/alpha-clash/pages/LiveMatch.page.tsx"
+  },
+  {
+    "id": "alpha-clash:AlphaClashPracticePage:src/games/alpha-clash/pages/Practice.page.tsx",
+    "name": "AlphaClashPracticePage",
+    "game": "alpha-clash",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/alpha-clash/pages/Practice.page.tsx"
+  },
+  {
+    "id": "alpha-clash:AlphaClashSimulatorProviders:src/games/alpha-clash/App.tsx",
+    "name": "AlphaClashSimulatorProviders",
+    "game": "alpha-clash",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/alpha-clash/App.tsx"
+  },
+  {
+    "id": "cyberpunk:AiControlPanel:src/games/cyberpunk/components/AiControlPanel/AiControlPanel.tsx",
+    "name": "AiControlPanel",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/AiControlPanel/AiControlPanel.tsx"
+  },
+  {
+    "id": "cyberpunk:AttackPhaseHud:src/games/cyberpunk/components/GameBoard/AttackPhaseHud.tsx",
+    "name": "AttackPhaseHud",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/AttackPhaseHud.tsx"
+  },
+  {
+    "id": "cyberpunk:AttackSelectionProvider:src/games/cyberpunk/components/GameBoard/AttackSelectionContext.tsx",
+    "name": "AttackSelectionProvider",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/AttackSelectionContext.tsx"
+  },
+  {
+    "id": "cyberpunk:AuthSessionBootstrap:src/games/cyberpunk/auth/AuthSessionBootstrap.tsx",
+    "name": "AuthSessionBootstrap",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/auth/AuthSessionBootstrap.tsx"
+  },
+  {
+    "id": "cyberpunk:BackgroundMusicControls:src/games/cyberpunk/audio/BackgroundMusic.tsx",
+    "name": "BackgroundMusicControls",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/audio/BackgroundMusic.tsx"
+  },
+  {
+    "id": "cyberpunk:BackgroundMusicProvider:src/games/cyberpunk/audio/BackgroundMusic.tsx",
+    "name": "BackgroundMusicProvider",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/audio/BackgroundMusic.tsx"
+  },
+  {
+    "id": "cyberpunk:BoardAlert:src/games/cyberpunk/components/BoardV2/BoardAlert.tsx",
+    "name": "BoardAlert",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/BoardAlert.tsx"
+  },
+  {
+    "id": "cyberpunk:BoardAlertStack:src/games/cyberpunk/components/BoardV2/BoardAlert.tsx",
+    "name": "BoardAlertStack",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/BoardAlert.tsx"
+  },
+  {
+    "id": "cyberpunk:BoardContextMenu:src/games/cyberpunk/components/GameBoard/BoardContextMenu.tsx",
+    "name": "BoardContextMenu",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/BoardContextMenu.tsx"
+  },
+  {
+    "id": "cyberpunk:BoardCorrectionStrip:src/games/cyberpunk/components/GameBoard/BoardCorrectionStrip.tsx",
+    "name": "BoardCorrectionStrip",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/BoardCorrectionStrip.tsx"
+  },
+  {
+    "id": "cyberpunk:BoardSharedPage:src/games/cyberpunk/pages/BoardShared.page.tsx",
+    "name": "BoardSharedPage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/BoardShared.page.tsx"
+  },
+  {
+    "id": "cyberpunk:BoardSurfacePicker:src/games/cyberpunk/components/BoardV2/BoardSurfacePicker.tsx",
+    "name": "BoardSurfacePicker",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/BoardSurfacePicker.tsx"
+  },
+  {
+    "id": "cyberpunk:Card:src/games/cyberpunk/components/GameBoard/Card.tsx",
+    "name": "Card",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/Card.tsx"
+  },
+  {
+    "id": "cyberpunk:CardBackProvider:src/games/cyberpunk/components/GameBoard/CardImage.tsx",
+    "name": "CardBackProvider",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/CardImage.tsx"
+  },
+  {
+    "id": "cyberpunk:CardHit:src/games/cyberpunk/components/BoardV2/CyberpunkBoardV2.tsx",
+    "name": "CardHit",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/CyberpunkBoardV2.tsx"
+  },
+  {
+    "id": "cyberpunk:CardImage:src/games/cyberpunk/components/GameBoard/CardImage.tsx",
+    "name": "CardImage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/CardImage.tsx"
+  },
+  {
+    "id": "cyberpunk:CardInspectProvider:src/games/cyberpunk/components/GameBoard/CardInspectContext.tsx",
+    "name": "CardInspectProvider",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/CardInspectContext.tsx"
+  },
+  {
+    "id": "cyberpunk:CardNameText:src/games/cyberpunk/components/CardDisplay/CardNameToken.tsx",
+    "name": "CardNameText",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/CardDisplay/CardNameToken.tsx"
+  },
+  {
+    "id": "cyberpunk:CardNameToken:src/games/cyberpunk/components/CardDisplay/CardNameToken.tsx",
+    "name": "CardNameToken",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/CardDisplay/CardNameToken.tsx"
+  },
+  {
+    "id": "cyberpunk:CardPreviewProvider:src/games/cyberpunk/components/CardPreview/CardPreviewContext.tsx",
+    "name": "CardPreviewProvider",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/CardPreview/CardPreviewContext.tsx"
+  },
+  {
+    "id": "cyberpunk:CardSlot:src/games/cyberpunk/components/GameBoard/CardSlot.tsx",
+    "name": "CardSlot",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/CardSlot.tsx"
+  },
+  {
+    "id": "cyberpunk:CenterRow:src/games/cyberpunk/components/GameBoard/CenterRow.tsx",
+    "name": "CenterRow",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/CenterRow.tsx"
+  },
+  {
+    "id": "cyberpunk:ChoiceModal:src/games/cyberpunk/components/Prompt/ChoiceModal.tsx",
+    "name": "ChoiceModal",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/Prompt/ChoiceModal.tsx"
+  },
+  {
+    "id": "cyberpunk:ClockDisplay:src/games/cyberpunk/components/GameBoard/CenterRow.tsx",
+    "name": "ClockDisplay",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/CenterRow.tsx"
+  },
+  {
+    "id": "cyberpunk:ColorSchemeToggle:src/games/cyberpunk/components/ColorSchemeToggle/ColorSchemeToggle.tsx",
+    "name": "ColorSchemeToggle",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/ColorSchemeToggle/ColorSchemeToggle.tsx"
+  },
+  {
+    "id": "cyberpunk:CombatArrowOverlay:src/games/cyberpunk/components/GameBoard/CombatArrowOverlay.tsx",
+    "name": "CombatArrowOverlay",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/CombatArrowOverlay.tsx"
+  },
+  {
+    "id": "cyberpunk:CombatPriorityShortcut:src/games/cyberpunk/components/PaymentSelection/CombatPriorityShortcut.tsx",
+    "name": "CombatPriorityShortcut",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/PaymentSelection/CombatPriorityShortcut.tsx"
+  },
+  {
+    "id": "cyberpunk:ConfirmDialog:src/games/cyberpunk/components/GameBoard/GameBoard.tsx",
+    "name": "ConfirmDialog",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/GameBoard.tsx"
+  },
+  {
+    "id": "cyberpunk:ConnectionPanel:src/games/cyberpunk/components/ConnectionDiagnostics/ConnectionPanel.tsx",
+    "name": "ConnectionPanel",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/ConnectionDiagnostics/ConnectionPanel.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkAnimationActivityProvider:src/games/cyberpunk/animation/CyberpunkAnimationActivityContext.tsx",
+    "name": "CyberpunkAnimationActivityProvider",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/animation/CyberpunkAnimationActivityContext.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkBoard:src/games/cyberpunk/components/CyberpunkBoard.tsx",
+    "name": "CyberpunkBoard",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/CyberpunkBoard.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkBoardRuntimeProvider:src/games/cyberpunk/components/BoardRuntimeContext.tsx",
+    "name": "CyberpunkBoardRuntimeProvider",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardRuntimeContext.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkBoardV2:src/games/cyberpunk/components/BoardV2/CyberpunkBoardV2.tsx",
+    "name": "CyberpunkBoardV2",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/CyberpunkBoardV2.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkCardContextController:src/games/cyberpunk/components/CardContext/CyberpunkCardContextController.tsx",
+    "name": "CyberpunkCardContextController",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/CardContext/CyberpunkCardContextController.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkCardEffectFxLayer:src/games/cyberpunk/animation/CyberpunkCardEffectFxLayer.tsx",
+    "name": "CyberpunkCardEffectFxLayer",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/animation/CyberpunkCardEffectFxLayer.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkComponentCatalog:src/games/cyberpunk/components/BoardV2/ComponentCatalog.tsx",
+    "name": "CyberpunkComponentCatalog",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/ComponentCatalog.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkDeckRevealMotion:src/games/cyberpunk/animation/CyberpunkDeckRevealMotion.tsx",
+    "name": "CyberpunkDeckRevealMotion",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/animation/CyberpunkDeckRevealMotion.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkEffectCanvas:src/games/cyberpunk/animation/CyberpunkEffectCanvas.tsx",
+    "name": "CyberpunkEffectCanvas",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/animation/CyberpunkEffectCanvas.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkInteractionPanel:src/games/cyberpunk/components/CyberpunkInteractionPanel.tsx",
+    "name": "CyberpunkInteractionPanel",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/CyberpunkInteractionPanel.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkPaymentSelectionDiscovery:src/games/cyberpunk/components/PaymentSelection/PaymentSelectionPlayerAction.tsx",
+    "name": "CyberpunkPaymentSelectionDiscovery",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/PaymentSelection/PaymentSelectionPlayerAction.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkPaymentSelectionPlayerAction:src/games/cyberpunk/components/PaymentSelection/PaymentSelectionPlayerAction.tsx",
+    "name": "CyberpunkPaymentSelectionPlayerAction",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/PaymentSelection/PaymentSelectionPlayerAction.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkPaymentSelectionShortcut:src/games/cyberpunk/components/PaymentSelection/PaymentSelectionPlayerAction.tsx",
+    "name": "CyberpunkPaymentSelectionShortcut",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/PaymentSelection/PaymentSelectionPlayerAction.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkPreparationDialog:src/games/cyberpunk/pages/CyberpunkPreparation.page.tsx",
+    "name": "CyberpunkPreparationDialog",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/CyberpunkPreparation.page.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkPreparationPage:src/games/cyberpunk/pages/CyberpunkPreparation.page.tsx",
+    "name": "CyberpunkPreparationPage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/CyberpunkPreparation.page.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkRulesText:src/games/cyberpunk/components/CardContext/CyberpunkRulesText.tsx",
+    "name": "CyberpunkRulesText",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/CardContext/CyberpunkRulesText.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkSettingsFields:src/games/cyberpunk/components/UserConfig/UserConfigDialog.tsx",
+    "name": "CyberpunkSettingsFields",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/UserConfig/UserConfigDialog.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkSharedAnimationLayer:src/games/cyberpunk/animation/CyberpunkSharedAnimationLayer.tsx",
+    "name": "CyberpunkSharedAnimationLayer",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/animation/CyberpunkSharedAnimationLayer.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkSimulatorApp:src/games/cyberpunk/App.tsx",
+    "name": "CyberpunkSimulatorApp",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/App.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkSimulatorProviders:src/games/cyberpunk/App.tsx",
+    "name": "CyberpunkSimulatorProviders",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/App.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkTestStatePage:src/games/cyberpunk/pages/TestState.page.tsx",
+    "name": "CyberpunkTestStatePage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/TestState.page.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkThreeCardStateChangeLayer:src/games/cyberpunk/animation/CyberpunkThreeCardTransferLayer.tsx",
+    "name": "CyberpunkThreeCardStateChangeLayer",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/animation/CyberpunkThreeCardTransferLayer.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkThreeCardTransferLayer:src/games/cyberpunk/animation/CyberpunkThreeCardTransferLayer.tsx",
+    "name": "CyberpunkThreeCardTransferLayer",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/animation/CyberpunkThreeCardTransferLayer.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkThreeFeedbackLayer:src/games/cyberpunk/animation/CyberpunkThreeFeedbackLayer.tsx",
+    "name": "CyberpunkThreeFeedbackLayer",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/animation/CyberpunkThreeFeedbackLayer.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkVersionedBoard:src/games/cyberpunk/components/BoardV2/version.tsx",
+    "name": "CyberpunkVersionedBoard",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/version.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkVersionMenuItem:src/games/cyberpunk/components/BoardV2/VersionMenuItem.tsx",
+    "name": "CyberpunkVersionMenuItem",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/VersionMenuItem.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkViewportShell:src/games/cyberpunk/components/BoardV2/version.tsx",
+    "name": "CyberpunkViewportShell",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/version.tsx"
+  },
+  {
+    "id": "cyberpunk:CyberpunkZoneAnchor:src/games/cyberpunk/animation/CyberpunkZoneAnchor.tsx",
+    "name": "CyberpunkZoneAnchor",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/animation/CyberpunkZoneAnchor.tsx"
+  },
+  {
+    "id": "cyberpunk:DataStreams:src/games/cyberpunk/animation/DataStreamTargeting.tsx",
+    "name": "DataStreams",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/animation/DataStreamTargeting.tsx"
+  },
+  {
+    "id": "cyberpunk:DebugPanel:src/games/cyberpunk/components/DebugPanel/DebugPanel.tsx",
+    "name": "DebugPanel",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/DebugPanel/DebugPanel.tsx"
+  },
+  {
+    "id": "cyberpunk:DebugPanelProvider:src/games/cyberpunk/components/DebugPanel/DebugPanelMount.tsx",
+    "name": "DebugPanelProvider",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/DebugPanel/DebugPanelMount.tsx"
+  },
+  {
+    "id": "cyberpunk:DebugPanelToggle:src/games/cyberpunk/components/DebugPanel/DebugPanelMount.tsx",
+    "name": "DebugPanelToggle",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/DebugPanel/DebugPanelMount.tsx"
+  },
+  {
+    "id": "cyberpunk:DeckDetailPage:src/games/cyberpunk/pages/Decks.page.tsx",
+    "name": "DeckDetailPage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/Decks.page.tsx"
+  },
+  {
+    "id": "cyberpunk:DecksPage:src/games/cyberpunk/pages/Decks.page.tsx",
+    "name": "DecksPage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/Decks.page.tsx"
+  },
+  {
+    "id": "cyberpunk:DeckZone:src/games/cyberpunk/components/GameBoard/DeckZone.tsx",
+    "name": "DeckZone",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/DeckZone.tsx"
+  },
+  {
+    "id": "cyberpunk:DeferredAiControlPanel:src/games/cyberpunk/components/AiControlPanel/DeferredAiControlPanel.tsx",
+    "name": "DeferredAiControlPanel",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/AiControlPanel/DeferredAiControlPanel.tsx"
+  },
+  {
+    "id": "cyberpunk:DemoFixturePage:src/games/cyberpunk/pages/DemoFixture.page.tsx",
+    "name": "DemoFixturePage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/DemoFixture.page.tsx"
+  },
+  {
+    "id": "cyberpunk:DieDisplay:src/games/cyberpunk/components/GameBoard/DieDisplay.tsx",
+    "name": "DieDisplay",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/DieDisplay.tsx"
+  },
+  {
+    "id": "cyberpunk:DragCardImage:src/games/cyberpunk/components/GameBoard/DragDropContext.tsx",
+    "name": "DragCardImage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/DragDropContext.tsx"
+  },
+  {
+    "id": "cyberpunk:DragDropProvider:src/games/cyberpunk/components/GameBoard/DragDropContext.tsx",
+    "name": "DragDropProvider",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/DragDropContext.tsx"
+  },
+  {
+    "id": "cyberpunk:DropDispatchBridge:src/games/cyberpunk/components/GameBoard/BoardInputController.tsx",
+    "name": "DropDispatchBridge",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/BoardInputController.tsx"
+  },
+  {
+    "id": "cyberpunk:EddiesZone:src/games/cyberpunk/components/GameBoard/EddiesZone.tsx",
+    "name": "EddiesZone",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/EddiesZone.tsx"
+  },
+  {
+    "id": "cyberpunk:EndGameModal:src/games/cyberpunk/components/EndGameModal/EndGameModal.tsx",
+    "name": "EndGameModal",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/EndGameModal/EndGameModal.tsx"
+  },
+  {
+    "id": "cyberpunk:EndGameModalFixture:src/games/cyberpunk/components/EndGameModal/EndGameModal.tsx",
+    "name": "EndGameModalFixture",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/EndGameModal/EndGameModal.tsx"
+  },
+  {
+    "id": "cyberpunk:EngineProvider:src/games/cyberpunk/engine/EngineProvider.tsx",
+    "name": "EngineProvider",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/engine/EngineProvider.tsx"
+  },
+  {
+    "id": "cyberpunk:EventCard:src/games/cyberpunk/components/EventCard/EventCard.tsx",
+    "name": "EventCard",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/EventCard/EventCard.tsx"
+  },
+  {
+    "id": "cyberpunk:FieldZone:src/games/cyberpunk/components/GameBoard/FieldZone.tsx",
+    "name": "FieldZone",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/FieldZone.tsx"
+  },
+  {
+    "id": "cyberpunk:FirstGameTutorialPage:src/games/cyberpunk/pages/FirstGameTutorial.page.tsx",
+    "name": "FirstGameTutorialPage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/FirstGameTutorial.page.tsx"
+  },
+  {
+    "id": "cyberpunk:FixerZone:src/games/cyberpunk/components/GameBoard/FixerZone.tsx",
+    "name": "FixerZone",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/FixerZone.tsx"
+  },
+  {
+    "id": "cyberpunk:FixtureIndex:src/games/cyberpunk/pages/Tests.page.tsx",
+    "name": "FixtureIndex",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/Tests.page.tsx"
+  },
+  {
+    "id": "cyberpunk:FloatingChatComposer:src/games/cyberpunk/components/ChatPanel/FloatingChatComposer.tsx",
+    "name": "FloatingChatComposer",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/ChatPanel/FloatingChatComposer.tsx"
+  },
+  {
+    "id": "cyberpunk:GameBoard:src/games/cyberpunk/components/GameBoard/GameBoard.tsx",
+    "name": "GameBoard",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/GameBoard.tsx"
+  },
+  {
+    "id": "cyberpunk:GameStateProvider:src/games/cyberpunk/components/GameBoard/useGameState.tsx",
+    "name": "GameStateProvider",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/useGameState.tsx"
+  },
+  {
+    "id": "cyberpunk:GigDieIcon:src/games/cyberpunk/components/GameBoard/StreetCredHelper.tsx",
+    "name": "GigDieIcon",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/StreetCredHelper.tsx"
+  },
+  {
+    "id": "cyberpunk:GigsRow:src/games/cyberpunk/components/GameBoard/GigsRow.tsx",
+    "name": "GigsRow",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/GigsRow.tsx"
+  },
+  {
+    "id": "cyberpunk:GigZone:src/games/cyberpunk/components/GameBoard/GigZone.tsx",
+    "name": "GigZone",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/GigZone.tsx"
+  },
+  {
+    "id": "cyberpunk:HandZone:src/games/cyberpunk/components/GameBoard/HandZone.tsx",
+    "name": "HandZone",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/HandZone.tsx"
+  },
+  {
+    "id": "cyberpunk:HomePage:src/games/cyberpunk/pages/Tests.page.tsx",
+    "name": "HomePage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/Tests.page.tsx"
+  },
+  {
+    "id": "cyberpunk:LegendsZone:src/games/cyberpunk/components/GameBoard/LegendsZone.tsx",
+    "name": "LegendsZone",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/LegendsZone.tsx"
+  },
+  {
+    "id": "cyberpunk:LiveMatchLandingPage:src/games/cyberpunk/pages/LiveMatchLanding.page.tsx",
+    "name": "LiveMatchLandingPage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/LiveMatchLanding.page.tsx"
+  },
+  {
+    "id": "cyberpunk:LiveMatchPage:src/games/cyberpunk/pages/LiveMatch.page.tsx",
+    "name": "LiveMatchPage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/LiveMatch.page.tsx"
+  },
+  {
+    "id": "cyberpunk:MatchmakingPage:src/games/cyberpunk/pages/Matchmaking.page.tsx",
+    "name": "MatchmakingPage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/Matchmaking.page.tsx"
+  },
+  {
+    "id": "cyberpunk:MatchSeriesMeta:src/games/cyberpunk/components/EndGameModal/MatchSeriesMeta.tsx",
+    "name": "MatchSeriesMeta",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/EndGameModal/MatchSeriesMeta.tsx"
+  },
+  {
+    "id": "cyberpunk:MatchViewportV2:src/games/cyberpunk/components/BoardV2/MatchViewportV2.tsx",
+    "name": "MatchViewportV2",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/MatchViewportV2.tsx"
+  },
+  {
+    "id": "cyberpunk:MobileBoard:src/games/cyberpunk/components/GameBoard/MobileBoard.tsx",
+    "name": "MobileBoard",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/MobileBoard.tsx"
+  },
+  {
+    "id": "cyberpunk:MobileClockRail:src/games/cyberpunk/components/GameBoard/CenterRow.tsx",
+    "name": "MobileClockRail",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/CenterRow.tsx"
+  },
+  {
+    "id": "cyberpunk:MobileDirectAttackDropTarget:src/games/cyberpunk/components/GameBoard/CenterRow.tsx",
+    "name": "MobileDirectAttackDropTarget",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/CenterRow.tsx"
+  },
+  {
+    "id": "cyberpunk:MobileHandZone:src/games/cyberpunk/components/GameBoard/MobileHandZone.tsx",
+    "name": "MobileHandZone",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/MobileHandZone.tsx"
+  },
+  {
+    "id": "cyberpunk:MobileSellReveal:src/games/cyberpunk/components/GameBoard/CenterRow.tsx",
+    "name": "MobileSellReveal",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/CenterRow.tsx"
+  },
+  {
+    "id": "cyberpunk:MobileSideStrip:src/games/cyberpunk/components/GameBoard/MobileSideStrip.tsx",
+    "name": "MobileSideStrip",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/MobileSideStrip.tsx"
+  },
+  {
+    "id": "cyberpunk:MoveSelectionProvider:src/games/cyberpunk/components/GameBoard/MoveSelectionContext.tsx",
+    "name": "MoveSelectionProvider",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/MoveSelectionContext.tsx"
+  },
+  {
+    "id": "cyberpunk:MulliganStatsStrip:src/games/cyberpunk/components/Prompt/MulliganStatsStrip.tsx",
+    "name": "MulliganStatsStrip",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/Prompt/MulliganStatsStrip.tsx"
+  },
+  {
+    "id": "cyberpunk:NotFound:src/games/cyberpunk/pages/Tests.page.tsx",
+    "name": "NotFound",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/Tests.page.tsx"
+  },
+  {
+    "id": "cyberpunk:OpponentDisconnectOverlay:src/games/cyberpunk/components/GameBoard/OpponentDisconnectOverlay.tsx",
+    "name": "OpponentDisconnectOverlay",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/OpponentDisconnectOverlay.tsx"
+  },
+  {
+    "id": "cyberpunk:PassTurnControl:src/games/cyberpunk/components/GameBoard/CenterRow.tsx",
+    "name": "PassTurnControl",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/CenterRow.tsx"
+  },
+  {
+    "id": "cyberpunk:PaymentSelectionPrompt:src/games/cyberpunk/components/PaymentSelection/PaymentSelectionPrompt.tsx",
+    "name": "PaymentSelectionPrompt",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/PaymentSelection/PaymentSelectionPrompt.tsx"
+  },
+  {
+    "id": "cyberpunk:PaymentSelectionProvider:src/games/cyberpunk/components/PaymentSelection/PaymentSelectionContext.tsx",
+    "name": "PaymentSelectionProvider",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/PaymentSelection/PaymentSelectionContext.tsx"
+  },
+  {
+    "id": "cyberpunk:PendingMoveRecoveryMessage:src/games/cyberpunk/components/pendingMoveFeedback.tsx",
+    "name": "PendingMoveRecoveryMessage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/pendingMoveFeedback.tsx"
+  },
+  {
+    "id": "cyberpunk:PInfoZone:src/games/cyberpunk/components/GameBoard/PInfoZone.tsx",
+    "name": "PInfoZone",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/PInfoZone.tsx"
+  },
+  {
+    "id": "cyberpunk:PlayerNameplate:src/games/cyberpunk/components/BoardV2/PlayerNameplate.tsx",
+    "name": "PlayerNameplate",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/PlayerNameplate.tsx"
+  },
+  {
+    "id": "cyberpunk:PracticeMatchPage:src/games/cyberpunk/pages/PracticeMatch.page.tsx",
+    "name": "PracticeMatchPage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/PracticeMatch.page.tsx"
+  },
+  {
+    "id": "cyberpunk:PracticePage:src/games/cyberpunk/pages/Practice.page.tsx",
+    "name": "PracticePage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/Practice.page.tsx"
+  },
+  {
+    "id": "cyberpunk:ProgramDataStreams:src/games/cyberpunk/animation/DataStreamTargeting.tsx",
+    "name": "ProgramDataStreams",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/animation/DataStreamTargeting.tsx"
+  },
+  {
+    "id": "cyberpunk:PromptBanner:src/games/cyberpunk/components/Prompt/PromptBanner.tsx",
+    "name": "PromptBanner",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/Prompt/PromptBanner.tsx"
+  },
+  {
+    "id": "cyberpunk:RawEngineEventsPanel:src/games/cyberpunk/components/RawEngineEventsPanel/RawEngineEventsPanel.tsx",
+    "name": "RawEngineEventsPanel",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/RawEngineEventsPanel/RawEngineEventsPanel.tsx"
+  },
+  {
+    "id": "cyberpunk:ReadyPracticeMatch:src/games/cyberpunk/pages/PracticeMatch.page.tsx",
+    "name": "ReadyPracticeMatch",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/PracticeMatch.page.tsx"
+  },
+  {
+    "id": "cyberpunk:ReplayForkPage:src/games/cyberpunk/pages/ReplayFork.page.tsx",
+    "name": "ReplayForkPage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/ReplayFork.page.tsx"
+  },
+  {
+    "id": "cyberpunk:ReplayPage:src/games/cyberpunk/pages/Replay.page.tsx",
+    "name": "ReplayPage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/Replay.page.tsx"
+  },
+  {
+    "id": "cyberpunk:ReturnToV1:src/games/cyberpunk/components/BoardV2/version.tsx",
+    "name": "ReturnToV1",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/version.tsx"
+  },
+  {
+    "id": "cyberpunk:RivalDropTarget:src/games/cyberpunk/components/BoardV2/DropAreas.tsx",
+    "name": "RivalDropTarget",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/DropAreas.tsx"
+  },
+  {
+    "id": "cyberpunk:RotateGuidance:src/games/cyberpunk/components/BoardV2/RotateGuidance.tsx",
+    "name": "RotateGuidance",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/RotateGuidance.tsx"
+  },
+  {
+    "id": "cyberpunk:Router:src/games/cyberpunk/Router.tsx",
+    "name": "Router",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/Router.tsx"
+  },
+  {
+    "id": "cyberpunk:Scene:src/games/cyberpunk/components/BoardV2/Scene.tsx",
+    "name": "Scene",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/Scene.tsx"
+  },
+  {
+    "id": "cyberpunk:SeatStatus:src/games/cyberpunk/components/BoardV2/CyberpunkBoardV2.tsx",
+    "name": "SeatStatus",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/CyberpunkBoardV2.tsx"
+  },
+  {
+    "id": "cyberpunk:SelectionReset:src/games/cyberpunk/components/GameBoard/BoardInputController.tsx",
+    "name": "SelectionReset",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/BoardInputController.tsx"
+  },
+  {
+    "id": "cyberpunk:SellDropArea:src/games/cyberpunk/components/BoardV2/DropAreas.tsx",
+    "name": "SellDropArea",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/DropAreas.tsx"
+  },
+  {
+    "id": "cyberpunk:ServerAuthSessionHydrator:src/games/cyberpunk/auth/ServerAuthSessionHydrator.tsx",
+    "name": "ServerAuthSessionHydrator",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/auth/ServerAuthSessionHydrator.tsx"
+  },
+  {
+    "id": "cyberpunk:SetupSyncNotice:src/games/cyberpunk/pages/setupSyncStallNotice.tsx",
+    "name": "SetupSyncNotice",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/setupSyncStallNotice.tsx"
+  },
+  {
+    "id": "cyberpunk:SoundMuteShortcut:src/games/cyberpunk/components/BoardV2/SoundMuteShortcut.tsx",
+    "name": "SoundMuteShortcut",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/BoardV2/SoundMuteShortcut.tsx"
+  },
+  {
+    "id": "cyberpunk:StreetCredHelperPopover:src/games/cyberpunk/components/GameBoard/StreetCredHelper.tsx",
+    "name": "StreetCredHelperPopover",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/StreetCredHelper.tsx"
+  },
+  {
+    "id": "cyberpunk:StreetCredStarIcon:src/games/cyberpunk/components/GameBoard/StreetCredHelper.tsx",
+    "name": "StreetCredStarIcon",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/StreetCredHelper.tsx"
+  },
+  {
+    "id": "cyberpunk:SuppressPaymentDiscovery:src/games/cyberpunk/components/PaymentSelection/PaymentSelectionPlayerAction.tsx",
+    "name": "SuppressPaymentDiscovery",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/PaymentSelection/PaymentSelectionPlayerAction.tsx"
+  },
+  {
+    "id": "cyberpunk:TestFixturePage:src/games/cyberpunk/pages/TestFixture.page.tsx",
+    "name": "TestFixturePage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/TestFixture.page.tsx"
+  },
+  {
+    "id": "cyberpunk:TestsPage:src/games/cyberpunk/pages/Tests.page.tsx",
+    "name": "TestsPage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/Tests.page.tsx"
+  },
+  {
+    "id": "cyberpunk:TrashZone:src/games/cyberpunk/components/GameBoard/TrashZone.tsx",
+    "name": "TrashZone",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/TrashZone.tsx"
+  },
+  {
+    "id": "cyberpunk:UserConfigButton:src/games/cyberpunk/components/UserConfig/UserConfigDialog.tsx",
+    "name": "UserConfigButton",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/UserConfig/UserConfigDialog.tsx"
+  },
+  {
+    "id": "cyberpunk:UserConfigDialog:src/games/cyberpunk/components/UserConfig/UserConfigDialog.tsx",
+    "name": "UserConfigDialog",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/UserConfig/UserConfigDialog.tsx"
+  },
+  {
+    "id": "cyberpunk:UserConfigProvider:src/games/cyberpunk/engine/UserConfigContext.tsx",
+    "name": "UserConfigProvider",
+    "game": "cyberpunk",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/engine/UserConfigContext.tsx"
+  },
+  {
+    "id": "cyberpunk:WebviewPracticePage:src/games/cyberpunk/pages/WebviewPractice.page.tsx",
+    "name": "WebviewPracticePage",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/pages/WebviewPractice.page.tsx"
+  },
+  {
+    "id": "cyberpunk:Welcome:src/games/cyberpunk/components/Welcome/Welcome.tsx",
+    "name": "Welcome",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/Welcome/Welcome.tsx"
+  },
+  {
+    "id": "cyberpunk:ZoneBadge:src/games/cyberpunk/components/GameBoard/ZoneBadge.tsx",
+    "name": "ZoneBadge",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/ZoneBadge.tsx"
+  },
+  {
+    "id": "cyberpunk:ZoneLabel:src/games/cyberpunk/components/GameBoard/ZoneLabel.tsx",
+    "name": "ZoneLabel",
+    "game": "cyberpunk",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/ZoneLabel.tsx"
+  },
+  {
+    "id": "flesh-and-blood:CombatChain:src/games/flesh-and-blood/CombatChain.tsx",
+    "name": "CombatChain",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/CombatChain.tsx"
+  },
+  {
+    "id": "flesh-and-blood:CompactResolutionStack:src/games/flesh-and-blood/CompactResolutionStack.tsx",
+    "name": "CompactResolutionStack",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/CompactResolutionStack.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabActionIcon:src/games/flesh-and-blood/FabCardContextVisualIdentity.tsx",
+    "name": "FabActionIcon",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabCardContextVisualIdentity.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabActionNotice:src/games/flesh-and-blood/FabActionNotice.tsx",
+    "name": "FabActionNotice",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabActionNotice.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabActiveEffectsButton:src/games/flesh-and-blood/FabActiveEffects.tsx",
+    "name": "FabActiveEffectsButton",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabActiveEffects.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabActiveEffectsInspector:src/games/flesh-and-blood/FabActiveEffects.tsx",
+    "name": "FabActiveEffectsInspector",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabActiveEffects.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabActiveEffectsRail:src/games/flesh-and-blood/FabActiveEffects.tsx",
+    "name": "FabActiveEffectsRail",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabActiveEffects.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabAssetMeters:src/games/flesh-and-blood/FabIconography.tsx",
+    "name": "FabAssetMeters",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabIconography.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabAutomationSettingsContext:src/games/flesh-and-blood/fab-automation-settings.tsx",
+    "name": "FabAutomationSettingsContext",
+    "game": "flesh-and-blood",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/fab-automation-settings.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabAutomationSettingsProvider:src/games/flesh-and-blood/fab-automation-settings.tsx",
+    "name": "FabAutomationSettingsProvider",
+    "game": "flesh-and-blood",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/fab-automation-settings.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabBloodDebtCue:src/games/flesh-and-blood/FabBloodDebtCue.tsx",
+    "name": "FabBloodDebtCue",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabBloodDebtCue.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabBoardCardFace:src/games/flesh-and-blood/FabBoardCardFace.tsx",
+    "name": "FabBoardCardFace",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabBoardCardFace.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabBoardContextMenu:src/games/flesh-and-blood/FabPriorityAutomation.tsx",
+    "name": "FabBoardContextMenu",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPriorityAutomation.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabBoardHighlightProvider:src/games/flesh-and-blood/FabBoardCardFace.tsx",
+    "name": "FabBoardHighlightProvider",
+    "game": "flesh-and-blood",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabBoardCardFace.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabCardArtLadderImage:src/games/flesh-and-blood/useFabCardArtFallback.tsx",
+    "name": "FabCardArtLadderImage",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/useFabCardArtFallback.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabCardAutomationCluster:src/games/flesh-and-blood/FabCardAutomationCluster.tsx",
+    "name": "FabCardAutomationCluster",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabCardAutomationCluster.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabCardPreviewFallback:src/games/flesh-and-blood/FabCardPreview.tsx",
+    "name": "FabCardPreviewFallback",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabCardPreview.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabCardPreviewProvider:src/games/flesh-and-blood/FabCardPreview.tsx",
+    "name": "FabCardPreviewProvider",
+    "game": "flesh-and-blood",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabCardPreview.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabCardPreviewSurface:src/games/flesh-and-blood/FabCardPreview.tsx",
+    "name": "FabCardPreviewSurface",
+    "game": "flesh-and-blood",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabCardPreview.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabCombatValueHighlights:src/games/flesh-and-blood/FabCombatValuePanel.tsx",
+    "name": "FabCombatValueHighlights",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabCombatValuePanel.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabCombatValuePanel:src/games/flesh-and-blood/FabCombatValuePanel.tsx",
+    "name": "FabCombatValuePanel",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabCombatValuePanel.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabFirstGameEntry:src/games/flesh-and-blood/first-game/FabFirstGameGuide.tsx",
+    "name": "FabFirstGameEntry",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/first-game/FabFirstGameGuide.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabFirstGameGuide:src/games/flesh-and-blood/first-game/FabFirstGameGuide.tsx",
+    "name": "FabFirstGameGuide",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/first-game/FabFirstGameGuide.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabFirstGameTutorialPage:src/games/flesh-and-blood/first-game/FabFirstGameTutorial.page.tsx",
+    "name": "FabFirstGameTutorialPage",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/first-game/FabFirstGameTutorial.page.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabFirstPlayerChoice:src/games/flesh-and-blood/FabFirstPlayerChoice.tsx",
+    "name": "FabFirstPlayerChoice",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabFirstPlayerChoice.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabHeroIdentityMedia:src/games/flesh-and-blood/FabHeroIdentityMedia.tsx",
+    "name": "FabHeroIdentityMedia",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabHeroIdentityMedia.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabHeroSignalEdge:src/games/flesh-and-blood/FabHeroSignalEdge.tsx",
+    "name": "FabHeroSignalEdge",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabHeroSignalEdge.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabHistoryCardReference:src/games/flesh-and-blood/FabHistoryCardReference.tsx",
+    "name": "FabHistoryCardReference",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabHistoryCardReference.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabHistoryFixture:src/games/flesh-and-blood/FabHistory.fixture.tsx",
+    "name": "FabHistoryFixture",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabHistory.fixture.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabHostedCards:src/games/flesh-and-blood/FabHostedCards.tsx",
+    "name": "FabHostedCards",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabHostedCards.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabInstantYieldAutomationControl:src/games/flesh-and-blood/FabInstantYieldAutomation.tsx",
+    "name": "FabInstantYieldAutomationControl",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabInstantYieldAutomation.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabInstantYieldAutomationProvider:src/games/flesh-and-blood/FabInstantYieldAutomation.tsx",
+    "name": "FabInstantYieldAutomationProvider",
+    "game": "flesh-and-blood",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabInstantYieldAutomation.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabKeywordRow:src/games/flesh-and-blood/FabIconography.tsx",
+    "name": "FabKeywordRow",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabIconography.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabLiveMatchLandingPage:src/games/flesh-and-blood/LiveMatchLanding.page.tsx",
+    "name": "FabLiveMatchLandingPage",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/LiveMatchLanding.page.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabMatchClock:src/games/flesh-and-blood/FabMatchClock.tsx",
+    "name": "FabMatchClock",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabMatchClock.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabMatchClockFixture:src/games/flesh-and-blood/FabMatchClock.fixture.tsx",
+    "name": "FabMatchClockFixture",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabMatchClock.fixture.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabMatchHistoryPanel:src/games/flesh-and-blood/FabMatchHistoryPanel.tsx",
+    "name": "FabMatchHistoryPanel",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabMatchHistoryPanel.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabMethodologyLink:src/games/flesh-and-blood/FabCombatValuePanel.tsx",
+    "name": "FabMethodologyLink",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabCombatValuePanel.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabMobileActiveEffectsLedger:src/games/flesh-and-blood/FabActiveEffects.tsx",
+    "name": "FabMobileActiveEffectsLedger",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabActiveEffects.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabMobileBoard:src/games/flesh-and-blood/FabMobileBoard.tsx",
+    "name": "FabMobileBoard",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabMobileBoard.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabMobileChoicePreview:src/games/flesh-and-blood/FabMobileChoicePreview.tsx",
+    "name": "FabMobileChoicePreview",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabMobileChoicePreview.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabMobileStackPopover:src/games/flesh-and-blood/FabMobileStackPopover.tsx",
+    "name": "FabMobileStackPopover",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabMobileStackPopover.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabOfficialIcon:src/games/flesh-and-blood/FabIconography.tsx",
+    "name": "FabOfficialIcon",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabIconography.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabOpponentTriggerYieldControl:src/games/flesh-and-blood/FabOpponentTriggerYield.tsx",
+    "name": "FabOpponentTriggerYieldControl",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabOpponentTriggerYield.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabOptionalTriggerAutomationControl:src/games/flesh-and-blood/FabOptionalTriggerAutomation.tsx",
+    "name": "FabOptionalTriggerAutomationControl",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabOptionalTriggerAutomation.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabOptionalTriggerAutomationProvider:src/games/flesh-and-blood/FabOptionalTriggerAutomation.tsx",
+    "name": "FabOptionalTriggerAutomationProvider",
+    "game": "flesh-and-blood",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabOptionalTriggerAutomation.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPitchGem:src/games/flesh-and-blood/FabIconography.tsx",
+    "name": "FabPitchGem",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabIconography.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPitchStackOrderingPanel:src/games/flesh-and-blood/FabPitchStackOrderingPanel.tsx",
+    "name": "FabPitchStackOrderingPanel",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPitchStackOrderingPanel.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPitchZoneIcon:src/games/flesh-and-blood/FabIconography.tsx",
+    "name": "FabPitchZoneIcon",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabIconography.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPostGameSummary:src/games/flesh-and-blood/FabPostGameSummary.tsx",
+    "name": "FabPostGameSummary",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPostGameSummary.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPostGameSummaryFixturePage:src/games/flesh-and-blood/FabPostGameSummary.fixture.tsx",
+    "name": "FabPostGameSummaryFixturePage",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPostGameSummary.fixture.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPracticePreparation:src/games/flesh-and-blood/FabFirstPlayerChoice.tsx",
+    "name": "FabPracticePreparation",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabFirstPlayerChoice.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPracticeSidebarActivity:src/games/flesh-and-blood/FabPracticeSidebarActivity.tsx",
+    "name": "FabPracticeSidebarActivity",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPracticeSidebarActivity.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPregameSideboard:src/games/flesh-and-blood/FabPregameSideboard.tsx",
+    "name": "FabPregameSideboard",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPregameSideboard.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPreparationPage:src/games/flesh-and-blood/FabPreparation.page.tsx",
+    "name": "FabPreparationPage",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPreparation.page.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPresentationCatalogProvider:src/games/flesh-and-blood/FabPresentationCatalog.tsx",
+    "name": "FabPresentationCatalogProvider",
+    "game": "flesh-and-blood",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPresentationCatalog.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPresentationTestProvider:src/games/flesh-and-blood/presentation-test-provider.tsx",
+    "name": "FabPresentationTestProvider",
+    "game": "flesh-and-blood",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/presentation-test-provider.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPriorityAutomationControl:src/games/flesh-and-blood/FabPriorityAutomation.tsx",
+    "name": "FabPriorityAutomationControl",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPriorityAutomation.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPriorityAutomationParticipantMenu:src/games/flesh-and-blood/FabPriorityAutomation.tsx",
+    "name": "FabPriorityAutomationParticipantMenu",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPriorityAutomation.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPriorityAutomationParticipantMenuItems:src/games/flesh-and-blood/FleshAndBloodTabletop.tsx",
+    "name": "FabPriorityAutomationParticipantMenuItems",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FleshAndBloodTabletop.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPriorityAutomationQuickControl:src/games/flesh-and-blood/FabPriorityAutomation.tsx",
+    "name": "FabPriorityAutomationQuickControl",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPriorityAutomation.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPriorityAutomationSettings:src/games/flesh-and-blood/FabPriorityAutomation.tsx",
+    "name": "FabPriorityAutomationSettings",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPriorityAutomation.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPriorityAutomationSettingsPanel:src/games/flesh-and-blood/FleshAndBloodTabletop.tsx",
+    "name": "FabPriorityAutomationSettingsPanel",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FleshAndBloodTabletop.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabPrioritySignal:src/games/flesh-and-blood/FabPrioritySignal.tsx",
+    "name": "FabPrioritySignal",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPrioritySignal.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabReplayForkPage:src/games/flesh-and-blood/ReplayFork.page.tsx",
+    "name": "FabReplayForkPage",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/ReplayFork.page.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabReplayPage:src/games/flesh-and-blood/Replay.page.tsx",
+    "name": "FabReplayPage",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/Replay.page.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabRoutePresentationCatalog:src/games/flesh-and-blood/FabPresentationCatalog.tsx",
+    "name": "FabRoutePresentationCatalog",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPresentationCatalog.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabSidebarResolutionStack:src/games/flesh-and-blood/CombatChain.tsx",
+    "name": "FabSidebarResolutionStack",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/CombatChain.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabSideboardingMockPage:src/games/flesh-and-blood/Practice.page.tsx",
+    "name": "FabSideboardingMockPage",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/Practice.page.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabSpectatorNotice:src/games/flesh-and-blood/FabSpectatorNotice.tsx",
+    "name": "FabSpectatorNotice",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabSpectatorNotice.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabStatBadge:src/games/flesh-and-blood/FabIconography.tsx",
+    "name": "FabStatBadge",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabIconography.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabSymbolText:src/games/flesh-and-blood/FabSymbolText.tsx",
+    "name": "FabSymbolText",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabSymbolText.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabTriggerOrderingPanel:src/games/flesh-and-blood/FabTriggerOrderingPanel.tsx",
+    "name": "FabTriggerOrderingPanel",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabTriggerOrderingPanel.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabValueDeltaVisual:src/games/flesh-and-blood/FabValueDeltaVisual.tsx",
+    "name": "FabValueDeltaVisual",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabValueDeltaVisual.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FabWeaponAttacksLeft:src/games/flesh-and-blood/FabWeaponAttacksLeft.tsx",
+    "name": "FabWeaponAttacksLeft",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabWeaponAttacksLeft.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FleshAndBloodFixtureIndexPage:src/games/flesh-and-blood/Fixtures.page.tsx",
+    "name": "FleshAndBloodFixtureIndexPage",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/Fixtures.page.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FleshAndBloodHomePage:src/games/flesh-and-blood/Home.page.tsx",
+    "name": "FleshAndBloodHomePage",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/Home.page.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FleshAndBloodMobilePanel:src/games/flesh-and-blood/FleshAndBloodSidebar.tsx",
+    "name": "FleshAndBloodMobilePanel",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FleshAndBloodSidebar.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FleshAndBloodPracticePage:src/games/flesh-and-blood/Practice.page.tsx",
+    "name": "FleshAndBloodPracticePage",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/Practice.page.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FleshAndBloodSidebar:src/games/flesh-and-blood/FleshAndBloodSidebar.tsx",
+    "name": "FleshAndBloodSidebar",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FleshAndBloodSidebar.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FleshAndBloodSimulatorProviders:src/games/flesh-and-blood/App.tsx",
+    "name": "FleshAndBloodSimulatorProviders",
+    "game": "flesh-and-blood",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/App.tsx"
+  },
+  {
+    "id": "flesh-and-blood:FleshAndBloodTabletop:src/games/flesh-and-blood/FleshAndBloodTabletop.tsx",
+    "name": "FleshAndBloodTabletop",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FleshAndBloodTabletop.tsx"
+  },
+  {
+    "id": "flesh-and-blood:HeroPanel:src/games/flesh-and-blood/FabPregameSideboard.tsx",
+    "name": "HeroPanel",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FabPregameSideboard.tsx"
+  },
+  {
+    "id": "flesh-and-blood:HeroSpecialArea:src/games/flesh-and-blood/HeroSpecialArea.tsx",
+    "name": "HeroSpecialArea",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/HeroSpecialArea.tsx"
+  },
+  {
+    "id": "flesh-and-blood:HeroSpecialPreviewGallery:src/games/flesh-and-blood/HeroSpecialPreviewGallery.tsx",
+    "name": "HeroSpecialPreviewGallery",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/HeroSpecialPreviewGallery.tsx"
+  },
+  {
+    "id": "flesh-and-blood:LiveMatchPage:src/games/flesh-and-blood/LiveMatch.page.tsx",
+    "name": "LiveMatchPage",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/LiveMatch.page.tsx"
+  },
+  {
+    "id": "flesh-and-blood:LocalEngineMatch:src/games/flesh-and-blood/Practice.page.tsx",
+    "name": "LocalEngineMatch",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/Practice.page.tsx"
+  },
+  {
+    "id": "flesh-and-blood:MobileAssetPills:src/games/flesh-and-blood/FleshAndBloodTabletop.tsx",
+    "name": "MobileAssetPills",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/FleshAndBloodTabletop.tsx"
+  },
+  {
+    "id": "flesh-and-blood:PlayerBoard:src/games/flesh-and-blood/PlayerBoard.tsx",
+    "name": "PlayerBoard",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/PlayerBoard.tsx"
+  },
+  {
+    "id": "flesh-and-blood:ResolutionStack:src/games/flesh-and-blood/CombatChain.tsx",
+    "name": "ResolutionStack",
+    "game": "flesh-and-blood",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/flesh-and-blood/CombatChain.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveAgencySignal:src/games/grand-archive/GrandArchiveAgencySignal.tsx",
+    "name": "GrandArchiveAgencySignal",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchiveAgencySignal.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveAttackGuide:src/games/grand-archive/GrandArchiveAttackGuide.tsx",
+    "name": "GrandArchiveAttackGuide",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchiveAttackGuide.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveCardPreviewProvider:src/games/grand-archive/GrandArchiveCardPreview.tsx",
+    "name": "GrandArchiveCardPreviewProvider",
+    "game": "grand-archive",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchiveCardPreview.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveCombatWorkspace:src/games/grand-archive/GrandArchiveCombatWorkspace.tsx",
+    "name": "GrandArchiveCombatWorkspace",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchiveCombatWorkspace.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveCounters:src/games/grand-archive/GrandArchiveCounters.tsx",
+    "name": "GrandArchiveCounters",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchiveCounters.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveEffectsStack:src/games/grand-archive/GrandArchiveEffectsStack.tsx",
+    "name": "GrandArchiveEffectsStack",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchiveEffectsStack.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveFixturesPage:src/games/grand-archive/Fixtures.page.tsx",
+    "name": "GrandArchiveFixturesPage",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/Fixtures.page.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveGameSummary:src/games/grand-archive/GrandArchiveGameSummary.tsx",
+    "name": "GrandArchiveGameSummary",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchiveGameSummary.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveHands:src/games/grand-archive/GrandArchiveHands.tsx",
+    "name": "GrandArchiveHands",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchiveHands.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveHomePage:src/games/grand-archive/Home.page.tsx",
+    "name": "GrandArchiveHomePage",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/Home.page.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveInteractionLayer:src/games/grand-archive/GrandArchiveInteractionLayer.tsx",
+    "name": "GrandArchiveInteractionLayer",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchiveInteractionLayer.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveLiveMatchLandingPage:src/games/grand-archive/LiveMatchLanding.page.tsx",
+    "name": "GrandArchiveLiveMatchLandingPage",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/LiveMatchLanding.page.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveLiveMatchPage:src/games/grand-archive/LiveMatch.page.tsx",
+    "name": "GrandArchiveLiveMatchPage",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/LiveMatch.page.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchivePlayerTable:src/games/grand-archive/GrandArchivePlayerTable.tsx",
+    "name": "GrandArchivePlayerTable",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchivePlayerTable.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchivePracticeChat:src/games/grand-archive/GrandArchivePracticeChat.tsx",
+    "name": "GrandArchivePracticeChat",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchivePracticeChat.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchivePracticePage:src/games/grand-archive/Practice.page.tsx",
+    "name": "GrandArchivePracticePage",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/Practice.page.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchivePracticeSetup:src/games/grand-archive/GrandArchivePracticeSetup.tsx",
+    "name": "GrandArchivePracticeSetup",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchivePracticeSetup.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchivePreparation:src/games/grand-archive/GrandArchivePreparation.tsx",
+    "name": "GrandArchivePreparation",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchivePreparation.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchivePreparationPage:src/games/grand-archive/GrandArchivePreparation.page.tsx",
+    "name": "GrandArchivePreparationPage",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchivePreparation.page.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveRoleCard:src/games/grand-archive/GrandArchiveRoleCard.tsx",
+    "name": "GrandArchiveRoleCard",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchiveRoleCard.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveSimulatorProviders:src/games/grand-archive/App.tsx",
+    "name": "GrandArchiveSimulatorProviders",
+    "game": "grand-archive",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/App.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveTabletop:src/games/grand-archive/GrandArchiveTabletop.tsx",
+    "name": "GrandArchiveTabletop",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchiveTabletop.tsx"
+  },
+  {
+    "id": "grand-archive:GrandArchiveBoard:src/games/grand-archive/GrandArchiveBoard.tsx",
+    "name": "GrandArchiveBoard",
+    "game": "grand-archive",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/grand-archive/GrandArchiveBoard.tsx"
+  },
+  {
+    "id": "gundam:AttackDropCue:src/games/gundam/src/components/ui/playerSeat/AttackDropCue.tsx",
+    "name": "AttackDropCue",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/playerSeat/AttackDropCue.tsx"
+  },
+  {
+    "id": "gundam:AttackTargetingOverlayContainer:src/games/gundam/src/components/containers/AttackTargetingOverlayContainer.tsx",
+    "name": "AttackTargetingOverlayContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/AttackTargetingOverlayContainer.tsx"
+  },
+  {
+    "id": "gundam:AutoPassActionStepContainer:src/games/gundam/src/components/containers/AutoPassActionStepContainer.tsx",
+    "name": "AutoPassActionStepContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/AutoPassActionStepContainer.tsx"
+  },
+  {
+    "id": "gundam:AutoPassPriorityControl:src/games/gundam/src/components/ui/AutoPassPriorityControl.tsx",
+    "name": "AutoPassPriorityControl",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/AutoPassPriorityControl.tsx"
+  },
+  {
+    "id": "gundam:AutoPassWhenNoValidActionProvider:src/games/gundam/src/lib/auto-pass-settings.tsx",
+    "name": "AutoPassWhenNoValidActionProvider",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/lib/auto-pass-settings.tsx"
+  },
+  {
+    "id": "gundam:BaseSection:src/games/gundam/src/components/ui/playerSeat/BaseSection.tsx",
+    "name": "BaseSection",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/playerSeat/BaseSection.tsx"
+  },
+  {
+    "id": "gundam:BattleStepRibbon:src/games/gundam/src/components/ui/BattleStepRibbon.tsx",
+    "name": "BattleStepRibbon",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/BattleStepRibbon.tsx"
+  },
+  {
+    "id": "gundam:BattleStepRibbonContainer:src/games/gundam/src/components/containers/BattleStepRibbonContainer.tsx",
+    "name": "BattleStepRibbonContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/BattleStepRibbonContainer.tsx"
+  },
+  {
+    "id": "gundam:BoardArea:src/games/gundam/src/components/ui/BoardArea.tsx",
+    "name": "BoardArea",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/BoardArea.tsx"
+  },
+  {
+    "id": "gundam:BotBenchUiPage:src/games/gundam/pages/BotBenchUi.page.tsx",
+    "name": "BotBenchUiPage",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/pages/BotBenchUi.page.tsx"
+  },
+  {
+    "id": "gundam:BotVsBotPage:src/games/gundam/pages/BotVsBot.page.tsx",
+    "name": "BotVsBotPage",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/pages/BotVsBot.page.tsx"
+  },
+  {
+    "id": "gundam:BotVsBotShell:src/games/gundam/pages/BotVsBot.page.tsx",
+    "name": "BotVsBotShell",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/pages/BotVsBot.page.tsx"
+  },
+  {
+    "id": "gundam:Button:src/games/gundam/src/components/primitives/button.tsx",
+    "name": "Button",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/button.tsx"
+  },
+  {
+    "id": "gundam:CardBack:src/games/gundam/src/components/ui/BoardArea.tsx",
+    "name": "CardBack",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/BoardArea.tsx"
+  },
+  {
+    "id": "gundam:CardBack:src/games/gundam/src/components/ui/card/CardBack.tsx",
+    "name": "CardBack",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/card/CardBack.tsx"
+  },
+  {
+    "id": "gundam:CardFace:src/games/gundam/src/components/ui/card/CardFace.tsx",
+    "name": "CardFace",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/card/CardFace.tsx"
+  },
+  {
+    "id": "gundam:CardHoverPreview:src/games/gundam/src/components/ui/card/CardHoverPreview.tsx",
+    "name": "CardHoverPreview",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/card/CardHoverPreview.tsx"
+  },
+  {
+    "id": "gundam:CardInfoBody:src/games/gundam/src/components/ui/CardInfoDialog.tsx",
+    "name": "CardInfoBody",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/CardInfoDialog.tsx"
+  },
+  {
+    "id": "gundam:CardInfoDialog:src/games/gundam/src/components/ui/CardInfoDialog.tsx",
+    "name": "CardInfoDialog",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/CardInfoDialog.tsx"
+  },
+  {
+    "id": "gundam:CardInspectDialog:src/games/gundam/src/components/ui/CardInspectDialogContainer.tsx",
+    "name": "CardInspectDialog",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/CardInspectDialogContainer.tsx"
+  },
+  {
+    "id": "gundam:CardInspectProvider:src/games/gundam/src/components/ui/card/card-inspect-context.tsx",
+    "name": "CardInspectProvider",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/card/card-inspect-context.tsx"
+  },
+  {
+    "id": "gundam:CardLink:src/games/gundam/src/components/ui/CardLink.tsx",
+    "name": "CardLink",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/CardLink.tsx"
+  },
+  {
+    "id": "gundam:CardLinkedText:src/games/gundam/src/components/ui/CardLinkedText.tsx",
+    "name": "CardLinkedText",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/CardLinkedText.tsx"
+  },
+  {
+    "id": "gundam:CardTagStrip:src/games/gundam/src/components/ui/card/CardTagStrip.tsx",
+    "name": "CardTagStrip",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/card/CardTagStrip.tsx"
+  },
+  {
+    "id": "gundam:ChooseFirstPlayerPrompt:src/games/gundam/src/components/ui/ChooseFirstPlayerPrompt.tsx",
+    "name": "ChooseFirstPlayerPrompt",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/ChooseFirstPlayerPrompt.tsx"
+  },
+  {
+    "id": "gundam:CombatIntentOverlayContainer:src/games/gundam/src/components/containers/CombatIntentOverlayContainer.tsx",
+    "name": "CombatIntentOverlayContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/CombatIntentOverlayContainer.tsx"
+  },
+  {
+    "id": "gundam:CommandFocusArea:src/games/gundam/src/animation/CommandFocusArea.tsx",
+    "name": "CommandFocusArea",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/animation/CommandFocusArea.tsx"
+  },
+  {
+    "id": "gundam:ConcedeButton:src/games/gundam/src/components/ui/ConcedeButton.tsx",
+    "name": "ConcedeButton",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/ConcedeButton.tsx"
+  },
+  {
+    "id": "gundam:DamageCounterOverlay:src/games/gundam/src/components/ui/card/DamageCounterOverlay.tsx",
+    "name": "DamageCounterOverlay",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/card/DamageCounterOverlay.tsx"
+  },
+  {
+    "id": "gundam:DeckPicker:src/games/gundam/src/components/vs-ai-setup/DeckPicker.tsx",
+    "name": "DeckPicker",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/vs-ai-setup/DeckPicker.tsx"
+  },
+  {
+    "id": "gundam:DeckStack:src/games/gundam/src/components/ui/playerSeat/DeckStack.tsx",
+    "name": "DeckStack",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/playerSeat/DeckStack.tsx"
+  },
+  {
+    "id": "gundam:DeferredGundamChatPanel:src/games/gundam/src/components/ui/DeferredGundamChatPanel.tsx",
+    "name": "DeferredGundamChatPanel",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/DeferredGundamChatPanel.tsx"
+  },
+  {
+    "id": "gundam:Dialog:src/games/gundam/src/components/primitives/dialog.tsx",
+    "name": "Dialog",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/dialog.tsx"
+  },
+  {
+    "id": "gundam:DialogClose:src/games/gundam/src/components/primitives/dialog.tsx",
+    "name": "DialogClose",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/dialog.tsx"
+  },
+  {
+    "id": "gundam:DialogContent:src/games/gundam/src/components/primitives/dialog.tsx",
+    "name": "DialogContent",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/dialog.tsx"
+  },
+  {
+    "id": "gundam:DialogDescription:src/games/gundam/src/components/primitives/dialog.tsx",
+    "name": "DialogDescription",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/dialog.tsx"
+  },
+  {
+    "id": "gundam:DialogFooter:src/games/gundam/src/components/primitives/dialog.tsx",
+    "name": "DialogFooter",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/dialog.tsx"
+  },
+  {
+    "id": "gundam:DialogHeader:src/games/gundam/src/components/primitives/dialog.tsx",
+    "name": "DialogHeader",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/dialog.tsx"
+  },
+  {
+    "id": "gundam:DialogOverlay:src/games/gundam/src/components/primitives/dialog.tsx",
+    "name": "DialogOverlay",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/dialog.tsx"
+  },
+  {
+    "id": "gundam:DialogPortal:src/games/gundam/src/components/primitives/dialog.tsx",
+    "name": "DialogPortal",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/dialog.tsx"
+  },
+  {
+    "id": "gundam:DialogTitle:src/games/gundam/src/components/primitives/dialog.tsx",
+    "name": "DialogTitle",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/dialog.tsx"
+  },
+  {
+    "id": "gundam:DialogTrigger:src/games/gundam/src/components/primitives/dialog.tsx",
+    "name": "DialogTrigger",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/dialog.tsx"
+  },
+  {
+    "id": "gundam:DiscardSlot:src/games/gundam/src/components/ui/playerSeat/DiscardSlot.tsx",
+    "name": "DiscardSlot",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/playerSeat/DiscardSlot.tsx"
+  },
+  {
+    "id": "gundam:DualModeContext:src/games/gundam/src/components/ui/dual-mode-context.tsx",
+    "name": "DualModeContext",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/dual-mode-context.tsx"
+  },
+  {
+    "id": "gundam:DualModeOverlay:src/games/gundam/src/components/ui/card/DualModeOverlay.tsx",
+    "name": "DualModeOverlay",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/card/DualModeOverlay.tsx"
+  },
+  {
+    "id": "gundam:DualModeProvider:src/games/gundam/src/components/ui/dual-mode-context.tsx",
+    "name": "DualModeProvider",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/dual-mode-context.tsx"
+  },
+  {
+    "id": "gundam:FixtureCatalog:src/games/gundam/src/components/fixture-catalog/FixtureCatalog.tsx",
+    "name": "FixtureCatalog",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/fixture-catalog/FixtureCatalog.tsx"
+  },
+  {
+    "id": "gundam:FloatingUndoButton:src/games/gundam/src/components/ui/FloatingUndoButton.tsx",
+    "name": "FloatingUndoButton",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/FloatingUndoButton.tsx"
+  },
+  {
+    "id": "gundam:GameCard:src/games/gundam/src/components/ui/GameCard.tsx",
+    "name": "GameCard",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/GameCard.tsx"
+  },
+  {
+    "id": "gundam:GameCardVisual:src/games/gundam/src/components/ui/GameCard.tsx",
+    "name": "GameCardVisual",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/GameCard.tsx"
+  },
+  {
+    "id": "gundam:GameTable:src/games/gundam/src/components/ui/GameTable.tsx",
+    "name": "GameTable",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/GameTable.tsx"
+  },
+  {
+    "id": "gundam:GundamAutoPassSettingsContext:src/games/gundam/src/lib/auto-pass-settings.tsx",
+    "name": "GundamAutoPassSettingsContext",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/lib/auto-pass-settings.tsx"
+  },
+  {
+    "id": "gundam:GundamBoardLayout:src/games/gundam/src/components/ui/GundamBoardLayout.tsx",
+    "name": "GundamBoardLayout",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/GundamBoardLayout.tsx"
+  },
+  {
+    "id": "gundam:GundamBugReportDialog:src/games/gundam/src/components/ui/GundamBugReportDialog.tsx",
+    "name": "GundamBugReportDialog",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/GundamBugReportDialog.tsx"
+  },
+  {
+    "id": "gundam:GundamCardContextController:src/games/gundam/src/components/GundamCardContextController.tsx",
+    "name": "GundamCardContextController",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/GundamCardContextController.tsx"
+  },
+  {
+    "id": "gundam:GundamChatPanel:src/games/gundam/src/components/ui/GundamChatPanel.tsx",
+    "name": "GundamChatPanel",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/GundamChatPanel.tsx"
+  },
+  {
+    "id": "gundam:GundamChatProvider:src/games/gundam/src/game/chat-context.tsx",
+    "name": "GundamChatProvider",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/game/chat-context.tsx"
+  },
+  {
+    "id": "gundam:GundamChoiceModal:src/games/gundam/src/components/ui/GundamChoiceModal.tsx",
+    "name": "GundamChoiceModal",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/GundamChoiceModal.tsx"
+  },
+  {
+    "id": "gundam:GundamDragDropProvider:src/games/gundam/src/components/ui/playerSeat/gundam-drag-drop-context.tsx",
+    "name": "GundamDragDropProvider",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/playerSeat/gundam-drag-drop-context.tsx"
+  },
+  {
+    "id": "gundam:GundamFixtureIndexPage:src/games/gundam/pages/FixtureRoutes.page.tsx",
+    "name": "GundamFixtureIndexPage",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/pages/FixtureRoutes.page.tsx"
+  },
+  {
+    "id": "gundam:GundamGame:src/games/gundam/src/components/GundamGame.tsx",
+    "name": "GundamGame",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/GundamGame.tsx"
+  },
+  {
+    "id": "gundam:GundamGameProvider:src/games/gundam/src/game/context.tsx",
+    "name": "GundamGameProvider",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/game/context.tsx"
+  },
+  {
+    "id": "gundam:GundamInteractionDraftProvider:src/games/gundam/src/game/interaction-draft.tsx",
+    "name": "GundamInteractionDraftProvider",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/game/interaction-draft.tsx"
+  },
+  {
+    "id": "gundam:GundamMobileActivityContainer:src/games/gundam/src/components/containers/MatchSidebarContainer.tsx",
+    "name": "GundamMobileActivityContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/MatchSidebarContainer.tsx"
+  },
+  {
+    "id": "gundam:GundamPendingChoicePrompt:src/games/gundam/src/components/containers/GundamPendingChoicePrompt.tsx",
+    "name": "GundamPendingChoicePrompt",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/GundamPendingChoicePrompt.tsx"
+  },
+  {
+    "id": "gundam:GundamPresentationProvider:src/games/gundam/src/game/presentation-context.tsx",
+    "name": "GundamPresentationProvider",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/game/presentation-context.tsx"
+  },
+  {
+    "id": "gundam:GundamSharedAnimationLayer:src/games/gundam/src/animation/GundamSharedAnimationLayer.tsx",
+    "name": "GundamSharedAnimationLayer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/animation/GundamSharedAnimationLayer.tsx"
+  },
+  {
+    "id": "gundam:GundamSimulatorApp:src/games/gundam/App.tsx",
+    "name": "GundamSimulatorApp",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/App.tsx"
+  },
+  {
+    "id": "gundam:GundamSimulatorEntityVisual:src/games/gundam/src/animation/gundamAnimationVisual.tsx",
+    "name": "GundamSimulatorEntityVisual",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/animation/gundamAnimationVisual.tsx"
+  },
+  {
+    "id": "gundam:GundamSimulatorProviders:src/games/gundam/App.tsx",
+    "name": "GundamSimulatorProviders",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/App.tsx"
+  },
+  {
+    "id": "gundam:GundamTargetingProvider:src/games/gundam/src/components/containers/GundamTargetingProvider.tsx",
+    "name": "GundamTargetingProvider",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/GundamTargetingProvider.tsx"
+  },
+  {
+    "id": "gundam:GundamTestStatePage:src/games/gundam/pages/TestState.page.tsx",
+    "name": "GundamTestStatePage",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/pages/TestState.page.tsx"
+  },
+  {
+    "id": "gundam:HandZone:src/games/gundam/src/components/ui/playerSeat/HandZone.tsx",
+    "name": "HandZone",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/playerSeat/HandZone.tsx"
+  },
+  {
+    "id": "gundam:LinkTargetPreviewContext:src/games/gundam/src/components/ui/link-target-preview-context.tsx",
+    "name": "LinkTargetPreviewContext",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/link-target-preview-context.tsx"
+  },
+  {
+    "id": "gundam:LiveDropEligibilityProvider:src/games/gundam/src/engine/live/liveDropEligibility.tsx",
+    "name": "LiveDropEligibilityProvider",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/engine/live/liveDropEligibility.tsx"
+  },
+  {
+    "id": "gundam:LiveGundamGameProvider:src/games/gundam/src/engine/live/LiveGundamGameProvider.tsx",
+    "name": "LiveGundamGameProvider",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/engine/live/LiveGundamGameProvider.tsx"
+  },
+  {
+    "id": "gundam:LiveMatchLandingPage:src/games/gundam/pages/LiveMatchLanding.page.tsx",
+    "name": "LiveMatchLandingPage",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/pages/LiveMatchLanding.page.tsx"
+  },
+  {
+    "id": "gundam:LiveMatchPage:src/games/gundam/pages/LiveMatch.page.tsx",
+    "name": "LiveMatchPage",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/pages/LiveMatch.page.tsx"
+  },
+  {
+    "id": "gundam:LiveSimulatorShell:src/games/gundam/pages/LiveMatch.page.tsx",
+    "name": "LiveSimulatorShell",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/pages/LiveMatch.page.tsx"
+  },
+  {
+    "id": "gundam:MatchEventLog:src/games/gundam/src/components/ui/MatchSidebar.tsx",
+    "name": "MatchEventLog",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/MatchSidebar.tsx"
+  },
+  {
+    "id": "gundam:MatchLogContainer:src/games/gundam/src/components/containers/MatchLogContainer.tsx",
+    "name": "MatchLogContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/MatchLogContainer.tsx"
+  },
+  {
+    "id": "gundam:MatchOverviewModal:src/games/gundam/src/components/ui/MatchOverviewModal.tsx",
+    "name": "MatchOverviewModal",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/MatchOverviewModal.tsx"
+  },
+  {
+    "id": "gundam:MatchOverviewModalContainer:src/games/gundam/src/components/containers/MatchOverviewModalContainer.tsx",
+    "name": "MatchOverviewModalContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/MatchOverviewModalContainer.tsx"
+  },
+  {
+    "id": "gundam:MatchSidebar:src/games/gundam/src/components/ui/MatchSidebar.tsx",
+    "name": "MatchSidebar",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/MatchSidebar.tsx"
+  },
+  {
+    "id": "gundam:MatchSidebarContainer:src/games/gundam/src/components/containers/MatchSidebarContainer.tsx",
+    "name": "MatchSidebarContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/MatchSidebarContainer.tsx"
+  },
+  {
+    "id": "gundam:MatchStatusBar:src/games/gundam/src/components/ui/MatchStatusBar.tsx",
+    "name": "MatchStatusBar",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/MatchStatusBar.tsx"
+  },
+  {
+    "id": "gundam:MatchStatusBarContainer:src/games/gundam/src/components/containers/MatchStatusBarContainer.tsx",
+    "name": "MatchStatusBarContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/MatchStatusBarContainer.tsx"
+  },
+  {
+    "id": "gundam:MobileActionBar:src/games/gundam/src/components/ui/MobileActionBar.tsx",
+    "name": "MobileActionBar",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/MobileActionBar.tsx"
+  },
+  {
+    "id": "gundam:MobileActionBarContainer:src/games/gundam/src/components/containers/MobileChromeContainer.tsx",
+    "name": "MobileActionBarContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/MobileChromeContainer.tsx"
+  },
+  {
+    "id": "gundam:MobileTopHud:src/games/gundam/src/components/ui/MobileTopHud.tsx",
+    "name": "MobileTopHud",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/MobileTopHud.tsx"
+  },
+  {
+    "id": "gundam:MobileTopHudContainer:src/games/gundam/src/components/containers/MobileChromeContainer.tsx",
+    "name": "MobileTopHudContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/MobileChromeContainer.tsx"
+  },
+  {
+    "id": "gundam:MulliganPrompt:src/games/gundam/src/components/ui/MulliganPrompt.tsx",
+    "name": "MulliganPrompt",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/MulliganPrompt.tsx"
+  },
+  {
+    "id": "gundam:OpponentHandZoneContainer:src/games/gundam/src/components/containers/OpponentHandZoneContainer.tsx",
+    "name": "OpponentHandZoneContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/OpponentHandZoneContainer.tsx"
+  },
+  {
+    "id": "gundam:OpponentPicker:src/games/gundam/src/components/vs-ai-setup/OpponentPicker.tsx",
+    "name": "OpponentPicker",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/vs-ai-setup/OpponentPicker.tsx"
+  },
+  {
+    "id": "gundam:OpponentTimeoutOverlayContainer:src/games/gundam/src/components/containers/OpponentTimeoutOverlayContainer.tsx",
+    "name": "OpponentTimeoutOverlayContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/OpponentTimeoutOverlayContainer.tsx"
+  },
+  {
+    "id": "gundam:PassTurnConfirmationDialog:src/games/gundam/src/components/ui/PassTurnConfirmationDialog.tsx",
+    "name": "PassTurnConfirmationDialog",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/PassTurnConfirmationDialog.tsx"
+  },
+  {
+    "id": "gundam:PlayerSeat:src/games/gundam/src/components/ui/playerSeat/PlayerSeat.tsx",
+    "name": "PlayerSeat",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/playerSeat/PlayerSeat.tsx"
+  },
+  {
+    "id": "gundam:PlayerSeatContainer:src/games/gundam/src/components/containers/PlayerSeatContainer.tsx",
+    "name": "PlayerSeatContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/PlayerSeatContainer.tsx"
+  },
+  {
+    "id": "gundam:PlayerSeatPlate:src/games/gundam/src/components/ui/playerSeat/PlayerSeatPlate.tsx",
+    "name": "PlayerSeatPlate",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/playerSeat/PlayerSeatPlate.tsx"
+  },
+  {
+    "id": "gundam:PlayerTimer:src/games/gundam/src/components/ui/PlayerTimer.tsx",
+    "name": "PlayerTimer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/PlayerTimer.tsx"
+  },
+  {
+    "id": "gundam:PlayZone:src/games/gundam/src/components/ui/playerSeat/PlayZone.tsx",
+    "name": "PlayZone",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/playerSeat/PlayZone.tsx"
+  },
+  {
+    "id": "gundam:PlayZoneCardBands:src/games/gundam/src/components/ui/playerSeat/PlayZoneCardBands.tsx",
+    "name": "PlayZoneCardBands",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/playerSeat/PlayZoneCardBands.tsx"
+  },
+  {
+    "id": "gundam:Popover:src/games/gundam/src/components/primitives/popover.tsx",
+    "name": "Popover",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/popover.tsx"
+  },
+  {
+    "id": "gundam:PopoverAnchor:src/games/gundam/src/components/primitives/popover.tsx",
+    "name": "PopoverAnchor",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/popover.tsx"
+  },
+  {
+    "id": "gundam:PopoverClose:src/games/gundam/src/components/primitives/popover.tsx",
+    "name": "PopoverClose",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/popover.tsx"
+  },
+  {
+    "id": "gundam:PopoverContent:src/games/gundam/src/components/primitives/popover.tsx",
+    "name": "PopoverContent",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/popover.tsx"
+  },
+  {
+    "id": "gundam:PopoverTrigger:src/games/gundam/src/components/primitives/popover.tsx",
+    "name": "PopoverTrigger",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/primitives/popover.tsx"
+  },
+  {
+    "id": "gundam:PracticePage:src/games/gundam/pages/Practice.page.tsx",
+    "name": "PracticePage",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/pages/Practice.page.tsx"
+  },
+  {
+    "id": "gundam:PriorityActionButton:src/games/gundam/src/components/ui/PriorityActionButton.tsx",
+    "name": "PriorityActionButton",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/PriorityActionButton.tsx"
+  },
+  {
+    "id": "gundam:PriorityCommandBeacon:src/games/gundam/src/components/ui/PriorityCommandBeacon.tsx",
+    "name": "PriorityCommandBeacon",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/PriorityCommandBeacon.tsx"
+  },
+  {
+    "id": "gundam:PromptContainer:src/games/gundam/src/components/containers/PromptContainer.tsx",
+    "name": "PromptContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/PromptContainer.tsx"
+  },
+  {
+    "id": "gundam:ReplayForkPage:src/games/gundam/pages/ReplayFork.page.tsx",
+    "name": "ReplayForkPage",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/pages/ReplayFork.page.tsx"
+  },
+  {
+    "id": "gundam:ReplayPage:src/games/gundam/pages/Replay.page.tsx",
+    "name": "ReplayPage",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/pages/Replay.page.tsx"
+  },
+  {
+    "id": "gundam:ResourceAreaAnimationFixtureControls:src/games/gundam/src/components/ui/ResourceAreaAnimationFixtureControls.tsx",
+    "name": "ResourceAreaAnimationFixtureControls",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/ResourceAreaAnimationFixtureControls.tsx"
+  },
+  {
+    "id": "gundam:ResourceAreaRow:src/games/gundam/src/components/ui/playerSeat/ResourceAreaRow.tsx",
+    "name": "ResourceAreaRow",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/playerSeat/ResourceAreaRow.tsx"
+  },
+  {
+    "id": "gundam:Router:src/games/gundam/Router.tsx",
+    "name": "Router",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/Router.tsx"
+  },
+  {
+    "id": "gundam:SelfHandZoneContainer:src/games/gundam/src/components/containers/SelfHandZoneContainer.tsx",
+    "name": "SelfHandZoneContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/SelfHandZoneContainer.tsx"
+  },
+  {
+    "id": "gundam:SetupPromptContainer:src/games/gundam/src/components/containers/SetupPromptContainer.tsx",
+    "name": "SetupPromptContainer",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/SetupPromptContainer.tsx"
+  },
+  {
+    "id": "gundam:ShieldPips:src/games/gundam/src/components/ui/playerSeat/ShieldPips.tsx",
+    "name": "ShieldPips",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/playerSeat/ShieldPips.tsx"
+  },
+  {
+    "id": "gundam:SimulatorApp:src/games/gundam/src/SimulatorApp.tsx",
+    "name": "SimulatorApp",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/SimulatorApp.tsx"
+  },
+  {
+    "id": "gundam:SpectatorGundamGameProvider:src/games/gundam/src/engine/spectator/SpectatorGundamGameProvider.tsx",
+    "name": "SpectatorGundamGameProvider",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/engine/spectator/SpectatorGundamGameProvider.tsx"
+  },
+  {
+    "id": "gundam:StatCurrentBadges:src/games/gundam/src/components/ui/card/StatCurrentBadges.tsx",
+    "name": "StatCurrentBadges",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/card/StatCurrentBadges.tsx"
+  },
+  {
+    "id": "gundam:SubmitErrorProvider:src/games/gundam/src/components/containers/submit-error-context.tsx",
+    "name": "SubmitErrorProvider",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/containers/submit-error-context.tsx"
+  },
+  {
+    "id": "gundam:SubmitErrorToast:src/games/gundam/src/components/ui/SubmitErrorToast.tsx",
+    "name": "SubmitErrorToast",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/SubmitErrorToast.tsx"
+  },
+  {
+    "id": "gundam:TimedOutPlayerOverlay:src/games/gundam/src/components/ui/TimedOutPlayerOverlay.tsx",
+    "name": "TimedOutPlayerOverlay",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/TimedOutPlayerOverlay.tsx"
+  },
+  {
+    "id": "gundam:TrashCardModal:src/games/gundam/src/components/ui/playerSeat/TrashCardModal.tsx",
+    "name": "TrashCardModal",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/playerSeat/TrashCardModal.tsx"
+  },
+  {
+    "id": "gundam:UndoButton:src/games/gundam/src/components/ui/UndoButton.tsx",
+    "name": "UndoButton",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/UndoButton.tsx"
+  },
+  {
+    "id": "gundam:VsAiControls:src/games/gundam/src/components/ui/VsAiControls.tsx",
+    "name": "VsAiControls",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/VsAiControls.tsx"
+  },
+  {
+    "id": "gundam:VsAiPage:src/games/gundam/pages/VsAi.page.tsx",
+    "name": "VsAiPage",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/pages/VsAi.page.tsx"
+  },
+  {
+    "id": "gundam:VsAiProvider:src/games/gundam/src/game/bot/bot-context.tsx",
+    "name": "VsAiProvider",
+    "game": "gundam",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/game/bot/bot-context.tsx"
+  },
+  {
+    "id": "gundam:VsAiSetup:src/games/gundam/src/components/vs-ai-setup/VsAiSetup.tsx",
+    "name": "VsAiSetup",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/vs-ai-setup/VsAiSetup.tsx"
+  },
+  {
+    "id": "gundam:VsAiSummary:src/games/gundam/src/components/ui/VsAiControls.tsx",
+    "name": "VsAiSummary",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/VsAiControls.tsx"
+  },
+  {
+    "id": "gundam:WaitingForOpponentPrompt:src/games/gundam/src/components/ui/WaitingForOpponentPrompt.tsx",
+    "name": "WaitingForOpponentPrompt",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/WaitingForOpponentPrompt.tsx"
+  },
+  {
+    "id": "gundam:ZoneCardModal:src/games/gundam/src/components/ui/playerSeat/ZoneCardModal.tsx",
+    "name": "ZoneCardModal",
+    "game": "gundam",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/gundam/src/components/ui/playerSeat/ZoneCardModal.tsx"
+  },
+  {
+    "id": "naruto:ActionBadges:src/games/naruto/board/ActionBadge.tsx",
+    "name": "ActionBadges",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/ActionBadge.tsx"
+  },
+  {
+    "id": "naruto:AttackArrow:src/games/naruto/board/AttackArrow.tsx",
+    "name": "AttackArrow",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/AttackArrow.tsx"
+  },
+  {
+    "id": "naruto:ChakraPips:src/games/naruto/board/ChakraPips.tsx",
+    "name": "ChakraPips",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/ChakraPips.tsx"
+  },
+  {
+    "id": "naruto:CharacterCard:src/games/naruto/board/CharacterCard.tsx",
+    "name": "CharacterCard",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/CharacterCard.tsx"
+  },
+  {
+    "id": "naruto:ChoiceModal:src/games/naruto/board/ChoiceModal.tsx",
+    "name": "ChoiceModal",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/ChoiceModal.tsx"
+  },
+  {
+    "id": "naruto:DeckStack:src/games/naruto/board/SeatHalf.tsx",
+    "name": "DeckStack",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/SeatHalf.tsx"
+  },
+  {
+    "id": "naruto:DesktopBoard:src/games/naruto/board/DesktopBoard.tsx",
+    "name": "DesktopBoard",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/DesktopBoard.tsx"
+  },
+  {
+    "id": "naruto:DropSlot:src/games/naruto/board/DropSlot.tsx",
+    "name": "DropSlot",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/DropSlot.tsx"
+  },
+  {
+    "id": "naruto:EndOverlay:src/games/naruto/board/EndOverlay.tsx",
+    "name": "EndOverlay",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/EndOverlay.tsx"
+  },
+  {
+    "id": "naruto:ExStack:src/games/naruto/board/SeatHalf.tsx",
+    "name": "ExStack",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/SeatHalf.tsx"
+  },
+  {
+    "id": "naruto:HandBacks:src/games/naruto/board/HandFan.tsx",
+    "name": "HandBacks",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/HandFan.tsx"
+  },
+  {
+    "id": "naruto:HandCount:src/games/naruto/board/HandFan.tsx",
+    "name": "HandCount",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/HandFan.tsx"
+  },
+  {
+    "id": "naruto:HandFan:src/games/naruto/board/HandFan.tsx",
+    "name": "HandFan",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/HandFan.tsx"
+  },
+  {
+    "id": "naruto:Inspector:src/games/naruto/board/Inspector.tsx",
+    "name": "Inspector",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/Inspector.tsx"
+  },
+  {
+    "id": "naruto:LeaderZone:src/games/naruto/board/LeaderZone.tsx",
+    "name": "LeaderZone",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/LeaderZone.tsx"
+  },
+  {
+    "id": "naruto:LogPanel:src/games/naruto/board/LogPanel.tsx",
+    "name": "LogPanel",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/LogPanel.tsx"
+  },
+  {
+    "id": "naruto:MobileBoard:src/games/naruto/board/MobileBoard.tsx",
+    "name": "MobileBoard",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/MobileBoard.tsx"
+  },
+  {
+    "id": "naruto:MulliganBanner:src/games/naruto/board/MulliganBanner.tsx",
+    "name": "MulliganBanner",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/MulliganBanner.tsx"
+  },
+  {
+    "id": "naruto:NarutoActivityPanel:src/games/naruto/board/NarutoActivityPanel.tsx",
+    "name": "NarutoActivityPanel",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/NarutoActivityPanel.tsx"
+  },
+  {
+    "id": "naruto:NarutoBoard:src/games/naruto/board/NarutoBoard.tsx",
+    "name": "NarutoBoard",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/NarutoBoard.tsx"
+  },
+  {
+    "id": "naruto:NarutoCardImage:src/games/naruto/board/NarutoCardImage.tsx",
+    "name": "NarutoCardImage",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/NarutoCardImage.tsx"
+  },
+  {
+    "id": "naruto:NarutoFixtureIndexPage:src/games/naruto/pages/FixtureRoutes.page.tsx",
+    "name": "NarutoFixtureIndexPage",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/pages/FixtureRoutes.page.tsx"
+  },
+  {
+    "id": "naruto:NarutoFixtureNotFound:src/games/naruto/pages/FixtureRoutes.page.tsx",
+    "name": "NarutoFixtureNotFound",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/pages/FixtureRoutes.page.tsx"
+  },
+  {
+    "id": "naruto:NarutoFixturePage:src/games/naruto/pages/FixtureRoutes.page.tsx",
+    "name": "NarutoFixturePage",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/pages/FixtureRoutes.page.tsx"
+  },
+  {
+    "id": "naruto:NarutoLiveMatchLandingPage:src/games/naruto/pages/LiveMatchLanding.page.tsx",
+    "name": "NarutoLiveMatchLandingPage",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/pages/LiveMatchLanding.page.tsx"
+  },
+  {
+    "id": "naruto:NarutoLiveMatchPage:src/games/naruto/pages/LiveMatch.page.tsx",
+    "name": "NarutoLiveMatchPage",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/pages/LiveMatch.page.tsx"
+  },
+  {
+    "id": "naruto:NarutoPracticePage:src/games/naruto/pages/Practice.page.tsx",
+    "name": "NarutoPracticePage",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/pages/Practice.page.tsx"
+  },
+  {
+    "id": "naruto:NarutoSimulatorProviders:src/games/naruto/App.tsx",
+    "name": "NarutoSimulatorProviders",
+    "game": "naruto",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/naruto/App.tsx"
+  },
+  {
+    "id": "naruto:NarutoTestStatePage:src/games/naruto/pages/TestState.page.tsx",
+    "name": "NarutoTestStatePage",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/pages/TestState.page.tsx"
+  },
+  {
+    "id": "naruto:PillRow:src/games/naruto/board/PillRow.tsx",
+    "name": "PillRow",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/PillRow.tsx"
+  },
+  {
+    "id": "naruto:SeamPrompt:src/games/naruto/board/SeamPrompt.tsx",
+    "name": "SeamPrompt",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/SeamPrompt.tsx"
+  },
+  {
+    "id": "naruto:SeatHalf:src/games/naruto/board/SeatHalf.tsx",
+    "name": "SeatHalf",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/SeatHalf.tsx"
+  },
+  {
+    "id": "naruto:SelectionBadge:src/games/naruto/board/SelectionBadge.tsx",
+    "name": "SelectionBadge",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/SelectionBadge.tsx"
+  },
+  {
+    "id": "naruto:SummonSlot:src/games/naruto/board/SummonSlot.tsx",
+    "name": "SummonSlot",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/SummonSlot.tsx"
+  },
+  {
+    "id": "naruto:SupportPlayDropZone:src/games/naruto/board/SupportPlayDropZone.tsx",
+    "name": "SupportPlayDropZone",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/SupportPlayDropZone.tsx"
+  },
+  {
+    "id": "naruto:SupportSlot:src/games/naruto/board/SupportSlot.tsx",
+    "name": "SupportSlot",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/SupportSlot.tsx"
+  },
+  {
+    "id": "naruto:TrashStack:src/games/naruto/board/SeatHalf.tsx",
+    "name": "TrashStack",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/SeatHalf.tsx"
+  },
+  {
+    "id": "naruto:TurnBanner:src/games/naruto/board/SeamPrompt.tsx",
+    "name": "TurnBanner",
+    "game": "naruto",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/naruto/board/SeamPrompt.tsx"
+  },
+  {
+    "id": "one-piece:BoardPrototypePage:src/games/one-piece/pages/BoardPrototype.page.tsx",
+    "name": "BoardPrototypePage",
+    "game": "one-piece",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/one-piece/pages/BoardPrototype.page.tsx"
+  },
+  {
+    "id": "one-piece:OnePieceCardContextController:src/games/one-piece/components/OnePieceCardContextController.tsx",
+    "name": "OnePieceCardContextController",
+    "game": "one-piece",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/one-piece/components/OnePieceCardContextController.tsx"
+  },
+  {
+    "id": "one-piece:OnePieceFixtureIndexPage:src/games/one-piece/pages/FixtureRoutes.page.tsx",
+    "name": "OnePieceFixtureIndexPage",
+    "game": "one-piece",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/one-piece/pages/FixtureRoutes.page.tsx"
+  },
+  {
+    "id": "one-piece:OnePieceFixtureNotFound:src/games/one-piece/pages/FixtureRoutes.page.tsx",
+    "name": "OnePieceFixtureNotFound",
+    "game": "one-piece",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/one-piece/pages/FixtureRoutes.page.tsx"
+  },
+  {
+    "id": "one-piece:OnePieceFixturePage:src/games/one-piece/pages/FixtureRoutes.page.tsx",
+    "name": "OnePieceFixturePage",
+    "game": "one-piece",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/one-piece/pages/FixtureRoutes.page.tsx"
+  },
+  {
+    "id": "one-piece:OnePieceMatchActions:src/games/one-piece/components/OnePieceSidebar.tsx",
+    "name": "OnePieceMatchActions",
+    "game": "one-piece",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/one-piece/components/OnePieceSidebar.tsx"
+  },
+  {
+    "id": "one-piece:OnePieceMobileActivity:src/games/one-piece/components/OnePieceSidebar.tsx",
+    "name": "OnePieceMobileActivity",
+    "game": "one-piece",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/one-piece/components/OnePieceSidebar.tsx"
+  },
+  {
+    "id": "one-piece:OnePiecePracticePage:src/games/one-piece/pages/Practice.page.tsx",
+    "name": "OnePiecePracticePage",
+    "game": "one-piece",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/one-piece/pages/Practice.page.tsx"
+  },
+  {
+    "id": "one-piece:OnePieceSidebar:src/games/one-piece/components/OnePieceSidebar.tsx",
+    "name": "OnePieceSidebar",
+    "game": "one-piece",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/one-piece/components/OnePieceSidebar.tsx"
+  },
+  {
+    "id": "one-piece:OnePieceSimulatorApp:src/games/one-piece/App.tsx",
+    "name": "OnePieceSimulatorApp",
+    "game": "one-piece",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/one-piece/App.tsx"
+  },
+  {
+    "id": "one-piece:OnePieceSimulatorProviders:src/games/one-piece/App.tsx",
+    "name": "OnePieceSimulatorProviders",
+    "game": "one-piece",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/one-piece/App.tsx"
+  },
+  {
+    "id": "one-piece:OnePieceSimulatorShell:src/games/one-piece/components/OnePieceSimulatorShell.tsx",
+    "name": "OnePieceSimulatorShell",
+    "game": "one-piece",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/one-piece/components/OnePieceSimulatorShell.tsx"
+  },
+  {
+    "id": "one-piece:OnePieceTabletopBoard:src/games/one-piece/components/OnePieceTabletopBoard.tsx",
+    "name": "OnePieceTabletopBoard",
+    "game": "one-piece",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/one-piece/components/OnePieceTabletopBoard.tsx"
+  },
+  {
+    "id": "one-piece:OnePieceTestStatePage:src/games/one-piece/pages/TestState.page.tsx",
+    "name": "OnePieceTestStatePage",
+    "game": "one-piece",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/one-piece/pages/TestState.page.tsx"
+  },
+  {
+    "id": "one-piece:PlayerMat:src/games/one-piece/components/OnePieceTabletopBoard.tsx",
+    "name": "PlayerMat",
+    "game": "one-piece",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/one-piece/components/OnePieceTabletopBoard.tsx"
+  },
+  {
+    "id": "one-piece:Router:src/games/one-piece/Router.tsx",
+    "name": "Router",
+    "game": "one-piece",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/one-piece/Router.tsx"
+  },
+  {
+    "id": "riftbound:RiftboundFixturesPage:src/games/riftbound/Fixtures.page.tsx",
+    "name": "RiftboundFixturesPage",
+    "game": "riftbound",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/riftbound/Fixtures.page.tsx"
+  },
+  {
+    "id": "riftbound:RiftboundHomePage:src/games/riftbound/Home.page.tsx",
+    "name": "RiftboundHomePage",
+    "game": "riftbound",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/riftbound/Home.page.tsx"
+  },
+  {
+    "id": "riftbound:RiftboundLiveMatchLandingPage:src/games/riftbound/LiveMatchLanding.page.tsx",
+    "name": "RiftboundLiveMatchLandingPage",
+    "game": "riftbound",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/riftbound/LiveMatchLanding.page.tsx"
+  },
+  {
+    "id": "riftbound:RiftboundLiveMatchPage:src/games/riftbound/LiveMatch.page.tsx",
+    "name": "RiftboundLiveMatchPage",
+    "game": "riftbound",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/riftbound/LiveMatch.page.tsx"
+  },
+  {
+    "id": "riftbound:RiftboundReplayPage:src/games/riftbound/Replay.page.tsx",
+    "name": "RiftboundReplayPage",
+    "game": "riftbound",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/riftbound/Replay.page.tsx"
+  },
+  {
+    "id": "riftbound:RiftboundSimulatorProviders:src/games/riftbound/App.tsx",
+    "name": "RiftboundSimulatorProviders",
+    "game": "riftbound",
+    "role": "composition",
+    "source": "apps/multi-game-simulator/src/games/riftbound/App.tsx"
+  },
+  {
+    "id": "riftbound:RiftboundTabletop:src/games/riftbound/RiftboundTabletop.tsx",
+    "name": "RiftboundTabletop",
+    "game": "riftbound",
+    "role": "visual",
+    "source": "apps/multi-game-simulator/src/games/riftbound/RiftboundTabletop.tsx"
+  },
+  {
+    "id": "shared:AccessibilityAnnouncer",
+    "name": "AccessibilityAnnouncer",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/AccessibilityAnnouncer.tsx"
+  },
+  {
+    "id": "shared:AiControlPanel",
+    "name": "AiControlPanel",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/AiControlPanel.tsx"
+  },
+  {
+    "id": "shared:AnimatedEntityCollection",
+    "name": "AnimatedEntityCollection",
+    "game": "shared",
+    "role": "composition",
+    "source": "packages/simulator-ui/src/animation/components/AnimatedEntityCollection.tsx"
+  },
+  {
+    "id": "shared:AnimatedEntityListItem",
+    "name": "AnimatedEntityListItem",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/animation/components/AnimatedEntityNode.tsx"
+  },
+  {
+    "id": "shared:AnimatedEntityNode",
+    "name": "AnimatedEntityNode",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/animation/components/AnimatedEntityNode.tsx"
+  },
+  {
+    "id": "shared:AnimatedEntitySlot",
+    "name": "AnimatedEntitySlot",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/animation/components/AnimatedEntitySlot.tsx"
+  },
+  {
+    "id": "shared:AnimatedZoneSlot",
+    "name": "AnimatedZoneSlot",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/animation/components/AnimatedZoneSlot.tsx"
+  },
+  {
+    "id": "shared:AnimationAnchor",
+    "name": "AnimationAnchor",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/animation/components/AnimationAnchor.tsx"
+  },
+  {
+    "id": "shared:AnimationInteractionBoundary",
+    "name": "AnimationInteractionBoundary",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/animation/components/AnimationInteractionBoundary.tsx"
+  },
+  {
+    "id": "shared:Board",
+    "name": "Board",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Board.tsx"
+  },
+  {
+    "id": "shared:BoardBlock",
+    "name": "BoardBlock",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/BoardBlock.tsx"
+  },
+  {
+    "id": "shared:BoardLayout",
+    "name": "BoardLayout",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/BoardLayout.tsx"
+  },
+  {
+    "id": "shared:Card",
+    "name": "Card",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Card.tsx"
+  },
+  {
+    "id": "shared:CardActionPicker",
+    "name": "CardActionPicker",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CardActionPicker.tsx"
+  },
+  {
+    "id": "shared:CardContextMenu",
+    "name": "CardContextMenu",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CardContextMenu.tsx"
+  },
+  {
+    "id": "shared:CardContextMenuController",
+    "name": "CardContextMenuController",
+    "game": "shared",
+    "role": "composition",
+    "source": "packages/simulator-ui/src/components/CardContextMenu.tsx"
+  },
+  {
+    "id": "shared:CardDetailSheet",
+    "name": "CardDetailSheet",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CardDetailSheet.tsx"
+  },
+  {
+    "id": "shared:CardFace",
+    "name": "CardFace",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CardFace.tsx"
+  },
+  {
+    "id": "shared:CardFan",
+    "name": "CardFan",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CardFan.tsx"
+  },
+  {
+    "id": "shared:CardGrid",
+    "name": "CardGrid",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CardGrid.tsx"
+  },
+  {
+    "id": "shared:CardImage",
+    "name": "CardImage",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CardImage.tsx"
+  },
+  {
+    "id": "shared:CardInspectionDialog",
+    "name": "CardInspectionDialog",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CardInspectionDialog.tsx"
+  },
+  {
+    "id": "shared:CardInspector",
+    "name": "CardInspector",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CardInspector.tsx"
+  },
+  {
+    "id": "shared:CardInteractionFrame",
+    "name": "CardInteractionFrame",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CardInteractionFrame.tsx"
+  },
+  {
+    "id": "shared:CardPresentationPlane",
+    "name": "CardPresentationPlane",
+    "game": "shared",
+    "role": "composition",
+    "source": "packages/simulator-ui/src/components/CardPresentationPlane.tsx"
+  },
+  {
+    "id": "shared:CardRow",
+    "name": "CardRow",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CardRow.tsx"
+  },
+  {
+    "id": "shared:CardSlot",
+    "name": "CardSlot",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CardSlot.tsx"
+  },
+  {
+    "id": "shared:CardStack",
+    "name": "CardStack",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CardStack.tsx"
+  },
+  {
+    "id": "shared:CardZone",
+    "name": "CardZone",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CardZone.tsx"
+  },
+  {
+    "id": "shared:ChatPanel",
+    "name": "ChatPanel",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/ChatPanel.tsx"
+  },
+  {
+    "id": "shared:ChessClock",
+    "name": "ChessClock",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/ChessClock.tsx"
+  },
+  {
+    "id": "shared:ChoiceChips",
+    "name": "ChoiceChips",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/ChoiceChips.tsx"
+  },
+  {
+    "id": "shared:ChoiceModal",
+    "name": "ChoiceModal",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/ChoiceModal.tsx"
+  },
+  {
+    "id": "shared:ChoiceResolutionOverlay",
+    "name": "ChoiceResolutionOverlay",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/ChoiceResolutionOverlay.tsx"
+  },
+  {
+    "id": "shared:ClockReadout",
+    "name": "ClockReadout",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/ClockReadout.tsx"
+  },
+  {
+    "id": "shared:CombatIntentOverlay",
+    "name": "CombatIntentOverlay",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CombatIntentOverlay.tsx"
+  },
+  {
+    "id": "shared:CompactHandZone",
+    "name": "CompactHandZone",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CompactHandZone.tsx"
+  },
+  {
+    "id": "shared:ConnectionPanel",
+    "name": "ConnectionPanel",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/ConnectionPanel.tsx"
+  },
+  {
+    "id": "shared:CoreComponentMap",
+    "name": "CoreComponentMap",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/CoreComponentMap.tsx"
+  },
+  {
+    "id": "shared:DeckRevealShelf",
+    "name": "DeckRevealShelf",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/DeckRevealShelf.tsx"
+  },
+  {
+    "id": "shared:DeckStackZone",
+    "name": "DeckStackZone",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/DeckStackZone.tsx"
+  },
+  {
+    "id": "shared:DefaultSimulatorEntityVisual",
+    "name": "DefaultSimulatorEntityVisual",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/animation/components/SimulatorEntityVisual.tsx"
+  },
+  {
+    "id": "shared:DiscardPileZone",
+    "name": "DiscardPileZone",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/DiscardPileZone.tsx"
+  },
+  {
+    "id": "shared:DndContext",
+    "name": "DndContext",
+    "game": "shared",
+    "role": "composition",
+    "source": "packages/simulator-ui/src/hooks/useDnd.ts"
+  },
+  {
+    "id": "shared:Draggable",
+    "name": "Draggable",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Draggable.tsx"
+  },
+  {
+    "id": "shared:DropClaimControl",
+    "name": "DropClaimControl",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/DropClaimControl.tsx"
+  },
+  {
+    "id": "shared:Droppable",
+    "name": "Droppable",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Droppable.tsx"
+  },
+  {
+    "id": "shared:DropTargetFrame",
+    "name": "DropTargetFrame",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/DropTargetFrame.tsx"
+  },
+  {
+    "id": "shared:EffectConnectionsContext",
+    "name": "EffectConnectionsContext",
+    "game": "shared",
+    "role": "composition",
+    "source": "packages/simulator-ui/src/animation/overlays/EffectOverlay.tsx"
+  },
+  {
+    "id": "shared:EmptyZone",
+    "name": "EmptyZone",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/EmptyZone.tsx"
+  },
+  {
+    "id": "shared:EventLogPanel",
+    "name": "EventLogPanel",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/EventLogPanel.tsx"
+  },
+  {
+    "id": "shared:FixedSlotCardZone",
+    "name": "FixedSlotCardZone",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/FixedSlotCardZone.tsx"
+  },
+  {
+    "id": "shared:FixtureNavigation",
+    "name": "FixtureNavigation",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/FixtureNavigation.tsx"
+  },
+  {
+    "id": "shared:HandZone",
+    "name": "HandZone",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/HandZone.tsx"
+  },
+  {
+    "id": "shared:InteractionDraftProvider",
+    "name": "InteractionDraftProvider",
+    "game": "shared",
+    "role": "composition",
+    "source": "packages/simulator-ui/src/interactions/InteractionDraftContext.tsx"
+  },
+  {
+    "id": "shared:InteractionPanel",
+    "name": "InteractionPanel",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/InteractionPanel.tsx"
+  },
+  {
+    "id": "shared:InteractionResolutionPrompt",
+    "name": "InteractionResolutionPrompt",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/InteractionResolutionPrompt.tsx"
+  },
+  {
+    "id": "shared:KeyboardNavigator",
+    "name": "KeyboardNavigator",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/KeyboardNavigator.tsx"
+  },
+  {
+    "id": "shared:MaskedCardFrame",
+    "name": "MaskedCardFrame",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/MaskedCardFrame.tsx"
+  },
+  {
+    "id": "shared:MatchHistoryPanel",
+    "name": "MatchHistoryPanel",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/MatchHistoryPanel.tsx"
+  },
+  {
+    "id": "shared:MobileBattlefieldLane",
+    "name": "MobileBattlefieldLane",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/MobilePortraitBoard.tsx"
+  },
+  {
+    "id": "shared:MobileHandDock",
+    "name": "MobileHandDock",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/MobilePortraitBoard.tsx"
+  },
+  {
+    "id": "shared:MobileMirrorLedger",
+    "name": "MobileMirrorLedger",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/MobilePortraitBoard.tsx"
+  },
+  {
+    "id": "shared:MobilePlayerRail",
+    "name": "MobilePlayerRail",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/MobilePortraitBoard.tsx"
+  },
+  {
+    "id": "shared:MobilePortraitBoard",
+    "name": "MobilePortraitBoard",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/MobilePortraitBoard.tsx"
+  },
+  {
+    "id": "shared:MobileZoneInventoryPopover",
+    "name": "MobileZoneInventoryPopover",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/MobilePortraitBoard.tsx"
+  },
+  {
+    "id": "shared:PendingResolutionCards",
+    "name": "PendingResolutionCards",
+    "game": "shared",
+    "role": "composition",
+    "source": "packages/simulator-ui/src/components/PendingResolutionCards.tsx"
+  },
+  {
+    "id": "shared:PointerDragDropSurface",
+    "name": "PointerDragDropSurface",
+    "game": "shared",
+    "role": "composition",
+    "source": "packages/simulator-ui/src/components/PointerDragDropSurface.tsx"
+  },
+  {
+    "id": "shared:PointerDraggable",
+    "name": "PointerDraggable",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/PointerDraggable.tsx"
+  },
+  {
+    "id": "shared:PointerDroppable",
+    "name": "PointerDroppable",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/PointerDroppable.tsx"
+  },
+  {
+    "id": "shared:PostGameModal",
+    "name": "PostGameModal",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/PostGameModal.tsx"
+  },
+  {
+    "id": "shared:PriorityRing",
+    "name": "PriorityRing",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/PriorityRing.tsx"
+  },
+  {
+    "id": "shared:PromptBanner",
+    "name": "PromptBanner",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/PromptBanner.tsx"
+  },
+  {
+    "id": "shared:ResolvingEntityStage",
+    "name": "ResolvingEntityStage",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/ResolvingEntityStage.tsx"
+  },
+  {
+    "id": "shared:ResourceCardZone",
+    "name": "ResourceCardZone",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/ResourceCardZone.tsx"
+  },
+  {
+    "id": "shared:RunbookPanel",
+    "name": "RunbookPanel",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/RunbookPanel.tsx"
+  },
+  {
+    "id": "shared:SceneArtworkContext",
+    "name": "SceneArtworkContext",
+    "game": "shared",
+    "role": "composition",
+    "source": "packages/simulator-ui/src/animation/overlays/SceneEffect.tsx"
+  },
+  {
+    "id": "shared:SeatSummary",
+    "name": "SeatSummary",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/SeatSummary.tsx"
+  },
+  {
+    "id": "shared:Sidebar",
+    "name": "Sidebar",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/Sidebar.tsx"
+  },
+  {
+    "id": "shared:SidebarContent",
+    "name": "SidebarContent",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarContent.tsx"
+  },
+  {
+    "id": "shared:SidebarFooter",
+    "name": "SidebarFooter",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarFooter.tsx"
+  },
+  {
+    "id": "shared:SidebarGroup",
+    "name": "SidebarGroup",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarGroup.tsx"
+  },
+  {
+    "id": "shared:SidebarGroupAction",
+    "name": "SidebarGroupAction",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarGroupAction.tsx"
+  },
+  {
+    "id": "shared:SidebarGroupContent",
+    "name": "SidebarGroupContent",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarGroupContent.tsx"
+  },
+  {
+    "id": "shared:SidebarGroupLabel",
+    "name": "SidebarGroupLabel",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarGroupLabel.tsx"
+  },
+  {
+    "id": "shared:SidebarHeader",
+    "name": "SidebarHeader",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarHeader.tsx"
+  },
+  {
+    "id": "shared:SidebarInput",
+    "name": "SidebarInput",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarInput.tsx"
+  },
+  {
+    "id": "shared:SidebarInset",
+    "name": "SidebarInset",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarInset.tsx"
+  },
+  {
+    "id": "shared:SidebarMenu",
+    "name": "SidebarMenu",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarMenu.tsx"
+  },
+  {
+    "id": "shared:SidebarMenuAction",
+    "name": "SidebarMenuAction",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarMenuAction.tsx"
+  },
+  {
+    "id": "shared:SidebarMenuBadge",
+    "name": "SidebarMenuBadge",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarMenuBadge.tsx"
+  },
+  {
+    "id": "shared:SidebarMenuButton",
+    "name": "SidebarMenuButton",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarMenuButton.tsx"
+  },
+  {
+    "id": "shared:SidebarMenuItem",
+    "name": "SidebarMenuItem",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarMenuItem.tsx"
+  },
+  {
+    "id": "shared:SidebarMenuSkeleton",
+    "name": "SidebarMenuSkeleton",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarMenuSkeleton.tsx"
+  },
+  {
+    "id": "shared:SidebarMenuSub",
+    "name": "SidebarMenuSub",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarMenuSub.tsx"
+  },
+  {
+    "id": "shared:SidebarMenuSubButton",
+    "name": "SidebarMenuSubButton",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarMenuSubButton.tsx"
+  },
+  {
+    "id": "shared:SidebarMenuSubItem",
+    "name": "SidebarMenuSubItem",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarMenuSubItem.tsx"
+  },
+  {
+    "id": "shared:SidebarProvider",
+    "name": "SidebarProvider",
+    "game": "shared",
+    "role": "composition",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarProvider.tsx"
+  },
+  {
+    "id": "shared:SidebarRail",
+    "name": "SidebarRail",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarRail.tsx"
+  },
+  {
+    "id": "shared:SidebarSeparator",
+    "name": "SidebarSeparator",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarSeparator.tsx"
+  },
+  {
+    "id": "shared:SidebarTrigger",
+    "name": "SidebarTrigger",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/Sidebar/SidebarTrigger.tsx"
+  },
+  {
+    "id": "shared:SimulatorActivityTabs",
+    "name": "SimulatorActivityTabs",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/SimulatorMatchSidebar.tsx"
+  },
+  {
+    "id": "shared:SimulatorCancelledMatch",
+    "name": "SimulatorCancelledMatch",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/SimulatorCancelledMatch.tsx"
+  },
+  {
+    "id": "shared:SimulatorEntityVisual",
+    "name": "SimulatorEntityVisual",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/animation/components/SimulatorEntityVisual.tsx"
+  },
+  {
+    "id": "shared:SimulatorEntityVisualProvider",
+    "name": "SimulatorEntityVisualProvider",
+    "game": "shared",
+    "role": "composition",
+    "source": "packages/simulator-ui/src/animation/components/SimulatorEntityVisual.tsx"
+  },
+  {
+    "id": "shared:SimulatorHarness",
+    "name": "SimulatorHarness",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/SimulatorHarness.tsx"
+  },
+  {
+    "id": "shared:SimulatorMatchActionDock",
+    "name": "SimulatorMatchActionDock",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/SimulatorMatchSidebar.tsx"
+  },
+  {
+    "id": "shared:SimulatorMatchParticipantView",
+    "name": "SimulatorMatchParticipantView",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/SimulatorMatchSidebar.tsx"
+  },
+  {
+    "id": "shared:SimulatorMatchSidebar",
+    "name": "SimulatorMatchSidebar",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/SimulatorMatchSidebar.tsx"
+  },
+  {
+    "id": "shared:SimulatorRouteStatus",
+    "name": "SimulatorRouteStatus",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/SimulatorRouteStatus.tsx"
+  },
+  {
+    "id": "shared:SimulatorSidebarIconButton",
+    "name": "SimulatorSidebarIconButton",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/SimulatorSidebarIconButton.tsx"
+  },
+  {
+    "id": "shared:SimulatorViewportRailPortal",
+    "name": "SimulatorViewportRailPortal",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/SimulatorViewportShell.tsx"
+  },
+  {
+    "id": "shared:SimulatorViewportShell",
+    "name": "SimulatorViewportShell",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/SimulatorViewportShell.tsx"
+  },
+  {
+    "id": "shared:SimulatorViewportSidebarToolsProvider",
+    "name": "SimulatorViewportSidebarToolsProvider",
+    "game": "shared",
+    "role": "composition",
+    "source": "packages/simulator-ui/src/components/SimulatorViewportShell.tsx"
+  },
+  {
+    "id": "shared:SingleCardZone",
+    "name": "SingleCardZone",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/SingleCardZone.tsx"
+  },
+  {
+    "id": "shared:StatusBar",
+    "name": "StatusBar",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/StatusBar.tsx"
+  },
+  {
+    "id": "shared:TabletopActionButton",
+    "name": "TabletopActionButton",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/TabletopActionButton.tsx"
+  },
+  {
+    "id": "shared:TabletopAttachmentStack",
+    "name": "TabletopAttachmentStack",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/TabletopAttachmentStack.tsx"
+  },
+  {
+    "id": "shared:TabletopCounterBadge",
+    "name": "TabletopCounterBadge",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/TabletopCounterBadge.tsx"
+  },
+  {
+    "id": "shared:TabletopDie",
+    "name": "TabletopDie",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/TabletopDie.tsx"
+  },
+  {
+    "id": "shared:TabletopDieButton",
+    "name": "TabletopDieButton",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/TabletopDie.tsx"
+  },
+  {
+    "id": "shared:TabletopStatementsPanel",
+    "name": "TabletopStatementsPanel",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/TabletopStatementsPanel.tsx"
+  },
+  {
+    "id": "shared:TargetFilterModal",
+    "name": "TargetFilterModal",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/TargetFilterModal.tsx"
+  },
+  {
+    "id": "shared:TargetingArrow",
+    "name": "TargetingArrow",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/TargetingArrow.tsx"
+  },
+  {
+    "id": "shared:TargetingContext",
+    "name": "TargetingContext",
+    "game": "shared",
+    "role": "composition",
+    "source": "packages/simulator-ui/src/components/TargetingContext.tsx"
+  },
+  {
+    "id": "shared:TargetingOverlay",
+    "name": "TargetingOverlay",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/TargetingOverlay.tsx"
+  },
+  {
+    "id": "shared:TargetingPreviewBadge",
+    "name": "TargetingPreviewBadge",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/TargetingPreviewBadge.tsx"
+  },
+  {
+    "id": "shared:TargetingProvider",
+    "name": "TargetingProvider",
+    "game": "shared",
+    "role": "composition",
+    "source": "packages/simulator-ui/src/components/TargetingContext.tsx"
+  },
+  {
+    "id": "shared:TargetingSpotlight",
+    "name": "TargetingSpotlight",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/TargetingSpotlight.tsx"
+  },
+  {
+    "id": "shared:TokenRow",
+    "name": "TokenRow",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/TokenRow.tsx"
+  },
+  {
+    "id": "shared:TurnIndicator",
+    "name": "TurnIndicator",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/TurnIndicator.tsx"
+  },
+  {
+    "id": "shared:ViewerSafeCardImage",
+    "name": "ViewerSafeCardImage",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/ViewerSafeCardImage.tsx"
+  },
+  {
+    "id": "shared:ZoneFrame",
+    "name": "ZoneFrame",
+    "game": "shared",
+    "role": "visual",
+    "source": "packages/simulator-ui/src/components/ZoneFrame.tsx"
+  }
+]

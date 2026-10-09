@@ -48,4 +48,30 @@ describe("OP11-061 Gum-Gum Jet Culverin", () => {
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("Main uses base cost for both an increased four and a reduced five", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST01-001", hand: ["OP02-106", "OP11-061"], activeDon: 4 },
+      { leaderCardId: "OP10-042", character: ["OP04-079", "EB01-018"] },
+    );
+    const orlumbus = e.findCardInZone("north", "character", "OP04-079"),
+      mountain = e.findCardInZone("north", "character", "EB01-018");
+    e.asSouth().play("OP02-106");
+    e.asSouth().chooseTargets(mountain);
+    const chars = e.getView("south").players.north.characters;
+    expect(chars.find((c) => c?.instanceId === orlumbus)?.cost).toBe(5);
+    expect(chars.find((c) => c?.instanceId === mountain)?.cost).toBe(3);
+    e.asSouth().play("OP11-061");
+    const p = e.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (p?.kind !== "selectEntity") throw new Error("Expected Character selection");
+    expect(p.candidates.map((c) => c.ref.id)).toContain(orlumbus);
+    expect(p.candidates.map((c) => c.ref.id)).not.toContain(mountain);
+    e.asSouth().chooseTargets(orlumbus);
+    e.asNorth().declineOptional();
+    expect(
+      e.getView("south").players.north.characters.some((c) => c?.instanceId === orlumbus),
+    ).toBe(false);
+    expect(
+      e.getView("south").players.north.characters.some((c) => c?.instanceId === mountain),
+    ).toBe(true);
+  });
 });

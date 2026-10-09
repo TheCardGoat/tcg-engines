@@ -31,7 +31,6 @@ export const op17BennBeckman027: CharacterCard = {
   setId: "OP17",
   cost: 7,
   power: 9000,
-  counter: 9000,
   traits: ["Red-Haired Pirates"],
   attribute: "ranged",
   effect:
@@ -45,7 +44,7 @@ export const op17BennBeckman027: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Red-Haired Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

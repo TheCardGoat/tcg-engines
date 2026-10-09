@@ -54,7 +54,7 @@ describe("OP17-057 Fullalead", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("never opens under a non-Rocks Leader", () => {
+  test("declining under a non-Rocks Leader preserves the Stage and hand", () => {
     const engine = OnePieceTestEngine.create(
       {
         leaderCardId: "OP13-001",
@@ -76,5 +76,7 @@ describe("OP17-057 Fullalead", () => {
     const view = engine.getView("south");
     expect(view.players.south.leader?.power).toBe(5000);
     expect(view.players.south.trash).toHaveLength(0);
+    expect(view.players.south.stage?.rested).toBe(false);
+    expect(view.prompts).toHaveLength(0);
   });
 });

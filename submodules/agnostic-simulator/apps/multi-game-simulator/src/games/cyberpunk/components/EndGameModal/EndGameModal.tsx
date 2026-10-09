@@ -10,6 +10,7 @@ import {
   IconDeviceFloppy,
   IconDownload,
   IconLoader2,
+  IconInfoCircle,
   IconMessage2,
   IconNotebook,
   IconRefresh,
@@ -17,7 +18,11 @@ import {
   IconTrophy,
   IconX,
 } from "@tabler/icons-react";
+import { getCardBySlug } from "@tcg/cyberpunk-cards";
 import { PostGameModal } from "@tcg/simulator-ui";
+import { Menu, Tooltip, ActionIcon } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
+import { MatchSessionSchema, sessionGameId, type PostGameRating } from "@tcg/game-page-contract";
 import { useSimulatorAudio } from "../../../../simulator/audio";
 import {
   isBrowserReplayStorageAvailable,
@@ -25,6 +30,8 @@ import {
 } from "@tcg/simulator-runtime/replay-library";
 import { downloadHostedReplay, saveHostedReplayOnDevice } from "../../../../runtime/replayActions";
 import { useEngine } from "../../engine";
+import { SupporterPlayerName } from "../../../../components/SupporterPlayerName";
+import type { PlayerIdentityBySide, PlayerIdentityInfo } from "../../engine/sides";
 import { PLAYER_SIDE_TO_ID } from "../../engine/sides";
 import { useGameState } from "../GameBoard/gameStateContext";
 import {
@@ -43,9 +50,30 @@ import {
   syncPostGameModalState,
 } from "./postGameModalState";
 import classes from "./EndGameModal.module.css";
+import { MatchSeriesMeta } from "./MatchSeriesMeta";
+import { buildLiveMatchGameHref } from "../../engine/live/matchContext";
 import { cyberpunkSimulatorPath } from "../../pages/simulatorPaths";
+import { playUrl } from "../../../../runtime/gameRuntimeApi";
 
 const PLATFORM_MATCHMAKING_URL = "https://tcg.online/cyberpunk/matchmaking";
+const CYBERPUNK_COLOR_ICON_BASE = "https://cdn.tcg.online/public/cyberpunk/colors";
+const CYBERPUNK_COLOR_IDS = new Set(["blue", "green", "red", "yellow"]);
+
+function CyberpunkColorSymbol({ color }: { color: string }) {
+  const id = color.trim().toLowerCase();
+  if (!CYBERPUNK_COLOR_IDS.has(id)) return null;
+  return (
+    <img
+      src={`${CYBERPUNK_COLOR_ICON_BASE}/${id}.svg`}
+      alt=""
+      width={14}
+      height={14}
+      className={classes.colorSymbol}
+    />
+  );
+}
+const NEXT_GAME_RECHECK_MS = 1_500;
+const NEXT_GAME_CHECK_TIMEOUT_MS = 10_000;
 
 const neutralReasons: Readonly<Record<string, string>> = {
   gig_victory: "Gig victory: start your turn with 7 gigs",
@@ -69,7 +97,8 @@ const reasonsByOutcome: Readonly<
 
 type SupportDialog = "bug" | "feedback" | null;
 
-export function EndGameModal() {
+export function EndGameModal({ playerIdentities }: { playerIdentities?: PlayerIdentityBySide }) {
+  const navigate = useNavigate();
   const { gameEnded, winnerSide, winReason, turnNumber } = useGameState();
   const {
     humanSide,
@@ -83,6 +112,8 @@ export function EndGameModal() {
   } = useEngine();
   const [modalState, setModalState] = useState(createInitialPostGameModalState);
   const [recordLoading, setRecordLoading] = useState(false);
+  const [rating, setRating] = useState<PostGameRating>();
+  const [ratingRefreshKey, setRatingRefreshKey] = useState(0);
   const [recordError, setRecordError] = useState<string | null>(null);
   const [analyticsEnvelope, setAnalyticsEnvelope] = useState<CyberpunkAnalyticsEnvelope | null>(
     null,
@@ -97,8 +128,10 @@ export function EndGameModal() {
   const [supportStatus, setSupportStatus] = useState<string | null>(null);
   const [replayDownloading, setReplayDownloading] = useState(false);
   const [replaySaving, setReplaySaving] = useState(false);
+  const [replayWatching, setReplayWatching] = useState(false);
   const [replaySaved, setReplaySaved] = useState(false);
   const [replayStatus, setReplayStatus] = useState<string | null>(null);
+  const [readyNextGameKey, setReadyNextGameKey] = useState<string | null>(null);
   const celebratedAudioKeyRef = useRef<string | null>(null);
   const { playCue } = useSimulatorAudio();
   const isDeckBuilderPractice = postGameSurface === "deck-builder-practice";
@@ -110,6 +143,68 @@ export function EndGameModal() {
   const finishedGameKey = gameEnded
     ? `${postGameContext?.gameId ?? "local"}:${matchState.ctx.stateID}:${winnerSide ?? "draw"}`
     : null;
+  const nextGameMatchId = isRemote && gameEnded ? postGameContext?.matchId : undefined;
+  const nextGameId = isRemote && gameEnded ? postGameContext?.nextGameId : undefined;
+  const nextGameKey = nextGameMatchId && nextGameId ? `${nextGameMatchId}:${nextGameId}` : null;
+
+  useEffect(() => {
+    setReadyNextGameKey(null);
+    if (!modalState.open || !nextGameMatchId || !nextGameId) return;
+
+    let stopped = false;
+    let retryTimer: ReturnType<typeof setTimeout> | undefined;
+    let requestTimeout: ReturnType<typeof setTimeout> | undefined;
+    let controller: AbortController | undefined;
+    let retries = 0;
+    const check = async () => {
+      const requestController = new AbortController();
+      controller = requestController;
+      requestTimeout = setTimeout(() => requestController.abort(), NEXT_GAME_CHECK_TIMEOUT_MS);
+      try {
+        const response = await fetch(
+          playUrl(
+            "cyberpunk",
+            `/matches/${encodeURIComponent(nextGameMatchId)}/games/${encodeURIComponent(nextGameId)}/session`,
+          ),
+          {
+            credentials: "include",
+            headers: { Accept: "application/json" },
+            signal: requestController.signal,
+          },
+        );
+        if (response.ok) {
+          const parsed = MatchSessionSchema.safeParse(await response.json());
+          if (
+            parsed.success &&
+            (parsed.data.phase === "preparation" ||
+              parsed.data.phase === "playing" ||
+              parsed.data.phase === "finished") &&
+            parsed.data.match.matchId === nextGameMatchId &&
+            sessionGameId(parsed.data) === nextGameId
+          ) {
+            if (!stopped) setReadyNextGameKey(`${nextGameMatchId}:${nextGameId}`);
+            return;
+          }
+        }
+      } catch {
+        // The next session may still be committing. Keep the button disabled.
+      } finally {
+        if (requestTimeout) clearTimeout(requestTimeout);
+      }
+      if (!stopped) {
+        const delay = Math.min(NEXT_GAME_RECHECK_MS * 2 ** Math.min(retries, 3), 12_000);
+        retries++;
+        retryTimer = setTimeout(check, delay);
+      }
+    };
+    void check();
+    return () => {
+      stopped = true;
+      controller?.abort();
+      if (retryTimer) clearTimeout(retryTimer);
+      if (requestTimeout) clearTimeout(requestTimeout);
+    };
+  }, [modalState.open, nextGameMatchId, nextGameId]);
 
   useEffect(() => {
     setModalState((current) => syncPostGameModalState(current, finishedGameKey));
@@ -134,7 +229,7 @@ export function EndGameModal() {
       setSavedNoteValue("");
       setRecordError(null);
       setRecordLoading(false);
-      return;
+      if (!isRemote) return;
     }
 
     if (isDeckBuilderPractice || !modalState.open || !postGameContext?.gameId) {
@@ -143,6 +238,8 @@ export function EndGameModal() {
 
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout> | null = null;
+    let ratingPolls = 0;
+    setRating(undefined);
 
     const loadRecord = async () => {
       setRecordLoading(true);
@@ -150,11 +247,20 @@ export function EndGameModal() {
       try {
         const record = await fetchCyberpunkPostGameRecord(postGameContext.gameId);
         if (cancelled) return;
-        setAnalyticsEnvelope(record.analytics ?? { status: "processing" });
+        setAnalyticsEnvelope((current) => record.analytics ?? current ?? { status: "processing" });
+        setRating(record.rating);
+        ratingPolls++;
         setCanSaveNote(record.canSaveNote);
         setNoteValue(record.note);
         setSavedNoteValue(record.note);
-        if (record.analytics?.status === "processing" || record.analytics?.status === "missing") {
+        if (
+          record.analytics?.status === "processing" ||
+          record.analytics?.status === "missing" ||
+          ((record.rating?.status === "pending" ||
+            (record.rating?.status === "in_progress" &&
+              postGameContext.matchStatus === "completed")) &&
+            ratingPolls < 24)
+        ) {
           timer = setTimeout(loadRecord, 2500);
         }
       } catch (error) {
@@ -162,10 +268,15 @@ export function EndGameModal() {
           setRecordError(
             error instanceof Error ? error.message : "Unable to load match analytics.",
           );
-          setAnalyticsEnvelope({
-            status: "failed",
-            errorMessage: "Unable to load match analytics.",
-          });
+          setAnalyticsEnvelope((current) =>
+            current?.status === "saved"
+              ? current
+              : {
+                  status: "failed",
+                  errorMessage: "Unable to load match analytics.",
+                },
+          );
+          setRating({ status: "unavailable" });
         }
       } finally {
         if (!cancelled) {
@@ -180,7 +291,15 @@ export function EndGameModal() {
       cancelled = true;
       if (timer) clearTimeout(timer);
     };
-  }, [isDeckBuilderPractice, modalState.open, postGameContext?.analytics, postGameContext?.gameId]);
+  }, [
+    isDeckBuilderPractice,
+    isRemote,
+    modalState.open,
+    postGameContext?.analytics,
+    postGameContext?.gameId,
+    ratingRefreshKey,
+    postGameContext?.matchStatus,
+  ]);
 
   useEffect(() => {
     if (
@@ -193,6 +312,7 @@ export function EndGameModal() {
       setReplayStatus(null);
       setReplayDownloading(false);
       setReplaySaving(false);
+      setReplayWatching(false);
       return;
     }
 
@@ -218,13 +338,16 @@ export function EndGameModal() {
   }, [canUseReplayActions, canUseReplayStore, modalState.open, postGameContext?.gameId]);
 
   const analytics = analyticsEnvelope?.payload;
+  const endReason = analytics?.summary.endReason ?? winReason ?? undefined;
   const noteDirty = noteValue.trim() !== savedNoteValue.trim();
   const bestOfLabel = postGameContext?.format === "best_of_3" ? "Best of 3" : "Best of 1";
   const nextGameHref =
     postGameContext?.nextGameId && postGameContext.matchId
-      ? `/matches/${encodeURIComponent(postGameContext.matchId)}/games/${encodeURIComponent(
+      ? buildLiveMatchGameHref(
+          postGameContext.matchId,
           postGameContext.nextGameId,
-        )}${window.location.search}`
+          window.location.search,
+        )
       : null;
   const viewerPlayerId = resolveViewerPlayerId(matchState.ctx.playerIds, humanSide);
   const sides = useMemo(
@@ -265,29 +388,55 @@ export function EndGameModal() {
       await downloadHostedReplay("cyberpunk", postGameContext.gameId);
     } catch (error) {
       console.error("[CyberpunkPostGame] Failed to download replay:", error);
-      setReplayStatus("Replay download failed.");
+      setReplayStatus(
+        error instanceof DOMException && error.name === "TimeoutError"
+          ? "Replay server did not respond. Try again later."
+          : "Replay download failed.",
+      );
     } finally {
       setReplayDownloading(false);
     }
   }
 
-  async function saveReplay(): Promise<void> {
-    if (!postGameContext?.gameId || replaySaving || replaySaved) return;
+  async function saveReplay(): Promise<boolean> {
+    if (!postGameContext?.gameId || replaySaving) return false;
+    if (replaySaved) return true;
     setReplaySaving(true);
     setReplayStatus(null);
     try {
       await saveHostedReplayOnDevice("cyberpunk", postGameContext.gameId);
       setReplaySaved(true);
       setReplayStatus("Replay saved.");
+      return true;
     } catch (error) {
       console.error("[CyberpunkPostGame] Failed to save replay:", error);
       setReplayStatus(
         error instanceof DOMException && error.name === "QuotaExceededError"
           ? "Replay storage is full. Delete older saved replays and try again."
-          : "Replay save failed.",
+          : error instanceof DOMException && error.name === "TimeoutError"
+            ? "Replay server did not respond. Try again later."
+            : "Replay save failed.",
       );
+      return false;
     } finally {
       setReplaySaving(false);
+    }
+  }
+
+  async function watchReplay(): Promise<void> {
+    if (!postGameContext?.gameId || replayWatching || replaySaving) return;
+    setReplayWatching(true);
+    const gameId = postGameContext.gameId;
+    try {
+      if (!replaySaved) {
+        const saved = await saveReplay();
+        if (!saved) return;
+      }
+      await navigate(
+        `${cyberpunkSimulatorPath(`/replay/${encodeURIComponent(gameId)}`)}?source=device`,
+      );
+    } finally {
+      setReplayWatching(false);
     }
   }
 
@@ -306,7 +455,7 @@ export function EndGameModal() {
             playerCount: analytics?.players?.length ?? 2,
             stateVersion: matchState.ctx.stateID,
             winnerId: analytics?.summary.winnerId,
-            endReason: analytics?.summary.endReason ?? winReason ?? undefined,
+            endReason,
             turn: turnNumber,
             platform: window.innerWidth < 768 ? "mobile" : "desktop",
           },
@@ -328,7 +477,7 @@ export function EndGameModal() {
     }
   }
 
-  const reasonText = describeReason(winReason, outcome);
+  const reasonText = describeReason(endReason ?? null, outcome);
   const timing = analytics ? getAnalyticsTiming(analytics) : null;
   const metaChips = isDeckBuilderPractice ? (
     <>
@@ -336,36 +485,44 @@ export function EndGameModal() {
       <span>Turn {turnNumber}</span>
     </>
   ) : (
-    <>
-      <span>{bestOfLabel}</span>
-      {postGameContext?.gameNumber !== undefined && <span>Game {postGameContext.gameNumber}</span>}
-      {postGameContext?.player1Score !== undefined &&
-        postGameContext.player2Score !== undefined && (
-          <span>
-            Series {postGameContext.player1Score}-{postGameContext.player2Score}
-          </span>
-        )}
+    <MatchSeriesMeta
+      formatLabel={bestOfLabel}
+      gameNumber={postGameContext?.gameNumber}
+      seriesScore={
+        postGameContext?.player1Score !== undefined && postGameContext.player2Score !== undefined
+          ? `${postGameContext.player1Score}–${postGameContext.player2Score}`
+          : undefined
+      }
+    >
+      {analytics?.summary.overtimeActive && <span>Overtime</span>}
       <span>Turn {analytics?.summary.totalTurns ?? turnNumber}</span>
       {timing && timing.totalDurationMs > 0 && (
         <span>{formatDuration(timing.totalDurationMs)}</span>
       )}
-    </>
+    </MatchSeriesMeta>
   );
   const participants =
     sides && !isDeckBuilderPractice
       ? {
           left: (
             <ParticipantCard
+              position="left"
+              identity={playerIdentities?.[humanSide]}
               player={sides.viewer}
               sideLabel={sides.viewerLabel}
-              isWinner={analytics?.summary.winnerId === sides.viewer.playerId}
+              isWinner={outcome === "win"}
+              ranked={analytics?.dimensions.matchType === "ranked"}
+              rating={rating}
             />
           ),
           right: (
             <ParticipantCard
+              identity={playerIdentities?.[humanSide === "player" ? "opponent" : "player"]}
               player={sides.opponent}
               sideLabel={sides.opponentLabel}
-              isWinner={analytics?.summary.winnerId === sides.opponent.playerId}
+              isWinner={outcome === "loss"}
+              ranked={analytics?.dimensions.matchType === "ranked"}
+              rating={rating}
             />
           ),
         }
@@ -460,57 +617,92 @@ export function EndGameModal() {
       ];
 
   const actions = (
-    <>
+    <div className={classes.footerActions}>
+      {(rating?.status === "pending" || rating?.status === "unavailable") && (
+        <button
+          className={classes.supportButton}
+          type="button"
+          disabled={recordLoading}
+          onClick={() => setRatingRefreshKey((key) => key + 1)}
+        >
+          Refresh rating
+        </button>
+      )}
       {canUseReplayActions && (
         <div className={classes.replayActions} aria-label="Replay actions">
-          <button
-            type="button"
-            className={classes.replayButton}
-            onClick={() =>
-              window.location.assign(
-                cyberpunkSimulatorPath(
-                  `/replay/${encodeURIComponent(postGameContext?.gameId ?? "")}`,
-                ),
-              )
-            }
-          >
-            Watch replay
-          </button>
-          <button
-            type="button"
-            className={classes.replayButton}
-            onClick={() => void downloadReplay()}
-            disabled={replayDownloading}
-          >
-            {replayDownloading ? (
-              <IconLoader2 size={15} className={classes.spin} />
-            ) : (
-              <IconDownload size={15} />
-            )}
-            Download replay
-          </button>
-          {canUseReplayStore && (
-            <button
-              type="button"
-              className={classes.replayButton}
-              onClick={() => void saveReplay()}
-              disabled={replaySaving || replaySaved}
-            >
-              {replaySaved ? (
-                <IconCheck size={15} />
-              ) : replaySaving ? (
-                <IconLoader2 size={15} className={classes.spin} />
-              ) : (
-                <IconDeviceFloppy size={15} />
-              )}
-              {replaySaved
-                ? "Saved on this device"
-                : replaySaving
+          <Menu position="top-start" withinPortal={false} transitionProps={{ duration: 0 }}>
+            <Menu.Target>
+              <button
+                type="button"
+                className={classes.replayButton}
+                disabled={replayWatching || replaySaving || replayDownloading}
+              >
+                {replayWatching || replaySaving || replayDownloading ? (
+                  <IconLoader2 size={15} className={classes.spin} />
+                ) : (
+                  <IconDeviceFloppy size={15} />
+                )}
+                {replayWatching || replaySaving
                   ? "Saving replay"
-                  : "Save on this device"}
-            </button>
+                  : replayDownloading
+                    ? "Downloading replay"
+                    : "Replay"}
+                <IconChevronDown size={15} />
+              </button>
+            </Menu.Target>
+            <Menu.Dropdown className={classes.replayMenu}>
+              <Menu.Item
+                leftSection={
+                  replayWatching ? (
+                    <IconLoader2 size={15} className={classes.spin} />
+                  ) : (
+                    <IconSwords size={15} />
+                  )
+                }
+                onClick={() => void watchReplay()}
+                disabled={!canUseReplayStore || replayWatching || replaySaving}
+              >
+                {replayWatching ? "Opening replay" : "Watch replay"}
+              </Menu.Item>
+              <Menu.Item
+                leftSection={
+                  replayDownloading ? (
+                    <IconLoader2 size={15} className={classes.spin} />
+                  ) : (
+                    <IconDownload size={15} />
+                  )
+                }
+                onClick={() => void downloadReplay()}
+                disabled={replayDownloading}
+              >
+                Download replay
+              </Menu.Item>
+              <Menu.Item
+                leftSection={
+                  replaySaved ? (
+                    <IconCheck size={15} />
+                  ) : replaySaving ? (
+                    <IconLoader2 size={15} className={classes.spin} />
+                  ) : (
+                    <IconDeviceFloppy size={15} />
+                  )
+                }
+                onClick={() => void saveReplay()}
+                disabled={!canUseReplayStore || replaySaving || replayWatching || replaySaved}
+              >
+                {replaySaved
+                  ? "Saved on this device"
+                  : replaySaving
+                    ? "Saving replay"
+                    : "Save on this device"}
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+          {(replayStatus || !canUseReplayStore) && (
+            <span className={classes.replayStatus} role="status">
+              {replayStatus ?? "Replay saving is unavailable in this browser."}
+            </span>
           )}
-          {replayStatus && <span className={classes.replayStatus}>{replayStatus}</span>}
         </div>
       )}
       <div className={classes.supportActions}>
@@ -542,6 +734,15 @@ export function EndGameModal() {
         </button>
       </div>
       <div className={classes.actions}>
+        <button
+          type="button"
+          className={classes.btn}
+          data-testid="end-game-view-board"
+          onClick={closeModal}
+        >
+          <IconSwords size={16} />
+          View board
+        </button>
         {isDeckBuilderPractice ? (
           <button
             type="button"
@@ -555,17 +756,24 @@ export function EndGameModal() {
           </button>
         ) : isRemote ? (
           <>
-            {nextGameHref ? (
-              <button
-                type="button"
+            {nextGameHref && readyNextGameKey === nextGameKey ? (
+              <a
                 className={`${classes.btn} ${classes.btnPrimary}`}
                 data-testid="end-game-next-game"
-                onClick={() => {
-                  window.location.href = nextGameHref;
-                }}
+                href={nextGameHref}
               >
                 Go to next game
                 <IconArrowRight size={16} />
+              </a>
+            ) : nextGameHref ? (
+              <button
+                type="button"
+                className={`${classes.btn} ${classes.btnPrimary}`}
+                data-testid="end-game-next-game-waiting"
+                disabled
+              >
+                <IconLoader2 size={15} className={classes.spin} />
+                Preparing next game
               </button>
             ) : postGameContext?.matchStatus === "completed" ? (
               <button
@@ -612,7 +820,7 @@ export function EndGameModal() {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 
   if (!modalState.open) {
@@ -631,19 +839,17 @@ export function EndGameModal() {
   return (
     <>
       <PostGameModal
+        layout="compact"
         open={modalState.open}
         outcome={outcome}
         reason={reasonText}
         participants={participants}
         meta={metaChips}
-        returnUrl={
-          isRemote ? (remoteReturnUrl ?? PLATFORM_MATCHMAKING_URL) : PLATFORM_MATCHMAKING_URL
-        }
         sections={sections}
         actions={actions}
         onClose={closeModal}
         testId="end-game-modal"
-        dataEndReason={winReason ?? undefined}
+        dataEndReason={endReason}
         dataRemote={isRemote ? "true" : "false"}
         dataPostGameSurface={postGameSurface}
         celebrationKey={finishedGameKey ?? undefined}
@@ -805,6 +1011,12 @@ interface ComparisonRow {
   emphasis?: boolean;
 }
 
+function formatMilestoneTurn(turn: number | null | undefined): string {
+  if (turn === undefined) return "Not recorded";
+  if (turn === null) return "Not reached";
+  return turn === 0 ? "Setup" : `Turn ${turn}`;
+}
+
 function buildComparisonRows(sides: SideAssignment): Array<ComparisonRow> {
   const attacks = (player: CyberpunkPlayerAnalytics) =>
     player.counters.directAttacks + player.counters.unitAttacks;
@@ -834,6 +1046,34 @@ function buildComparisonRows(sides: SideAssignment): Array<ComparisonRow> {
       label: "Cards played",
       viewer: sides.viewer.counters.cardsPlayed,
       opponent: sides.opponent.counters.cardsPlayed,
+    },
+    {
+      id: "cards-sold",
+      label: "Cards sold",
+      viewer: sides.viewer.counters.cardsSold,
+      opponent: sides.opponent.counters.cardsSold,
+    },
+    {
+      id: "units-defeated",
+      label: "Units lost",
+      viewer: sides.viewer.defeatsRecorded
+        ? (sides.viewer.counters.unitsLost ?? "Not recorded")
+        : "Not recorded",
+      opponent: sides.opponent.defeatsRecorded
+        ? (sides.opponent.counters.unitsLost ?? "Not recorded")
+        : "Not recorded",
+    },
+    {
+      id: "first-gig",
+      label: "First Gig",
+      viewer: formatMilestoneTurn(sides.viewer.metrics.firstGigTurn),
+      opponent: formatMilestoneTurn(sides.opponent.metrics.firstGigTurn),
+    },
+    {
+      id: "first-legend",
+      label: "First Legend called",
+      viewer: formatMilestoneTurn(sides.viewer.metrics.firstLegendCallTurn),
+      opponent: formatMilestoneTurn(sides.opponent.metrics.firstLegendCallTurn),
     },
     {
       id: "gigs-stolen",
@@ -866,10 +1106,16 @@ function buildComparisonRows(sides: SideAssignment): Array<ComparisonRow> {
       opponent: sides.opponent.final.deckCount,
     },
     {
-      id: "avg-think",
-      label: "Avg think / turn",
-      viewer: formatDuration(getPlayerTiming(sides.viewer).avgThinkingMs),
-      opponent: formatDuration(getPlayerTiming(sides.opponent).avgThinkingMs),
+      id: "priority-time",
+      label: "Thinking time (excluding setup)",
+      viewer: formatThinkingTime(getPlayerTiming(sides.viewer).totalThinkingMs),
+      opponent: formatThinkingTime(getPlayerTiming(sides.opponent).totalThinkingMs),
+    },
+    {
+      id: "setup-time",
+      label: "Setup time",
+      viewer: formatThinkingTime(getPlayerTiming(sides.viewer).setupThinkingMs),
+      opponent: formatThinkingTime(getPlayerTiming(sides.opponent).setupThinkingMs),
     },
   ];
 }
@@ -1156,7 +1402,7 @@ function MatchHighlights({ sides }: { sides: SideAssignment }) {
     chips.push({
       id: "biggest-steal",
       label: "Biggest steal",
-      value: `${getPlayerName(thief)} · ${biggestSteal} ${biggestSteal === 1 ? "gig" : "gigs"}`,
+      value: `${thief.metrics.biggestStealCardName ?? "Card not recorded"} · ${getPlayerName(thief)} · ${biggestSteal} ${biggestSteal === 1 ? "gig" : "gigs"}`,
     });
   }
 
@@ -1417,7 +1663,7 @@ function DeckMatchupPlayer({
         <span>{getPlayerPerspectiveLabel(player, viewerPlayerId)}</span>
         <div className={classes.colorSymbols} aria-label={player.deckColors.join(", ")}>
           {player.deckColors.map((color) => (
-            <i key={color} data-color={color} />
+            <CyberpunkColorSymbol key={color} color={color} />
           ))}
         </div>
       </div>
@@ -1461,11 +1707,15 @@ function TurnsBreakdown({
   }
 
   const turnSet = new Set<number>();
+  for (let turn = 1; turn <= analytics.summary.totalTurns; turn++) turnSet.add(turn);
   for (const turn of sides.viewer.perTurn) turnSet.add(turn.turn);
   for (const turn of sides.opponent.perTurn) turnSet.add(turn.turn);
+  for (const turn of sides.viewer.priorityTimeByTurn ?? []) turnSet.add(turn.turn);
+  for (const turn of sides.opponent.priorityTimeByTurn ?? []) turnSet.add(turn.turn);
   const turnNumbers = [...turnSet].sort((a, b) => a - b);
   const viewerByTurn = new Map(sides.viewer.perTurn.map((turn) => [turn.turn, turn]));
   const opponentByTurn = new Map(sides.opponent.perTurn.map((turn) => [turn.turn, turn]));
+
   const sideColumns: Array<{ label: string; kind: "viewer" | "opponent" }> = [
     { label: sides.viewerLabel, kind: "viewer" },
     { label: sides.opponentLabel, kind: "opponent" },
@@ -1506,6 +1756,8 @@ function TurnsBreakdown({
           </p>
         </div>
       </div>
+      <ThinkingTimeTable sides={sides} turns={turnNumbers} />
+      <h4>Actions by turn</h4>
       <div className={classes.tableScroll}>
         <table className={classes.turnsTable}>
           <thead>
@@ -1530,9 +1782,6 @@ function TurnsBreakdown({
                   Eddies left
                 </th>
               ) : null}
-              <th scope="col" rowSpan={2}>
-                Duration
-              </th>
             </tr>
             <tr>
               {sideColumns.map((side) => (
@@ -1566,15 +1815,9 @@ function TurnsBreakdown({
           </thead>
           <tbody>
             {turnNumbers.map((turn) => {
-              const viewerEntry = viewerByTurn.get(turn);
-              const opponentEntry = opponentByTurn.get(turn);
-              const durationMs = Math.max(
-                viewerEntry?.durationMs ?? 0,
-                opponentEntry?.durationMs ?? 0,
-              );
               return (
                 <tr key={turn}>
-                  <th scope="row">{turn}</th>
+                  <th scope="row">{turn === 0 ? "Setup" : turn}</th>
                   <td>{valueFor("viewer", turn, "cards")}</td>
                   <td>{valueFor("opponent", turn, "cards")}</td>
                   <td>{valueFor("viewer", turn, "gained")}</td>
@@ -1589,7 +1832,6 @@ function TurnsBreakdown({
                       <td>{eddiesFor("opponent", turn)}</td>
                     </>
                   ) : null}
-                  <td>{durationMs > 0 ? formatDuration(durationMs) : "—"}</td>
                 </tr>
               );
             })}
@@ -1642,33 +1884,76 @@ function AnalyticsStatus({
 }
 
 function ParticipantCard({
+  identity,
+  position = "right",
   player,
   sideLabel,
   isWinner,
+  ranked = false,
+  rating,
 }: {
+  identity?: PlayerIdentityInfo;
+  position?: "left" | "right";
   player: CyberpunkPlayerAnalytics;
   sideLabel: string;
   isWinner: boolean;
+  ranked?: boolean;
+  rating?: PostGameRating;
 }) {
+  const legends = getLegendSummaries(player);
+  const thinkingTime = getPlayerTiming(player).totalThinkingMs;
   return (
-    <article className={classes.participant} data-winner={isWinner || undefined}>
-      <header className={classes.participantHeader}>
-        <span>{sideLabel}</span>
-        {isWinner ? <IconTrophy size={15} aria-label="Winner" /> : null}
-      </header>
-      <h3 className={classes.participantName}>{getPlayerName(player)}</h3>
-      <p className={classes.participantScore}>
-        <strong>{player.final.gigs}</strong> gigs
-        <span aria-hidden="true"> · </span>
-        <strong>{player.final.streetCred}</strong> Street Cred
-      </p>
-      {player.deckColors.length > 0 ? (
-        <div className={classes.colorSymbols} aria-label={player.deckColors.join(", ")}>
-          {player.deckColors.map((color) => (
-            <i key={color} data-color={color} />
-          ))}
-        </div>
-      ) : null}
+    <article
+      className={classes.participant}
+      data-position={position}
+      data-winner={isWinner || undefined}
+    >
+      <div className={classes.legendPortraits} aria-label={`${getPlayerName(player)} Legends`}>
+        {legends.map((legend) => (
+          <div className={classes.legendPortrait} key={legend.id}>
+            {legend.imageUrl ? (
+              <img src={legend.imageUrl} alt={legend.name} />
+            ) : (
+              <span>{legend.name}</span>
+            )}
+          </div>
+        ))}
+        {Array.from({ length: Math.max(0, 3 - legends.length) }, (_, index) => (
+          <div className={classes.legendPortrait} key={`unrecorded-${index}`}>
+            <span>Legend not recorded</span>
+          </div>
+        ))}
+      </div>
+      <div className={classes.participantInfo}>
+        <header className={classes.participantHeader}>
+          <span>
+            {sideLabel}
+            {player.onThePlay === true ? " · Went first" : ""}
+          </span>
+          {isWinner ? <IconTrophy size={15} aria-label="Winner" /> : null}
+        </header>
+        <h3 className={classes.participantName}>
+          <SupporterPlayerName
+            name={identity?.displayName ?? getPlayerName(player)}
+            tier={identity?.subscriptionTier}
+          />
+        </h3>
+        {ranked && <PlayerRating player={player} rating={rating} />}
+        <p className={classes.participantScore}>
+          <span>
+            <strong>{player.final.gigs}</strong> gigs
+          </span>
+          <span>
+            <strong>{player.final.streetCred}</strong> Street Cred
+          </span>
+        </p>
+        <p className={classes.participantTiming}>
+          Thinking time{" "}
+          <strong>
+            {thinkingTime === null ? "Not recorded" : formatThinkingTime(thinkingTime)}
+          </strong>
+        </p>
+      </div>
     </article>
   );
 }
@@ -1723,13 +2008,19 @@ function getTotalRam(player: CyberpunkPlayerAnalytics): number {
   }, 0);
 }
 
-function getLegendSummaries(
-  player: CyberpunkPlayerAnalytics,
-): Array<{ name: string; ram: number | null; color: string | null }> {
+function getLegendSummaries(player: CyberpunkPlayerAnalytics): Array<{
+  id: string;
+  name: string;
+  imageUrl?: string;
+  ram: number | null;
+  color: string | null;
+}> {
   return Object.values(player.cardEvents)
     .filter((card) => card.type === "legend")
     .map((card) => ({
+      id: card.cardPublicId,
       name: card.displayName,
+      imageUrl: getCardBySlug(card.cardPublicId)?.imageUrl,
       ram: card.ram,
       color: card.color,
     }))
@@ -1741,7 +2032,10 @@ function getAnalyticsTiming(analytics: CyberpunkGameAnalyticsRecord): {
   totalThinkingMs: number;
 } {
   const totalThinkingMs = analytics.players.reduce(
-    (sum, player) => sum + getPlayerTiming(player).totalThinkingMs,
+    (sum, player) =>
+      sum +
+      (getPlayerTiming(player).totalThinkingMs ?? 0) +
+      (getPlayerTiming(player).setupThinkingMs ?? 0),
     0,
   );
   return {
@@ -1755,20 +2049,107 @@ function getAnalyticsTiming(analytics: CyberpunkGameAnalyticsRecord): {
 }
 
 function getPlayerTiming(player: CyberpunkPlayerAnalytics): {
-  totalThinkingMs: number;
-  avgThinkingMs: number;
-  ownTurns: number;
+  totalThinkingMs: number | null;
+  setupThinkingMs: number | null;
 } {
-  const ownTurnDurations = player.perTurn
-    .map((turn) => turn.durationMs)
-    .filter((duration) => Number.isFinite(duration) && duration > 0);
-  const totalThinkingMs = ownTurnDurations.reduce((sum, duration) => sum + duration, 0);
-  const ownTurns = player.perTurn.length;
+  const priorityTimeByTurn = player.priorityTimeByTurn;
   return {
-    totalThinkingMs,
-    avgThinkingMs: ownTurns > 0 ? totalThinkingMs / ownTurns : 0,
-    ownTurns,
+    totalThinkingMs: priorityTimeByTurn
+      ? priorityTimeByTurn.reduce((sum, turn) => sum + (turn.turn > 0 ? turn.thinkingTimeMs : 0), 0)
+      : null,
+    setupThinkingMs: priorityTimeByTurn
+      ? priorityTimeByTurn.reduce(
+          (sum, turn) => sum + (turn.turn === 0 ? turn.thinkingTimeMs : 0),
+          0,
+        )
+      : null,
   };
+}
+
+function formatThinkingTime(ms: number | null): string {
+  return ms === null ? "—" : formatDuration(ms);
+}
+
+function ThinkingTimeTable({ sides, turns }: { sides: SideAssignment; turns: number[] }) {
+  const players = [sides.viewer, sides.opponent];
+  const [helpOpen, setHelpOpen] = useState(false);
+  return (
+    <section aria-label="Thinking time by turn">
+      <div className={classes.thinkingTimeHeading}>
+        <h4>Thinking time by turn</h4>
+        <Tooltip
+          label="Time with priority, including reactions and choices during the rival's turn. Setup is shown separately and is excluded from the total. Waiting and connection delays while holding priority are included."
+          opened={helpOpen}
+          multiline
+          w={280}
+          maw="calc(100vw - 32px)"
+          withArrow
+          position="top"
+          zIndex={9100}
+        >
+          <ActionIcon
+            variant="subtle"
+            color="gray"
+            className={classes.thinkingTimeHelp}
+            aria-label="About thinking time"
+            onMouseEnter={() => setHelpOpen(true)}
+            onMouseLeave={(event) => {
+              if (event.currentTarget !== document.activeElement) setHelpOpen(false);
+            }}
+            onFocus={() => setHelpOpen(true)}
+            onBlur={() => setHelpOpen(false)}
+            onClick={() => setHelpOpen(true)}
+            onKeyDown={(event) => {
+              if (event.key === "Escape") {
+                setHelpOpen(false);
+                event.stopPropagation();
+              }
+            }}
+          >
+            <IconInfoCircle size={16} aria-hidden="true" />
+          </ActionIcon>
+        </Tooltip>
+      </div>
+      <table className={classes.comparisonTable}>
+        <thead>
+          <tr>
+            <th scope="col">Turn</th>
+            <th scope="col">{sides.viewerLabel}</th>
+            <th scope="col">{sides.opponentLabel}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {turns.map((turn) => (
+            <tr key={turn}>
+              <th scope="row">{turn === 0 ? "Setup" : `Turn ${turn}`}</th>
+              {players.map((player) => (
+                <td key={player.playerId}>
+                  {player.priorityTimeByTurn === undefined
+                    ? "Not recorded"
+                    : formatDuration(
+                        player.priorityTimeByTurn.find((entry) => entry.turn === turn)
+                          ?.thinkingTimeMs ?? 0,
+                      )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th scope="row">Total thinking time</th>
+            {players.map((player) => (
+              <td key={player.playerId}>
+                {getPlayerTiming(player).totalThinkingMs === null
+                  ? "Not recorded"
+                  : formatThinkingTime(getPlayerTiming(player).totalThinkingMs)}
+              </td>
+            ))}
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+  );
 }
 
 function firstPositiveNumber(...values: Array<number | undefined>): number {
@@ -1789,7 +2170,7 @@ function durationFromIsoRange(start: string | undefined, end: string | undefined
 function mergeTurnRows(analytics: CyberpunkGameAnalyticsRecord) {
   const byTurn = new Map<
     number,
-    { turn: number; cardsPlayed: number; gigsChanged: number; attacks: number; durationMs: number }
+    { turn: number; cardsPlayed: number; gigsChanged: number; attacks: number }
   >();
   for (const player of analytics.players) {
     for (const turn of player.perTurn) {
@@ -1798,12 +2179,10 @@ function mergeTurnRows(analytics: CyberpunkGameAnalyticsRecord) {
         cardsPlayed: 0,
         gigsChanged: 0,
         attacks: 0,
-        durationMs: 0,
       };
       existing.cardsPlayed += turn.cardsPlayedThisTurn;
       existing.gigsChanged += turn.gigsGainedThisTurn + turn.gigsStolenThisTurn;
       existing.attacks += turn.directAttacksThisTurn + turn.unitAttacksThisTurn;
-      existing.durationMs = Math.max(existing.durationMs, turn.durationMs);
       byTurn.set(turn.turn, existing);
     }
   }
@@ -1831,13 +2210,14 @@ const ILLUSTRATIVE_FIXTURE_ANALYTICS: CyberpunkGameAnalyticsRecord = {
   },
   summary: {
     winnerId: "fixture-player-1",
-    endReason: "gig_victory",
-    totalTurns: 9,
+    endReason: "overtime_majority",
+    totalTurns: 14,
     totalMoves: 87,
     durationMs: 26 * 60_000,
     createdAt: "2026-09-18T10:00:00Z",
     completedAt: "2026-09-18T10:26:00Z",
     onThePlay: "fixture-player-1",
+    overtimeActive: true,
     finalGigs: { player1: 7, player2: 5 },
     finalStreetCred: { player1: 31, player2: 24 },
     finalEddies: { player1: 3, player2: 0 },
@@ -1850,6 +2230,9 @@ const ILLUSTRATIVE_FIXTURE_ANALYTICS: CyberpunkGameAnalyticsRecord = {
       username: null,
       seat: 1,
       onThePlay: true,
+      mmrAtMatch: 1420,
+      bracket: "silver",
+      defeatsRecorded: true,
       deckColors: ["yellow", "green"],
       deckCardIds: [],
       final: {
@@ -1894,6 +2277,7 @@ const ILLUSTRATIVE_FIXTURE_ANALYTICS: CyberpunkGameAnalyticsRecord = {
         firstStolenGigTurn: 5,
         firstLegendCallTurn: 6,
         biggestSteal: 2,
+        biggestStealCardName: "Street Samurai",
         stealEvents: 3,
         eddiesFloating: 9,
         lowestDeckCount: 24,
@@ -2094,6 +2478,14 @@ const ILLUSTRATIVE_FIXTURE_ANALYTICS: CyberpunkGameAnalyticsRecord = {
           spentUnitCount: 2,
         },
       ],
+      priorityTimeByTurn: [
+        { turn: 0, thinkingTimeMs: 8_000 },
+        { turn: 1, thinkingTimeMs: 38_000 },
+        { turn: 2, thinkingTimeMs: 6_000 },
+        { turn: 3, thinkingTimeMs: 52_000 },
+        { turn: 6, thinkingTimeMs: 7_000 },
+        { turn: 9, thinkingTimeMs: 39_000 },
+      ],
     },
     {
       playerId: "fixture-player-2",
@@ -2101,6 +2493,9 @@ const ILLUSTRATIVE_FIXTURE_ANALYTICS: CyberpunkGameAnalyticsRecord = {
       username: null,
       seat: 2,
       onThePlay: false,
+      mmrAtMatch: 1470,
+      bracket: "silver",
+      defeatsRecorded: true,
       deckColors: ["blue"],
       deckCardIds: [],
       final: {
@@ -2284,6 +2679,14 @@ const ILLUSTRATIVE_FIXTURE_ANALYTICS: CyberpunkGameAnalyticsRecord = {
           spentUnitCount: 3,
         },
       ],
+      priorityTimeByTurn: [
+        { turn: 0, thinkingTimeMs: 10_000 },
+        { turn: 1, thinkingTimeMs: 5_000 },
+        { turn: 2, thinkingTimeMs: 48_000 },
+        { turn: 3, thinkingTimeMs: 9_000 },
+        { turn: 6, thinkingTimeMs: 44_000 },
+        { turn: 8, thinkingTimeMs: 41_000 },
+      ],
     },
   ],
 };
@@ -2295,7 +2698,33 @@ const ILLUSTRATIVE_FIXTURE_ANALYTICS: CyberpunkGameAnalyticsRecord = {
  * hosted match. All names and numbers are synthetic.
  */
 export function EndGameModalFixture() {
-  const analytics = ILLUSTRATIVE_FIXTURE_ANALYTICS;
+  const [open, setOpen] = useState(true);
+  const rating: PostGameRating = {
+    status: "ready",
+    seasonId: "illustrative-season",
+    players: [
+      { status: "rated", seat: 1, before: 1420, after: 1438 },
+      { status: "rated", seat: 2, before: 1470, after: 1452 },
+    ],
+  };
+  const analytics = useMemo(
+    () => ({
+      ...ILLUSTRATIVE_FIXTURE_ANALYTICS,
+      players: [
+        withFixtureLegends(ILLUSTRATIVE_FIXTURE_ANALYTICS.players[0], [
+          "jackie-welles-pour-one-out-for-me",
+          "v-corporate-exile",
+          "viktor-vektor-sit-down-and-relax",
+        ]),
+        withFixtureLegends(ILLUSTRATIVE_FIXTURE_ANALYTICS.players[1], [
+          "goro-takemura-hands-unclean",
+          "saburo-arasaka-stubborn-patriarch",
+          "yorinobu-arasaka-embracing-destruction",
+        ]),
+      ] satisfies CyberpunkGameAnalyticsRecord["players"],
+    }),
+    [],
+  );
   const sides = resolveSides(analytics, analytics.players[0].playerId);
   const timing = getAnalyticsTiming(analytics);
   const sections = [
@@ -2333,14 +2762,30 @@ export function EndGameModalFixture() {
       ),
     },
   ];
+  if (!open)
+    return (
+      <button type="button" className={classes.launcher} onClick={() => setOpen(true)}>
+        View summary
+      </button>
+    );
   return (
     <PostGameModal
+      layout="compact"
       open
+      onClose={() => setOpen(false)}
       outcome="win"
-      reason={describeReason("gig_victory", "win")}
+      reason={describeReason("overtime_majority", "win")}
       participants={{
         left: (
           <ParticipantCard
+            identity={{
+              id: sides.viewer.playerId,
+              displayName: "Fixture Runner",
+              subscriptionTier: "tier3",
+            }}
+            position="left"
+            ranked
+            rating={rating}
             player={sides.viewer}
             sideLabel={sides.viewerLabel}
             isWinner={analytics.summary.winnerId === sides.viewer.playerId}
@@ -2348,6 +2793,13 @@ export function EndGameModalFixture() {
         ),
         right: (
           <ParticipantCard
+            ranked
+            rating={rating}
+            identity={{
+              id: sides.opponent.playerId,
+              displayName: "Fixture Rival",
+              subscriptionTier: "tier2",
+            }}
             player={sides.opponent}
             sideLabel={sides.opponentLabel}
             isWinner={analytics.summary.winnerId === sides.opponent.playerId}
@@ -2365,10 +2817,20 @@ export function EndGameModalFixture() {
       }
       sections={sections}
       actions={
-        <span className={classes.mutedText}>Visual fixture — all numbers are illustrative.</span>
+        <div className={classes.footerActions}>
+          <div className={classes.actions}>
+            <button type="button" className={classes.btn} onClick={() => setOpen(false)}>
+              View board
+            </button>
+            <a className={`${classes.btn} ${classes.btnPrimary}`} href={PLATFORM_MATCHMAKING_URL}>
+              Back to matchmaking
+            </a>
+          </div>
+          <span className={classes.mutedText}>Preview — illustrative match data.</span>
+        </div>
       }
       testId="end-game-modal-fixture"
-      dataEndReason="gig_victory"
+      dataEndReason="overtime_majority"
       dataPostGameSurface="fixture-preview"
     />
   );
@@ -2376,4 +2838,98 @@ export function EndGameModalFixture() {
 
 function bestOfLabelForFixture(analytics: CyberpunkGameAnalyticsRecord): string {
   return analytics.dimensions.format === "best_of_3" ? "Best of 3" : "Best of 1";
+}
+
+function withFixtureLegends(
+  player: CyberpunkPlayerAnalytics,
+  slugs: string[],
+): CyberpunkPlayerAnalytics {
+  const cardEvents = Object.fromEntries(
+    Object.entries(player.cardEvents).filter(([, card]) => card.type !== "legend"),
+  );
+  for (const slug of slugs) {
+    const card = getCardBySlug(slug);
+    if (!card) throw new Error(`Unknown fixture Legend: ${slug}`);
+    cardEvents[slug] = {
+      cardPublicId: slug,
+      displayName: card.displayName ?? card.name,
+      type: "legend",
+      color: card.color ?? null,
+      cost: card.cost ?? null,
+      power: card.power ?? null,
+      ram: card.ram ?? null,
+      copiesInDeck: 1,
+      timesPlayed: 0,
+      timesSold: 0,
+      timesCalled: 0,
+      timesAttackedUnits: 0,
+      timesAttackedDirectly: 0,
+      timesDefended: 0,
+      timesBlocked: 0,
+      timesAbilityActivated: 0,
+      gigsStolen: 0,
+    };
+  }
+  return { ...player, cardEvents };
+}
+
+function PlayerRating({
+  player,
+  rating,
+}: {
+  player: CyberpunkPlayerAnalytics;
+  rating?: PostGameRating;
+}) {
+  const startingVisible =
+    player.bracket !== undefined &&
+    player.bracket !== "placement" &&
+    player.mmrAtMatch !== undefined;
+  let result: string;
+  if (!rating) result = "Rating not recorded";
+  else
+    switch (rating.status) {
+      case "not_applicable":
+        return null;
+      case "in_progress":
+        result = "Updates after the match";
+        break;
+      case "pending":
+        result = "Rating update pending";
+        break;
+      case "unavailable":
+        result = "Rating unavailable";
+        break;
+      case "short_match_not_rated":
+        result = "Match too short — not rated";
+        break;
+      case "ready": {
+        const entry = rating.players.find((entry) => entry.seat === player.seat);
+        if (!entry) result = "Rating unavailable";
+        else if (entry.status === "placement") result = "Placement match";
+        else if (entry.before === null) result = `MMR ${Math.round(entry.after)}`;
+        else {
+          const before = Math.round(entry.before);
+          const after = Math.round(entry.after);
+          const delta = after - before;
+          result = `${before} → ${after} (${delta >= 0 ? "+" : ""}${delta})`;
+        }
+        break;
+      }
+      default: {
+        const exhaustive: never = rating;
+        return exhaustive;
+      }
+    }
+  return (
+    <div className={classes.participantTiming}>
+      <span>
+        {startingVisible
+          ? `Starting MMR · ${Math.round(player.mmrAtMatch!)}`
+          : player.bracket === "placement"
+            ? "Starting rank · Placement"
+            : "Starting MMR not recorded"}
+      </span>
+      <strong>{result}</strong>
+    </div>
+  );
 }

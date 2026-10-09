@@ -46,7 +46,7 @@ export const op14eb04Oinkchuck082: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Thriller Bark Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -77,7 +77,7 @@ export const op14eb04Oinkchuck082: CharacterCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

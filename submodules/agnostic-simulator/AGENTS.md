@@ -1,71 +1,43 @@
 # Agnostic Simulator
 
-This submodule owns TCG Online's cross-game contracts, protocol, adapter
-interfaces, shared simulator UI, agent core, and multi-game browser app.
+Owns cross-game contracts, adapters, shared UI, agents, and the multi-game app.
 
-Keep shared models game-agnostic. If a behavior applies to one game, keep it in
-that game or its adapter. Shared concepts use the smallest cross-game shape and
-let adapters provide native ids, labels, zones, prompts, and state.
+## Main paths
 
-## Where To Look
+- `packages/protocol`: wire protocol, game slugs, and gateway envelopes.
+- `packages/shared/src/game-adapter`: adapter interfaces and registry.
+- `packages/game-page-contract`: match, replay, practice, and page-load contracts.
+- `packages/simulator-contract`: normalized browser state and interactions.
+- `packages/simulator-ui`: shared UI; `packages/agent-core`: shared agent runner.
+- `packages/<game>`: game-specific adapters and agents.
+- `apps/multi-game-simulator`: browser app and game surfaces.
 
-- `packages/protocol/src` - runtime protocol, game slugs, gateway envelopes,
-  interactions, and Redis stream keys.
-- `packages/shared/src/game-adapter` - adapter interfaces and the slug-keyed
-  registry consumed by platform services.
-- `packages/game-page-contract/src` - live match, replay, practice, gateway,
-  and page-load contracts.
-- `packages/simulator-contract/src` - normalized browser entities, zones,
-  layouts, and interactions.
-- `packages/simulator-ui/src` - reusable cross-game UI primitives.
-- `packages/agent-core/src` - shared bot/agent runner behavior.
-- `packages/<game>/<game>-server-adapter/src` - engine-to-platform adapters.
-- `packages/<game>/<game>-agent/src` - game agents built on `agent-core`.
-- `apps/multi-game-simulator/src` - Cyberpunk, Gundam, and One Piece browser
-  surfaces plus shared app integration.
+## Local guidance
 
-## Implementation Rules
+- Keep game engines and cards out of shared packages. Put game-specific state,
+  labels, prompts, and behavior in the game adapter or game UI.
+- When a shared contract changes, update affected adapters and verify their
+  mappings. Check that the model fits the supported games.
+- Reuse Mantine and `@tcg/simulator-ui`. Follow root `DESIGN.md` for density
+  and shared surface styles; keep the board prominent and touch targets usable.
+- Use workspace scripts for focused checks. The optional broad root check is
+  `pnpm run ci:agnostic:check`.
 
-- Do not import game engines or cards into protocol, page contracts, simulator
-  contracts, simulator UI, shared adapters, or agent core.
-- Before adding a shared concept, map it against Lorcana, Cyberpunk, Gundam,
-  and One Piece. Narrow the shape when any game cannot map cleanly.
-- Platform consumes `@tcg/protocol`, `@tcg/game-page-contract`, and
-  `@tcg/shared/game-adapter` rather than game internals.
-- Shared UI renders normalized data; game naming, layout, move labels, and
-  prompt wording are adapter inputs.
-- Before adding a React component or custom CSS, search the app, Mantine, and
-  `@tcg/simulator-ui`. Reuse, compose, or theme existing primitives for standard
-  dialogs, buttons, menus, inputs, overlays, focus behavior, and layout. Mount
-  the required provider in tests instead of replacing a design-system
-  primitive with test-only markup. Custom components and CSS are for behavior
-  those primitives cannot express and for game-native board geometry,
-  responsive composition, or animation.
-- Simulator panels, prompts, drawers, and sidebars use one compact surface
-  grammar. Reuse the shared semantic density variables and the compact or
-  focused-decision tier documented in the root `DESIGN.md`; do not add
-  component-local header, footer, padding, radius, or typography dimensions
-  when the shared role applies. Preserve 44px coarse-pointer targets without
-  inflating passive chrome, and keep the game board visually dominant.
+## Run and validate
 
-## Cross-Game Change Gate
-
-1. Update the contract in its owning package.
-2. Update every affected game adapter.
-3. Cover the shared contract and at least one focused adapter mapping.
-4. For UI behavior, add focused component or route proof.
-5. After focused checks pass, run `pnpm run ci:agnostic:check` from the root.
-
-Do not claim a shared concept is complete while an affected game needs
-game-native nouns in shared types.
-
-## Bug Triage
-
-- Protocol or gateway shape failures start in `packages/protocol/src`.
-- A game that works locally but fails through platform runtime usually crosses
-  its server adapter and engine package.
-- Fix interaction or prompt rendering in shared UI only when the behavior is
-  genuinely cross-game; otherwise fix the game's projection.
-
-Run `vp check`, `vp test`, or the focused package script from this workspace
-before the root agnostic gate.
+- For package logic, adapters, and contracts, run focused tests from the owning
+  package. Check affected consumers when shared types or mappings change.
+- For UI work, run only this simulator: `pnpm run dev:multi-game-sim` from the
+  repository root, or `pnpm run dev` from this workspace. The default address
+  is `http://127.0.0.1:5193`; reuse a suitable existing server first.
+- Open local practice or the relevant `/component-catalog`,
+  `/simulator-ui-fixtures`, `/animation-fixtures`, or game test route directly.
+  Extend existing fixtures when needed. Exercise interactions in local practice
+  when static fixtures cannot verify the behavior.
+- For Alpha Clash or Grand Archive opening visuals, use the same simulator
+  server and open `/simulator-ui-fixtures` or `/animation-fixtures` to select
+  the opening preview. See [opening fixtures](docs/opening-visual-fixtures.md).
+- Simulator visuals and local interactions do not require platform services.
+  Use platform integration only for changed hosted transport, auth, persistence,
+  or routing behavior that local tests cannot cover. A fixture that displays
+  hosted controls proves their presentation, not a hosted match.

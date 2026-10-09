@@ -25,7 +25,7 @@ export const op07RoronoaZoro113: CharacterCard = {
   counter: 1000,
   trigger:
     "If your Leader has the [Egghead] type, rest up to 1 of your opponent's Leader or Character cards.",
-  traits: ["Straw Hat Crew Egghead"],
+  traits: ["Egghead", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     "[Trigger] If your Leader has the [Egghead] type, rest up to 1 of your opponent's Leader or Character cards.",
@@ -37,7 +37,7 @@ export const op07RoronoaZoro113: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Egghead",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

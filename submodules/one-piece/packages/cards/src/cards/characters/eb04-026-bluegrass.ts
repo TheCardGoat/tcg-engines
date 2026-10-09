@@ -22,7 +22,7 @@ export const op14eb04Bluegrass026: CharacterCard = {
   setId: "EB04",
   cost: 4,
   power: 6000,
-  traits: ["Navy Egghead"],
+  traits: ["Egghead", "Navy"],
   attribute: "special",
   effect:
     "[On Play] Place up to 1 of your opponent's Characters with a cost of 1 or less at the bottom of the owner's deck.\n[When Attacking] Draw 1 card and trash 1 card from your hand.",

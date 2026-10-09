@@ -136,6 +136,14 @@
         return;
       }
 
+      const botPlayerId = match.participants.find((participant) => participant.isBot)?.id
+        ?? session.botPlayerId;
+      if (!botPlayerId) {
+        console.error("[bot-match-mode] practice match is missing its bot participant");
+        loadError = true;
+        return;
+      }
+
       const realtime = data.bootstrap.realtime;
       if (!realtime || data.bootstrap.viewer.role !== 'player') {
         loadError = true;
@@ -184,7 +192,7 @@
         practiceOrchestrator = await PracticeMatchOrchestrator.create({
           gameId,
           playerId: session.gameProfileId,
-          botPlayerId: session.botPlayerId,
+          botPlayerId,
           deckConfig: session.deckConfig,
           gateway: gateway!,
           humanSeat: 'playerOne', // bot matches always have human as playerOne
@@ -198,7 +206,7 @@
         practiceOrchestrator = await PracticeMatchOrchestrator.create({
           gameId,
           playerId: session.gameProfileId,
-          botPlayerId: session.botPlayerId,
+          botPlayerId,
           deckConfig: session.deckConfig,
           gateway: gateway!,
           humanSeat: 'playerOne',
@@ -207,7 +215,10 @@
       }
 
       aiCtx.set(practiceOrchestrator.orchestrator);
-    })();
+    })().catch((error: unknown) => {
+      console.error("[bot-match-mode] failed to prepare practice match", error);
+      loadError = true;
+    });
 
     return () => {
       // cleanup handled in onDestroy
@@ -240,6 +251,7 @@
       {playerMetadataMap}
       serverGameplaySettings={data.userSettings?.resolvedGameplaySettings ?? data.userSettings?.gameplaySettings}
       postGameGameId={data.gameId}
+      moderationMatchId={data.matchId}
       isAuthenticated={authSession.isAuthenticated}
       {matchChatController}
       opponentPresence={null}

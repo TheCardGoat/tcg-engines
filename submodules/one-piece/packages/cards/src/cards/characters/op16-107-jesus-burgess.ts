@@ -30,6 +30,21 @@ export const op16JesusBurgess107: CharacterCard = {
   effects: {
     effects: [
       {
+        trigger: "trigger",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+        optional: true,
+      },
+      {
         trigger: "onKo",
         actions: [
           {

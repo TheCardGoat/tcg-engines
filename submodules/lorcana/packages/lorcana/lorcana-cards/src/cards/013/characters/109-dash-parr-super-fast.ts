@@ -1,7 +1,8 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { dashParrSuperFastI18n } from "./109-dash-parr-super-fast.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { shift } from "../../../helpers/abilities/shift";
-import { dashParrSuperFastI18n } from "./109-dash-parr-super-fast.i18n";
 
 export const dashParrSuperFast: CharacterCard = {
   id: "S3p",
@@ -31,6 +32,10 @@ export const dashParrSuperFast: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_b184e0e3735b4fb0b414467ea35e5340",
+    tcgPlayer: "704617",
+  },
   text: [
     {
       title: "Shift 3 {I}",
@@ -39,7 +44,7 @@ export const dashParrSuperFast: CharacterCard = {
       title: "Evasive",
     },
     {
-      title: "Follow Me!",
+      title: "FOLLOW ME!",
       description:
         "Whenever this character quests, you may reveal the top card of your deck. If you do, you may play it. Otherwise, put it into your discard. (You pay all costs.)",
     },

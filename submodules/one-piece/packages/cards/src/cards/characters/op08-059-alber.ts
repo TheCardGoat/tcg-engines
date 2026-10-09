@@ -23,7 +23,7 @@ export const op08Alber059: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates Lunarian"],
+  traits: ["Lunarian", "Animal Kingdom Pirates"],
   attribute: "special",
   effect:
     "[Activate:Main] You may trash this Character: If your Leader has the [Animal Kingdom Pirates] type and you have 10 DON!! cards on your field, play up to 1 [King] with a cost of 7 or less from your hand.",
@@ -65,7 +65,7 @@ export const op08Alber059: CharacterCard = {
                 {
                   condition: "leaderTrait",
                   trait: "Animal Kingdom Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   condition: "donFieldCount",

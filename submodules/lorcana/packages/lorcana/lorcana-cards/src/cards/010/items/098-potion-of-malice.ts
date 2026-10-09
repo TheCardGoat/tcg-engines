@@ -11,7 +11,7 @@ export const potionOfMalice: ItemCard = {
       artId: "set10-098",
       setCode: "set10",
       collectorNumber: "98",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -22,7 +22,7 @@ export const potionOfMalice: ItemCard = {
   franchise: "Hercules",
   set: "010",
   cardNumber: 98,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 3,
   inkable: false,
   externalIds: {

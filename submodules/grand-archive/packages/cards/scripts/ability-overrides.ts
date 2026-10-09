@@ -1890,20 +1890,8 @@ export const GRAND_ARCHIVE_ABILITY_OVERRIDES: Readonly<
               relationship: "zone-of",
               player: "controller",
               filter: {
-                kind: "all",
-                filters: [
-                  {
-                    kind: "type",
-                    oneOf: ["CHAMPION"],
-                  },
-                  {
-                    kind: "not",
-                    filter: {
-                      kind: "type",
-                      oneOf: ["CHAMPION"],
-                    },
-                  },
-                ],
+                kind: "not",
+                filter: { kind: "type", oneOf: ["CHAMPION"] },
               },
             },
           },
@@ -3301,20 +3289,8 @@ export const GRAND_ARCHIVE_ABILITY_OVERRIDES: Readonly<
               relationship: "zone-of",
               player: "controller",
               filter: {
-                kind: "all",
-                filters: [
-                  {
-                    kind: "type",
-                    oneOf: ["CHAMPION"],
-                  },
-                  {
-                    kind: "not",
-                    filter: {
-                      kind: "type",
-                      oneOf: ["CHAMPION"],
-                    },
-                  },
-                ],
+                kind: "not",
+                filter: { kind: "type", oneOf: ["CHAMPION"] },
               },
             },
           },
@@ -4406,115 +4382,6 @@ export const GRAND_ARCHIVE_ABILITY_OVERRIDES: Readonly<
             },
           },
         ],
-      },
-    ],
-  },
-  THjSE7caau: {
-    provenance:
-      "Migrated from the previously maintained generated definition for gleaming-smolder.",
-    abilities: [
-      {
-        id: "THjSE7caau-a1",
-        kind: "card-resolution",
-        text: "Draw a card and discard a card.",
-        effect: {
-          kind: "sequence",
-          effects: [
-            {
-              kind: "draw",
-              player: "controller",
-              amount: 1,
-            },
-            {
-              kind: "discard",
-              player: "controller",
-              selection: {
-                id: "discarded-card",
-                kind: "choice",
-                declared: "resolution",
-                chooser: "controller",
-                count: {
-                  kind: "exactly",
-                  amount: 1,
-                },
-                candidates: {
-                  kind: "card",
-                  zones: ["hand"],
-                  relationship: "zone-of",
-                  player: "controller",
-                },
-              },
-            },
-          ],
-        },
-      },
-      {
-        id: "THjSE7caau-a2",
-        kind: "ability-modifier",
-        text: "[Merlin Bonus] If a fire element card was discarded, choose a unit and put two sheen counters on it.",
-        modifies: {
-          kind: "preceding-non-modifier-ability",
-        },
-        restrictions: [
-          {
-            kind: "static",
-            name: "champion-bonus",
-            condition: {
-              kind: "champion-lineage-is",
-              name: "Merlin",
-            },
-          },
-        ],
-        operation: {
-          kind: "append-effect",
-          effect: {
-            kind: "conditional",
-            condition: {
-              kind: "history",
-              event: "card-discarded",
-              window: "this-resolution",
-              filter: {
-                kind: "element",
-                oneOf: ["FIRE"],
-              },
-              minimum: 1,
-            },
-            then: {
-              kind: "choose",
-              selection: {
-                id: "chosen-unit",
-                kind: "choice",
-                declared: "resolution",
-                chooser: "controller",
-                count: {
-                  kind: "exactly",
-                  amount: 1,
-                },
-                candidates: {
-                  kind: "object",
-                  zones: ["field"],
-                  relationship: "zone-of",
-                  player: "controller",
-                  filter: {
-                    kind: "type",
-                    oneOf: ["ALLY", "CHAMPION"],
-                  },
-                },
-              },
-              effect: {
-                kind: "add-counter",
-                subject: {
-                  kind: "bound",
-                  binding: "chosen-unit",
-                },
-                counter: {
-                  named: "sheen",
-                },
-                amount: 2,
-              },
-            },
-          },
-        },
       },
     ],
   },

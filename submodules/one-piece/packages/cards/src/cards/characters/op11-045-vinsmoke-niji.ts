@@ -23,7 +23,7 @@ export const op11VinsmokeNiji045: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 2000,
-  traits: ["The Vinsmoke Family GERMA 66"],
+  traits: ["The Vinsmoke Family", "GERMA 66"],
   attribute: "special",
   i18n: op11VinsmokeNiji045I18n,
 };

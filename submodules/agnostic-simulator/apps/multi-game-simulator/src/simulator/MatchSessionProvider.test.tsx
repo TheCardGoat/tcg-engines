@@ -6,9 +6,15 @@ import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MatchSessionSchema, type MatchSession } from "@tcg/game-page-contract";
 import { MatchSessionProvider, useMatchSession } from "./MatchSessionProvider";
+import { logBrowserInfo } from "../observability/browser";
+
+vi.mock("../observability/browser", () => ({ logBrowserInfo: vi.fn() }));
 
 const gateway = vi.hoisted(() => ({
   events: new Map<string, (event: Record<string, unknown>) => void>(),
+  emit: vi.fn(),
+  listeners: new Map<string, Set<(event: Record<string, unknown>) => void>>(),
+  disconnected: undefined as (() => void) | undefined,
   authenticated: undefined as (() => void) | undefined,
   release: vi.fn(),
 }));
@@ -17,11 +23,24 @@ vi.mock("../lib/gateway/root-socket", () => ({
   destroyRootSocket: vi.fn(),
   acquireRootGatewayHandle: () => ({
     on: (event: string, listener: (value: Record<string, unknown>) => void) => {
-      gateway.events.set(event, listener);
-      return () => gateway.events.delete(event);
+      const listeners = gateway.listeners.get(event) ?? new Set();
+      listeners.add(listener);
+      gateway.listeners.set(event, listeners);
+      gateway.events.set(event, (value) => {
+        for (const callback of [...listeners]) callback(value);
+      });
+      return () => {
+        listeners.delete(listener);
+        if (listeners.size === 0) gateway.events.delete(event);
+      };
     },
     onAuthenticated: (listener: () => void) => {
       gateway.authenticated = listener;
+      return vi.fn();
+    },
+    emit: gateway.emit,
+    onDisconnected: (listener: () => void) => {
+      gateway.disconnected = listener;
       return vi.fn();
     },
     release: gateway.release,
@@ -89,6 +108,7 @@ function Probe() {
   return (
     <>
       <output>{session?.phase}</output>
+      <input aria-label="Unsent draft" defaultValue="" />
       {session?.phase === "preparation" && (
         <output aria-label="Preparation progress">
           {session.preparation.turnOrder.stage} /{" "}
@@ -109,6 +129,11 @@ function Page({ initial = pending }: { initial?: MatchSession }) {
 }
 beforeEach(() => {
   gateway.events.clear();
+  gateway.listeners.clear();
+  gateway.emit.mockImplementation(() => {
+    throw new Error("Socket unavailable");
+  });
+  vi.spyOn(Math, "random").mockReturnValue(0.5);
   gateway.authenticated = undefined;
   vi.clearAllMocks();
   vi.stubGlobal(
@@ -119,6 +144,7 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
   vi.useRealTimers();
 });
 describe("shared match session lifecycle", () => {
@@ -150,7 +176,8 @@ describe("shared match session lifecycle", () => {
     vi.mocked(fetch).mockResolvedValueOnce(new Response(null, { status: 503 }));
     render(<Page initial={playing} />);
     fireEvent.click(screen.getByRole("button", { name: "Refresh" }));
-    await screen.findByRole("alert");
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
+    expect(screen.queryByRole("alert")).toBeNull();
     expect(screen.getByText("playing")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Refresh" }));
     await waitFor(() => expect(screen.queryByRole("alert")).toBeNull());
@@ -202,7 +229,7 @@ describe("shared match session lifecycle", () => {
     fireEvent.click(screen.getByRole("button", { name: "Refresh" }));
     expect(fetch).toHaveBeenCalledTimes(1);
     await act(async () => resolve(Response.json(playing)));
-    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(fetch).toHaveBeenCalledTimes(1);
     page.unmount();
     expect(gateway.release).toHaveBeenCalled();
     expect(gateway.events.size).toBe(0);
@@ -245,7 +272,7 @@ describe("pending session recovery without realtime delivery", () => {
     vi.mocked(fetch).mockResolvedValueOnce(new Response(null, { status: 503 }));
     render(<Page />);
     await act(() => vi.advanceTimersByTimeAsync(3_000));
-    expect(screen.getByRole("alert").textContent).toContain("503");
+    expect(screen.queryByRole("alert")).toBeNull();
     await act(() => vi.advanceTimersByTimeAsync(5_999));
     expect(fetch).toHaveBeenCalledTimes(1);
     await act(() => vi.advanceTimersByTimeAsync(1));
@@ -266,12 +293,7 @@ describe("pending session recovery without realtime delivery", () => {
     await act(() => vi.advanceTimersByTimeAsync(12_999));
     expect(fetch).toHaveBeenCalledTimes(1);
     await act(() => vi.advanceTimersByTimeAsync(1));
-    const alert = screen.getByRole("alert");
-    expect(alert.textContent).toContain("timed out");
-    // The stall is usually the match server restarting, not the player's
-    // connection — the copy must not send players to debug their network.
-    expect(alert.textContent).toContain("restarting");
-    expect(alert.textContent).not.toContain("check your connection");
+    expect(screen.queryByRole("alert")).toBeNull();
     await act(() => vi.advanceTimersByTimeAsync(6_000));
     expect(screen.getByText("playing")).toBeTruthy();
     expect(fetch).toHaveBeenCalledTimes(2);
@@ -310,6 +332,10 @@ function preparation(deadlineAt: string): MatchSession {
     },
     preparation: {
       object: "game_pregame",
+      phase: "selecting",
+      phaseToken: "test-phase",
+      serverTime: new Date().toISOString(),
+      selectionOutcome: "pending",
       kind: "fab",
       matchId: "m1",
       gameId: "g1",
@@ -368,7 +394,9 @@ describe("preparation deadline and dialog recovery", () => {
     expect(screen.getByText("playing")).toBeTruthy();
   });
 
-  it("lets a waiting player recover from the non-blocking notice", async () => {
+  it("shows one recovery notice after a sustained failure and lets the player retry", async () => {
+    vi.useFakeTimers();
+    vi.mocked(fetch).mockResolvedValue(new Response(null, { status: 503 }));
     function WaitingScreen() {
       const { session } = useMatchSession();
       if (session?.phase === "playing") return <main>Game board</main>;
@@ -393,13 +421,182 @@ describe("preparation deadline and dialog recovery", () => {
         </MatchSessionProvider>
       </MantineProvider>,
     );
-    const button = screen.getByRole("button", { name: "Refresh match" });
+    expect(screen.queryByRole("button", { name: "Retry connection" })).toBeNull();
+    await act(() => vi.advanceTimersByTimeAsync(11_000));
+    const button = screen.getByRole("button", { name: "Retry connection" });
     expect(screen.queryByRole("dialog")).toBeNull();
     expect(
       screen.getByRole("status", { name: "Waiting for the first-player choice" }).contains(button),
     ).toBe(true);
-    fireEvent.click(button);
-    expect(await screen.findByText("Game board")).toBeTruthy();
-    await waitFor(() => expect(screen.queryByTestId("fab-first-player-choice")).toBeNull());
+    vi.mocked(fetch).mockResolvedValue(Response.json(playing));
+    await act(async () => fireEvent.click(button));
+    expect(screen.getByText("Game board")).toBeTruthy();
+    expect(screen.queryByTestId("fab-first-player-choice")).toBeNull();
+  });
+});
+
+describe("preparation over WebSocket", () => {
+  it("does not start HTTP fallback when a socket request times out after leaving", async () => {
+    vi.useFakeTimers();
+    gateway.emit.mockImplementation(() => {});
+    const page = render(
+      <Page initial={preparation(new Date(Date.now() + 180_000).toISOString())} />,
+    );
+    await act(async () => gateway.authenticated?.());
+    expect(gateway.emit).toHaveBeenCalledWith("request_preparation_sync", expect.anything());
+    page.unmount();
+    await act(() => vi.advanceTimersByTimeAsync(60_000));
+    expect(fetch).not.toHaveBeenCalled();
+    expect(gateway.events.size).toBe(0);
+  });
+
+  it("retries a lost socket acknowledgement through HTTP with the same command ID", async () => {
+    vi.useFakeTimers();
+    const initial = preparation(new Date(Date.now() + 180_000).toISOString());
+    gateway.emit.mockImplementation((event: string, payload: { correlationId: string }) => {
+      if (event === "request_preparation_sync") {
+        gateway.events.get("preparation_state")?.({
+          correlationId: payload.correlationId,
+          snapshot: {
+            state: "unchanged",
+            matchId: "m1",
+            gameId: "g1",
+            revision: initial.revision,
+            serverTime: new Date().toISOString(),
+          },
+        });
+      }
+      // The server may have committed confirmation; its acknowledgement is lost.
+    });
+    vi.mocked(fetch).mockImplementation(async (_url, options) => {
+      const body = JSON.parse(String(options?.body));
+      return Response.json({
+        status: "accepted",
+        matchId: "m1",
+        gameId: body.gameId,
+        commandId: body.commandId,
+        phaseToken: body.phaseToken,
+        revision: 2,
+      });
+    });
+    const outcomes: string[] = [];
+    function Confirm() {
+      const { submitPreparation } = useMatchSession();
+      return (
+        <button
+          onClick={() =>
+            void submitPreparation({
+              type: "confirm_preparation",
+              selection: { sideboard: [] },
+            }).then((result) => {
+              outcomes.push(result.status);
+            })
+          }
+        >
+          Confirm selection
+        </button>
+      );
+    }
+    render(
+      <MatchSessionProvider initial={initial} gameSlug="flesh-and-blood">
+        <Probe />
+        <Confirm />
+      </MatchSessionProvider>,
+    );
+    await act(async () => gateway.authenticated?.());
+    fireEvent.click(screen.getByRole("button", { name: "Confirm selection" }));
+    expect(fetch).not.toHaveBeenCalled();
+    await act(() => vi.advanceTimersByTimeAsync(4_000));
+    const socketCommand = gateway.emit.mock.calls.find(
+      ([event]) => event === "confirm_preparation",
+    )?.[1];
+    expect(socketCommand).toBeDefined();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    const [url, options] = vi.mocked(fetch).mock.calls[0]!;
+    expect(String(url)).toContain("/matches/m1/pregame");
+    expect(options?.method).toBe("PUT");
+    expect({ matchId: "m1", ...JSON.parse(String(options?.body)) }).toEqual(socketCommand);
+    expect(outcomes).toEqual(["accepted"]);
+    expect(logBrowserInfo).toHaveBeenCalledWith("preparation.command_fallback", {
+      reason: "socket_reply_failed",
+    });
+    expect(logBrowserInfo).toHaveBeenCalledWith("preparation.command_reply", {
+      command: "confirm_preparation",
+      transport: "http",
+      outcome: "accepted",
+      duration_ms: expect.any(Number),
+    });
+    expect(screen.queryByRole("alert")).toBeNull();
+    expect(screen.queryByText("Refreshing match…")).toBeNull();
+  });
+
+  it("pushes private readiness without HTTP polling or disturbing input and focus", async () => {
+    vi.useFakeTimers();
+    const initial = preparation(new Date(Date.now() + 180_000).toISOString());
+    if (initial.phase !== "preparation") throw new Error("Expected preparation");
+    gateway.emit.mockImplementation((event: string, payload: { correlationId: string }) => {
+      if (event !== "request_preparation_sync") return;
+      gateway.events.get("preparation_state")?.({
+        correlationId: payload.correlationId,
+        snapshot: {
+          state: "unchanged",
+          matchId: "m1",
+          gameId: "g1",
+          revision: initial.revision,
+          serverTime: new Date().toISOString(),
+        },
+      });
+    });
+    render(<Page initial={initial} />);
+    const input = screen.getByRole("textbox", { name: "Unsent draft" });
+    fireEvent.change(input, { target: { value: "keep this selection" } });
+    input.focus();
+    await act(async () => gateway.authenticated?.());
+    await act(() => vi.advanceTimersByTimeAsync(9_000));
+    expect(fetch).not.toHaveBeenCalled();
+    await act(async () =>
+      gateway.events.get("preparation_state")?.({
+        snapshot: {
+          state: "preparation",
+          matchId: "m1",
+          gameId: "g1",
+          revision: 2,
+          serverTime: new Date().toISOString(),
+          preparation: { ...initial.preparation, opponentReady: true },
+        },
+      }),
+    );
+    expect(screen.getByLabelText("Preparation progress").textContent).toContain("opponent ready");
+    expect(screen.getByRole("textbox", { name: "Unsent draft" })).toBe(input);
+    expect(input).toHaveProperty("value", "keep this selection");
+    expect(document.activeElement).toBe(input);
+    expect(fetch).not.toHaveBeenCalled();
+    expect(screen.queryByRole("alert")).toBeNull();
+    expect(screen.queryByText("Refreshing match…")).toBeNull();
+  });
+
+  it("ignores old revisions and preparation projected for another actor", async () => {
+    const initial = preparation(new Date(Date.now() + 180_000).toISOString());
+    if (initial.phase !== "preparation") throw new Error("Expected preparation");
+    render(<Page initial={initial} />);
+    for (const [revision, playerId] of [
+      [0, "p1"],
+      [2, "p2"],
+    ] as const) {
+      await act(async () =>
+        gateway.events.get("preparation_state")?.({
+          snapshot: {
+            state: "preparation",
+            matchId: "m1",
+            gameId: "g1",
+            revision,
+            serverTime: new Date().toISOString(),
+            preparation: { ...initial.preparation, playerId, opponentReady: true },
+          },
+        }),
+      );
+    }
+    expect(screen.getByLabelText("Preparation progress").textContent).toContain("opponent waiting");
+    expect(fetch).not.toHaveBeenCalled();
   });
 });

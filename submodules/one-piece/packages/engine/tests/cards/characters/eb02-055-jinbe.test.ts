@@ -35,4 +35,31 @@ describe("EB02-055 Jinbe", () => {
     expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(jinbeId);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test.each([3, 4])(
+    "Trigger Life gate excludes the resolving card at initial Life %s",
+    (initialLife) => {
+      const e = OnePieceTestEngine.create(
+        { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+        {
+          leaderCardId: op14eb04JinbeOp14040040,
+          life: [eb02Jinbe055, ...Array(initialLife - 1).fill(eb01Doma005)],
+        },
+        { firstPlayer: "north", activeSeat: "south" },
+      );
+      const jinbe = e.findCardInZone("north", "life", eb02Jinbe055);
+      e.declareAttack(
+        e.findCardInZone("south", "character", eb01MountainGod018),
+        e.leader("north"),
+        "south",
+      );
+      e.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+      expect(e.getView("north").players.north.lifeCount).toBe(initialLife - 1);
+      expect(e.getView("north").players.north.characters.some((c) => c?.instanceId === jinbe)).toBe(
+        initialLife === 3,
+      );
+      expect(e.getView("north").players.north.trash.some((c) => c.instanceId === jinbe)).toBe(
+        initialLife === 4,
+      );
+    },
+  );
 });

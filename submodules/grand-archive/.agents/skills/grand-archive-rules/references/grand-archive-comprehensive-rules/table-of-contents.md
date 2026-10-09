@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/"
+  relation: "current_index"
+---
+
 # Table of Contents
 
 * [General Rules](/general-rules.md)

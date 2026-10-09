@@ -25,7 +25,7 @@ export const jiminyCricketGhostOfChristmasPastEpic: CharacterCard = {
   franchise: "Mickey's Christmas Carol",
   set: "011",
   cardNumber: 218,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 3,

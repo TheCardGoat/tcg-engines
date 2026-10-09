@@ -72,11 +72,24 @@ describe("OP11-088 Shu", () => {
     const attackerId = engine.findCardInZone("north", "character", eb01MountainGod018);
 
     engine.declareAttack(attackerId, engine.leader("south"), "north");
-
-    expect(() => engine.pendingDecision("effectOptional", "south")).toThrow();
+    engine.asSouth().acceptOptional();
     expect(
       engine.getView("south").players.south.characters.find((card) => card?.instanceId === shuId)
         ?.power,
+    ).toBe(5000);
+  });
+  test("does not activate against a Slash Leader", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op11Shu088] },
+      { leaderCardId: "OP01-001" },
+      { activeSeat: "north" },
+    );
+    engine.asNorth().attack(engine.leader("north"), engine.leader("south"));
+    expect(() => engine.pendingDecision("effectOptional", "south")).toThrow();
+    expect(
+      engine
+        .getView("south")
+        .players.south.characters.find((card) => card?.cardId === op11Shu088.id)?.power,
     ).toBe(5000);
   });
 });

@@ -1,7 +1,6 @@
 import { defOf } from "@tcg/cyberpunk-engine";
 import {
   getGearAttachTargets,
-  getProgramSpatialTargets,
   PLAYER_SIDE_TO_ID,
   useEngine,
   useEngineInteractionView,
@@ -31,13 +30,7 @@ export function useLocalTargetSelection(side: Side) {
   const sourceCardId = attack?.attackerId ?? play?.sourceCardId;
   const source = sourceCardId ? matchState.G.cardIndex[sourceCardId] : undefined;
   const definition = source ? defOf(source) : null;
-  const kind = attack
-    ? "attack"
-    : definition?.type === "gear"
-      ? "gear"
-      : definition?.type === "program"
-        ? "program"
-        : null;
+  const kind = attack ? "attack" : definition?.type === "gear" ? "gear" : null;
   if (
     !sourceCardId ||
     !definition ||
@@ -52,9 +45,7 @@ export function useLocalTargetSelection(side: Side) {
           attack.intent !== "steal" &&
           interactionViewCanFightTarget(interactionView, sourceCardId, id),
       )
-    : kind === "gear"
-      ? getGearAttachTargets({ interactionView }, sourceCardId, "gear")
-      : getProgramSpatialTargets({ matchState, side, interactionView }, sourceCardId);
+    : getGearAttachTargets({ interactionView }, sourceCardId, "gear");
   const canTargetRival = Boolean(
     attack &&
     attack.intent !== "fight" &&
@@ -90,13 +81,6 @@ export function useLocalTargetSelection(side: Side) {
       }
       case "gear":
         dispatchCostedAction({ type: "playCard", cardId: sourceCardId, attachToId: targetId, as });
-        clear();
-        return;
-      case "program":
-        // Payment may defer play; resolve its target only after successful play.
-        dispatchCostedAction({ type: "playCard", cardId: sourceCardId, as }, (result) => {
-          if (result.success) dispatch({ type: "resolveEffectTarget", targetIds: [targetId], as });
-        });
         clear();
         return;
       default: {

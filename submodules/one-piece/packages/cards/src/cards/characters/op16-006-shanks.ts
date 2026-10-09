@@ -23,7 +23,7 @@ export const op16Shanks006: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 2000,
-  traits: ["The Four Emperors Red-Haired Pirates"],
+  traits: ["The Four Emperors", "Red-Haired Pirates"],
   attribute: "slash",
   effect:
     "[On Play] You may rest 2 of your DON!! cards: K.O. up to 1 of your opponent's Characters with 4000 power or less.",

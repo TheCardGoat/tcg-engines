@@ -1,5 +1,6 @@
 import {
   createAcceptedMoveRecord,
+  createMatchStaticResourcesFromCardsMaps,
   createEngineLogRecord,
   getLorcanaServerAuthoritativeSnapshot,
   type CardsMaps,
@@ -7,6 +8,8 @@ import {
   type LorcanaServer,
   type LorcanaServerAuthoritativeSnapshot,
 } from "@tcg/lorcana-engine";
+import { getLorcanaCardCatalogSync } from "@tcg/lorcana-cards/cards/sync";
+import { LorcanaMultiplayerTestEngine } from "@tcg/lorcana-engine/testing";
 import { HumanVsAiOrchestrator } from "../simulator-devtools/vs-ai/human-vs-ai-orchestrator.svelte.js";
 import {
   AutomatedMatchPlaybackReadModel,
@@ -57,9 +60,37 @@ export class PracticeMatchOrchestrator {
   static async create(
     options: PracticeMatchOrchestratorOptions,
   ): Promise<PracticeMatchOrchestrator> {
-    const humanVsAi = await HumanVsAiOrchestrator.create(options.deckConfig, {
-      initialPerspective: options.humanSeat,
-    });
+    let humanVsAi: HumanVsAiOrchestrator;
+    if (options.restoredSnapshot) {
+      // Card instances are immutable engine resources. Build them from the saved
+      // snapshot, which remains authoritative when local deck settings are absent.
+      const snapshot = options.restoredSnapshot;
+      const testEngine = new LorcanaMultiplayerTestEngine(
+        {
+          capturePatches: false,
+          seed: snapshot.state.ctx.random.seed,
+          staticResources: createMatchStaticResourcesFromCardsMaps(
+            snapshot.cardsMaps,
+            getLorcanaCardCatalogSync(),
+            {},
+          ),
+          timeControl: { mode: "none" },
+        },
+        { skipPreGame: true, validateSync: false },
+      );
+      testEngine.loadState(snapshot.state);
+      testEngine.initializeSync();
+      humanVsAi = HumanVsAiOrchestrator.fromEngine(testEngine, {
+        strategyId: options.deckConfig.strategyId,
+        initialAiPlayMode: options.deckConfig.initialAiPlayMode ?? "auto",
+        initialPerspective: options.humanSeat,
+        gameId: snapshot.state.ctx.gameID,
+      });
+    } else {
+      humanVsAi = await HumanVsAiOrchestrator.create(options.deckConfig, {
+        initialPerspective: options.humanSeat,
+      });
+    }
     return new PracticeMatchOrchestrator(options, humanVsAi);
   }
 

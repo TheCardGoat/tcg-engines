@@ -32,7 +32,7 @@ export const op15Alvida003: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["East Blue Alvida Pirates"],
+  traits: ["East Blue", "Alvida Pirates"],
   attribute: "strike",
   effect:
     "If this Character would be K.O.'d, you may trash 1 Character card with a power of 6000 or less from your hand instead.\n[Activate: Main] [Once Per Turn] You may give 1 of your opponent's rested DON!! cards to 1 of your opponent's Characters: Give up to 1 rested DON!! card to its owner's Leader or 1 of their Characters.",
@@ -49,13 +49,14 @@ export const op15Alvida003: CharacterCard = {
             donorPlayer: "opponent",
             donState: "rested",
             recipientPlayer: "opponent",
+            recipientZones: ["character"],
           },
         ],
         actions: [
           {
             action: "giveDon",
             target: {
-              player: "opponent",
+              player: "both",
               zones: ["leader", "character"],
               count: {
                 amount: 1,
@@ -65,7 +66,7 @@ export const op15Alvida003: CharacterCard = {
               amount: 1,
               upTo: true,
             },
-            donorPlayer: "opponent",
+            donorPlayer: "targetOwner",
             donState: "rested",
           },
         ],

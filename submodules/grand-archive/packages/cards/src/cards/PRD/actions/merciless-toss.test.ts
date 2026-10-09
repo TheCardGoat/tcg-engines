@@ -7,3 +7,7 @@ import { mercilessToss } from "./merciless-toss.ts";
 describe("Merciless Toss — Class Bonus activation discount", () => {
   proveClassBonusActivationDiscount({ card: mercilessToss, discount: 1 });
 });
+
+import { proveTargetStateDamage } from "../../../testing/target-state-damage.ts";
+/** @covers ZIU4bH6D9q-a2 */
+describe("Merciless Toss — damaged ally bonus", () => proveTargetStateDamage(mercilessToss, true));

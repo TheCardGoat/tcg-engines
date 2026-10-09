@@ -44,14 +44,18 @@ export const op15Yama073: CharacterCard = {
               upTo: true,
             },
             filters: [
+              { filter: "cardCategory", value: "character" },
               {
                 filter: "cost",
                 comparison: "eq",
                 value: 1,
               },
               {
-                filter: "name",
-                value: "Heavenly Warriors",
+                filter: "anyOf",
+                filters: [
+                  { filter: "name", value: "Heavenly Warriors" },
+                  { filter: "trait", value: "Vassals", match: "exact" },
+                ],
               },
             ],
           },

@@ -31,7 +31,7 @@ import type {
   GrandArchiveVariableDeclaration,
 } from "@tcg/grand-archive-types";
 import { GRAND_ARCHIVE_CLASSES } from "@tcg/grand-archive-types";
-import { scopeResolutionTargets } from "./scope-resolution-targets.ts";
+import { scopeModeTargets, scopeResolutionTargets } from "./scope-resolution-targets.ts";
 import { GRAND_ARCHIVE_ABILITY_OVERRIDES } from "./ability-overrides.ts";
 
 /** Bump when typed ability-compilation semantics change. */
@@ -232,11 +232,9 @@ function derivedAmount(raw: string, sourceName?: string): GrandArchiveAmount | n
     const filter = describedCardFilter(
       sacrificedObjects[1].replace(/ies$/u, "y").replace(/s$/u, ""),
     );
-    if (filter)
-      return {
-        kind: "count",
-        collection: { binding: "sacrificed-objects", filter },
-      };
+    // The sacrifice selection already enforces the object kind. Count the paid
+    // identities so token sacrifices still count after the tokens cease to exist.
+    if (filter) return { kind: "binding-count", binding: "sacrificed-objects" };
   }
   const priorTargetStat =
     /^that (?:ally|unit|object|champion)['’]s (power|life|level|reserve cost|memory cost)(?: stat)?$/iu.exec(
@@ -273,6 +271,24 @@ function derivedAmount(raw: string, sourceName?: string): GrandArchiveAmount | n
       basis: "last-known",
       missing: "zero",
     };
+  const sacrificedObjectCounters =
+    /^the amount of ([a-z-]+) counters that (?:was|were) on the sacrificed (?:weapon|ally|domain|object)$/iu.exec(
+      text,
+    );
+  if (sacrificedObjectCounters) {
+    const counter = compileCounterKind(sacrificedObjectCounters[1]);
+    if (counter)
+      return {
+        kind: "counter-count",
+        subject: { kind: "bound", binding: "sacrificed-object" },
+        counter,
+        basis: "last-known",
+        missing: "zero",
+      };
+  }
+  const countersPaid = /^the amount of ([a-z-]+) counters removed$/iu.exec(text);
+  if (countersPaid)
+    return { kind: "binding-count", binding: `removed-${countersPaid[1].toLowerCase()}-counters` };
   const paidObjectProperty =
     /^the (reserve cost|memory cost|power|life|level)(?: stat)? of the (sacrificed|discarded) (?:card|ally|domain|object)$/iu.exec(
       text,
@@ -645,22 +661,28 @@ function perDescriptorAmount(raw: string, sourceName: string): GrandArchiveAmoun
           subject: { kind: "champion", player: "controller" },
           counter: compileCounterKind(counters[2]),
         }
-      : refersToSource(holder, sourceName) || /^(?:it|this object)$/iu.test(holder)
+      : /^Fractured Memories$/iu.test(holder)
         ? {
             kind: "counter-count",
-            subject: { kind: "source" },
+            subject: { kind: "mastery", player: "controller", name: "Fractured Memories" },
             counter: compileCounterKind(counters[2]),
-            ...sourceCounterBasis,
           }
-        : {
-            kind: "sum-counters",
-            collection: {
-              zones: ["field"],
-              player: /^objects on the field$/iu.test(holder) ? "each-player" : "controller",
-              filter: { kind: "name", value: holder },
-            },
-            counter: compileCounterKind(counters[2]),
-          };
+        : refersToSource(holder, sourceName) || /^(?:it|this object)$/iu.test(holder)
+          ? {
+              kind: "counter-count",
+              subject: { kind: "source" },
+              counter: compileCounterKind(counters[2]),
+              ...sourceCounterBasis,
+            }
+          : {
+              kind: "sum-counters",
+              collection: {
+                zones: ["field"],
+                player: /^objects on the field$/iu.test(holder) ? "each-player" : "controller",
+                filter: { kind: "name", value: holder },
+              },
+              counter: compileCounterKind(counters[2]),
+            };
     return divisor === 1
       ? counted
       : { kind: "calculate", operator: "divide", operands: [counted, divisor], rounding: "down" };
@@ -1192,6 +1214,20 @@ function describedObjectTarget(
     filters.push({ kind: "type", oneOf: ["ALLY", "ITEM", "WEAPON"] });
   else if (/\bitem or weapon\b/iu.test(description))
     filters.push({ kind: "type", oneOf: ["ITEM", "WEAPON"] });
+  else if (/^(?:unit|ally) or Siegeable domain$/iu.test(description))
+    filters.push({
+      kind: "any",
+      filters: [
+        { kind: "type", oneOf: /^unit /iu.test(description) ? ["ALLY", "CHAMPION"] : ["ALLY"] },
+        {
+          kind: "all",
+          filters: [
+            { kind: "type", oneOf: ["DOMAIN"] },
+            { kind: "subtype", oneOf: ["SIEGEABLE"] },
+          ],
+        },
+      ],
+    });
   else if (/\bunit\b/iu.test(description))
     filters.push({ kind: "type", oneOf: ["ALLY", "CHAMPION"] });
   else {
@@ -1239,7 +1275,9 @@ function describedObjectTarget(
   }
   if (/\bnon-champion\b/iu.test(description))
     filters.push({ kind: "not", filter: { kind: "type", oneOf: ["CHAMPION"] } });
-  if (!allyOrRegalia && /\bregalia\b/iu.test(description))
+  if (/\bnon-regalia\b/iu.test(description))
+    filters.push({ kind: "not", filter: { kind: "supertype", oneOf: ["REGALIA"] } });
+  else if (!allyOrRegalia && /\bregalia\b/iu.test(description))
     filters.push({ kind: "supertype", oneOf: ["REGALIA"] });
   if (/\bunique\b/iu.test(description)) filters.push({ kind: "supertype", oneOf: ["UNIQUE"] });
   if (/\bnon-attack\b/iu.test(description))
@@ -1250,6 +1288,8 @@ function describedObjectTarget(
   if (/\bfast speed\b/iu.test(description)) filters.push({ kind: "speed", oneOf: ["fast"] });
   if (/\bthat entered the field this turn$/iu.test(description))
     filters.push({ kind: "entered-field-this-turn" });
+  if (/\bthat leveled up this turn$/iu.test(description))
+    filters.push({ kind: "leveled-up-this-turn" });
   if (/^ally you control with stealth$/iu.test(description))
     filters.push({ kind: "has-keyword", keyword: "stealth" });
   if (/\bwith fast activation\b/iu.test(description))
@@ -1327,7 +1367,7 @@ function describedObjectTarget(
   else if (/\badvanced element\b/iu.test(description))
     filters.push({ kind: "element-category", value: "advanced" });
   const subtype =
-    /^target (?:another )?(?:rested |unloaded )?([A-Z][A-Za-z'-]+) (ally|item|weapon|unit)\b/u.exec(
+    /^target (?:another )?(?:rested |unloaded )?([A-Z][A-Za-z'-]+) (ally|allies|items?|weapons?|units?)\b/u.exec(
       `target ${description}`,
     );
   const pairedSubtype =
@@ -1339,7 +1379,9 @@ function describedObjectTarget(
       description,
     );
   const standaloneSubtype =
-    /^([A-Z][A-Za-z'-]+)(?: you (?:do not|don't|don’t) control| you control)?$/u.exec(description);
+    /^([A-Z][A-Za-z'-]+)(?: you (?:do not|don't|don’t) control| you control)?$/u.exec(
+      description.replace(/^non-regalia /iu, ""),
+    );
   const excludedSubtype = /\bnon-([A-Z][A-Za-z'-]+)\b/u.exec(description);
   const paired = pairedSubtype ?? standalonePairedSubtype;
   if (excludedSubtype)
@@ -1367,8 +1409,8 @@ function describedObjectTarget(
     );
   } else if (standaloneSubtype)
     filters.push({ kind: "subtype", oneOf: [standaloneSubtype[1].toUpperCase()] });
-  const memoryCost = /memory cost (\d+)(?: or less)?/iu.exec(description);
-  const reserveCost = /reserve cost (\d+)(?: or less)?/iu.exec(description);
+  const memoryCost = /memory cost (\d+)(?: or (less|more))?/iu.exec(description);
+  const reserveCost = /reserve cost (\d+)(?: or (less|more))?/iu.exec(description);
   const printedStat = /(\d+)\s*(POWER|LIFE|level)(?: or (less|more))?/iu.exec(description);
   const baseStat = /base (power|life|level) (\d+)(?: or (less|more))?/iu.exec(description);
   const costFilters: GrandArchiveCardFilter[] = [];
@@ -1382,7 +1424,12 @@ function describedObjectTarget(
           property: "memory-cost",
           basis: "base",
         },
-        operator: description.includes("or less") ? "lte" : "eq",
+        operator:
+          memoryCost[2]?.toLowerCase() === "less"
+            ? "lte"
+            : memoryCost[2]?.toLowerCase() === "more"
+              ? "gte"
+              : "eq",
         right: Number(memoryCost[1]),
       },
     });
@@ -1396,7 +1443,12 @@ function describedObjectTarget(
           property: "reserve-cost",
           basis: "base",
         },
-        operator: description.includes("or less") ? "lte" : "eq",
+        operator:
+          reserveCost[2]?.toLowerCase() === "less"
+            ? "lte"
+            : reserveCost[2]?.toLowerCase() === "more"
+              ? "gte"
+              : "eq",
         right: Number(reserveCost[1]),
       },
     });
@@ -1536,9 +1588,9 @@ function resolutionChoice(input: {
 }
 
 function describedCardFilter(raw: string, sourceName?: string): GrandArchiveCardFilter | undefined {
-  const description = raw
+  let description = raw
     .replace(/^(?:a|an) /iu, "")
-    .replace(/^(?:other|another) /u, "")
+    .replace(/^(?:other|another) /iu, "")
     .replace(/ cards?$/u, "")
     .replace(/\ballies\b/giu, "ally")
     .replace(/\bchampions\b/giu, "champion")
@@ -1549,6 +1601,77 @@ function describedCardFilter(raw: string, sourceName?: string): GrandArchiveCard
     .replace(/\bweapons\b/giu, "weapon")
     .trim();
   if (description === "card") return undefined;
+  if (/^phantasia ally$/iu.test(description))
+    return {
+      kind: "all",
+      filters: [
+        { kind: "type", oneOf: ["PHANTASIA"] },
+        { kind: "type", oneOf: ["ALLY"] },
+      ],
+    };
+  const minimumChampionBaseLevel = /^champion cards? with base level (\d+) or higher$/iu.exec(
+    description,
+  );
+  if (minimumChampionBaseLevel) {
+    return {
+      kind: "all",
+      filters: [
+        { kind: "type", oneOf: ["CHAMPION"] },
+        {
+          kind: "numeric",
+          comparison: {
+            left: {
+              kind: "property",
+              subject: { kind: "candidate" },
+              property: "level",
+              basis: "base",
+            },
+            operator: "gte",
+            right: Number(minimumChampionBaseLevel[1]),
+          },
+        },
+      ],
+    };
+  }
+  if (/^Warrior champion$/iu.test(description)) {
+    return {
+      kind: "all",
+      filters: [
+        { kind: "type", oneOf: ["CHAMPION"] },
+        { kind: "class", oneOf: ["WARRIOR"] },
+      ],
+    };
+  }
+  const statParity = /^(.+?) with an? (even|odd) (life|power|level) stat$/iu.exec(description);
+  if (statParity) {
+    const base = describedCardFilter(statParity[1], sourceName);
+    if (!base) return undefined;
+    return {
+      kind: "all",
+      filters: [
+        base,
+        {
+          kind: "parity",
+          property: statParity[3].toLowerCase() as "life" | "power" | "level",
+          value: statParity[2].toLowerCase() as "even" | "odd",
+        },
+      ],
+    };
+  }
+
+  const alternativeTypedObjects =
+    /^([A-Z][A-Za-z-]+ (?:ally|item|weapon|domain|phantasia)) or (?:an? )?([A-Z][A-Za-z-]+ (?:ally|item|weapon|domain|phantasia))$/iu.exec(
+      description,
+    ) ??
+    /^([A-Z][A-Za-z-]+ (?:ally|item|weapon|domain|phantasia)) or (?:an? )?([A-Z][A-Za-z-]+)$/u.exec(
+      description,
+    );
+  if (alternativeTypedObjects) {
+    const left = describedCardFilter(alternativeTypedObjects[1], sourceName);
+    const right = describedCardFilter(alternativeTypedObjects[2], sourceName);
+    if (left && right) return { kind: "any", filters: [left, right] };
+  }
+
   const namedOnly = /^cards? named (.+)$/iu.exec(description);
   if (namedOnly) {
     const names = namedOnly[1].split(/ (?:or|and\/or) /iu).map((name) => name.trim());
@@ -1582,6 +1705,15 @@ function describedCardFilter(raw: string, sourceName?: string): GrandArchiveCard
       filters: [
         { kind: "element", oneOf: ["ARCANE"] },
         { kind: "class", oneOf: ["MAGE"] },
+        { kind: "subtype", oneOf: ["SPELL"] },
+      ],
+    };
+  }
+  if (/^Aenean Spell(?: cards?)?$/iu.test(description)) {
+    return {
+      kind: "all",
+      filters: [
+        { kind: "subtype", oneOf: ["AENEAN"] },
         { kind: "subtype", oneOf: ["SPELL"] },
       ],
     };
@@ -1633,6 +1765,8 @@ function describedCardFilter(raw: string, sourceName?: string): GrandArchiveCard
     const nameFilter = describedCardFilter(`cards named ${named[1]}`);
     if (!nameFilter) return undefined;
     filters.push(nameFilter);
+    // A card name is not a source of type, subtype, element, or state requirements.
+    description = description.slice(0, named.index).trim();
   }
   const pairedElement =
     /\b(norm|water|fire|wind|arcane|astra|crux|exalted|exia|luxem|neos|tera|umbra) or (norm|water|fire|wind|arcane|astra|crux|exalted|exia|luxem|neos|tera|umbra) element\b/iu.exec(
@@ -1670,9 +1804,9 @@ function describedCardFilter(raw: string, sourceName?: string): GrandArchiveCard
       oneOf: [element[1].toUpperCase() as import("@tcg/grand-archive-types").GrandArchiveElement],
     });
   const type = /\b(action|ally|attack|champion|domain|item|phantasia|unit|weapon)\b/iu.exec(
-    description,
+    description.replace(/\bnon-(?:champion|attack)\b/giu, ""),
   );
-  if (type && !(type[1].toLowerCase() === "champion" && /\bnon-champion\b/iu.test(description)))
+  if (type)
     filters.push({
       kind: "type",
       oneOf:
@@ -1682,7 +1816,10 @@ function describedCardFilter(raw: string, sourceName?: string): GrandArchiveCard
     });
   if (/\bboon\b/iu.test(description))
     filters.push({ kind: "type", oneOf: ["GREATER BOON", "LESSER BOON"] });
-  if (/\bregalia\b/iu.test(description)) filters.push({ kind: "supertype", oneOf: ["REGALIA"] });
+  if (/\bnon-regalia\b/iu.test(description))
+    filters.push({ kind: "not", filter: { kind: "supertype", oneOf: ["REGALIA"] } });
+  else if (/\bregalia\b/iu.test(description))
+    filters.push({ kind: "supertype", oneOf: ["REGALIA"] });
   if (/\bunique\b/iu.test(description)) filters.push({ kind: "supertype", oneOf: ["UNIQUE"] });
   if (!/\bnon-token\b/iu.test(description) && /\btokens?\b/iu.test(description))
     filters.push({ kind: "token", value: true });
@@ -1733,10 +1870,12 @@ function describedCardFilter(raw: string, sourceName?: string): GrandArchiveCard
     filters.push({ kind: "element-category", value: "basic" });
   else if (/\badvanced element\b/iu.test(description))
     filters.push({ kind: "element-category", value: "advanced" });
+  if (/with divine relic/iu.test(description))
+    filters.push({ kind: "has-keyword", keyword: "divine-relic" });
   if (/with floating memory/iu.test(description))
     filters.push({ kind: "has-keyword", keyword: "floating-memory" });
-  const memoryCost = /memory cost (\d+)(?: or less)?/iu.exec(description);
-  const reserveCost = /reserve cost (\d+)(?: or less)?/iu.exec(description);
+  const memoryCost = /memory cost (\d+)(?: or (less|more))?/iu.exec(description);
+  const reserveCost = /reserve cost (\d+)(?: or (less|more))?/iu.exec(description);
   if (memoryCost)
     filters.push({
       kind: "numeric",
@@ -1747,7 +1886,12 @@ function describedCardFilter(raw: string, sourceName?: string): GrandArchiveCard
           property: "memory-cost",
           basis: "base",
         },
-        operator: /or less/iu.test(memoryCost[0]) ? "lte" : "eq",
+        operator:
+          memoryCost[2]?.toLowerCase() === "less"
+            ? "lte"
+            : memoryCost[2]?.toLowerCase() === "more"
+              ? "gte"
+              : "eq",
         right: Number(memoryCost[1]),
       },
     });
@@ -1761,14 +1905,20 @@ function describedCardFilter(raw: string, sourceName?: string): GrandArchiveCard
           property: "reserve-cost",
           basis: "base",
         },
-        operator: /or less/iu.test(reserveCost[0]) ? "lte" : "eq",
+        operator:
+          reserveCost[2]?.toLowerCase() === "less"
+            ? "lte"
+            : reserveCost[2]?.toLowerCase() === "more"
+              ? "gte"
+              : "eq",
         right: Number(reserveCost[1]),
       },
     });
   const pairedSubtypes =
-    /\b([A-Z][A-Za-z'-]+) (?:and(?:\/or)?|or) ([A-Z][A-Za-z'-]+) (?:allies|ally|attacks?|cards?|items?|objects?|units?|weapons?)\b/u.exec(
+    /\b([A-Z][A-Za-z'-]+) (?:and(?:\/or)?|or) (?:(?:a|an) )?([A-Z][A-Za-z'-]+) (?:allies|ally|attacks?|cards?|items?|objects?|units?|weapons?)\b/u.exec(
       description,
-    );
+    ) ??
+    /^([A-Z][A-Za-z'-]+) (?:and(?:\/or)?|or) (?:(?:a|an) )?([A-Z][A-Za-z'-]+)$/u.exec(description);
   if (pairedSubtypes)
     filters.push({
       kind: "any",
@@ -1779,13 +1929,29 @@ function describedCardFilter(raw: string, sourceName?: string): GrandArchiveCard
     });
   else {
     const subtype =
-      /(?:^|\s)([A-Z][A-Za-z'-]+) (?:ally|attack|card|domain|item|object|phantasia|regalia|unit|weapon)/u.exec(
+      /(?:^|\s)((?:[A-Z][A-Za-z'-]+ )*[A-Z][A-Za-z'-]+) (?:action|ally|attack|card|domain|item|object|phantasia|regalia|unit|weapon)/u.exec(
         description,
       ) ??
       /^([A-Z][A-Za-z'-]+)$/u.exec(description) ??
-      /\b([A-Z][A-Za-z'-]+)$/u.exec(description);
-    if (subtype && (!type || subtype[1].toLowerCase() !== type[1].toLowerCase()))
-      filters.push({ kind: "subtype", oneOf: [subtype[1].toUpperCase()] });
+      /\b((?:[A-Z][A-Za-z'-]+ )*[A-Z][A-Za-z'-]+)$/u.exec(description);
+    if (
+      subtype &&
+      !/^tokens?$/iu.test(subtype[1]) &&
+      (!type || subtype[1].toLowerCase() !== type[1].toLowerCase())
+    )
+      for (const name of subtype[1]
+        .split(" ")
+        .filter((value) => !/^(?:other|another)$/iu.test(value))) {
+        const actionClass =
+          type?.[1].toLowerCase() === "action"
+            ? GRAND_ARCHIVE_CLASSES.find((candidate) => candidate === name.toUpperCase())
+            : undefined;
+        filters.push(
+          actionClass
+            ? { kind: "class", oneOf: [actionClass] }
+            : { kind: "subtype", oneOf: [name.toUpperCase()] },
+        );
+      }
   }
   if (filters.length === 0) return undefined;
   return filters.length === 1 ? filters[0] : { kind: "all", filters };
@@ -2233,7 +2399,7 @@ function compileSelectionAction(text: string): CompiledInstruction | null {
   const faceDown = / face down$/iu.test(text);
   const normalizedText = text.replace(/ face down$/iu, "");
   const selected =
-    /^(Discard|Banish|Reveal) (a|an|one|two|three|four|five|six|seven|eight|nine|ten|X|LV|any amount of|up to one|up to two|up to three|up to four|up to five|up to six|up to seven|up to eight|up to nine|up to ten|up to X|up to LV) (.+?)( at random)?(?: from your (hand or memory|memory or hand|hand|memory|graveyard|material deck))?( at random)?$/iu.exec(
+    /^(Discard|Banish|Reveal) (a|an|one|two|three|four|five|six|seven|eight|nine|ten|X|LV|any amount of|up to one|up to two|up to three|up to four|up to five|up to six|up to seven|up to eight|up to nine|up to ten|up to X|up to LV) (.+?)( at random)?(?: from your (hand (?:or|and(?:\/or)?) memory|memory (?:or|and(?:\/or)?) hand|hand|memory|graveyard|material deck))?( at random)?$/iu.exec(
       normalizedText,
     );
   if (!selected || (selected[4] && selected[6])) return null;
@@ -2246,7 +2412,10 @@ function compileSelectionAction(text: string): CompiledInstruction | null {
       : rawCount.startsWith("up to ")
         ? { kind: "up-to", amount: numeric ?? 0 }
         : { kind: "exactly", amount: numeric ?? 1 };
-  const combinedZones = /^(?:hand or memory|memory or hand)$/iu.test(selected[5] ?? "");
+  const combinedZones =
+    /^(?:hand (?:or|and(?:\/or)?) memory|memory (?:or|and(?:\/or)?) hand)$/iu.test(
+      selected[5] ?? "",
+    );
   const zone = combinedZones
     ? "hand"
     : selected[5]
@@ -2366,7 +2535,13 @@ function compileCondition(raw: string, sourceName?: string): GrandArchiveConditi
       };
   }
   if (/^you activated this card during your main phase$/iu.test(text))
-    return { kind: "source-activation-context", phase: "main" };
+    return {
+      kind: "all",
+      conditions: [
+        { kind: "source-activation-context", phase: "main" },
+        { kind: "turn-player", player: "controller" },
+      ],
+    };
   const activatedFromZone =
     /^(.+?) was activated from your (hand|memory|graveyard|banishment|material deck)$/iu.exec(text);
   if (activatedFromZone && refersToSource(activatedFromZone[1], sourceName))
@@ -3039,6 +3214,7 @@ function compileCondition(raw: string, sourceName?: string): GrandArchiveConditi
     if (filter)
       return {
         kind: "subject-matches",
+        basis: "last-known",
         subject: { kind: "bound", binding: "sacrificed-object" },
         filter,
       };
@@ -4125,7 +4301,17 @@ function compileCondition(raw: string, sourceName?: string): GrandArchiveConditi
   if (controlsAtLeast) {
     const count = amount(controlsAtLeast[2]);
     const filter = describedCardFilter(controlsAtLeast[3].replace(/ies$/u, "y").replace(/s$/u, ""));
-    if (count !== null && filter)
+    if (count !== null && filter) {
+      if (controlsAtLeast[1].toLowerCase() === "an opponent")
+        return {
+          kind: "player-zone-count",
+          players: "each-opponent",
+          quantifier: "any",
+          zone: "field",
+          filter,
+          operator: "gte",
+          value: count,
+        };
       return {
         kind: "compare",
         comparison: {
@@ -4133,7 +4319,7 @@ function compileCondition(raw: string, sourceName?: string): GrandArchiveConditi
             kind: "count",
             collection: {
               zones: ["field"],
-              player: controlsAtLeast[1].toLowerCase() === "you" ? "controller" : "each-opponent",
+              player: "controller",
               filter,
             },
           },
@@ -4141,6 +4327,7 @@ function compileCondition(raw: string, sourceName?: string): GrandArchiveConditi
           right: count,
         },
       };
+    }
   }
   const doesNotControl =
     /^(?:you (?:do not|don['’]t) control (?:an?|another)|you control no) (.+)$/iu.exec(text);
@@ -4216,6 +4403,7 @@ function compileCondition(raw: string, sourceName?: string): GrandArchiveConditi
         collection: {
           zones: ["field"],
           player: "controller",
+          ...(/^you control another /iu.test(text) ? { excludingSource: true as const } : {}),
           ...(filter ? { filter } : {}),
         },
       };
@@ -4422,6 +4610,13 @@ function compileEventClause(raw: string, sourceName: string): GrandArchiveEventP
       state: "shifting-currents",
       from: shiftingCurrents[1],
       to: shiftingCurrents[2],
+    };
+  if (/^you activate a cardistry ability of an ally$/iu.test(clause))
+    return {
+      name: "ability-activated",
+      actor: "controller",
+      abilityLabel: "Cardistry",
+      subject: { kind: "event-object", filter: { kind: "type", oneOf: ["ALLY"] } },
     };
   const activated =
     /^(you|an opponent) activates? (?:a|an) (.+?)(?: card)?(?: from (?:your|their) (hand|memory))?(?: for the (first|second|third) time each turn)?$/iu.exec(
@@ -5078,8 +5273,8 @@ function compileEventClause(raw: string, sourceName: string): GrandArchiveEventP
                     : controlledSourceDealsDamage[4].toLowerCase() === "second"
                       ? 2
                       : 3,
-                window: "this-turn",
-                actorScope: "same-player",
+                window: "game",
+                subjectScope: "same-object",
               },
             }
           : {}),
@@ -5158,6 +5353,106 @@ export function compileInstruction(
     .replace(/\s+\(As you materialize,[^]*\)$/u, "")
     .replace(/\s+\(This effect lasts indefinitely\.\)$/u, "")
     .replace(/[.]$/u, "");
+
+  const eventChampionsDamageAndRecover =
+    /^Deal (\d+) damage to each champion that (?:opponent|player) controls and you recover (\d+)$/iu.exec(
+      text,
+    );
+  if (eventChampionsDamageAndRecover) {
+    return {
+      effect: sequence([
+        {
+          kind: "deal-damage",
+          source: { kind: "source" },
+          recipient: {
+            kind: "each",
+            collection: {
+              zones: ["field"],
+              player: "event-actor",
+              filter: { kind: "type", oneOf: ["CHAMPION"] },
+            },
+          },
+          amount: Number(eventChampionsDamageAndRecover[1]),
+        },
+        {
+          kind: "recover",
+          player: "controller",
+          amount: Number(eventChampionsDamageAndRecover[2]),
+        },
+      ]),
+    };
+  }
+
+  const sourceOrSubtypeAllyBuff =
+    /^Put a buff counter on (.+?) or a (.+?) ally you control$/iu.exec(text);
+  if (sourceOrSubtypeAllyBuff && refersToSource(sourceOrSubtypeAllyBuff[1], sourceName)) {
+    const subtypeFilter = describedCardFilter(`${sourceOrSubtypeAllyBuff[2]} ally`);
+    if (subtypeFilter) {
+      const selection = resolutionChoice({
+        id: "buff-recipient",
+        count: { kind: "exactly", amount: 1 },
+        zone: "field",
+        relationship: "controlled-by",
+        filter: {
+          kind: "any",
+          filters: [{ kind: "not", filter: { kind: "not-source" } }, subtypeFilter],
+        },
+      });
+      return {
+        effect: {
+          kind: "choose",
+          selection,
+          effect: {
+            kind: "add-counter",
+            subject: { kind: "bound", binding: selection.id },
+            counter: "buff",
+            amount: 1,
+          },
+        },
+      };
+    }
+  }
+
+  const linkedDurabilityThenStatic =
+    /^Put a durability counter on linked weapon\. Then if that weapon has one or more static counters on it, put two static counters on (.+)$/iu.exec(
+      text,
+    );
+  if (linkedDurabilityThenStatic && refersToSource(linkedDurabilityThenStatic[1], sourceName)) {
+    return {
+      effect: {
+        kind: "sequence",
+        effects: [
+          {
+            kind: "add-counter",
+            subject: { kind: "linked-object" },
+            counter: "durability",
+            amount: 1,
+          },
+          {
+            kind: "conditional",
+            condition: {
+              kind: "compare",
+              comparison: {
+                left: {
+                  kind: "counter-count",
+                  subject: { kind: "linked-object" },
+                  counter: "static",
+                },
+                operator: "gte",
+                right: 1,
+              },
+            },
+            then: {
+              kind: "add-counter",
+              subject: { kind: "source" },
+              counter: "static",
+              amount: 2,
+            },
+          },
+        ],
+      },
+    };
+  }
 
   const addThenGlimpse =
     /^Put (?:a|one) ([a-z-]+) counter on (.+?)\. Then glimpse X, where X is the amount of \1 counters on \2$/iu.exec(
@@ -8641,14 +8936,16 @@ export function compileInstruction(
           },
         },
       };
-      const effects = keywords.map((keyword): GrandArchiveContinuousEffect => ({
-        kind: "continuous",
-        subjects,
-        affectedSet: "locked",
-        duration: { kind: "this-turn" },
-        layer: { layer: "D", modifies: "ability" },
-        change: { kind: "grant-keyword", keyword },
-      }));
+      const effects = keywords.map(
+        (keyword): GrandArchiveContinuousEffect => ({
+          kind: "continuous",
+          subjects,
+          affectedSet: "locked",
+          duration: { kind: "this-turn" },
+          layer: { layer: "D", modifies: "ability" },
+          change: { kind: "grant-keyword", keyword },
+        }),
+      );
       const [first, ...rest] = effects;
       if (first) return { effect: sequence([first, ...rest]) };
     }
@@ -12180,7 +12477,7 @@ export function compileInstruction(
   }
 
   const optionalRevealToDeckBottom =
-    /^You may reveal up to (one|two|three|four|five|six|seven|eight|nine|ten|\d+) (.+?) cards? from your (hand|memory) and put them on the bottom of your deck in any order$/iu.exec(
+    /^You may reveal up to (one|two|three|four|five|six|seven|eight|nine|ten|\d+) (.+?) cards? from your (hand|memory) and put them on the bottom of your deck in any order(\. Then draw that many cards(?: into your memory)?)?$/iu.exec(
       text,
     );
   if (optionalRevealToDeckBottom) {
@@ -12207,7 +12504,20 @@ export function compileInstruction(
                 zone: "main-deck",
                 placement: { kind: "bottom", orderChosenBy: "controller" },
               },
+              ...(optionalRevealToDeckBottom[4] ? { bindResultAs: "returned-cards" } : {}),
             },
+            ...(optionalRevealToDeckBottom[4]
+              ? [
+                  {
+                    kind: "draw" as const,
+                    player: "controller" as const,
+                    amount: { kind: "binding-count" as const, binding: "returned-cards" },
+                    ...(optionalRevealToDeckBottom[4].toLowerCase().includes("memory")
+                      ? { to: "memory" as const }
+                      : {}),
+                  },
+                ]
+              : []),
           ]),
         },
       };
@@ -13406,31 +13716,48 @@ export function compileInstruction(
       text,
     )
   ) {
-    const declaration = describedObjectTarget("target-1", "up to one target another unit");
-    if (declaration)
-      return {
-        targets: [declaration],
-        effect: {
-          kind: "replacement",
-          event: {
-            name: "damage-dealt",
-            recipient: {
-              kind: "any-of",
-              subjects: [
-                {
-                  kind: "event-object",
-                  controller: "controller",
-                  filter: { kind: "type", oneOf: ["CHAMPION"] },
-                },
-                { kind: "bound-object", binding: declaration.id },
-              ],
-            },
-          },
-          operation: { kind: "prevent" },
-          capacity: { amount: 4, scope: "replacement-instance" },
-          duration: { kind: "this-turn" },
+    const declaration: GrandArchiveTargetDeclaration = {
+      id: "target-1",
+      kind: "target",
+      declared: "announcement",
+      chooser: "controller",
+      count: { kind: "up-to", amount: 1 },
+      unique: true,
+      candidates: {
+        kind: "object",
+        zones: ["field"],
+        filter: {
+          kind: "all",
+          filters: [
+            { kind: "type", oneOf: ["ALLY", "CHAMPION"] },
+            { kind: "not-subject", subject: { kind: "champion", player: "controller" } },
+          ],
         },
-      };
+      },
+    };
+    return {
+      targets: [declaration],
+      effect: {
+        kind: "replacement",
+        event: {
+          name: "damage-dealt",
+          recipient: {
+            kind: "any-of",
+            subjects: [
+              {
+                kind: "event-object",
+                controller: "controller",
+                filter: { kind: "type", oneOf: ["CHAMPION"] },
+              },
+              { kind: "bound-object", binding: declaration.id },
+            ],
+          },
+        },
+        operation: { kind: "prevent" },
+        capacity: { amount: 4, scope: "per-object" },
+        duration: { kind: "this-turn" },
+      },
+    };
   }
 
   const preventionRetaliation =
@@ -13482,14 +13809,7 @@ export function compileInstruction(
         capacity: { amount: 2, scope: "per-object" },
         afterApply: {
           kind: "add-counter",
-          subject: {
-            kind: "each",
-            collection: {
-              zones: ["field"],
-              player: "controller",
-              filter: { kind: "name", value: "Fractured Memories" },
-            },
-          },
+          subject: { kind: "mastery", player: "controller", name: "Fractured Memories" },
           counter: { named: "sheen" },
           amount: 2,
         },
@@ -13514,6 +13834,39 @@ export function compileInstruction(
           effect: { ...replacement.effect, afterApply: followUp.effect },
         };
     }
+  }
+
+  const gainMasteryCounters =
+    /^You gain the (.+) mastery\. Then put (a|an|two|three|four|five|\d+) ([a-z-]+) counters? on it$/iu.exec(
+      text,
+    );
+  if (gainMasteryCounters) {
+    const count = amount(gainMasteryCounters[2]);
+    if (count !== null)
+      return {
+        effect: sequence([
+          { kind: "gain-mastery", player: "controller", mastery: gainMasteryCounters[1] },
+          {
+            kind: "add-counter",
+            subject: { kind: "mastery", player: "controller", name: gainMasteryCounters[1] },
+            counter: { named: gainMasteryCounters[3] },
+            amount: count,
+          },
+        ]),
+      };
+  }
+
+  const countersAndRecovery = /^(Put .+? counters? on .+?) and recover (\d+)$/iu.exec(text);
+  if (countersAndRecovery) {
+    const counters = compileInstruction(countersAndRecovery[1], sourceName, pronounContext);
+    if (counters)
+      return {
+        ...counters,
+        effect: sequence([
+          counters.effect,
+          { kind: "recover", player: "controller", amount: Number(countersAndRecovery[2]) },
+        ]),
+      };
   }
 
   const explicitThenSequence = text.split(/\. Then /u);
@@ -14523,14 +14876,16 @@ export function compileInstruction(
             amount: Math.abs(modifier),
           },
         },
-        ...keywords.map((keyword): GrandArchiveEffect => ({
-          kind: "continuous",
-          subjects: { kind: "event-subject" },
-          affectedSet: "locked",
-          duration: { kind: "this-turn" },
-          layer: { layer: "D", modifies: "ability" },
-          change: { kind: "grant-keyword", keyword },
-        })),
+        ...keywords.map(
+          (keyword): GrandArchiveEffect => ({
+            kind: "continuous",
+            subjects: { kind: "event-subject" },
+            affectedSet: "locked",
+            duration: { kind: "this-turn" },
+            layer: { layer: "D", modifies: "ability" },
+            change: { kind: "grant-keyword", keyword },
+          }),
+        ),
       ];
       return { effect: sequence(effects) };
     }
@@ -14841,13 +15196,14 @@ export function compileInstruction(
   if (splitDamage) {
     const total = rulesAmount(splitDamage[1]);
     if (total !== null) {
-      const selection: GrandArchiveResolutionChoice = {
-        id: "damage-recipients",
-        kind: "choice",
-        declared: "resolution",
+      const target: GrandArchiveTargetDeclaration = {
+        id: "damage-targets",
+        kind: "target",
+        declared: "announcement",
         chooser: "controller",
         count: { kind: "any-number" },
         unique: true,
+        distributedAmount: total,
         candidates: {
           kind: "object",
           zones: ["field"],
@@ -14858,10 +15214,18 @@ export function compileInstruction(
         },
       };
       return {
+        targets: [target],
         effect: {
           kind: "distribute",
           amount: total,
-          among: selection,
+          among: {
+            id: "damage-recipients",
+            kind: "choice",
+            declared: "resolution",
+            chooser: "controller",
+            count: { kind: "all" },
+            candidates: { kind: "object", binding: target.id },
+          },
           payload: {
             kind: "damage",
             source: { kind: "source" },
@@ -16440,7 +16804,11 @@ export function compileInstruction(
       });
     }
     if (modes.length >= 2) {
-      const [first, second, ...rest] = modes;
+      // A single selected mode cannot collide with another mode's targets.
+      // Preserve its existing announcement keys, including tracked one-at-a-time modes.
+      const scopedModes = modal[1] === "one" && !modal[3] ? modes : scopeModeTargets(modes);
+      if (!scopedModes) return null;
+      const [first, second, ...rest] = scopedModes;
       let choose: import("@tcg/grand-archive-types").GrandArchiveSelectionCount =
         modal[1] === "two"
           ? { kind: "exactly", amount: 2 }
@@ -16971,7 +17339,7 @@ export function compileInstruction(
   }
 
   const topRevealToHand =
-    /^Look at the top ([0-9XYZLV+ -]+|one|two|three|four|five|six|seven|eight|nine|ten) cards? of your deck\. (You may )?reveal (?:a|an) (.+?) card from among them and put it into your (hand|memory)\. Put the rest on the bottom of your deck in any order$/iu.exec(
+    /^Look at the top ([0-9XYZLV+ -]+|one|two|three|four|five|six|seven|eight|nine|ten) cards? of your deck\. (You may )?reveal (?:a|an) (.+?) card from among them and put it into your (hand|memory)\. Put the rest(?: of the cards)? on the bottom of your deck in any order$/iu.exec(
       text,
     );
   if (topRevealToHand) {
@@ -19662,6 +20030,21 @@ export function compileInstruction(
           amount: 1,
         },
       };
+    const eachWithCounter = /^each (.+?) with (?:a|an) ([a-z-]+) counter on it$/iu.exec(
+      counterSubject,
+    );
+    if (eachWithCounter) {
+      const filter = describedCardFilter(counterSubject.slice(5));
+      if (filter)
+        return {
+          effect: {
+            kind: "add-counter",
+            subject: { kind: "each", collection: { zones: ["field"], filter } },
+            counter,
+            amount: 1,
+          },
+        };
+    }
     const eachYouControl = /^each (.+?) you control$/iu.exec(counterSubject);
     if (eachYouControl) {
       const filter = describedCardFilter(
@@ -19737,14 +20120,16 @@ export function compileInstruction(
       return {
         effect: {
           kind: "add-counter",
-          subject: {
-            kind: "each",
-            collection: {
-              zones: ["field"],
-              player: "controller",
-              filter: { kind: "name", value: ownedNamed[1] },
-            },
-          },
+          subject: /^(?:Fractured Memories|Phantasmagoria)$/iu.test(ownedNamed[1])
+            ? { kind: "mastery", player: "controller", name: ownedNamed[1] }
+            : {
+                kind: "each",
+                collection: {
+                  zones: ["field"],
+                  player: "controller",
+                  filter: { kind: "name", value: ownedNamed[1] },
+                },
+              },
           counter,
           amount: 1,
         },
@@ -19926,14 +20311,16 @@ export function compileInstruction(
         return {
           effect: {
             kind: "add-counter",
-            subject: {
-              kind: "each",
-              collection: {
-                zones: ["field"],
-                player: "controller",
-                filter: { kind: "name", value: ownedNamed[1] },
-              },
-            },
+            subject: /^(?:Fractured Memories|Phantasmagoria)$/iu.test(ownedNamed[1])
+              ? { kind: "mastery", player: "controller", name: ownedNamed[1] }
+              : {
+                  kind: "each",
+                  collection: {
+                    zones: ["field"],
+                    player: "controller",
+                    filter: { kind: "name", value: ownedNamed[1] },
+                  },
+                },
             counter: { named: putCounters[2] },
             amount: count,
           },
@@ -19941,6 +20328,25 @@ export function compileInstruction(
       const binding = "target-1";
       const declaration = describedObjectTarget(binding, counterSubject);
       if (!declaration) return null;
+      if (/^(?:a|an|one) /iu.test(counterSubject)) {
+        const selection: GrandArchiveResolutionChoice = {
+          ...declaration,
+          kind: "choice",
+          declared: "resolution",
+        };
+        return {
+          effect: {
+            kind: "choose",
+            selection,
+            effect: {
+              kind: "add-counter",
+              subject: { kind: "bound", binding },
+              counter: { named: putCounters[2] },
+              amount: count,
+            },
+          },
+        };
+      }
       return {
         targets: [declaration],
         effect: {
@@ -20219,7 +20625,7 @@ export function compileInstruction(
   }
 
   const summonConfigured =
-    /^Summon (a|an|one|two|three|four|five|\d+) (.+?) tokens?( rested)?(?: each)? with (?:a|an|one) ([a-z-]+) counter on (?:it|them)$/iu.exec(
+    /^Summon (a|an|one|two|three|four|five|\d+) (?:additional )?(.+?) tokens?( rested)?(?: each)? with (?:a|an|one) ([a-z-]+) counter on (?:it|them)$/iu.exec(
       text,
     );
   if (summonConfigured) {
@@ -20236,6 +20642,17 @@ export function compileInstruction(
           entersWithCounters: [{ counter: { named: summonConfigured[4] }, amount: 1 }],
         },
       };
+  }
+  const summonList = /^Summon (?:a|an) (.+? and (?:a|an) .+?) token$/iu.exec(text);
+  if (summonList) {
+    const names = summonList[1]
+      .split(/,? and |, /iu)
+      .map((name) => name.replace(/^(?:a|an) /iu, ""));
+    return {
+      effect: sequence(
+        names.map((object) => ({ kind: "summon", object, controller: "controller" })),
+      ),
+    };
   }
   const summon = /^Summon (?:a|an|one|another) (.+?) token( rested)?$/iu.exec(text);
   if (summon)
@@ -20436,17 +20853,21 @@ export function compileInstruction(
       text,
     );
   if (nextFastActivation) {
-    const filter = describedCardFilter(`${nextFastActivation[1]} card`);
     const requiredClass = GRAND_ARCHIVE_CLASSES.find((candidate) =>
       new RegExp(`\\b${candidate}\\b`, "iu").test(nextFastActivation[1]),
     );
-    if (filter) {
-      const fastActivationFilter: GrandArchiveCardFilter = requiredClass
-        ? {
-            kind: "all",
-            filters: [filter, { kind: "class", oneOf: [requiredClass] }],
-          }
-        : filter;
+    const description = requiredClass
+      ? nextFastActivation[1].replace(new RegExp(`\\b${requiredClass}\\b`, "iu"), "").trim()
+      : nextFastActivation[1];
+    const filter = describedCardFilter(`${description} card`);
+    const classFilter: GrandArchiveCardFilter | undefined = requiredClass
+      ? { kind: "class", oneOf: [requiredClass] }
+      : undefined;
+    const fastActivationFilter: GrandArchiveCardFilter | undefined =
+      filter && classFilter
+        ? { kind: "all", filters: [filter, classFilter] }
+        : (filter ?? classFilter);
+    if (fastActivationFilter) {
       return {
         effect: {
           kind: "rule-modification",
@@ -20643,6 +21064,35 @@ export function compileInstruction(
       },
     };
 
+  const targetDistantAndKeywords =
+    /^Target (.+?) becomes distant and gains? (.+?) until end of turn$/iu.exec(text);
+  if (targetDistantAndKeywords) {
+    const binding = "target-1";
+    const declaration = describedObjectTarget(binding, targetDistantAndKeywords[1]);
+    const keywords = grantedKeywords(targetDistantAndKeywords[2]);
+    if (declaration && keywords)
+      return {
+        targets: [declaration],
+        effect: sequence([
+          {
+            kind: "set-object-state",
+            subject: { kind: "bound", binding },
+            state: "distant",
+            value: true,
+          },
+          ...keywords.map(
+            (keyword): GrandArchiveEffect => ({
+              kind: "continuous",
+              subjects: { kind: "bound", binding },
+              affectedSet: "locked",
+              duration: { kind: "this-turn" },
+              layer: { layer: "D", modifies: "ability" },
+              change: { kind: "grant-keyword", keyword },
+            }),
+          ),
+        ]),
+      };
+  }
   const targetGetsThenDistant =
     /^(?:Another )?target (.+?) gets ([+-]\d+)\s*(POWER|LIFE|level) until end of turn and becomes distant$/iu.exec(
       text,
@@ -21006,7 +21456,7 @@ export function compileInstruction(
         action: "activate",
         subject: { kind: "player", player: "controller" },
         activationKind: "ability",
-        abilityFilter: { keyword: "cardistry" },
+        abilityFilter: { label: "Cardistry" },
         costKind: "reserve",
         costOperation: "subtract",
         amount: 6,
@@ -21117,7 +21567,7 @@ export function compileInstruction(
       "chosen-controlled-object",
       `${restControlledObject[2]}${restControlledObject[3] ?? ""}`,
     );
-    if (described?.candidates.kind === "object") {
+    if (described?.candidates.kind === "object" && !("binding" in described.candidates)) {
       const selection: GrandArchiveResolutionChoice = {
         id: "chosen-controlled-object",
         kind: "choice",
@@ -21271,7 +21721,10 @@ export function compileInstruction(
     );
   if (targetModifier && !/(?:'s|’s).*\battack/iu.test(targetModifier[1])) {
     const binding = "target-1";
-    const declaration = describedObjectTarget(binding, targetModifier[1]);
+    const declaration = describedObjectTarget(
+      binding,
+      `${/^Another /iu.test(text) ? "another " : ""}${targetModifier[1]}`,
+    );
     if (!declaration) return null;
     const modifier = Number(targetModifier[2]);
     return {
@@ -21965,6 +22418,23 @@ export function compileInstruction(
     const binding = "target-1";
     const declaration = describedObjectTarget(binding, `target ${objectType}`);
     const modifier = rulesAmount(rawModifier.slice(1));
+    if (declaration && modifier !== null && !targetAttackModifier?.[2] && !targetNextAttackModifier)
+      return {
+        targets: [declaration],
+        effect: {
+          kind: "continuous",
+          subjects: { kind: "attacks-by", attacker: { kind: "bound", binding } },
+          affectedSet: "dynamic",
+          duration: { kind: "this-turn" },
+          layer: { layer: "E", modifies: "stat", sublayer: "modifier" },
+          change: {
+            kind: "numeric",
+            property: stat.toUpperCase() === "POWER" ? "power" : "life",
+            operation: rawModifier.startsWith("-") ? "subtract" : "add",
+            amount: modifier,
+          },
+        },
+      };
     if (declaration && modifier !== null)
       return {
         targets: [declaration],
@@ -22739,14 +23209,16 @@ export function compileInstruction(
     const keywords = grantedKeywords(targetKeywordsAndStat[2]);
     const modifier = Number(targetKeywordsAndStat[3]);
     if (declaration && keywords?.length) {
-      const keywordEffects = keywords.map((keyword): GrandArchiveContinuousEffect => ({
-        kind: "continuous",
-        subjects: { kind: "bound", binding },
-        affectedSet: "locked",
-        duration: { kind: "this-turn" },
-        layer: { layer: "D", modifies: "ability" },
-        change: { kind: "grant-keyword", keyword },
-      }));
+      const keywordEffects = keywords.map(
+        (keyword): GrandArchiveContinuousEffect => ({
+          kind: "continuous",
+          subjects: { kind: "bound", binding },
+          affectedSet: "locked",
+          duration: { kind: "this-turn" },
+          layer: { layer: "D", modifies: "ability" },
+          change: { kind: "grant-keyword", keyword },
+        }),
+      );
       return {
         targets: [declaration],
         effect: sequence([
@@ -23825,6 +24297,46 @@ export function compileInstruction(
       return { ...instruction, effect: { kind: "repeat", count: 2, effect: instruction.effect } };
   }
 
+  const namedCopyDamage =
+    /^Deal (\d+) damage to target (unit|ally|champion) plus an additional (\d+) for each card named (.+?) in your graveyard and banishment$/iu.exec(
+      text,
+    );
+  if (namedCopyDamage) {
+    const binding = "target-1";
+    const declaration = describedObjectTarget(binding, namedCopyDamage[2]);
+    if (declaration)
+      return {
+        targets: [declaration],
+        effect: {
+          kind: "deal-damage",
+          source: { kind: "source" },
+          recipient: { kind: "bound", binding },
+          amount: {
+            kind: "calculate",
+            operator: "add",
+            operands: [
+              Number(namedCopyDamage[1]),
+              {
+                kind: "calculate",
+                operator: "multiply",
+                operands: [
+                  Number(namedCopyDamage[3]),
+                  {
+                    kind: "count",
+                    collection: {
+                      zones: ["graveyard", "banishment"],
+                      player: "controller",
+                      filter: { kind: "name", value: namedCopyDamage[4], match: "exact" },
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      };
+  }
+
   const describedDamage = /^Deal ([0-9XYZLVD+ -]+) (unpreventable )?damage to target (.+)$/iu.exec(
     text,
   );
@@ -24734,6 +25246,14 @@ export function compileInstruction(
   return null;
 }
 
+function costRequiresDiscardSelf(cost: GrandArchiveAbilityCost): boolean {
+  if (cost.kind === "discard-self") return true;
+  if (cost.kind === "all") return cost.costs.some(costRequiresDiscardSelf);
+  if (cost.kind === "one-of")
+    return cost.costs.length > 0 && cost.costs.every(costRequiresDiscardSelf);
+  return false;
+}
+
 function costIncludesBanishSelf(cost: GrandArchiveAbilityCost): boolean {
   if (cost.kind === "banish-self") return true;
   if (cost.kind === "all" || cost.kind === "one-of") return cost.costs.some(costIncludesBanishSelf);
@@ -24824,6 +25344,19 @@ function compileCost(raw: string, sourceName: string): GrandArchiveAbilityCost |
       );
       continue;
     }
+    const sacrificeAny = /^Sacrifice any amount of (.+)$/iu.exec(part);
+    if (sacrificeAny) {
+      const filter = describedCardFilter(sacrificeAny[1].replace(/ies$/u, "y").replace(/s$/u, ""));
+      if (!filter) return null;
+      costs.push({
+        kind: "select-and-sacrifice",
+        player: "controller",
+        count: { kind: "any-number" },
+        bindResultAs: "sacrificed-objects",
+        filter,
+      });
+      continue;
+    }
     const sacrifice =
       /^Sacrifice (?!up to\b)(?:(a|an|one|two|three|four|five|X|Y|Z|\d+) )?(.+)$/iu.exec(part);
     if (sacrifice) {
@@ -24900,12 +25433,25 @@ function compileCost(raw: string, sourceName: string): GrandArchiveAbilityCost |
       const numeric =
         rawCount === "one or more" ? 1 : amount(removeSelectedCounters[2] ?? rawCount);
       if (numeric !== null) {
+        const objectFilters: GrandArchiveCardFilter[] = [];
+        const described = describedCardFilter(removeSelectedCounters[4]);
+        if (described) objectFilters.push(described);
+        if (/\bon the field\b/iu.test(removeSelectedCounters[4]))
+          objectFilters.push({ kind: "zone", oneOf: ["field"] });
         costs.push({
           kind: "select-and-remove-counters",
-          player: "each-player",
+          ...(/counters? from (?:an?|one) /iu.test(part) ? { singleObject: true as const } : {}),
+          player: /you don['’]t control$/iu.test(removeSelectedCounters[4])
+            ? "each-opponent"
+            : /you control$/iu.test(removeSelectedCounters[4])
+              ? "controller"
+              : "each-player",
+          bindResultAs: `removed-${removeSelectedCounters[3].toLowerCase()}-counters`,
           ...(refersToSource(removeSelectedCounters[4], sourceName)
             ? { subject: { kind: "source" as const } }
-            : { objectFilter: describedCardFilter(removeSelectedCounters[4]) }),
+            : objectFilters.length
+              ? { objectFilter: { kind: "all" as const, filters: objectFilters } }
+              : {}),
           counter: { named: removeSelectedCounters[3] },
           count:
             rawCount === "one or more"
@@ -25012,6 +25558,7 @@ function compileCost(raw: string, sourceName: string): GrandArchiveAbilityCost |
         from: "inner-lineage",
         to: "graveyard",
         count: { kind: "exactly", amount: 1 },
+        bindResultAs: "discarded-card",
         filter: describedCardFilter(`${discardLineage[1]} card`),
       });
       continue;
@@ -25275,6 +25822,62 @@ function compileParagraph(
     effect,
   });
 
+  const entryOpponentAllySurplus =
+    /^On Enter: (.+?) gets \+X POWER until end of turn where X is the amount of allies target opponent controls more than you control\.$/u.exec(
+      body,
+    );
+  if (entryOpponentAllySurplus && refersToSource(entryOpponentAllySurplus[1], sourceName)) {
+    const binding = "target-opponent";
+    const surplus: GrandArchiveAmount = {
+      kind: "calculate",
+      operator: "maximum",
+      operands: [
+        0,
+        {
+          kind: "calculate",
+          operator: "subtract",
+          operands: [
+            {
+              kind: "count",
+              collection: {
+                zones: ["field"],
+                player: { binding },
+                filter: { kind: "type", oneOf: ["ALLY"] },
+              },
+            },
+            {
+              kind: "count",
+              collection: {
+                zones: ["field"],
+                player: "controller",
+                filter: { kind: "type", oneOf: ["ALLY"] },
+              },
+            },
+          ],
+        },
+      ],
+    };
+    return onEnter(
+      {
+        kind: "continuous",
+        subjects: { kind: "source" },
+        affectedSet: "locked",
+        duration: { kind: "this-turn" },
+        layer: { layer: "E", modifies: "stat", sublayer: "modifier" },
+        change: {
+          kind: "numeric",
+          property: "power",
+          operation: "add",
+          amount: { kind: "variable", symbol: "X" },
+        },
+      },
+      {
+        targets: [playerTarget(binding, "opponent")],
+        variables: [{ symbol: "X", kind: "derived", amount: surplus }],
+      },
+    );
+  }
+
   const activatedAbility = (
     cost: GrandArchiveAbilityCost,
     effect: GrandArchiveEffect,
@@ -25325,6 +25928,101 @@ function compileParagraph(
     ...(restrictions.length ? { restrictions } : {}),
     effect,
   });
+
+  if (
+    body ===
+    "As an additional cost to activate this card, sacrifice up to two awake Chessman allies."
+  )
+    return {
+      id,
+      kind: "static",
+      staticKind: "effects",
+      text: printedText,
+      effects: [
+        {
+          kind: "rule-modification",
+          mode: "add-cost",
+          action: "activate",
+          subject: { kind: "source" },
+          cost: {
+            kind: "select-and-sacrifice",
+            player: "controller",
+            count: { kind: "up-to", amount: 2 },
+            bindResultAs: "sacrificed-objects",
+            filter: {
+              kind: "all",
+              filters: [
+                { kind: "type", oneOf: ["ALLY"] },
+                { kind: "subtype", oneOf: ["CHESSMAN"] },
+                { kind: "object-state", state: "awake" },
+              ],
+            },
+          },
+          duration: { kind: "while-source-in-functional-zone" },
+        },
+      ],
+    };
+
+  if (
+    body === "Sacrifice Play enters the intent with +2POWER for each ally sacrificed this way." ||
+    body === "Sacrifice Play enters the intent with +2 POWER for each ally sacrificed this way."
+  )
+    return cardResolution({
+      kind: "replacement",
+      event: { name: "card-moved", subject: { kind: "source" }, to: "intent" },
+      operation: {
+        kind: "modify-characteristic",
+        change: {
+          kind: "numeric",
+          property: "power",
+          operation: "add",
+          amount: {
+            kind: "calculate",
+            operator: "multiply",
+            operands: [2, { kind: "binding-count", binding: "sacrificed-objects" }],
+          },
+        },
+      },
+      duration: { kind: "for-next-event", event: "card-moved", expires: { kind: "this-turn" } },
+    });
+
+  if (
+    /^The next time damage would be dealt to your champion this turn, prevent all but 1 of that damage\.\s+\[Ciel Bonus\] When 3 or more damage is prevented this way, you may banish a card from your graveyard and put an omen counter on it\.$/u.test(
+      body,
+    )
+  ) {
+    const prevention = compileInstruction(
+      "The next time damage would be dealt to your champion this turn, prevent all but 1 of that damage",
+      sourceName,
+    );
+    const followUp = compileInstruction(
+      "You may banish a card from your graveyard and put an omen counter on it",
+      sourceName,
+    );
+    if (!prevention || prevention.effect.kind !== "replacement" || !followUp)
+      throw new Error("Return to the Depths prevention grammar did not compile");
+    return cardResolution({
+      ...prevention.effect,
+      afterApply: {
+        kind: "conditional",
+        condition: {
+          kind: "all",
+          conditions: [
+            { kind: "champion-lineage-is", name: "Ciel" },
+            {
+              kind: "compare",
+              comparison: {
+                left: { kind: "modified-ability-result-amount", metric: "damage-prevented" },
+                operator: "gte",
+                right: 3,
+              },
+            },
+          ],
+        },
+        then: { kind: "create-reflexive-trigger", effect: followUp.effect },
+      },
+    });
+  }
 
   if (
     body ===
@@ -25529,6 +26227,40 @@ function compileParagraph(
                 value: Number(aggregateGraveyardReserveAlternative[3]),
                 basis: "base",
               },
+            },
+            duration: { kind: "while-source-in-functional-zone" },
+          },
+        ],
+      };
+  }
+
+  const qualifiedGraveyardReserveAlternative =
+    /^You may banish a card with (.+?) from your graveyard rather than pay this card['’]s reserve cost\.?$/iu.exec(
+      body,
+    );
+  if (qualifiedGraveyardReserveAlternative) {
+    const filter = describedCardFilter(`card with ${qualifiedGraveyardReserveAlternative[1]}`);
+    if (filter)
+      return {
+        id,
+        kind: "static",
+        staticKind: "effects",
+        text: printedText,
+        ...(restrictions.length ? { restrictions } : {}),
+        effects: [
+          {
+            kind: "rule-modification",
+            mode: "replace-cost",
+            action: "pay-cost",
+            subject: { kind: "source" },
+            costKind: "reserve",
+            cost: {
+              kind: "select-and-move",
+              player: "controller",
+              from: "graveyard",
+              to: "banishment",
+              count: { kind: "exactly", amount: 1 },
+              filter,
             },
             duration: { kind: "while-source-in-functional-zone" },
           },
@@ -28728,7 +29460,19 @@ function compileParagraph(
         },
         bindAs: "revealed-reserve-cost",
         effect: sequence([
-          { kind: "reveal", player: "controller", selection: memoryCard },
+          {
+            kind: "reveal",
+            player: "controller",
+            selection: {
+              id: "revealed-memory-card",
+              kind: "choice",
+              declared: "resolution",
+              chooser: "controller",
+              count: { kind: "all" },
+              unique: true,
+              candidates: { kind: "card", binding: memoryCard.id },
+            },
+          },
           preserve({ kind: "bound", binding: memoryCard.id }),
           { kind: "reveal", player: "controller", selection: deckCards },
           preserve({ kind: "bound", binding: deckCards.id }),
@@ -30091,7 +30835,19 @@ function compileParagraph(
           kind: "choose",
           selection: ally,
           effect: sequence([
-            { kind: "reveal", player: "controller", selection: ally },
+            {
+              kind: "reveal",
+              player: "controller",
+              selection: {
+                id: "revealed-ally",
+                kind: "choice",
+                declared: "resolution",
+                chooser: "controller",
+                count: { kind: "all" },
+                unique: true,
+                candidates: { kind: "card", binding: ally.id },
+              },
+            },
             {
               kind: "move",
               subject: { kind: "bound", binding: ally.id },
@@ -30531,7 +31287,19 @@ function compileParagraph(
           kind: "choose",
           selection: ally,
           effect: sequence([
-            { kind: "reveal", player: "controller", selection: ally },
+            {
+              kind: "reveal",
+              player: "controller",
+              selection: {
+                id: "revealed-ranger-ally",
+                kind: "choice",
+                declared: "resolution",
+                chooser: "controller",
+                count: { kind: "all" },
+                unique: true,
+                candidates: { kind: "card", binding: ally.id },
+              },
+            },
             {
               kind: "move",
               subject: { kind: "bound", binding: ally.id },
@@ -31918,28 +32686,30 @@ function compileParagraph(
       "taunt",
       "true-sight",
     ] as const;
-    const effects = keywords.map((keyword): GrandArchiveContinuousEffect => ({
-      kind: "continuous",
-      subjects: { kind: "source" },
-      affectedSet: "dynamic",
-      condition: {
-        kind: "collection-exists",
-        collection: {
-          zones: ["banishment"],
-          player: "controller",
-          filter: {
-            kind: "all",
-            filters: [
-              { kind: "has-counter", counter: "omen" },
-              { kind: "has-keyword", keyword },
-            ],
+    const effects = keywords.map(
+      (keyword): GrandArchiveContinuousEffect => ({
+        kind: "continuous",
+        subjects: { kind: "source" },
+        affectedSet: "dynamic",
+        condition: {
+          kind: "collection-exists",
+          collection: {
+            zones: ["banishment"],
+            player: "controller",
+            filter: {
+              kind: "all",
+              filters: [
+                { kind: "has-counter", counter: "omen" },
+                { kind: "has-keyword", keyword },
+              ],
+            },
           },
         },
-      },
-      duration: { kind: "while-source-in-functional-zone" },
-      layer: { layer: "D", modifies: "ability" },
-      change: { kind: "grant-keyword", keyword: { name: keyword } },
-    }));
+        duration: { kind: "while-source-in-functional-zone" },
+        layer: { layer: "D", modifies: "ability" },
+        change: { kind: "grant-keyword", keyword: { name: keyword } },
+      }),
+    );
     const [first, ...rest] = effects;
     if (first)
       return {
@@ -33397,7 +34167,10 @@ function compileParagraph(
   }
 
   if (body.startsWith("Choose one. If Topsy Decree is imbued, choose two instead—")) {
-    const opponent = playerTarget("discarding-opponent", "opponent");
+    const opponent = {
+      ...playerTarget("discarding-opponent", "opponent"),
+      count: { kind: "up-to", amount: 1 } as const,
+    };
     const discarded: GrandArchiveResolutionChoice = {
       id: "discarded-card",
       kind: "choice",
@@ -36249,6 +37022,47 @@ function compileParagraph(
     };
 
   if (
+    /^If it[’']s not your turn, you may remove a preparation counter from your champion to activate this card from your memory without paying its reserve cost\.$/u.test(
+      body,
+    )
+  )
+    return {
+      id,
+      kind: "static",
+      staticKind: "effects",
+      text: printedText,
+      functionalZones: ["memory"],
+      ...(restrictions.length ? { restrictions } : {}),
+      effects: [
+        {
+          kind: "rule-modification",
+          mode: "allow",
+          action: "activate",
+          subject: { kind: "source" },
+          fromZone: "memory",
+          condition: { kind: "not", condition: { kind: "turn-player", player: "controller" } },
+          duration: { kind: "while-source-in-functional-zone" },
+        },
+        {
+          kind: "rule-modification",
+          mode: "replace-cost",
+          action: "activate",
+          subject: { kind: "source" },
+          fromZone: "memory",
+          costKind: "reserve",
+          cost: {
+            kind: "remove-counter",
+            subject: { kind: "champion", player: "controller" },
+            counter: "preparation",
+            amount: 1,
+          },
+          condition: { kind: "not", condition: { kind: "turn-player", player: "controller" } },
+          duration: { kind: "while-source-in-functional-zone" },
+        },
+      ],
+    };
+
+  if (
     /^As long as your champion is defending, you may banish six cards from your graveyard to activate this card from your memory without paying its reserve cost\.$/u.test(
       body,
     )
@@ -36348,7 +37162,8 @@ function compileParagraph(
                   kind: "all",
                   filters: [
                     { kind: "type", oneOf: ["ALLY"] },
-                    { kind: "subtype", oneOf: ["CHESSMAN", "PAWN"] },
+                    { kind: "subtype", oneOf: ["CHESSMAN"] },
+                    { kind: "subtype", oneOf: ["PAWN"] },
                   ],
                 },
               },
@@ -40237,12 +41052,14 @@ function compileParagraph(
       allOrNothing: true,
       effect: sequence([
         { kind: "discard", player: "controller", selection: discarded },
-        ...sightNames.map((card): GrandArchiveEffect => ({
-          kind: "generate",
-          card,
-          player: "controller",
-          destination: { zone: "memory" },
-        })),
+        ...sightNames.map(
+          (card): GrandArchiveEffect => ({
+            kind: "generate",
+            card,
+            player: "controller",
+            destination: { zone: "memory" },
+          }),
+        ),
         {
           kind: "rule-modification",
           mode: "allow",
@@ -41930,12 +42747,18 @@ function compileParagraph(
       body,
     )
   ) {
-    const selection = resolutionChoice({
+    const selection: GrandArchiveResolutionChoice = {
       id: "chosen-unit",
+      kind: "choice",
+      declared: "resolution",
+      chooser: "controller",
       count: { kind: "exactly", amount: 1 },
-      zone: "field",
-      filter: { kind: "type", oneOf: ["ALLY", "CHAMPION"] },
-    });
+      candidates: {
+        kind: "object",
+        zones: ["field"],
+        filter: { kind: "type", oneOf: ["ALLY", "CHAMPION"] },
+      },
+    };
     return {
       id,
       kind: "ability-modifier",
@@ -43389,6 +44212,31 @@ function compileParagraph(
       ],
     };
 
+  const boundedAdditionalCost =
+    /^As an additional cost to activate this card, ([^.]+)\. ([XYZ]) (?:can't|can’t) be more than (\d+)\.$/u.exec(
+      body,
+    );
+  if (boundedAdditionalCost) {
+    const cost = compileCost(boundedAdditionalCost[1].replace(/^pay /iu, ""), sourceName);
+    if (cost)
+      return {
+        id,
+        kind: "card-resolution",
+        text: printedText,
+        additionalCost: cost,
+        variables: [
+          {
+            symbol: boundedAdditionalCost[2] as "X" | "Y" | "Z",
+            kind: "chosen",
+            minimum: 0,
+            maximum: Number(boundedAdditionalCost[3]),
+          },
+        ],
+        ...(restrictions.length ? { restrictions } : {}),
+        effect: { kind: "no-op" },
+      };
+  }
+
   const additionalCostAndResolution =
     /^As an additional cost to activate this card, ([^.]+)\.\s+([^]*)$/iu.exec(body);
   if (additionalCostAndResolution) {
@@ -43593,7 +44441,15 @@ function compileParagraph(
     const activationCondition = activationConditionText
       ? compileCondition(activationConditionText[1], sourceName)
       : null;
-    const instruction = compileInstruction(instructionText, sourceName);
+    // A released champion card is beneath the representative champion, and
+    // leaves that lineage as its cost. Its named lineage is the controller's
+    // champion lineage, not a collection hosted by the released card itself.
+    const releaseInstructionText = instructionText.replace(
+      /([A-Z][a-z]+)['’]s lineage/gu,
+      (reference, name: string) =>
+        refersToSource(name, sourceName) ? "your champion's lineage" : reference,
+    );
+    const instruction = compileInstruction(releaseInstructionText, sourceName);
     if (instruction && (!activationConditionText || activationCondition)) {
       const cost: GrandArchiveAbilityCost = { kind: "banish-self" };
       return {
@@ -43961,45 +44817,6 @@ function compileParagraph(
       ],
     };
 
-  if (
-    body ===
-    "As long as an opponent controls three or more units, this card costs 2 less to activate."
-  )
-    return {
-      id,
-      kind: "static",
-      staticKind: "effects",
-      text: printedText,
-      ...(restrictions.length ? { restrictions } : {}),
-      effects: [
-        {
-          kind: "rule-modification",
-          mode: "modify-cost",
-          action: "activate",
-          subject: { kind: "source" },
-          condition: {
-            kind: "compare",
-            comparison: {
-              left: {
-                kind: "count",
-                collection: {
-                  zones: ["field"],
-                  player: "each-opponent",
-                  filter: { kind: "type", oneOf: ["ALLY", "CHAMPION"] },
-                },
-              },
-              operator: "gte",
-              right: 3,
-            },
-          },
-          costKind: "reserve",
-          costOperation: "subtract",
-          amount: 2,
-          duration: { kind: "while-source-in-functional-zone" },
-        },
-      ],
-    };
-
   const conditionalCostReduction =
     /^As long as (.+), this card costs (\d+) less to (activate|materialize)\.$/u.exec(body);
   if (conditionalCostReduction) {
@@ -44308,7 +45125,6 @@ function compileParagraph(
       kind: "static",
       staticKind: "effects",
       text: printedText,
-      executionSource: "linked-object",
       ...(restrictions.length ? { restrictions } : {}),
       effects: [
         {
@@ -44991,15 +45807,17 @@ function compileParagraph(
       { name: "vigor" },
       { name: "retort", value: 2 },
     ];
-    const effects = keywords.map((keyword): GrandArchiveContinuousEffect => ({
-      kind: "continuous",
-      subjects: { kind: "source" },
-      affectedSet: "dynamic",
-      condition,
-      duration: { kind: "while-source-in-functional-zone" },
-      layer: { layer: "D", modifies: "ability" },
-      change: { kind: "grant-keyword", keyword },
-    }));
+    const effects = keywords.map(
+      (keyword): GrandArchiveContinuousEffect => ({
+        kind: "continuous",
+        subjects: { kind: "source" },
+        affectedSet: "dynamic",
+        condition,
+        duration: { kind: "while-source-in-functional-zone" },
+        layer: { layer: "D", modifies: "ability" },
+        change: { kind: "grant-keyword", keyword },
+      }),
+    );
     const [first, ...rest] = effects;
     if (first)
       return {
@@ -45824,14 +46642,16 @@ function compileParagraph(
             layer: { layer: "D", modifies: "ability" },
             change: { kind: "grant-keyword", keyword: firstKeyword },
           },
-          ...(keywords?.slice(1).map((keyword): GrandArchiveContinuousEffect => ({
-            kind: "continuous",
-            subjects: { kind: "source" },
-            affectedSet: "dynamic",
-            duration: { kind: "while-source-in-functional-zone" },
-            layer: { layer: "D", modifies: "ability" },
-            change: { kind: "grant-keyword", keyword },
-          })) ?? []),
+          ...(keywords?.slice(1).map(
+            (keyword): GrandArchiveContinuousEffect => ({
+              kind: "continuous",
+              subjects: { kind: "source" },
+              affectedSet: "dynamic",
+              duration: { kind: "while-source-in-functional-zone" },
+              layer: { layer: "D", modifies: "ability" },
+              change: { kind: "grant-keyword", keyword },
+            }),
+          ) ?? []),
           {
             kind: "continuous",
             subjects: { kind: "source" },
@@ -46278,15 +47098,17 @@ function compileParagraph(
           right: minimum,
         },
       };
-      const effects = keywords.map((keyword): GrandArchiveContinuousEffect => ({
-        kind: "continuous",
-        subjects: { kind: "source" },
-        affectedSet: "dynamic",
-        condition,
-        duration: { kind: "while-source-in-functional-zone" },
-        layer: { layer: "D", modifies: "ability" },
-        change: { kind: "grant-keyword", keyword },
-      }));
+      const effects = keywords.map(
+        (keyword): GrandArchiveContinuousEffect => ({
+          kind: "continuous",
+          subjects: { kind: "source" },
+          affectedSet: "dynamic",
+          condition,
+          duration: { kind: "while-source-in-functional-zone" },
+          layer: { layer: "D", modifies: "ability" },
+          change: { kind: "grant-keyword", keyword },
+        }),
+      );
       const [first, ...rest] = effects;
       if (first)
         return {
@@ -46309,15 +47131,17 @@ function compileParagraph(
     const condition = compileCondition(conditionText, sourceName);
     const keywords = grantedKeywords(trailingConditionalKeywords[2]);
     if (subject && condition && keywords?.length) {
-      const effects = keywords.map((keyword): GrandArchiveContinuousEffect => ({
-        kind: "continuous",
-        subjects: subject,
-        affectedSet: "dynamic",
-        condition,
-        duration: { kind: "while-source-in-functional-zone" },
-        layer: { layer: "D", modifies: "ability" },
-        change: { kind: "grant-keyword", keyword },
-      }));
+      const effects = keywords.map(
+        (keyword): GrandArchiveContinuousEffect => ({
+          kind: "continuous",
+          subjects: subject,
+          affectedSet: "dynamic",
+          condition,
+          duration: { kind: "while-source-in-functional-zone" },
+          layer: { layer: "D", modifies: "ability" },
+          change: { kind: "grant-keyword", keyword },
+        }),
+      );
       const [first, ...rest] = effects;
       if (first)
         return {
@@ -46384,7 +47208,12 @@ function compileParagraph(
   );
   if (conditionalContinuous) {
     const condition = compileCondition(conditionalContinuous[1], sourceName);
-    const subject = staticSubject(conditionalContinuous[2], sourceName);
+    // In "As long as linked ally has ..., it gets ...", "it" is the linked object.
+    const linkedAntecedent = /^(linked (?:ally|unit|object))\b/iu.exec(conditionalContinuous[1]);
+    const subject: GrandArchiveSubject | null =
+      /^it$/iu.test(conditionalContinuous[2]) && linkedAntecedent
+        ? { kind: "linked-object" }
+        : staticSubject(conditionalContinuous[2], sourceName);
     if (condition && subject) {
       const changes: GrandArchiveContinuousEffect[] = [];
       const stats = [
@@ -49492,6 +50321,9 @@ function compileParagraph(
             kind: "rule-modification",
             mode: "modify-cost",
             action,
+            ...(filteredCostModifier[2]
+              ? { subject: { kind: "player" as const, player: "controller" as const } }
+              : {}),
             filter,
             costKind: action === "activate" ? "reserve" : "memory",
             costOperation: filteredCostModifier[4].toLowerCase() === "less" ? "subtract" : "add",
@@ -50184,8 +51016,12 @@ function compileParagraph(
                   kind: "count",
                   collection: {
                     zones: ["inner-lineage"],
-                    player:
-                      lineageCountedCost[3].toLowerCase() === "your" ? "controller" : "each-player",
+                    ...(lineageCountedCost[3].toLowerCase() === "your"
+                      ? {
+                          host: { kind: "champion" as const, player: "controller" as const },
+                          relationship: "lineage-of" as const,
+                        }
+                      : { player: "each-player" as const }),
                     filter,
                   },
                 },
@@ -50209,17 +51045,27 @@ function compileParagraph(
           subject: { kind: "source" },
           counter: { named: sourceCounterCost[2] },
         }
-      : {
-          kind: "sum-counters",
-          collection: {
-            zones: ["field"],
-            player: "controller",
-            ...(/^objects on the field$/iu.test(holder)
-              ? {}
-              : { filter: { kind: "name" as const, value: holder } }),
-          },
-          counter: { named: sourceCounterCost[2] },
-        };
+      : /^Fractured Memories$/iu.test(holder)
+        ? {
+            kind: "counter-count",
+            subject: { kind: "mastery", player: "controller", name: "Fractured Memories" },
+            counter: { named: sourceCounterCost[2] },
+          }
+        : {
+            kind: "sum-counters",
+            collection: {
+              zones: ["field"],
+              ...(/^objects on the field$/iu.test(holder)
+                ? /counter on your /iu.test(body)
+                  ? { player: "controller" as const }
+                  : {}
+                : {
+                    player: "controller" as const,
+                    filter: { kind: "name" as const, value: holder },
+                  }),
+            },
+            counter: { named: sourceCounterCost[2] },
+          };
     return {
       id,
       kind: "static",
@@ -50456,7 +51302,20 @@ export function compileGrandArchiveAbilities(
     .split(/\n\s*\n/u)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean);
-  const paragraphs = blocks.flatMap((block) => {
+  // This restricted follow-up belongs to the preceding prevention effect, even across a paragraph break.
+  const linkedBlocks: string[] = [];
+  for (const block of blocks) {
+    const previous = linkedBlocks.at(-1);
+    if (
+      previous ===
+        "The next time damage would be dealt to your champion this turn, prevent all but 1 of that damage." &&
+      block ===
+        "[Ciel Bonus] When 3 or more damage is prevented this way, you may banish a card from your graveyard and put an omen counter on it."
+    ) {
+      linkedBlocks[linkedBlocks.length - 1] = `${previous}\n\n${block}`;
+    } else linkedBlocks.push(block);
+  }
+  const paragraphs = linkedBlocks.flatMap((block) => {
     const segments: string[] = [];
     let current: string[] = [];
     for (const rawLine of block.split(/\n/u)) {
@@ -50492,23 +51351,59 @@ export function compileGrandArchiveAbilities(
       );
     }
   }
-  const compiledAbilities = scopeResolutionTargets(override?.abilities ?? abilities).map(
-    (ability) => {
-      if (
-        ability.kind === "triggered" &&
-        !("intrinsic" in ability) &&
-        ability.trigger.kind === "event" &&
-        "name" in ability.trigger.event &&
-        ability.trigger.event.name === "card-revealed" &&
-        ability.trigger.event.from === "memory" &&
-        ability.trigger.event.subject?.kind === "source" &&
-        !ability.functionalZones
-      ) {
-        return { ...ability, functionalZones: ["memory"] as const };
-      }
-      return ability;
-    },
+  const resolvedAbilities = scopeResolutionTargets(override?.abilities ?? abilities);
+  const counterPaymentBindings = resolvedAbilities.flatMap((ability) =>
+    ability.kind === "static" && ability.staticKind === "effects"
+      ? ability.effects.flatMap((effect) =>
+          effect.kind === "rule-modification" &&
+          effect.mode === "add-cost" &&
+          effect.cost?.kind === "select-and-remove-counters" &&
+          effect.cost.bindResultAs
+            ? [effect.cost.bindResultAs]
+            : [],
+        )
+      : [],
   );
+  const compiledAbilities = resolvedAbilities.map((ability) => {
+    if (
+      ability.kind === "card-resolution" &&
+      /where X is the amount of counters removed\.?$/u.test(ability.text) &&
+      !ability.variables?.some((variable) => variable.symbol === "X") &&
+      counterPaymentBindings.length === 1
+    ) {
+      return {
+        ...ability,
+        variables: [
+          ...(ability.variables ?? []),
+          {
+            symbol: "X" as const,
+            kind: "derived" as const,
+            amount: { kind: "binding-count" as const, binding: counterPaymentBindings[0]! },
+          },
+        ],
+      };
+    }
+    if (
+      ability.kind === "activated" &&
+      !ability.functionalZones &&
+      costRequiresDiscardSelf(ability.cost)
+    ) {
+      return { ...ability, functionalZones: ["hand"] as const };
+    }
+    if (
+      ability.kind === "triggered" &&
+      !("intrinsic" in ability) &&
+      ability.trigger.kind === "event" &&
+      "name" in ability.trigger.event &&
+      ability.trigger.event.name === "card-revealed" &&
+      ability.trigger.event.from === "memory" &&
+      ability.trigger.event.subject?.kind === "source" &&
+      !ability.functionalZones
+    ) {
+      return { ...ability, functionalZones: ["memory"] as const };
+    }
+    return ability;
+  });
   const unparsedParagraphs = compiledAbilities.filter(
     (ability) => ability.kind === "unparsed",
   ).length;

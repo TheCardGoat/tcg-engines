@@ -79,7 +79,11 @@ export function lorcanaSerializeEngine(
     state: auth.state,
     historyLength: 0,
     cardsMaps: auth.cardsMaps,
-    metadata: auth.undoStack ? { undoStack: auth.undoStack } : undefined,
+    metadata: {
+      undoStack: auth.undoStack,
+      turnStartCheckpoint: auth.turnStartCheckpoint,
+      turnStartStateID: auth.turnStartStateID,
+    },
   };
 }
 
@@ -97,6 +101,21 @@ export async function lorcanaRestoreEngine(
   }
 
   const undoStack = extractUndoStack(snapshot.metadata);
+  const turnStartCheckpoint = extractUndoStack({
+    undoStack:
+      snapshot.metadata && typeof snapshot.metadata === "object" &&
+      "turnStartCheckpoint" in snapshot.metadata &&
+      snapshot.metadata.turnStartCheckpoint !== null
+        ? [snapshot.metadata.turnStartCheckpoint]
+        : [],
+  })?.[0];
+  const turnStartStateID =
+    snapshot.metadata && typeof snapshot.metadata === "object" &&
+    "turnStartStateID" in snapshot.metadata &&
+    typeof snapshot.metadata.turnStartStateID === "number" &&
+    Number.isInteger(snapshot.metadata.turnStartStateID)
+      ? snapshot.metadata.turnStartStateID
+      : null;
   const cardCatalog = getLorcanaCardCatalogSync();
   const players = [
     { id: createPlayerId(context.player1Id) },
@@ -108,6 +127,8 @@ export async function lorcanaRestoreEngine(
       state: snapshot.state as LorcanaServerAuthoritativeSnapshot["state"],
       cardsMaps,
       ...(undoStack ? { undoStack } : {}),
+      turnStartCheckpoint: turnStartCheckpoint ?? null,
+      turnStartStateID,
     },
     cardCatalog,
     undefined,

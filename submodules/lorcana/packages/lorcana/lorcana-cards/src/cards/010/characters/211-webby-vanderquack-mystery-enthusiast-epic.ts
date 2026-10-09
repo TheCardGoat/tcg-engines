@@ -23,7 +23,7 @@ export const webbyVanderquackMysteryEnthusiastEpic: CharacterCard = {
   franchise: "Ducktales",
   set: "010",
   cardNumber: 211,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 1,
   strength: 1,

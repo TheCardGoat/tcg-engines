@@ -1,51 +1,23 @@
-# Public Submodules Map
+# Public Workspace Map
 
-These directories are normal tracked source directories. They are not git
-submodule gitlinks, even though the directory is named `submodules`.
+These are tracked source directories, not Git submodules.
 
-## Choose The Owner
+- `agnostic-simulator`: shared protocol, contracts, UI, agents, and game adapters.
+- Game workspaces: native rules, cards, engines, and import tools. Lorcana
+  also owns its dedicated simulator and replay CLI.
 
-- Use `agnostic-simulator` for game-agnostic contracts and adapters: protocol
-  shapes, playable game slugs, runtime adapter interfaces, shared simulator/page
-  contracts, reusable simulator UI primitives, shared agent-core behavior, and
-  per-game server adapters.
-- Use a game submodule (`lorcana`, `cyberpunk`, `gundam`, `one-piece`,
-  `star-wars-unlimited`) for that game's rules, cards, engine state,
-  parser/scraper tooling, game-native wording, and any simulator it owns.
+Read each owner's guide for local paths and rules skills. Shared concepts live
+in agnostic-simulator; adapters map game-specific state and actions into them.
+Production platform services remain private.
 
-If a change crosses these boundaries, keep the shared concept in
-`agnostic-simulator` and map each game into it through an adapter. Do not add
-one game's nouns or state shape directly to shared code.
+Use `workspace:*` within a workspace and `link:` across workspaces; follow
+existing workspace configuration. Install games before agnostic-simulator when
+bootstrapping linked packages. Run checks from the owning workspace;
+`pnpm run ci:public` is the optional broad public check at the repository root.
 
-## Workspace Boundaries
-
-Each submodule is its own pnpm workspace. No workspace may include packages from
-another submodule. Cross-submodule dependencies use `link:` and
-intra-submodule dependencies use `workspace:*`.
-
-Install order matters for cross-game simulator work: game submodules first, then
-`agnostic-simulator`.
-
-## Submodule Map
-
-| Submodule             | Purpose                                                                                                                | First files for bugs                                                                                                                                                                              |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `agnostic-simulator`  | Cross-game protocol, contracts, adapter interfaces, simulator UI primitives, agent core, and per-game server adapters. | `packages/protocol/src`, `packages/shared/src/game-adapter`, `packages/game-page-contract/src`, `packages/simulator-contract/src`, `packages/simulator-ui/src`, `packages/*/*-server-adapter/src` |
-| `lorcana`             | Lorcana engine, cards, simulator, replay tools, and rules skills.                                                      | `packages/lorcana/lorcana-engine/src`, `packages/lorcana/lorcana-cards/src`, `packages/lorcana/lorcana-simulator/src`, `packages/tools/replay-cli/src`                                            |
-| `cyberpunk`           | Cyberpunk cards, engine, parser/scraper tools, and game-native rules source.                                           | `packages/engine/src`, `packages/cards/src`, `packages/server-adapter/src`, `.agents/skills/cyberpunk-tcg-rules`                                                                                  |
-| `gundam`              | Gundam cards, engine, server adapter, bot bench, and rule docs.                                                        | `packages/engine/src`, `packages/cards/src`, `packages/server-adapter/src`, `tools/bot-bench`, `docs/architecture.md`                                                                             |
-| `one-piece`           | One Piece engine, cards, types, utils, parser, and rules.                                                              | `packages/engine/src`, `packages/cards/src`, `packages/types/src`, `tools/op-card-parser`, `.agents/skills/op-rules`                                                                              |
-| `star-wars-unlimited` | Star Wars Unlimited engine, cards, types, import tooling, and rules.                                                   | `packages/engine/src`, `packages/cards/src`, `packages/types/src`, `tools/import-card-data`, `.agents/skills/swu-rules`                                                                           |
-
-## Validation
-
-Use focused validation from the owning submodule first:
-
-- `pnpm run ci:cyberpunk:check`
-- `pnpm run ci:gundam:check`
-- `pnpm run ci:lorcana:check`
-- `pnpm run ci:one-piece:check`
-- `pnpm run ci:star-wars-unlimited:check`
-- `pnpm run ci:agnostic:check`
-
-For docs-only edits, `git diff --check` is usually sufficient.
+Install only the workspaces needed for the task. Card and engine changes use
+focused local tests and relevant data/type checks without servers. Tests in a
+simulator package can also run without its dev server. For UI work, run only
+the owning simulator and use local practice or existing fixture pages. Check
+affected adapters and consumers for shared contract changes; do not make a
+broad workspace check or private platform run a routine final step.

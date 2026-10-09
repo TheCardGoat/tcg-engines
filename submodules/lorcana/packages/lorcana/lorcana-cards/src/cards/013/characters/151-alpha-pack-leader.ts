@@ -29,11 +29,15 @@ export const alphaPackLeader: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_0f69915018f245419008adf5cd9926c5",
+    tcgPlayer: "704649",
+  },
   text: [
     {
-      title: "Who Wants a Treat?",
+      title: "WHO WANTS",
       description:
-        "Whenever you play an item, chosen character gets +1 {S} and gains Resist +1 this turn.",
+        "A TREAT? Whenever you play an item, chosen character gets +1 {S} and gains Resist +1 this turn.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

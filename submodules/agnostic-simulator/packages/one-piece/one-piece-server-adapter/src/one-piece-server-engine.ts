@@ -21,7 +21,11 @@ import {
   type EngineInteractionView,
   type InteractionSubmission,
 } from "@tcg/protocol";
-import { createCanonicalEngineMoveLog, createEngineLogMessage } from "@tcg/shared/game-engine";
+import {
+  capUndoCheckpoints,
+  createCanonicalEngineMoveLog,
+  createEngineLogMessage,
+} from "@tcg/shared/game-engine";
 import type {
   AcceptedMoveRecord,
   BotActionOptions,
@@ -35,12 +39,26 @@ import type {
 import { createRandomAPI } from "@tcg/engine-core";
 import { validateInteractionSubmission } from "@tcg/protocol";
 import { buildOnePieceInteractionView, onePieceSubmissionToPayload } from "./interaction-protocol";
+import {
+  hasOnePieceUndoBarrier,
+  type OnePieceUndoCheckpoint,
+  type OnePieceUndoState,
+} from "./undo";
 
 export class OnePieceServerEngine implements ServerGameEngine {
   constructor(
     public state: MatchState,
     public readonly playerIdToSeat: Record<string, MatchSeat>,
+    private readonly undoState: OnePieceUndoState = {
+      checkpoints: [],
+      turnStart: null,
+      turnStartStateID: null,
+    },
   ) {}
+
+  getUndoState(): OnePieceUndoState {
+    return structuredClone(this.undoState);
+  }
 
   get seatToPlayerId(): Record<MatchSeat, string> {
     const map: Partial<Record<MatchSeat, string>> = {};
@@ -65,6 +83,8 @@ export class OnePieceServerEngine implements ServerGameEngine {
         stateID: this.getStateID(),
       };
     }
+    if (moveType === "undo") return this.undo(actorId, context);
+    if (moveType === "undoToTurnStart") return this.undoToTurnStart(actorId, context);
     if (isJudgeOnlyMove(moveType)) {
       return {
         success: false,
@@ -84,7 +104,8 @@ export class OnePieceServerEngine implements ServerGameEngine {
       };
     }
 
-    const result = applyCommand(this.state, command);
+    const before = this.state;
+    const result = applyCommand(before, command);
     if (!result.accepted) {
       return {
         success: false,
@@ -95,6 +116,34 @@ export class OnePieceServerEngine implements ServerGameEngine {
     }
 
     this.state = result.state;
+    const sameTurn =
+      before.status === "active" &&
+      before.phase === "main" &&
+      before.activeSeat === seat &&
+      result.state.status === "active" &&
+      result.state.phase === "main" &&
+      result.state.activeSeat === seat &&
+      result.state.turnNumber === before.turnNumber;
+    if (sameTurn && !hasOnePieceUndoBarrier(before, result.state, result.events)) {
+      const checkpoint: OnePieceUndoCheckpoint = {
+        actorId,
+        moveId: moveType,
+        state: structuredClone(before),
+      };
+      if (before.idCounter === this.undoState.turnStartStateID && !this.undoState.turnStart) {
+        this.undoState.turnStart = checkpoint;
+      }
+      this.undoState.checkpoints = capUndoCheckpoints([...this.undoState.checkpoints, checkpoint]);
+    } else {
+      this.undoState.checkpoints = [];
+      this.undoState.turnStart = null;
+      this.undoState.turnStartStateID =
+        result.state.status === "active" &&
+        result.state.phase === "main" &&
+        (before.status !== "active" || before.turnNumber !== result.state.turnNumber)
+          ? result.state.idCounter
+          : null;
+    }
     const stateVersion = this.getStateID();
     const timestamp = Date.now();
     const acceptedMoveRecord: AcceptedMoveRecord = {
@@ -130,8 +179,136 @@ export class OnePieceServerEngine implements ServerGameEngine {
         result.animations,
       ),
       transition: "move",
+      undoable: this.canUndo(actorId),
       acceptedMoveRecord,
       engineLogRecords,
+    };
+  }
+
+  canUndo(actorId: string): boolean {
+    const last = this.undoState.checkpoints.at(-1);
+    return (
+      this.state.status === "active" &&
+      this.state.activeSeat === this.playerIdToSeat[actorId] &&
+      last?.actorId === actorId &&
+      last.state.turnNumber === this.state.turnNumber
+    );
+  }
+
+  canUndoToTurnStart(actorId: string): boolean {
+    return (
+      this.canUndo(actorId) &&
+      this.undoState.turnStart?.actorId === actorId &&
+      this.undoState.turnStart.state.turnNumber === this.state.turnNumber
+    );
+  }
+
+  undo(actorId: string, context: DispatchContext, expectedVersion?: number): DispatchResult {
+    return this.restoreUndo(actorId, context, "last_move", expectedVersion);
+  }
+
+  undoToTurnStart(
+    actorId: string,
+    context: DispatchContext,
+    expectedVersion?: number,
+  ): DispatchResult {
+    return this.restoreUndo(actorId, context, "turn_start", expectedVersion);
+  }
+
+  private restoreUndo(
+    actorId: string,
+    context: DispatchContext,
+    scope: "last_move" | "turn_start",
+    expectedVersion?: number,
+  ): DispatchResult {
+    const previousStateID = this.getStateID();
+    const allowed =
+      scope === "last_move" ? this.canUndo(actorId) : this.canUndoToTurnStart(actorId);
+    const checkpoint =
+      scope === "last_move" ? this.undoState.checkpoints.at(-1) : this.undoState.turnStart;
+    if (
+      !allowed ||
+      !checkpoint ||
+      (expectedVersion !== undefined && expectedVersion !== previousStateID)
+    ) {
+      return {
+        success: false,
+        error: "No action is available to undo.",
+        errorCode: "undo_unavailable",
+        stateID: previousStateID,
+      };
+    }
+
+    const current = this.state;
+    const restored = structuredClone(checkpoint.state);
+    const restoredTurnStart =
+      checkpoint.state.idCounter === this.undoState.turnStart?.state.idCounter;
+    restored.idCounter = previousStateID + 1;
+    restored.eventSequence = Math.max(restored.eventSequence, current.eventSequence);
+    restored.logSequence = Math.max(restored.logSequence, current.logSequence);
+    restored.capabilitySequence = Math.max(restored.capabilitySequence, current.capabilitySequence);
+    this.state = restored;
+    const stateVersion = restored.idCounter;
+    if (scope === "turn_start") {
+      this.undoState.checkpoints = [];
+      this.undoState.turnStart = null;
+      this.undoState.turnStartStateID = stateVersion;
+    } else {
+      this.undoState.checkpoints.pop();
+      if (this.undoState.checkpoints.length === 0) {
+        this.undoState.turnStart = null;
+        this.undoState.turnStartStateID = restoredTurnStart ? stateVersion : null;
+      }
+    }
+
+    const timestamp = Date.now();
+    const moveId = scope === "turn_start" ? "undoToTurnStart" : "undo";
+    return {
+      success: true,
+      stateID: stateVersion,
+      state: restored,
+      patches: [],
+      animations: [],
+      animationPlan: null,
+      transition: "move",
+      undoable: this.canUndo(actorId),
+      acceptedMoveRecord: {
+        gameId: context.gameId,
+        stateVersion,
+        turnNumber: restored.turnNumber,
+        actorId,
+        moveId,
+        input: { args: {} },
+        processedCommand: { move: moveId },
+        timestamp,
+        sourceAuthority: context.sourceAuthority,
+        transitionType: "undo",
+        newStateID: stateVersion,
+        undoneStateID: previousStateID,
+        restoredCheckpointStateID: checkpoint.state.idCounter,
+        ...(scope === "last_move" ? { undoneMoveId: checkpoint.moveId } : {}),
+      },
+      engineLogRecords: [
+        {
+          gameId: context.gameId,
+          stateVersion,
+          timestamp,
+          sourceAuthority: context.sourceAuthority,
+          log: createCanonicalEngineMoveLog({
+            moveType: moveId,
+            playerId: actorId,
+            timestamp,
+            turnNumber: restored.turnNumber,
+            messages: [
+              createEngineLogMessage({
+                key: "one-piece.undo",
+                defaultMessage:
+                  scope === "turn_start" ? "Undid the turn." : "Undid the last action.",
+              }),
+            ],
+          }),
+        },
+      ],
     };
   }
 
@@ -235,10 +412,12 @@ export class OnePieceServerEngine implements ServerGameEngine {
     const random = createRandomAPI(`${context.gameId}:${this.getStateID()}:${seat}`);
     const decisionContext = { random: () => random.random() };
     const command = pendingPrompt
-      ? ((pendingPrompt.kind !== "judge" &&
-        (pendingPrompt.seat === "north" || pendingPrompt.seat === "south")
-          ? strategyOption.resolvePrompt?.(this.state, pendingPrompt, decisionContext)
-          : undefined) ?? resolveBotPromptCommand(this.state, pendingPrompt))
+      ? pendingPrompt.resolutionContext?.intent === "loopIterations"
+        ? resolveBotPromptCommand(this.state, pendingPrompt)
+        : ((pendingPrompt.kind !== "judge" &&
+          (pendingPrompt.seat === "north" || pendingPrompt.seat === "south")
+            ? strategyOption.resolvePrompt?.(this.state, pendingPrompt, decisionContext)
+            : undefined) ?? resolveBotPromptCommand(this.state, pendingPrompt))
       : strategyOption.strategy(
           this.state,
           seat,
@@ -622,6 +801,7 @@ function buildEngineCommand(
           ? payload.selectedIds.filter((id): id is string => typeof id === "string")
           : undefined,
         confirm: typeof payload.confirm === "boolean" ? payload.confirm : undefined,
+        iterations: typeof payload.iterations === "number" ? payload.iterations : undefined,
       };
     case "judgeResolvePrompt":
       return {

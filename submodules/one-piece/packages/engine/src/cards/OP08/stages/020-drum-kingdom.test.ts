@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op08DrumKingdom020 } from "../../../../../cards/src/cards/stages/op08-020-drum-kingdom.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP08-020 Drum Kingdom", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op08DrumKingdom020);
-  });
-});

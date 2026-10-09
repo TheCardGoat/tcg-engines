@@ -30,7 +30,7 @@ export const op11Shirahoshi022: LeaderCard = {
   setId: "OP11",
   power: 5000,
   life: 5,
-  traits: ["Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island"],
   attribute: "wisdom",
   effect:
     'This Leader cannot attack.\n[Activate: Main] [Once Per Turn] You may rest 1 of your DON!! cards and turn 1 card from the top of your Life cards face-up: Play up to 1 "Neptunian" type Character card or "Megalo" with a cost equal to or less than the number of DON!! cards on your field from your hand.',
@@ -83,7 +83,7 @@ export const op11Shirahoshi022: LeaderCard = {
               {
                 filter: "anyOf",
                 groups: [
-                  [{ filter: "trait", value: "Neptunian", match: "includes" }],
+                  [{ filter: "trait", value: "Neptunian", match: "exact" }],
                   [{ filter: "name", value: "Megalo" }],
                 ],
               },

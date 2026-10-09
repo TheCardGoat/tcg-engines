@@ -47,6 +47,9 @@ function defaultEvidence(card: OPCard): string {
         return trigger;
     }
   });
+  if (card.cardType === "leader" && card.rulesIdentity) {
+    triggers.push("universal rules identity");
+  }
   if (card.effects?.permanentEffects?.length) {
     triggers.push("permanent");
   }
@@ -99,6 +102,7 @@ const cards = [...canonicalCards.values()].sort((left, right) =>
 const records = cards.map((card) => {
   const existing = existingRows.get(card.canonicalId);
   const hasStructuredBehavior = Boolean(
+    (card.cardType === "leader" && card.rulesIdentity) ||
     card.effects?.keywords?.length ||
     card.effects?.effects?.length ||
     card.effects?.permanentEffects?.length ||

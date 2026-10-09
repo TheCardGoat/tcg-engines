@@ -12,6 +12,7 @@ export const SETUP_SYNC_STALL_GRACE_MS = 10_000;
  * type-check directly.
  */
 export interface SetupStateProbe {
+  ctx: { stateID: number };
   G: {
     gameEnded: boolean;
     gamePhase: string;
@@ -21,20 +22,24 @@ export interface SetupStateProbe {
 }
 
 /**
- * True when the local board is still sitting in the pre-deal setup state: the
- * engine phase is `setup`, no opening hands have been dealt, and no pending
- * choice exists. A healthy match only passes through this state for moments
- * before the first setup update lands, so a sustained reading means this
- * client missed its setup `state_update`s and should request a fresh copy.
+ * True when the local board has no opening hand or known setup decision. A
+ * healthy match only passes through this state for moments before its first
+ * setup update lands, so a sustained reading warrants a fresh copy.
  *
- * A waiting player whose Rival is deciding their opening-hand mulligan does
- * not match: hands are already dealt by then (CR 7.9.1) and the pending
- * choice is set, so the normal "Waiting" sidebar state stays free of recovery
- * noise.
+ * The viewer projection hides the Rival's first-player choice. The matching
+ * server interaction view still reports its resolution, so waiting for that
+ * decision is not a sync stall. Mulligan follows the opening draw (CR 7.9.1).
  */
-export function isSetupStateStale(state: SetupStateProbe, humanSide: Side): boolean {
+export function isSetupStateStale(
+  state: SetupStateProbe,
+  humanSide: Side,
+  authoritativeChoiceStateVersion?: number,
+): boolean {
   if (state.G.gameEnded || state.G.gamePhase !== "setup") return false;
   if (state.G.turnMetadata.pendingChoice != null) return false;
+  // A rival's choice is hidden from this viewer projection. The server's
+  // interaction view still records its resolution at the same state version.
+  if (authoritativeChoiceStateVersion === state.ctx.stateID) return false;
   const sideId = PLAYER_SIDE_TO_ID[humanSide];
   const hand = state.G.players[sideId]?.zones.hand;
   return Array.isArray(hand) && hand.length === 0;

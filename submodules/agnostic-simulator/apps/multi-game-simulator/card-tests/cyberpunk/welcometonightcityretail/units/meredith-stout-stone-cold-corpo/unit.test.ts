@@ -88,12 +88,7 @@ describe("Meredith Stout — Stone Cold Corpo", () => {
         if (!trigger) throw new Error("Expected Meredith trigger option.");
         engine.executeMove("resolveTrigger", { args: { triggerId: trigger.triggerId } }, P1);
       }
-      engine.resolveEffectTarget(welcomeToNightCityRetailCorporateSurveillance, {
-        as: P1,
-        allowPendingChoice: true,
-        reason: "Meredith still needs the selected trash card move confirmed",
-      });
-      engine.resolveCardToMove(welcomeToNightCityRetailCorporateSurveillance, { as: P1 });
+      engine.resolveEffectTarget(welcomeToNightCityRetailCorporateSurveillance, { as: P1 });
 
       // Recovered card is now in P1 hand and no longer in P1 trash.
       expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toContain(

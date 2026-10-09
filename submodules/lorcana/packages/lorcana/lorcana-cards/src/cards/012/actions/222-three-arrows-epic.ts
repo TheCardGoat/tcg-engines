@@ -22,7 +22,7 @@ export const threeArrowsEpic: ActionCard = {
   franchise: "Brave",
   set: "012",
   cardNumber: 222,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   inkable: true,

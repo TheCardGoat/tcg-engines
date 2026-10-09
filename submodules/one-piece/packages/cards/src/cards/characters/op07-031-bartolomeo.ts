@@ -40,7 +40,7 @@ export const op07Bartolomeo031: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Supernovas Barto Club"],
+  traits: ["Supernovas", "Barto Club"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [Your Turn] [Once Per Turn] If a Character is rested by your effect, draw 1 card and trash 1 card from your hand.",

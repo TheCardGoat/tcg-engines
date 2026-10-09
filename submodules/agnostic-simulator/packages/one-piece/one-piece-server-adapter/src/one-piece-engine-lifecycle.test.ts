@@ -119,12 +119,21 @@ describe("onePieceCreateServerEngine — section-tagged decks", () => {
       const player = state.players[seat];
       expect(player).toBeTruthy();
       expect(player!.leaderCardId).toBe(LEADER_ID);
-      // createMatch draws a 5-card opening hand from the main deck, so the
-      // remaining deck + hand together hold the 50 classified main cards.
+      // Opening hands wait for the first-player decision and startup effects.
       // Deck entries are engine instance ids, not card ids.
       expect(player!.deck.length + player!.hand.length).toBe(MAIN_DECK_SIZE);
-      expect(player!.hand).toHaveLength(5);
+      expect(player!.hand).toHaveLength(0);
       expect(player!.donDeckCount).toBe(DON_DECK_SIZE);
+    }
+    const context = { gameId: "sectioned-setup", sourceAuthority: "server" as const };
+    expect(engine.dispatch("chooseJoKenPo", "p1", { choice: "paper" }, context).success).toBe(true);
+    expect(engine.dispatch("chooseJoKenPo", "p2", { choice: "rock" }, context).success).toBe(true);
+    expect(
+      engine.dispatch("chooseFirstPlayer", "p1", { firstPlayer: "south" }, context).success,
+    ).toBe(true);
+    for (const player of Object.values((engine as OnePieceServerEngine).state.players)) {
+      expect(player.hand).toHaveLength(5);
+      expect(player.deck).toHaveLength(MAIN_DECK_SIZE - 5);
     }
   });
 });

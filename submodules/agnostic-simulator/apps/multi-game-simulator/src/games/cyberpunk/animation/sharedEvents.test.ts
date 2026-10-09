@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
-import { AnimationPlanV2Schema, type AnimationPlanV2, type AnimationStepV2 } from "@tcg/protocol";
+import type { AnimationPlanV2 } from "@tcg/protocol";
 import type { AnimationScript } from "@tcg/cyberpunk-engine";
-import { cyberpunkAnimationPlan } from "@tcg/cyberpunk-server-adapter/animation";
 import { AnimationInteractionBoundary } from "@tcg/simulator-ui";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -130,13 +129,15 @@ const representativeScripts: Record<string, AnimationScript> = {
       {
         id: "reveal",
         kind: "cardReveal",
+        audience: "public",
+        viewerId: P1,
         startMs: 0,
         durationMs: 1600,
         reason: "cardsRevealed",
         cardId: "top-1",
         fromZone: "deck",
         toZone: "hand",
-        playerId: P1,
+        ownerId: P1,
       },
     ],
   } as AnimationScript,
@@ -146,12 +147,14 @@ const representativeScripts: Record<string, AnimationScript> = {
       {
         id: "reveal",
         kind: "cardReveal",
+        audience: "public",
+        viewerId: P1,
         startMs: 0,
         durationMs: 1600,
         reason: "cardsRevealed",
         cardId: "top-1",
         fromZone: "deck",
-        playerId: P1,
+        ownerId: P1,
       },
     ],
   } as AnimationScript,
@@ -166,6 +169,7 @@ const representativeScripts: Record<string, AnimationScript> = {
         reason: "attackDeclared",
         attackerId: "atk",
         defenderId: "def",
+        rivalId: P2,
         attackKind: "fight",
         playerId: P1,
       },
@@ -199,51 +203,7 @@ const representativeScripts: Record<string, AnimationScript> = {
   } as AnimationScript,
 };
 
-function stepShape(step: AnimationStepV2) {
-  if (step.type === "entityTransfer") {
-    return {
-      type: step.type,
-      entity: step.entity.id,
-      fromKind: step.from?.kind ?? null,
-      toKind: step.to?.kind ?? null,
-    };
-  }
-  if (step.type === "entityStateChange") {
-    return { type: step.type, entity: step.entity.id, change: step.change };
-  }
-  if (step.type === "valueDelta") {
-    return { type: step.type, subjectKind: step.subject.kind };
-  }
-  if (step.type === "phaseChange") {
-    return { type: step.type, variant: step.variant };
-  }
-  return { type: step.type };
-}
-
-function shapes(plan: AnimationPlanV2 | null | undefined) {
-  return (plan?.steps ?? []).map(stepShape);
-}
-
 describe("Cyberpunk AnimationPlanV2 adapter", () => {
-  test("practice projection matches the adapter plan for representative scripts", () => {
-    for (const [name, script] of Object.entries(representativeScripts)) {
-      const adapter = cyberpunkAnimationPlan(`adapter:${name}`, script);
-      const practice = cyberpunkAnimationScriptToAnimationPlans(script, {
-        viewerSeatId,
-        idPrefix: `practice:${name}`,
-      });
-      if (!adapter) {
-        expect(practice, name).toEqual([]);
-        continue;
-      }
-      expect(practice, name).toHaveLength(1);
-      expect(AnimationPlanV2Schema.parse(practice[0])).toEqual(practice[0]);
-      expect(shapes(practice[0]), name).toEqual(shapes(adapter));
-      expect(JSON.stringify(practice[0])).not.toContain("resolving-program");
-      expect(practice[0]?.steps.some((step) => step.type === "hold")).toBe(false);
-    }
-  });
-
   test("play-to-field is a hand→field transfer", () => {
     const [plan] = cyberpunkAnimationScriptToAnimationPlans(representativeScripts.playToField, {
       viewerSeatId,
@@ -324,6 +284,38 @@ describe("Cyberpunk AnimationPlanV2 adapter", () => {
       from: { kind: "zone", id: "p-field" },
       to: { kind: "zone", id: "p-hand" },
       sourceFace: "public",
+      destinationFace: "public",
+    });
+  });
+
+  test("projects the same public transfer for both player views", () => {
+    const authoritative: AnimationPlanV2 = {
+      id: "shared-public-transfer",
+      version: 2,
+      steps: [
+        {
+          id: "play",
+          type: "entityTransfer",
+          entity: { kind: "entity", id: "unit-1" },
+          from: { kind: "zone", id: "hand", ownerId: P1 },
+          to: { kind: "zone", id: "field", ownerId: P1 },
+          sourceFace: "public",
+          destinationFace: "public",
+        },
+      ],
+    };
+
+    const playerView = projectCyberpunkAuthoritativeAnimationPlan(authoritative, P1);
+    const rivalView = projectCyberpunkAuthoritativeAnimationPlan(authoritative, P2);
+
+    expect(playerView.steps[0]).toMatchObject({
+      from: { kind: "zone", id: "p-hand" },
+      to: { kind: "zone", id: "p-field" },
+      destinationFace: "public",
+    });
+    expect(rivalView.steps[0]).toMatchObject({
+      from: { kind: "zone", id: "opp-hand" },
+      to: { kind: "zone", id: "opp-field" },
       destinationFace: "public",
     });
   });

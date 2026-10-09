@@ -43,6 +43,12 @@ describe("chooseCardTarget fixture behavior", () => {
 
       await pom.resolveCardToPlay(cardToPlay.instanceId, CYBERPUNK_P1);
 
+      // Mox Inciters' play trigger now surfaces its must-attack target choice
+      // instead of auto-resolving behind the play.
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+      const triggerTargets = await pom.getEligibleTargetIds(CYBERPUNK_P1);
+      await pom.resolveEffectTarget([triggerTargets[0]!], CYBERPUNK_P1);
+
       await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
       await pom.expectBoardMode(CYBERPUNK_P1, "select-action");
       await pom.expectHandSize(CYBERPUNK_P1, 2);

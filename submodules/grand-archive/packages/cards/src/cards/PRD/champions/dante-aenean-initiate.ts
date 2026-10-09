@@ -57,8 +57,17 @@ export const danteAeneanInitiate: GrandArchiveCard<GrandArchiveAbilityDefinition
             action: "scavenge",
             amount: 10,
             filter: {
-              kind: "subtype",
-              oneOf: ["SPELL"],
+              kind: "all",
+              filters: [
+                {
+                  kind: "subtype",
+                  oneOf: ["AENEAN"],
+                },
+                {
+                  kind: "subtype",
+                  oneOf: ["SPELL"],
+                },
+              ],
             },
           },
         },

@@ -19,7 +19,17 @@ export const tamatoaSoShinyI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Tamatoa",
     version: "So glänzend!",
-    text: "Was haben wir denn hier? Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand nehmen.\\Glamourös\\ Dieser Charakter erhält +1 {L} für jeden Gegenstand, den du im Spiel hast.",
+    text: [
+      {
+        title: "Was haben wir denn hier?",
+        description:
+          "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand nehmen.",
+      },
+      {
+        title: "Glamourös",
+        description: "Dieser Charakter erhält +1 {L} für jeden Gegenstand, den du im Spiel hast.",
+      },
+    ],
   },
   fr: {
     name: "TAMATOA",

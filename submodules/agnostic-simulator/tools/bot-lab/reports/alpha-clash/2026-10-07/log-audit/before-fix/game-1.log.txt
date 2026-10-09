@@ -1,0 +1,925 @@
+# 0: turn 0, player-one, setup, health 25/25
+{"type":"setup"}
+
+# 1: turn 1, player-one, expansion, health 25/25
+{"type":"startGame"}
+
+# 2: turn 1, player-one, primary, health 25/25
+{"type":"deployResource","playerId":"player-one","cardId":"player-one-16"}
+Card: player-one-16 (Restoration)
+1 [framework.resource] P1 deploys a resource.
+
+# 3: turn 1, player-one, primary, health 25/25
+{"type":"playCard","playerId":"player-one","cardId":"player-one-42"}
+Card: player-one-42 (Marcus, Ghost of the Gambit)
+2 [framework.play] P1 plays Marcus, Ghost of the Gambit.
+
+# 4: turn 1, player-one, primary, health 25/25
+{"type":"pass","playerId":"player-two"}
+
+# 5: turn 2, player-two, expansion, health 25/25
+{"type":"endTurn","playerId":"player-one"}
+
+# 6: turn 2, player-two, primary, health 25/25
+{"type":"deployResource","playerId":"player-two","cardId":"player-two-57"}
+Card: player-two-57 (Breach the Void)
+3 [framework.resource] P2 deploys a resource.
+
+# 7: turn 2, player-two, primary, health 25/25
+{"type":"setCard","playerId":"player-two","cardId":"player-two-89"}
+Card: player-two-89 (Morac, the Devourer)
+4 [framework.set] P2 sets a card face down.
+
+# 8: turn 2, player-two, primary, health 25/25
+{"type":"playCard","playerId":"player-two","cardId":"player-two-84"}
+Card: player-two-84 (Gur, Savage Aggressor)
+5 [framework.play] P2 plays Gur, Savage Aggressor.
+
+# 9: turn 2, player-two, primary, health 25/25
+{"type":"pass","playerId":"player-one"}
+
+# 10: turn 2, player-two, clash, health 25/25
+{"type":"initiateClash","playerId":"player-two","attackerId":"player-two-84","targetId":"player-one-1"}
+6 [clash.declare] Gur, Savage Aggressor attacks Clarity, Ready for Trials.
+
+# 11: turn 2, player-two, clash, health 25/25
+{"type":"pass","playerId":"player-one"}
+
+# 12: turn 2, player-two, clash, health 25/25
+{"type":"declareObstructors","playerId":"player-one","obstructorIds":["player-one-42"]}
+7 [clash.obstruct] 1 Clash card(s) obstruct the attack.
+
+# 13: turn 2, player-two, clash, health 25/25
+{"type":"pass","playerId":"player-two"}
+
+# 14: turn 2, player-two, clash, health 25/25
+{"type":"pass","playerId":"player-one"}
+
+# 15: turn 2, player-two, clash, health 25/25
+{"type":"pass","playerId":"player-two"}
+
+# 16: turn 2, player-two, primary, health 25/25
+{"type":"pass","playerId":"player-one"}
+8 [effect.damage] Marcus, Ghost of the Gambit takes 2 clash damage.
+9 [effect.damage] Marcus, Ghost of the Gambit takes 2 clash damage.
+
+# 17: turn 2, player-two, clash, health 25/25
+{"type":"initiateClash","playerId":"player-two","attackerId":"player-two-52","targetId":"player-one-1"}
+10 [clash.declare] The Absence, Voice of the Void attacks Clarity, Ready for Trials.
+
+# 18: turn 2, player-two, clash, health 25/25
+{"type":"pass","playerId":"player-one"}
+
+# 19: turn 2, player-two, clash, health 25/25
+{"type":"pass","playerId":"player-one"}
+
+# 20: turn 2, player-two, clash, health 25/25
+{"type":"pass","playerId":"player-two"}
+
+# 21: turn 2, player-two, clash, health 25/25
+{"type":"pass","playerId":"player-one"}
+
+# 22: turn 2, player-two, clash, health 25/25
+{"type":"pass","playerId":"player-two"}
+
+# 23: turn 2, player-two, primary, health 24/24
+{"type":"pass","playerId":"player-one"}
+11 [effect.damage] Clarity, Ready for Trials takes 1 clash damage.
+12 [effect.damage] Clarity, Ready for Trials takes 1 clash damage; 1 reduces health to 24.
+13 [effect.damage] The Absence, Voice of the Void takes 1 clash damage.
+14 [effect.damage] The Absence, Voice of the Void takes 1 clash damage; 1 reduces health to 24.
+Choices: [{"id":"choice-1","kind":"option","playerId":"player-two","sourceId":"player-two-52","prompt":"Trigger - Challenge: You may activate the Portal.","options":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"effects":[{"type":"activatePortal"}],"eventCardId":"player-one-1","eventSourceId":"player-two-52"}]
+
+# 24: turn 2, player-two, primary, health 24/24
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-1","optionId":"yes"}
+15 [effect.portal] The Portal is now open.
+Choices: [{"id":"choice-2","kind":"target","playerId":"player-two","sourceId":"player-two-52","prompt":"Choose a target","candidates":["player-two-52"],"effects":[{"type":"modifyStats","target":{"type":"card","controller":"friendly","zones":["clash","contender"],"nameIncludes":"Absence","chosen":true},"attack":1,"defense":0,"duration":"endOfTurn"}],"bindings":{},"eventCardId":"player-one-1","eventSourceId":"player-two-52","friendlyAnchor":"player-two"}]
+
+# 25: turn 2, player-two, primary, health 24/24
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-2","optionId":"player-two-52"}
+
+# 26: turn 3, player-one, expansion, health 24/24
+{"type":"endTurn","playerId":"player-two"}
+Choices: [{"id":"choice-3","kind":"option","playerId":"player-two","sourceId":"player-two-52","prompt":"Banish the top card of your deck?","options":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"effects":[{"type":"banishTop","controller":"friendly"},{"type":"optional","prompt":"Draw a card?","effects":[{"type":"draw","controller":"friendly","amount":1}]}],"bindings":{}}]
+
+# 27: turn 3, player-one, expansion, health 24/24
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-3","optionId":"yes"}
+Choices: [{"id":"choice-4","kind":"option","playerId":"player-two","sourceId":"player-two-52","prompt":"Draw a card?","options":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"effects":[{"type":"draw","controller":"friendly","amount":1}],"bindings":{}}]
+
+# 28: turn 3, player-one, expansion, health 24/24
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-4","optionId":"yes"}
+
+# 29: turn 3, player-one, primary, health 24/24
+{"type":"deployResource","playerId":"player-one","cardId":"player-one-11"}
+Card: player-one-11 (Clarity's 1911)
+16 [framework.resource] P1 deploys a resource.
+
+# 30: turn 3, player-one, clash, health 24/24
+{"type":"initiateClash","playerId":"player-one","attackerId":"player-one-1","targetId":"player-two-52"}
+17 [clash.declare] Clarity, Ready for Trials attacks The Absence, Voice of the Void.
+Choices: [{"id":"choice-5","kind":"modal","playerId":"player-one","sourceId":"player-one-1","prompt":"Foretell: choose the next card and its destination","options":[{"id":"0","label":"Cao Ling, Demon Hunter: top of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-19"],"top":["player-one-33"],"bottom":[],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"1","label":"Cao Ling, Demon Hunter: bottom of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-19"],"top":[],"bottom":["player-one-33"],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"2","label":"Bombardment: top of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-33"],"top":["player-one-19"],"bottom":[],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"3","label":"Bombardment: bottom of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-33"],"top":[],"bottom":["player-one-19"],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]}],"bindings":{},"eventSourceId":"player-one-1"}]
+
+# 31: turn 3, player-one, clash, health 24/24
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-5","optionId":"0"}
+Choices: [{"id":"choice-6","kind":"modal","playerId":"player-one","sourceId":"player-one-1","prompt":"Foretell: choose the next card and its destination","options":[{"id":"0","label":"Bombardment: top of deck","effects":[{"type":"orderDeckCards","remaining":[],"top":["player-one-33","player-one-19"],"bottom":[],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"1","label":"Bombardment: bottom of deck","effects":[{"type":"orderDeckCards","remaining":[],"top":["player-one-33"],"bottom":["player-one-19"],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]}],"bindings":{},"eventSourceId":"player-one-1"}]
+
+# 32: turn 3, player-one, clash, health 24/24
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-6","optionId":"0"}
+18 [effect.reveal] Cao Ling, Demon Hunter is revealed.
+Choices: [{"id":"choice-7","kind":"modal","playerId":"player-one","sourceId":"player-one-1","prompt":"Choose what happens to the revealed card","options":[{"id":"0","label":"Put it into your hand","effects":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}]},{"id":"1","label":"Put it into Oblivion","effects":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}],"bindings":{"revealed":"player-one-33"},"eventSourceId":"player-one-1"}]
+
+# 33: turn 3, player-one, clash, health 24/24
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-7","optionId":"0"}
+
+# 34: turn 3, player-one, clash, health 24/24
+{"type":"pass","playerId":"player-two"}
+
+# 35: turn 3, player-one, clash, health 24/24
+{"type":"pass","playerId":"player-two"}
+
+# 36: turn 3, player-one, clash, health 24/24
+{"type":"pass","playerId":"player-one"}
+
+# 37: turn 3, player-one, clash, health 24/24
+{"type":"pass","playerId":"player-two"}
+
+# 38: turn 3, player-one, clash, health 24/24
+{"type":"pass","playerId":"player-one"}
+
+# 39: turn 3, player-one, primary, health 23/23
+{"type":"pass","playerId":"player-two"}
+19 [effect.damage] The Absence, Voice of the Void takes 1 clash damage.
+20 [effect.damage] The Absence, Voice of the Void takes 1 clash damage; 1 reduces health to 23.
+21 [effect.damage] Clarity, Ready for Trials takes 1 clash damage.
+22 [effect.damage] Clarity, Ready for Trials takes 1 clash damage; 1 reduces health to 23.
+Choices: [{"id":"choice-8","kind":"option","playerId":"player-two","sourceId":"player-two-52","prompt":"Trigger - Challenge: You may activate the Portal.","options":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"effects":[{"type":"activatePortal"}],"eventCardId":"player-one-1","eventSourceId":"player-two-52"}]
+
+# 40: turn 3, player-one, primary, health 23/23
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-8","optionId":"yes"}
+23 [effect.portal] The Portal is now closed.
+Choices: [{"id":"choice-9","kind":"target","playerId":"player-two","sourceId":"player-two-52","prompt":"Choose a target","candidates":["player-two-52"],"effects":[{"type":"modifyStats","target":{"type":"card","controller":"friendly","zones":["clash","contender"],"nameIncludes":"Absence","chosen":true},"attack":1,"defense":0,"duration":"endOfTurn"}],"bindings":{},"eventCardId":"player-one-1","eventSourceId":"player-two-52","friendlyAnchor":"player-two"}]
+
+# 41: turn 3, player-one, primary, health 23/23
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-9","optionId":"player-two-52"}
+
+# 42: turn 3, player-one, primary, health 23/23
+{"type":"playCard","playerId":"player-one","cardId":"player-one-26"}
+Card: player-one-26 (Haven, the Resourceful Helper)
+24 [framework.play] P1 plays Haven, the Resourceful Helper.
+
+# 43: turn 3, player-one, primary, health 23/23
+{"type":"pass","playerId":"player-two"}
+
+# 44: turn 3, player-one, clash, health 23/23
+{"type":"initiateClash","playerId":"player-one","attackerId":"player-one-26","targetId":"player-two-52"}
+25 [clash.declare] Haven, the Resourceful Helper attacks The Absence, Voice of the Void.
+
+# 45: turn 3, player-one, clash, health 23/23
+{"type":"pass","playerId":"player-two"}
+
+# 46: turn 3, player-one, clash, health 23/23
+{"type":"pass","playerId":"player-two"}
+
+# 47: turn 3, player-one, clash, health 23/23
+{"type":"pass","playerId":"player-one"}
+
+# 48: turn 3, player-one, clash, health 23/23
+{"type":"pass","playerId":"player-two"}
+
+# 49: turn 3, player-one, clash, health 23/23
+{"type":"pass","playerId":"player-one"}
+
+# 50: turn 3, player-one, primary, health 23/22
+{"type":"pass","playerId":"player-two"}
+26 [effect.damage] The Absence, Voice of the Void takes 1 clash damage.
+27 [effect.damage] The Absence, Voice of the Void takes 1 clash damage; 1 reduces health to 22.
+28 [effect.damage] Haven, the Resourceful Helper takes 2 clash damage.
+29 [effect.damage] Haven, the Resourceful Helper takes 2 clash damage.
+
+# 51: turn 3, player-one, primary, health 23/22
+{"type":"playCard","playerId":"player-one","cardId":"player-one-12"}
+Card: player-one-12 (Webber's Binoculars)
+30 [framework.play] P1 plays Webber's Binoculars.
+
+# 52: turn 3, player-one, primary, health 23/22
+{"type":"pass","playerId":"player-two"}
+
+# 53: turn 4, player-two, expansion, health 23/22
+{"type":"endTurn","playerId":"player-one"}
+
+# 54: turn 4, player-two, primary, health 23/22
+{"type":"deployResource","playerId":"player-two","cardId":"player-two-61"}
+Card: player-two-61 (From Life to Death)
+31 [framework.resource] P2 deploys a resource.
+
+# 55: turn 4, player-two, primary, health 23/22
+{"type":"playCard","playerId":"player-two","cardId":"player-two-79"}
+Card: player-two-79 (Death, the Dreadful)
+32 [framework.play] P2 plays Death, the Dreadful.
+
+# 56: turn 4, player-two, primary, health 23/22
+{"type":"pass","playerId":"player-one"}
+Choices: [{"id":"choice-10","kind":"option","playerId":"player-two","sourceId":"player-two-79","prompt":"You may activate the Portal.","options":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"effects":[{"type":"activatePortal"}],"eventSourceId":"player-two-79"}]
+
+# 57: turn 4, player-two, primary, health 23/22
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-10","optionId":"yes"}
+33 [effect.portal] The Portal is now open.
+Choices: [{"id":"choice-11","kind":"target","playerId":"player-two","sourceId":"player-two-52","prompt":"Choose a target","candidates":["player-two-52"],"effects":[{"type":"modifyStats","target":{"type":"card","controller":"friendly","zones":["clash","contender"],"nameIncludes":"Absence","chosen":true},"attack":1,"defense":0,"duration":"endOfTurn"}],"bindings":{},"eventSourceId":"player-two-79","friendlyAnchor":"player-two"}]
+
+# 58: turn 4, player-two, primary, health 23/22
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-11","optionId":"player-two-52"}
+
+# 59: turn 4, player-two, clash, health 23/22
+{"type":"initiateClash","playerId":"player-two","attackerId":"player-two-79","targetId":"player-one-1"}
+34 [clash.declare] Death, the Dreadful attacks Clarity, Ready for Trials.
+
+# 60: turn 4, player-two, clash, health 23/22
+{"type":"pass","playerId":"player-one"}
+
+# 61: turn 4, player-two, clash, health 23/22
+{"type":"pass","playerId":"player-one"}
+
+# 62: turn 4, player-two, clash, health 23/22
+{"type":"pass","playerId":"player-two"}
+
+# 63: turn 4, player-two, clash, health 23/22
+{"type":"pass","playerId":"player-one"}
+
+# 64: turn 4, player-two, clash, health 23/22
+{"type":"pass","playerId":"player-two"}
+
+# 65: turn 4, player-two, primary, health 21/22
+{"type":"pass","playerId":"player-one"}
+35 [effect.damage] Clarity, Ready for Trials takes 2 clash damage.
+36 [effect.damage] Clarity, Ready for Trials takes 2 clash damage; 2 reduces health to 21.
+37 [effect.damage] Death, the Dreadful takes 1 clash damage.
+38 [effect.damage] Death, the Dreadful takes 1 clash damage.
+Choices: [{"id":"choice-12","kind":"target","playerId":"player-two","sourceId":"player-two-79","prompt":"Choose a target","candidates":["player-one-1","player-two-52"],"effects":[{"type":"loseHealth","controller":"any","target":{"type":"contender","controller":"any","chosen":true},"amount":2},{"type":"draw","controller":"any","target":{"type":"contender","controller":"any","chosen":true},"amount":1}],"bindings":{},"eventCardId":"player-two-79","friendlyAnchor":"player-two"}]
+
+# 66: turn 4, player-two, primary, health 21/20
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-12","optionId":"player-two-52"}
+
+# 67: turn 4, player-two, clash, health 21/20
+{"type":"initiateClash","playerId":"player-two","attackerId":"player-two-84","targetId":"player-one-1"}
+39 [clash.declare] Gur, Savage Aggressor attacks Clarity, Ready for Trials.
+
+# 68: turn 4, player-two, clash, health 21/20
+{"type":"pass","playerId":"player-one"}
+
+# 69: turn 4, player-two, clash, health 21/20
+{"type":"pass","playerId":"player-one"}
+
+# 70: turn 4, player-two, clash, health 21/20
+{"type":"pass","playerId":"player-two"}
+
+# 71: turn 4, player-two, clash, health 21/20
+{"type":"pass","playerId":"player-one"}
+
+# 72: turn 4, player-two, clash, health 21/20
+{"type":"pass","playerId":"player-two"}
+
+# 73: turn 4, player-two, primary, health 19/20
+{"type":"pass","playerId":"player-one"}
+40 [effect.damage] Clarity, Ready for Trials takes 2 clash damage.
+41 [effect.damage] Clarity, Ready for Trials takes 2 clash damage; 2 reduces health to 19.
+42 [effect.damage] Gur, Savage Aggressor takes 1 clash damage.
+43 [effect.damage] Gur, Savage Aggressor takes 1 clash damage.
+
+# 74: turn 4, player-two, clash, health 19/20
+{"type":"initiateClash","playerId":"player-two","attackerId":"player-two-52","targetId":"player-one-1"}
+44 [clash.declare] The Absence, Voice of the Void attacks Clarity, Ready for Trials.
+
+# 75: turn 4, player-two, clash, health 19/20
+{"type":"pass","playerId":"player-one"}
+
+# 76: turn 4, player-two, clash, health 19/20
+{"type":"pass","playerId":"player-one"}
+
+# 77: turn 4, player-two, clash, health 19/20
+{"type":"pass","playerId":"player-two"}
+
+# 78: turn 4, player-two, clash, health 19/20
+{"type":"pass","playerId":"player-one"}
+
+# 79: turn 4, player-two, clash, health 19/20
+{"type":"pass","playerId":"player-two"}
+
+# 80: turn 4, player-two, primary, health 17/19
+{"type":"pass","playerId":"player-one"}
+45 [effect.damage] Clarity, Ready for Trials takes 2 clash damage.
+46 [effect.damage] Clarity, Ready for Trials takes 2 clash damage; 2 reduces health to 17.
+47 [effect.damage] The Absence, Voice of the Void takes 1 clash damage.
+48 [effect.damage] The Absence, Voice of the Void takes 1 clash damage; 1 reduces health to 19.
+Choices: [{"id":"choice-13","kind":"option","playerId":"player-two","sourceId":"player-two-52","prompt":"Trigger - Challenge: You may activate the Portal.","options":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"effects":[{"type":"activatePortal"}],"eventCardId":"player-one-1","eventSourceId":"player-two-52"}]
+
+# 81: turn 4, player-two, primary, health 17/19
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-13","optionId":"yes"}
+49 [effect.portal] The Portal is now closed.
+Choices: [{"id":"choice-14","kind":"target","playerId":"player-two","sourceId":"player-two-52","prompt":"Choose a target","candidates":["player-two-52"],"effects":[{"type":"modifyStats","target":{"type":"card","controller":"friendly","zones":["clash","contender"],"nameIncludes":"Absence","chosen":true},"attack":1,"defense":0,"duration":"endOfTurn"}],"bindings":{},"eventCardId":"player-one-1","eventSourceId":"player-two-52","friendlyAnchor":"player-two"}]
+
+# 82: turn 4, player-two, primary, health 17/19
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-14","optionId":"player-two-52"}
+
+# 83: turn 5, player-one, expansion, health 17/19
+{"type":"endTurn","playerId":"player-two"}
+
+# 84: turn 5, player-one, primary, health 17/19
+{"type":"deployResource","playerId":"player-one","cardId":"player-one-19"}
+Card: player-one-19 (Bombardment)
+50 [framework.resource] P1 deploys a resource.
+
+# 85: turn 5, player-one, clash, health 17/19
+{"type":"initiateClash","playerId":"player-one","attackerId":"player-one-1","targetId":"player-two-52"}
+51 [clash.declare] Clarity, Ready for Trials attacks The Absence, Voice of the Void.
+Choices: [{"id":"choice-15","kind":"modal","playerId":"player-one","sourceId":"player-one-1","prompt":"Foretell: choose the next card and its destination","options":[{"id":"0","label":"Denver: top of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-23"],"top":["player-one-51"],"bottom":[],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"1","label":"Denver: bottom of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-23"],"top":[],"bottom":["player-one-51"],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"2","label":"Zhao Li, Reconaissance Agent: top of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-51"],"top":["player-one-23"],"bottom":[],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"3","label":"Zhao Li, Reconaissance Agent: bottom of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-51"],"top":[],"bottom":["player-one-23"],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]}],"bindings":{},"eventSourceId":"player-one-1"}]
+
+# 86: turn 5, player-one, clash, health 17/19
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-15","optionId":"0"}
+Choices: [{"id":"choice-16","kind":"modal","playerId":"player-one","sourceId":"player-one-1","prompt":"Foretell: choose the next card and its destination","options":[{"id":"0","label":"Zhao Li, Reconaissance Agent: top of deck","effects":[{"type":"orderDeckCards","remaining":[],"top":["player-one-51","player-one-23"],"bottom":[],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"1","label":"Zhao Li, Reconaissance Agent: bottom of deck","effects":[{"type":"orderDeckCards","remaining":[],"top":["player-one-51"],"bottom":["player-one-23"],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]}],"bindings":{},"eventSourceId":"player-one-1"}]
+
+# 87: turn 5, player-one, clash, health 17/19
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-16","optionId":"0"}
+52 [effect.reveal] Denver is revealed.
+Choices: [{"id":"choice-17","kind":"modal","playerId":"player-one","sourceId":"player-one-1","prompt":"Choose what happens to the revealed card","options":[{"id":"0","label":"Put it into your hand","effects":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}]},{"id":"1","label":"Put it into Oblivion","effects":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}],"bindings":{"revealed":"player-one-51"},"eventSourceId":"player-one-1"}]
+
+# 88: turn 5, player-one, clash, health 17/19
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-17","optionId":"0"}
+
+# 89: turn 5, player-one, clash, health 17/19
+{"type":"pass","playerId":"player-two"}
+
+# 90: turn 5, player-one, clash, health 17/19
+{"type":"pass","playerId":"player-two"}
+
+# 91: turn 5, player-one, clash, health 17/19
+{"type":"pass","playerId":"player-one"}
+
+# 92: turn 5, player-one, clash, health 17/19
+{"type":"pass","playerId":"player-two"}
+
+# 93: turn 5, player-one, clash, health 17/19
+{"type":"pass","playerId":"player-one"}
+
+# 94: turn 5, player-one, primary, health 16/18
+{"type":"pass","playerId":"player-two"}
+53 [effect.damage] The Absence, Voice of the Void takes 1 clash damage.
+54 [effect.damage] The Absence, Voice of the Void takes 1 clash damage; 1 reduces health to 18.
+55 [effect.damage] Clarity, Ready for Trials takes 1 clash damage.
+56 [effect.damage] Clarity, Ready for Trials takes 1 clash damage; 1 reduces health to 16.
+Choices: [{"id":"choice-18","kind":"option","playerId":"player-two","sourceId":"player-two-52","prompt":"Trigger - Challenge: You may activate the Portal.","options":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"effects":[{"type":"activatePortal"}],"eventCardId":"player-one-1","eventSourceId":"player-two-52"}]
+
+# 95: turn 5, player-one, primary, health 16/18
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-18","optionId":"yes"}
+57 [effect.portal] The Portal is now open.
+Choices: [{"id":"choice-19","kind":"target","playerId":"player-two","sourceId":"player-two-52","prompt":"Choose a target","candidates":["player-two-52"],"effects":[{"type":"modifyStats","target":{"type":"card","controller":"friendly","zones":["clash","contender"],"nameIncludes":"Absence","chosen":true},"attack":1,"defense":0,"duration":"endOfTurn"}],"bindings":{},"eventCardId":"player-one-1","eventSourceId":"player-two-52","friendlyAnchor":"player-two"}]
+
+# 96: turn 5, player-one, primary, health 16/18
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-19","optionId":"player-two-52"}
+
+# 97: turn 5, player-one, primary, health 16/18
+{"type":"playCard","playerId":"player-one","cardId":"player-one-27"}
+Card: player-one-27 (Haven, the Resourceful Helper)
+58 [framework.play] P1 plays Haven, the Resourceful Helper.
+
+# 98: turn 5, player-one, primary, health 16/18
+{"type":"pass","playerId":"player-two"}
+
+# 99: turn 5, player-one, clash, health 16/18
+{"type":"initiateClash","playerId":"player-one","attackerId":"player-one-27","targetId":"player-two-52"}
+59 [clash.declare] Haven, the Resourceful Helper attacks The Absence, Voice of the Void.
+
+# 100: turn 5, player-one, clash, health 16/18
+{"type":"pass","playerId":"player-two"}
+
+# 101: turn 5, player-one, clash, health 16/18
+{"type":"pass","playerId":"player-two"}
+
+# 102: turn 5, player-one, clash, health 16/18
+{"type":"pass","playerId":"player-one"}
+
+# 103: turn 5, player-one, clash, health 16/18
+{"type":"pass","playerId":"player-two"}
+
+# 104: turn 5, player-one, clash, health 16/18
+{"type":"pass","playerId":"player-one"}
+
+# 105: turn 5, player-one, primary, health 16/17
+{"type":"pass","playerId":"player-two"}
+60 [effect.damage] The Absence, Voice of the Void takes 1 clash damage.
+61 [effect.damage] The Absence, Voice of the Void takes 1 clash damage; 1 reduces health to 17.
+62 [effect.damage] Haven, the Resourceful Helper takes 2 clash damage.
+63 [effect.damage] Haven, the Resourceful Helper takes 2 clash damage.
+
+# 106: turn 5, player-one, primary, health 16/17
+{"type":"playCard","playerId":"player-one","cardId":"player-one-51"}
+Card: player-one-51 (Denver)
+64 [framework.play] P1 plays Denver.
+
+# 107: turn 5, player-one, primary, health 16/17
+{"type":"pass","playerId":"player-two"}
+Choices: [{"id":"choice-20","kind":"option","playerId":"player-one","sourceId":"player-one-51","prompt":"You may draw two cards, then discard one card.","options":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"effects":[{"type":"draw","controller":"friendly","amount":2},{"type":"discard","controller":"friendly","amount":1}],"eventSourceId":"player-one-51"}]
+
+# 108: turn 5, player-one, primary, health 16/17
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-20","optionId":"yes"}
+
+# 109: turn 6, player-two, expansion, health 16/17
+{"type":"endTurn","playerId":"player-one"}
+
+# 110: turn 6, player-two, primary, health 16/17
+{"type":"deployResource","playerId":"player-two","cardId":"player-two-104"}
+Card: player-two-104 (Undiscovered Passageway)
+65 [framework.resource] P2 deploys a resource.
+
+# 111: turn 6, player-two, primary, health 16/17
+{"type":"playCard","playerId":"player-two","cardId":"player-two-94"}
+Card: player-two-94 (Rizlac, Ferocious Threat)
+66 [framework.play] P2 plays Rizlac, Ferocious Threat.
+
+# 112: turn 6, player-two, primary, health 16/17
+{"type":"pass","playerId":"player-one"}
+
+# 113: turn 6, player-two, clash, health 16/17
+{"type":"initiateClash","playerId":"player-two","attackerId":"player-two-94","targetId":"player-one-1"}
+67 [clash.declare] Rizlac, Ferocious Threat attacks Clarity, Ready for Trials.
+
+# 114: turn 6, player-two, clash, health 16/17
+{"type":"pass","playerId":"player-one"}
+
+# 115: turn 6, player-two, clash, health 16/17
+{"type":"pass","playerId":"player-one"}
+
+# 116: turn 6, player-two, clash, health 16/17
+{"type":"pass","playerId":"player-two"}
+
+# 117: turn 6, player-two, clash, health 16/17
+{"type":"pass","playerId":"player-one"}
+
+# 118: turn 6, player-two, clash, health 16/17
+{"type":"pass","playerId":"player-two"}
+
+# 119: turn 6, player-two, primary, health 14/17
+{"type":"pass","playerId":"player-one"}
+68 [effect.damage] Clarity, Ready for Trials takes 2 clash damage.
+69 [effect.damage] Clarity, Ready for Trials takes 2 clash damage; 2 reduces health to 14.
+70 [effect.damage] Rizlac, Ferocious Threat takes 1 clash damage.
+71 [effect.damage] Rizlac, Ferocious Threat takes 1 clash damage.
+
+# 120: turn 6, player-two, clash, health 14/17
+{"type":"initiateClash","playerId":"player-two","attackerId":"player-two-52","targetId":"player-one-1"}
+72 [clash.declare] The Absence, Voice of the Void attacks Clarity, Ready for Trials.
+
+# 121: turn 6, player-two, clash, health 14/17
+{"type":"pass","playerId":"player-one"}
+
+# 122: turn 6, player-two, clash, health 14/17
+{"type":"pass","playerId":"player-one"}
+
+# 123: turn 6, player-two, clash, health 14/17
+{"type":"pass","playerId":"player-two"}
+
+# 124: turn 6, player-two, clash, health 14/17
+{"type":"pass","playerId":"player-one"}
+
+# 125: turn 6, player-two, clash, health 14/17
+{"type":"pass","playerId":"player-two"}
+
+# 126: turn 6, player-two, primary, health 13/16
+{"type":"pass","playerId":"player-one"}
+73 [effect.damage] Clarity, Ready for Trials takes 1 clash damage.
+74 [effect.damage] Clarity, Ready for Trials takes 1 clash damage; 1 reduces health to 13.
+75 [effect.damage] The Absence, Voice of the Void takes 1 clash damage.
+76 [effect.damage] The Absence, Voice of the Void takes 1 clash damage; 1 reduces health to 16.
+Choices: [{"id":"choice-21","kind":"option","playerId":"player-two","sourceId":"player-two-52","prompt":"Trigger - Challenge: You may activate the Portal.","options":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"effects":[{"type":"activatePortal"}],"eventCardId":"player-one-1","eventSourceId":"player-two-52"}]
+
+# 127: turn 6, player-two, primary, health 13/16
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-21","optionId":"yes"}
+77 [effect.portal] The Portal is now closed.
+Choices: [{"id":"choice-22","kind":"target","playerId":"player-one","sourceId":"player-one-1","prompt":"Choose a target","candidates":["player-one-26","player-one-27","player-one-32","player-one-42"],"effects":[{"type":"returnToDeckTop","target":{"type":"card","controller":"friendly","zones":["oblivion"],"cardTypes":["clash"],"chosen":true}}],"bindings":{},"eventCardId":"player-two-52","eventSourceId":"player-one-1","friendlyAnchor":"player-one"}]
+
+# 128: turn 6, player-two, primary, health 13/16
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-22","optionId":"player-one-26"}
+78 [effect.deckTop] Haven, the Resourceful Helper is put on top of its owner's deck.
+Choices: [{"id":"choice-23","kind":"target","playerId":"player-two","sourceId":"player-two-52","prompt":"Choose a target","candidates":["player-two-52"],"effects":[{"type":"modifyStats","target":{"type":"card","controller":"friendly","zones":["clash","contender"],"nameIncludes":"Absence","chosen":true},"attack":1,"defense":0,"duration":"endOfTurn"}],"bindings":{},"eventCardId":"player-one-1","eventSourceId":"player-two-52","friendlyAnchor":"player-two"}]
+
+# 129: turn 6, player-two, primary, health 13/16
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-23","optionId":"player-two-52"}
+
+# 130: turn 7, player-one, expansion, health 13/16
+{"type":"endTurn","playerId":"player-two"}
+
+# 131: turn 7, player-one, primary, health 13/16
+{"type":"deployResource","playerId":"player-one","cardId":"player-one-18"}
+Card: player-one-18 (Restoration)
+79 [framework.resource] P1 deploys a resource.
+
+# 132: turn 7, player-one, clash, health 13/16
+{"type":"initiateClash","playerId":"player-one","attackerId":"player-one-1","targetId":"player-two-52"}
+80 [clash.declare] Clarity, Ready for Trials attacks The Absence, Voice of the Void.
+Choices: [{"id":"choice-24","kind":"modal","playerId":"player-one","sourceId":"player-one-1","prompt":"Foretell: choose the next card and its destination","options":[{"id":"0","label":"Zhao Li, Reconaissance Agent: top of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-25"],"top":["player-one-24"],"bottom":[],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"1","label":"Zhao Li, Reconaissance Agent: bottom of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-25"],"top":[],"bottom":["player-one-24"],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"2","label":"Zhao Li, Reconaissance Agent: top of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-24"],"top":["player-one-25"],"bottom":[],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"3","label":"Zhao Li, Reconaissance Agent: bottom of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-24"],"top":[],"bottom":["player-one-25"],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]}],"bindings":{},"eventSourceId":"player-one-1"}]
+
+# 133: turn 7, player-one, clash, health 13/16
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-24","optionId":"0"}
+Choices: [{"id":"choice-25","kind":"modal","playerId":"player-one","sourceId":"player-one-1","prompt":"Foretell: choose the next card and its destination","options":[{"id":"0","label":"Zhao Li, Reconaissance Agent: top of deck","effects":[{"type":"orderDeckCards","remaining":[],"top":["player-one-24","player-one-25"],"bottom":[],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"1","label":"Zhao Li, Reconaissance Agent: bottom of deck","effects":[{"type":"orderDeckCards","remaining":[],"top":["player-one-24"],"bottom":["player-one-25"],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]}],"bindings":{},"eventSourceId":"player-one-1"}]
+
+# 134: turn 7, player-one, clash, health 13/16
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-25","optionId":"0"}
+81 [effect.reveal] Zhao Li, Reconaissance Agent is revealed.
+Choices: [{"id":"choice-26","kind":"modal","playerId":"player-one","sourceId":"player-one-1","prompt":"Choose what happens to the revealed card","options":[{"id":"0","label":"Put it into your hand","effects":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}]},{"id":"1","label":"Put it into Oblivion","effects":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}],"bindings":{"revealed":"player-one-24"},"eventSourceId":"player-one-1"}]
+
+# 135: turn 7, player-one, clash, health 13/16
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-26","optionId":"0"}
+
+# 136: turn 7, player-one, clash, health 13/16
+{"type":"pass","playerId":"player-two"}
+
+# 137: turn 7, player-one, clash, health 13/16
+{"type":"pass","playerId":"player-two"}
+
+# 138: turn 7, player-one, clash, health 13/16
+{"type":"pass","playerId":"player-one"}
+
+# 139: turn 7, player-one, clash, health 13/16
+{"type":"pass","playerId":"player-two"}
+
+# 140: turn 7, player-one, clash, health 13/16
+{"type":"pass","playerId":"player-one"}
+
+# 141: turn 7, player-one, primary, health 12/15
+{"type":"pass","playerId":"player-two"}
+82 [effect.damage] The Absence, Voice of the Void takes 1 clash damage.
+83 [effect.damage] The Absence, Voice of the Void takes 1 clash damage; 1 reduces health to 15.
+84 [effect.damage] Clarity, Ready for Trials takes 1 clash damage.
+85 [effect.damage] Clarity, Ready for Trials takes 1 clash damage; 1 reduces health to 12.
+Choices: [{"id":"choice-27","kind":"target","playerId":"player-one","sourceId":"player-one-1","prompt":"Choose a target","candidates":["player-one-27","player-one-32","player-one-42"],"effects":[{"type":"returnToDeckTop","target":{"type":"card","controller":"friendly","zones":["oblivion"],"cardTypes":["clash"],"chosen":true}}],"bindings":{},"eventCardId":"player-two-52","eventSourceId":"player-one-1","friendlyAnchor":"player-one"}]
+
+# 142: turn 7, player-one, primary, health 12/15
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-27","optionId":"player-one-27"}
+86 [effect.deckTop] Haven, the Resourceful Helper is put on top of its owner's deck.
+Choices: [{"id":"choice-28","kind":"option","playerId":"player-two","sourceId":"player-two-52","prompt":"Trigger - Challenge: You may activate the Portal.","options":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"effects":[{"type":"activatePortal"}],"eventCardId":"player-one-1","eventSourceId":"player-two-52"}]
+
+# 143: turn 7, player-one, primary, health 12/15
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-28","optionId":"yes"}
+87 [effect.portal] The Portal is now open.
+Choices: [{"id":"choice-29","kind":"target","playerId":"player-two","sourceId":"player-two-52","prompt":"Choose a target","candidates":["player-two-52"],"effects":[{"type":"modifyStats","target":{"type":"card","controller":"friendly","zones":["clash","contender"],"nameIncludes":"Absence","chosen":true},"attack":1,"defense":0,"duration":"endOfTurn"}],"bindings":{},"eventCardId":"player-one-1","eventSourceId":"player-two-52","friendlyAnchor":"player-two"}]
+
+# 144: turn 7, player-one, primary, health 12/15
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-29","optionId":"player-two-52"}
+
+# 145: turn 7, player-one, primary, health 12/15
+{"type":"playCard","playerId":"player-one","cardId":"player-one-23"}
+Card: player-one-23 (Zhao Li, Reconaissance Agent)
+88 [framework.play] P1 plays Zhao Li, Reconaissance Agent.
+
+# 146: turn 7, player-one, primary, health 12/15
+{"type":"pass","playerId":"player-two"}
+
+# 147: turn 7, player-one, clash, health 12/15
+{"type":"initiateClash","playerId":"player-one","attackerId":"player-one-23","targetId":"player-two-52"}
+89 [clash.declare] Zhao Li, Reconaissance Agent attacks The Absence, Voice of the Void.
+
+# 148: turn 7, player-one, clash, health 12/15
+{"type":"pass","playerId":"player-two"}
+
+# 149: turn 7, player-one, clash, health 12/15
+{"type":"pass","playerId":"player-two"}
+
+# 150: turn 7, player-one, clash, health 12/15
+{"type":"pass","playerId":"player-one"}
+
+# 151: turn 7, player-one, clash, health 12/15
+{"type":"pass","playerId":"player-two"}
+
+# 152: turn 7, player-one, clash, health 12/15
+{"type":"pass","playerId":"player-one"}
+
+# 153: turn 7, player-one, primary, health 12/13
+{"type":"pass","playerId":"player-two"}
+90 [effect.damage] The Absence, Voice of the Void takes 2 clash damage.
+91 [effect.damage] The Absence, Voice of the Void takes 2 clash damage; 2 reduces health to 13.
+92 [effect.damage] Zhao Li, Reconaissance Agent takes 2 clash damage.
+93 [effect.damage] Zhao Li, Reconaissance Agent takes 2 clash damage.
+
+# 154: turn 8, player-two, expansion, health 12/13
+{"type":"endTurn","playerId":"player-one"}
+
+# 155: turn 8, player-two, primary, health 12/13
+{"type":"deployResource","playerId":"player-two","cardId":"player-two-105"}
+Card: player-two-105 (Undiscovered Passageway)
+94 [framework.resource] P2 deploys a resource.
+
+# 156: turn 8, player-two, primary, health 12/13
+{"type":"playCard","playerId":"player-two","cardId":"player-two-67"}
+Card: player-two-67 (The Absence, New Host)
+95 [framework.play] P2 plays The Absence, New Host.
+
+# 157: turn 8, player-two, primary, health 12/13
+{"type":"pass","playerId":"player-one"}
+
+# 158: turn 8, player-two, clash, health 12/13
+{"type":"initiateClash","playerId":"player-two","attackerId":"player-two-67","targetId":"player-one-1"}
+96 [clash.declare] The Absence, New Host attacks Clarity, Ready for Trials.
+
+# 159: turn 8, player-two, clash, health 12/13
+{"type":"pass","playerId":"player-one"}
+
+# 160: turn 8, player-two, clash, health 12/13
+{"type":"pass","playerId":"player-one"}
+
+# 161: turn 8, player-two, clash, health 12/13
+{"type":"pass","playerId":"player-two"}
+
+# 162: turn 8, player-two, clash, health 12/13
+{"type":"pass","playerId":"player-one"}
+
+# 163: turn 8, player-two, clash, health 12/13
+{"type":"pass","playerId":"player-two"}
+
+# 164: turn 8, player-two, primary, health 9/13
+{"type":"pass","playerId":"player-one"}
+97 [effect.damage] Clarity, Ready for Trials takes 3 clash damage.
+98 [effect.damage] Clarity, Ready for Trials takes 3 clash damage; 3 reduces health to 9.
+99 [effect.damage] The Absence, New Host takes 1 clash damage.
+100 [effect.damage] The Absence, New Host takes 1 clash damage.
+
+# 165: turn 8, player-two, clash, health 9/13
+{"type":"initiateClash","playerId":"player-two","attackerId":"player-two-94","targetId":"player-one-1"}
+101 [clash.declare] Rizlac, Ferocious Threat attacks Clarity, Ready for Trials.
+
+# 166: turn 8, player-two, clash, health 9/13
+{"type":"pass","playerId":"player-one"}
+
+# 167: turn 8, player-two, clash, health 9/13
+{"type":"pass","playerId":"player-one"}
+
+# 168: turn 8, player-two, clash, health 9/13
+{"type":"pass","playerId":"player-two"}
+
+# 169: turn 8, player-two, clash, health 9/13
+{"type":"pass","playerId":"player-one"}
+
+# 170: turn 8, player-two, clash, health 9/13
+{"type":"pass","playerId":"player-two"}
+
+# 171: turn 8, player-two, primary, health 7/13
+{"type":"pass","playerId":"player-one"}
+102 [effect.damage] Clarity, Ready for Trials takes 2 clash damage.
+103 [effect.damage] Clarity, Ready for Trials takes 2 clash damage; 2 reduces health to 7.
+104 [effect.damage] Rizlac, Ferocious Threat takes 1 clash damage.
+105 [effect.damage] Rizlac, Ferocious Threat takes 1 clash damage.
+
+# 172: turn 8, player-two, clash, health 7/13
+{"type":"initiateClash","playerId":"player-two","attackerId":"player-two-52","targetId":"player-one-1"}
+106 [clash.declare] The Absence, Voice of the Void attacks Clarity, Ready for Trials.
+
+# 173: turn 8, player-two, clash, health 7/13
+{"type":"pass","playerId":"player-one"}
+
+# 174: turn 8, player-two, clash, health 7/13
+{"type":"pass","playerId":"player-one"}
+
+# 175: turn 8, player-two, clash, health 7/13
+{"type":"pass","playerId":"player-two"}
+
+# 176: turn 8, player-two, clash, health 7/13
+{"type":"pass","playerId":"player-one"}
+
+# 177: turn 8, player-two, clash, health 7/13
+{"type":"pass","playerId":"player-two"}
+
+# 178: turn 8, player-two, primary, health 6/12
+{"type":"pass","playerId":"player-one"}
+107 [effect.damage] Clarity, Ready for Trials takes 1 clash damage.
+108 [effect.damage] Clarity, Ready for Trials takes 1 clash damage; 1 reduces health to 6.
+109 [effect.damage] The Absence, Voice of the Void takes 1 clash damage.
+110 [effect.damage] The Absence, Voice of the Void takes 1 clash damage; 1 reduces health to 12.
+Choices: [{"id":"choice-30","kind":"option","playerId":"player-two","sourceId":"player-two-52","prompt":"Trigger - Challenge: You may activate the Portal.","options":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"effects":[{"type":"activatePortal"}],"eventCardId":"player-one-1","eventSourceId":"player-two-52"}]
+
+# 179: turn 8, player-two, primary, health 6/12
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-30","optionId":"yes"}
+111 [effect.portal] The Portal is now closed.
+Choices: [{"id":"choice-31","kind":"target","playerId":"player-one","sourceId":"player-one-1","prompt":"Choose a target","candidates":["player-one-23","player-one-32","player-one-42"],"effects":[{"type":"returnToDeckTop","target":{"type":"card","controller":"friendly","zones":["oblivion"],"cardTypes":["clash"],"chosen":true}}],"bindings":{},"eventCardId":"player-two-52","eventSourceId":"player-one-1","friendlyAnchor":"player-one"}]
+
+# 180: turn 8, player-two, primary, health 6/12
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-31","optionId":"player-one-23"}
+112 [effect.deckTop] Zhao Li, Reconaissance Agent is put on top of its owner's deck.
+Choices: [{"id":"choice-32","kind":"target","playerId":"player-two","sourceId":"player-two-52","prompt":"Choose a target","candidates":["player-two-52","player-two-67"],"effects":[{"type":"modifyStats","target":{"type":"card","controller":"friendly","zones":["clash","contender"],"nameIncludes":"Absence","chosen":true},"attack":1,"defense":0,"duration":"endOfTurn"}],"bindings":{},"eventCardId":"player-one-1","eventSourceId":"player-two-52","friendlyAnchor":"player-two"}]
+
+# 181: turn 8, player-two, primary, health 6/12
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-32","optionId":"player-two-52"}
+
+# 182: turn 9, player-one, expansion, health 6/12
+{"type":"endTurn","playerId":"player-two"}
+
+# 183: turn 9, player-one, primary, health 6/12
+{"type":"deployResource","playerId":"player-one","cardId":"player-one-23"}
+Card: player-one-23 (Zhao Li, Reconaissance Agent)
+113 [framework.resource] P1 deploys a resource.
+
+# 184: turn 9, player-one, clash, health 6/12
+{"type":"initiateClash","playerId":"player-one","attackerId":"player-one-1","targetId":"player-two-52"}
+114 [clash.declare] Clarity, Ready for Trials attacks The Absence, Voice of the Void.
+Choices: [{"id":"choice-33","kind":"modal","playerId":"player-one","sourceId":"player-one-1","prompt":"Foretell: choose the next card and its destination","options":[{"id":"0","label":"Haven, the Resourceful Helper: top of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-25"],"top":["player-one-27"],"bottom":[],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"1","label":"Haven, the Resourceful Helper: bottom of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-25"],"top":[],"bottom":["player-one-27"],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"2","label":"Zhao Li, Reconaissance Agent: top of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-27"],"top":["player-one-25"],"bottom":[],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"3","label":"Zhao Li, Reconaissance Agent: bottom of deck","effects":[{"type":"orderDeckCards","remaining":["player-one-27"],"top":[],"bottom":["player-one-25"],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]}],"bindings":{},"eventSourceId":"player-one-1"}]
+
+# 185: turn 9, player-one, clash, health 6/12
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-33","optionId":"0"}
+Choices: [{"id":"choice-34","kind":"modal","playerId":"player-one","sourceId":"player-one-1","prompt":"Foretell: choose the next card and its destination","options":[{"id":"0","label":"Zhao Li, Reconaissance Agent: top of deck","effects":[{"type":"orderDeckCards","remaining":[],"top":["player-one-27","player-one-25"],"bottom":[],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]},{"id":"1","label":"Zhao Li, Reconaissance Agent: bottom of deck","effects":[{"type":"orderDeckCards","remaining":[],"top":["player-one-27"],"bottom":["player-one-25"],"then":[{"type":"revealTopChoice","binding":"revealed","take":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}],"decline":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}]}]}],"bindings":{},"eventSourceId":"player-one-1"}]
+
+# 186: turn 9, player-one, clash, health 6/12
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-34","optionId":"0"}
+115 [effect.reveal] Haven, the Resourceful Helper is revealed.
+Choices: [{"id":"choice-35","kind":"modal","playerId":"player-one","sourceId":"player-one-1","prompt":"Choose what happens to the revealed card","options":[{"id":"0","label":"Put it into your hand","effects":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"hand"}]},{"id":"1","label":"Put it into Oblivion","effects":[{"type":"tutor","controller":"friendly","target":{"type":"bound","binding":"revealed"},"destination":"oblivion"},{"type":"modifyStats","target":{"type":"self"},"attack":{"type":"boundProperty","binding":"revealed","property":"specificResourceCost","max":3},"defense":0,"duration":"endOfClash"}]}],"bindings":{"revealed":"player-one-27"},"eventSourceId":"player-one-1"}]
+
+# 187: turn 9, player-one, clash, health 6/12
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-35","optionId":"0"}
+
+# 188: turn 9, player-one, clash, health 6/12
+{"type":"pass","playerId":"player-two"}
+
+# 189: turn 9, player-one, clash, health 6/12
+{"type":"pass","playerId":"player-two"}
+
+# 190: turn 9, player-one, clash, health 6/12
+{"type":"pass","playerId":"player-one"}
+
+# 191: turn 9, player-one, clash, health 6/12
+{"type":"pass","playerId":"player-two"}
+
+# 192: turn 9, player-one, clash, health 6/12
+{"type":"pass","playerId":"player-one"}
+
+# 193: turn 9, player-one, primary, health 5/11
+{"type":"pass","playerId":"player-two"}
+116 [effect.damage] The Absence, Voice of the Void takes 1 clash damage.
+117 [effect.damage] The Absence, Voice of the Void takes 1 clash damage; 1 reduces health to 11.
+118 [effect.damage] Clarity, Ready for Trials takes 1 clash damage.
+119 [effect.damage] Clarity, Ready for Trials takes 1 clash damage; 1 reduces health to 5.
+Choices: [{"id":"choice-36","kind":"target","playerId":"player-one","sourceId":"player-one-1","prompt":"Choose a target","candidates":["player-one-32","player-one-42"],"effects":[{"type":"returnToDeckTop","target":{"type":"card","controller":"friendly","zones":["oblivion"],"cardTypes":["clash"],"chosen":true}}],"bindings":{},"eventCardId":"player-two-52","eventSourceId":"player-one-1","friendlyAnchor":"player-one"}]
+
+# 194: turn 9, player-one, primary, health 5/11
+{"type":"resolveChoice","playerId":"player-one","choiceId":"choice-36","optionId":"player-one-32"}
+120 [effect.deckTop] Cao Ling, Demon Hunter is put on top of its owner's deck.
+Choices: [{"id":"choice-37","kind":"option","playerId":"player-two","sourceId":"player-two-52","prompt":"Trigger - Challenge: You may activate the Portal.","options":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"effects":[{"type":"activatePortal"}],"eventCardId":"player-one-1","eventSourceId":"player-two-52"}]
+
+# 195: turn 9, player-one, primary, health 5/11
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-37","optionId":"yes"}
+121 [effect.portal] The Portal is now open.
+Choices: [{"id":"choice-38","kind":"target","playerId":"player-two","sourceId":"player-two-52","prompt":"Choose a target","candidates":["player-two-52","player-two-67"],"effects":[{"type":"modifyStats","target":{"type":"card","controller":"friendly","zones":["clash","contender"],"nameIncludes":"Absence","chosen":true},"attack":1,"defense":0,"duration":"endOfTurn"}],"bindings":{},"eventCardId":"player-one-1","eventSourceId":"player-two-52","friendlyAnchor":"player-two"}]
+
+# 196: turn 9, player-one, primary, health 5/11
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-38","optionId":"player-two-52"}
+
+# 197: turn 9, player-one, primary, health 5/11
+{"type":"playCard","playerId":"player-one","cardId":"player-one-24"}
+Card: player-one-24 (Zhao Li, Reconaissance Agent)
+122 [framework.play] P1 plays Zhao Li, Reconaissance Agent.
+
+# 198: turn 9, player-one, primary, health 5/11
+{"type":"pass","playerId":"player-two"}
+
+# 199: turn 9, player-one, clash, health 5/11
+{"type":"initiateClash","playerId":"player-one","attackerId":"player-one-24","targetId":"player-two-52"}
+123 [clash.declare] Zhao Li, Reconaissance Agent attacks The Absence, Voice of the Void.
+
+# 200: turn 9, player-one, clash, health 5/11
+{"type":"pass","playerId":"player-two"}
+
+# 201: turn 9, player-one, clash, health 5/11
+{"type":"pass","playerId":"player-two"}
+
+# 202: turn 9, player-one, clash, health 5/11
+{"type":"pass","playerId":"player-one"}
+
+# 203: turn 9, player-one, clash, health 5/11
+{"type":"pass","playerId":"player-two"}
+
+# 204: turn 9, player-one, clash, health 5/11
+{"type":"pass","playerId":"player-one"}
+
+# 205: turn 9, player-one, primary, health 5/9
+{"type":"pass","playerId":"player-two"}
+124 [effect.damage] The Absence, Voice of the Void takes 2 clash damage.
+125 [effect.damage] The Absence, Voice of the Void takes 2 clash damage; 2 reduces health to 9.
+126 [effect.damage] Zhao Li, Reconaissance Agent takes 2 clash damage.
+127 [effect.damage] Zhao Li, Reconaissance Agent takes 2 clash damage.
+
+# 206: turn 9, player-one, primary, health 5/9
+{"type":"playCard","playerId":"player-one","cardId":"player-one-26"}
+Card: player-one-26 (Haven, the Resourceful Helper)
+128 [framework.play] P1 plays Haven, the Resourceful Helper.
+
+# 207: turn 9, player-one, primary, health 5/9
+{"type":"pass","playerId":"player-two"}
+
+# 208: turn 9, player-one, clash, health 5/9
+{"type":"initiateClash","playerId":"player-one","attackerId":"player-one-26","targetId":"player-two-52"}
+129 [clash.declare] Haven, the Resourceful Helper attacks The Absence, Voice of the Void.
+
+# 209: turn 9, player-one, clash, health 5/9
+{"type":"pass","playerId":"player-two"}
+
+# 210: turn 9, player-one, clash, health 5/9
+{"type":"pass","playerId":"player-two"}
+
+# 211: turn 9, player-one, clash, health 5/9
+{"type":"pass","playerId":"player-one"}
+
+# 212: turn 9, player-one, clash, health 5/9
+{"type":"pass","playerId":"player-two"}
+
+# 213: turn 9, player-one, clash, health 5/9
+{"type":"pass","playerId":"player-one"}
+
+# 214: turn 9, player-one, primary, health 5/7
+{"type":"pass","playerId":"player-two"}
+130 [effect.damage] The Absence, Voice of the Void takes 2 clash damage.
+131 [effect.damage] The Absence, Voice of the Void takes 2 clash damage; 2 reduces health to 7.
+132 [effect.damage] Haven, the Resourceful Helper takes 2 clash damage.
+133 [effect.damage] Haven, the Resourceful Helper takes 2 clash damage.
+
+# 215: turn 10, player-two, expansion, health 5/7
+{"type":"endTurn","playerId":"player-one"}
+
+# 216: turn 10, player-two, primary, health 5/7
+{"type":"deployResource","playerId":"player-two","cardId":"player-two-107"}
+Card: player-two-107 (Amazon Rainforest)
+134 [framework.resource] P2 deploys a resource.
+
+# 217: turn 10, player-two, primary, health 5/7
+{"type":"playCard","playerId":"player-two","cardId":"player-two-95"}
+Card: player-two-95 (Rizlac, Ferocious Threat)
+135 [framework.play] P2 plays Rizlac, Ferocious Threat.
+
+# 218: turn 10, player-two, primary, health 5/7
+{"type":"pass","playerId":"player-one"}
+
+# 219: turn 10, player-two, primary, health 5/7
+{"type":"playCard","playerId":"player-two","cardId":"player-two-78"}
+Card: player-two-78 (Death, the Dreadful)
+136 [framework.play] P2 plays Death, the Dreadful.
+
+# 220: turn 10, player-two, primary, health 5/7
+{"type":"pass","playerId":"player-one"}
+Choices: [{"id":"choice-39","kind":"option","playerId":"player-two","sourceId":"player-two-78","prompt":"You may activate the Portal.","options":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"effects":[{"type":"activatePortal"}],"eventSourceId":"player-two-78"}]
+
+# 221: turn 10, player-two, primary, health 5/7
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-39","optionId":"yes"}
+137 [effect.portal] The Portal is now closed.
+Choices: [{"id":"choice-40","kind":"target","playerId":"player-two","sourceId":"player-two-52","prompt":"Choose a target","candidates":["player-two-52","player-two-67"],"effects":[{"type":"modifyStats","target":{"type":"card","controller":"friendly","zones":["clash","contender"],"nameIncludes":"Absence","chosen":true},"attack":1,"defense":0,"duration":"endOfTurn"}],"bindings":{},"eventSourceId":"player-two-78","friendlyAnchor":"player-two"}]
+
+# 222: turn 10, player-two, primary, health 5/7
+{"type":"resolveChoice","playerId":"player-two","choiceId":"choice-40","optionId":"player-two-52"}
+
+# 223: turn 10, player-two, clash, health 5/7
+{"type":"initiateClash","playerId":"player-two","attackerId":"player-two-67","targetId":"player-one-1"}
+138 [clash.declare] The Absence, New Host attacks Clarity, Ready for Trials.
+
+# 224: turn 10, player-two, clash, health 5/7
+{"type":"pass","playerId":"player-one"}
+
+# 225: turn 10, player-two, clash, health 5/7
+{"type":"pass","playerId":"player-one"}
+
+# 226: turn 10, player-two, clash, health 5/7
+{"type":"pass","playerId":"player-two"}
+
+# 227: turn 10, player-two, clash, health 5/7
+{"type":"pass","playerId":"player-one"}
+
+# 228: turn 10, player-two, clash, health 5/7
+{"type":"pass","playerId":"player-two"}
+
+# 229: turn 10, player-two, primary, health 2/7
+{"type":"pass","playerId":"player-one"}
+139 [effect.damage] Clarity, Ready for Trials takes 3 clash damage.
+140 [effect.damage] Clarity, Ready for Trials takes 3 clash damage; 3 reduces health to 2.
+141 [effect.damage] The Absence, New Host takes 1 clash damage.
+142 [effect.damage] The Absence, New Host takes 1 clash damage.
+
+# 230: turn 10, player-two, clash, health 2/7
+{"type":"initiateClash","playerId":"player-two","attackerId":"player-two-94","targetId":"player-one-1"}
+143 [clash.declare] Rizlac, Ferocious Threat attacks Clarity, Ready for Trials.
+
+# 231: turn 10, player-two, clash, health 2/7
+{"type":"pass","playerId":"player-one"}
+
+# 232: turn 10, player-two, clash, health 2/7
+{"type":"pass","playerId":"player-one"}
+
+# 233: turn 10, player-two, clash, health 2/7
+{"type":"pass","playerId":"player-two"}
+
+# 234: turn 10, player-two, clash, health 2/7
+{"type":"pass","playerId":"player-one"}
+
+# 235: turn 10, player-two, clash, health 2/7
+{"type":"pass","playerId":"player-two"}
+
+# 236: turn 10, player-two, complete, health 0/7
+{"type":"pass","playerId":"player-one"}
+144 [effect.damage] Clarity, Ready for Trials takes 2 clash damage.
+145 [effect.damage] Clarity, Ready for Trials takes 2 clash damage; 2 reduces health to 0.
+146 [effect.damage] Rizlac, Ferocious Threat takes 1 clash damage.
+147 [effect.damage] Rizlac, Ferocious Threat takes 1 clash damage.
+148 [framework.gameOver] P1's Contender is defeated.
+149 [framework.gameOver] P1's Contender is defeated.
+150 [framework.gameOver] P1's Contender is defeated.

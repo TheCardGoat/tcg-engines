@@ -44,6 +44,16 @@ describe("Zetatech Faceplate (Retail) jsdom happy path", () => {
       await pom.expectFieldCardAttachedGearCount(CYBERPUNK_P2, rivalHost.instanceId, 1);
 
       await pom.attackRival(host.instanceId, CYBERPUNK_P1);
+      // The Faceplate spend trigger now queues as an explicit chooseTrigger
+      // before its gig-adjust target choice.
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTrigger");
+      const spendTrigger = (await pom.getPendingTriggerOptions(CYBERPUNK_P1)).find(
+        (option) => option.sourceCardId !== host.instanceId,
+      );
+      if (!spendTrigger) {
+        throw new Error("Expected Zetatech Faceplate to offer its spend trigger.");
+      }
+      await pom.resolveTrigger(spendTrigger.triggerId, CYBERPUNK_P1);
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
 
       const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
@@ -60,11 +70,12 @@ describe("Zetatech Faceplate (Retail) jsdom happy path", () => {
       }
       fireEvent.click(selectedGig);
 
-      const adjustPanels = view.container.querySelectorAll('[data-testid="gig-adjust-panel"]');
+      const adjustPanels = document.body.querySelectorAll('[data-testid="gig-adjust-panel"]');
       expectEqual("Zetatech Retail adjustment panel count", adjustPanels.length, 1);
+      // The popover dropdown portals to body and carries the die id itself.
       expectEqual(
         "Zetatech Retail adjustment panel anchor",
-        adjustPanels[0]?.closest('[data-testid="gig-die-anchor"]')?.getAttribute("data-die-id"),
+        adjustPanels[0]?.getAttribute("data-die-id"),
         d8.id,
       );
 
@@ -113,8 +124,16 @@ describe("Zetatech Faceplate (Retail) jsdom happy path", () => {
       await pom.expectFieldCardAttachedGearCount(CYBERPUNK_P2, rivalHost.instanceId, 1);
 
       await pom.attackRival(host.instanceId, CYBERPUNK_P1);
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTrigger");
+      const declineTrigger = (await pom.getPendingTriggerOptions(CYBERPUNK_P1)).find(
+        (option) => option.sourceCardId !== host.instanceId,
+      );
+      if (!declineTrigger) {
+        throw new Error("Expected Zetatech Faceplate to offer its spend trigger.");
+      }
+      await pom.resolveTrigger(declineTrigger.triggerId, CYBERPUNK_P1);
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
-      await pom.resolveAdjustGigPass(CYBERPUNK_P1);
+      fireEvent.click(view.getByRole("button", { name: "Take none" }));
 
       await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
       await pom.expectGigValue(d8.id, 3);

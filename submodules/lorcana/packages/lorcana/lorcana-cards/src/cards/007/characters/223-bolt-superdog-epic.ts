@@ -25,7 +25,7 @@ export const boltSuperdogEpic: CharacterCard = {
   franchise: "Bolt",
   set: "007",
   cardNumber: 223,
-  rarity: "common",
+  rarity: "super_rare",
   specialRarity: "epic",
   cost: 5,
   strength: 3,

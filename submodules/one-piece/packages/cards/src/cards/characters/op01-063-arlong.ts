@@ -23,7 +23,7 @@ export const op01Arlong063: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Fish-Man Arlong Pirates"],
+  traits: ["Fish-Man", "Arlong Pirates"],
   attribute: "slash",
   effect:
     "[DON!! x1] [Activate:Main] You may rest this Character: Choose 1 card from your opponent's hand; your opponent reveals that card. If the revealed card is an Event, place up to 1 card from your opponent's Life area at the bottom of the owner's deck.  This card has been officially errata'd.",

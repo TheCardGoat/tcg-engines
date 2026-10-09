@@ -29,6 +29,7 @@ describe("OP14-109 Victoria Cindry", () => {
     const wrongTraitId = engine.findCardInZone("north", "trash", eb01Doma005);
     const wrongCategoryId = engine.findCardInZone("north", "trash", op06ThrillerBark098);
 
+    const resolvingTriggerId = engine.findCardInZone("north", "life", op14eb04VictoriaCindry109);
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
     const play = engine.pendingDecision("effectPlaySelection", "north").steps[0];
@@ -38,6 +39,7 @@ describe("OP14-109 Victoria Cindry", () => {
     for (const excludedId of [highCostId, wrongTraitId, wrongCategoryId]) {
       expect(play.candidates.map((candidate) => candidate.ref.id)).not.toContain(excludedId);
     }
+    expect(play.candidates.map((candidate) => candidate.ref.id)).not.toContain(resolvingTriggerId);
     engine.resolveDecision("effectPlaySelection", { selectedIds: [includedId] }, "north");
 
     expect(

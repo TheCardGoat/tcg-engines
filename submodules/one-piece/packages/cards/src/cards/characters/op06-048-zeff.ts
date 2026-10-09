@@ -39,7 +39,7 @@ export const op06Zeff048: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "East Blue",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -61,7 +61,7 @@ export const op06Zeff048: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "East Blue",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

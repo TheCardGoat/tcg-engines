@@ -30,7 +30,7 @@ export const op13Sabo004: LeaderCard = {
   setId: "OP13",
   power: 5000,
   life: 5,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "special",
   effect:
     "If you have 4 or more Life cards, give this Leader -1000 power.\n[DON!! x1] If you have a Character with a cost of 8 or more, your Leader and all of your Characters gain +1000 power.",

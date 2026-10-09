@@ -39,7 +39,7 @@ export const op12JewelryBonney118: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Bonney Pirates Supernovas"],
+  traits: ["Supernovas", "Bonney Pirates"],
   attribute: "special",
   effect:
     "[Blocker]\n[On Play] If you have 8 or more rested cards, draw 2 cards and trash 1 card from your hand. Then, set up to 1 of your DON!! cards as active.",

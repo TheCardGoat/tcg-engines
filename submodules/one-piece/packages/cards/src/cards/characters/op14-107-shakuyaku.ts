@@ -59,7 +59,7 @@ export const op14eb04Shakuyaku107: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Kuja Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

@@ -23,7 +23,7 @@ export const eb04Sentomaru053: CharacterCard = {
   cost: 2,
   power: 1000,
   counter: 1000,
-  traits: ["Navy Egghead"],
+  traits: ["Egghead", "Navy"],
   attribute: "slash",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Block] If you have 2 or less Life cards, draw 1 card.",

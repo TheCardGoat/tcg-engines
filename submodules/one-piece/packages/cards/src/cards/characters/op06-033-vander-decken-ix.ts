@@ -38,7 +38,7 @@ export const op06VanderDeckenIx033: CharacterCard = {
             options: [
               {
                 zones: ["hand"],
-                filters: [{ filter: "trait", value: "Fish-Man", match: "includes" }],
+                filters: [{ filter: "trait", value: "Fish-Man", match: "exact" }],
               },
               {
                 zones: ["hand", "stage"],

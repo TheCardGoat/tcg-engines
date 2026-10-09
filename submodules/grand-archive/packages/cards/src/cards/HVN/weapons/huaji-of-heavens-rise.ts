@@ -47,7 +47,7 @@ export const huajiOfHeavensRise: GrandArchiveCard<GrandArchiveAbilityDefinition,
             {
               kind: "rule-modification",
               mode: "allow",
-              action: "attack",
+              action: "use-weapon-for-attack",
               subject: {
                 kind: "each",
                 collection: {
@@ -195,7 +195,7 @@ export const huajiOfHeavensRise: GrandArchiveCard<GrandArchiveAbilityDefinition,
             {
               kind: "rule-modification",
               mode: "allow",
-              action: "attack",
+              action: "use-weapon-for-attack",
               subject: {
                 kind: "each",
                 collection: {

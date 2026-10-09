@@ -32,7 +32,7 @@ export const eb02Vegapunk056: CharacterCard = {
   cost: 5,
   power: 0,
   counter: 1000,
-  traits: ["Scientist Egghead"],
+  traits: ["Scientist", "Egghead"],
   attribute: "wisdom",
   effect:
     '[Blocker][On Play] Look at 5 cards from the top of your deck; play up to 1 "Scientist" type Character card with a cost of 5 or less other than [Vegapunk]. Then, place the rest at the bottom of your deck in any order and if your opponent has 2 or less Characters, trash 1 card from your hand.[Trigger] Draw 1 card.',
@@ -66,7 +66,7 @@ export const eb02Vegapunk056: CharacterCard = {
               {
                 filter: "trait",
                 value: "Scientist",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

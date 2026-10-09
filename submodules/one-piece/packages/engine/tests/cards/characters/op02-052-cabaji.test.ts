@@ -14,7 +14,7 @@ describe("OP02-052 Cabaji", () => {
     const engine = OnePieceTestEngine.create({
       hand: [op02Cabaji052, eb01Doma005],
       character: [{ card: op02Mohji060, playedOnTurn: 0 }],
-      deck: [eb01Fourtricks025, eb01MountainGod018],
+      deck: [eb01Fourtricks025, eb01MountainGod018, "EB01-025"],
       activeDon: op02Cabaji052.cost,
     });
     const keptId = engine.findCardInZone("south", "hand", eb01Doma005);

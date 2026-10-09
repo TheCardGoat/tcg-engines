@@ -17,6 +17,7 @@ import type {
 } from "@tcg/shared/game-adapter";
 import {
   buildColorMetadataFacets,
+  hostedUndoProposalPolicy,
   normalizeMetadataColors,
   sortMetadataFacets,
 } from "@tcg/shared/game-adapter";
@@ -44,6 +45,7 @@ function getLorcanaCard(publicId: string) {
 
 export const lorcanaServerAdapter: GameAdapter = {
   slug: "lorcana",
+  proposalPolicy: hostedUndoProposalPolicy,
   deckInterchange: lorcanaDeckInterchangeAdapter,
 
   createGameId(): string {

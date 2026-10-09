@@ -97,7 +97,7 @@ export const vermilionDecree: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                 text: "Deal 2 damage to up to one target ally.",
                 targets: [
                   {
-                    id: "target-1",
+                    id: "mode-2:target-1",
                     kind: "target",
                     declared: "announcement",
                     chooser: "controller",
@@ -123,7 +123,7 @@ export const vermilionDecree: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                   },
                   recipient: {
                     kind: "bound",
-                    binding: "target-1",
+                    binding: "mode-2:target-1",
                   },
                   amount: 2,
                 },

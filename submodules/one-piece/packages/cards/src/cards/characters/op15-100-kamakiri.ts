@@ -23,7 +23,7 @@ export const op15Kamakiri100: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Sky Island Shandian Warrior"],
+  traits: ["Sky Island", "Shandian Warrior"],
   attribute: "slash",
   effect:
     "[On Play] You may trash this Character and add 1 card from the top of your Life cards to your hand: K.O. up to 1 of your opponent's Characters with a cost of 6 or less.",

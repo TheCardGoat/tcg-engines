@@ -22,6 +22,7 @@ export const op08CharlotteOven061: CharacterCard = {
   setId: "OP08",
   cost: 5,
   power: 6000,
+  counter: 1000,
   traits: ["Big Mom Pirates"],
   attribute: "special",
   effect:

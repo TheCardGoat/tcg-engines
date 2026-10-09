@@ -1,3 +1,4 @@
+import { getCard } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
 
 import { OnePieceTestEngine } from "../../../index.ts";
@@ -35,6 +36,12 @@ describe("OP16-119 Marshall.D.Teach", () => {
     expect(south.lifeCount).toBe(lifeBefore + 1);
     const state = engine.getState();
     expect(state.cards[state.players.south.life[0]!]!.cardId).toBe("OP16-004");
+    expect(
+      engine
+        .getView("north")
+        .logs.some((entry) => entry.message.includes(getCard("OP16-004").name)),
+    ).toBe(false);
+    expect(state.cards[state.players.south.life[0]!]!.faceUp).toBe(false);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 

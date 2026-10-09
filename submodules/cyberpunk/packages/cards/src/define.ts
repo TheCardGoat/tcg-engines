@@ -5,6 +5,8 @@ import type {
   CardKeyword,
   CardPrinting,
   CardType,
+  CyberpunkCardLocale,
+  CyberpunkLocale,
   GearCardDefinition,
   LegendCardDefinition,
   ProgramCardDefinition,
@@ -12,27 +14,27 @@ import type {
   TimingTrigger,
   UnitCardDefinition,
 } from "@tcg/cyberpunk-types";
+import { unitsAndLegendsInPlay } from "@tcg/cyberpunk-types";
 import { cyberpunkCardMetadata, type CyberpunkCardMetadataEntry } from "./card-metadata.ts";
 
 /**
  * Canonical attachment for Gear that equips to a friendly unit or face-up legend in play.
- * All current Gear (7 cards) share this exact shape. Authors should call this rather than
- * inline the literal so the rule lives in one place.
+ * The shared target preset also serves card effects, the parser, and engine conditions.
  */
 export function gearAttachmentToUnitOrLegend(): AttachmentDefinition {
   return {
     text: "Equip to a unit or face-up legend.",
-    target: {
-      selector: "card",
-      controller: "friendly",
-      zones: ["field", "legendArea"],
-      cardTypes: ["unit", "legend"],
-      face: "faceUp",
-    },
+    target: unitsAndLegendsInPlay("friendly", "faceUp"),
   };
 }
 
-const TIMING_TRIGGERS: ReadonlySet<TimingTrigger> = new Set(["play", "attack", "flip", "call"]);
+const TIMING_TRIGGERS: ReadonlySet<TimingTrigger> = new Set([
+  "play",
+  "attack",
+  "flip",
+  "call",
+  "defeated",
+]);
 
 export function deriveTimingTriggers(abilities: readonly Ability[]): TimingTrigger[] {
   const seen: TimingTrigger[] = [];
@@ -68,6 +70,22 @@ export function deriveCardSurface(card: StructuredCardDefinition): {
 
 type MetadataBackedCardProperty = "printings" | "selectedPrintingId";
 
+/**
+ * Card-level display text. Authored card files must NOT carry these — they
+ * live in the per-card `<slug>.i18n.ts` sibling and are supplied to
+ * {@link defineCyberpunkCard} through its `i18n` parameter, so forbidding them
+ * here makes text-in-the-wrong-file a compile error.
+ */
+type LocalizedTextCardProperty =
+  | "name"
+  | "subname"
+  | "displayName"
+  | "rulesText"
+  | "flavorText"
+  | "description"
+  | "youtubeUrl"
+  | "sourceUrl";
+
 type DefaultableCardProperty =
   | "abilities"
   | "attachment"
@@ -79,9 +97,13 @@ type DefaultableCardProperty =
 
 export type AuthoredCyberpunkCardDefinition = Omit<
   CardDefinition,
-  MetadataBackedCardProperty | DefaultableCardProperty
+  MetadataBackedCardProperty | LocalizedTextCardProperty | DefaultableCardProperty
 > &
   Partial<Pick<CardDefinition, MetadataBackedCardProperty | DefaultableCardProperty>>;
+
+type LocalizedTextFreeAuthoredCardDefinition = AuthoredCyberpunkCardDefinition & {
+  [Property in LocalizedTextCardProperty]?: never;
+};
 
 type HydratedCyberpunkCard<TCard extends { type?: CardType }> = TCard &
   (TCard extends { type: "legend" }
@@ -94,8 +116,14 @@ type HydratedCyberpunkCard<TCard extends { type?: CardType }> = TCard &
           ? ProgramCardDefinition
           : StructuredCardDefinition);
 
-function cardMetadataKey(card: Pick<CardDefinition, "set" | "slug">): string {
-  return `${card.set.code}:${card.slug}`;
+/**
+ * Metadata is keyed by canonical slug — one entry per card regardless of how
+ * many sets carry printings for it. The authored file must be the canonical
+ * set's definition; every other set version of the card exists only as
+ * `printings[]` entries on the same entry.
+ */
+function cardMetadataKey(card: Pick<CardDefinition, "slug">): string {
+  return card.slug;
 }
 
 function hydratePrinting(
@@ -113,36 +141,38 @@ function hydratePrinting(
   };
 }
 
-export function defineCyberpunkCard<TCard extends AuthoredCyberpunkCardDefinition>(
+export function defineCyberpunkCard<TCard extends LocalizedTextFreeAuthoredCardDefinition>(
   card: TCard,
+  i18n: Record<CyberpunkLocale, CyberpunkCardLocale>,
 ): HydratedCyberpunkCard<TCard> {
   const metadata: CyberpunkCardMetadataEntry | undefined =
     cyberpunkCardMetadata[cardMetadataKey(card)];
   if (!metadata) {
-    throw new Error(`Missing Cyberpunk card metadata for ${card.set.code}:${card.slug}`);
+    throw new Error(`Missing Cyberpunk card metadata for ${card.slug}`);
+  }
+  if (metadata.canonicalSetCode !== card.set.code) {
+    throw new Error(
+      `Cyberpunk card ${card.slug} is authored under set "${card.set.code}" but canonical ` +
+        `metadata owns it under "${metadata.canonicalSetCode}". Only the canonical set may ` +
+        `author the card file; other set versions are printings on the same card.`,
+    );
   }
 
   const abilities = card.abilities ?? [];
-  const text = metadata.i18n.en;
+  const text = i18n.en;
   const selectedPrintingId =
     card.selectedPrintingId ?? metadata.selectedPrintingId ?? metadata.printings[0]?.id;
 
   return {
     ...card,
-    name: card.name ?? text.name,
-    displayName: card.displayName ?? text.displayName,
-    ...((card.subname ?? text.subname) ? { subname: card.subname ?? text.subname } : {}),
-    ...((card.rulesText ?? text.rulesText) ? { rulesText: card.rulesText ?? text.rulesText } : {}),
-    ...((card.flavorText ?? text.flavorText)
-      ? { flavorText: card.flavorText ?? text.flavorText }
-      : {}),
-    ...((card.description ?? text.description)
-      ? { description: card.description ?? text.description }
-      : {}),
-    ...((card.youtubeUrl ?? text.youtubeUrl)
-      ? { youtubeUrl: card.youtubeUrl ?? text.youtubeUrl }
-      : {}),
-    ...((card.sourceUrl ?? text.sourceUrl) ? { sourceUrl: card.sourceUrl ?? text.sourceUrl } : {}),
+    name: text.name,
+    displayName: text.displayName,
+    ...(text.subname ? { subname: text.subname } : {}),
+    ...(text.rulesText ? { rulesText: text.rulesText } : {}),
+    ...(text.flavorText ? { flavorText: text.flavorText } : {}),
+    ...(text.description ? { description: text.description } : {}),
+    ...(text.youtubeUrl ? { youtubeUrl: text.youtubeUrl } : {}),
+    ...(text.sourceUrl ? { sourceUrl: text.sourceUrl } : {}),
     printings: (card.printings ?? metadata.printings).map(hydratePrinting),
     ...(selectedPrintingId ? { selectedPrintingId } : {}),
     cost: card.cost ?? null,
@@ -155,5 +185,5 @@ export function defineCyberpunkCard<TCard extends AuthoredCyberpunkCardDefinitio
     abilities,
     attachment: card.attachment ?? null,
     reminderText: card.reminderText ?? [],
-  } as unknown as HydratedCyberpunkCard<TCard>;
+  } as HydratedCyberpunkCard<TCard>;
 }

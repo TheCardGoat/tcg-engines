@@ -61,6 +61,10 @@
     fromUnderCards.length > 0 || fromDiscardCards.length > 0,
   );
   const totalCards = $derived(board.getZoneTotalCards(playerSide, "hand"));
+  // Real hands stay well under this; fixtures that stage whole sets need a
+  // scrollable strip instead of an unreadable fan.
+  const BROWSE_MODE_THRESHOLD = 20;
+  const isBrowseMode = $derived(layoutMode === "desktop" && cards.length > BROWSE_MODE_THRESHOLD);
   const isMasked = $derived(board.isZoneMasked(playerSide, "hand"));
   const ownerId = $derived(board.getOwnerIdForSide(playerSide));
   const selectedCardIds = $derived(board.selectedCardIds);
@@ -109,7 +113,7 @@
     return 110;
   }
 
-  const dynamicOverlap = $derived(getDynamicOverlapRem(cards.length));
+  const dynamicOverlap = $derived(isBrowseMode ? -0.65 : getDynamicOverlapRem(cards.length));
   const dynamicCardWidth = $derived(getDynamicCardWidthPx(cards.length));
   const disableMobileSelectedLift = $derived(layoutMode === "mobile" && cards.length > 7);
 
@@ -167,9 +171,14 @@
   const showMobileHandControls = $derived(
     layoutMode === "mobile" && !isOpponent && cards.length > 0 && mobileHandNeedsScroll,
   );
+  const showBrowseHandControls = $derived(isBrowseMode && cards.length > 0);
+  const showHandScrollControls = $derived(showMobileHandControls || showBrowseHandControls);
+  const needsScrollIndicators = $derived(
+    layoutMode === "mobile" ? mobileHandNeedsScroll : isBrowseMode,
+  );
 
   function getFanRotation(index: number, total: number): number {
-    if (layoutMode === "mobile") {
+    if (isBrowseMode || layoutMode === "mobile") {
       return 0;
     }
 
@@ -201,7 +210,7 @@
   }
 
   function updateHiddenCardsToRight(): void {
-    if (layoutMode !== "mobile" || !handContainerEl) {
+    if (!needsScrollIndicators || !handContainerEl) {
       hiddenCardsToLeft = 0;
       hiddenCardsToRight = 0;
       return;
@@ -261,6 +270,16 @@
     onToggleTucked?.();
   }
 
+  function handleContainerWheel(event: WheelEvent) {
+    if (!needsScrollIndicators) return;
+    const container = event.currentTarget;
+    if (!(container instanceof HTMLDivElement)) return;
+    const delta = Math.abs(event.deltaY) > Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+    if (delta === 0) return;
+    event.preventDefault();
+    container.scrollLeft += delta;
+  }
+
   $effect(() => {
     if (!handContainerEl) {
       handViewportWidth = 0;
@@ -283,7 +302,7 @@
   });
 
   $effect(() => {
-    if (layoutMode !== "mobile" || !mobileHandNeedsScroll || !handContainerEl) {
+    if (!needsScrollIndicators || !handContainerEl) {
       hiddenCardsToLeft = 0;
       hiddenCardsToRight = 0;
       return;
@@ -367,7 +386,9 @@
 
   <div
     class="hand-container"
+    class:hand-container--browse={isBrowseMode}
     bind:this={handContainerEl}
+    onwheel={handleContainerWheel}
     data-board-anchor-id={createZoneAnchorId(playerSide, "hand")}
     data-board-scroll-sync={layoutMode === "mobile" ? "true" : undefined}
     data-mobile-scrollable={layoutMode === "mobile" && mobileHandNeedsScroll ? "true" : undefined}
@@ -472,7 +493,7 @@
     <span class="hand-inline-count">{effectiveTotal}</span>
   {/if}
 
-  {#if showMobileHandControls}
+  {#if showHandScrollControls}
     <button
       type="button"
       class="mobile-hand-scroll-button mobile-hand-scroll-button--left"
@@ -486,7 +507,7 @@
     </button>
   {/if}
 
-  {#if showMobileHandControls}
+  {#if showHandScrollControls}
     <button
       type="button"
       class="mobile-hand-scroll-button mobile-hand-scroll-button--right"
@@ -643,6 +664,39 @@
     position: relative;
     pointer-events: none;
     z-index: 2;
+  }
+
+  /* Oversized hands (whole-set fixtures) become a scrollable strip: the fan
+     overlap would leave only a sliver of each card visible. */
+  .hand-container--browse {
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-top: 26px;
+    margin-bottom: 30px;
+    pointer-events: auto;
+    --hover-scale: 1.12;
+    --hover-translate-y: -6px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(112, 153, 204, 0.55) transparent;
+  }
+
+  .hand-container--browse::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .hand-container--browse::-webkit-scrollbar-track {
+    background: rgba(7, 18, 31, 0.5);
+    border-radius: 999px;
+  }
+
+  .hand-container--browse::-webkit-scrollbar-thumb {
+    background: rgba(112, 153, 204, 0.55);
+    border-radius: 999px;
+  }
+
+  .hand-zone[data-layout-mode="desktop"] .hand-container--browse ~ .mobile-hand-scroll-button {
+    display: inline-flex;
   }
 
   .hand-zone--virtual-playables:not(.hand-zone--opponent) .hand-container::before {

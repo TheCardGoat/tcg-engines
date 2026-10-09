@@ -23,7 +23,7 @@ export const op15Nezumi010: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Navy East Blue"],
+  traits: ["East Blue", "Navy"],
   attribute: "strike",
   effect:
     "[Activate: Main] [Once Per Turn] Give up to 1 rested DON!! card to its owner's Leader or 1 of their Characters.",
@@ -35,8 +35,9 @@ export const op15Nezumi010: CharacterCard = {
         actions: [
           {
             action: "giveDon",
+            donorPlayer: "targetOwner",
             target: {
-              player: "self",
+              player: "both",
               zones: ["leader", "character"],
               count: {
                 amount: 1,

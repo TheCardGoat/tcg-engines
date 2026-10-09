@@ -35,7 +35,7 @@ export const eb02MonkeyDLuffy010: LeaderCard = {
   traits: ["Straw Hat Crew"],
   attribute: "strike",
   effect:
-    '[Activate: Main] [Once Per Turn] DON!! 2: If the only Characters on your field are "Straw Hat Crew" type Characters, set up to 2 of your DON!! cards as active. Then, this Leader gains +1000 power until the end of your opponent\'s next turn.',
+    '[Activate: Main] [Once Per Turn] DON!! -2: If the only Characters on your field are "Straw Hat Crew" type Characters, set up to 2 of your DON!! cards as active. Then, this Leader gains +1000 power until the end of your opponent\'s next turn.',
   effects: {
     effects: [
       {
@@ -48,43 +48,42 @@ export const eb02MonkeyDLuffy010: LeaderCard = {
         ],
         actions: [
           {
-            action: "setActive",
-            target: {
-              player: "self",
-              zones: ["costArea"],
-              count: {
-                amount: 2,
-                upTo: true,
-              },
-            },
-            condition: {
-              condition: "zoneCount",
-              player: "self",
-              zone: "character",
-              comparison: "eq",
-              value: 0,
-              filters: [
+            action: "conditional",
+            predicate: {
+              condition: "compound",
+              operator: "and",
+              conditions: [
                 {
-                  filter: "trait",
-                  value: "Straw Hat Crew",
-                  match: "includes",
-                  negate: true,
+                  condition: "zoneCount",
+                  player: "self",
+                  zone: "character",
+                  comparison: "gte",
+                  value: 1,
+                },
+                {
+                  condition: "zoneCount",
+                  player: "self",
+                  zone: "character",
+                  comparison: "eq",
+                  value: 0,
+                  filters: [
+                    { filter: "trait", value: "Straw Hat Crew", match: "exact", negate: true },
+                  ],
                 },
               ],
             },
-          },
-          {
-            action: "modifyPower",
-            target: {
-              player: "self",
-              zones: ["leader"],
-              count: {
-                amount: 1,
+            whenTrue: [
+              {
+                action: "setActive",
+                target: { player: "self", zones: ["costArea"], count: { amount: 2, upTo: true } },
               },
-              self: true,
-            },
-            value: 1000,
-            duration: "untilEndOfOpponentNextTurn",
+              {
+                action: "modifyPower",
+                target: { player: "self", zones: ["leader"], count: { amount: 1 }, self: true },
+                value: 1000,
+                duration: "untilEndOfOpponentNextTurn",
+              },
+            ],
           },
         ],
         oncePerTurn: true,

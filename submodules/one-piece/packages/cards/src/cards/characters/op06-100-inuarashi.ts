@@ -50,7 +50,7 @@ export const op06Inuarashi100: CharacterCard = {
   power: 5000,
   counter: 1000,
   trigger: "If your opponent has 3 or less Life cards, play this card.",
-  traits: ["Land of Wano", "Minks", "The Akazaya Nine"],
+  traits: ["Minks", "Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[DON!! x2][When Attacking] You may trash 1 card from your hand: K.O. up to 1 of your opponent's Characters with a cost equal to or less than the number of your opponent's Life cards.",

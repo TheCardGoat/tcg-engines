@@ -33,6 +33,7 @@ export const violetParrForceFieldPractice: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_92536b3f5ff44ef4b1a018151d15d441",
+    tcgPlayer: "704678",
   },
   text: "Resist +1",
   classifications: ["Storyborn", "Super", "Hero"],

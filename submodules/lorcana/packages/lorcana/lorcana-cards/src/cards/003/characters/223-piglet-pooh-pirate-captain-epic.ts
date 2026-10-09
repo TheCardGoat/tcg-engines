@@ -23,7 +23,7 @@ export const pigletPoohPirateCaptainEpic: CharacterCard = {
   franchise: "Winnie the Pooh",
   set: "003",
   cardNumber: 223,
-  rarity: "common",
+  rarity: "super_rare",
   specialRarity: "epic",
   cost: 2,
   strength: 2,

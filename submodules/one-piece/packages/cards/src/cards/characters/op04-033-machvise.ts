@@ -35,7 +35,7 @@ export const op04Machvise033: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Donquixote Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

@@ -24,11 +24,20 @@ export const op16AvaloPizarro102: CharacterCard = {
   power: 2000,
   counter: 2000,
   trigger: "Activate this card's [On K.O.] effect.",
-  traits: ["Blackbeard Pirates Impel Down"],
+  traits: ["Impel Down", "Blackbeard Pirates"],
   attribute: "special",
   effect: "[On K.O.] Draw 1 card, then play up to 1 [Fullalead] from your hand or trash.",
   effects: {
     effects: [
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "onKo",
+          },
+        ],
+      },
       {
         trigger: "onKo",
         actions: [

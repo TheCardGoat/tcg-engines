@@ -64,6 +64,7 @@ export const op15GanFall102: CharacterCard = {
               {
                 filter: "trait",
                 value: "Sky Island",
+                match: "exact",
               },
               {
                 filter: "power",

@@ -24,7 +24,7 @@ export const op14eb04EustassCaptainKidOp14014014: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Kid Pirates Supernovas"],
+  traits: ["Supernovas", "Kid Pirates"],
   attribute: "special",
   effect:
     "[Blocker]\n[On Play] If your Leader has the {Supernovas} type, play up to 1 red Character card with 2000 power or less from your hand.",
@@ -37,7 +37,7 @@ export const op14eb04EustassCaptainKidOp14014014: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Supernovas",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

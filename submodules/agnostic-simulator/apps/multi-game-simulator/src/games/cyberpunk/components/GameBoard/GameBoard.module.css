@@ -1,6 +1,7 @@
 .board {
-  --board-bg: #07090c;
-  --board-zone: #090b0f;
+  /* A seated playmat sets these on the seat so the field can show the art. */
+  --board-bg: var(--cp-seat-board-bg, #07090c);
+  --board-zone: var(--cp-seat-board-zone, #090b0f);
   --board-surface: #0c0f14;
   --neon-yellow: #f5e642;
   --neon-yellow-dim: rgb(245 230 66 / 30%);

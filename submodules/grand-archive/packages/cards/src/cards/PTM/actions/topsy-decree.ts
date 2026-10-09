@@ -94,7 +94,7 @@ export const topsyDecree: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
                     declared: "announcement",
                     chooser: "controller",
                     count: {
-                      kind: "exactly",
+                      kind: "up-to",
                       amount: 1,
                     },
                     unique: true,

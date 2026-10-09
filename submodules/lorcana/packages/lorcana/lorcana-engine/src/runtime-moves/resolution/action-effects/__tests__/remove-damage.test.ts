@@ -1,4 +1,5 @@
-import { describe, expect, it } from "bun:test";
+import { createLorcanaDomainEvent } from "../../../../types/domain-events";
+import { describe, expect, it, spyOn } from "bun:test";
 import type { CardInstanceId } from "#core";
 import type { RemoveDamageEffect } from "@tcg/lorcana-types";
 import type { PlayCardExecutionContext } from "../types";
@@ -62,6 +63,7 @@ describe("remove-damage", () => {
         other: { damage: 3 },
       },
     });
+    const emit = spyOn(ctx.framework.events, "emit");
     const effect: RemoveDamageEffect = {
       type: "remove-damage",
       amount: { type: "up-to", value: 4 },
@@ -84,5 +86,38 @@ describe("remove-damage", () => {
 
     expect(readDamage(ctx, TGT)).toBe(0);
     expect(readDamage(ctx, OTHER)).toBe(2);
+    const events = emit.mock.calls
+      .map((call) => call[0])
+      .filter((event) => event.kind === "CUSTOM" && event.customType === "damageRemoved");
+    expect(events).toEqual([
+      createLorcanaDomainEvent("damageRemoved", { targetId: TGT, amount: 3 }),
+      createLorcanaDomainEvent("damageRemoved", { targetId: OTHER, amount: 1 }),
+    ]);
   });
 });
+
+for (const damage of [0, 1, 3]) {
+  it(`publishes actual removal for damage ${damage}, with no zero healing outcome`, () => {
+    const ctx = createTestContext({
+      zoneCards: { "play:player-one": [TGT] },
+      definitions: { tgt: { id: "tgt", cardType: "character" } },
+      cardMeta: { tgt: { damage } },
+    });
+    const emit = spyOn(ctx.framework.events, "emit");
+    resolveRemoveDamageEffect(
+      ctx,
+      createCardPlayed({ cardId: "src", playerId: PLAYER_ONE }),
+      { type: "remove-damage", amount: 5 },
+      { targets: [TGT], amountByTarget: { [TGT]: 5 } },
+    );
+    expect(readDamage(ctx, TGT)).toBe(0);
+    const events = emit.mock.calls
+      .map((call) => call[0])
+      .filter((event) => event.kind === "CUSTOM" && event.customType === "damageRemoved");
+    expect(events).toEqual(
+      damage > 0
+        ? [createLorcanaDomainEvent("damageRemoved", { targetId: TGT, amount: damage })]
+        : [],
+    );
+  });
+}

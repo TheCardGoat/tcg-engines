@@ -28,12 +28,27 @@ export const op16CaptainBuggySOurSavior057: EventCard = {
   effects: {
     effects: [
       {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 2,
+          },
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: 1,
+          },
+        ],
+      },
+      {
         trigger: "counter",
         conditions: [
           {
             condition: "zoneCount",
             player: "self",
-            zone: "character",
+            zone: "field",
             comparison: "gte",
             value: 2,
             filters: [

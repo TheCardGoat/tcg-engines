@@ -74,7 +74,7 @@ describe("EB03-010 Monet", () => {
     if (blocker?.kind !== "selectEntity") throw new Error("Expected Monet's Blocker choice.");
     expect(blocker.candidates.map((candidate) => candidate.ref.id)).toEqual(["skip", monetId]);
     engine.resolveDecision("battleBlocker", { selectedIds: [monetId] }, "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
 
     const view = engine.getView("south");
     expect(view.players.south.lifeCount).toBe(lifeBefore);

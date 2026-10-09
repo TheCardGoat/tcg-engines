@@ -636,7 +636,7 @@
   "sim.support.submitError": "Failed to submit bug report. Please try again.",
   "sim.support.submitLabel": "Submit",
   "sim.support.submitSuccess": "Thank you for your report!",
-  "sim.support.openTriageLabel": "Open triage request",
+  "sim.support.openTriageLabel": "View bug report",
   "sim.target.cards": "Cards",
   "sim.target.players": "Players",
   "sim.target.selectedCount": "{selectedCount} selected",
@@ -647,5 +647,11 @@
   "sim.postGame.sidebar.goToNextGame": "Go to Next Game →",
   "sim.player.report.openAria": "Report player",
   "sim.itemZone.showEarlierAria": "Show {count, plural, one {# earlier item} other {# earlier items}}",
-  "sim.itemZone.showLaterAria": "Show {count, plural, one {# later item} other {# later items}}"
+  "sim.itemZone.showLaterAria": "Show {count, plural, one {# later item} other {# later items}}",
+  "sim.inkDropsBadge.instructionStart": "click to start paying with ink drops",
+  "sim.inkDropsBadge.instructionStop": "click to stop paying with ink drops",
+  "sim.inkDropsBadge.countOne": "{count} ink drop",
+  "sim.inkDropsBadge.countMany": "{count} ink drops",
+  "sim.effect.canChallengeReady": "Can challenge ready characters",
+  "sim.support.dismissReminderLabel": "Dismiss feedback reminder for one week"
 }

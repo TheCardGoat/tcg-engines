@@ -23,7 +23,7 @@ export const eb03Kuina014: CharacterCard = {
   cost: 2,
   power: 0,
   counter: 1000,
-  traits: ["East Blue Frost Moon Village"],
+  traits: ["East Blue", "Frost Moon Village"],
   attribute: "slash",
   effect:
     '[Activate: Main] You may rest this Character: Give up to 2 rested DON!! cards to your "Slash" attribute Leader.',

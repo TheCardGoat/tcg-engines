@@ -31,6 +31,7 @@ export const carlFredricksenLovingHusband: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5c8da2083bb14ef3b6b0536876a61a22",
+    tcgPlayer: "702684",
   },
   text: [
     {

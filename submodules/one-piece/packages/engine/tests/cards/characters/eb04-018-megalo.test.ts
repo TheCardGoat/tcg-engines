@@ -75,3 +75,24 @@ describe("EB04-018 Megalo", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });
+
+test("FAQ: Megalo played rested by Moria cannot pay its On Play rest cost", () => {
+  const e = OnePieceTestEngine.create(
+    { hand: ["OP06-086"], activeDon: 8, trash: ["EB04-018", "EB01-005"] },
+    { character: [{ cardId: "EB01-018", rested: true }] },
+  );
+  const megalo = e.findCardInZone("south", "trash", "EB04-018");
+  const doma = e.findCardInZone("south", "trash", "EB01-005");
+  const target = e.findCardInZone("north", "character", "EB01-018");
+  e.asSouth().play("OP06-086");
+  e.resolveDecision("effectGroupedPlaySelection", { selectedIds: [megalo, doma] }, "south");
+  e.resolveDecision("effectGroupedPlayStateAssignment", { optionId: doma }, "south");
+  expect(
+    e.getView("south").players.south.characters.find((c) => c?.instanceId === megalo)?.rested,
+  ).toBe(true);
+  expect(e.getView("south").players.north.characters.some((c) => c?.instanceId === target)).toBe(
+    true,
+  );
+  expect(e.getView("south").players.north.trash).toHaveLength(0);
+  expect(e.getView("south").prompts).toHaveLength(0);
+});

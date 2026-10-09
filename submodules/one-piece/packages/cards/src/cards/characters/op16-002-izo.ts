@@ -23,7 +23,7 @@ export const op16Izo002: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Land of Wano Whitebeard Pirates"],
+  traits: ["Land of Wano", "Whitebeard Pirates"],
   attribute: "ranged",
   effect: "[On Play] You may reveal 1 Character card with 8000 power from your hand: Draw 1 card.",
   effects: {

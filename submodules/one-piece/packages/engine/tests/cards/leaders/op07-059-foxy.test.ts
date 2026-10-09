@@ -11,7 +11,7 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP07-059 Foxy", () => {
-  test("pays DON!! -3 and freezes up to one rested Leader and Character independently", () => {
+  test("pays DON!! -3 and freezes the rested Leader before the optional Character", () => {
     const engine = OnePieceTestEngine.create(
       {
         leaderCardId: op07Foxy059,
@@ -36,12 +36,6 @@ describe("OP07-059 Foxy", () => {
     const donDeckBefore = engine.getView("south").players.south.donDeckCount;
     engine.declareAttack(engine.leader("south"), northLeaderId, "south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
-
-    const leaderChoice = engine.pendingDecision("effectTargetSelection", "south").steps[0];
-    expect(leaderChoice?.kind).toBe("selectEntity");
-    if (leaderChoice?.kind !== "selectEntity") throw new Error("Expected Foxy's Leader choice.");
-    expect(leaderChoice.candidates.map((candidate) => candidate.ref.id)).toEqual([northLeaderId]);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [northLeaderId] }, "south");
 
     const characterChoice = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     expect(characterChoice?.kind).toBe("selectEntity");
@@ -105,5 +99,23 @@ describe("OP07-059 Foxy", () => {
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("an active opposing Leader does not prevent freezing a rested Character", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op07Foxy059,
+        character: [op07Itomimizu060, op07Foxy071, op07Porche072],
+        activeDon: 3,
+      },
+      { character: [{ card: eb01Doma005, rested: true }] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const target = engine.findCardInZone("north", "character", eb01Doma005);
+    engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    engine.endTurn("south");
+    expect(engine.getView("north").players.north.leader.rested).toBe(false);
+    expect(engine.getView("north").players.north.characters[0]?.rested).toBe(true);
   });
 });

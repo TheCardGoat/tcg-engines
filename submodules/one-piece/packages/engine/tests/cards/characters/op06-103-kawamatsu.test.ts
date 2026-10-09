@@ -88,4 +88,24 @@ describe("OP06-103 Kawamatsu", () => {
     expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(hiyoriId);
     expect(view.players.south.trash).toHaveLength(0);
   });
+  test.each([3, 4])("Life Trigger checks opponent Life at boundary %i", (lifeCount) => {
+    const engine = OnePieceTestEngine.create(
+      { life: [op06Kawamatsu103, ...Array.from({ length: 1 }, () => "EB01-005")] },
+      { life: lifeCount, character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const physicalId = engine.findCardInZone("south", "life", op06Kawamatsu103);
+    engine
+      .asNorth()
+      .attack(engine.findCardInZone("north", "character", "EB01-018"), engine.leader("south"));
+    engine.asSouth().activateLifeTrigger();
+    const view = engine.getView("south");
+    expect(view.players.south.characters.some((card) => card?.instanceId === physicalId)).toBe(
+      lifeCount === 3,
+    );
+    expect(view.players.south.trash.some((card) => card.instanceId === physicalId)).toBe(
+      lifeCount === 4,
+    );
+    expect(view.prompts).toHaveLength(0);
+  });
 });

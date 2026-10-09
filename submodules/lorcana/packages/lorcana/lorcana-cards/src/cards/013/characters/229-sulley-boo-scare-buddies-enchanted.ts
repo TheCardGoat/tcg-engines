@@ -34,6 +34,7 @@ export const sulleyBooScareBuddiesEnchanted: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_84ac4e601f31462988d5fef80d41f5b2",
+    tcgPlayer: "702674",
   },
   text: [
     {

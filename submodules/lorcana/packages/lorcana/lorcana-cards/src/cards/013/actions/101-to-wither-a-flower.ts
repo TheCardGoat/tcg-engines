@@ -25,6 +25,10 @@ export const toWitherAFlower: ActionCard = {
   rarity: "rare",
   cost: 4,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_9bb5ff4d3e2f4134a178dd7381d4a640",
+    tcgPlayer: "704610",
+  },
   text: "Deal 2 damage to each opposing damaged character.",
   actionSubtype: "song",
   abilities: [

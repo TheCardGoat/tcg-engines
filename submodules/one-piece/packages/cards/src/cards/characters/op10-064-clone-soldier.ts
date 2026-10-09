@@ -23,7 +23,7 @@ export const op10CloneSoldier064: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["The Vinsmoke Family Kingdom of GERMA"],
+  traits: ["Kingdom of GERMA"],
   attribute: "ranged",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

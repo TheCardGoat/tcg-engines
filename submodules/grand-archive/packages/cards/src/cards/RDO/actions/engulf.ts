@@ -89,20 +89,11 @@ export const engulf: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> = {
                 kind: "stack-item",
                 itemTypes: ["card-activation"],
                 sourceFilter: {
-                  kind: "all",
-                  filters: [
-                    {
-                      kind: "type",
-                      oneOf: ["ATTACK"],
-                    },
-                    {
-                      kind: "not",
-                      filter: {
-                        kind: "type",
-                        oneOf: ["ATTACK"],
-                      },
-                    },
-                  ],
+                  kind: "not",
+                  filter: {
+                    kind: "type",
+                    oneOf: ["ATTACK"],
+                  },
                 },
               },
             },

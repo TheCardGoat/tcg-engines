@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb01Doma005, eb01MountainGod018, op07Morgans090 } from "@tcg/op-cards";
+import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018, op07Morgans090 } from "@tcg/op-cards";
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
@@ -7,7 +7,7 @@ describe("OP07-090 Morgans", () => {
   test("makes the opponent choose a hand card to trash before revealing and drawing", () => {
     const engine = OnePieceTestEngine.create(
       { hand: [op07Morgans090], activeDon: op07Morgans090.cost },
-      { hand: [eb01Doma005, eb01MountainGod018], deck: [eb01Doma005, eb01Doma005] },
+      { hand: [eb01Doma005, eb01MountainGod018], deck: [eb01Fourtricks025, eb01Doma005] },
     );
     const opposingHandIds = engine
       .getView("north")
@@ -30,6 +30,16 @@ describe("OP07-090 Morgans", () => {
         .getView("spectator")
         .logs.some((entry) => entry.message.includes(eb01MountainGod018.name)),
     ).toBe(true);
+    expect(opponent.players.north.hand.some((card) => card.cardId === eb01Fourtricks025.id)).toBe(
+      true,
+    );
+    for (const seat of ["south", "spectator"] as const) {
+      const view = engine.getView(seat);
+      expect(view.logs.some((entry) => entry.message.includes(eb01Fourtricks025.name))).toBe(false);
+      expect(view.players.north.hand.some((card) => card.cardId === eb01Fourtricks025.id)).toBe(
+        false,
+      );
+    }
     expect(opponent.prompts).toHaveLength(0);
   });
 });

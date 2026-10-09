@@ -99,11 +99,22 @@ describe("OP04-064 Ms. All Sunday", () => {
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
     expect(engine.getView("north").players.north.activeDon).toBe(4);
 
+    // The Life Trigger finishes playing its card before either ready effect activates.
+    expect(
+      engine
+        .getView("north")
+        .players.north.characters.some((card) => card?.instanceId === sundayId),
+    ).toBe(true);
+    const order = engine.pendingDecision("readyEffectOrder", "north").steps[0];
+    if (order?.kind !== "chooseOption") throw new Error("Expected Crocodile and On Play order.");
+    const crocodile = order.options.find((option) => option.targetId === engine.leader("north"));
+    if (!crocodile) throw new Error("Expected Crocodile's DON!! reaction.");
+    engine.resolveDecision("readyEffectOrder", { optionId: crocodile.id }, "north");
     // OP04-058 resolves first, replacing one of the two returned DON!! as active.
     chooseOneDon(engine, "north");
     expect(engine.getView("north").players.north).toMatchObject({ activeDon: 5, restedDon: 0 });
 
-    // The physical Trigger card is played, then its On Play adds the sixth field DON!! rested.
+    // The played card's On Play now adds the sixth field DON!! rested.
     expect(
       engine
         .getView("north")

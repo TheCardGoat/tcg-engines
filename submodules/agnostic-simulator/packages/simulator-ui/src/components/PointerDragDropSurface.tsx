@@ -1,10 +1,13 @@
+import type { DragMotion } from "./drag-motion";
 import {
   DndContext,
   DragOverlay,
   KeyboardSensor,
-  PointerSensor,
+  MouseSensor,
+  TouchSensor,
   defaultDropAnimationSideEffects,
   useDndMonitor,
+  useDndContext,
   useSensor,
   useSensors,
   type CollisionDetection,
@@ -13,8 +16,9 @@ import {
   type DragStartEvent,
   type DropAnimation,
   type DropAnimationKeyframeResolver,
+  type PointerActivationConstraint,
 } from "@dnd-kit/core";
-import { useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 
 const DEFAULT_DROP_ANIMATION: DropAnimation = {
   duration: 220,
@@ -30,12 +34,18 @@ const DEFAULT_DROP_ANIMATION: DropAnimation = {
 export type DropDisposition = { readonly kind: "accepted" } | { readonly kind: "rejected" };
 
 export interface PointerDragDropSurfaceProps<TSource> {
+  /** Cancel active sensors when the authoritative board changes, preserving child nodes. */
+  readonly cancelKey?: string | number;
+  readonly motion?: DragMotion<TSource>;
+  readonly presentation?: "overlay" | "external";
   readonly id: string;
   readonly children: ReactNode;
   readonly decodeSource: (id: string) => TSource | null;
   readonly renderOverlay: (source: TSource) => ReactNode;
   readonly collisionDetection?: CollisionDetection;
   readonly activationDistance?: number;
+  /** Optional touch threshold for scrollable surfaces; mouse keeps the normal distance. */
+  readonly touchActivationConstraint?: PointerActivationConstraint;
   readonly overlayClassName?: string;
   readonly dropAnimation?: DropAnimation | null;
   readonly onDragStart?: (source: TSource | null, event: DragStartEvent) => void;
@@ -56,11 +66,15 @@ export interface PointerDragDropSurfaceProps<TSource> {
  */
 export function PointerDragDropSurface<TSource>({
   id,
+  cancelKey,
+  motion,
+  presentation = "overlay",
   children,
   decodeSource,
   renderOverlay,
   collisionDetection,
   activationDistance = 4,
+  touchActivationConstraint,
   overlayClassName,
   dropAnimation = DEFAULT_DROP_ANIMATION,
   onDragStart,
@@ -69,10 +83,23 @@ export function PointerDragDropSurface<TSource>({
 }: PointerDragDropSurfaceProps<TSource>) {
   const [activeSource, setActiveSource] = useState<TSource | null>(null);
   const acceptedDropRef = useRef(false);
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: activationDistance } }),
-    useSensor(KeyboardSensor),
-  );
+  const previousCancelKey = useRef(cancelKey);
+  useLayoutEffect(() => {
+    if (previousCancelKey.current === cancelKey) return;
+    previousCancelKey.current = cancelKey;
+    // dnd-kit mouse, touch and keyboard sensors all implement Escape cancellation.
+    if (activeSource)
+      document.dispatchEvent(new KeyboardEvent("keydown", { code: "Escape", bubbles: true }));
+  }, [cancelKey, activeSource]);
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: { distance: activationDistance },
+  });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: touchActivationConstraint ?? { distance: activationDistance },
+  });
+  const keyboardSensor = useSensor(KeyboardSensor);
+  // Keep sensor registration stable when responsive touch thresholds change.
+  const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
 
   const handleDragStart = (event: DragStartEvent) => {
     acceptedDropRef.current = false;
@@ -83,13 +110,17 @@ export function PointerDragDropSurface<TSource>({
 
   const handleDragCancel = () => {
     setActiveSource(null);
+    motion?.returnToSource();
     onDragCancel?.();
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
     const source = decodeSource(String(event.active.id));
     const overId = event.over ? String(event.over.id) : null;
+    motion?.move(event.delta.x, event.delta.y);
+    motion?.release();
     acceptedDropRef.current = onDragEnd?.(source, overId, event).kind === "accepted";
+    if (!acceptedDropRef.current) motion?.returnToSource();
     setActiveSource(null);
   };
 
@@ -98,18 +129,22 @@ export function PointerDragDropSurface<TSource>({
       id={id}
       collisionDetection={collisionDetection}
       sensors={sensors}
+      onDragMove={(event) => motion?.move(event.delta.x, event.delta.y)}
       onDragStart={handleDragStart}
       onDragCancel={handleDragCancel}
       onDragEnd={handleDragEnd}
     >
+      {motion && <MotionCapture motion={motion} source={activeSource} />}
       {children}
-      <VelocityTiltOverlay
-        source={activeSource}
-        renderOverlay={renderOverlay}
-        className={overlayClassName}
-        dropAnimation={dropAnimation}
-        acceptedDropRef={acceptedDropRef}
-      />
+      {presentation === "overlay" && (
+        <VelocityTiltOverlay
+          source={activeSource}
+          renderOverlay={renderOverlay}
+          className={overlayClassName}
+          dropAnimation={dropAnimation}
+          acceptedDropRef={acceptedDropRef}
+        />
+      )}
     </DndContext>
   );
 }
@@ -210,4 +245,14 @@ function cssTransform(transform: {
   readonly scaleY: number;
 }): string {
   return `translate3d(${transform.x}px, ${transform.y}px, 0) scaleX(${transform.scaleX}) scaleY(${transform.scaleY})`;
+}
+
+function MotionCapture<T>({ motion, source }: { motion: DragMotion<T>; source: T | null }) {
+  const { activeNodeRect } = useDndContext();
+  useLayoutEffect(() => {
+    if (!source || !activeNodeRect || motion.getSnapshot()?.source === source) return;
+    const { left, top, width, height } = activeNodeRect;
+    motion.begin(source, { left, top, width, height });
+  }, [motion, source, activeNodeRect]);
+  return null;
 }

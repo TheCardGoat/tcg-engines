@@ -23,7 +23,7 @@ export const op15Viola040: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 2000,
-  traits: ["Donquixote Pirates Dressrosa"],
+  traits: ["Dressrosa", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "[On Play] Look at 3 cards from the top of your deck; reveal up to 1 {Dressrosa} type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
@@ -47,7 +47,7 @@ export const op15Viola040: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

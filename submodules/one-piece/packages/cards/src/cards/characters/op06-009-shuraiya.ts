@@ -42,16 +42,8 @@ export const op06Shuraiya009: CharacterCard = {
         trigger: "whenAttacking",
         actions: [
           {
-            action: "setBasePowerFrom",
+            action: "copyPower",
             target: {
-              player: "self",
-              zones: ["character"],
-              count: {
-                amount: 1,
-              },
-              self: true,
-            },
-            source: {
               player: "opponent",
               zones: ["leader"],
               count: {
@@ -69,16 +61,8 @@ export const op06Shuraiya009: CharacterCard = {
         trigger: "onBlock",
         actions: [
           {
-            action: "setBasePowerFrom",
+            action: "copyPower",
             target: {
-              player: "self",
-              zones: ["character"],
-              count: {
-                amount: 1,
-              },
-              self: true,
-            },
-            source: {
               player: "opponent",
               zones: ["leader"],
               count: {

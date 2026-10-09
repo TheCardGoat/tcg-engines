@@ -1,7 +1,15 @@
+import {
+  nextFabUndoCheckpoint,
+  type FabTurnStartCheckpoint,
+  type FabUndoCheckpoint,
+} from "./undo.ts";
 import { evaluateReserveTimeoutDrop } from "@tcg/protocol";
 import { advanceFabClock, fabRemainingMs, type FabClock } from "./clock.ts";
 import {
   FAB_FACE_DOWN,
+  createFabMatchContext,
+  restoreFabMatchSnapshot,
+  type FabPlayerLog,
   FabMatchRuntime,
   decodeFabCommand,
   isFabMoveName,
@@ -48,7 +56,9 @@ import { FAB_ANALYTICS_SCHEMA_VERSION_V2, projectFabAnalyticsFactsV2 } from "./a
  * this class only translates dispatch results and viewer projections.
  */
 export class FleshAndBloodServerEngine implements ServerGameEngine {
-  readonly runtime: FabMatchRuntime;
+  runtime: FabMatchRuntime;
+  private undoCheckpoints: FabUndoCheckpoint[];
+  private turnStartCheckpoint: FabTurnStartCheckpoint | null;
 
   private clock?: FabClock;
   private readonly transferSources = new WeakMap<
@@ -56,9 +66,20 @@ export class FleshAndBloodServerEngine implements ServerGameEngine {
     ReadonlyMap<string, ReadonlySet<string>>
   >();
 
-  constructor(runtime: FabMatchRuntime, clock?: FabClock) {
+  constructor(
+    runtime: FabMatchRuntime,
+    clock?: FabClock,
+    undoCheckpoints: readonly FabUndoCheckpoint[] = [],
+    turnStartCheckpoint?: FabTurnStartCheckpoint | null,
+  ) {
+    this.undoCheckpoints = [...undoCheckpoints];
     this.runtime = runtime;
     this.clock = clock;
+    const actorId = runtime.getActivePlayerId();
+    this.turnStartCheckpoint =
+      turnStartCheckpoint === undefined && actorId && !runtime.getState().decision
+        ? { actorId, snapshot: runtime.snapshot(), clockBonuses: {} }
+        : (turnStartCheckpoint ?? null);
   }
 
   dispatch(
@@ -67,6 +88,10 @@ export class FleshAndBloodServerEngine implements ServerGameEngine {
     payload: Record<string, unknown>,
     context: DispatchContext,
   ): DispatchResult {
+    // Hosted dispatch is version-checked by the platform runtime cache and CAS.
+    // Direct undo callers can additionally supply expectedVersion below.
+    if (moveType === "undo") return this.undo(actorId, context);
+    if (moveType === "undoToTurnStart") return this.undoToTurnStart(actorId, context);
     if (!isFabMoveName(moveType)) {
       return {
         success: false,
@@ -84,6 +109,11 @@ export class FleshAndBloodServerEngine implements ServerGameEngine {
         stateID: this.runtime.getStateID(),
       };
     }
+    const before =
+      this.runtime.getState().decision || command.move === "concede"
+        ? null
+        : this.runtime.snapshot();
+    const previousClock = this.clock;
     const previousLocations = captureFabZoneLocations(this.runtime.getState());
     const sourceIds = new Map<string, ReadonlySet<string>>();
     sourceIds.set("spectator", visibleCardIds(this.runtime.viewer({ role: "spectator" })));
@@ -101,19 +131,275 @@ export class FleshAndBloodServerEngine implements ServerGameEngine {
       combatStep: this.runtime.getState().combat?.step ?? null,
     };
     const timestamp = Date.now();
+    const applied = this.runtime.applyCommand(actorId, command, {
+      commandId: `${context.gameId}:${actorId}:${this.runtime.getStateID() + 1}`,
+      timestamp,
+    });
     const result = this.toDispatchResult(
-      this.runtime.applyCommand(actorId, command, {
-        commandId: `${context.gameId}:${actorId}:${this.runtime.getStateID() + 1}`,
-        timestamp,
-      }),
+      applied,
       context,
       previousTurn,
       previousLocations,
       previousAnnouncementState,
     );
+    if (applied.success && result.success && result.transition !== "reversal") {
+      const currentCheckpoint = this.undoCheckpoints.at(-1) ?? null;
+      const nextCheckpoint = nextFabUndoCheckpoint({
+        current: currentCheckpoint,
+        before,
+        actorId,
+        move: command.move,
+        barrier: applied.undoBarrier,
+        ended: this.hasGameEnded(),
+      });
+      if (this.runtime.getState().turnNumber !== previousTurn) {
+        this.undoCheckpoints = [];
+        const nextActorId = this.getActivePlayerId();
+        this.turnStartCheckpoint = nextActorId
+          ? { actorId: nextActorId, snapshot: this.runtime.snapshot(), clockBonuses: {} }
+          : null;
+      } else if (!nextCheckpoint) {
+        this.undoCheckpoints = [];
+        this.turnStartCheckpoint = null;
+      } else if (nextCheckpoint !== currentCheckpoint) {
+        this.undoCheckpoints =
+          currentCheckpoint?.actorId === actorId
+            ? [...this.undoCheckpoints, nextCheckpoint]
+            : [nextCheckpoint];
+        if (this.turnStartCheckpoint?.actorId !== actorId) this.turnStartCheckpoint = null;
+      }
+      if (previousClock && this.clock) {
+        const now = applied.execution.timestamp;
+        const awardedBonuses: Record<string, number> = {};
+        for (const id of this.runtime.playerIds()) {
+          const awarded =
+            fabRemainingMs(this.clock, id, now) - fabRemainingMs(previousClock, id, now);
+          awardedBonuses[id] = Math.max(0, awarded);
+        }
+        const latest = this.undoCheckpoints.at(-1);
+        if (latest) {
+          this.undoCheckpoints[this.undoCheckpoints.length - 1] = {
+            ...latest,
+            clockBonuses: addClockBonuses(latest.clockBonuses, awardedBonuses),
+          };
+        }
+        if (this.turnStartCheckpoint && this.runtime.getState().turnNumber === previousTurn) {
+          this.turnStartCheckpoint = {
+            ...this.turnStartCheckpoint,
+            clockBonuses: addClockBonuses(this.turnStartCheckpoint.clockBonuses, awardedBonuses),
+          };
+        }
+      }
+      result.undoable = this.canUndo(actorId);
+    }
     if (result.success && result.animationPlan)
       this.transferSources.set(result.animationPlan, sourceIds);
     return result;
+  }
+
+  getUndoCheckpoint(): FabUndoCheckpoint | null {
+    return this.undoCheckpoints.at(-1) ?? null;
+  }
+
+  getUndoCheckpoints(): readonly FabUndoCheckpoint[] {
+    return this.undoCheckpoints;
+  }
+
+  getTurnStartCheckpoint(): FabTurnStartCheckpoint | null {
+    return this.turnStartCheckpoint;
+  }
+
+  canUndo(actorId: string): boolean {
+    return !this.hasGameEnded() && this.getUndoCheckpoint()?.actorId === actorId;
+  }
+
+  canUndoToTurnStart(actorId: string): boolean {
+    const checkpoint = this.turnStartCheckpoint;
+    return (
+      !this.hasGameEnded() &&
+      checkpoint?.actorId === actorId &&
+      checkpoint.snapshot.turnNumber === this.runtime.getState().turnNumber &&
+      this.undoCheckpoints.length > 0
+    );
+  }
+
+  undo(actorId: string, context: DispatchContext, expectedVersion?: number): DispatchResult {
+    return this.restoreUndo(actorId, context, "last_move", expectedVersion);
+  }
+
+  undoToTurnStart(
+    actorId: string,
+    context: DispatchContext,
+    expectedVersion?: number,
+  ): DispatchResult {
+    return this.restoreUndo(actorId, context, "turn_start", expectedVersion);
+  }
+
+  private restoreUndo(
+    actorId: string,
+    context: DispatchContext,
+    scope: "last_move" | "turn_start",
+    expectedVersion?: number,
+  ): DispatchResult {
+    const undoneMoveId = scope === "last_move" ? this.getUndoCheckpoint()?.move : undefined;
+    const checkpoint = scope === "last_move" ? this.getUndoCheckpoint() : this.turnStartCheckpoint;
+    const restoresTurnStart = checkpoint?.snapshot.stateID === this.turnStartCheckpoint?.snapshot.stateID;
+    const previousStateID = this.getStateID();
+    if (
+      !checkpoint ||
+      !(scope === "last_move" ? this.canUndo(actorId) : this.canUndoToTurnStart(actorId)) ||
+      (expectedVersion !== undefined && expectedVersion !== previousStateID)
+    ) {
+      return {
+        success: false,
+        stateID: previousStateID,
+        errorCode: "undo_unavailable",
+        error: "No action is available to undo.",
+      };
+    }
+    const current = this.runtime.getState();
+    const stateID = previousStateID + 1;
+    const restored = restoreFabMatchSnapshot(
+      {
+        ...checkpoint.snapshot,
+        stateID,
+        automationPreferences: current.automationPreferences,
+        optionalTriggerAutomation: current.optionalTriggerAutomation,
+        priorityHoldArmed: current.priorityHoldArmed,
+      },
+      createFabMatchContext(current.cardDefinitions, current.publicCardIdentities),
+    );
+    this.runtime = new FabMatchRuntime(restored);
+    if (scope === "turn_start") {
+      this.undoCheckpoints = [];
+      this.turnStartCheckpoint = null;
+    } else {
+      this.undoCheckpoints.pop();
+      if (this.turnStartCheckpoint) {
+        this.turnStartCheckpoint = {
+          ...this.turnStartCheckpoint,
+          clockBonuses: subtractClockBonuses(
+            this.turnStartCheckpoint.clockBonuses,
+            checkpoint.clockBonuses,
+          ),
+        };
+        if (checkpoint.snapshot.stateID === this.turnStartCheckpoint.snapshot.stateID) {
+          this.turnStartCheckpoint = null;
+        }
+      }
+    }
+    const timestamp = Date.now();
+    if (this.clock) {
+      const clock = advanceFabClock(this.clock, {
+        actorId,
+        activeId: this.getActivePlayerId(),
+        now: timestamp,
+        actionBonus: false,
+        turnEnded: false,
+      });
+      this.clock = {
+        ...clock,
+        clockState: Object.fromEntries(
+          Object.entries(clock.clockState).map(([id, value]) => [
+            id,
+            {
+              ...value,
+              reserveMsRemaining: value.reserveMsRemaining - (checkpoint.clockBonuses[id] ?? 0),
+            },
+          ]),
+        ),
+      };
+    }
+    if (restoresTurnStart) {
+      this.turnStartCheckpoint = {
+        actorId,
+        snapshot: this.runtime.snapshot(),
+        clockBonuses: {},
+      };
+    }
+    const commandId = `${context.gameId}:${actorId}:${stateID}`;
+    const log: FabPlayerLog = {
+      kind: "player-narrative",
+      schemaVersion: 1,
+      commandId,
+      moveType: "undo",
+      actorId,
+      timestamp,
+      restoredCheckpointStateID: checkpoint.snapshot.stateID,
+      turnNumber: restored.turnNumber,
+      turnPlayerId: restored.activePlayerId,
+      phase: restored.phase,
+      entries: [
+        {
+          entryId: `${commandId}:undo`,
+          publicMessage: {
+            key: "flesh-and-blood.undo",
+            category: "action",
+            values: { actorId },
+          },
+        },
+      ],
+    };
+    return {
+      success: true,
+      stateID,
+      state: this.getStateSnapshot(),
+      transition: "move",
+      undoable: this.canUndo(actorId),
+      animationPlan: null,
+      acceptedMoveRecord: {
+        gameId: context.gameId,
+        stateVersion: stateID,
+        turnNumber: restored.turnNumber,
+        actorId,
+        moveId: scope === "turn_start" ? "undoToTurnStart" : "undo",
+        input: { args: {} },
+        processedCommand: {
+          commandID: commandId,
+          move: scope === "turn_start" ? "undoToTurnStart" : "undo",
+        },
+        timestamp,
+        sourceAuthority: context.sourceAuthority,
+        transitionType: "undo",
+        newStateID: stateID,
+        undoneStateID: previousStateID,
+        restoredCheckpointStateID: checkpoint.snapshot.stateID,
+        ...(undoneMoveId ? { undoneMoveId } : {}),
+      },
+      engineLogRecords: [
+        {
+          gameId: context.gameId,
+          stateVersion: stateID,
+          timestamp,
+          sourceAuthority: context.sourceAuthority,
+          log,
+        },
+      ],
+      analyticsFactBatchRecords: [
+        {
+          gameId: context.gameId,
+          gameSlug: "flesh-and-blood",
+          schemaVersion: FAB_ANALYTICS_SCHEMA_VERSION_V2,
+          stateVersion: stateID,
+          commandId,
+          timestamp,
+          sourceAuthority: context.sourceAuthority,
+          facts: [
+            {
+              schemaVersion: FAB_ANALYTICS_SCHEMA_VERSION_V2,
+              kind: "undo",
+              eventId: `${commandId}:undo`,
+              turn: restored.turnNumber,
+              activePlayerId: restored.activePlayerId,
+              phase: restored.phase,
+              combatNumber: null,
+              chainLinkNumber: null,
+              restoredCheckpointStateID: checkpoint.snapshot.stateID,
+            },
+          ],
+        },
+      ],
+    };
   }
 
   getStateID(): number {
@@ -440,7 +726,7 @@ export class FleshAndBloodServerEngine implements ServerGameEngine {
             announcement,
           )
         : null,
-      undoable: result.undoBarrier === null,
+      undoable: false,
       transition: "move",
       acceptedMoveRecord,
       engineLogRecords,
@@ -448,6 +734,24 @@ export class FleshAndBloodServerEngine implements ServerGameEngine {
       processedCommand: result.processedCommand,
     };
   }
+}
+
+function addClockBonuses(
+  current: Readonly<Record<string, number>>,
+  awarded: Readonly<Record<string, number>>,
+): Record<string, number> {
+  return Object.fromEntries(
+    Object.keys(awarded).map((id) => [id, (current[id] ?? 0) + (awarded[id] ?? 0)]),
+  );
+}
+
+function subtractClockBonuses(
+  current: Readonly<Record<string, number>>,
+  removed: Readonly<Record<string, number>>,
+): Record<string, number> {
+  return Object.fromEntries(
+    Object.keys(current).map((id) => [id, Math.max(0, (current[id] ?? 0) - (removed[id] ?? 0))]),
+  );
 }
 
 function visibleCardIds(state: FabViewerState): Set<string> {

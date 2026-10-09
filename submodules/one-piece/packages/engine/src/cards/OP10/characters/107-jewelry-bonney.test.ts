@@ -53,4 +53,17 @@ describe("OP10-107 Jewelry Bonney", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("Blocker works independently of its On Play Life payment", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP10-107"] },
+      {},
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const bonney = e.findCardInZone("south", "character", "OP10-107");
+    const life = e.getView("south").players.south.lifeCount;
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().chooseBlocker(bonney);
+    expect(e.getView("south").players.south.lifeCount).toBe(life);
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(bonney);
+  });
 });

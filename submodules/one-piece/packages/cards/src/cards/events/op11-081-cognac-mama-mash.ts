@@ -22,7 +22,7 @@ export const op11CognacMamaMash081: EventCard = {
   setId: "OP11",
   cost: 6,
   trigger: "Add up to 1 DON!! card from your DON!! deck and set it as active.",
-  traits: ["The Four Emperors Big Mom Pirates"],
+  traits: ["The Four Emperors", "Big Mom Pirates"],
   effect:
     "[Main] Choose a cost and reveal 1 card from the top of your opponent's deck. If the revealed card has the chosen cost, K.O. up to 1 of your opponent's Characters with a base cost of 8 or less.",
   effects: {

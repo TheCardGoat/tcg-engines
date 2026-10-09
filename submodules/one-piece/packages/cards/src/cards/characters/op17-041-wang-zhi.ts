@@ -27,6 +27,26 @@ export const op17WangZhi041: CharacterCard = {
   effect:
     "[Blocker]\n\n[On Play] You may trash 1 card from your hand: Place all of your opponent's Characters with a base cost of 1 at the bottom of the owner's deck in any order of the owner's choosing",
   effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        optional: true,
+        costs: [{ cost: "trashFromHand", amount: 1 }],
+        actions: [
+          {
+            action: "returnToDeck",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: { amount: "all" },
+              filters: [{ filter: "baseCost", comparison: "eq", value: 1 }],
+            },
+            position: "bottom",
+            order: "any",
+          },
+        ],
+      },
+    ],
     keywords: ["blocker"],
   },
   i18n: op17WangZhi041I18n,

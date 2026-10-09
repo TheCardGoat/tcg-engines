@@ -1,0 +1,22 @@
+{
+  "adapterVersion": "2",
+  "candidateId": "meta-v2",
+  "cardCatalogHash": "fnv1a32:de23a4df",
+  "changes": { "keepClashWeight": 3 },
+  "engineRevision": "fnv1a32:53f5ede9",
+  "evaluation": {
+    "batchSize": 3,
+    "confidenceLevel": 0.95,
+    "maximumBlocks": 12,
+    "maximumCellRegression": 0,
+    "minimumBlocks": 12,
+    "minimumMeanImprovement": 0,
+    "seedBase": "alpha-clash-meta-holdout-v1",
+    "suiteId": "meta"
+  },
+  "game": "alpha-clash",
+  "hypothesis": "Build the board and attach Weapons before attacks, while holding the resource preference equal to meta-v1.",
+  "informationPolicy": "oracle",
+  "parentStrategyId": "meta-v1",
+  "schemaVersion": 1
+}

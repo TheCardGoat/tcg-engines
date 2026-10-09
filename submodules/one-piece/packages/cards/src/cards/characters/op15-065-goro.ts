@@ -23,7 +23,7 @@ export const op15Goro065: CharacterCard = {
   cost: 3,
   power: 0,
   counter: 2000,
-  traits: ["Alabasta Hot Springs Island"],
+  traits: ["Alabasta", "Hot Springs Island"],
   attribute: "wisdom",
   effect:
     "[On Play] Reveal 1 card from the top of your deck. If the revealed card has a cost of 2 or less, add up to 1 DON!! card from your DON!! deck and rest it.",

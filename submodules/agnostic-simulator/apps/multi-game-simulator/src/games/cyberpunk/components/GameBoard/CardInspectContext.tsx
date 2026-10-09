@@ -8,13 +8,12 @@ import {
   type CSSProperties,
   type ReactNode,
 } from "react";
-import { Modal } from "@mantine/core";
 import { IconX } from "@tabler/icons-react";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
-import { ViewerSafeCardImage } from "@tcg/simulator-ui";
+import { CardInspectionDialog, ViewerSafeCardImage } from "@tcg/simulator-ui";
 import classes from "./CardInspect.module.css";
 
-interface InspectCard {
+export interface InspectCard {
   imageUrl: string;
   name?: string;
   face: "public" | "hidden";
@@ -72,7 +71,7 @@ export function CardInspectProvider({ children }: { children: ReactNode }) {
   const cards = state
     ? [
         { imageUrl: state.imageUrl, name: state.name, face: state.face },
-        ...(state.attachments ?? []),
+        ...(state.attachments ?? []).filter((attachment) => attachment.face === "public"),
       ]
     : [];
   const selectedCard = cards[selectedIndex] ?? cards[0];
@@ -109,13 +108,12 @@ export function CardInspectProvider({ children }: { children: ReactNode }) {
   return (
     <CardInspectContext.Provider value={value}>
       {children}
-      <Modal
+      <CardInspectionDialog
         opened={!!state}
         onClose={() => setState(null)}
         fullScreen
         size="auto"
         padding={0}
-        zIndex={5500}
         withCloseButton={false}
         overlayProps={{ backgroundOpacity: 0.85, blur: 4 }}
         classNames={{ content: classes.content, body: classes.body }}
@@ -161,10 +159,12 @@ export function CardInspectProvider({ children }: { children: ReactNode }) {
                       className={classes.thumbnail}
                       data-active={index === selectedIndex ? "true" : "false"}
                       onClick={() => setSelectedIndex(index)}
-                      aria-label={index === 0 ? "View main card" : `View attached gear ${index}`}
+                      aria-label={
+                        index === 0 ? "View main card" : `View attached gear ${card.name ?? index}`
+                      }
                     >
                       <ViewerSafeCardImage entity={inspectEntity(card)} alt={card.name ?? ""} />
-                      <span>{index === 0 ? "Unit" : `Gear ${index}`}</span>
+                      <span>{index === 0 ? "Main card" : (card.name ?? `Gear ${index}`)}</span>
                     </button>
                   ))}
                 </div>
@@ -184,7 +184,7 @@ export function CardInspectProvider({ children }: { children: ReactNode }) {
             </div>
           </div>
         ) : null}
-      </Modal>
+      </CardInspectionDialog>
     </CardInspectContext.Provider>
   );
 }

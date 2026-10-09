@@ -1,6 +1,8 @@
 import { type RouteObject } from "react-router-dom";
 import { TestsPage, HomePage } from "./pages/Tests.page";
 import { TestFixturePage } from "./pages/TestFixture.page";
+import { CreatorPage } from "./pages/Creator.page";
+import { DemoFixturePage } from "./pages/DemoFixture.page";
 import { CyberpunkTestStatePage } from "./pages/TestState.page";
 import { PracticePage } from "./pages/Practice.page";
 import { PracticeMatchPage } from "./pages/PracticeMatch.page";
@@ -14,6 +16,7 @@ import { ReplayForkPage } from "./pages/ReplayFork.page";
 import { createSimulatorBrowserRouter, SimulatorRouterProvider } from "../../lib/router.tsx";
 
 export const cyberpunkSimulatorRoutes: RouteObject[] = [
+  { path: "/creator", element: <CreatorPage /> },
   // Root home — fixture chooser.
   {
     path: "/",
@@ -28,6 +31,10 @@ export const cyberpunkSimulatorRoutes: RouteObject[] = [
   {
     path: "/tests/test-engine-state",
     element: <CyberpunkTestStatePage />,
+  },
+  {
+    path: "/tests/demo",
+    element: <DemoFixturePage />,
   },
   {
     path: "/tests/:fixtureId",

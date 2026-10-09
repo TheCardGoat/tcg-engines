@@ -21,7 +21,7 @@ export const op13IKnowYouReStrongSoILlGoAllOutFromTheVeryStart040: EventCard = {
   rarity: "R",
   setId: "OP13",
   cost: 1,
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   effect:
     "[Main] You may rest 2 of your DON!! cards: Up to 2 of your opponent's rested Characters with a cost of 7 or less will not become active in your opponent's next Refresh Phase.\n[Counter] Your Leader gains +3000 power during this battle.",
   effects: {

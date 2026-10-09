@@ -1,69 +1,42 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-// Auto-verified: Howling Gab (OP17-024) cost=8 power=8000 counter=1000
 describe("OP17-024 Howling Gab", () => {
-  test("[On Play] resolves its play effects", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-024"], activeDon: 10 },
-      { character: ["OP13-013"], activeDon: 5 },
+  test("On Play rests an opposing Character; later Banish trashes Life without its Trigger", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-024"], activeDon: 8 },
+      {
+        character: ["EB01-018"],
+        life: ["OP17-076", "ST02-002"],
+        deck: ["ST02-002", "ST02-003"],
+        activeDon: 2,
+      },
     );
-
-    engine.playCard("OP17-024");
-    engine.acceptLeadingOptional("south");
-
-    // Resolve any remaining prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-024",
-    );
+    const target = e.findCardInZone("north", "character", "EB01-018");
+    e.playCard("OP17-024");
+    e.asSouth().chooseTargets(target);
+    expect(
+      e.getView("south").players.north.characters.find((c) => c?.instanceId === target)?.rested,
+    ).toBe(true);
+    e.endTurn("south");
+    e.endTurn("north");
+    const before = e.getView("north").players.north;
+    e.asSouth().attack("OP17-024", e.leader("north"));
+    e.asNorth().chooseCounter();
+    const after = e.getView("north").players.north;
+    expect(after.lifeCount).toBe(before.lifeCount - 1);
+    expect(after.handCount).toBe(before.handCount);
+    expect(after.trash.map((c) => c.cardId)).toContain("OP17-076");
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
-
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-024", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
+  test("On Play may choose no opposing Character", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-024"], activeDon: 8 },
+      { character: ["EB01-018"] },
     );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-024",
-    );
-    expect(engine.getView("south").prompts).toHaveLength(0);
+    e.playCard("OP17-024");
+    e.asSouth().chooseTargets();
+    expect(e.getView("south").players.north.characters[0]?.rested).toBe(false);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

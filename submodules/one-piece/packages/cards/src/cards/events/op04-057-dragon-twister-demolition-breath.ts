@@ -21,7 +21,7 @@ export const op04DragonTwisterDemolitionBreath057: EventCard = {
   rarity: "UC",
   setId: "OP04",
   cost: 2,
-  traits: ["Animal Kingdom Pirates The Four Emperors"],
+  traits: ["The Four Emperors", "Animal Kingdom Pirates"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, place up to 1 Character with a cost of 1 or less at the bottom of the owner's deck. [Trigger] Return up to 1 Character with a cost of 6 or less to the owner's hand.",
   effects: {

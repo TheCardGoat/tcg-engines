@@ -31,6 +31,7 @@ export const op14eb04NefeltariVivi025: CharacterCard = {
   setId: "EB04",
   cost: 7,
   power: 4000,
+  counter: 1000,
   traits: ["Alabasta"],
   attribute: "slash",
   effect:
@@ -63,7 +64,7 @@ export const op14eb04NefeltariVivi025: CharacterCard = {
               {
                 filter: "trait",
                 value: "Alabasta",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

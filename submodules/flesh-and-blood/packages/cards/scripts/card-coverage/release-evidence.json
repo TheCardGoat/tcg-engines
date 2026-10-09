@@ -2865,11 +2865,11 @@
     },
     "actions/cognition-nodes": {
       "definitionSha256": "fcd63203f1905ca80cff0104fc531fba64b1b450311cac73e726f1540093e53b",
-      "i18nSha256": "c64b6017ba7ca32a0c836dcb9c8fd2461521a63cb401a052327caae066b42d40",
+      "i18nSha256": "ebad6ecb58af75590ba930d1921ccdb78bc68a16c4cc0ead65a46891e11446b4",
       "testSha256": "d006b5b74dd3d46321def7d89987b72c699bbb5fa04d2ba2cce0705ba811f771",
       "coveredCanonicalIds": ["Kqmkn6mpNKLqKQdRPjMmt"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-23",
+      "reviewedBy": "codex:pr-3891-review-followup"
     },
     "actions/cogwerx-dovetail": {
       "definitionSha256": "6260dce0b70a0accd3e7c10a80d4a45aaaa322d1146f93c2d41bfe7a5ef5cd21",
@@ -6644,9 +6644,9 @@
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/grinding-gears": {
-      "definitionSha256": "06aecb10de41dfb1fa190ad7c8fb8f73f90de2540ce8409b76bafdbda791b9d1",
+      "definitionSha256": "2e449d8dbf6cec954e2db9e0a76d6b8f40e179d31492ce36fa5b7cec3af72759",
       "i18nSha256": "f33b4a1559c38a9b3503c1f939e63cc1908adff780d2df2ce6973942a7be063c",
-      "testSha256": "93925a058a9965e59c280221cd4ef644b4a98a737b650bcf11c46e97fa0416fe",
+      "testSha256": "eb5256869df35b68100aa618607b51cedce4a8c1a1d6d8accbb6b809ec103627",
       "coveredCanonicalIds": ["TNGCHzzLBft9q77QhkW9d"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
@@ -7597,11 +7597,11 @@
     },
     "actions/induction-chamber": {
       "definitionSha256": "bb8ca467f71213fd1a1604336203079498f5b4e53c053b73ec71c8e800b4ed42",
-      "i18nSha256": "0d63164d9328ae62cf6a26602ed3643aa781acf717b07686364b9ad1e68bc820",
+      "i18nSha256": "83eb2d7cdee20a2ecd27ee91a3d8cb20be880ae3d0efb8f554dff8e5e8106364",
       "testSha256": "2fb43ad9f28277487ee2af7cbd033181c3c38c5eb100a6a17ddb63581c4c88d8",
       "coveredCanonicalIds": ["MNwTgMKtfwcbBTGTLCbzt"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-23",
+      "reviewedBy": "codex:pr-3891-review-followup"
     },
     "actions/infiltrate": {
       "definitionSha256": "4452aa83788ecea1ea3fd7eddebff31f6e1da7315c83dd483de7ba6cc5818693",
@@ -10061,11 +10061,11 @@
     },
     "actions/plasma-purifier": {
       "definitionSha256": "a0bf92a9056946d9a3e1fbb574b04b6813f4993069f40dc62369a23796a5da2a",
-      "i18nSha256": "4415c1b9cec33a7ab84de0c36f8479f346a9f783a05d0e95a61ec96853668ae4",
+      "i18nSha256": "6891152f81f48cbfda065f552081589a1e74cbea48c67e9687a45a45b25917dc",
       "testSha256": "acd2ae9490bbe21dcb7b8a6c34814c3a698d85383ae529ab903ffba037b28179",
       "coveredCanonicalIds": ["rmdHP7ttKz7NqLwwwGGKg"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-23",
+      "reviewedBy": "codex:pr-3891-review-followup"
     },
     "actions/platinum-amulet": {
       "definitionSha256": "5d0dfd47b145bd87a18fb47b3b8a7840ed647b0173f518c35e43c579eb765a2e",
@@ -10508,9 +10508,9 @@
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/promise-of-plenty": {
-      "definitionSha256": "266a811a3e265ccbed8942d6a229a62e327d1f45f8a20faff6b9cee9b0270d8d",
+      "definitionSha256": "e3da3ed41c593c955214bf6deba0ae5c3a03dea8d9ed001a96b90aa249d0b9ba",
       "i18nSha256": "95a0aeba3550d47a6d16eefefdbe9819e891d1d69b03a2bd2a7df870bfd009fe",
-      "testSha256": "f235249d2f4bb69c1c5b3e499818a882e9183013d583d915728d300432490eea",
+      "testSha256": "c429c00988827115400c30a78afebfcc49b9398376fdb7041732576eadba3f24",
       "coveredCanonicalIds": [
         "g9LhkTgkgNBCtwmcPCgdP",
         "GTLKqwK6pfzjdmCgRgd9W",
@@ -11346,14 +11346,14 @@
     "actions/ridge-rider-shot": {
       "definitionSha256": "ff1c6f7e3173806b45d429346ffc8fea9cf4289c93c7092c78ace3113f0c2f5f",
       "i18nSha256": "bb965901c18f88ac4626e811f13649316f17246a1b412aaeb57bcd6509b0b933",
-      "testSha256": "7414747f6e625c9f549e64a67312a585cca21c8d81e05217e2a8904674f19779",
+      "testSha256": "938ff9a80964b246e4230fb0e8d2b533b8153d0700d39d7d9104da06019b227c",
       "coveredCanonicalIds": [
         "WRqmkMpqpJPWNmrdPzdpT",
         "mDmCFWkbbbfR7dD87Fnc8",
         "nRKmkHTJRpnDWndNgfTwk"
       ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-25",
+      "reviewedBy": "codex:death-dealer-single-choice"
     },
     "actions/rift-bind": {
       "definitionSha256": "1acd9aedbcfd8e6990f6d30ebde51542d9ecf594fd40974f3b5013e824621913",
@@ -12104,9 +12104,9 @@
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/scout-the-periphery": {
-      "definitionSha256": "b044f2fcddf94ebdb1de3c402ab5f167ba328b60830c84bd6b0ecc211694ca08",
+      "definitionSha256": "8b66f95256ddeedbab86d2cf55a65eca2be622fc83d4097b42d8797eebaa64f1",
       "i18nSha256": "8171bfaa4f2e51f2c564b48583df8fbfd45cbac796100b2a7181bd1bbe331beb",
-      "testSha256": "bb3e8eb3a83906c3620726f645c31e4752d6528a42f55a7b9676d046a7d928f8",
+      "testSha256": "0a49e33f7cc20c7d73b5e7e6f27260d91c5073a8e386783c79a550b18112ffea",
       "coveredCanonicalIds": [
         "7WFnnN9jPJ8cpCzrKkwcG",
         "kH9PnLPwkjrBjBPWR7FBq",
@@ -12192,9 +12192,9 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "actions/scrub-the-deck": {
-      "definitionSha256": "9b2db14c9fb8370ce54a3b7788c87f8cdf3f2e39dfcf2d521301b7e792f6969b",
+      "definitionSha256": "f4fb2dff382b63d121c02891f4aa5357041c8c2edd6d2d232e4472f21ce6f9a6",
       "i18nSha256": "9a3ecaa9505808f0f694f977dd7fdbcf4a488ec1e725796d9ef1a1880154757f",
-      "testSha256": "757744516d96bfdf66b769a61069b1218ed684f4a8eefad116df42089c7e08c8",
+      "testSha256": "12efa62633a108b3e9ed4d4c0536700768a90801deaadf9375cefc49b23e2bd2",
       "coveredCanonicalIds": ["rqcKnqMqChqrkHbDTPWPR"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
@@ -13234,14 +13234,14 @@
     "actions/snap-shot": {
       "definitionSha256": "c08981ef2ba2e77090bcfcbdea2562633dfc79c8ff8d11ea33246a7fa002d735",
       "i18nSha256": "6bc6e0d2a0238e1f05db8a447d89b66326b951272b281a50c7abf263562a4467",
-      "testSha256": "3ed303ced507c79d2124a9e5757296c8bec7a79443f5fcabc93fd7e756a2fd44",
+      "testSha256": "3755636d557d4cd2fd5d0c50e095653f87bec95104d03b3edc9966dd856f9a7b",
       "coveredCanonicalIds": [
         "HfNNH6tjw9PgJ8KHpkpBL",
         "rqcn9Q6JDG6FRCrpt9tb7",
         "zrJRtGh66Ggpgr87nnzFn"
       ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:make-card-types-right"
+      "reviewedAt": "2026-09-25",
+      "reviewedBy": "codex:death-dealer-single-choice"
     },
     "actions/snapback": {
       "definitionSha256": "de74d3148c98ac91e81697e11e1e6a5d68d24f9963fcd7482e4a2410eced95a1",
@@ -15652,9 +15652,9 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "actions/vile-inquisition": {
-      "definitionSha256": "68ac43e00dae82a4b163798609e1a4e17a04c04b7c4f1f4ca31bdb396716ebe7",
+      "definitionSha256": "1015ea1c423887e449776ab7a89692a49e7ae639eccb4ab07697ec71bb8c0239",
       "i18nSha256": "e30d5e262d531a4b9547c806dba99fe309a16f04489fb063c561c095e70913a3",
-      "testSha256": "1491b26e61661bc56978729231ff3781868cb5ec0fe839f9e2916195bec3bd04",
+      "testSha256": "19824783c456260b998975a3b3db09b5e0e7b501029ce459cb2038ab3ac6617f",
       "coveredCanonicalIds": [
         "CpMzgzzqzDH6thBrdGRHM",
         "TTGbBdCMpzDM8HhBdJFmf",
@@ -22778,10 +22778,10 @@
     "heroes/azalea": {
       "definitionSha256": "1d8020223f94dde1b6e34f3332c5f02c03846c680e4a78217291f957dbdaadc4",
       "i18nSha256": "af91524215900229370c3f4b8c10efd709a043b81179288449744a3048cad30a",
-      "testSha256": "29734e04d2713244579656924ba50832519f1307e322b43264ca9af5245bd3f9",
+      "testSha256": "bf971f1ca06ec9a715802e19204fcc82ccd0e48397a9858c43c8963b62e05de5",
       "coveredCanonicalIds": ["Fc8mPQBjrNq6Fg9LW9RLc"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-25",
+      "reviewedBy": "codex:death-dealer-single-choice"
     },
     "heroes/azalea-ace-in-the-hole": {
       "definitionSha256": "d4d8efde7a253686b184ad55ef8051d12efdd977f1d3ecad031c441e953dae96",
@@ -23000,20 +23000,20 @@
       "reviewedBy": "grok:dorinthea-extra-attack-permission"
     },
     "heroes/dr-mortimer": {
-      "definitionSha256": "3228297dcad447e14beb41a6cb692af36abd453b202deb65a3c2990d90219d1b",
-      "i18nSha256": "1afe0a02ec2feebc8529e2e93faac79303e453df0ae244e0ece39291ec187ed8",
+      "definitionSha256": "8dbe703a7cbc8fc5f236deb1f0edd5179e78d1901089285b4a4eafcb416fca17",
+      "i18nSha256": "d46ed7804e9e7d84b6bd19b27d0a2e5a74addf46389c4e1a79a866208b23ecf3",
       "testSha256": "066d9f7a10b5a55d6f9c6afb0e82d6b241fbb193a9f609dc89c21f8e3ae8abf3",
       "coveredCanonicalIds": ["KRkW9KqmRwRPQW8LGTKRK"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-23",
+      "reviewedBy": "codex:pr-3891-review-followup"
     },
     "heroes/dr-mortimer-blight-of-the-pits": {
-      "definitionSha256": "509a533477c4939f30ca024ff1ddb6fa5205e3541ee0e7364a24d5336d5ed401",
-      "i18nSha256": "a4e9f6099b2db418094b3e181bdbc50d943757c34cb9f247228956a34e35cfa1",
+      "definitionSha256": "9c5c157a2725147ec06677350ed990f9cc607f027fbdbdb90ff4c63b6f85d0a4",
+      "i18nSha256": "5875e3be3d58a947ad5d57db8c86ba92ea60cc09e6e10c68606e0a818997d9ac",
       "testSha256": "d82acf1e5ab702636fa7c72f8d5c73705f5f8cb09d4399a0a62f7b99755af16c",
       "coveredCanonicalIds": ["TmJKLrtp6fCRtDcWMmRLf"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-23",
+      "reviewedBy": "codex:pr-3891-review-followup"
     },
     "heroes/dromai": {
       "definitionSha256": "c78e7d4b583124c24dc86a3edf8a6731bb1d27db37df554f521e069b0becb99b",
@@ -26304,12 +26304,12 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "weapons/barbed-castaway": {
-      "definitionSha256": "312926d4131d9d2c12c8e8e4432fa769ae7c906d4710912dfbe6ca7aeb7ef027",
-      "i18nSha256": "588b981edd2ca0f992da82b10acdb238dea5df66370a34f977f006fef76fe0c0",
+      "definitionSha256": "fd55351c944d14046d573b1f52a08a5a92de44c8d8b62b88943df61e3759f287",
+      "i18nSha256": "a02aa230802afa962e8dfcda6a202b656a2a942ea9d539fd53f2d97b3b4b6cc3",
       "testSha256": "4da4f7178d1227b28b512ffb3f3b3aa2140b3b37e2129432fa215a1b66826dcf",
       "coveredCanonicalIds": ["jPfMCnKDptNbCbp6T96dT"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-23",
+      "reviewedBy": "codex:pr-3891-review-followup"
     },
     "weapons/beaming-blade": {
       "definitionSha256": "6e79db4beb324fe616b263f0a587c6fa6eb3791af0bd6cb05774114495e897c3",
@@ -26408,12 +26408,12 @@
       "reviewedBy": "grok:dorinthea-extra-attack-permission"
     },
     "weapons/death-dealer": {
-      "definitionSha256": "5ee12744a136edff21bcbb61d499fab6d786ab34aefcca5abe95e25d3b005fa6",
+      "definitionSha256": "224057d775cb010c269e76a8d2a43e1ca891f82646bd3998ca78e0e178690cba",
       "i18nSha256": "c55b986b7b3784c6e86d7b6f805f74e65a21a6ccb9c1ea64c9c03f7096083bc1",
-      "testSha256": "042355f730e2a974fa5d7f828f7b0e0f126e75166534f90d59ee809e00aca637",
+      "testSha256": "e550cbe5e6656e494281d6d1aac9500b8cb639487b6c0a907cb383f4f5c22fdc",
       "coveredCanonicalIds": ["Nnmtz6GrR6MWMcptb6wD7"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-25",
+      "reviewedBy": "codex:death-dealer-single-choice"
     },
     "weapons/dread-scythe": {
       "definitionSha256": "d8cfcf631a3cb4ad80e3dca2035e6bf09fe0ad2bca582abec9d9f2f80d21b4fa",

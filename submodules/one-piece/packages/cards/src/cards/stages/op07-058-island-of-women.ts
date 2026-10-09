@@ -54,12 +54,12 @@ export const op07IslandOfWomen058: StageCard = {
                     {
                       filter: "trait",
                       value: "Amazon Lily",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "trait",
                       value: "Kuja Pirates",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                 },
@@ -68,7 +68,7 @@ export const op07IslandOfWomen058: StageCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Kuja Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

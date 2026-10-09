@@ -1,0 +1,26 @@
+{
+  "aOff": [],
+  "bOff": [],
+  "aConfig": {
+    "maxDepth": 4,
+    "maxNodes": 128,
+    "branchLimit": 16
+  },
+  "bConfig": {},
+  "games": 360,
+  "aWins": 185,
+  "aLosses": 175,
+  "draws": 0,
+  "aWinRate": 0.5139,
+  "pairs": 180,
+  "aSweeps": 62,
+  "bSweeps": 57,
+  "splits": 61,
+  "pairedImprovement": 0.0278,
+  "failures": [
+    "ab/authored-yorinobu-two-units-for-one-vs-authored-relic-placide-surgical-reanimation/match-3/p2 repeatedState",
+    "ab/authored-yorinobu-two-units-for-one-vs-authored-rry-llorona-steel-dragon/match-1/p2 repeatedState"
+  ],
+  "avgSteps": 95.7,
+  "elapsedMs": 476931
+}

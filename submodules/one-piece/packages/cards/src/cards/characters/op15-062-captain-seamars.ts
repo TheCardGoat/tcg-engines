@@ -23,7 +23,7 @@ export const op15CaptainSeamars062: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 2000,
-  traits: ["The Moon Space Pirates"],
+  traits: ["The Moon", "Space Pirates"],
   attribute: "slash",
   i18n: op15CaptainSeamars062I18n,
 };

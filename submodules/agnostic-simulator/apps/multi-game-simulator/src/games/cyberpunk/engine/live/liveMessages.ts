@@ -1,7 +1,6 @@
 import { EngineInteractionView, type ServerToClientEvents } from "@tcg/protocol";
 import { parseLiveGatewayEvent, type LiveGatewayMessage, type MatchInfo } from "./liveGateway";
 import {
-  buildLiveMatchGameHref,
   projectLiveStateForSimulator,
   projectLiveValueForSimulator,
   type LiveMatchContext,
@@ -12,11 +11,9 @@ import {
   viewerProjectionToMatchState,
   type CyberpunkViewerState,
 } from "./liveState";
+import { logHandVisibilityDiagnostics } from "./handVisibilityDiagnostics";
 
-export type LiveMessageEffect =
-  | { type: "ignore" }
-  | { type: "state"; context: LiveMatchContext }
-  | { type: "redirect"; href: string };
+export type LiveMessageEffect = { type: "ignore" } | { type: "state"; context: LiveMatchContext };
 
 export function prepareLiveContext(context: LiveMatchContext): LiveMatchContext {
   if (!context.game.state) {
@@ -54,13 +51,8 @@ export function prepareLiveContext(context: LiveMatchContext): LiveMatchContext 
 export function reduceLiveGatewayMessage(
   context: LiveMatchContext,
   message: LiveGatewayMessage,
-  options: { matchId: string; gameId: string; search: string; basename?: string },
+  options: { gameId: string },
 ): LiveMessageEffect {
-  const redirect = redirectForMessage(message, options);
-  if (redirect) {
-    return { type: "redirect", href: redirect };
-  }
-
   const state = stateFromMessage(message);
   if (!state || !("gameId" in message) || message.gameId !== options.gameId) {
     const terminalContext = terminalContextFromMessage(context, message, options.gameId);
@@ -76,6 +68,26 @@ export function reduceLiveGatewayMessage(
       : viewerStateVersion(state)) ?? context.game.version;
   const isTerminalState = viewerStateGameEnded(state);
   const viewerProjection = isFilteredMatchView(state) ? state : undefined;
+  if (viewerProjection) {
+    logHandVisibilityDiagnostics({
+      source: message.type,
+      gameId: context.game.gameId,
+      matchId: context.match.matchId,
+      previousVersion: context.game.version,
+      disposition: version < context.game.version ? "ignore-stale" : "apply",
+      correlationId:
+        "correlationId" in message && typeof message.correlationId === "string"
+          ? message.correlationId
+          : undefined,
+      version,
+      projection: viewerProjection,
+      actorIds: context.game.actorIds,
+    });
+  }
+  // A delayed snapshot must not roll the board or its choices backward.
+  if (version < context.game.version) {
+    return { type: "ignore" };
+  }
   const rendererState = isMatchState(state)
     ? state
     : viewerProjectionToMatchState(state, context.match.matchId);
@@ -144,6 +156,25 @@ export function parseGatewayEvent(
   type: keyof ServerToClientEvents,
   payload: unknown,
 ): LiveGatewayMessage | null {
+  if (type === "submit_interaction:response" || type === "execute_move:response") {
+    const response = payload as
+      | { correlationId?: unknown; status?: unknown; data?: unknown }
+      | null
+      | undefined;
+    if (response?.status !== "ok" || !response.data || typeof response.data !== "object") {
+      return null;
+    }
+
+    // Keep the protocol's §5 response envelope compatible with gateways that
+    // implement it. The current game server sends the same actor-scoped
+    // snapshot as a direct move_accepted event instead.
+    return parseLiveGatewayEvent("move_accepted", {
+      ...response.data,
+      ...(typeof response.correlationId === "string"
+        ? { correlationId: response.correlationId }
+        : {}),
+    });
+  }
   return parseLiveGatewayEvent(type, payload);
 }
 
@@ -165,32 +196,6 @@ export function liveGatewayJoinFromEvent(type: string, payload: unknown): LiveGa
     return null;
   }
   return { gameId: record.gameId, role: record.role };
-}
-
-function redirectForMessage(
-  message: LiveGatewayMessage,
-  options: { matchId: string; gameId: string; search: string; basename?: string },
-): string | null {
-  const matchInfo = matchInfoFromMessage(message);
-  const terminalState =
-    message.type === "game_ended" || viewerStateGameEnded(stateFromMessage(message));
-  if (matchInfo?.nextGameId && matchInfo.nextGameId !== options.gameId && !terminalState) {
-    return nextGameHref(options.matchId, matchInfo.nextGameId, options.search, options.basename);
-  }
-
-  if (message.type === "match_state") {
-    const record = message as Record<string, unknown>;
-    const completed =
-      readBoolean(record, "matchCompleted") || readString(record, "status") === "completed";
-    const currentGameId = readString(record, "currentGameId");
-    // Completed matches intentionally stay on the final board. The end-game
-    // modal owns the explicit "back to matchmaking" navigation.
-    if (!completed && currentGameId && currentGameId !== options.gameId) {
-      return nextGameHref(options.matchId, currentGameId, options.search, options.basename);
-    }
-  }
-
-  return null;
 }
 
 function matchInfoFromMessage(message: LiveGatewayMessage): MatchInfo | undefined {
@@ -242,7 +247,7 @@ function terminalContextFromMessage(
 
   const record = message as Record<string, unknown>;
   const status = readString(record, "status");
-  if (status !== "completed" && status !== "abandoned") {
+  if (status !== "in_progress" && status !== "completed" && status !== "abandoned") {
     return null;
   }
 
@@ -251,7 +256,7 @@ function terminalContextFromMessage(
     match: {
       ...context.match,
       status,
-      currentGameId: readString(record, "currentGameId"),
+      currentGameId: readString(record, "currentGameId") ?? context.match.currentGameId,
       gameIds: Array.isArray(record.gameIds)
         ? record.gameIds.filter(isString)
         : context.match.gameIds,
@@ -284,10 +289,6 @@ function viewerStateGameEnded(state: CyberpunkViewerState | null): boolean {
 function parseInteractionView(value: unknown): LiveMatchContext["game"]["interactionView"] {
   const parsed = EngineInteractionView.safeParse(value);
   return parsed.success ? parsed.data : undefined;
-}
-
-function nextGameHref(matchId: string, gameId: string, search: string, basename?: string): string {
-  return buildLiveMatchGameHref(matchId, gameId, search, basename);
 }
 
 function readString(value: Record<string, unknown>, key: string): string | undefined {

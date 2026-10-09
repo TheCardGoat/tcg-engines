@@ -23,7 +23,7 @@ export const op04Nami011: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Alabasta Straw Hat Crew"],
+  traits: ["Alabasta", "Straw Hat Crew"],
   attribute: "wisdom",
   effect:
     "[When Attacking] Reveal 1 card from the top of your deck. If the revealed card is a Character card with 6000 power or more, this Character gains +3000 power during this turn. Then, place the revealed card at the bottom of your deck.",
@@ -36,6 +36,7 @@ export const op04Nami011: CharacterCard = {
             action: "revealTopDeckCard",
             player: "self",
             conditional: {
+              finalPosition: "bottom",
               filters: [
                 {
                   filter: "cardCategory",
@@ -63,7 +64,7 @@ export const op04Nami011: CharacterCard = {
                 },
               ],
             },
-            finalPosition: "bottom",
+            finalPosition: "top",
           },
         ],
       },

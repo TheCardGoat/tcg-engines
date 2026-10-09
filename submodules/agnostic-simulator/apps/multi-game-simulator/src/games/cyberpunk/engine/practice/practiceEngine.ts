@@ -39,10 +39,17 @@ export function createPracticeEngine(config: PracticeMatchConfig): CyberpunkTest
     matchId: config.matchId,
   });
 
-  return CyberpunkTestEngine.fromState(state, { autoGainGig: false });
+  return CyberpunkTestEngine.fromState(state, {
+    autoGainGig: false,
+    autoChooseFirstPlayer: false,
+  });
 }
 
 export function createPracticeAiConfig(config: PracticeMatchConfig): AISideConfig {
+  if (config.mode === "self") {
+    return { player: null, opponent: null };
+  }
+
   const playerDeck = resolvePlayerDeck(config);
   const botDeck = resolveBotDeck(config);
   const playerStrategy = config.playerStrategyId
@@ -92,5 +99,7 @@ function strategyForSeat(
     deckId: fixtureId,
     cards: deck ? [...deck.legends, ...deck.mainDeck] : undefined,
   });
-  return profile ? withDeckProfile(base, profile as DeckStrategyProfile) : base;
+  const strategy = profile ? withDeckProfile(base, profile as DeckStrategyProfile) : base;
+  // Keep the selected alias visible while "default" follows the recommended strategy.
+  return strategyId === "default" ? { ...strategy, name: "default" } : strategy;
 }

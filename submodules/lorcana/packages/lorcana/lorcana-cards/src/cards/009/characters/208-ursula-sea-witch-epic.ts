@@ -23,7 +23,7 @@ export const ursulaSeaWitchEpic: CharacterCard = {
   franchise: "Little Mermaid",
   set: "009",
   cardNumber: 208,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 3,

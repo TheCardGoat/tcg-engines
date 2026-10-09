@@ -31,6 +31,7 @@ export const gastonCreatedByTheVine: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e9b42287e4e24f079b2906af28880a46",
+    tcgPlayer: "702658",
   },
   text: [
     {

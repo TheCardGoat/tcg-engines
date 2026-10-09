@@ -30,7 +30,7 @@ export const op14eb04GroundDeath096: EventCard = {
   rarity: "R",
   setId: "OP14",
   cost: 1,
-  traits: ["Baroque Works The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
   effect:
     "[Main] You may rest 2 of your DON!! cards: Negate the effect of up to 1 of your opponent's Characters with a cost of 5 or less during this turn.\n[Counter] If you have 10 or more cards in your trash, up to 1 of your Leader or Character cards gains +4000 power during this battle.",
   effects: {

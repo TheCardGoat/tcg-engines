@@ -23,7 +23,7 @@ export const op12Seto103: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 2000,
-  traits: ["Sky Island Shandian Warrior Jaya"],
+  traits: ["Jaya", "Sky Island", "Shandian Warrior"],
   attribute: "slash",
   i18n: op12Seto103I18n,
 };

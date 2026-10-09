@@ -10,6 +10,25 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 import { SOUTH_ATTACKS_WITHOUT_TURN_SETUP } from "./battle-fixture.shared.ts";
 
 describe("OP07-017 Dragon Breath", () => {
+  test("declining the first target group still permits the second group", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: ["OP07-017"], activeDon: 8, life: 2 },
+      { character: ["EB01-005", "EB01-005"], stage: "OP02-092" },
+    );
+    const kept = engine.getView("south").players.north.characters[0]!.instanceId;
+    const selected = engine.findCardInZone("north", "stage", "OP02-092");
+    engine.playCard("OP07-017");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    expect(
+      engine.getView("south").players.north.characters.some((card) => card?.instanceId === kept),
+    ).toBe(true);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [selected] }, "south");
+    const view = engine.getView("south");
+    expect(view.players.north.characters.some((card) => card?.instanceId === kept)).toBe(true);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(selected);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("Main independently maps the power-3000 Character and cost-1 Stage K.O. choices", () => {
     const engine = OnePieceTestEngine.create(
       {
@@ -26,6 +45,11 @@ describe("OP07-017 Dragon Breath", () => {
 
     engine.playCard(op07DragonBreath017);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [characterId] }, "south");
+    expect(
+      engine
+        .getView("south")
+        .players.north.characters.some((card) => card?.instanceId === characterId),
+    ).toBe(true);
 
     const stageDecision = engine.pendingDecision("effectTargetSelection", "south");
     const stageStep = stageDecision.steps[0];

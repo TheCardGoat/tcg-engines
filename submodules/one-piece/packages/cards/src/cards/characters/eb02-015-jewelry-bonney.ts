@@ -32,7 +32,7 @@ export const eb02JewelryBonney015: CharacterCard = {
   cost: 7,
   power: 7000,
   counter: 1000,
-  traits: ["Bonney Pirates Supernovas"],
+  traits: ["Supernovas", "Bonney Pirates"],
   attribute: "special",
   effect:
     "[On Play] Up to 1 of your opponent's rested Characters will not become active in your opponent's next Refresh Phase. Then, set up to 1 of your DON!! cards as active at the end of this turn.",

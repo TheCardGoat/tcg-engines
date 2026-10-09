@@ -89,4 +89,21 @@ describe("OP12-119 Bartholomew Kuma", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("skipping the optional Life addition still grants the printed cost increase", () => {
+    const e = OnePieceTestEngine.create({
+      hand: [op12BartholomewKuma119, eb01Doma005],
+      activeDon: op12BartholomewKuma119.cost,
+    });
+    const life = e.getView("south").players.south.lifeCount;
+    e.asSouth().play(op12BartholomewKuma119);
+    e.asSouth().acceptOptional();
+    e.asSouth().chooseOption("effectAddToLifeFromDeck", "0");
+    expect(e.getView("south").players.south.lifeCount).toBe(life);
+    expect(
+      e
+        .getView("south")
+        .players.south.characters.find((c) => c?.cardId === op12BartholomewKuma119.id)?.cost,
+    ).toBe(op12BartholomewKuma119.cost + 2);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toContain(eb01Doma005.id);
+  });
 });

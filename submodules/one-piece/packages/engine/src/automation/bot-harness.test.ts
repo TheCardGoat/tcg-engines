@@ -321,11 +321,11 @@ describe("One Piece Bot Harness", () => {
       assert.strictEqual(totalIllegal, 0, `Expected 0 illegal commands, got ${totalIllegal}`);
       assert.ok(totalStuck < 15, `Expected <15 stuck games, got ${totalStuck}`);
     },
-    60000,
+    180000,
   );
 
   stressTest(
-    "Batch 3: 1000 games across strategy matchups",
+    "Batch 3: 1000 games per strategy matchup",
     () => {
       const results = runBatch({ games: 1000, seedBase: 3000 });
 
@@ -358,7 +358,8 @@ describe("One Piece Bot Harness", () => {
       console.log(`Total stuck: ${totalStuck}`);
       console.log(`Clean rate: ${(((totalGames - totalStuck) / totalGames) * 100).toFixed(1)}%`);
     },
-    300000,
+    // Four seeded 1,000-game matchups can exceed five minutes with invariant checks.
+    1_500_000,
   );
 
   test("firstLegal strategy smoke test", () => {

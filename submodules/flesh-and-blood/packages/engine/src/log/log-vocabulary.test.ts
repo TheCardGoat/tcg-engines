@@ -378,6 +378,7 @@ const SAMPLE_VALUES = {
   "flesh-and-blood.turn.started": { turnNumber: 7 },
   "flesh-and-blood.game.ended": { playerId: "beta", reason: "no-life" },
   "flesh-and-blood.decision.awaiting": { actorId: "alpha" },
+  "flesh-and-blood.undo": { actorId: "alpha" },
   "flesh-and-blood.decision.chosen": { actorId: "alpha", choice: "Snatch, Wounding Blow" },
   "flesh-and-blood.decision.private": { label: "Choose a card to banish" },
   "flesh-and-blood.deck-top": { playerId: "alpha", cardName: "Wounding Blow", from: "graveyard" },

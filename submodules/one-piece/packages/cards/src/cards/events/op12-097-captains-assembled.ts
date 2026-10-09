@@ -49,7 +49,7 @@ export const op12CaptainsAssembled097: EventCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

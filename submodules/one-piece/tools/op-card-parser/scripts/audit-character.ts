@@ -3,6 +3,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import type { Action, CardEffects, CharacterCard } from "@tcg/op-types";
 import { buildCardEffects } from "../src/effect-parser/index.ts";
+import { assertTriggerPreserved } from "../src/trigger-preservation.ts";
 import { joinPrintedAbilityText } from "../src/printed-text.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -1060,6 +1061,12 @@ if (card.effect !== card.i18n.en.effect) {
 }
 
 const generated = buildCardEffects(printedText);
+assertTriggerPreserved({
+  cardId: options.cardId,
+  printedText: printedText,
+  current: card.effects,
+  generated,
+});
 if (!generated) {
   if (!printedText && !card.effects) {
     console.log(`${options.cardId} ${card.name}`);

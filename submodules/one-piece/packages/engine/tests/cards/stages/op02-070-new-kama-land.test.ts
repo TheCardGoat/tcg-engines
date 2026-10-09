@@ -11,7 +11,7 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP02-070 New Kama Land", () => {
-  test("without Emporio.Ivankov, skips the conditioned exchange but still allows the trailing trash", () => {
+  test("without Emporio.Ivankov, pays the rest cost but skips the whole effect", () => {
     const engine = OnePieceTestEngine.create({
       stage: op02NewKamaLand070,
       hand: [op13Higuma013, op13Otama043],
@@ -24,21 +24,11 @@ describe("OP02-070 New Kama Land", () => {
     engine.activateEffect(stageId, "activateMain");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
 
-    const trashDecision = engine.pendingDecision("effectTrashFromHandSelection", "south");
-    const trashStep = trashDecision.steps[0];
-    expect(trashStep?.kind).toBe("selectEntity");
-    if (trashStep?.kind !== "selectEntity") {
-      throw new Error("Expected New Kama Land's unconditional up-to hand-trash choice.");
-    }
-    expect(trashStep).toMatchObject({ min: 0, max: 2 });
-    expect(trashStep.candidates.map((candidate) => candidate.ref.id)).toEqual([higumaId, otamaId]);
-    engine.resolveDecision("effectTrashFromHandSelection", { selectedIds: [higumaId] }, "south");
-
     const view = engine.getView("south");
     expect(view.players.south.stage?.rested).toBe(true);
     expect(view.players.south.deckCount).toBe(1);
-    expect(view.players.south.hand.map((card) => card.instanceId)).toEqual([otamaId]);
-    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(higumaId);
+    expect(view.players.south.hand.map((card) => card.instanceId)).toEqual([higumaId, otamaId]);
+    expect(view.players.south.trash).toHaveLength(0);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
@@ -48,7 +38,7 @@ describe("OP02-070 New Kama Land", () => {
       leaderCardId: op02EmporioIvankov049,
       stage: op02NewKamaLand070,
       hand: [op13Higuma013, op13Otama043, op13KouzukiMomonosuke105],
-      deck: [op13York094],
+      deck: [op13York094, op13Higuma013],
     });
     const stageId = engine.findCardInZone("south", "stage", op02NewKamaLand070);
     const higumaId = engine.findCardInZone("south", "hand", op13Higuma013);
@@ -94,7 +84,7 @@ describe("OP02-070 New Kama Land", () => {
 
     const view = engine.getView("south");
     expect(view.players.south.stage?.rested).toBe(true);
-    expect(view.players.south.deckCount).toBe(0);
+    expect(view.players.south.deckCount).toBe(1);
     expect(view.players.south.hand.map((card) => card.instanceId)).toEqual([otamaId]);
     expect(view.players.south.trash.map((card) => card.instanceId)).toEqual([
       drawnYorkId,

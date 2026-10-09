@@ -25,7 +25,7 @@ export const belleBeastCertainAsTheSunIconic: CharacterCard = {
   franchise: "Beauty and the Beast",
   set: "013",
   cardNumber: 245,
-  rarity: "common",
+  rarity: "iconic",
   specialRarity: "iconic",
   cost: 8,
   strength: 6,
@@ -34,6 +34,7 @@ export const belleBeastCertainAsTheSunIconic: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_063394f93893493ab04808e6d7247926",
+    tcgPlayer: "702661",
   },
   text: [
     {

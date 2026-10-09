@@ -49,7 +49,7 @@ export const op16TrafalgarLaw068: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Donquixote Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

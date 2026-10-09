@@ -4,6 +4,10 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, test } from "vite-plus/test";
 
 import { UserConfigProvider } from "../../engine";
+import {
+  EMPTY_SIMULATOR_AUTH_CONTEXT,
+  SimulatorAuthContextProvider,
+} from "../../../../simulator/providers/auth-context";
 import { SimulatorSettingsProvider } from "../../../../simulator/settings";
 import { SIMULATOR_ANIMATION_SPEED_STORAGE_KEY } from "../../../../simulator/settings/simulator-settings";
 import { UserConfigButton } from "./UserConfigDialog";
@@ -38,6 +42,64 @@ describe("UserConfigButton", () => {
     });
   });
 
+  test("changes the visible card back and keeps supporter playmats unavailable to free users", () => {
+    render(
+      <SimulatorSettingsProvider>
+        <UserConfigProvider>
+          <UserConfigButton />
+        </UserConfigProvider>
+      </SimulatorSettingsProvider>,
+    );
+
+    fireEvent.click(screen.getByLabelText("Open simulator settings"));
+    fireEvent.click(screen.getByRole("tab", { name: "Game" }));
+    const cardBack = screen.getByRole("combobox", { name: "Card back" });
+    fireEvent.change(cardBack, { target: { value: "goat-celestial" } });
+
+    expect((cardBack as HTMLSelectElement).value).toBe("goat-celestial");
+    expect(screen.getByAltText("Card Goat Celestial preview").getAttribute("src")).toContain(
+      "/v3/card-back-400.webp",
+    );
+    expect(
+      JSON.parse(window.localStorage.getItem("cyberpunk:visualSelection") ?? "{}"),
+    ).toMatchObject({
+      cardBackId: "goat-celestial",
+    });
+    expect(
+      (screen.getByRole("option", { name: "Night Market · Supporter" }) as HTMLOptionElement)
+        .disabled,
+    ).toBe(true);
+  });
+
+  test("lets a supporter select a playmat during a game", () => {
+    render(
+      <SimulatorAuthContextProvider
+        value={{
+          ...EMPTY_SIMULATOR_AUTH_CONTEXT,
+          isAuthenticated: true,
+          isPremium: true,
+          subscriptionTier: "tier2",
+        }}
+      >
+        <SimulatorSettingsProvider>
+          <UserConfigProvider>
+            <UserConfigButton />
+          </UserConfigProvider>
+        </SimulatorSettingsProvider>
+      </SimulatorAuthContextProvider>,
+    );
+
+    fireEvent.click(screen.getByLabelText("Open simulator settings"));
+    fireEvent.click(screen.getByRole("tab", { name: "Game" }));
+    const playmat = screen.getByRole("combobox", { name: "Playmat" });
+    fireEvent.change(playmat, { target: { value: "night-market" } });
+
+    expect((playmat as HTMLSelectElement).value).toBe("night-market");
+    expect(screen.getByAltText("Night Market preview").getAttribute("src")).toContain(
+      "/night-market.webp",
+    );
+  });
+
   test("exposes the shared animation speed setting for Cyberpunk", () => {
     render(
       <SimulatorSettingsProvider>
@@ -59,5 +121,25 @@ describe("UserConfigButton", () => {
 
     fireEvent.click(screen.getByRole("tab", { name: "Game" }));
     expect(screen.queryByText("Animation Pacing")).toBeNull();
+  });
+
+  test("toggles persisted payment-source selection", () => {
+    render(
+      <SimulatorSettingsProvider>
+        <UserConfigProvider>
+          <UserConfigButton />
+        </UserConfigProvider>
+      </SimulatorSettingsProvider>,
+    );
+
+    fireEvent.click(screen.getByLabelText("Open simulator settings"));
+    fireEvent.click(screen.getByRole("tab", { name: "Game" }));
+    const paymentToggle = screen.getByRole("checkbox");
+    fireEvent.click(paymentToggle);
+
+    expect((paymentToggle as HTMLInputElement).checked).toBe(true);
+    expect(JSON.parse(window.localStorage.getItem("cyberpunk:userConfig") ?? "{}")).toMatchObject({
+      choosePaymentSources: true,
+    });
   });
 });

@@ -9,6 +9,7 @@ import {
   IconVolume,
 } from "@tabler/icons-react";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { CinematicBench } from "./animation-fixtures/CinematicBench";
 
 import { buildMountedHref } from "../routes/router-paths.ts";
 import {
@@ -27,11 +28,11 @@ import {
   disposeSimulatorSoundService,
   playSimulatorSound,
   setSimulatorSoundPack,
-} from "../simulator/audio/sound-service.ts";
+} from "@tcg/simulator-presentation/audio/sound-service";
 import {
   SIMULATOR_SOUND_PACKS,
   type SimulatorSoundPackId,
-} from "../simulator/audio/sound-packs.ts";
+} from "@tcg/simulator-presentation/audio/sound-packs";
 
 interface AnimationFixturesPageProps {
   onNavigate: (path: string) => void;
@@ -123,7 +124,7 @@ export default function AnimationFixturesPage({ onNavigate }: AnimationFixturesP
           <button
             type="button"
             className="mb-5 inline-flex min-h-10 items-center gap-2 rounded-md border border-[#45403a] bg-[#1d1b19] px-3 text-sm font-bold text-[#c9c0b5] transition hover:border-[#6b6258] hover:text-white"
-            onClick={() => onNavigate(buildMountedHref("/"))}
+            onClick={() => onNavigate(buildMountedHref("/simulator-ui-fixtures"))}
           >
             <IconArrowLeft size={17} />
             All fixtures
@@ -138,9 +139,9 @@ export default function AnimationFixturesPage({ onNavigate }: AnimationFixturesP
                 Animation inventory
               </h1>
               <p className="mt-3 max-w-[76ch] text-sm leading-6 text-[#b9b0a6] sm:text-base">
-                Every runnable case opens the owning game&apos;s real simulator, real engine
-                fixture, real adapter, and real card renderer. Missing cases stay visible so this
-                page never overstates runtime coverage.
+                Test reusable visual recipes in the shared renderer, then open each game&apos;s
+                engine fixtures to check its event mappings. Missing cases stay visible so this page
+                never overstates runtime coverage.
               </p>
             </div>
 
@@ -151,6 +152,45 @@ export default function AnimationFixturesPage({ onNavigate }: AnimationFixturesP
             </dl>
           </div>
         </header>
+
+        <CinematicBench />
+
+        <section
+          className="my-6 rounded-lg border border-[#45403a] p-4"
+          aria-label="Opening visual fixtures"
+        >
+          <h2 className="text-lg font-bold">Opening table · React Three Fiber</h2>
+          <p className="my-2 text-sm text-[#b9b0a6]">
+            Alpha Clash opens a real local engine match. Grand Archive remains a presentation
+            fixture with fixed cards.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <a
+              className="text-[#f2c77d] underline"
+              href={buildMountedHref("/alpha-clash/simulator/tests/opening-preview")}
+            >
+              Alpha Clash · engine opening and first turn
+            </a>
+            <a
+              className="text-[#9ed9e8] underline"
+              href={buildMountedHref("/grand-archive/simulator/tests/opening-preview")}
+            >
+              Grand Archive · Spirit reveal and opening hands
+            </a>
+            <a
+              className="text-[#9ed9e8] underline"
+              href={buildMountedHref("/grand-archive/simulator/tests/card-motions")}
+            >
+              Grand Archive · card motions
+            </a>
+            <a
+              className="text-[#9ed9e8] underline"
+              href={buildMountedHref("/grand-archive/simulator/tests/play-preview")}
+            >
+              Grand Archive · drag, play and resolve
+            </a>
+          </div>
+        </section>
 
         <section className="mb-6" aria-labelledby="game-selector-heading">
           <div className="mb-3 flex flex-wrap items-end justify-between gap-3">

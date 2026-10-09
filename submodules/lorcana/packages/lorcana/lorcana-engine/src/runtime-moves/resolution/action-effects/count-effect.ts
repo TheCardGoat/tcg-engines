@@ -56,7 +56,8 @@ export function resolveCountEffect(
   }
 
   if (effect.what === "distinct-character-ink-types") {
-    const controller = effect.controller === "opponent" ? "opponent" : ("you" satisfies CountController);
+    const controller =
+      effect.controller === "opponent" ? "opponent" : ("you" satisfies CountController);
     const sourceController =
       ctx.framework.zones.getCardController(_cardPlayed.cardId) ?? _cardPlayed.playerId;
     const playerIds =

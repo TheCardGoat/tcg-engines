@@ -23,4 +23,14 @@ describe("parseUserConfig", () => {
     expect(config.fieldCardSize).toBe("standard");
     expect(config.diceDisplayMode).toBe("image");
   });
+
+  test("defaults payment-source selection off and accepts only an enabled toggle", () => {
+    expect(parseUserConfig(null).choosePaymentSources).toBe(false);
+    expect(
+      parseUserConfig(JSON.stringify({ choosePaymentSources: true })).choosePaymentSources,
+    ).toBe(true);
+    expect(
+      parseUserConfig(JSON.stringify({ choosePaymentSources: "true" })).choosePaymentSources,
+    ).toBe(false);
+  });
 });

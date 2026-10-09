@@ -23,7 +23,7 @@ export const op08SShark111: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Egghead Seraphim"],
+  traits: ["Egghead", "Seraphim"],
   attribute: "special",
   effect:
     "[DON!! x1] [When Attacking] Your opponent cannot activate [Blocker] during this battle. [Trigger] You may trash 1 card from your hand: If you have 2 or less Life cards, play this card.",

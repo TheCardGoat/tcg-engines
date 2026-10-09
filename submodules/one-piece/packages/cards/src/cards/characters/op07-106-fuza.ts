@@ -22,7 +22,7 @@ export const op07Fuza106: CharacterCard = {
   setId: "OP07",
   cost: 4,
   power: 6000,
-  traits: ["Animal Sky Island"],
+  traits: ["Animal", "Sky Island"],
   attribute: "special",
   effect:
     "[DON!! x1] [When Attacking] If you have 1 or less Life cards, K.O. up to 1 of your opponent's Characters with a cost of 3 or less.",

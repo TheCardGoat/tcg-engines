@@ -96,4 +96,21 @@ describe("OP11-072 Charlotte Mont-d'or", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: returns the opponent's only trash card, then takes Life", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op11CharlotteMontDOr072], activeDon: 1, life: [eb01Doma005] },
+      { trash: [eb01Fourtricks025] },
+    );
+    const returned = engine.findCardInZone("north", "trash", eb01Fourtricks025);
+    const life = engine.findCardInZone("south", "life", eb01Doma005);
+    engine.asSouth().activateMain(op11CharlotteMontDOr072);
+    engine.asSouth().acceptOptional();
+    engine.asNorth().chooseTargets(returned);
+    expect(engine.getView("north").players.north.trash).toHaveLength(0);
+    expect(engine.findCardInZone("north", "deck", eb01Fourtricks025)).toBe(returned);
+    expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).toContain(
+      life,
+    );
+    expect(engine.getView("south").players.south.lifeCount).toBe(0);
+  });
 });

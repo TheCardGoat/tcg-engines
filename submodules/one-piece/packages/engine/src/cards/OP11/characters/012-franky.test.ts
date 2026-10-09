@@ -47,6 +47,7 @@ describe("OP11-012 Franky", () => {
       view.players.south.characters.find((card) => card?.instanceId === attackerIds[1])?.power,
     ).toBe(9000);
 
+    engine.asNorth().chooseCounter();
     engine.declareAttack(attackerIds[1]!, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventIds[1]!] }, "north");
     engine.resolveDecision(
@@ -76,5 +77,29 @@ describe("OP11-012 Franky", () => {
       engine.getView("south").players.south.characters.find((card) => card?.instanceId === frankyId)
         ?.power,
     ).toBe(4000);
+  });
+  test("FAQ: Red Hawk KOs Franky before its Event reaction can boost the field", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP11-012", "ST02-012"] },
+      { hand: ["OP01-026"], activeDon: 2 },
+    );
+    const franky = e.findCardInZone("south", "character", "OP11-012");
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.asNorth().chooseCounter(e.findCardInZone("north", "hand", "OP01-026"));
+    e.asNorth().chooseTargets(e.leader("north"));
+    e.asNorth().chooseTargets(franky);
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(franky);
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.cardId === "ST02-012")?.power,
+    ).toBe(3000);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+  test("FAQ: an opponent Event Life Trigger does not activate Franky's power effect", () => {
+    const e = OnePieceTestEngine.create({ character: ["OP11-012"] }, { life: ["ST06-016"] });
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.asNorth().activateLifeTrigger();
+    expect(e.getView("south").players.south.characters[0]?.power).toBe(4000);
+    expect(e.getView("north").players.north.handCount).toBe(1);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

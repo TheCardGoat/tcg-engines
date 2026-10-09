@@ -107,6 +107,8 @@ describe("FAB server adapter lifecycle baseline", () => {
           createFabMatchContext(state.cardDefinitions, state.publicCardIdentities),
         ),
       ),
+      undefined,
+      uninterrupted.getUndoCheckpoints(),
     );
     const payload = {
       decisionId: decision.decisionId,
@@ -126,7 +128,7 @@ describe("FAB server adapter lifecycle baseline", () => {
     expect(restoredResult).toMatchObject({
       success: true,
       stateID: 2,
-      undoable: false,
+      undoable: true,
       processedCommand: { move: "answer-decision" },
       acceptedMoveRecord: {
         moveId: "answer-decision",

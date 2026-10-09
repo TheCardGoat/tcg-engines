@@ -48,7 +48,9 @@ export function hasActivePlayFromDiscardPermission(
   currentTurn: number,
 ): boolean {
   return getActivePlayFromDiscardPermissions(state, playerId, currentTurn).some(
-    (permission) => permission.cardId === cardId,
+    // Player-wide permissions (allCards) cover any card, not just their
+    // ability source recorded in cardId.
+    (permission) => permission.allCards === true || permission.cardId === cardId,
   );
 }
 
@@ -59,6 +61,12 @@ export function consumePlayFromDiscardPermission(
 ): void {
   const permissions = state.permissionsByPlayer[playerId];
   if (!permissions) {
+    return;
+  }
+
+  // Player-wide permissions (e.g. Remember Me: "for the rest of this turn")
+  // persist for their duration — they are not consumed by a single play.
+  if (permission.allCards === true) {
     return;
   }
 

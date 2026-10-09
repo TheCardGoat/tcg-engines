@@ -4,6 +4,3471 @@ This inventory tracks executable behavior tests by canonical gameplay card.
 Alternate art and reprint definitions share a canonical behavior test; catalog
 signature tests remain responsible for detecting variant drift.
 
+## October 7, 2026 semantic audit checkpoint
+
+Completion remains unproven. The existing coverage and Grade A gates pass, but
+several primary files prove only field placement or turn handoff. Such tests do
+not prove every printed clause. Inventory row labels must not be used as a
+substitute for command-driven clause audits.
+
+Current inventory labels cover 2,818 canonical cards: 2,533 ability cards marked
+verified and 285 vanilla cards.
+These counts describe the inventory, not a new claim that every card clause is complete.
+
+Confirmed corrections in this checkpoint:
+
+- OP15-001 Krieg requires at least one friendly Character for its debuff.
+- OP15-003, 010, 012, 017, and 023 allow either owner's DON!! while keeping
+  donor and recipient ownership equal. Cost-area giving now lets the effect
+  controller select the active/rested source mix; OP15-025 and 028 use it too.
+- OP15-022 Brook trashes a partial or empty deck and continues its Then clause.
+  Its deferred defeat remains due after the deck is refilled. OP03-043 Gaimon
+  retains its distinct full-payment requirement for If you do.
+- OP15-098 Luffy replaces opponent-caused battle or effect removal, without
+  replacing its controller's own effects.
+- Grouped optional removal replacements have one accept/decline decision and
+  one payment per group. Declined deck movement retains its original ordering
+  across other replacement choices.
+- OP15-080 Oars checks the full field for Gecko Moria and other Oars cards.
+- OP17-043 Ganzui has its missing On Play base-power effect. Battle replacement
+  supports its two-card hand-trash payment and rejects an insufficient hand.
+- EB04-048 Rob Lucci now has its paid On Play draw and dynamic per-five-card
+  power/cost bonuses. The imported cost sign was corrected against the
+  [official card list](https://en.onepiece-cardgame.com/cardlist/?freewords=EB04-048).
+- Full-field grouped plays now pause for each replacement choice, retain
+  active/rested assignments, and finish before resolving the played cards' On Play.
+- Five OP17 Character cards gained missing On Play clauses; six Events gained
+  missing Main/Counter blocks and distinct-name/current-turn K.O. conditions.
+- Nineteen Life Trigger blocks and ST27-005's On K.O. block gained command proofs.
+  A catalog guard now checks that printed timing headings have executable blocks;
+  it supplements, rather than replaces, clause-specific behavior tests.
+- Giving multiple DON!! publishes one Garp reaction per DON!!, including
+  effect-based transfers and activation costs, after the parent effect finishes.
+
+- Field auras no longer activate from hand. Ace, Kaido, and Xebec use fixed
+  Counter values, with no stacking; Xebec requires at least one Character.
+- Marco and Kyo gained their missing removal replacements. Kaido's K.O.
+  remains bound to the Character selected for effect negation.
+- ST15-005 Ace has conditional Rush and self-only, once-per-turn protection.
+  EB04-057 Vegapunk protects yellow Scientist Characters at low Life.
+- ST32-002 Oden applies its printed base-cost limit. OP16-058's Counter
+  can target a Buggy Leader as well as a Buggy Character.
+- Cracker gained its unbracketed Life Trigger. Streusen now orders the looked
+  cards and chooses top or bottom. Shanks can choose either printed cost.
+- Players can choose among eligible K.O./field-removal replacements, including
+  physical Rosinante copies; compulsory Thatch replacement keeps priority.
+- Audited mandatory self-rest/self-activation loops now finish as a draw.
+  Optional choices and finite repetitions do not cause a false draw.
+
+Source checks: official OP15 FAQ Q1170, Q1172–1193, Q1196–1198, Q1239 and
+OP02 FAQ Q270; fixed Counter FAQ Q1339/1340, Q1391 and Q1419; Shanks/Streusen/Cracker
+FAQ Q1372, Q1388 and Q1409; Comprehensive Rules 1-3-2, 4-10-2 and 4-11-2.
+
+Validation: 2,309 engine files / 8,472 tests pass (3 opt-in automated-game
+checks skipped); 101 parser files / 1,237 tests pass; 4 card-package files /
+26 tests pass. All 138 changed TypeScript files pass scoped format, lint, and
+type checks; the engine bundle and declarations build successfully. An earlier
+opt-in run completed 3,280 bot matches, before the final Counter and replacement
+changes; it is not claimed as validation of the final checkpoint.
+No simulator UI files changed. The root check still has unrelated existing
+formatting failures; this checkpoint does not claim a clean repository-wide gate.
+
+Checkpoint feedback: timing-heading checks exposed omitted Trigger/Main/Counter
+blocks on cards whose other clauses already had tests. The guard now also
+recognizes unbracketed Trigger headings, which found OP17-104. The proof grader
+now recognizes public fluent play/attack/decline helpers and literal parameterized
+tests; it still requires a matching opener and a strict outcome for a decline.
+
+Remaining work: audit weak primary tests against all printed clauses, confirm
+new-set card behavior with official FAQs, and implement the documented missing
+infinite-loop cases outside audited deterministic rest/active cycles. No
+all-names Leader exists in the current catalog for a direct Oars Q1239 scenario.
+
+
+### Follow-up qualifier audit
+
+- OP16-015's discount applies only in hand, with a Leader name containing Ace.
+- OP16-060 returns only active DON!! as printed; rested and attached DON!! cannot pay.
+- OP16-033 Morley's replacement protects itself, not another friendly Character.
+- OP05-001 Sabo's power loss stays bound to the saved Character.
+- OP15-024 Usopp distinguishes Leader/Character effects from Events; mixed
+  Character/DON!! rest prompts apply the same protection filter.
+- OP15-064 Kotori and OP15-072 Hotori return two DON!! instead of resting them.
+- A real Hawkins-to-Zoro nested replacement test passes without engine changes.
+
+Follow-up validation: all 2,309 engine files / 8,485 tests pass (3 opt-in tests
+skipped). All 21 changed TypeScript files pass scoped checks; the engine bundle
+and declarations build. Official card-list text confirms Usopp's source-type
+restriction and Kotori's DON!! return cost.
+
+
+### Target, cost-timing, and loop audit
+
+Kid OP10-099 keeps Blocker bound to the reactivated Character; choosing no
+Character grants no Blocker. Shu OP11-088 reacts to Slash Characters, not Leaders.
+The OP15 pass repairs missing cost, name, power, and DON!! filters, conditional
+power, optional recovery, and unprinted Blocker. Named-Leader boundary tests use
+explicit synthetic alternateNames fixtures and restore metadata; they do not
+claim that an all-name Leader exists in the catalog.
+
+The OP16/17 pass binds Yamato's Rush to the Character played from trash, rejects
+an empty-field condition where required, permits the opponent's qualifying
+Character for Otama, and applies printed conditions after payment. Decline and
+payment-without-effect paths have public command tests.
+Blenheim OP17-012 now plays only cost-1 Whitebeard Pirates cards from hand;
+public tests include both Character and Stage cards, exclusions, and skipping.
+
+The proof selector now recognizes numbered subject filenames such as
+`OP15/stages/057.test.ts`. Fixture imports no longer replace those primaries.
+This exposed two weak OP17 tests, which now check actual card clauses and
+found Blenheim's missing filters.
+
+Optional-loop declarations now work for audited deterministic rest/active
+cycles, including two-player order, smaller-count stopping, invalid values,
+restart restrictions, and snapshot continuation. Numeric input passes through
+the existing server protocol; bots can stop the loop. Other loop forms remain
+unimplemented or unverified. Simulator UI files are unchanged.
+
+Validation: all 2,313 engine files / 8,534 tests pass (3 opt-in tests skipped);
+all 7 server-adapter files / 30 tests pass. Parser tests (1,237) and card-package
+tests (26) pass, as do scoped format/lint/type checks and the engine build.
+
+### OP17 replacement and Event follow-up
+
+Zoro OP17-095 now protects friendly Characters, including itself, from opponent
+effect removal by returning three chosen trash cards to the deck bottom in the
+chosen order. One payment protects a simultaneously removed group (official
+FAQ Q1401/1402); decline, insufficient trash, battle K.O., and own-effect removal
+remain distinct. Named targets on OP17-055 and OP17-115 now include Leaders.
+Kundali Dragon Swarm OP17-077 checks its Animal Kingdom Pirates Leader condition
+after paying both Main costs; its Counter works with any Leader.
+
+Kong Gun OP17-098 has a real positive test using Shinobu's cost increase on
+Momonosuke. Its earlier claim that cost 12 was unreachable was false. Tests
+also cover Counter behavior and actual affordable optional declines. Zoro's
+conditional +3000 power is now proven with the same real cost increase and
+its end-of-turn expiry. The proof checker accepts exact quoted card IDs in
+subject-bound play commands and still rejects an unrelated fixture card.
+
+Validation: all 2,314 engine files / 8,555 tests pass (3 opt-in tests skipped).
+All 11 changed TypeScript files pass scoped format, lint, and type checks.
+This follow-up changes card definitions, tests, and this inventory only.
+
+### OP16 clause audit and replacement-process follow-up
+
+The bounded Character audit compared 42 definitions in OP16-001–055 (excluding
+four previously repaired cards) and 31 in OP16-061–098 (excluding two previously
+repaired cards). This is printed-structure evidence with focused behavior tests
+for corrections, not full scenario proof for every card in those ranges.
+Thatch and Kin'emon now keep field-only or hand-only cost changes in the printed
+area. Both Mr.2 cards copy the opponent Leader's current power. Sakazuki's On Play
+DON!! return is optional. Kuzan and Yamato tests now execute their Unblockable
+attacks instead of relying on field placement or turn handoff.
+
+OP16-019 now plays only 8000-power Whitebeard Pirates Characters. OP16-020 pays
+its reveal cost and rejects lower-power cards; its Counter test now submits the
+power target and proves the battle result. Hammer Rifle counts a Luffy Leader
+for its field-name condition. OP16-058 includes a Leader with the required name;
+this last boundary uses a temporary, explicit synthetic alternateNames fixture,
+not a claim that such a Leader currently exists in the catalog. Official card
+list text was checked for all four Events.
+
+The additional 15-Character audit within OP16-101–119 repairs Devon's current-
+power copy and Moria's missing Absalom cost cap. Moria's test now rejects its
+Trigger above the Life threshold instead of asserting an unprinted Continuous
+ability. Simultaneous named-card play ordering remains an investigation: the
+current queue defers On Play, so sequential choices alone do not prove a bug.
+
+Repeated current/base-power defects led to a parser repair. It now emits
+`copyPower` for current Leader power and retains `setBasePowerFrom` only when
+the source text explicitly says base power. Parser regressions distinguish both
+forms and preserve Shuraiya's shared once-per-turn identity. Shuraiya and Sanji
+receive the same current-power definition repair; Vista's explicit base-power
+behavior is retained.
+
+The engine now records which physical source/effect replacements have applied
+within one replacement process. The record persists through prompts and JSON
+snapshots; independent actions and triggered effects get a fresh process.
+This prevents self-replacing rest/K.O. chains from applying the same replacement
+again. Cross-player source ordering and general loop detection remain separate
+unfinished requirements.
+
+Validation: 2,315 engine files / 8,573 tests pass (3 opt-in tests skipped),
+101 parser files / 1,239 tests pass, 4 card-package files / 26 tests pass,
+and 7 server-adapter files / 30 tests pass. All 42 changed TypeScript files
+pass scoped format, lint, and type checks. The engine build and full server-
+adapter typecheck pass. No UI files changed.
+
+
+### OP17 clause audit and replacement ordering follow-up
+
+Two bounded audits inspected 35 earlier and 40 later OP17 Character definitions,
+excluding previously repaired cards. This is printed-structure evidence, with
+command tests for confirmed defects; it is not full scenario proof for 75 cards.
+Newgate (040) gains its paid, shared-once-per-turn Leader battle bonus on either
+player's attack. Kaido (042) applies -3000, rather than +3000, after revealing the
+required Rocks Pirates cards. Kaido (062) adds an active DON!! before reactivating
+one. Mont-d'or (111) must reveal two cards with Trigger before its two-target K.O.
+Ga Ha Ha Ha (017) already applied -2000 correctly; its imported base and English
+text now match that behavior. Event 037's former turn-handoff placeholder is
+replaced by Counter battle tests for Leader, Character, and Stage rest payments,
+plus declining payment. DON!! payment is covered separately after the Event
+cost is paid. Shared rest-card costs now include active DON!!, as confirmed by
+[official OP14 FAQ](https://www.onepiece-cardgame.com/rules/qa.php?tab=cardqa&type=1)
+Q1119 and Q1124; tests cover all-DON!! and mixed field/DON!! payments.
+Duplicate and wrong-owner payment rejection also exposed a shared prompt bug:
+rejected submissions now keep the choice pending so a valid retry can resolve it.
+Two Event tests that submitted invalid empty remainder orders now explicitly
+decline the search and order all remaining cards; Buddha Sengoku still pays
+its later hand trash. They no longer rely on rejected choices disappearing.
+
+Replacement scans now include both players. Choice groups follow turn-player
+then opponent order, declined groups fall through, and multiple rest replacement
+sources can be chosen. Tests cover battle payment ownership, independent grouped
+siblings, and reconsidering declined candidates after a transformed result.
+The six OP17 Leaders and Stage 057 were also checked against official card
+text, without a new definition defect. Luffy (079) now has real-card Blocker
+battle proofs at cost 16, exactly 12 after Sabo, and below the threshold.
+Linlin (099) no longer has the stale inventory label "unstructured".
+
+Mandatory affected-card priority remains a pre-existing interpretation needing
+clearer source evidence; optional replacement choices do not gain that priority.
+
+A real Moria/Perona/Absalom probe confirms a separate ready-effect ordering gap:
+the owner cannot choose Perona's cost reduction before Absalom's K.O. This is now
+recorded as a required engine repair, rather than an unreachable rules case.
+General loop forms outside the audited deterministic family also remain open.
+
+The parser now retains a field card's paid observation of its Leader attacking
+or being attacked. It emits both triggers, the Leader target filters, trait
+condition, optional trash cost, and shared once-per-turn identity; regeneration
+no longer drops Newgate's second ability. Existing source-bound Leader parsing
+has a control regression.
+
+Validation: 2,317 engine files / 8,605 tests pass (3 opt-in tests skipped),
+102 parser files / 1,243 tests pass, 4 card-package files / 26 tests pass,
+and 7 server-adapter files / 30 tests pass. All 28 changed TypeScript files
+pass scoped format, lint, and type checks. The engine build and server-adapter
+typecheck pass. This goal now changes 105 card definitions. No UI files changed.
+
+
+### EB03 clause audit and simultaneous effect ordering follow-up
+
+A bounded audit inspected 35 EB03 Character definitions within 002–040 against
+official card text and relevant FAQs Q1072–1085. Uta (003) now requires an Uta
+Leader for both its draw and its later play, as Q1072 specifies. The other 34
+had no further demonstrated clause defect in this pass; this is not exhaustive
+scenario proof. All six EB03 Event definitions were compared with official text.
+Thanks for the Treat (038) now requires at least one Character for its only-GERMA
+condition, as Q1084 specifies. The negative test confirms that an empty field
+still permits paying the pre-colon cost but receives no DON!! afterward.
+
+Source: [official EB03 FAQ](https://asia-en.onepiece-cardgame.com/rules/qa.php?freewords=EB03&tab=cardqa&type=1).
+
+The remaining 19 EB03 Characters (041–048, 050–059, 061) were also compared with
+official text and FAQs 1086–1093. The gameplay name of 061 is now Uta; its art
+variant no longer prevents Tot Musica from paying a named-Uta rest cost. A
+35-Character EB02 audit within 001–046 adds Sanji & Pudding's missing two-DON!!
+return threshold, repairs Nico Robin's imported minus sign, and expands Gaimon
+and Klabautermann name checks to the printed full field. The last two use explicit
+synthetic named-Leader boundaries alongside existing real-card controls.
+
+Parser regressions preserve Uta's Leader condition across its draw/play sequence
+while keeping independent later conditions separate. All three supported
+only-type-Character wordings now require a nonempty field; explicit absence
+conditions remain distinct.
+
+The engine now records ready auto effects separately from the active effect's
+actions. It freezes each ready group, gives its original turn player and then
+its original opponent their choices, and defers newly triggered groups. A
+selected effect completes its costs and actions before its siblings; eligible
+Life Triggers interrupt damage and finish before damage continues. Saved matches
+retain these choices. Effects whose costs are enabled by an earlier sibling
+remain available, while a source leaving and reentering loses its old effect.
+The generic choice replaces the former Moria-specific order prompt.
+
+Tests now choose actual ready effects rather than relying on queue insertion
+order. The former direct-queue damage and Bonney tests now use public commands;
+Bonney's own-turn Life Trigger case uses Robin's real On K.O. damage. Synthetic
+multi-damage coverage is labeled as such.
+
+Validation: 2,319 engine files / 8,621 tests pass (3 opt-in tests skipped),
+104 parser files / 1,250 tests pass, 4 card-package files / 26 tests pass,
+and 7 server-adapter files / 30 tests pass. All 53 changed TypeScript files
+pass scoped format, lint, and type checks. Engine and card builds pass;
+the server-adapter typecheck was also run without its task cache. Independent
+review verified the ready-group and damage probes. This goal now changes 114
+card definitions, including removal of obsolete grouped-play order flags.
+No simulator UI files changed. Next bounded card audit: EB02-047 onward.
+
+### EB02 completion audit and forced cross-player loops
+
+The remaining ten EB02 Characters (047–049, 052–057, 061) and all twelve Events
+were compared with official text and relevant FAQs Q873 and Q878–882. Enel (052)
+now applies its post-cost Life condition to both Life gain and power (Q879).
+Event 059 requires yellow on both named-Sanji and Straw Hat Crew branches (Q881).
+Luffy (061) returns only active DON!! for its printed cost; tests reject using
+rested or attached DON!! instead.
+
+A follow-up of only-type field conditions repairs Leader EB02-010 and Event
+OP13-097. Both need at least one Character. The Leader's whole post-cost effect
+is conditional: returning two DON!! on an empty or nonmatching field gives
+neither reactivation nor power (Q860). The Event can pay its cost on an empty
+field but cannot K.O. (Q1059). Character-source versions were also inspected;
+the source itself supplies their required Character while its effect is valid.
+
+Sources: [official EB02 FAQ](https://asia-en.onepiece-cardgame.com/rules/qa.php?freewords=EB02&tab=cardqa&type=1),
+[official OP13 FAQ](https://asia-en.onepiece-cardgame.com/rules/qa.php?freewords=OP13-097&tab=cardqa&type=1).
+
+The mandatory loop guard now shares the optional guard's exact single-target
+rest/activation audit. A synthetic public-command cross-player loop that never
+returned before the change now ends in a draw after a proven repeated state.
+Finite once-per-turn effects and target choices do not cause a false draw.
+There is no arbitrary iteration limit. No actual catalog infinite loop was
+established in this pass: the eight when-rested definitions and the DON-giving
+reaction were checked, and their apparent feedback was finite or absent.
+Other action families and loops with unresolved player choices remain outside
+this automated proof.
+
+Validation for this batch: 2,320 engine files / 8,629 tests pass (three opt-in
+tests skipped); 105 parser files / 1,255 tests pass; four card-package files /
+26 tests pass; seven server-adapter files / 30 tests pass. All 21 changed
+TypeScript files pass scoped format, lint, and type checks. Engine and card
+builds and an uncached server-adapter typecheck pass. Independent review found
+no false draw in the bounded loop family.
+
+### Conditional revealed-card placement and EB01 audit
+
+EB01-029 now keeps a revealed card on top when its cost is below four, as
+specified by [official FAQ Q640](https://asia-en.onepiece-cardgame.com/rules/qa.php?freewords=EB01-029&tab=cardqa&type=1).
+The existing successful reveal and Life Trigger tests still pass. A new public
+Counter test fails before the repair and proves the retained physical card is
+drawn next. The reveal action can specify a final position inside its condition;
+failed conditions use the fallback position. The parser preserves that shape.
+
+The bounded audit found no further confirmed mismatch in EB02 Stages 009, 041,
+060 or EB01 Characters 002–008, 012–018, 022–027, 031–037. Four vanilla Characters
+were excluded from effect testing. These source and existing-test reviews do not
+prove every interaction or duration boundary.
+
+Fresh official English and Japanese rules v1.2.1 retain the ambiguous replacement
+source-priority phrase in 8-1-3-4-2. They do not independently confirm affected-card
+priority or the mandatory-only interpretation. No official competing-replacement
+example was found; this remains an explicit unresolved interpretation.
+
+Validation: all 8,630 engine tests and 1,256 parser tests pass; three opt-in
+engine tests remain skipped. All 30 server-adapter tests, six-file scoped
+checks, engine/card builds, and uncached adapter typecheck pass.
+
+### EB01 audit completion and conditional reveal follow-up
+
+The remaining 17 EB01 Characters (041–049, 052–058, 061) and all 17 Leaders,
+Stages, and Events were compared with official text and applicable FAQs. Six
+EB01 Characters across the set are vanilla. This completes the bounded EB01
+clause audit; it does not prove every cross-card interaction. Added public FAQ
+boundaries cover Chambres with no Characters (Q634), Hannyabal with an empty
+DON!! deck (Q635), and Champion Rifle with a nonmatching Leader (Q639).
+
+Four Bentham definitions (EB01-061, OP01-084, OP02-064, OP04-069) now use the
+official name `Mr.2.Bon.Kurei(Bentham)`. Their extra space before the parenthesis
+incorrectly bypassed OP14-091's same-name exclusion. All four public battle-K.O.
+regressions failed before the correction; an eligible differently named card
+remains playable after it.
+
+Current Comprehensive Rules 4-10-1/2 also confirm the failed-reveal boundary
+for OP04-011 Nami and OP07-048 Doflamingo: an unmet condition prevents the later
+bottom-deck instruction. Both negative command tests reproduced the defect.
+Successful Nami reveals still grant power and go to the bottom; Doflamingo's
+eligible card goes to the bottom if its optional play is declined. Both parser
+families now retain the same conditional placement.
+
+Sources: [official EB01 FAQ](https://asia-en.onepiece-cardgame.com/rules/qa.php?freewords=EB01&tab=cardqa&type=1),
+[current official comprehensive rules](https://en.onepiece-cardgame.com/pdf/rule_comprehensive.pdf?20260828=).
+
+Validation: 8,638 engine tests pass (three opt-in tests skipped by default),
+1,256 parser tests pass, and 26 card-package tests pass. All 19 changed
+TypeScript files pass scoped checks; the card package builds. The extended
+automated-game run is still in progress and is not counted as completed proof.
+
+### Whole-sequence conditions and grouped removal
+
+A current-rule audit found repeated misuse of “Then” as an escape from an unmet
+preceding “If”. Twenty definitions now gate their complete following sequence.
+Printed costs remain payable before post-colon conditions. Public negative
+scenarios reproduced the defects, including a paid self-trash activation at
+higher Life, wrong Leaders, missing field conditions, and opponent hand limits.
+A successful Chopper condition remains satisfied for its following mill even
+when the preceding discard reduces the opponent's hand below the threshold.
+Law's missing-field negative already resolved correctly because its play needs
+the returned Character; a regression records this without changing its definition.
+
+The parser now applies the general rule instead of action-specific exceptions.
+It preserves nested reveal/play identity, independent later conditions, and
+post-cost evaluation. Independent review found and fixed a payment boundary:
+deck-trash and shuffle payment processing must remain outside the later gate.
+Public parser regressions cover both payment forms.
+
+Single removal instructions containing two separately limited target groups
+now collect both choices before moving cards. The engine reuses its existing
+replacement and owner deck-order processing for one combined movement. The
+public proofs cover Alvida's physical bottom order after snapshot restore,
+duplicate selection rejection with retry, and one replacement payment or decline
+for Lucci's joint K.O. Parser output preserves the same target groups.
+Unsupported target groups now stop with a capability record and the existing
+judge prompt before movement. Typed fault-injection tests cover initial selection
+and the final recheck; current catalog groups use supported filters.
+
+Validation: all 2,320 engine files pass (8,662 tests; three opt-in tests skipped),
+107 parser files pass (1,263 tests), four card-package files pass (26 tests),
+and seven server-adapter files pass (30 tests). The 83 changed TypeScript files
+pass scoped checks, the engine and cards build, and the adapter passes an
+uncached TypeScript check. The first broad run exposed a missing explicit
+EB04-059 optional Life-payment decline proof; that proof and the full rerun pass.
+Across this goal, 156 canonical card definitions have changed. No simulator UI
+files changed.
+
+The local rules sources now match official v1.2.1, including all 481 numbered
+entries. Both text copies match the current PDF after typography normalization.
+The skill harness still reports 81 unrelated baseline issues (80 broken links
+and missing Alpha Clash frontmatter); none concern these rule files.
+
+The opt-in stress run completed 4,000 games with zero illegal commands or stuck
+games, but exceeded its five-minute test limit. This was a failed test gate,
+not a passed stress test. The opt-in timeout now matches the larger benchmark;
+the fresh run now passes: both automation files, all 13 tests, in 809.70 seconds.
+This includes the four 1,000-game strategy pairings and extended heuristic
+benchmark. The stress assertions require zero illegal commands and fewer than
+50 stuck games; successful-run output does not expose an exact stuck count.
+The prior run's zero-stuck count is not claimed for this new run.
+
+### Follow-up gaps found at checkpoint e99286468d
+
+A read-only follow-up audit found three concrete gaps after this checkpoint:
+
+- OP05-087 Hakuba pays its Character K.O. cost through direct removal, bypassing
+  Kyros replacement. The official OP05 FAQ, page 6, permits resting the Leader
+  or Corrida Coliseum instead; Kyros remains and Hakuba must not apply its -5
+  cost effect because the printed cost was not paid. Rules 8-3-1-7 and 10-2-13-5
+  govern payment replacement and once-per-turn consumption. Other catalog
+  `koCharacter` cost consumers are OP06-083, OP14-080, and OP14-079.
+- EB03-049 places its hand Character before collecting the trash Character
+  choice. One printed play instruction must collect both groups before placement;
+  full-field rule removal must not manufacture the second group's candidate.
+- `validateDeckForFormat` accepts fractional quantities and negative quantities
+  that cancel other entries. The public validator needs a positive integer
+  quantity check before such entries can establish a legal deck.
+
+These defects were queued at e99286468d and are repaired by the next batch below. The EB03 bounded
+read-only audit covered all 54 Characters (three vanilla), one Leader, and six
+Events. Besides EB03-049 and the repaired 021/052 clauses, no further concrete
+text/structure defect was established; independent boundary tests remain useful.
+
+### Replaced K.O. costs, active grouped play, and deck quantities
+
+K.O. activation costs now use the existing replacement pipeline with a saved
+payment completion item. Kyros can replace Hakuba's cost K.O.; Hakuba's -5
+cost effect then does not resolve. Mandatory Thatch replacement draws but also
+fails to pay the original K.O. cost. The success record tracks actual original
+K.O.s, not whether a Character reached trash. Public tests cover accept/decline,
+invalid input retry, snapshot reload, and Oars paying by K.O.ing itself. A
+clearly marked synthetic once-per-turn variant proves consumption on replaced
+payment; real Moria/Crocodile activations retain repeated-use rejection. All
+four current catalog `koCharacter` cost consumers have focused coverage.
+
+EB03-049, OP14-084, and OP16-105 now select their complete groups before
+placement. The shared grouped-play action supports any number of all-active
+groups while retaining the existing mixed active/rested pair. Full-field tests
+prevent a rule-trashed Character from becoming a newly selected candidate and
+preserve physical identity after snapshot reload. Moria's three-name group
+limits and both choices of subsequent On Play order pass. The parser preserves
+two/three-group clauses and a following Then action without merging separately
+stated play instructions.
+
+Deck validation now rejects zero, negative, fractional, and unsafe quantities.
+Three public red/green regressions cover fractions totaling 50, negative copy
+cancellation, and a zero-count Leader used to bypass the real Leader's colors.
+Additional EB03-051/061 tests prove the FAQ continuations after declining or
+finding no eligible K.O. target, and after finding no own rested DON!!.
+
+Independent review verified grouped-play and payment continuation behavior.
+Validation: 2,321 engine files pass (8,675 tests; three opt-in tests skipped),
+108 parser files pass (1,267 tests), four card-package files pass (29 tests),
+and seven adapter files pass (30 tests). All 25 changed TypeScript files pass
+scoped checks; engine/card builds and the uncached adapter typecheck pass.
+The full rerun retains both owner-chosen simultaneous On Play order cases after
+updating their stale selection commands. The goal has changed 158 canonical
+card definitions; simulator UI files remain unchanged.
+The earlier enabled stress/heuristic run passed at e99286468d; it is not a new
+stress run for this batch. General unaudited loop forms and remaining card
+clause audits remain open. Next bounded catalog audit: EB04.
+
+### EB04 clause audit and named DON!! costs
+
+The bounded audit inspected all 61 EB04 definitions: 47 Characters (no vanilla
+cards), one Leader, twelve Events, and one Stage. Official card pages verified
+the changed printed clauses. The repairs cover Bonney's optional Life draw,
+Smoker & Tashigi's Navy-only Leader base power, Ginny's optional rest payment and
+both-field Character count without an invented once-per-turn limit, Emet's
+Character-only attack condition, Rayleigh-only DON!! recipients, named Leader
+Counter targets, and Hawk Gatling's top-or-bottom Life payment. Shared zone
+counting now supports both players rather than treating that scope as opponent.
+
+The named-DON!! family audit also repaired OP12-016/017/019. Unblockable stays
+bound to the physical DON!! recipient, including an automatically paid single
+recipient. The search preserves red Event OR cost-3-or-more Character as
+independent alternatives. Parser regressions cover named costs, Counter target
+alternatives, physical-recipient binding, and optional Life choices. OP12-039
+now restricts its Leader reactivation to Roronoa Zoro.
+
+Bottom-deck activation costs now use the same saved original-payment result as
+K.O. costs. Plague Rounds offers Zoro's removal replacement to the affected
+opponent. A replacement prevents Ice Oni's play; previously paid discard is not
+refunded. Public tests cover both choices, owner, invalid retry, and snapshot.
+Independent review found no concrete defect in this bounded payment scope.
+
+Behavior coverage was strengthened for EB04-007's power, threshold, attack
+restriction and Rush: Character, EB04-049's Life Trigger, SWORD Main attack
+permission and expiration, Lulucia's actual power changes, and the repaired
+negative/decline branches. These checks and the definition audit do not prove
+all cross-card interactions. General loop cases and other catalog clause audits
+remain incomplete. Next bounded catalog audit: OP01.
+
+Validation: 2,322 engine files pass (8,703 tests; three opt-in tests skipped),
+110 parser files pass (1,272 tests), four card-package files pass (29 tests),
+and seven adapter files pass (30 tests). All 41 changed TypeScript files pass
+scoped checks; engine/card builds and an uncached adapter typecheck pass.
+The skill harness retains the same 81 unrelated baseline issues. No new stress
+run is claimed beyond the enabled run at e99286468d. Across the goal, 167
+canonical card definitions have changed. No simulator UI files changed.
+
+### OP01 clause audit and reaction boundaries
+
+The bounded audit compared all 121 canonical OP01 definitions with their printed
+clauses: 93 Characters (16 vanilla), eight Leaders, and twenty Events. The
+Character audit consulted official card pages and the set FAQ. Existing tests
+cover the primary Leader/Event clauses; new negative branches prove the repairs.
+Luffy's Strike battle protection now excludes Leaders. Kaido and the related
+OP03-076 Rob Lucci trigger only for an opponent's K.O., including when a player
+pays an own-Character K.O. cost. Kanjuro now has explicit attack-trigger target
+and DON!! boundary tests. Crocodile can decline a draw and accept a later Event's
+draw in the same turn.
+
+The reaction-family audit also corrected OP16-041 Buggy's missing DON!! x1,
+removed-card owner, and Impel Down type gates. The previous positive test had
+silently relied on the missing DON!! condition. Public negative tests now prove
+all three gates, and the positive test attaches DON!! through the public command.
+Declining optional activation leaves a later removal available in the same turn.
+A parsed-effects integration test also proves battle K.O. dispatch for Buggy;
+parser metadata alone had missed that boundary.
+
+Reject's damage option checks the opponent's one-Life condition once around
+both damage and the following own-Life addition. Failed conditions at zero or
+two Life skip both actions. The K.O. option retains its follow-up. Parser tests
+preserve conditional choice sequences and the shared Then, while retaining
+OP05-096 and OP15-054's different continuation structures.
+
+A shared expiry helper now applies the opponent-turn boundary in sixteen
+modifier creation paths. Effects applied during the opponent's turn expire at
+that turn's end. Galdino's attack restriction and Oinkchuck's cost bonus have
+public regressions. Labelled synthetic Counter fixtures test power/base-power
+variants; an extra-turn test confirms an own-turn bonus lasts through the next
+opponent's turn. Existing seat-aware cleanup is retained.
+
+Sources: [OP01 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op01.pdf?20240405=),
+[OP06 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op06.pdf?20240419=),
+[Buggy's official text](https://asia-en.onepiece-cardgame.com/cardlist/?freewords=OP16-041).
+The replacement-priority review found no new authority to resolve mandatory
+Thatch versus optional Rosinante ordering; no speculative change was made.
+The audit is not exhaustive interaction proof. Remaining examples include
+Smiley's hand changes during Counter, Bao Huang's simultaneous private choices,
+and Shanks's Blocker eligibility after power changes. General loop families and
+further set audits remain open. Next bounded catalog audit: OP02.
+Parser review found one existing source-layout limit: a final bullet’s inline
+Then can be classified as shared. No affected catalog card was confirmed;
+flattened OP05-096 does require the shared interpretation. This audit does not
+claim general recovery of lost bullet formatting.
+Self-improvement: no new skill rule; existing trigger-provenance guidance applied.
+
+Validation: 2,324 engine files / 8,720 tests pass (three opt-in tests skipped),
+113 parser files / 1,283 tests pass, four card-package files / 29 tests pass,
+and seven adapter files / 30 tests pass. All 23 changed TypeScript files pass
+scoped checks. Engine/card builds and an uncached adapter typecheck pass.
+The enabled stress run remains the earlier e99286468d checkpoint, not this
+revision. Across the goal, 172 canonical definitions changed. No simulator UI
+files changed.
+
+### OP02 clause audit and search-count choices
+
+The bounded OP02 audit covers 121 canonical cards: 93 Characters (20 vanilla),
+eight Leaders, sixteen Events, and four Stages. Official card pages and the
+set FAQ were compared with structured clauses and existing public tests. The
+non-Character audit found Kin'emon's next-play discount family defects; the
+Character audit found Dadan's missing optional look count.
+
+Dadan now asks for zero to five cards before exposing their contents. The count
+is capped by the remaining deck, and zero does not use the full-deck-search
+sentinel. Public tests cover partial/full/zero selections, short decks, invalid
+retries, saved-state continuation, and the following draw. The parser preserves
+this option only when the text says to look at up to a number of deck cards.
+
+Kin'emon and Rosinante now save a player-scoped next-paid-play discount. It
+applies to eligible cards drawn after activation, and is consumed only by the
+matching paid play. It does not change a card's cost characteristic, widen Law's
+effect-play limit, or disappear after an effect play or an unrelated paid play.
+Public tests cover both Leaders, actual payment, and saved-state continuation.
+Kin'emon also covers a full field, invalid replacement retry without payment,
+and restoration before the valid replacement pays exactly the discounted cost.
+
+Added FAQ coverage proves Nami's attack search succeeds, Luffy gains Double
+Attack after paying even with no return target, and Uta's snapshot bonus does
+not include Characters played later. These are coverage additions, not claimed
+repairs to those three definitions. Remaining interaction examples include
+Inuarashi's non-K.O. removal protection, Inazuma's live hand-size changes during
+Counter, Isuka's no-DON/effect-K.O. exclusions, and Hina's current-attacker case.
+The audit does not prove every cross-card combination. Next set audit: OP03.
+
+The queue now stops immediately when a rule defeat occurs during an action.
+A synthetic mandatory self-K.O./replay cycle is recognized as a draw only in
+the audited deterministic family. A finite draw variant instead loses when
+its deck empties, before its remaining K.O.; optional and target choices remain
+available. Generation checks preserve source identity across saved states.
+Moving loops with replacements, modifiers, delays, battle state, or complex
+continuations remain outside the detector. No real catalog unavoidable loop
+is claimed. Thirty old neutral scenarios in twenty-seven files gained one
+unused bottom card so their intended follow-ups no longer occur after defeat.
+
+Sources: [official OP02 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op02.pdf?20240405=)
+and the official OP02 card list. General loop cases and later set clause audits
+remain open. Existing rules/test guidance was reused; no new skill rule was added.
+
+Validation: 2,325 engine files / 8,736 tests pass (three opt-in tests skipped),
+114 parser files / 1,285 tests pass, four card-package files / 29 tests pass,
+and seven adapter files / 30 tests pass. All 48 changed TypeScript files pass
+scoped checks. Engine/card builds and an uncached adapter typecheck pass.
+No new stress run is claimed beyond e99286468d. Across the goal, 173 canonical
+card definitions changed. Simulator UI files remain unchanged.
+
+### OP03 clause audit and exact trait membership
+
+The bounded OP03 audit covers all 123 canonical definitions: 89 Characters
+(15 vanilla), eight Leaders, 23 Events, and three Stages. Curiel's printed
+played-turn Leader prohibition is separate from its DON-gated Rush. The engine
+now evaluates the permanent restriction when validating an attack. Marco's
+Event payment and replay are separate optional decisions; paying the Event
+cost does not force the physical Character to return from trash.
+
+Brannew exposed a shared data/filter defect: ordinary Navy membership was
+implemented with substring matching to compensate for flattened compound type
+metadata. That also admitted Former Navy and Neo Navy. Official slash-separated
+card types are the source for normalization; exact type filters remain distinct
+from printed text that explicitly says a type includes a string. The repair
+covers the Navy selector family, rather than adding exclusions to Brannew alone.
+
+Helmeppo's cost setting is an absolute duration-bound modifier, not a snapshot
+subtraction from the currently reduced cost. Public tests remove Kuzan after
+setting both a one-cost and six-cost vanilla Character to zero, resume from
+saved state, and prove turn-end expiry. Arlong OP11-023 is a separate imported
+sign error: its printed minus-three hand discount is additive and costs four
+DON when its conditions hold. Neither effect changes printed base cost.
+Later positive-modifier ordering against a cost setting lacks a direct ruling
+in the checked FAQ; the Kuzan departure cases are the verified boundary.
+
+Additional command proofs cover Blueno playing a companion K.O.d simultaneously,
+Kingbaum's last-Life payment exclusion, and Cracker retaining allocated Double
+Attack damage after its Life condition stops being true. Ikoku Sovereignty adds
+Life before the second damage. Leader proofs cover Kuro's active cost-five/six
+boundary, Katakuri's skipped/empty and face-up Life choices, Ace's Character-target
+negative and battle expiry, and Nami's Character-K.O. negative. Event condition
+negatives include a non-Ace Flame Emperor and Buzz Cut Mochi at equal/more Life.
+
+Sources: [official OP03 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op03.pdf?20230623=),
+[current errata](https://en.onepiece-cardgame.com/rules/errata_card/), and official
+card-list records. Historical Ace and damage-dealt timing FAQ answers differ
+from the current comprehensive rules 7-1-1-3 and 8-6-2/8-6-2-1. Current rule
+processing is preserved; the old FAQ is not used to reverse it.
+
+The exact-type guidance replaces a prior overbroad substring recommendation.
+The harness check still reports the same 81 unrelated baseline issues.
+Validation: 2,326 engine files / 8,758 tests pass (three opt-in tests skipped),
+116 parser files / 1,293 tests pass, four card-package files / 29 tests pass,
+and seven adapter files / 30 tests pass. All 161 changed TypeScript files pass
+scoped checks; engine/card builds and an uncached adapter typecheck pass.
+The new helper also retains the utility package's existing test. Independent
+reviews found no concrete defect in the cost-setting or exact-Navy repair.
+The broad run found one stale rule fixture using Curiel as unconditional
+Rush: Character; it now uses Izo, which prints that keyword.
+
+The Navy repair updates 43 selectors in 38 definitions and normalizes verified
+metadata, with 115 affected definitions across that family. Across the goal,
+284 canonical definitions changed. No new stress run is claimed beyond
+e99286468d. No simulator UI edits. General loop support and further card audits remain open;
+the next bounded set audit is OP04.
+
+### OP04 clause audit, complete type normalization, and removal selection
+
+The bounded OP04 audit covers all 119 canonical definitions: 93 Characters
+(eight vanilla), six Leaders, 19 Events, and one Stage. Added command proofs
+cover Karoo's shortage of rested DON, Sugar leaving before its pending effect,
+Rebecca's hand boundary and declined search, Queen's draw/Life choice,
+Doflamingo's zero selection, and Spiderweb reactivating an attacked Character
+without cancelling the battle.
+
+Chopper exposed the next exact-type defect: Animal Kingdom Pirates was accepted
+as Animal. The catalog now uses official separated types for all 2,376 canonical
+cards with type metadata. The audit manifest in
+[`data/trait-normalization-audit.json`](data/trait-normalization-audit.json)
+records 795 ordinary selector changes, 124 preserved explicit substring sites,
+and 22 card-specific metadata corrections. Generic import normalization uses
+verified full strings; card-specific corrections use canonical IDs and known
+printing aliases. Unknown strings and unknown suffixes are not guessed.
+Parser grammar follows the same distinction for searches, play, conditions,
+observers, and costs. Luffy OP01-003 also uses the official plural Supernovas
+in its filter and text; the stale singular had relied on substring matching. Earlier checkpoint notes that recommend substring matching
+for ordinary type text are superseded by this exact-membership correction.
+
+Official OP04 Orlumbus and OP14-EB04 Crocodile FAQ answers establish that a
+protected Character can be selected for a removal effect. The prohibition applies
+when resolving the move. Tests now select the protected card and prove survival
+for K.O., return to hand/deck, trash, and Life movement. K.O. cost payment still
+requires an action that can occur. Rosinante's protection is evaluated for the
+whole simultaneous K.O. group before movement, including a saved replacement
+prompt after its source leaves. Actual K.O. counts exclude protected cards.
+
+Sources: [OP04 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op04.pdf),
+[current OP14-EB04 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op14_eb04.pdf?20260626=),
+and [official card types](https://en.onepiece-cardgame.com/cardlist/).
+Validation: 2,326 engine files / 8,785 tests pass (three opt-in skips),
+116 parser files / 1,300 tests pass, 29 card-package tests, three utility tests,
+and 30 adapter tests pass. All 1,491 changed TypeScript files pass scoped checks.
+Engine/card builds and adapter typecheck pass. The harness check matches the
+81-issue baseline. Independent removal review found no new defect. This
+checkpoint changes 1,511 canonical definitions across the goal; it does not
+claim a new enabled stress run beyond e99286468d. A separate public probe
+found Izo OP01-033 excludes both an already-rested Character and rest-protected
+Yonji OP11-046 despite having no active-only qualifier. The next shared repair
+must separate rest selection from execution, preserve rest-cost and attack
+legality, and avoid rest-trigger events when no state change occurs. General
+loop forms and mandatory affected-card replacement priority also remain open.
+No simulator UI files changed. The next bounded set audit is OP05.
+
+### OP05 clause audit and action-selection boundaries
+
+The OP05 audit covers all 119 canonical definitions: 91 Characters (seven
+vanilla), six Leaders, 18 Events, and four Stages. Hawkins OP05-047 now gates
+both draw and power gain on its hand condition, evaluated before the draw.
+Amazon OP05-099 cannot offer an impossible Life payment to avoid its fallback.
+Both parser branches reproduce the repaired conditions. Pagaya also has a
+public opponent-Trigger and once-per-turn proof.
+
+Mary Geoise OP05-097 has a continuous payment discount. It does not reduce the
+card cost characteristic seen by Rebecca's effect-play limit. Canonical and
+parser-generated Stage proofs exclude four-cost Saturn, retain legal payment
+at one DON, and apply the discount to successive paid plays. The new
+`paymentOnly` flag is for continuous modifiers; no transient flag behavior is
+claimed.
+
+Enel's “when Life becomes zero” condition now uses the Life count at removal.
+Ikoku Sovereignty can restore Life before the pending Enel effect resolves;
+Enel still adds its Life. Non-last-Life removal does not trigger it. Saved
+states retain this event fact across the Life Trigger and effect continuations.
+Actual “if” conditions remain live. Existing non-Trigger Double Attack
+scheduling is preserved. Sabo's one replacement protects both qualifying
+Characters in a simultaneous Kaido K.O.
+
+Rest effects select by printed restrictions, then check whether a state change
+can occur. Protected and already-rested cards remain choices, with no false
+rest reaction or replacement prompt. Pure and mixed DON choices distinguish
+active/rested slots; saved rest replacements retain the remaining selections.
+Explicit active-only target text remains restrictive, including consecutive
+PRB02-005 Luffy effects. Attack, Blocker, activation costs, and replacement
+affordability remain strict. Return-to-deck costs exclude removal-
+protected Characters; invalid or duplicate submissions retain the same prompt
+and consume no cards. Plague Rounds and Aramaki prove both blocked and valid
+payments, including saved-state retries.
+
+Sources: [official OP05 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op05.pdf),
+[OP05 card list](https://en.onepiece-cardgame.com/cardlist/?series=569105),
+[OP11 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op11.pdf), and current rules
+1-3-2-1, 1-3-3, 2-7, 6-5-3-1, and 8-4-4. The set audit does not establish every
+cross-card combination. General loop forms, affected-card replacement priority,
+and further card audits remain open. The next bounded set audit is OP06.
+The mixed-DON continuation proof covers current printed replacements; it does
+not establish identity tracking for arbitrary synthetic replacements that also
+consume a pending DON pool.
+
+Validation: all 2,329 engine files / 8,827 tests pass (three opt-in tests
+skipped). All 118 parser files / 1,304 tests pass. Card-package tests (29) and
+server-adapter tests (30) pass. The engine and card packages build; adapter type
+checking passes. All 62 changed TypeScript files pass scoped checks. The skill
+harness reports the identical 81 baseline issues. Across this goal, 1,513
+canonical definitions have changed. No new enabled stress result is claimed
+beyond e99286468d. No simulator UI edits.
+
+### OP06 clause audit and official Trigger fields
+
+The OP06 audit covers all 119 canonical definitions: 92 Characters (seven
+vanilla), six Leaders, 17 Events, and four Stages. The official card list keeps
+Trigger text in a separate field. Comparing only local effect text missed three
+whole Trigger clauses: Kamakiri OP06-102, Kawamatsu OP06-103, and Ama no Murakumo
+Sword OP06-056. They now have executable Life Triggers, with public damage-flow
+proofs for the printed Life thresholds and the Event's two target groups.
+
+Sanji OP06-119 must reveal the top card even when it cannot be played or the
+player declines. Its old private-search action hid those cards. The corrected
+public reveal preserves optional play and bottom-deck placement of the remainder.
+The Character audit compares all 13 official Trigger fields; the Event audit
+compares all 16 official Trigger fields, with OP06-017 correctly having none.
+
+Additional public proofs cover Reiju resolving the played Character's On Play
+before the pending Leader draw at five cards, Perona's rest branch and once-per-
+turn limit, and The Ark Maxim paying its Enel rest cost with a Leader. The
+mandatory replacement audit found no runtime defect: Luffy's first effect-K.O.
+replacement takes priority over Rosinante; Rosinante remains available afterward.
+This does not settle optional self-replacement priority.
+
+A synthetic compulsory self-K.O./replay loop hung when its effect had a true
+“your turn” condition. The stationary rest/active loop had the same gap. Both
+mandatory detectors now accept fulfilled turn conditions, with the active seat
+and controller retained in repeated-state comparison. Child-process watchdog
+proofs preserve false-condition, finite-deck, optional-choice, and target-choice
+outcomes. Other condition kinds and unaudited action families remain incomplete;
+no unavoidable real-card loop is claimed.
+
+Sources: [official OP06 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op06.pdf),
+[OP06 card list](https://en.onepiece-cardgame.com/cardlist/?series=569106), and
+[official OP10 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op10.pdf).
+Validation: all 2,332 engine files / 8,848 tests pass (three opt-in tests
+skipped). The full parser suite passes 120 files / 1,311 tests, including regeneration
+guards. Both audit writers reject generation that loses an existing or supplied
+Trigger. The retained upstream OP06 snapshot omitted the three Trigger clauses;
+normal imports skip existing definitions, but audit writes previously could
+erase repaired effects when local Trigger metadata was missing. All 22 changed
+TypeScript files pass scoped checks. Across this goal, 1,515 canonical definitions have
+changed. Card-package tests (29) and server-adapter tests (30) pass. Card and
+engine builds and adapter type checking pass. The harness retains its identical
+81 baseline issues. The enabled stress/heuristic run at a063d693fd passes all
+13 tests across two files in 884.65 seconds, including the four seeded 1,000-game
+matchups. This is prior-checkpoint stress proof, not a stress run of OP06 repairs.
+The batch asserts zero illegal commands and fewer than 50 stuck games; the
+silent successful output does not establish zero stuck games. The next bounded
+set audit is OP07. No simulator UI files changed.
+
+### OP07 audit, rest-cost reactions, and starter catalog gaps
+
+The OP07 audit covers 119 canonical cards: 92 Characters (six vanilla), six
+Leaders, 19 Events, and two Stages. Separate official Trigger text is included.
+Foxy OP07-059 now requires the eligible rested Leader, independently of its
+optional Character target. Egghead OP07-117 permits an eligible Character on
+either field, as specified by both official English and Japanese text.
+
+Bartolomeo OP07-031's official FAQ confirms that resting a Character as an
+effect cost counts as resting it by an effect. Both self-rest and selected-card
+rest costs now publish that reaction with the actual effect source. Real
+Stainless and The Ark Maxim tests cover both paths; an ordinary attack does
+not dispatch the effect-rest reaction.
+
+The Sanji FAQ references ST10-001 Trafalgar Law, which was absent from the
+catalog. It is now implemented with a primary behavior test. This exposed a
+larger completion gap: the official 36 English starter products list 382 unique
+primary ST-numbered cards. Before adding Law, 310 were absent; 309 remain after
+this checkpoint. [The exact missing IDs and source links](starter-catalog-gaps.json)
+were compared with the exported runtime catalog. Product reprints with other
+card numbers are excluded from those totals. This is a catalog-presence audit,
+not proof of the implemented cards' behavior. Earlier inventory coverage counts
+apply to existing definitions and do not establish a complete game catalog.
+
+The starter gaps must be implemented and behavior-tested as part of this goal.
+The next work starts with missing starter cards, alongside remaining booster
+audits. OP07 FAQ proofs also cover Sanji's post-Law-payment hand-cost threshold,
+Morgans's newly drawn card staying private, Luffy's five-versus-six trash return
+rounding, Ace's Rush after declining Life addition, and Vegapunk's play branches.
+
+Validation: 2,335 engine files / 8,868 tests, 121 parser files / 1,314 tests,
+and 29 card-package tests pass. All 21 changed TypeScript files pass scoped
+checks. The card and engine builds, 30 adapter tests, and adapter type checking
+pass. The harness retains its identical 81
+baseline issues. Across the goal, 1,516 canonical definitions have changed.
+The last enabled stress result remains a063d693fd; no OP07 stress run is claimed.
+Sources: [official OP07 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op07.pdf),
+[OP07 card list](https://en.onepiece-cardgame.com/cardlist/?series=569107), and
+[ST10 card list](https://en.onepiece-cardgame.com/cardlist/?series=569010).
+No simulator UI edits.
+
+### ST02–ST05 starter catalog implementation
+
+This batch adds 58 missing canonical cards and their English localization:
+15 from ST02, 12 from ST03, 14 from ST04, and all 17 from ST05. Each set adds
+four vanilla cards, covered by the catalog identity, printing, and stat
+invariants. The 42 new ability cards have primary public-command proofs:
+ST02 has 25 tests across 11 new primary files; ST03 has 24 across eight;
+ST04 has 28 across ten; and ST05 has 40 across 13. The four category inventories
+include these 58 cards and the preceding ST10-001 addition.
+
+The exported runtime catalog now contains all primary cards in ST02–ST05.
+The starter manifest was recomputed against those exports: 251 of the 382
+unique primary ST-numbered cards remain absent, down from 309 at the preceding
+checkpoint. These remaining cards and the unfinished booster clause audits are
+still required work; catalog membership alone does not prove behavior.
+
+Shared behavior proofs cover ST02 Hawkins and ST05 Zephyr requiring an actual
+battle power comparison, including canceled-battle negatives. Zephyr gains
+power after either battle role and accumulates the printed turn-long bonus.
+Union Armada applies its protection to the same selected Character, including
+snapshot restoration during the Counter choice. Parsed definitions have public
+runtime proofs for both Zephyr battle roles, Union Armada, and declining Lion's
+optional DON!! return after paying the Event play cost. The parser now preserves
+optional DON!! return activation costs on Main and Counter Events.
+
+The parser repair exposed eight existing canonical Event definitions needing
+the same optional-cost correction: EB01-038, OP01-118, OP15-074, OP15-075,
+OP15-076, OP15-077, OP15-078, and OP17-077. These definitions were only audited
+in that batch; the following ST06–ST07 checkpoint resolves all eight.
+
+Final integration validation: 2,378 engine files pass 9,095 tests, with three
+opt-in tests skipped. The 122 parser files pass 1,317 tests, the card catalog
+passes 29 tests, and the server adapter passes 30 tests. Card and engine builds,
+adapter typecheck, and scoped format/lint/type checks on all 178 changed
+TypeScript files pass. The Grade A gate passes. The harness retains the same
+81 baseline issues. Across the goal, 1,574 canonical definitions have changed.
+No new stress run or simulator UI change is claimed.
+
+Sources: [official ST02 card list](https://en.onepiece-cardgame.com/cardlist/?series=569002),
+[ST03 card list](https://en.onepiece-cardgame.com/cardlist/?series=569003),
+[ST04 card list](https://en.onepiece-cardgame.com/cardlist/?series=569004),
+[ST05 card list](https://en.onepiece-cardgame.com/cardlist/?series=569005), and
+[combined ST01–ST04 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-01-st-04.pdf), and
+[ST05 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-05.pdf?20230127=).
+
+### ST06–ST07 starter cards and optional Event activation costs
+
+This batch adds 29 missing canonical cards and their English localization:
+13 from ST06 and 16 from ST07. Each set adds four vanilla cards. All 21 new
+ability cards have primary public-command proofs. ST06's nine new primary files
+pass 26 tests; its complete 13-file primary set passes 32 tests. ST07's 12 new
+primary files pass 41 tests. The four category inventories now cover 2,479
+canonical cards: 2,233 ability rows and 246 vanilla rows.
+
+The runtime catalog now includes every primary ST06 and ST07 card. The starter
+manifest records 222 missing primary ST-numbered cards, down from 251. Those
+cards and remaining booster clause audits still prevent a completion claim.
+The eight Event activation-cost gaps from the preceding checkpoint are repaired:
+EB01-038, OP01-118, OP15-074, OP15-075, OP15-076, OP15-077, OP15-078, and OP17-077.
+A player can decline the optional DON!! return after paying the Event play cost;
+this does not refund the Event play cost. Their eight primary files pass 31
+tests, with 12 additional dependent tests and eight static Grade A checks.
+
+The new starter proofs include Smoker's effect-K.O. immunity and dynamic
+Double Attack eligibility; White Out protecting only Characters present when
+its Trigger resolves; and Charlotte Linlin's Life threshold checked after
+payment. Opponent-owned Linlin and Soul Pocus choices retain both options even
+when the opponent has no Life. Soul Pocus can replenish Life between Double
+Attack damage instances. Power Mochi's private Life look precedes its battle
+power, and skipping that look does not suppress the power effect. Queen Mama
+Chanter checks the printed exact cost and moves the chosen field Character to
+Life face-up after both costs are paid.
+
+Parser repairs preserve Great Eruption's opponent-selected hand discard,
+White Out's draw and current-Character protection, both opponent-owned Life
+choices, and Power Mochi's ordered actions. Printed bullet layouts from the
+card list are covered. All 123 parser files pass 1,326 tests; seven generated
+public runtime tests cover all five affected cards, including snapshot recovery
+and private-information boundaries. All six changed parser/proof files pass
+scoped checks. No shared runtime change was required for these starter cards.
+
+Final integration validation: 2,400 engine files pass 9,230 tests, with three
+opt-in tests skipped. The parser passes 1,326 tests, the card catalog passes
+29 tests, and the adapter passes 30 tests. Card and engine builds, adapter
+typecheck, and scoped format/lint/type checks on all 107 changed TypeScript
+files pass. The Grade A gate passes. Across the goal, 1,606 canonical definitions
+have changed. No new stress run or simulator UI change is claimed.
+
+Sources: [official ST06 card list](https://en.onepiece-cardgame.com/cardlist/?series=569006),
+[ST07 card list](https://en.onepiece-cardgame.com/cardlist/?series=569007),
+[ST06 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-06.pdf), and
+[ST07 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-07.pdf).
+
+### ST08–ST09 starter cards and battle-result follow-ups
+
+This batch adds 29 missing canonical cards and their English localization:
+15 from ST08 and 14 from ST09. Eight are vanilla cards; all 21 ability cards
+have primary public-command proofs. ST08 has 40 passing cases in 11 primary
+files: 39 printed-card cases and one explicitly synthetic continuation case.
+ST09 has 34 passing cases in 10 primary files. The four category inventories
+now contain 2,508 rows: 2,254 ability cards and 254 vanilla cards. No Stage
+cards are added.
+
+The starter manifest now records 193 missing primary ST-numbered cards, down
+from 222. Existing ST09-014 is retained. The missing starters and remaining
+clause audits still prevent a completion claim.
+
+ST08 proofs cover separate Leader DON choices after simultaneous KOs, Uta's
+Leader-only battle immunity, Koby's self-rest payment, Shanks's K.O. of both
+fields' cost-one Characters, and Makino's cost-zero check on either field.
+Blocker and Life Trigger behaviors are exercised through attacks. Gum-Gum
+Bell's payment and recovery filters and Gum-Gum Pistol's distinct Main and
+Trigger results have command proofs.
+
+Mr.2.Bon.Kurei(Bentham) uses the exact opposing battle object at battle end.
+Its self-K.O. follows only a successful effect K.O. of that object. Tests cover
+attacking and surviving defense, decline, missing DON, immunity, replacement,
+an opponent already K.O.d in battle, a replayed object's new identity, and a
+canceled battle. A separate synthetic case checks that a successful self-K.O.
+does not discard a non-self draw follow-up. Its related seven-file regression
+scope passes 52 tests.
+
+ST09 proofs cover Yamato's changing Life-based defense during Double Attack,
+Kaido's battle-only protection, Oden's damage and paid On K.O. Life addition,
+Shinobu's paid Blocker survival, and Ushimaru's separate color, trait, cost and
+card-type filters. Tempura and Omusubi return themselves even with no opposing
+target selected. Ace's optional K.O. replacement covers battle and both
+players' effects, top or bottom Life, private selection, snapshot retry, zero
+Life, decline, once-per-turn use and reset. Yamato's attack power persists
+through the opposing turn. Thunder Bagua retains its Counter power when the
+Life threshold prevents its separate Character-to-Life action.
+
+The priority between an optional affected-card replacement and another eligible
+replacement remains under review. Ace's multiple-replacement test does not
+establish that the current priority order complies with rule 8-1-3-4-2.
+
+Final integration validation: 2,422 engine files pass 9,362 tests, with three
+opt-in tests skipped. The parser passes 1,328 tests, including both new clause
+families; four generated public runtime tests pass. The card catalog passes
+29 tests and the adapter passes 30 tests. Card and engine builds, adapter
+typecheck, Grade A's four tests, and scoped format/lint/type checks on all
+94 changed TypeScript files pass. The harness retains the same 81 baseline
+issues. Across the goal, 1,635 canonical definitions have changed. No new
+stress run or simulator UI change is claimed.
+
+Sources: [official ST08 card list](https://en.onepiece-cardgame.com/cardlist/?series=569008),
+[ST09 card list](https://en.onepiece-cardgame.com/cardlist/?series=569009),
+[ST08 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-08.pdf), and
+[ST09 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-09.pdf).
+
+### ST10–ST12 starter cards and parser repair
+
+Added all 31 missing primary definitions across ST10, ST11, and ST12. The 28
+ability cards have 106 public-command cases in 28 primary files. The three
+ST12 vanilla cards use the shared catalog invariant. Existing definitions
+were retained. The exported catalog now includes every primary ID in ST01
+through ST12; the official-product manifest records 162 missing starter IDs,
+down from 193. Presence remains separate from complete behavior proof.
+
+ST10 tests cover opponent Blocker activation without granting Luffy Blocker,
+K.O. of the blocking card before Counter, and the alternate legal K.O. target.
+Sanji's On Play Rush checks current opposing Character power and remains after
+that Character leaves. Killer, Heat, and Wire react when an opponent's effect
+returns their controller's DON, exclude opponent-owned DON, and enforce once
+per turn. Killer and Heat exclude opponent-turn returns; Wire still draws and
+discards on that turn. Counter and Life Trigger cases verify power expiration,
+independent following clauses, and exact power/cost thresholds.
+
+ST11 Uta publicly reveals the physical top card before its optional FILM hand
+addition. Declined and non-FILM cards go to the bottom; Leader reactivation does
+not reset its once-per-turn limit. Character Uta pays with an Event, readies
+only FILM Characters, and can ready itself for Blocker. Backlight covers both
+choices. New Genesis preserves private inspection, public selected reveal,
+ordered remainder, and DON recovery after a declined search. I'm invincible
+covers Leader reactivation and both Life Trigger power-recipient categories.
+The official ST11-005 Music token is normalized from Japanese without changing
+unknown longer tokens.
+
+ST12 tests cover Mihawk's Muggy Kingdom-or-Slash alternatives and self-inclusive
+Character count; Rika's payment before the opposing Life condition; revealed
+physical cost-two plays; active versus rested play; and ordered top/bottom
+remainder. Sanji's repeated attacks stack its turn-long power. Ivankov and the
+Leader retain their once-per-turn limits after real-card reactivation. Lion
+Strike proves Main, Counter, and Life Trigger behavior with Leader inclusion.
+
+Eight parser families now retain compound DON conditions, opposing power
+conditions, opponent-only Blocker ownership, outlined circled-number costs,
+revealed FILM hand addition, trait-or-attribute alternatives, and rested reveal
+play filters. Twelve generated-effect public cases supplement parser tests.
+No shared engine runtime or simulator UI change was needed in this batch.
+
+Validation: 2,451 engine files / 9,520 passing tests (three opt-in checks
+skipped), 125 parser files / 1,336 tests, 29 card-package tests, four utility
+tests, and 30 server-adapter tests pass. Card, engine, and utility builds,
+adapter typecheck, Grade A coverage, and scoped checks on 106 changed
+TypeScript files pass. Across the goal, 1,666 canonical definitions have
+changed. No new stress run is claimed.
+
+Self-improvement: the two outlined-number payment cards now use one central
+parser correction. Both generated public payment tests pass. No new helper or
+skill rule was needed. Remaining scope includes later starters, further card
+clause audits, general loop forms, and the unresolved optional affected-card
+replacement priority described above.
+
+Sources: [ST10 card list](https://en.onepiece-cardgame.com/cardlist/?series=569010),
+[ST11 card list](https://en.onepiece-cardgame.com/cardlist/?series=569011),
+[ST12 card list](https://en.onepiece-cardgame.com/cardlist/?series=569012),
+[ST10 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-10.pdf),
+[ST11 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-11.pdf), and
+[ST12 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-12.pdf).
+
+### ST13–ST17 starter cards and face-up Life rules
+
+Added all 31 missing primary definitions from ST13 through ST17: 30 ability
+cards with 102 public-command cases in 30 primary files, plus ST14-005 as a
+vanilla card. The official-product manifest now records 131 missing starter
+IDs, down from 162. Exported primary membership is complete through ST18;
+this does not establish that every existing card's clauses have been audited.
+
+Sabo now pays a qualifying Character into face-up Life before choosing its
+power recipient. Current power includes attached DON. The cost uses the same
+removal and replacement completion path as other movement costs, so an accepted
+replacement can move the Character without paying the printed Life cost.
+Ace can search into publicly visible face-up Life and trashes only face-up Life
+at turn end, including cards placed there by other effects. Shanks can choose
+any eligible face-up Life card for its face-down payment; it is not limited to
+the top card. Other costs that print top Life, including Katakuri and Urouge,
+remain top-only. Saved choices revalidate physical cards before payment.
+
+Luffy's permanent replacement now handles Life-to-hand movement at the shared
+movement boundary. Face-up Life goes to deck bottom for battle damage, effect
+damage, and ordinary Life additions; its Trigger is not offered. Face-down Life
+retains its normal behavior. Makino can attempt the replaced cost, but its
+reorder body does not run because no card reached hand. Invalid submissions
+and saved-state recovery preserve this distinction. Banish trashes the Life
+card under the active-player replacement order in rules 8-1-3-4-2 and 10-1-3-1;
+this case is rules-derived, unlike the direct Makino and Reject FAQ examples.
+
+The shared rules file has 12 cases. Three test declarations are explicitly
+synthetic: a parameterized accepted/declined field-to-Life replacement, a
+once-per-turn timing variant, and a prohibition-coexistence case. They produce
+four executions.
+These establish generic boundaries without claiming printed-card coexistence.
+The other starter proofs include Dadan's grouped names, Ivankov's physical
+revealed hand card, Garp's three-name search, mixed face-up/down Life ordering,
+modified-cost conditions, power durations, Music discard counts, and both
+Crocodile's and Hancock's deck interactions. Kingdew uses K.O. cause separately
+from effect controller: either player's effect can qualify on the opponent's
+turn, while battle K.O. cannot.
+
+Fourteen parser cases retain every repaired clause and the top-Life cost boundary. Twenty generated-effect
+public cases prove those structures execute through commands, including
+separate Trigger text. Parser conditions after payment may use action-level
+predicates where equivalent to the authored block's post-cost condition.
+
+Remaining engine limit: simultaneous multi-card Life-to-hand replacements
+append in processing order without a separate owner-order choice. A bounded
+catalog scan found no current amount-greater-than-one Life-to-hand action or
+cost, but this is not proof for missing definitions or arbitrary supported
+amounts. Keep that general ordering requirement open, alongside later starter
+cards, further clause audits, general loop forms, and optional affected-card
+replacement priority. No UI changes were made.
+
+Local validation: 9,688 engine tests, 1,350 parser tests, 29 card-package tests, and 30 server-adapter tests pass. All 117 TypeScript files changed in this checkpoint pass scoped format/lint/type checks. Types, cards, and engine builds, Grade A coverage, and adapter typecheck pass. Three opt-in engine tests are skipped by default. The enabled stress/heuristic run passed 13 tests at a063d693fd, including 4,000 seeded games; this is prior-checkpoint evidence, not a fresh stress run. No instruction files changed, so the harness guidance check was not rerun.
+
+Self-improvement: no new helper or skill rule. Early generated-effect checks
+and the independent shared-code review found the K.O.-cause distinction and a
+misplaced payment-completion update before publication. The focused tests
+remain regression evidence for both boundaries.
+
+Sources: [ST13 card list](https://en.onepiece-cardgame.com/cardlist/?series=569013),
+[ST14 card list](https://en.onepiece-cardgame.com/cardlist/?series=569014),
+[ST15 card list](https://en.onepiece-cardgame.com/cardlist/?series=569015),
+[ST16 card list](https://en.onepiece-cardgame.com/cardlist/?series=569016),
+[ST17 card list](https://en.onepiece-cardgame.com/cardlist/?series=569017),
+[ST13 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-13.pdf),
+[ST14 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-14.pdf), and
+[ST15–ST20 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-15-20.pdf).
+
+### ST19–ST21 completion and ST22 reveal/Life continuations
+
+Added 26 primary definitions: all 24 missing ST19–ST21 cards plus ST22-001 and
+ST22-015. The batch contains 22 ability cards with 91 public-command cases in
+22 primary files, and four vanilla Characters. Exported primary membership is
+complete through ST21; 105 starter IDs remain missing. Existing ST19-002,
+ST20-003 and ST21-003 were retained. Numeric metadata for all 26 new cards was
+checked against official card-list HTML, including zero-value handling.
+
+ST19 proofs cover Smoker's black-and-Navy payment, attack prevention and expiry;
+Tashigi's independent activation and trash without K.O. reactions; and Hina's
+and Garp's trash-to-deck payment. ST20 covers top-only Life orientation, Cracker's
+own/opponent effect replacements and turn reset, Pudding's actual Life payment,
+and Linlin's opponent-owned hand/Life choice including zero Life. ST21 proves
+Bonney's pre-removal DON snapshot, Franky's base-power filter despite current
+power changes, Zoro's independent Rush and hand-play effects, actual Blocker
+and Rush use, and ordered Main/Trigger clauses on both Events.
+
+Ace & Newgate now binds a return-to-deck action to the physical reveal-payment
+card. A draw can no longer replace that binding with the drawn card. Automatic
+single-candidate payment and chosen payment retain the same identity, including
+saved prompt recovery and rejected invalid selections. Return execution
+revalidates the bound cards against the current target pool. The parser retains
+this instruction separately from the immediately preceding action's targets.
+
+I Am Whitebeard!! retains its independent optional Life choice after playing
+or declining to play Newgate. A replaced Life-to-hand move does not satisfy
+its dependent power instruction. That replacement proof uses an explicitly
+synthetic Luffy trait extension: printed ST13 Luffy does not meet this Event's
+Leader condition. A separate shared fix accepts zero cards from bottom Life;
+JavaScript's negative-zero slice previously selected the whole Life array and
+rejected the choice. Canonical and generated-effect tests cover declined top
+and bottom choices. Two parser cases and four generated-effect public cases
+prove both repaired clauses. Top-level optional abilities retain their existing
+single decision; optional actions after a paid cost remain independent.
+
+Local validation: 9,821 engine tests, 1,352 parser tests, 29 card-package tests,
+and 30 server-adapter tests pass. All 85 changed TypeScript files pass scoped
+format, lint and type checks. Types, cards and engine builds, Grade A coverage,
+and adapter typecheck pass. Three opt-in engine tests are skipped by default.
+No fresh stress run or guidance harness check was needed for this checkpoint;
+the last enabled stress evidence remains a063d693fd (13 tests, 4,000 seeded
+games, zero-illegal and fewer-than-50-stuck threshold).
+
+Self-improvement: no helper or skill change. Generated-effect playback found
+the bottom-zero boundary after the primary top-zero case passed. Shared-code
+review found no additional confirmed regression and checked the current
+reveal-cost catalog for conflicting card-selection payments. No UI files changed.
+
+Replacement priority remains a precise authority gap. Fresh English and
+Japanese v1.2.1 rules and the ST09, OP05 and OP10 FAQs did not settle the
+optional Ace/Rosinante prompt order. OP10-118 Luffy's first-use “cannot be
+K.O.'d” protection is a prohibition; its mandatory protection test does not
+prove priority for true “instead” replacements. Current Ace/Rosinante outcome
+is possible by declining Ace first, so its board-state test does not prove the
+required prompt order. No speculative priority change was made. Simultaneous
+multi-card Life replacement ordering and general loop forms also remain open.
+
+Next: the remaining 15 ST22 cards, then ST23–ST24. Static preflight identified
+missing ST23-002 clauses and dropped ST24-004 rest/same-target freeze clauses;
+these remain unfinished, not runtime-proven repairs.
+
+Sources: [ST19 card list](https://en.onepiece-cardgame.com/cardlist/?series=569019),
+[ST20 card list](https://en.onepiece-cardgame.com/cardlist/?series=569020),
+[ST21 card list](https://en.onepiece-cardgame.com/cardlist/?series=569021),
+[ST22 card list](https://en.onepiece-cardgame.com/cardlist/?series=569022), and
+[ST15–ST20 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-15-20.pdf).
+The ST21 FAQ was not available during this audit; no FAQ claim relies on it.
+
+### ST22–ST24 starter completion and full product presence audit
+
+Added the remaining 15 ST22 definitions and all ten ST23–ST24 definitions:
+20 ability cards and five vanilla Characters. The 20 new primary files contain
+90 public-command cases. Primary starter membership is complete through ST24;
+80 starter IDs remain missing. Numeric metadata for all 25 cards matches the
+official card-list HTML, with zero values handled explicitly.
+
+ST22 proofs cover inclusive Whitebeard-type searches and reveal payments,
+physical search selections and remainder order, opponent-attack self-trash,
+Double Attack, conditional top-deck draw/discard, Whitey Bay's own-turn gate
+and public reveal, Counter and Trigger outcomes, and actual Blocker use.
+Oden pays both rest-three-DON and return-another-Character costs, including
+saved payment recovery. Its opponent-effect replacement handles K.O. and
+non-K.O. removal while excluding battle and own effects. Marco's separate
+replacement limit and attack bonus have timing and negative-boundary proof.
+
+ST23–ST24 proofs distinguish current-power hand discounts from base-power
+hand discounts and K.O. filters. Leader alternatives remain independent from
+Shanks's discount. Luffy can activate again after a real reactivation because
+it has no printed once-per-turn limit. Bege counts the DON rested to pay its
+own play cost. Drake's delayed DON activation survives leaving the field.
+Law & Bepo rests and freezes the same physical Character, then evaluates the
+opposing rested-Character count for the Leader bonus; selecting zero does not
+suppress that independent count check.
+
+The parser now retains both Shanks clauses and the Law & Bepo rest/freeze
+sequence. Two parser cases and nine generated-effect public cases prove the
+repaired structures. No shared runtime changes were required in this batch.
+
+A fresh presence audit checked all 24 non-starter categories from the official
+English product selector: 17 boosters, three extra boosters, two premium
+boosters, Promotion card and Other Product Card. EB04 is included through
+mixed booster products. All booster canonical IDs were present. The two other
+categories expose 84 distinct missing P-numbered cards, now tracked in
+`nonstarter-catalog-gaps.json`. Reprints are deduplicated, and alternate art
+does not create a new gameplay ID. These are additional to the 80 starter
+gaps: 164 known missing canonical definitions remain. Presence is not proof
+that all clauses of existing definitions are correct.
+
+Validation: 2,527 engine files pass (9,960 tests; three opt-in tests skipped),
+128 parser files pass (1,354 tests), plus 29 card-package and 30 server-adapter
+tests. All 77 changed TypeScript files pass scoped format, lint and type checks.
+Cards and engine builds, all 20 primary Grade A checks, and adapter typecheck
+pass. No fresh stress run or guidance harness run was required; the last enabled
+stress evidence remains `a063d693fd` (4,000 seeded games).
+
+Self-improvement: no helper or skill change. Independent review prompted
+stronger negative fixtures for turn gates, available DON and inclusive types.
+The final scope contains no unrelated formatting or UI changes.
+
+Next: ST25–ST28. Static preflight found omitted Soba Mask, Sanjuan.Wolf and
+Momonosuke clauses. Momonosuke also needs a cost for returning selected attached
+DON to the cost area rested; existing DON-return costs go to the DON deck and
+cannot represent it. That repair needs public behavior proof. Later starter
+cards, missing promos, further existing-card clause audits, general loop forms,
+optional replacement priority and simultaneous Life replacement order remain
+open.
+
+Sources: [ST22 card list](https://en.onepiece-cardgame.com/cardlist/?series=569022),
+[ST23 card list](https://en.onepiece-cardgame.com/cardlist/?series=569023),
+[ST24 card list](https://en.onepiece-cardgame.com/cardlist/?series=569024),
+[Promotion card list](https://en.onepiece-cardgame.com/cardlist/?series=569901), and
+[Other Product Card list](https://en.onepiece-cardgame.com/cardlist/?series=569801).
+Every audited non-starter category has its source URL in the presence manifest.
+
+### ST25–ST28 cards and attached-DON activation cost
+
+Added all 18 missing ST25–ST28 definitions, each with printed abilities and a
+primary public-command test file. The 84 primary cases complete starter
+membership through ST28. There are 62 missing starter IDs and 84 missing
+promotional IDs: 146 known absent canonical definitions remain. The new cards'
+numeric metadata matches the official card-list HTML, including Yamato's zero
+power. Catalog presence does not prove all existing card clauses.
+
+ST25 proofs cover base-cost Character counts, conditional Blocker, opponent-turn
+power, ordered draw/discard/play, Cross Guild filters, optional self-trash,
+removal replacements and K.O. draw gates. Crocodile & Mihawk protects itself or
+another eligible Character from opposing effects, including non-K.O. removal;
+own effects and battle removal remain separate. ST26 proofs cover both named
+Soba Mask discount conditions, base power despite current-power changes, return
+of all own matching Characters, mixed DON/Character rest choices, optional DON
+return and addition, and multi-target power reduction with expiry.
+
+ST27 proofs cover named Stage payment, independent K.O. draws, self-trash without
+K.O. reactions, rested trash play, and Sanjuan.Wolf's independent Blocker and
+per-four-trash cost increase. ST28 proofs cover base-cost K.O. under independent
+Leader/Life gates, Banish and its expiry, actual Blocker, physical Life Trigger
+play, and exact-type search with owner-chosen remainder order.
+
+Momonosuke exposed a shared cost gap. `returnDon` now has a typed destination
+variant for returning only currently attached DON to the cost area rested.
+The original DON-deck cost retains its destination and candidate pool. The new
+variant selects attachment tokens from the controller's Leader and Characters,
+reduces those attachments, increases rested DON, and does not change the DON
+deck or dispatch DON-deck-return reactions. Prompt text states the destination.
+Four public rule cases cover selected and automatic payment, JSON recovery,
+wrong-owner and cost-area choices, duplicate/count rejection, live candidate
+revalidation and a real Heat reaction negative. Primary Momonosuke proof uses
+paid play, a legal Rush attack, both power clauses and turn expiry.
+
+The parser retains Soba Mask's name/base-power discount and return-all clauses,
+Sanjuan.Wolf's Leader-gated Blocker and cost groups, and Momonosuke's attached
+DON cost. Three parser cases and 12 generated-effect public cases cover these
+families. Independent review found no additional confirmed runtime defect in
+this bounded batch.
+
+Validation: 2,547 engine files pass (10,078 tests; three opt-in tests skipped),
+129 parser files pass (1,357 tests), plus 29 card-package and 30 server-adapter
+tests. All 67 changed TypeScript files pass scoped format, lint and type checks.
+Types, cards and engine builds, all 18 primary Grade A checks, and adapter
+typecheck pass. No fresh enabled stress run; the latest remains `a063d693fd`
+(4,000 seeded games).
+
+Self-improvement: the test guidance now requires all costs to remain payable
+before a once-per-turn retry. Avalo gets a new active Fullalead; Momonosuke gets
+two DON reattached. Both still reject the second command for the turn limit.
+The harness guidance also explains that `expectFailure` returns a state without
+updating the driver. Both invalid-payment tests now inspect and retry from that
+returned state. `harness:check` reports the same 81 pre-existing issues as the
+previous checkpoint, with no new or removed issue lines.
+
+Next: ST29–ST30. Static preflight identifies seven parser omissions, including
+named-Leader Unblockable, exact-power reveal costs, replacement sequences and
+per-recipient DON giving. These need public behavior proof before completion.
+Later starters, missing promos, further existing-card clause audits, general
+loop forms, optional replacement priority and simultaneous Life replacement
+ordering remain open. No simulator UI files changed.
+
+Sources: official [ST25](https://en.onepiece-cardgame.com/cardlist/?series=569025),
+[ST26](https://en.onepiece-cardgame.com/cardlist/?series=569026),
+[ST27](https://en.onepiece-cardgame.com/cardlist/?series=569027), and
+[ST28](https://en.onepiece-cardgame.com/cardlist/?series=569028) card lists;
+Comprehensive Rules 3-9, 6-5-5 and 8-3-1.
+
+### ST29–ST30 cards, variable DON allocation and self-trash attachments
+
+Added all 34 missing ST29–ST30 canonical definitions: two Leaders, 26 Characters
+and six Events. Thirty ability cards have 130 primary public-command cases;
+four vanilla Characters use the catalog invariant. Primary starter membership
+is complete through ST30. There are 28 missing starter IDs and 84 missing
+promotional IDs, or 112 known absent canonical definitions. Numeric metadata for
+all 34 matches official card-list HTML, including ST29 Luffy's zero power.
+
+ST29 proofs cover both sides of Life comparisons, cost limits derived from Life,
+exact-name Leader gates, Character and Event search, physical Life Trigger play,
+Blocker, Rush: Character, Trigger-card discard and both DON recipient zones.
+Nami's replacement pays with the exact top face-down Life card, protects the
+source or an eligible teammate from opponent K.O., survives saved choices and
+can be used again after Life changes. Already-face-up and absent Life cannot
+pay; battle, own K.O. and non-K.O. removal do not qualify.
+
+ST30 proofs distinguish base power from current power, exact names from a
+combined Leader name, and Leader/field bonuses from hand-only costs. Reveal
+payments leave the selected cards in hand for the subsequent discard. Actual
+paid Rush attacks, Blocker battles, rested replay and freeze expiry prove the
+printed timings. LittleOars trashes itself, returns its attached DON and draws
+while replacing opponent removal; K.O., bounce, bottom-deck, saved replacement,
+simultaneous source/teammate removal and last-card defeat have public proof.
+Buggy's rest replacement excludes already-rested sources, own K.O. and battle,
+and works for both K.O. and bottom-deck removal.
+
+The six Event files cover Counter amounts and expiry, independent optional
+steps, exact base-power/name conditions, wrong or duplicate names, Life Trigger
+branches and owner-ordered physical search remainders. Skipping a power boost
+does not suppress an independent draw or low-Life K.O. Kizaru's Main affects
+only a named Luffy Leader; its Counter has no name restriction. ST30's Trigger
+K.O. uses current power while its Counter condition uses base power.
+
+Shared `giveDon` distribution now asks for each selected recipient's amount
+when the printed amount is optional. Galdino can allocate one/one from two DON,
+two/one from three, and one/zero from one. Previously the engine forced two per
+recipient and excluded these legal choices. All choices are reserved before
+resources move. Saved continuations retain physical recipient generations,
+validate remaining pools and reject invalid retries without partial movement.
+Each actual DON given still dispatches its reaction. The exported catalog scan
+finds the same optional distribution on Karoo and Gorgon Sisters; their existing
+public tests now use the corrected choices. Chopper's fixed amount is unchanged.
+
+A separate real Rosinante reproduction exposed lost attached DON on the generic
+`trashThisCard` action. It now returns those attachments rested before moving
+the source. LittleOars uses the normal `trashFromField` sequence and does not need
+a card-specific workaround. Six shared rule cases and 11 generated-effect
+cases cover the repaired runtime and seven parser families.
+
+Validation: 2,579 engine files pass (10,271 tests; three opt-in tests skipped),
+130 parser files pass (1,364 tests), plus 29 card-package and 30 server-adapter
+tests. All 114 changed TypeScript files pass scoped format, lint and type checks.
+Types, cards and engine builds, all 30 primary Grade A checks, and adapter
+typecheck pass. No fresh enabled stress run; the latest remains `a063d693fd`
+(4,000 seeded games).
+
+Self-improvement: no skill or helper change was needed. The preceding checkpoint's
+payment-availability and rejected-result-state guidance was applied to the new
+cost, turn-limit and saved-allocation proofs. The last guidance check retains
+81 pre-existing issues. No UI files changed.
+
+Next: ST31–ST36, the remaining 28 starter definitions. Static preflight found
+attribute tokens that an HTML tag stripper would lose, omitted Slash clauses,
+hand-discard history discounts, missing play filters and Life-orientation costs.
+These need public tests and owning-layer repairs. Promotional cards, later
+existing-card clause audits, general loop forms, optional replacement priority
+and simultaneous Life replacement ordering remain open.
+
+Sources: official [ST29](https://en.onepiece-cardgame.com/cardlist/?series=569029)
+and [ST30](https://en.onepiece-cardgame.com/cardlist/?series=569030) card lists;
+Comprehensive Rules 6-5-5, 8-3 and 8-4.
+
+### ST31–ST36 starter completion and hand-discard provenance
+
+Added the remaining 28 starter definitions: 27 Characters and one Stage, all
+with executable abilities. Their 28 primary files pass 127 public-command
+cases. All 382 primary ST-numbered IDs in the 36 official starter products are
+now exported. This closes the starter presence gap; it does not prove every
+old starter clause. The separate promotional audit still records 84 missing
+canonical IDs.
+
+ST31 proves draw-before-play, Character and Stage play, distributed given-DON
+thresholds, live Blocker loss after a donor leaves, Rush, exact-name rested-DON
+recipients, and private search with saved bottom ordering. ST32 proves both
+alternative rest costs, Slash Leader gates, Perona-or-Slash play with a shared
+cost ceiling, own-turn rest reactions, Rush Character and the first-turn ban.
+ST33 covers hand costs, opponent-owned choices, bottom-deck order, Navy filters,
+Blocker, and Borsalino's hand-only discount. ST34 covers DON-return provenance,
+per-copy turn limits, independent optional results, compound payment choices,
+and base-power settings that preserve additive modifiers. The two-Katakuri and
+Linlin concurrent-base-power scenarios match the official FAQ.
+
+ST35 distinguishes base from current power, exact Revolutionary Army filters,
+hand/trash play, field-only cost eight, and independent DON/play choices.
+Karasu's deck payment works before the opponent hand threshold, cannot partly
+pay, and loses immediately when it empties the deck. ST36 proves Life additions,
+physical Trigger play and turn gates, exact Supernovas costs, Apoo's independent
+draw and base-power change, and Kid's two distinct once-per-turn effects.
+Kid selects only a Life endpoint that can change orientation; saved choices
+retain the physical card, and redirect targets keep the printed name and base
+power limits.
+
+Shared fixes:
+
+- Borsalino now uses player turn history, including a discard that occurred
+  before the card entered hand. Effect actions, replacement discards and
+  activation-cost hand discards update that history. Ordinary Character Counter
+  use and Event disposal do not. A direct OP12 Garp/Kuzan FAQ check disproved
+  the existing omission of cost discards. The shared path now keeps source
+  provenance and queues Kuzan's draw after Garp's full effect, including its
+  pending play choice.
+- Kid's Life-orientation cost supports a top-or-bottom choice, with live
+  orientation and physical-card validation.
+- An automatically selected homogeneous DON-return payment no longer skips a
+  following hand-discard choice. Linlin retains all resources until the complete
+  cost selection is available, including across a saved prompt.
+
+The parser repairs ten cards across nine regression cases: official angle-bracket
+attributes, alternate costs, missing Slash clauses, hand-discard history,
+independent Then clauses, mixed name/attribute and exact-type play filters,
+Trigger-only text and endpoint Life costs. Fifteen parser-generated engine
+cases execute the repaired effects; six shared history cases prove provenance,
+turn memory, saved state and parent-effect ordering.
+
+Validation: 2,609 engine files / 10,447 tests pass (three opt-in skips),
+131 parser files / 1,373 tests pass, plus 29 card-package and 30 server-adapter
+tests. All 104 changed TypeScript files pass scoped format, lint and type checks.
+Types, cards and engine builds, all 28 new primary Grade A checks and adapter
+typecheck pass. Across the goal, 1,828 canonical definitions have changed.
+
+Self-improvement: the test guide now requires activation-cost discard proof for
+by-effect hand-trash behavior and keeps Counter/Event rule disposal separate.
+Koby and Garp provide the two direct cases; the Garp/Kuzan FAQ establishes
+reaction timing. The guidance harness reports the same 81 pre-existing issues
+as the baseline. No simulator UI files changed.
+
+Next: the 84 missing promotional cards, later existing-card clause audits,
+general loop forms, optional replacement priority and simultaneous Life
+replacement ordering. A read-only next-wave probe also confirms that deck
+validation ignores a Leader's `cannotInclude` rule: an otherwise valid
+OP12-001 deck of cost-five-or-higher Characters is incorrectly accepted.
+This deck-validation gap remains open for the promotional-card work. No new enabled stress result is claimed beyond
+`a063d693fd` (4,000 seeded games).
+
+Sources: official ST31–ST36 card lists recorded in
+[`starter-catalog-gaps.json`](starter-catalog-gaps.json),
+[ST31 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-31.pdf?20260717=),
+[ST32 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-32.pdf?20260717=),
+[ST33 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-33.pdf?20260717=),
+[ST34 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-34.pdf?20260821=),
+[ST35 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-35.pdf?20260717=),
+[ST36 FAQ](https://en.onepiece-cardgame.com/pdf/qa_st-36.pdf?20260717=), and
+[OP12 Garp/Kuzan FAQ](https://en.onepiece-cardgame.com/pdf/qa_op12.pdf?20260206=).
+
+### Promotional-card completion batch and Leader deck restrictions
+
+Added 29 missing promotional definitions: P-001–013, P-015–020,
+P-048–050, P-052, P-054, P-056–058, P-060 and P-061. These are 24
+Characters, four Events and one Leader; four are vanilla. The 25 ability
+primaries pass 90 public-command cases and Grade A. Official numeric,
+color, attribute and exact-type metadata match all 29 definitions.
+The runtime catalog now contains 2,730 canonical gameplay cards. The recorded
+promotional presence gaps fall from 84 to 55; starter coverage remains complete
+through ST36. Presence is separate from complete clause proof.
+
+The first ten cards cover paid Rush, Double Attack damage, conditional Blocker,
+repeatable Banish payments and expiry, Strike battle protection, self-rest
+costs without a target, mandatory opponent Life movement and End Turn DON ramp.
+Uta's optional rest-DON payment retains once-per-turn behavior and distinguishes
+Counter-only cards from Trigger-only cards. Gordon pays by moving its physical
+card to the deck bottom and returns attached DON rested.
+
+Later cards prove opponent-owned hand-bottom selection, private five-card
+ordering with a whole-group top-or-bottom choice, dynamic hand-size power,
+Slash/Strike protection against both Leaders and Characters, and either-owner
+cost-five bounce. Uta Events preserve the Leader gate only where printed.
+Fleeting Lullaby freezes eligible rested Characters through their next Refresh;
+Where the Wind Blows includes FILM Characters played and rested after Event
+resolution. Tot Musica can rest an Uta Leader or Character as payment and can
+select active or already-rested opposing DON without false pool changes.
+
+The game-owned deck validator now enforces Leader `cannotInclude` restrictions
+and declared DON-deck counts. Public red/green cases cover Rayleigh's cost-five
+boundary, exact negated East Blue type filtering, unsupported-filter rejection,
+and Enel's six-DON deck. The existing convention that a submission may omit
+its DON entries is unchanged. Runtime-dependent deck filters are rejected.
+
+The parser repairs P-007's fullwidth Strike and battle-source condition,
+P-009's opponent top-Life movement and P-011's optional rest-DON cost. Six
+generated public engine cases prove those paths. Two old optional-cost parser
+expectations were corrected against their printed text.
+
+Validation: 2,635 engine files / 10,572 tests pass (three opt-in skips),
+132 parser files / 1,376 tests pass, plus 33 card-package and 30 server-adapter
+tests. All 96 changed TypeScript files pass scoped format, lint and type checks.
+Types, cards and engine builds and adapter typecheck pass. The guidance harness
+has the same 81 pre-existing issues as its baseline. Across the goal, 1,857
+canonical definitions have changed. No new enabled stress result is claimed
+beyond `a063d693fd` (4,000 seeded games). No simulator UI files changed.
+
+Remaining work: 55 missing promotional IDs, later existing-card clause audits,
+general loop forms, optional replacement priority and simultaneous multi-card
+Life replacement ordering. Grade A and inventory counts are not all-clause
+completion proof. Post-declaration DON-loss continuations for P-001/P-004 and
+negated printed text for P-011 were not separately added in this batch.
+
+Sources: [official promotional cards](https://en.onepiece-cardgame.com/cardlist/?series=569901),
+[promotional FAQ](https://en.onepiece-cardgame.com/pdf/qa_promotion-cards.pdf?20260206=),
+and [OP01 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op01.pdf?20240405=).
+The latter confirms that identically worded look-and-order effects move the
+whole looked group to one end of the deck. The P-048 FAQ's timing/disposal
+wording differs from its current card text; the implementation follows the
+printed When Attacking and deck-bottom instruction.
+
+### Promotional catalog completion and actual movement results
+
+Added the remaining 55 promotional definitions: 50 Characters, two Events and
+three Leaders. Seven are vanilla; 48 have executable abilities and public-command
+primary tests. Official numeric, color, attribute and exact-type metadata match
+all 55. The runtime now contains 2,785 canonical gameplay cards, including 2,503
+ability cards and 282 vanilla cards. No canonical IDs remain missing from the
+recorded 24 official non-starter product categories or the 36 starter products.
+This closes the recorded presence gap, not the broader clause-audit requirement.
+
+The cards cover conditional battle protection, aliases and base-power auras,
+DON-return reactions, private hand/deck movement, Life payments, independent
+optional results, exact type/name/color/attribute gates, Counter recipients,
+Blocker and Rush, negation, delayed power, removal protection and replacements.
+P-117 Nami has its exact East Blue deck restriction and an actual empty-deck
+victory through damage-triggered milling. P-111 Robin's paid replacement applies
+to effect K.O. and other opposing removal, shares its once-per-turn limit across
+those paths, retains use after decline, survives a saved prompt and resets on a
+later turn. These single-source cases do not settle general replacement priority.
+
+Shared corrections:
+
+- P-046 Yamato orders the entire remaining hand at the deck bottom and draws
+  exactly the number returned, including zero. The draw action can use the
+  preceding movement's physical result.
+- P-059 The World's Continuation counts Characters actually returned, not merely
+  selected. A completion record retains successful original movements through
+  protection, replacement choices and saved states; replaced moves do not
+  inflate the Counter power. P-051 Shanks uses actual hand-trash count for
+  battle-only power.
+- P-103 Ace exposed a top-deck ordering reversal. Both hand-order/position and
+  owner-order continuations now keep the player's first-to-last order in the
+  deck. Top insertion uses reverse execution while logs retain submitted order.
+  The later DON gift still resolves. Bottom placement retains the same contract.
+
+The parser repairs 13 effect families across P-024/025/036/046/051/059/071/076,
+P-077/091/100/104/117. Generated-effect public tests cover their choices and
+boundaries, including P-024's separate Life Trigger. P-027's rule-level Franky
+alias now passes through normalization and card emission as metadata; temporary
+name changes do not become rule aliases. Its aura and an explicitly synthetic
+named consumer prove the separate effect and alias boundaries.
+
+Validation: all 48 new ability primaries pass 162 focused public-command cases
+and Grade A. The full engine passes 2,687 files / 10,868 tests (three opt-in
+skips); the full parser passes 135 files / 1,392 tests. Card-package tests (33),
+server-adapter tests (30), adapter typecheck, and types/cards/engine builds pass.
+All 181 changed TypeScript files pass scoped format, lint and type checks. The
+guidance harness has the same 81 pre-existing issues as its baseline. Across
+the goal, 1,912 canonical card definitions have changed.
+
+Self-improvement: the test guide now requires actual movement-count evidence
+through protection/replacement and exact top/bottom order across later prompts.
+Yamato, The World's Continuation and Ace provide the new public proofs. No
+simulator UI files changed.
+
+Remaining scope: later existing-card clause audits, general loop forms,
+optional affected-card replacement priority and simultaneous multi-card Life
+replacement ordering. A new read-only comparison of current English and Japanese
+rules plus OP05/ST09 FAQs did not resolve optional affected-card priority;
+Ace/Rosinante and Enel/Zoro are documented next-proof candidates, not executed
+new ruling evidence. P-104's new immunity proof covers opposing bottom-deck
+removal, either-side DON thresholds and battle, not a separate own-effect or
+K.O.-effect case. Inventory labels and Grade A are not all-clause completion
+proof. No new enabled stress result is claimed beyond `a063d693fd` (4,000 seeded
+games).
+
+Sources: [official promotional cards](https://en.onepiece-cardgame.com/cardlist/?series=569901),
+[official other-product cards](https://en.onepiece-cardgame.com/cardlist/?series=569801),
+[promotional FAQ](https://en.onepiece-cardgame.com/pdf/qa_promotion-cards.pdf?20260206=),
+and Comprehensive Rules 3-2-3, 4-10, 8-3 and 8-4. The recorded product audit is
+[`nonstarter-catalog-gaps.json`](nonstarter-catalog-gaps.json).
+
+### OP08 clause audit and simultaneous Life replacement ordering
+
+Reviewed all 119 OP08 canonical cards against the official English product list
+and FAQ: 91 Characters (ten vanilla), six Leaders, 19 Events and three Stages.
+All 109 ability primary files pass Grade A. This is a bounded semantic audit;
+Grade A alone does not prove every possible combination.
+
+Six definitions needed repairs. Chopper now permits zero or one rested DON!!
+independently for each selected Character. We Would Never Sell a Comrade to an
+Enemy!!! protects only against opposing effect K.O.; Orlumbus can still pay its
+own effect K.O. Ace publicly reveals the physical top card before its eligible
+play and top-or-bottom choice. Oven has its printed 1000 Counter, Sasaki has
+2000 Counter, and Who's.Who has the exact name needed by a real search exclusion.
+The parser now preserves per-recipient DON distribution and opposing-effect
+provenance. Generated-effect public tests prove both repairs.
+
+New FAQ and branch tests cover Wapol without opposing Characters, replaced K.O.
+without a false Kaido reaction, already-rested Shakuyaku, retained King Rush,
+King's five-versus-six hand draw gate, Pudding's exact top-two face-down payment,
+Kalgara's declined play and zero-Life success, independent Event results and
+separate Life Triggers. Biscuit Warrior has an actual unlimited-copy deck
+validation proof. Kaido & Linlin uses a legal ten-DON fixture and a payable
+decline rather than an impossible twenty-DON field.
+
+The engine gives each owner a private order for multiple face-up Life cards
+placed at the deck bottom by ST13 Luffy's mandatory replacement. Saved choices,
+invalid retries, both owners, mixed face states, failed Life costs, and later
+independent payments are covered. The order preserves the batch's physical deck
+slots. Nested movement continuations now wait for completion and use actual hand
+arrivals, excluding replaced cards; a draw through the moved batch proves that
+ordering occurs first. A zone-generation stamp prevents a later incarnation of
+a card from joining the earlier ordering group.
+
+Validation: all 109 OP08 ability primaries pass Grade A. The full engine passes
+2,689 files / 10,910 tests (three opt-in skips), and the full parser passes
+135 files / 1,395 tests. Card-package tests (33), adapter tests (30), adapter
+typecheck, and types/cards/engine builds pass. All 36 changed TypeScript files
+pass scoped format, lint and type checks. The guidance harness still reports exactly
+the same 81 pre-existing issues. Across this goal, 1,915 canonical definitions
+have changed. No simulator UI files changed. No new enabled stress run is claimed.
+
+Remaining scope includes OP09 and later existing-card clause audits, general
+loop forms, optional affected-card replacement priority, and full simultaneous
+cross-zone replacement atomicity. The last item is a synthetic mixed Life/field
+case: another removal replacement can draw a bottomed Life card before the final
+batch order is published. Generation validation prevents stale binding but does
+not settle that wider movement sequence. Specific OP08 proof limits remain for
+S-Snake's full expiry and negative filter boundaries, source removal before
+Black Maria's delayed result, and Jewelry Bonney's Life provenance combinations.
+
+Sources: [official OP08 card list](https://en.onepiece-cardgame.com/cardlist/?series=569108),
+[OP08 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op08.pdf?20260206=), and
+Comprehensive Rules 3-1-7, 3-1-8 and 8-1-3. Reusable test guidance now distinguishes
+nested movement continuations from following sibling actions.
+
+### OP09 audit, opposing Life payment and stable-turn optional loops
+
+Reviewed all 119 OP09 cards against the official product list and FAQ: 91
+Characters (ten vanilla), six Leaders, 18 Events and four Stages. Numeric, color,
+attribute and type metadata match. All 109 ability primary files pass Grade A.
+The following bounded repairs are complete; this is not proof of all engine
+interaction combinations.
+
+- Kuzan's opposing cost-three Character-to-Life placement is an activation cost.
+  It now requires an eligible payment target, retains the chosen top/bottom
+  face-up position across saved prompts, and discards from the opponent's hand
+  only after actual payment. Immunity prevents payment eligibility; a replacement
+  that moves the card elsewhere prevents the following discard. Earlier own-field
+  Character-to-Life costs retain their default ownership.
+- Teach's Character negation shares the printed duration of its attack restriction:
+  through the opponent's next turn. Its separate Leader negation still lasts only
+  this turn. The runtime now computes negation expiry for the full native duration
+  set, so the corrected effect also expires. Public tests prove next-turn
+  suppression, later restored activation, Blocker and once-per-turn limits.
+- Gum-Gum Giant's printed text regains the missing DON!! minus sign. Its native
+  payment was already correct; a new wrong-Leader case proves payment without
+  power or draw.
+
+Nami's empty-deck win replacement now respects effect negation. Black Vortex
+and Black Hole reproduce the official FAQ loss through real damage, negation
+and a later draw of the final deck card. The shared check also applies to
+Leader effects that defer empty-deck defeat.
+
+The parser recognizes Kuzan's colon payment instead of two independent actions,
+preserves Teach's shared Character duration, and no longer assumes every triggered
+cost is optional. Explicit may/can handling and existing DON-cost conventions
+remain. Generated-effect public tests prove payment, failed activation, saved
+position choices and negation expiry.
+
+Optional deterministic rest/ready loops with fulfilled turn conditions now reach
+the finite repetition declaration. The same narrow turn-condition verifier is
+shared with mandatory loops. Two failing cases now pass: a single-owner loop
+with saved declaration and same-state restart prevention, and a two-owner loop
+with turn-player-first declarations and minimum-count stopping. A false turn
+condition never creates the reaction. Other conditions, payments, choices and
+moving-card optional loops remain outside this certification.
+
+Additional proofs cover sequential rested-count rechecks, self-return payment,
+trash versus K.O. provenance, persistent granted effects, dynamic battle power,
+Roger's Life condition at Blocker activation, Life Trigger gates after damage,
+zero/one-card Sanji hand trash, and independent choice declines. The FAQ confirms
+that Shinobu taking the last Life only after Blocker activation does not create
+Roger's win; the existing capture behavior passes this case.
+
+Validation: 2,692 engine files / 10,960 tests pass (three opt-in skips). The full
+parser passes 136 files / 1,397 tests. Card tests (33), adapter tests (30), adapter
+typecheck and types/cards/engine builds pass. All 48 changed TypeScript files
+pass scoped format, lint and type checks; all 109 ability primaries pass Grade A.
+The guidance harness retains the same 81 pre-existing issues. Across the goal,
+1,916 canonical definitions
+have changed. No simulator UI files changed. No new enabled stress run is claimed.
+Remaining scope begins with OP10 and later existing-card audits, broader optional
+moving-card and stable-condition loop families, optional affected-card replacement
+priority, and full simultaneous cross-zone replacement atomicity.
+
+Sources: [official OP09 cards](https://en.onepiece-cardgame.com/cardlist/?series=569109),
+[OP09 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op09.pdf), Comprehensive Rules
+8-1-3-1, 8-3-1-3/4/7 and 11-1-1-2/3. Test guidance now warns against automatic
+optional-cost classification and requires both duration persistence and expiry.
+
+### OP10 audit, ordered compound payments and continuous cost
+
+Reviewed all 119 OP10 cards against the official English product list and FAQ:
+94 Characters (11 vanilla), six Leaders, 18 Events and one Stage. All 108 ability
+primary files pass Grade A. Metadata review corrected Moocy's Counter to 2000;
+a real battle proves the correction. No simulator UI files changed.
+
+Kin'emon 026/027 now returns the field source and filtered trash card as one
+payment in the player's chosen order. Both order directions survive saved
+prompts and are proved by later public draws. Invalid missing-source, duplicate
+and wrong-power submissions preserve the unpaid state. Attached DON returns
+rested. Parser output retains this combined payment instead of two sequential
+costs; ordinary trash-only payments remain covered.
+
+Fighting Fish rechecks its attached-DON condition after payment. Returning the
+last attached DON suppresses its KO; paying another DON retains the effect.
+Removed-source On KO effects retain their captured DON conditions. These are
+separate boundaries, not a general recheck of every textual condition.
+
+Usopp's cost aura now uses staged continuous contributions in turn-player order.
+Tsuru leaves base-three Bartolomeo at two; Kaku removes the threshold bonus and
+leaves it at zero; turn-player Issho applies before non-turn-player Usopp and
+also leaves it at zero. The runtime scan contains 64 permanent cost actions;
+Usopp is the only direct current-cost threshold. This proves those catalog
+interactions, not arbitrary cyclic dependencies or player-chosen ordering of
+multiple same-controller permanent effects.
+
+The earlier mixed Life/field replacement gap is repaired for the existing
+mandatory ST13 Luffy path. Each owner's replaced Life subset moves and receives
+private ordering before the remaining field replacement can draw from that
+deck. Original movement identity, actual-arrival counts and saved continuation
+remain intact; the parent condition is not rechecked halfway through movement.
+Both target orders, both owners, accepted/declined replacements and invalid
+saved retries pass public-command tests. Broader future conditional replacement
+families remain outside this bounded proof.
+
+Additional FAQ proofs cover Sugar's Counter-Event reaction despite declined
+optional payment, exclusion of Event Life Triggers from Event activation,
+Law's total-cost payment and face-down failed reveal return, Liberation's base
+cost limits, Kid's already-face-up Life payment rejection, exact Trebol power
+protection, independent Doflamingo reactions, and actual Hawkins/Heat & Wire
+Life Triggers. Existing weak Cub/Sai payment-only assertions now prove actual
+bounce and opposing cost-one eligibility.
+
+Validation: 2,693 engine files / 11,004 tests pass (three opt-in skips).
+The full parser passes 137 files / 1,399 tests. Card tests (33), adapter tests
+(30), adapter typecheck and types/cards/engine builds pass. All 42 changed
+TypeScript files pass scoped format, lint and type checks. The guidance harness
+retains the same 81 pre-existing issues. The cumulative definition count stays
+1,916 because these three corrected definitions were already changed earlier.
+No fresh enabled stress run or deployment is claimed.
+Remaining scope starts with OP11 and later clause audits, broader optional loop
+families, optional affected-card replacement priority, and general continuous
+ordering. The engine remains incomplete; catalog presence and Grade A do not
+prove all printed clauses or all rule interactions.
+
+Sources: [official OP10 cards](https://en.onepiece-cardgame.com/cardlist/?series=569110),
+[OP10 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op10.pdf?20260206=), and
+Comprehensive Rules 3-1-7/8, 8-1-3-3-5 and 8-3-1. Test guidance now requires
+combined-payment order and post-payment DON proofs.
+
+### OP11 audit, repeated Counter actions and replacement payment pools
+
+Reviewed all 119 OP11 cards against the official English product list and FAQ:
+94 Characters (21 vanilla), six Leaders, 18 Events and one Stage. All 98 ability
+primary files pass Grade A. Smoker now protects against non-Special Character
+effects only, so an Event can K.O. it. Camie accepts its optional activation
+before checking the current Life threshold. The same wording audit corrected
+Boa Hancock OP07-038, Usopp OP10-042 and Shu OP11-088: activation timing remains
+separate from the result condition. Shu retains the actual attacker's attribute
+through queued actions, nested choices and saved state.
+
+Counter actions now resolve one at a time and repeat until the defender passes
+or has no legal Counter. A Counter Event can recover or draw a Character which
+is then used in the same battle. Event payment uses its current discounted hand
+cost. Invalid multi-card submissions do not pay or move cards. Existing tests
+now pass explicitly at the intended battle boundary; public test helpers do
+not hide extra actions. Bots retain their defense plan across these decisions
+and submit at most one card per action.
+
+Simultaneous Koby replacements preserve initial payment affordability and the
+physical trash-card pool. A card K.O.'d earlier in the same movement cannot
+become a new payment for another replacement. Saved decisions, invalid retries,
+grouped choices and a later separate removal are covered. Trigger provenance
+is retained in the semantic loop fingerprint; its generation-free action
+metadata no longer prevents recognition of the established moving-card loop.
+General optional loop families remain unfinished.
+
+Additional proofs cover independent Jinbe DON choices, already-face-up Life
+payment rejection, Luffy's attached DON through turn handoff, same-count Nami
+Life movement, Culverin's base-cost threshold, Red Hawk's post-payment Life
+check, Blue Hole's insufficient deck payment, Arlong's current hand cost,
+Franky's Event reaction and Life Trigger exclusion, compound-cost declines,
+partial hand trash, and Koby's active-target permission without Rush.
+
+Validation: 2,697 engine files / 11,045 tests pass (three existing opt-in skips).
+The parser passes 138 files / 1,401 tests. Card-package tests (33), adapter tests
+(30), adapter typecheck and types/cards/engine builds pass. All 191 changed
+TypeScript files pass scoped format, lint and type checks. The guidance harness
+retains its 81 pre-existing issues. Cumulative canonical definitions changed:
+1,917. No simulator UI
+files changed. No fresh enabled stress run or deployment is claimed.
+Remaining scope starts with OP12 and later clause audits, broader optional loop
+families, optional affected-card replacement priority and general continuous
+ordering. Catalog presence and these bounded checks do not prove completion.
+
+Sources: [official OP11 cards](https://en.onepiece-cardgame.com/cardlist/?series=569111),
+[OP11 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op11.pdf), and Comprehensive
+Rules 7-1-3-1, 8-1-3 and 8-3-1.
+
+### OP12 audit, hand-only restrictions and private searches
+
+Reviewed all 119 OP12 cards against the official English product list and FAQ:
+92 Characters (24 vanilla), six Leaders, 20 Events and one Stage. All 95 ability
+primary files pass Grade A. Five OP12 definitions needed corrections.
+
+Zoro 036 now restricts effect play from hand only. Gecko Moria can play it from
+trash, while the existing hand prohibition remains. Jewelry Bonney 101 gains
+its missing Supernovas-gated Life Trigger in the canonical definition and
+English text; both matching and nonmatching Leader branches are exercised.
+
+Color of the Supreme King Haki 018 first boosts any Character or a Rayleigh
+Leader, then separately offers its active-DON rest. Declining or having no
+active DON preserves the boost and causes no opposing power reduction.
+Already-rested DON cannot fund that reduction. Both battle and turn expiry
+are covered. Parser output preserves this ordered optional action instead of
+moving the payment before the boost or losing the dependent effect.
+
+Color of Observation Haki 017 now applies red to both alternative search
+branches, as required by the official FAQ. A non-red high-cost Character is
+excluded. This corrects an earlier test and inventory statement which had
+accepted a green Character; repeated quantity wording alone did not establish
+qualifier scope.
+
+The private search on 079 no longer reveals its chosen card in the opponent's
+log. A native reveal flag preserves the public default for printed reveal
+searches. Private searches emit a generic public message with a controller-only
+named message, omit the chosen target ID from the public log, and keep hand
+projection hidden. Saved selection and remainder decisions retain privacy.
+The same printed look-and-add family is repaired for OP05 Ulti, OP15 Enel and
+OP16 Moby Dick. A public Brannew reveal remains visible as a control.
+
+Added FAQ and boundary proofs include Rayleigh's base-power selection, Zoro's
+third attached DON and Blocker interaction, Garp/Kuzan payment-before-draw,
+Sanji's printed Lightning cost, Law's discount retention, Koala's excluded
+Character attacks and Life Triggers, simultaneous Koushirou protection, partial
+Zephyr discard, Whitebeard event play decline, post-payment hand thresholds,
+and paid Baratie activation under a nonmatching Leader.
+
+Validation: 2,698 engine files / 11,090 tests pass (three existing opt-in skips).
+The parser passes 139 files / 1,404 tests. Card tests (33), adapter tests (30),
+adapter typecheck and types/cards/engine builds pass. All 61 changed TypeScript
+files pass scoped checks. All 95 OP12 ability primaries pass Grade A after the
+final Sanji decline proof. The guidance harness retains the same 81 baseline
+issues. Cumulative canonical definitions changed: 1,920.
+
+Remaining scope starts with OP13 and later clause audits, broader optional loop
+families, optional affected-card replacement priority and general continuous
+ordering. These bounded audits and catalog labels do not prove full completion.
+No simulator UI files changed; no deployment or fresh enabled stress run claimed.
+
+Sources: [official OP12 cards](https://en.onepiece-cardgame.com/cardlist/?series=569112)
+and [OP12 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op12.pdf).
+
+### OP13 audit and start-of-game effects
+
+Reviewed all 120 OP13 cards against the official English product list and FAQ:
+93 Characters (16 vanilla), six Leaders, 18 Events and three Stages. All 104
+ability primary files pass Grade A. Eight definitions needed corrections.
+
+Imu now rejects Events costing two or more while allowing one-cost Events and
+higher-cost Characters. The deck validator supports category filters alongside
+cost filters. Its optional startup search plays up to one Mary Geoise Stage,
+shuffles after an accepted search (including zero choices), and resolves Stage
+On Play effects before the next player's startup effect and opening hands.
+Declining the search does not shuffle. Saved prompts, invalid-choice retry,
+private candidates, public legal-command descriptors and both players are
+covered through setup commands. Ordinary opening draws now occur after the
+first-player decision and startup effects.
+
+Current Comprehensive Rules 5-2-1-5-1 order startup effects by the player who
+chose first or second, then the other player. The older OP13 FAQ instead says
+first player, then second player. Current English and Japanese rules agree;
+the engine follows the current rule, including the chooser going second.
+A synthetic Stage On Play test proves queue timing before the second startup
+and opening hands; Mary Geoise itself has no On Play effect.
+
+Dragon now reduces opposing power by 2,000. Shanks prevents normal hand play
+but permits effect play, including the official Law interaction after saved
+state. A typed play-origin qualifier preserves the default restrictions on
+other cards. Ju Peter applies his own-turn, ten-trash base-power-7,000 effect
+to all own Five Elders, including lowering higher printed power and retaining
+attached DON bonuses. His copied Saturn search and English text are removed.
+
+If I Bowed Down to Power blocks Blocker only for Leader attacks, with turn
+expiry; Character attacks still permit Blocker. Brilliant Punk regains its
+missing draw Life Trigger. Go All the Way to the Top's Counter bonus lasts
+only for the battle. Never Existed in the First Place pays its optional DON
+cost before checking Imu. Parser contracts preserve these qualifiers, base
+power, and Imu's startup and deck-building clauses.
+
+Additional proofs cover self-removal replacements, Teach's draw without Life,
+Roger's fixed affected group, replaced Ace return, Sabo's cost-11 target,
+post-cost and given-DON gates, Counter K.O. before damage, excluded Oro Jackson
+removal causes, Empty Throne's live trash threshold, and the exact top-Life
+face-up payment boundary. Official printed metadata and separate Life Trigger
+fields were compared across the complete set.
+
+Validation: 2,698 engine files / 11,121 tests pass (three existing opt-in skips).
+The parser passes 140 files / 1,408 tests. Card tests (33), adapter tests (30),
+adapter typecheck and types/cards/engine builds pass. All 61 changed One Piece
+TypeScript files pass scoped checks; the adapter test passes formatting and
+package typecheck. All 104 OP13 ability primaries pass Grade A. The guidance
+harness retains the same 81 baseline issues. Cumulative canonical definitions
+changed: 1,922.
+
+Remaining scope starts with OP14 and later clause audits, broader optional loop
+families, optional affected-card replacement priority and general continuous
+ordering. Bounded audits and catalog labels do not prove full completion.
+No simulator UI files changed; no deployment or fresh enabled stress run claimed.
+
+Sources: [official OP13 cards](https://en.onepiece-cardgame.com/cardlist/?series=569113),
+[OP13 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op13.pdf),
+[current English rules](https://en.onepiece-cardgame.com/pdf/rule_comprehensive.pdf?20260828=)
+and [Japanese rules](https://onepiece-cardgame.com/pdf/rule_comprehensive.pdf?20260109=).
+
+### OP14 audit, printed metadata and conditional effects
+
+Reviewed all 120 OP14-numbered cards against the official English card list,
+June 26, 2026 combined OP14/EB04 FAQ and the OP14-009 erratum: 93 Characters
+(eight vanilla), seven Leaders, 19 Events and one Stage. The EB04-numbered
+cards in the mixed product remain a separate audit scope.
+
+Eight canonical definitions needed corrections. Leader Law now selects only
+Supernovas or Heart Pirates Characters. Mihawk's post-cost cost-five condition
+controls both DON reactivation and the subsequent Character-play prohibition;
+a failed condition does not prohibit play. Character Law loses the obsolete
+Seven Warlords type per the official erratum, proven by exclusion from Sengoku's
+search. Nami regains her printed +1000 Counter. Mr.5's attribute is Special,
+not Strike, proven through Zephyr's actual target choice. The OP14-019 search
+Event costs one DON, not four, proven with only one active DON. Bullet String
+permits the optional DON return before checking the Leader type; a failed type
+check gives neither power bonus. You'll Frighten Me restores its printed heart
+symbol in the canonical and English names.
+
+The parser now retains Law's alternative type filters, Bullet String's second
+bonus on the same physical recipient and Mihawk's opposing-Leader Slash
+condition. It already grouped Mihawk's post-cost condition correctly; a new
+contract preserves that group and its play restriction.
+
+K.O. event filtering now preserves the Character's effective base power at the
+K.O. timing. Vista's opponent-turn copied base power previously disappeared
+when Ace's queued reaction checked Vista after movement to trash. The event
+snapshot carries that base power across queued choices and saved state; only
+the matching Character's K.O. event filter uses it. Action conditions and
+ordinary target selection continue to read live state. Battle K.O., effect K.O.,
+the eight-card hand negative and a saved optional listener with nested filters pass. The same event-filter correction covers Boa
+Hancock; a catalog scan found no equivalent confirmed lost-property gap in
+other current K.O. listeners.
+
+A follow-up simultaneous K.O. check found that removing Ju Peter first changed
+later Five Elders before their values were captured. The replacement process
+now records the original group's base powers by physical ID and zone generation
+before moving any member. Original continuations retain those observations;
+transformed replacement actions begin fresh observations. Both target orders
+and JSON-resumed accepted/declined replacements pass with a clearly labeled
+unlimited observer fixture and the real Ju Peter aura. The focused shared gate
+passes seven files / 71 tests. A possible older remaining-target continuation
+issue after a card leaves and re-enters has no confirmed catalog reproduction;
+that concern is not claimed as repaired by this snapshot change.
+
+Additional proofs cover swapped base power after a partner leaves, Jinbe's
+repeatable activation, mandatory Hancock draws for simultaneous plays,
+owner/type-limited redirection, Crocodile/Moria action order before On K.O.,
+fixed affected groups, the exact hand threshold after Event payment, independent
+power and DON effects, and Life Trigger cards excluded from trash counts.
+Paid Main/Counter Events enter trash before their effect resolves; Ground
+Death's eight/nine-trash boundary proves that the paid Event itself counts.
+This differs from resolving Life Triggers, which remain outside ordinary areas.
+The reusable testing note now records this distinction, with Ground Death and
+multiple OP14 Life Trigger cases as forward evidence.
+
+Validation: 2,699 engine files / 11,152 tests pass (three existing opt-in skips).
+The parser passes 141 files / 1,411 tests. Card tests (33), adapter tests (30),
+adapter typecheck and types/cards/engine builds pass. All 48 changed TypeScript
+files pass scoped checks. All 112 OP14 ability primaries pass Grade A. The
+final numeric/color/trait/attribute metadata comparison has no mismatch, using
+the official Law erratum to override its stale card-list trait row. The guidance
+harness retains the same 81 baseline issues. Cumulative canonical definitions
+changed: 1,925.
+
+Remaining scope starts with OP15 and later card clauses, EB and promotion
+clauses, broader optional loop families, optional affected-card replacement
+priority and general continuous ordering. Bounded audits and catalog labels do
+not prove full completion. No simulator UI files changed; no deployment or
+fresh enabled stress run claimed.
+
+Sources: [official OP14 cards](https://en.onepiece-cardgame.com/cardlist/?series=569114),
+[OP14/EB04 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op14_eb04.pdf?20260626=)
+and [OP14-009 erratum](https://en.onepiece-cardgame.com/topics/notice-op14-009.php).
+
+
+### OP15 audit, optional actions and selection conditions
+
+Reviewed all 119 OP15-numbered cards against the official English product list,
+March 13, 2026 OP15/EB04 FAQ and Arlong erratum: 93 Characters (six vanilla),
+six Leaders, 19 Events and one Stage. EB04-numbered cards remain separate scope.
+
+Eleven canonical definitions needed corrections, including one related OP05 card.
+Koby costs one DON. Arlong has
+Slash and Luffy092 has Special, proven through real battle/target interactions.
+Kuro permits either player's rested Character as the delayed target, but its
+restriction applies only during the opponent's Refresh. Purinpurin permits a
+rested Character whose cost differs from its attached DON to be selected; the
+K.O. condition is checked after that choice. Amazon forces its power reduction
+when the opponent has no active DON to return. Kotori and Hotori permit their
+DON return before checking for the named companion. Fire Fist resolves its
+power changes before an optional effect discard; discarding only one available
+card is legal but does not enable the dependent K.O. Impact Dial regains its
+separate Life Trigger, which K.O.s without removing another Life card.
+The full parser gate also identified Charlestone's old split Counter model; its
+optional discard now remains an action after the power bonus, with no DON
+reactivation when the full discard does not occur.
+
+Shared action types now express a specified Refresh player, selected-target
+result filters, full-amount-dependent hand-discard continuations and an
+opponent active-DON count. Parser contracts retain those distinctions, delayed
+end-of-turn actions and explicit cost-area DON ownership. Six public tests run
+parser-generated effects, including JSON-resumed Kuro and Purinpurin choices,
+zero/one/two-card Fire Fist discards and Amazon's unavailable-payment case.
+An independent read-only review found no confirmed defect in those four paths.
+
+Added command proofs cover Lucy Event activation versus Life Triggers, Brook's
+latched defeat after deck refill, same-physical-card Rebecca replay, Enel's
+existing-DON assignment, simultaneous Luffy replacements, real Blocker battles,
+DON-giving timing, separate Character/Event Triggers, Counter expiry, Event
+trash thresholds and independent later clauses with no legal Character target.
+Golden Rifle replenishes Life with no remaining hand cards; Dressrosa Kingdom's
+On Play draw now uses an actual Dressrosa Leader. Six vanilla IDs are 016, 030,
+049, 062, 089 and 107.
+
+Validation: 2,700 engine files / 11,210 tests pass (three existing opt-in skips).
+The parser passes 142 files / 1,415 tests. Card tests (33), adapter tests (30),
+adapter typecheck and types/cards/engine builds pass. All 70 changed TypeScript
+files pass scoped checks. All 113 OP15 ability primaries pass Grade A. The final
+119-card numeric/color/trait/attribute comparison has no mismatch. The guidance
+harness retains the same 81 baseline issues. Cumulative canonical definitions
+changed: 1,928.
+
+The full gate exposed stale fixtures for Purinpurin's broader legal selection,
+Fire Fist's newly available optional action and Koby's corrected cost in grouped
+removal. Their public choices and exact group outcomes now match the repaired
+rules; all pass in the full rerun. The repeated optional-action issue also
+produced a short test-authoring note, with Fire Fist and Charlestone as evidence.
+
+Remaining scope starts with OP16 and later card clauses, EB and promotion
+clauses, broader optional loop families, optional affected-card replacement
+priority and general continuous ordering. Bounded audits and catalog labels do
+not prove full completion. No simulator UI files changed; no deployment or
+fresh enabled stress run claimed.
+
+Sources: [official OP15 cards](https://en.onepiece-cardgame.com/cardlist/?series=569115),
+[OP15/EB04 FAQ](https://en.onepiece-cardgame.com/pdf/faq_op15-eb04.pdf?20260313=)
+and [Arlong erratum](https://en.onepiece-cardgame.com/topics/notice_op15-023.php).
+
+
+### OP16 audit, shared qualifiers and ordered actions
+
+Reviewed all 119 OP16-numbered cards against the official English product list,
+August 21, 2026 FAQ and Otama erratum: 95 Characters (nine vanilla), six Leaders,
+16 Events and two Stages. All exported IDs and the numeric/color/type/attribute
+metadata match the official rows; dual-attribute Mohji & Cabaji remains intact.
+
+Eight canonical definitions needed correction. Ace's 8000-power threshold now
+applies to both the named Luffy and Whitebeard-type alternatives. The parser
+previously omitted this whole effect; its target grammar now preserves the
+shared qualifier, with an exact contract and public parsed-effect proof.
+Ramba regains its printed +1000 Counter, proven through battle. Zoro's single
+On Play sequence now resolves the rest action before an optional hand discard
+and dependent DON assignment. The OP15 parser family already emits this shape;
+a new contract preserves it. Kuzan's optional DON return can be declined.
+Sakazuki's name no longer counts as a different name from other Sakazuki cards.
+Otama's stored English/canonical text now matches the erratum and its already
+correct either-field condition. Two Event names now match their printed names.
+
+New proofs cover exact-8000 reveal costs, inclusive Whitebeard types, all four
+Luffy distinct-name FAQ examples with dual-name cards, Marco revival and removal
+replacement, actual Blocker/Unblockable battles, self-return continuations,
+Sengoku partial Admiral plays, Buggy effect removal versus full-field rule trash,
+Teach redirection and Character Triggers, Otama opponent-only conditions,
+fixed Counter bonuses, and private Life selection. No new shared runtime
+change was needed for these audited cases.
+
+Event/Stage proofs now check active-aura and Blocker negation plus expiry,
+separate Life Triggers, the resolving Trigger excluded from trash recovery,
+all Black Vortex printings excluded by name, a paid Mahoroba becoming the tenth
+trash card, Teach play with no opposing Life, and Stage payment/action order.
+Hallowed Glacier Slash also permits reactivation after an opponent Marco's
+self-K.O. replacement; this directly proves the FAQ's own-effect case. Moby
+Dick retains private search disclosure. Marineford pays DON and self-rest costs
+before draw/discard. Payable decline tests replace weak optional fixtures.
+
+Validation: 2,702 engine files / 11,255 tests pass (three existing opt-in skips).
+The parser passes 144 files / 1,417 tests. Card tests (33), adapter tests (30),
+adapter typecheck and types/cards/engine builds pass. All 55 changed TypeScript
+files pass scoped checks. All 110 OP16 ability primaries pass Grade A. The final
+119-card numeric/color/trait/attribute comparison has no mismatch. The guidance
+harness retains the same 81 baseline issues. Cumulative canonical definitions
+changed: 1,931.
+
+Checkpoint feedback: Zoro reused the optional-action structure established by
+Fire Fist and Charlestone without a runtime extension. Ace again required
+checking a qualifier shared by alternatives; the parser-generated command proof
+now prevents an omitted parse from being mistaken for a complete definition.
+
+Remaining scope starts with OP17, EB and promotion clauses, broader optional
+loop families, optional affected-card replacement priority and general
+continuous ordering. Bounded audits do not prove full completion. No simulator
+UI files changed; no deployment or fresh enabled stress run claimed.
+
+Sources: [official OP16 cards](https://en.onepiece-cardgame.com/cardlist/?series=569116),
+[OP16 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op16.pdf?20260821=)
+and [Otama erratum](https://en.onepiece-cardgame.com/news/notice-op16.html).
+
+### OP17 audit, named attack targets and Leader alternatives
+
+Reviewed the 119 OP17-numbered cards against the official English product list
+and August 21, 2026 FAQ: 95 Characters (six vanilla), six Leaders, 17 Events and
+one Stage. All 119 IDs and final names, numeric values, colors, traits and
+attributes match the official rows. Separate Life Trigger fields were compared
+as well as main card text; this caught OP17-076's omitted Trigger.
+
+Eight canonical definitions were corrected. Oden permits either a Wano or an
+inclusive Whitebeard Character instead of requiring both types. Crone Oli's name,
+Fugar's cost of one, and Beckman's absence of a printed Counter now match the
+source. Ulti & Page One adds its missing active DON. The New Era Event's name
+has its printed punctuation. Sobered Up now returns one DON and draws two from
+its Life Trigger. Linlin's controller selects the opposing hand card without
+seeing its identity, while the opponent still selects the effect branch.
+
+The shared permanent-effect evaluator now combines simultaneous named attack
+target restrictions as alternatives. Captain John plus Kid permits either named
+rested Character. Leader, unrelated Character and active-target attacks remain
+illegal. A negated source no longer contributes; independent prohibitions still
+apply. Public legal-command targets agree with actual attack legality. The FAQ
+uses P-067, which is absent from the current catalog and official promotion-list
+extract. These interaction tests use OP01-051's equivalent named restriction with
+its DON condition satisfied; exact P-067 implementation remains open.
+
+The parser now accepts a named Leader OR an exact Leader type. Oden's target
+alternatives already parsed correctly; this previously missing Leader condition
+caused the whole effect to be omitted. Parser contracts and generated public
+plays cover both qualifying Leaders, wrong Leaders, eligible alternative types,
+and the common power threshold.
+
+New command proofs cover grouped self-rest and self-K.O. replacements, concurrent
+base-power setters, optional effects declined then used on a later attack,
+external Blocker grants under source/recipient negation, field-only cost bonuses,
+Big Mom Trigger plays on the opponent's turn, and private hand selection. Event
+proofs cover either-field high-cost conditions, post-cost Leader gates, actual
+Trigger abilities versus text mentioning Trigger, late entrants excluded from an
+already resolved cost reduction, Counter base-power conditions, and partial
+opponent discards that still permit Maser Saber's controller-owned K.O.
+
+Validation: 2,704 engine files / 11,306 tests pass (three existing opt-in skips).
+The parser passes 145 files / 1,418 tests. Card tests (33), adapter tests (30),
+adapter typecheck and types/cards/engine builds pass. All 58 changed TypeScript
+files pass scoped checks; all 113 OP17 ability primaries pass Grade A. The
+119-card metadata comparison has no mismatch. The guidance harness retains
+its same 81 baseline issues. Cumulative canonical definitions changed: 1,932.
+
+Checkpoint feedback: comparing separate Trigger fields found a clause that the
+main-text scan missed. The named-target FAQ exposed an intersection bug despite
+both cards' individual attack restrictions already passing. No new workflow
+abstraction was added.
+
+A final primary-proof review leaves explicit OP17 positive-clause gaps: 014,
+015, 016, 024, 025, 029, 030, 031, 032, 033, 045, 046, 048, 052, 053 and 054;
+050 still needs physical reordering and its bottom branch. These are proof gaps,
+not confirmed new runtime failures. The audit above covers source/structure and
+the listed added interactions, not full completion of every OP17 clause.
+
+Remaining scope starts with those OP17 proofs, EB and promotion clauses, the missing P-067 definition,
+broader optional loops, optional affected-card replacement priority and general
+continuous ordering. Structural equality and Grade A are not complete clause
+proof. No simulator UI files changed, and no deployment or fresh enabled stress
+run is claimed.
+
+Sources: [official OP17 cards](https://en.onepiece-cardgame.com/cardlist/?series=569117)
+and [OP17 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op17.pdf?20260821=).
+
+### OP17 positive-clause proof completion
+
+The follow-up closes the explicit first-half gaps listed above and the weak
+second-half primary cases found during a second review. Fifty-three Character
+primary files now assert actual outcomes. Generic prompt-draining, field-placement
+and turn-handoff checks were replaced where they did not prove a printed clause.
+No card definitions, parser code, engine runtime or UI changed in this follow-up.
+
+New proofs include Whitey Bay's accepted self-trash battle protection, Marco's
+same-physical-card revival after a qualifying discard, Rakuyo's two real K.O.
+targets including base power 2000/current power 5000, Howling Gab's Banish on
+Trigger Life, and Building Snake's Shanks-only DON assignment and actual On K.O.
+target. Searches assert the selected physical card, public reveal when required,
+chosen deck-bottom order and saved-state continuation. Private Drake hand choices
+remain hidden until the chosen card is discarded.
+
+Other cases prove actual Rush:Character, Blocker and Unblockable battles,
+compound attack-prevention costs and expiry, self/opponent high-cost conditions,
+field-only cost increases, hand recovery filters, Dorry/Brogy play restrictions,
+Big Mom own-turn effects and opponent-turn Trigger behavior, and ordered opponent
+hand-to-deck movement. Life Triggers are entered through damage and continue
+through their printed On Play effects where appropriate. Existing cross-card
+suites supply the reviewed Counter, replacement, reaction and qualifier proofs.
+
+Validation: all OP17 primaries plus the four OP17 cross-card suites and two
+related rule suites pass: 127 files / 453 tests. All 53 changed TypeScript files
+pass scoped checks. All 113 ability primaries pass Grade A after the explicit
+positive and decline search tests. Cumulative canonical changes remain 1,932.
+
+No new implementation defect was confirmed by this proof pass. The shared Shiki
+once-per-turn key is covered separately for each trigger and for repeated opponent
+attacks; a same-turn out-of-turn attack spanning both trigger types is not claimed.
+This is a bounded printed-clause audit, not exhaustive proof of every interaction.
+
+Next scope: missing P-067 and promotion/EB clause audits, broader optional loops,
+optional affected-card replacement priority, and general continuous ordering.
+The prior implementation checkpoint's full engine/parser/build results remain
+recorded above; this test-only follow-up uses the narrower OP17 integration gate.
+
+### EB01 audit and regional promotion-catalog correction
+
+Reviewed all 61 EB01 cards against the official English product list and FAQ:
+44 Characters (six vanilla), three Leaders, 12 Events and two Stages. Metadata
+now matches all 61 source rows. Existing primary tests already prove each
+positive clause; added cases close material FAQ and boundary gaps.
+
+Three gameplay names were corrected. EB01-027 is Mr.1(Daz.Bonez). OP01-008 and
+OP01-109 no longer include the printing label "Box Topper" in their canonical
+or English names. The latter two defects had game effects: another printing of
+Cavendish incorrectly permitted EB01-012's DON refresh, and OP04-051's named
+exclusion incorrectly offered Who's.Who. Both public repros fail before the name
+correction and pass afterward. Slugs, export names and printing identities remain
+stable. No shared runtime or parser change was needed.
+
+P-067 Eustass"Captain"Kid is now implemented and exported from an official English
+prerelease image, independently confirmed by the English Asia card list. Four
+public tests prove its rested restriction without DON, other named Kid targets,
+illegal Leader/unrelated targets and the exact P-067 plus OP17 Captain John FAQ
+pair. The catalog now has 2,786 gameplay cards, plus the separate DON definition;
+the ability inventory increases to 2,504 while vanilla remains 282.
+
+The P-067 investigation disproved the assumption that a Western-only card-list
+comparison establishes complete promo coverage. Two official English Asia
+products reveal 31 further missing canonical IDs after P-067 was added. Their
+exact source rows are recorded in `regional-promo-catalog-gaps.json`; the expanded
+`nonstarter-catalog-gaps.json` now covers 2,546 unique canonical source IDs and
+records those 31 missing IDs. This comparison does not claim complete regional
+coverage or tournament legality. No missing releases were inferred from numbering.
+
+Additional public proofs cover persistent Oden/Kid attack bonuses after their
+conditions cease, another-printing Cavendish, Ivankov/Inazuma end-turn order,
+paid zero-card Hiyori play followed by draw, Oars payment eligibility and spent
+turn limit, Brook Rush persistence, Laboon's reaction limit, paid wrong-Leader
+conditions, active-Blocker Counter redirection without another Block Step,
+face-up Life payment after Kyros's turn limit resets, and zero/one-Life behavior
+for Kingdom Come and Kami. Bentham copies modified opposing power before its own
+DON power is applied. Existing Mini-Merry and Loguetown tests retain exact compound
+payment, physical deck order and Life Trigger proof.
+
+Validation: 2,705 engine files / 11,402 tests pass, with three existing opt-in
+skips. Cards (33), adapter tests (30), adapter typecheck and types/cards/engine
+builds pass. All 33 changed TypeScript files pass scoped checks. Grade A passes
+for 55 EB01 ability primaries plus P-067 and the two corrected OP01 cards. The
+61-card metadata comparison has no mismatch. Guidance checks retain the same
+81 baseline issues. Cumulative canonical definitions changed: 1,935.
+
+Checkpoint feedback: the inventory procedure now treats source comparisons as
+bounded and directs absent FAQ/event cards to official regional lists and card
+images. This turned one absent FAQ card into a concrete 31-card remaining queue.
+
+Next scope: implement the recorded regional promos, continue EB02/EB03/EB04 and
+promotion clause audits, then resolve remaining optional-loop, replacement-priority
+and continuous-ordering gaps. No simulator UI or deployment changed; no new
+enabled stress run is claimed.
+
+Sources: [EB01 cards](https://en.onepiece-cardgame.com/cardlist/?series=569201),
+[EB01 FAQ](https://en.onepiece-cardgame.com/pdf/qa_eb01.pdf),
+[OP01 cards](https://en.onepiece-cardgame.com/cardlist/?series=569101),
+[P-067 official image](https://en.onepiece-cardgame.com/images/events/2024/store_tournament_op07/card_01.png),
+[English Asia promos](https://asia-en.onepiece-cardgame.com/cardlist/?series=556901)
+and [English Asia other products](https://asia-en.onepiece-cardgame.com/cardlist/?series=556801).
+
+## October 8, 2026 regional promo implementation checkpoint
+
+Added the 31 canonical IDs recorded in the preceding regional audit: P-038,
+040, 064, 066, 080, 086, 087, 094, 095, 108, 109, 114, 116, 118, 121,
+136–149, 157 and 159. The official sources are the
+[English Asia Promotion list](https://asia-en.onepiece-cardgame.com/cardlist/?series=556901)
+and [Other Product list](https://asia-en.onepiece-cardgame.com/cardlist/?series=556801).
+All 31 names, numbers, colors, traits, attributes and applicable stats match
+those source rows. The catalog now exports 2,817 gameplay cards plus one DON!!
+card: 143 Leaders, 2,215 Characters, 410 Events and 49 Stages. The bounded
+26-product source union has 2,546 unique IDs and zero missing IDs. This does
+not establish worldwide release, tournament eligibility or full clause coverage.
+The source rows remain in `regional-promo-catalog-gaps.json` as evidence.
+
+The batch adds 28 ability primaries with 85 focused public-command tests. The
+three new vanillas (P-064, P-080 and P-087) join the shared catalog and paid-play
+checks. Their inventory completeness check now compares against every exported
+vanilla Character; the two vanilla files pass 571 tests for 285 cards.
+
+P-086 exposed a shared ordered-cost defect. DON!! payment IDs occupied the same
+selection slot used by the later Character-to-deck payment, preventing its hand
+play from resolving. The engine now completes the leading DON!! return before
+constructing the later Character choices and saves the paid prefix across that
+choice. Tests prove live power after DON!! return, physical Character selection,
+attached-DON!! cleanup, invalid retry, saved-state resume, and no duplicate DON!!
+payment. If the first payment makes the second impossible, the engine retains
+the completed payment, suppresses the effect body and spends the once-per-turn
+activation. A later retry has both costs payable and is still rejected. This
+follows rules 8-3-1-1, 8-3-1-3-1 and 10-2-13-5. The repair is in shared cost
+resolution; there is no card-specific runtime action.
+
+Other proofs include actual Blocker, Rush, Character-only Rush and Double Attack
+battles; ordered private deck choices; both branches of Lilith's hand-play filter;
+hand and trash boundaries; and live cost-dependent effects. P-142 covers battle
+and effect K.O. replacement, its Stage payment, decline, wrong type, high base
+power and attached-DON!! power that must not change its base-power filter.
+P-143's opponent-field cost-zero condition and Rush persistence are proved, but
+an independent own-field cost-zero fixture remains open. Competing optional
+replacement priority is not established by the P-142 tests.
+
+Validation after sequential package builds:
+
+- Full engine: 2,733 files, 11,527 tests pass, three existing opt-in skips.
+- Cards: four files, 33 tests pass. Adapter: seven files, 30 tests pass;
+  direct adapter TypeScript check passes.
+- Types, cards and engine builds pass. All 96 changed TypeScript files pass
+  scoped formatting, lint and type checks. All 28 new ability primaries pass
+  Grade A; this is a structural gate, not a substitute for the clause proofs.
+- The 31-row official metadata comparison has zero differences. Cumulative
+  canonical definitions changed since `ce074e03a6^`: 1,966.
+- Parser and guidance files are unchanged in this batch. No new stress,
+  deployment or live-product result is claimed. Simulator UI files are unchanged.
+
+Signal: the earlier vanilla inventory check proved only uniqueness, so adding a
+new vanilla could leave it outside both shared checks. Change: compare inventory
+IDs with the exported vanilla catalog. Proof: existing 282-card baseline and
+expanded 285-card public-play batch both pass. No new card-specific helper or
+engine abstraction was added for the other 30 promo cards.
+
+Next: complete EB02–EB04 and remaining promotion clause audits, then resolve
+broader optional-loop, optional affected-card replacement-priority and continuous
+ordering questions. EB02 source preparation is complete: all 61 metadata rows
+match its official product list; that does not yet prove its behavior clauses.
+
+## October 8, 2026 EB02 clause audit checkpoint
+
+Compared all 61 primary EB02 cards with the
+[official product list](https://en.onepiece-cardgame.com/cardlist/?series=569202),
+including its separate Trigger fields, and reviewed the
+[official EB02 FAQ](https://en.onepiece-cardgame.com/pdf/qa_eb02.pdf).
+The set has 45 Characters (six vanilla), 12 Events, one Leader and three Stages.
+All names, applicable numeric stats, colors, traits and attributes match. No EB02
+card-definition or shared-runtime correction was required by the tested cases.
+
+Added 38 public-action cases across 35 existing primary files. Character proofs
+now cover Wano and named-Leader branches, conditional Character-only attacks,
+current power after an opposing aura, later activation after decline, paid
+wrong-Leader conditions, discarded-card replay, separate versus grouped DON!!
+return events, post-payment DON!! comparisons, Life Trigger eligibility after
+the resolving card leaves Life, and dynamic Rush loss after opposing DON!! return.
+Existing positive-clause tests were retained rather than replaced with placement
+or metadata checks.
+
+Each of the six search Events now has a successful Life Trigger search that adds
+an actual cost-four Event, permits a qualifying Character, preserves the
+untouched deck card and orders the exact remainder. Other additions prove a
+later K.O. after declining an earlier buff, no unrelated refresh freeze after
+zero target selection, battle replacement decline followed by a later accepted
+payment, turn expiry with payment still available, and actual battle prevention
+from a Counter bonus followed by expiry.
+
+Leader and Stage checks cover a payable once-per-turn retry, zero DON!!
+reactivation followed by the Leader bonus, DON!! transferred from the Leader,
+and a face-up top Life card that cannot pay after the Stage refreshes. The
+Merry Go DON!!-comparison negative fixture now contains a valid Straw Hat target,
+so the failed condition is distinct from having no eligible target. Decline tests
+also assert that each Stage stays active. Draw fixtures retain a deck card when
+empty-deck defeat is not the behavior under test.
+
+Validation:
+
+- Full engine: 2,733 files, 11,565 tests pass, three existing opt-in skips.
+- All 35 changed test files pass scoped formatting, lint and type checks.
+- All 55 EB02 ability primaries pass Grade A. Their four audit groups pass
+  145 focused tests in total. The 61-row metadata comparison has zero differences.
+- This batch changes tests and evidence only. No package source, parser,
+  Simulator UI or adapter code changed. Builds and adapter checks remain the
+  verified results from the preceding runtime checkpoint; they were not rerun
+  for these test-only changes. No new deployment or stress result is claimed.
+
+The FAQ audit found an additional catalog and engine omission. Its all-name,
+all-type, all-attribute Leader is the unnumbered six-color Monkey.D.Luffy from the
+[Sealed Battle Leader Pack](https://en.onepiece-cardgame.com/events/2023/sealed_battle_vol1/).
+The [official Leader image](https://en.onepiece-cardgame.com/images/events/2023/sealed_battle_vol1/card_01.png?1)
+shows the universal-property text and event restriction; it has no numbered
+P-### collector ID. The
+[official English Asia eight-pack rules](https://asia-en.onepiece-cardgame.com/pdf/rule_8packs-battle.pdf)
+change its printed Life from four to five. A current Western-rules cross-check
+and implementation of this event Leader remain open. Existing synthetic named-
+Leader tests for Gaimon and Klabautermann do not prove universal properties or
+format eligibility. No numbered promo ID was invented for this omission.
+
+Other audit limits: an isolated yellow Sanji above the play-cost ceiling and a
+Whitebeard Allies-only Leader were not found in the current catalog; the real
+eligible branches and independent printed filters are tested. These limits do
+not justify narrowing the printed filters. Cumulative canonical definitions
+changed remain 1,966; the catalog remains 2,817 gameplay cards plus DON!!.
+
+Next: implement and prove the confirmed event-Leader omission, continue EB03,
+EB04 and remaining promo clause audits, and resolve the outstanding optional-loop,
+replacement-priority and continuous-ordering questions. Completion is unproven.
+
+## October 8, 2026 event Leader and sealed rules checkpoint
+
+Added the unnumbered six-color event Monkey.D.Luffy Leader with internal catalog
+ID `EVENT-LEADER-MONKEY-D-LUFFY`. Its collector number remains empty. The
+[current official Western event](https://en.onepiece-cardgame.com/events/store-tournament-op17.html)
+and its [Leader image](https://en.onepiece-cardgame.com/onepiececg/bccard/en/news/2026/07/22/R1pSUVJg9PtQWvsu/batch_OPCG_card_L.webp)
+confirm five Life; this agrees with the previously recorded Asia erratum.
+
+The shared engine now treats this Leader as every name, type and all six
+attributes, including `?`. Name equality, name exclusion, type filters and
+Leader conditions use the rules identity. It remains a Leader for card-category
+filters and retains its rules identity when abilities are negated. Nine primary
+public tests prove five-Life setup, both EB02 conditional Blockers, named-Leader
+and type gates, Slash targeting and battle protection, negation and category
+limits. Three shared tests cover identity matching and distinct-name counting.
+
+The native validator accepts `sealed` with exactly 40 main cards and a supplied
+DON!! deck, permits any color and removes the four-copy limit. Printed deck
+restrictions and DON!! overrides still apply. The event Leader also requires
+`allowDesignatedEventCards: true`; Standard rejects it. This option records the
+caller's event choice; it does not verify event entry or opened-pack provenance.
+Rules source: [official Western sealed rules](https://en.onepiece-cardgame.com/pdf/tournament_rules_manual_op02.pdf).
+No simulator, adapter or format-discovery code changed.
+
+The catalog now has 2,818 gameplay cards plus DON!!: 144 Leaders, 2,215 Characters,
+410 Events and 49 Stages. Cumulative changed canonical definitions are 1,967.
+Coverage tooling and printing checks accept the explicit internal event ID
+without treating it as an official numbered promo. The new primary passes
+Grade A; that grade alone does not establish complete clause coverage.
+
+Validation: 2,735 engine files / 11,579 tests pass, with three existing opt-in
+skips. All 44 card-package tests and 30 read-only adapter tests pass. Types,
+cards and engine builds, direct adapter typecheck and scoped checks of all
+17 changed TypeScript files pass. All 145 parser files / 1,418 tests pass.
+No new deployment or stress result is claimed.
+
+Next: EB03, EB04 and remaining promo clause audits, the independent P-143
+own-field cost-zero fixture, and outstanding optional-loop, replacement-priority
+and continuous-ordering questions. Completion remains unproven.
+
+## October 8, 2026 EB03 clause audit checkpoint
+
+Compared all 62 current EB03 cards with the
+[official Western product list](https://en.onepiece-cardgame.com/cardlist/?series=569203)
+and [EB03 FAQ](https://en.onepiece-cardgame.com/pdf/qa_eb03.pdf). The list includes
+EB03-062 Trafalgar Law. This scope has 55 Characters (three vanilla), six Events
+and one Leader. All 62 names and applicable numeric/color/type/attribute rows
+match after restoring the printed heart in EB03-038's canonical and English
+names. No structured effect or shared runtime defect was confirmed in this wave.
+
+Added 29 public test cases in 21 existing primary files, with stronger outcomes
+in existing tests. Key proofs include Shuraiya's copied base power removing
+Carina's bonus; Nami paying power below zero; Koby permitting Hibari's own attack;
+Carrot skipping K.O. while still playing Zou; base-cost versus current-cost and
+base-power versus current-power filters; Boa Hancock returning herself as cost;
+actual Revolutionaries hand play; actual Rebecca Blocker; and Character-play
+restrictions surviving a declined play and expiring on the next turn.
+
+Robin's effect damage permits a Life Trigger and wins against zero Life. The
+FAQ's Banish/Double Attack cases use explicitly synthetic keyword setup, followed
+by real battle, K.O. and damage commands; they do not claim a real granting-card
+interaction. Black Maria's obsolete synthetic Stage was replaced with the real
+Onigashima Island. Vivi's tests prove When Attacking exclusion from Rush, skip
+then continue, turn expiry, effect and battle K.O. replacement, base-cost use
+through a live reduction, and decline/once-per-turn behavior. Event tests prove
+same-recipient Counter behavior, payment before wrong-Leader gates, and actual
+Life Trigger hand addition with physical deck-bottom ordering.
+
+All 59 ability primaries pass Grade A. The four bounded groups pass 167 tests
+(48 first-half Characters, 89 second-half Characters, 24 Events, six Leader).
+Catalog counts remain 2,818 gameplay cards plus DON!!; cumulative changed
+canonical definitions remain 1,967. No simulator UI code changed.
+
+Validation: 2,735 engine files / 11,608 tests pass, with three existing opt-in
+skips. All 44 card tests pass. The cards build and scoped checks of all 23
+changed TypeScript files pass. The preceding runtime checkpoint retains its
+types/engine build, parser and read-only adapter results; none is claimed as a
+new run here. No new stress, deployment or live-product result is claimed.
+
+A fresh English/Japanese rules and FAQ review did not resolve the source-card
+referent in CR 8-1-3-4-2. The optional affected-card replacement priority remains
+an explicit unverified policy, not a confirmed defect or completed rule proof.
+See the existing Ace policy test and owning replacement code. The real existing
+Ace/Rosinante fixture can test a correction once authoritative clarification
+establishes which effect must take priority.
+
+Next: EB04 and remaining promo clauses, independent P-143 own-field cost-zero
+proof, broader optional-loop families and continuous-effect ordering.
+Completion remains unproven.
+
+## October 8, 2026 EB04 clause audit and P-143 follow-up
+
+Audited all 61 EB04 cards: 47 Characters, 12 Events, one Leader and one Stage.
+All have printed abilities. The Western release is split across products; the
+[official EB04 search](https://en.onepiece-cardgame.com/cardlist/?freewords=EB04)
+and [combined OP14/EB04 FAQ](https://en.onepiece-cardgame.com/pdf/qa_op14_eb04.pdf?20260626=)
+provide this bounded source set.
+
+Confirmed card repairs:
+
+- EB04-025 Nefeltari Vivi now has its printed +1000 Counter. A public battle
+  reproduction failed before the fix and now prevents the expected Life damage.
+- EB04-038 Rosinante & Law now has both printed alternate names. Real Lammy and
+  Rosinante name-based effects select and buff it; unrelated Characters remain
+  excluded. Both named interactions failed before the repair.
+- EB04-044 Koby checks a Leader type including Navy. A real Former Navy Leader
+  now permits the replacement, with a physical hand payment and survival.
+- EB04-050 regains the printed heart; EB04-059 is named Black Rope Dragon Twister.
+
+Source conflict: EB04-014's web row says Kozuki Sukiyaki, while the
+[official card image](https://en.onepiece-cardgame.com/images/cardlist/card/EB04-014.png)
+prints Kouzuki Sukiyaki. The definition retains the printed name; no supporting
+erratum was found. This is the sole remaining metadata comparison difference,
+not an asserted zero-difference audit. EB04-009's image prints cost zero despite
+the web row's dash; the native cost remains zero.
+
+New behavior proof covers post-payment fourth-Event power, actual Blocker
+interceptions, Life Trigger hand/play results, nine-versus-ten-DON payment,
+base-power and base-cost filters under live modifiers, prevention of an End Turn
+ready effect, and a no-Kaido Event payment/result. Bonney's first damage raises
+her defense before the next attack. Lulucia Kingdom excludes a base-six Character
+whose current cost becomes one. Decline and threshold tests retain actual payable
+costs and eligible targets. The four EB04 groups pass 209 focused tests; all 61
+ability primaries pass Grade A.
+
+P-143's missing own-field branch now has a real public sequence: an opposing Air
+Door Life Trigger plays Tsuru, which reduces the controller's Doma to zero cost.
+The opponent's only Character remains cost one. Crocodile then enters play and
+attacks with Rush. No synthetic card or state mutation is used. Its three primary
+tests pass; the earlier isolated-branch proof limit is closed.
+
+Catalog counts remain 2,818 gameplay cards plus DON!!; cumulative changed
+canonical definitions remain 1,967. No simulator UI files changed.
+
+Validation: 2,735 engine files / 11,640 tests pass, with three existing opt-in
+skips. All 44 card tests pass. Cards and engine builds and scoped checks of all
+33 changed TypeScript files pass. This checkpoint adds 32 test cases, including
+the P-143 follow-up. Parser/types and read-only adapter results remain from the
+preceding shared-runtime checkpoint. No new stress or deployment is claimed.
+
+Next: finish the bounded remaining promo-clause review and extend audited loop
+families, then address continuous-effect ordering. Optional affected-card
+replacement priority retains its documented source ambiguity. Completion remains
+unproven.
+
+## October 8, 2026 older promos and stable-condition loops
+
+Closed the remaining bounded older-promo audit: P-014, 029, 044, 053, 055, 063,
+068, 069, 070, 073, 074, 075, 078, 079, 081, 082, 083, 084, 085, 088, 105 and 107.
+These 22 older cards plus 84 Western additions, 31 regional additions and P-067
+account for all 138 current numbered promos. All 22 metadata rows match fresh
+[official per-card sources](https://en.onepiece-cardgame.com/cardlist/?freewords=P-084);
+all 22 ability primaries pass Grade A. The bounded groups pass 67 tests.
+
+P-084 had no printed types and incorrectly used Strike. The
+[official image](https://en.onepiece-cardgame.com/images/cardlist/card/P-084.png?260929)
+confirms The Four Emperors/Cross Guild and Slash. Public Buggy Leader effect play
+and Ipponmatsu Slash selection failed before the repair and now pass. Tests also
+prove both owners' cost-three/four attack bans, the Buggy Leader gate and the
+unconditional self attack ban. P-029 now uses current printed exact FILM matching.
+No current catalog type supplied a substring-only negative case for that change.
+Non-card reprint disclaimers were removed from P-073/074/075/084/088 text.
+
+Additional proofs cover P-055's official empty-field payment FAQ, top-deck physical
+ordering, top/bottom Life payment without activating paid Triggers, opponent-turn
+effect play, skip-then-draw, zero-DON independence, saved bottom-Life selection,
+zero-Life failure, exact remaining-Life thresholds and P-107's opposing ten-DON
+branch plus actual duration expiry. The earlier roster's clause-audit task is
+closed at this bounded level; this does not claim all possible card combinations.
+
+Rest/ready loop certification now accepts selected conditions that cannot change
+within those transitions: Leader name/type and hand, Life, active-DON and field-DON
+counts. Existing evaluation decides their truth, while an explicit shape whitelist
+rejects other dependencies. Moving-card loop certification remains turn-only.
+Exact fingerprints, physical IDs and saved declaration rules remain intact.
+Both rest/ready auditors reject nonempty post-cost conditions. The 18 new rule
+cases use explicitly synthetic cycle fixtures; no real catalog infinite cycle is
+claimed. A mandatory-loop watchdog established the previous nontermination
+without hanging the test runner. Finite sequences and false gates remain finite.
+
+Validation: 2,736 engine files / 11,670 tests pass, with three existing opt-in skips.
+All 44 card tests and 30 read-only adapter tests pass. Cards/engine builds, direct
+adapter typecheck and all 30 changed-TypeScript checks pass. Parser/types results
+remain from the preceding unchanged-package checks. No fresh stress or deployment
+result is claimed. Catalog size stays 2,818 gameplay cards plus DON!!; cumulative
+changed canonical definitions are now 1,968. No simulator UI code changed.
+
+Next: investigate the concrete modified-Leader base-power copy candidate, extend
+sound optional moving-loop handling, and finish continuous-effect dependency
+review. Optional affected-card replacement priority retains its source ambiguity.
+Completion remains unproven.
+
+## October 8, 2026 live base-power and optional moving-loop checkpoint
+
+Fixed a confirmed dependency failure: OP14-053 Vista copied printed Leader power
+instead of the Leader's current base power. With OP10-042 Usopp and OP15-092
+Monkey.D.Luffy, Vista now copies 7000 on the opponent's turn. Public tests cover
+both source orders, a surviving Blocker battle, Counter additive-power exclusion,
+source removal and turn expiry. The equivalent resolved action now uses the same
+base-power reader. Its test is explicitly synthetic because no current active
+card uses that action. Seven focused files / 33 tests pass.
+
+Optional loop declarations now cover one physical Character with mandatory bare
+On Play self-K.O. and optional bare On K.O. self-play. Only turn gates are allowed;
+costs, extra actions, replacements, modifiers, battle and unrelated queued or
+saved references prevent certification. Positive declarations execute one normal
+representative cycle to create a fresh object, then compress equivalent cycles.
+Physical IDs and relative source generations remain in the proof. Zero stops
+immediately; a large safe integer does not allocate work proportional to its value.
+Synthetic rule fixtures cover both controllers, saved declarations and execution
+phases, unchanged-state restart rejection and unsupported-state exclusions. No
+real catalog infinite cycle is claimed.
+
+A static catalog scan found supported paths for all current action, condition,
+cost and filter configurations: 10,276 nodes across 2,819 exports including DON!!.
+This proves dispatch coverage only. The four category inventories have no missing,
+extra or duplicate IDs; stale summary counts were corrected to 2,215 Characters,
+144 Leaders, 410 Events and 49 Stages. The gameplay total remains 2,818.
+
+A bounded review of 59 continuous-effect dependency entries found no additional
+real-card ordering defect beyond Vista. It does not certify arbitrary effect
+ordering or all possible dependencies under CR 8-1-3-3-5. Optional affected-card
+replacement priority under CR 8-1-3-4-2 still has an unresolved source interpretation.
+The [official French rules](https://fr.onepiece-cardgame.com/pdf/rule_comprehensive.pdf?20260828=)
+and [Traditional Chinese rules](https://asia-tc.onepiece-cardgame.com/pdf/rule_comprehensive.pdf?20260911=)
+use the same source-card referent and did not settle optional affected-card priority.
+This is an interpretation limit, not evidence that no official ruling exists.
+Broader moving-loop families are outside the certified profile. Completion remains
+unproven. No simulator UI files changed.
+
+Validation on the final runtime: 2,738 engine files / 11,688 tests pass, with
+three opt-in tests skipped in the normal run. All 44 card tests, 30 read-only
+adapter tests, adapter typecheck, engine build and all 12 changed-TypeScript
+checks pass. The full seven-file loop rules gate passes 65 cases; the final
+candidate-check reorder also passes its 13-case focused gate. The fresh enabled
+bot and heuristic run passes both files / all 13 tests in 905 seconds, including
+4,000 fixed-deck stress games and the extended strategy matrix. These use bounded
+deck sets and assertions; they do not prove all catalog combinations or establish
+zero stuck games beyond the suite's stated thresholds. No deployment or live-product
+result is claimed.
+
+## October 8, 2026 Main activation and continuous-cost ordering checkpoint
+
+The shared Main activation action now excludes Events that have only Counter or
+Trigger effects. OP12-041 Sanji proves valid Main selection, saved invalid-choice
+rejection, and a zero-selection continuation. Bartolomeo and Sabo retain their
+existing shared-action proofs. No canonical card definition changed in this step.
+
+CR 8-1-3-3-5 has a new numeric-cost settlement path. Each controller can select
+between permanent-effect orders that produce different results, with the turn
+player first. A permanent block keeps its own printed action order. Saved choices,
+source removal, turn expiry, a stable branch beside a cyclic branch, and disjoint
+hand discounts have synthetic command proofs. Indirect cost dependencies through
+negation and granted keywords preserve both legal orders. Cost and keyword readers
+skip unrelated permanent blocks before evaluating their conditions.
+Cost payment can pause before its
+next cost slot or post-cost condition without repeating the paid prefix or losing
+once-per-turn use. This covers numeric cost dependencies, not all permanent-effect
+types or every inline trigger-capture boundary. A scan of 1,609 automatic blocks
+found one current-cost event filter (Ice Oni) and 25 current-cost conditions;
+these are evaluated after queue settlement. This is bounded source evidence.
+A cyclic branch or unsupported absolute permanent setter uses an explicit judge
+boundary.
+
+Audited nonmoving loops now include forced complete groups for both mandatory
+cycle draws and optional count declarations. Optional, surplus, empty, protected,
+once-per-turn and finite-loss controls prevent false certification. Moving paths
+retain their single-object restriction. Loop comparison excludes only the derived
+continuous-cost input fingerprint; cost contributions, results and pending state
+remain significant. Public watchdog tests prove moving-loop behavior with unrelated
+cost effects. A moving source with its own cost contribution remains unproved.
+
+Real-card rule proofs now cover negative intermediate cost followed by an increase,
+negated Nami remaining ineligible for Makino's no-effect target, and Law gaining
+Double Attack from Buggy after Black Vortex negates his existing activation.
+The rules inventory now distinguishes existing public proofs, physical or
+definitional rules, synthetic engine fixtures and actual missing catalog examples.
+
+Validation: all 2,743 engine files / 11,732 tests pass, with three opt-in skips.
+All 44 card tests, 30 read-only adapter tests, adapter typecheck, engine build and
+18 changed-TypeScript checks pass. The numeric-cost suite has 24 public cases;
+the related focused run passes 59 cases, and the loop rules gate passes 80 cases.
+The first full run exposed Shiki cleanup and a slow synthetic keyword case. Both
+were fixed without weakening the assertions or increasing the timeout; the final
+full run passes. The earlier extended bot stress result predates this checkpoint.
+The current catalog remains 2,818 gameplay cards plus DON!!. No simulator UI files changed.
+Optional affected-card replacement priority remains a source interpretation limit;
+completion remains unproven.
+
+## October 8, 2026 joint numeric ordering and added requirements checkpoint
+
+Permanent additive cost and power effects now share one settlement process.
+Synthetic public tests prove two power outcomes, two mixed cost/power outcomes,
+controller order, saved choices, wrong-seat rejection, ordered actions, expiry,
+negative power and a subsequent power-filtered K.O. Visible choices identify the
+effect number and signed value. A 24-hand-discount control exposed excessive
+order enumeration; restricting direct numeric reads to their target set reduces
+that case to 48 ms. Existing cost tests and real Vista/Luffy/Linlin proofs pass.
+Numeric/keyword-dependent base setters or copies, and base setters affected by
+permanent negation, retain an explicit judge boundary. General continuous-effect
+ordering is not complete.
+
+Native resolved effects can now add activation costs or conditions. Added costs
+follow printed and alternative costs in grant order. An ordered payment cursor
+preserves each physical choice and paid prefix through JSON snapshots. Initial
+affordability checks sequential resource use instead of counting the same cards
+or DON!! twice. Added conditions all apply, including DON!! qualification when
+auto effects become ready. Tests cover source removal, recipient reentry, expiry,
+invalid payment IDs and a large impossible hand payment with an external watchdog.
+These actions are duration-bound resolved grants; continuous permanent requirement
+grants remain unsupported and the native type excludes them. The parser explicitly
+rejects such a grant without an activation timing instead of hiding the type gap.
+
+The opponent-end keyword now has direct synthetic public proof: own-turn exclusion,
+a saved choice before handoff, decline, and negation before expiry. A moving card's
+own cost contribution does not require a loop runtime fix: the repeated trash
+boundary already proves the mandatory cycle. Finite-loss and saved optional-choice
+controls pass. Loop fingerprints retain power results and contributions, including
+pending contributions. No simulator UI files or canonical card definitions changed.
+
+Validation: 2,746 engine files / 11,769 tests pass, with three opt-in skips. The
+types test, all 44 card tests, 30 read-only adapter tests and adapter typecheck pass.
+Types, cards, engine and parser builds pass. All 145 parser files / 1,418 tests
+and the full parser typecheck pass after the native-type boundary correction.
+All 16 changed TypeScript files pass scoped checks. New numeric-power cases total 17, added-
+requirement cases total 13, and opponent-end cases total three. The extended bot
+stress result from an earlier checkpoint does not verify this runtime.
+
+Remaining work includes general continuous base-setting dependencies, broader
+loop families, simultaneous rest/active precedence, Life-value modification,
+base-cost setters and continuous requirement grants. Optional affected-card
+replacement priority remains an unresolved source interpretation. Completion
+remains unproven.
+
+## October 8, 2026 base-cost and Life-value checkpoint
+
+Native base-cost settings now follow highest-setter precedence, with printed cost
+used only when no setter applies. Signed arithmetic, current-cost overrides,
+expiry, negation, source removal and recipient zone generations have public
+proofs. Main, Counter and effect-driven Events capture base cost before movement;
+activation history and nested base/dynamic-cost Event filters retain that value.
+A separate fix makes permanent base-power copies obey their action condition.
+The real Vista and Linlin controls remain green. General base-setting feedback
+is still incomplete: official Linlin and Usopp examples do not establish a
+general self-reference algorithm.
+
+Leader Life value now has native resolved and permanent modifiers. It is separate
+from the physical Life count. Startup captures both values before placement;
+later modifiers, expiry, negation and damage do not change that distinction.
+Oversized values place available cards and then process empty-deck defeat.
+Tests cover simultaneous ordinary losses, Nami's alternate win and Brook's
+deferred defeat. Competing simultaneous alternate wins request judge review;
+saved intervention can restore the decks and resume the first turn, while an
+unresolved acknowledgement stays paused.
+
+Permanent added activation conditions now use a live evaluator. Provider gates
+use provider context, while added conditions use recipient context. Printed,
+resolved and permanent conditions combine, and payment continuations preserve
+the activated requirements. Permanent added costs remain excluded from the native
+type because their order relative to resolved grants is not established.
+
+Validation: all 2,750 engine files / 11,806 tests pass, with three opt-in skips.
+All 44 card tests, the types test, 1,418 parser tests and 30 read-only adapter
+tests pass. Types, cards, engine and parser builds pass; parser and adapter full
+typechecks pass. All 19 changed TypeScript files pass scoped checks. New native
+proofs comprise 15 base-cost, 12 Life-value, nine permanent-condition and one
+base-power-copy case. No canonical card definitions or simulator UI files changed.
+Earlier extended bot stress does not verify this runtime; no deployment is claimed.
+
+Remaining work includes general continuous base-setting dependencies, broader
+loop families and simultaneous rest/active processing. Permanent added-cost order,
+optional affected-card replacement priority and competing simultaneous alternate
+wins remain unresolved rule boundaries. Completion remains unproven.
+
+## October 8, 2026 card interactions and simultaneous field-state checkpoint
+
+Two public card regressions exposed further defects. OP16-003 Edward.Newgate's
+Leader target now grants Double Attack as well as power; the new attack proof
+checks two Life damage and excludes the source Character and opposing Leader.
+Ice Oni retains the original battle target's zone generation, so ST30 Marco's
+On K.O. replay creates a new object that Ice Oni does not return to the deck.
+The saved payment and surviving-original-target paths pass. A bounded review of
+327 permanent-effect cards, including 282 non-keyword actions across 20 families,
+found no further field-shape omission; this is not an all-interaction proof.
+
+An explicit simultaneous-state instruction now collects field-card choices before
+mutation, keeps rest on overlapping instructions, and applies protection and
+replacement processing before committing the original changes together. Public
+proofs cover both group orders, sequential controls, rest triggers, both players'
+choice order, saved replies, numeric totals and zone generations. The native type
+is restricted to Leader/Character/Stage. DON!! still needs stable resource tokens
+across replacement costs, transfers and detachment; counts alone cannot establish
+which originally selected DON!! survived.
+
+A forced self-return-to-hand/replay loop now ends in a draw instead of hanging.
+The optional On Play form supports saved repetition declarations and same-state
+restart prevention. Finite deck loss and random actions remain outside the
+shortcut. State comparison normalizes root field insertion order only; nested
+modifier order is preserved because it can change activation-cost payment.
+Optional action wrappers and multi-owner moving loops remain unfinished.
+
+Validation: 2,753 engine files / 11,832 tests pass, with three opt-in skips.
+The types test, 44 card tests, 1,418 parser tests and 30 read-only adapter tests
+pass. Types, cards, engine and parser builds and parser/adapter typechecks pass.
+All 18 files in this TypeScript change set pass scoped checks; the combined
+32-file TypeScript PR scope also passes. New proofs include
+14 simultaneous-state cases, four mandatory-hand cases, six optional-hand cases
+and the two real-card regressions. No simulator UI files changed. Extended bot
+stress from an earlier checkpoint is not proof of this runtime.
+
+The completion goal remains open for simultaneous DON!! handling, general
+continuous base-setting dependencies, broader loop forms and the documented
+unresolved rule-ordering cases. No deployment or live-product proof is claimed.
+
+## October 8, 2026 DON!! identity, paid play and loop checkpoint
+
+Simultaneous state changes now include cost-area DON!!. Saved choices keep the
+selected physical identities through replacement costs, equal-count removal and
+refill, attachment, return and nested groups. Active/rested changes retain the
+identity; area changes create a new generation. State-filtered native groups
+have direct support. Other DON!! qualifiers request judge review before mutation.
+
+Freeze restrictions now stay on the selected DON!! through active/rested changes
+and end when the card changes areas. Two real Jewelry Bonney effects selecting
+the same DON!! freeze one card, not two. Meaningful source choices use existing
+cost prompts for ordinary play, Counter, attachment, effect transfers and costs.
+Equivalent source pools do not add a choice. Compound costs preserve each
+original selection when earlier costs change pool positions; invalid active-only
+overlap is rejected before payment. Saved legacy restrictions also gain identity.
+
+Full-field Character play pays before the rule trash under CR 2-7-2 and 3-7-6-1.
+Real Uta and Shanks prove that losing the discount condition while making room
+does not change the paid cost. Separate native DON fixtures prove saved physical
+payment, invalid retries and legacy unpaid replacement continuation. Character,
+Event, Stage and Counter Event cards are publicly revealed before payment choices.
+
+Mandatory loops now inspect sequence and stable conditional wrappers, plus
+forced grouped field-card state changes. Optional action wrappers, strict nested
+chains and a two-owner opponent-play/self-return cycle support saved repetition
+declarations. A positive moving declaration completes one whole representative
+cycle before reaching the selected stopping player. Zero/large counts, both
+active players, invalid replies, finite/random controls and no-restart rules have
+public command tests. This does not certify arbitrary loop programs.
+
+General continuous base-setting feedback, permanent added-cost ordering and the
+documented optional affected-card replacement priority remain unresolved proof
+boundaries. No simulator UI files changed. No deployment or live-product proof
+is claimed.
+
+Validation: 2,760 engine files / 11,901 tests pass, with three opt-in tests
+skipped. Types pass 1 test; cards pass 44 tests; the parser passes 1,418 tests;
+the read-only server-adapter gate passes 30 tests. Types, cards, engine and parser
+builds pass. All 30 changed TypeScript files pass scoped formatting, lint and
+type checks; parser and adapter direct type checks also pass. Adapter checks
+use the final rebuilt engine. Catalog size and canonical definitions are unchanged.
+No new automated-game stress result is claimed.
+
+Next: resolve the documented source ambiguities and review remaining engine
+capability boundaries. The bounded catalog audit is complete; exhaustive
+interaction proof and general rules completion remain unproven.
+
+## October 8, 2026 inactive effects and delayed object identity
+
+Permanent absolute-cost declarations in the deck or trash no longer stop
+unrelated numeric settlement. Static false block/action conditions and negation
+also suppress inactive setters. Live numeric-dependent setters retain the
+explicit review boundary. The tests use synthetic native effects because the
+current catalog has no permanent absolute-cost setter.
+
+Delayed effects keep the object identity selected when scheduled. OP11-092
+Helmeppo no longer bottom-decks a Character that left play and returned through
+another effect. The real Sabo/Teach/Helmeppo/Prince Grus sequence includes saved
+state. OP11-107 Topknot Neptunian also remains rested after OP13-031 Law returns
+and replays it; its old delayed reactivation cannot affect the new object.
+
+Shared delayed-action tests distinguish independent schedules from ordered
+actions within one schedule. Target validation happens when the action uses the
+target, including after earlier queued movement. Historical target counts stay
+available; a fresh target choice can select a replayed card. Saved legacy actions
+without identity metadata retain their old ID-only behavior because their
+original object generations cannot be recovered.
+
+No card definitions or simulator UI files changed. General rules completion
+remains unproven; the previously documented source ambiguities remain open.
+
+Validation: 2,762 engine files / 11,922 tests pass, with three opt-in tests
+skipped. The rebuilt engine passes all 30 server-adapter tests and its direct
+type check. All 11 changed TypeScript files pass scoped formatting, lint and
+type checks. The delayed family gate passes 68 tests in 20 files. Types, cards,
+and parser packages are unchanged from their preceding verified gates. The
+larger deck benchmark was interrupted before producing a result; no completed
+benchmark or deployment result is claimed for this checkpoint.
+
+## October 8, 2026 mandatory DON!! resource loops
+
+A synthetic mandatory returned-DON!! reaction could repeatedly add one DON!!,
+give it to the Leader, and return it. A subprocess watchdog confirmed that the
+public activation did not terminate. CR 11-1-1-1 now ends this audited cycle as
+a draw. A simpler add-and-return cycle and both player orientations are covered.
+
+The new audit keeps existing exact game-state fingerprints. It admits fixed
+mandatory DON!! actions without choices, costs, conditions, identity ledgers,
+modifiers, permanent effects or replacements. It retains scalar DON!! pools,
+attachments, physical card identities, and ordered queued reactions. Optional,
+once-per-turn, partial-pool choice and finite draw-to-empty-deck controls remain
+distinct. Admission controls reject identity tracking and permanent restrictions.
+No unavoidable real-card resource loop is claimed; broader loop forms remain
+outside the audited family. No card definitions or simulator UI code changed.
+
+The opt-in six-deck benchmark passed on the preceding commit `d1e3d28cef`:
+2,880 seeded games and zero rejected bot commands. It ran before this loop
+extension. Console detail was suppressed by the test configuration, so this
+result does not establish the number of unfinished games. No deployment or
+live-product result is claimed.
+
+Final loop-extension validation: 2,763 engine files / 11,932 tests pass, with
+three opt-in tests skipped. All 30 server-adapter tests, its direct type check,
+the engine build, and four-file scoped formatting/lint/type checks pass.
+
+## October 8, 2026 optional DON!! resource loops
+
+An audited optional returned-DON!! cycle now uses the existing finite repetition
+prompt under CR 11-1-1-2. Fourteen synthetic controls cover both active seats,
+non-turn stopping ownership, saved choices, valid and invalid counts, stopping,
+restart refusal, and a legal state change that permits a new choice. Finite
+programs and ordinary DON!! choices do not become loop declarations.
+
+The shared audit retains mandatory behavior and rejects resource identity
+ledgers, modifiers, permanent effects, replacements, and unaudited reactions.
+Optional evidence records its DON!! source so it cannot cross into another
+certified loop family. Exact scalar resources, attachments, physical card IDs,
+and queued payloads remain in the comparison. One optional returned-DON!! source
+is admitted; broader resource programs remain unfinished. No card definitions
+or simulator UI code changed. The related loop gate passes 153 tests in 16 files,
+and six-file formatting, lint, and type checks pass. Final validation passes
+2,764 engine files / 11,946 tests, with three opt-in tests skipped. The engine
+build, all 30 server-adapter tests, and its direct type check pass. No deployment
+or fresh extended benchmark result is claimed.
+
+## October 8, 2026 two-player DON!! loop declarations
+
+The resource audit now admits two opposing Leader sources with one optional
+returned-DON!! reaction each. CR 11-1-1-3 uses the existing turn-player-first
+count prompt and stops at the smaller declaration. Public controls verify both
+player orientations, both stopping owners, exact final DON!! attachments and
+deck counts, saved declarations, invalid replies, initial state changes and
+restart restrictions. Tie tests preserve the existing engine policy without
+claiming a new official tie ruling.
+
+Whole-pool opponent returns are restricted to this two-source proof. Stable
+source membership separates its evidence from the one-source and other loop
+families. Existing saved one-source markers remain supported. No identity,
+resource, or generation normalization was added. The proofs are synthetic;
+card definitions and simulator UI code are unchanged. Broader resource loops
+and the recorded continuous-effect and replacement-order questions remain open.
+
+Final validation: 2,765 engine files / 11,965 tests pass, three opt-in tests
+skipped. All 30 server-adapter tests, its direct type check, the engine build,
+and six-file formatting/lint/type checks pass. The final DON!! gate passes
+43 tests in three files. No deployment or new extended benchmark is claimed.
+
+## October 8, 2026 opponent effect-play restriction ownership
+
+A real Mihawk/Ace/Soba Mask sequence exposed a wrong-player restriction check.
+South plays OP12-030 Mihawk, readies four DON!! and gains a restriction against
+playing base-cost-seven-or-more Characters. South can still play six-cost
+OP13-119 Ace. North has OP05-065 San-Gorou, so ST26-001 Soba Mask costs two in
+north's hand despite its base cost of seven. After Ace returns OP02-080 Dobon,
+north must be able to select and play Soba Mask. The baseline prompt incorrectly
+applied south's Mihawk restriction and omitted it.
+
+Effect-play candidate filtering now uses the playing seat derived from the
+source player, matching actual placement. Grouped play and restored prompt
+validation already use this helper. The existing Ace primary now proves the
+legal selection after JSON recovery, placement under north's control and Soba
+Mask's On Play return of San-Gorou. Seven related files / 21 tests and two-file
+formatting/lint/type checks pass. No card definitions or simulator UI changed.
+Final integration passes 2,765 engine files / 11,966 tests, with three opt-in
+tests skipped; engine build, all 30 adapter tests and adapter type check pass.
+No deployment or new extended benchmark result is claimed.
+
+## October 8, 2026 opponent top-deck play
+
+The native play action permits an opponent deck source with `topOnly`. Its
+candidate filter incorrectly compared that source pool with the controller's
+top card, so no card could be played. The filter now uses the playing seat,
+consistent with the existing choice owner and placement path.
+
+Two public synthetic tests cover eight scenarios: both seats, optional accept
+and decline, forced play, and an ineligible top card with an eligible deeper
+card. Saved choices, private prompt visibility and both deck identities are
+checked. The new rules file plus real Sanji top-deck and Ace play tests pass
+11 tests in three files; two-file formatting/lint/type checks pass. No current
+printed opponent-top-deck card is claimed. Card definitions and simulator UI
+are unchanged. Final integration passes 2,766 engine files / 11,968 tests,
+with three opt-in tests skipped; engine build, all 30 adapter tests and its
+direct type check pass. No deployment or new extended benchmark is claimed.
+
+## October 8, 2026 ordered permanent base-cost contributions
+
+Permanent base-cost settings now participate in the existing numeric ordering
+graph. The previous implementation computed them ahead of additive entries or
+rejected power-dependent eligibility. First-class contribution maps preserve
+block/action order, highest-setting precedence, raw signed arithmetic, current-
+and base-cost reads, and saved choices. The public ordering discriminator proves
+both cost-two and cost-four outcomes for a printed-cost-six Character.
+
+Resolved power inputs use the existing shared settlement stages. Setters are
+reevaluated at the normal stages; an irrelevant setter must not alter another
+additive history. Existing contribution history survives restored and changed
+states. This is an engine extension with synthetic behavior proof; card
+definitions and simulator UI are unchanged. General self-dependent base-setting,
+keyword and negation feedback remain unfinished.
+
+Final validation passes 2,767 engine files / 11,994 tests, with three opt-in
+tests skipped. The focused gate passes 157 tests in 11 files, including 26 new
+controls. Five-file formatting/lint/type checks, the engine build, all 30
+server-adapter tests and its direct type check pass. No deployment or new
+extended benchmark result is claimed.
+
+## October 8, 2026 ordered permanent base-power contributions
+
+Stable permanent base-power settings and deterministic own-Leader base-power
+copies now enter the existing numeric ordering process. The synthetic public
+discriminator preserves the controller's choice between 2000 and 4000 power,
+including saved choices. Highest-setting precedence, signed power, resolved
+modifiers, DON!! additions, source generations and prior contributions remain
+part of the same numeric state.
+
+Property-specific dependency checks permit independent real-card settings to
+coexist. Real baselines cover Linlin with Fuza and Holly, Luffy with Vista, and
+Ju Peter with Linlin; synthetic ordering choices also run beside those families.
+Connected legacy feedback remains outside this proof and requires judge review.
+Unknown predicates cannot certify independence. Whole-field target expansion is
+shared with the ordering independence check, fixing a reproduced missing choice.
+
+This is an engine/test change. No card definitions or simulator UI changed.
+General self-dependent base-setting and the other documented rules boundaries
+remain unfinished.
+
+Final validation passes 2,769 engine files / 12,025 tests, with three opt-in
+tests skipped. The focused gate passes 188 tests in 13 files, including 28 new
+ordered-power controls and three real mixed-card tests. The engine build,
+seven-file formatting/lint/type check, all 30 server-adapter tests and its direct
+type check pass. No deployment or new extended benchmark result is claimed.
+
+## October 8, 2026 numeric eligibility and Gedatsu cost checkpoint
+
+Dynamic cost limits now read current cost, matching ordinary cost filters.
+Real Gedatsu tests reproduce both errors: Ice Age reduced Apoo to cost zero but
+the target was excluded by its printed cost; Doll's opponent-turn cost increase
+was ignored and made it an illegal candidate. The corrected filter admits the
+former and excludes the latter. A saved Gedatsu choice resolves correctly.
+Explicit base-cost Event snapshots remain separate from current-cost filters.
+
+Permanent base-cost eligibility now uses a per-setter dependency audit instead
+of rejecting every cost read or live power writer. Synthetic public actions
+prove that a setter can depend on another card's cost, base cost or power when
+its output cannot feed back into its own condition. Scoped conditions preserve
+independent card families. Self/transitive setting cycles and connected mutable
+grants outside the ordered model remain explicit boundaries. This does not
+resolve general self-referential base setting.
+
+A bounded export audit found no unsupported condition variant among 1,680
+condition nodes in 2,819 exports. It identified 21 dynamic-cost payloads; that
+structural count is not a claim that every interaction has been tested.
+No card definitions or simulator UI changed.
+
+Final validation passes 2,770 engine files / 12,059 tests, with three opt-in
+tests skipped. The related gate passes 231 tests in 18 files. This adds 29
+dependency controls, two real Gedatsu cases and three Event cost distinctions.
+Inactive action gates and payment-only discounts no longer create false
+feedback. The engine build, seven-file formatting/lint/type check, all 30
+server-adapter tests and its direct type check pass. No deployment or new
+extended benchmark result is claimed.
+
+## October 8, 2026 Rocks aggregate-selection checkpoint
+
+OP17-118 Rocks.D.Xebec now rejects a combined-cost violation before consuming
+its play choice. Previously, total eleven was accepted against the printed
+limit of nine, and later execution discarded the selection. Both-seat public
+tests restore the choice, reject eleven without changing the hand or prompt,
+then restore again and successfully play an exact-nine selection. The printed
+up-to clause still permits an empty selection. Execution revalidation remains.
+
+The aggregate audit found four exported constraints. Sabo, Get Out of Here and
+Loki already validate their target totals before accepting a reply; Rocks was
+the sole exported aggregate play action missing that check. A separate event
+filter audit found no real missing current-cost/current-power movement snapshot
+caller. Neither audit proves all possible interactions. No card definitions or
+simulator UI changed.
+
+Validation: 2,770 engine files / 12,063 tests pass with four workers; three
+opt-in tests are skipped. The first default-concurrency run had one eight-second
+child-process timeout in the existing finite cost-cache loop test. Its isolated
+seven-test run and the complete four-worker rerun pass without changing the
+timeout. The focused gate passes 15 tests in six files. Two-file checks, engine
+build, all 30 server-adapter tests and its direct type check pass.
+
+## October 8, 2026 printed activation-cost order
+
+All multi-entry activation costs now use the ordered payment cursor, including
+printed costs and common costs followed by a selected alternative. Each entry
+keeps its own physical selection across saved-game recovery. Full original
+payment must be possible before activation. If an earlier choice makes a later
+cost only partly payable, the engine pays the available part and subsequent
+payable entries, skips the effect body, and consumes the original once-per-turn
+activation (CR 8-3-1-1, 8-3-1-3 and 8-3-1-3-1).
+
+The captured original requirements remain unchanged. Self references retain
+the activation object's identity; a moved source can qualify as an ordinary
+card in a later hand/trash payment, but cannot also pay the old self component.
+Preflight handles DON tokens in rest-card costs and legal full-field replacement
+when playing as a cost. The full-field continuation pays only its current entry.
+Replaced Life and removal costs still suppress the effect body under
+CR 8-3-1-7. Their saved continuation finishes later payable cost entries.
+
+Synthetic tests cover repeated cost kinds, distinct filters, partial and zero
+payments, compound self payments, saved prompts, alternative branches, and a
+full-field play between other costs. No exported cost array repeats a cost kind;
+these controls prove native grammar, not additional printed card clauses.
+OP04-055 and OP06-043 protection tests now assert the hand discard is already
+paid before the later bottom-deck choice, and invalid replies spend nothing more.
+ST34-004 now has explicit proof that its DON return is paid before the hand
+choice. DON identity controls follow each printed payment in order and retain
+freeze behavior. No card definitions or simulator UI changed. Overall completion
+remains unproven. A bounded rest-replacement audit found that generic own-rest
+cost replacement is still bypassed. The sole native rest replacement requires
+an opponent Character effect, so this audit found no real own-cost caller.
+
+Validation: 2,771 engine files / 12,081 tests pass with four workers; three
+opt-in tests are skipped. The focused gate passes 153 tests in 22 files, including
+18 new cost controls. Engine build, eight-file format/lint/type checks, all
+30 server-adapter tests and its direct type check pass. The first full run
+exposed five stale payment-order expectations and a lost Life-replacement tail;
+these were corrected before the final full run. No deployment is claimed.
+
+
+## October 8, 2026 rest-cost replacement and OP17 proof audit
+
+Rest activation costs now use a saved payment process. The process offers the
+same Character rest replacements as normal rest effects, retains original card
+identity and physical DON tokens, and completes each selected payment before
+advancing to later costs. Replacement processing is distinct from original
+payment: even a replacement that rests the same Character leaves the original
+cost unpaid and suppresses the effect body (CR 8-3-1-7). Once-per-turn use and
+later payable costs remain enforced.
+
+This closes the generic own-rest cost gap identified in the prior checkpoint.
+No real exported caller is claimed: PRB02-006's rest replacement requires an
+opponent Character effect. Synthetic tests isolate that native rules grammar.
+
+A bounded ten-card OP17 audit found companion or embedded behavior tests for
+all ten IDs, but two primary tests needed stronger proof. OP17-004 now plays a
+Character this turn, proves it cannot attack, grants Rush, and attacks with it.
+OP17-119 rejects a combined cost of five without changing the game or its
+pending choice (apart from rejection feedback), then removes exact cost four.
+Its cost remains eighteen during its controller's turn. No card definitions or
+simulator UI changed; no new canonical-card count is claimed.
+
+Validation: 2,772 engine files / 12,088 tests pass with four workers; three
+opt-in tests are skipped. The rest-related gate passes 127 tests in 16 files,
+including seven new controls; both repaired card files pass all five tests.
+Engine build, seven-file scoped checks, all 30 server-adapter tests and its
+direct type check pass. This checkpoint does not prove overall completion.
+A further bounded audit identified missing negative/OPT proof for OP17-011,
+027 and 049; these remain next work. No deployment is claimed.
+
+
+## October 8, 2026 OP17 defining-clause proof
+
+Six existing primary files now prove defining conditions and choices through
+public commands. OP17-011 attacks with only one attached DON and gets no power
+reduction. OP17-027 rejects a same-turn Leader attack, then attacks a Character;
+its On Play draws and rests two active targets only with the required Leader.
+OP17-049 pays once, loses its power bonus after battle, and cannot repeat despite
+retaining a payable hand card; a separate decline leaves the hand cost unpaid.
+
+OP17-061 now plays each named alternative (King, Queen and Jack), excludes an
+unrelated name, and distinguishes declining the DON cost, paying for zero Life,
+and paying with the wrong Leader for no Life result. Four generic prompt-drain
+or handoff tests were replaced with explicit clause checks. OP17-063 is publicly
+played and carried through a real turn cycle: its later DON cost is still paid,
+but the played-this-turn result does not apply. OP17-064 tests both spending
+its once-per-turn boost and declining first, then accepting on a second attack,
+with a payable hand and explicit battle-power and expiry assertions.
+
+The bounded audit used companion tests before classifying gaps; existing OP17
+late-clause and permanent-effect tests already cover 062 and additional 063
+behavior. No runtime or definition defect was found in this batch. Inventory
+card counts are unchanged; stronger proof does not mean new canonical cards.
+No simulator UI changed. Overall completion remains unproven.
+
+Validation: all 52 tests in the six revised primary files and two companion
+files pass. Format/lint/type checks pass for all six changed test files. This
+is test-only work, so the unchanged runtime was not rebuilt or broadly retested;
+its preceding checkpoint passed 12,088 engine tests and all 30 adapter tests.
+
+
+## October 8, 2026 OP17 field conditions and duration proof
+
+Eight primary files now distinguish eligible and ineligible states through
+public play, attack, choice and turn commands. Gerd keeps printed cost two with
+a non-Elbaph Leader and can decline a payable recovery cost. Jinbe has neither
+Blocker nor its power bonus without a qualifying field Character. Chopper's
+Unblockable grant requires the cost condition, bypasses a real Blocker, and
+expires before a later-turn attack that the same Blocker can intercept.
+
+Dorry and Brogy each play their named partner from hand as well as the already
+covered trash source. Choosing zero still applies the Character-play restriction;
+it expires on a later turn and does not apply with the wrong Leader. Franky and
+Brook get neither On Play result nor power bonus without a cost-twelve field
+Character; their live power returns to its printed value when the last qualifying
+Character leaves. A qualifying card in hand does not enable these field effects.
+Luffy's saved positive attack works while Saul is present; after a public sacrifice
+removes Saul, the original newly played Luffy cannot attack. An absent enabler is
+also covered independently.
+
+The Character inventory now records these exact clauses. No card-definition or
+runtime defect was found. This is test-only work and does not change the canonical
+card count. Simulator UI is unchanged; overall completion remains unproven.
+
+Validation: all 33 tests in the eight changed primary files pass together.
+Format/lint/type checks pass for all eight files. The runtime is unchanged, so
+no new full-engine, build or adapter run is claimed for this test-only batch.
+
+## October 8, 2026 OP17 payment, Trigger and choice proof
+
+Six primary files now prove missing boundaries through public commands:
+
+- Katakuri (103): a non-Big-Mom Leader suppresses both Life addition and the
+  following power reduction.
+- Cracker (104): payable decline preserves DON and Life; accepting payment
+  under the wrong Leader spends the two DON without adding Life.
+- Smoothie (106): payable decline and zero/one available DON after play suppress
+  both results. The opponent's own view proves its physical hand is unchanged.
+- Mont-d'Or (111): opponent-turn Life Trigger plays the card, then its On Play
+  reveal payment K.O.s two Characters without discarding the revealed hand cards.
+  Existing companion tests retain hand-play, shortage and decline proof.
+- Sweet 3 Generals (114): paying and choosing zero Life still draws and reduces
+  two Characters' power; both reductions expire at the real turn handoff.
+- Rocks (118): both seats reject duplicate names within the total cost limit,
+  preserve the pending choice, and accept a different-name retry after JSON
+  recovery. Both name and aggregate rejection tests inspect the returned failed
+  state, allowing only the rejection diagnostic to differ.
+
+Superseded placement, prompt-drain and turn-survival placeholders were removed.
+No card-definition or runtime defect was found, and no simulator files changed.
+Inventory counts do not change; full engine/card completion remains unproven.
+
+A separate bounded reachability audit inspected unsupported action, condition,
+flow-target and cost routes against 2,819 exports. The inspected search/Life
+payloads, 11 target groups, 24 cost kinds, sole target-derived draw, and play-cost
+continuation did not expose a current native-card caller of an unsupported route.
+This is source/coverage evidence, not execution of every combination; existing
+continuous-ordering, replacement-priority and general-loop limits remain open.
+
+The combined seven-file gate passes 34 tests, including the existing late-clause
+companion. All six changed test files pass scoped checks. No new full-engine,
+build or adapter run is claimed for this test-only batch.
+
+## October 8, 2026 rejected-choice returned-state proof
+
+Three existing test files now inspect the state returned by failed commands,
+rather than the original harness state. Plague Rounds and Aramaki retain the
+already-paid hand-trash cost across empty, protected, mixed and duplicate
+bottom-deck selections. Lucci retains its paid trash cost and first group while
+rejecting a repeated physical target in the second group. Moria retains the
+trash and pending grouped play after rejecting two Absaloms. Each valid retry
+continues from the returned failure state; the complete view changes only by
+one expected rejection diagnostic. Aramaki's failed initial activation also
+uses the returned state for its no-payment assertions.
+
+All 16 tests in the three files and all three scoped checks pass. No runtime
+defect was found. This is test-only proof repair; no new build, full-engine or
+adapter run is claimed, and no simulator files changed.
+
+## October 8, 2026 residual primary-proof audit
+
+A bounded review of all 72 primary files retaining generic play/turn-handoff
+patterns at checkpoint cd8de90532 included full-name sibling and companion tests.
+Sixty-four already had substantive core-clause proof elsewhere. Eight cards had
+material missing result, condition, or timing proof; nine test files now address it:
+
+- Wyper (OP15-114): actual top-Life face-up payment and decline, all-opponent
+  power reduction, zero-power K.O., survivor expiry, rested DON transfer to both
+  eligible card categories, target exclusions and a still-payable repeat attempt.
+- Risky Brothers (OP15-093): a publicly played Luffy cannot attack before the
+  grant, cannot attack a Leader after it, but can attack a Character. Self-trash
+  reaches fifteen; a thirteen-to-fourteen negative pays without granting either
+  result. Slash expires at turn end.
+- Perona (OP15-090): opposing Red Roc Trigger bottom-deck removal is replaced for
+  base3000/current8000; base8000/current6000 remains ineligible against Main
+  Red Roc. Paid hand identity and the protected/removed physical target are checked.
+- Mihawk (OP16-089): exact known cards are drawn and discarded before the existing
+  cost reduction and freshly played attack proof.
+- Orochi/Kanjuro (OP17-066/067): accepted DON payment remains spent when no own
+  cost-ten Character exists, including when only the opponent has one.
+- Usopp/Sanji (OP17-080/082): public battle removes the last qualifying opposing
+  Character and immediately removes the power bonus. Sanji's draw/discard still
+  resolves without that qualifier.
+
+New fixtures use matching Leader colors. No card-definition or runtime defect
+was found. This bounded audit does not establish every possible interaction or
+close the documented unresolved engine rule families.
+
+The combined nine-file gate passes 36 tests, and all nine changed files pass
+scoped formatting, lint and type checks. No new full-engine, build or adapter
+run is claimed for this test-only batch. No simulator files changed.
+
+## October 8, 2026 scoped negation and numeric settlement
+
+Real exported-card interactions exposed false judge stops. Opposing OP09-081
+Teach's On Play-only restriction blocked Linlin/Daifuku when Saul entered.
+Opposing OP13-064 Roger's own-card restriction caused the same stop. Playing
+Roger alongside his own Linlin also stopped instead of disabling her bonus.
+CR 8-1-3-3 and 8-2-1 distinguish effect timing, scope and validity.
+
+Numeric settlement now excludes timing-limited negation from permanent-effect
+dependencies. Its existing graph identifies which card's negation can actually
+change due to numeric effects, preserving target and controller scope. Base-setting
+guards use those affected source identities; static negation still applies through
+the ordinary getters. A separate reachability seed includes legacy base-setting
+writes, so numeric-dependent negation through an unordered setter remains guarded.
+The ordered-setter eligibility proof itself is unchanged.
+
+Six real cases cover both seats: Teach and opposing Roger permit Saul's search,
+current cost 16 and Daifuku power 8000; publicly playing own Roger changes Daifuku
+from 8000 to 4000 while opposing Saul retains cost 16. All finish without a judge
+or player prompt. Five synthetic controls cover both negation action forms and
+legacy-setter feedback; unresolved numeric-dependent cases still request review.
+These synthetic effects are not claimed as printed Brook behavior.
+
+All 11 new tests and 129 related tests in seven files pass. No card definitions
+or simulator code changed. General self-dependent base setting remains separate;
+this correction does not invent a ruling for it.
+
+Final validation: engine build and three-file checks pass. The full engine
+suite passes 12,124 tests in 2,773 files with four workers; three opt-in tests
+are skipped. All 30 server-adapter tests and its type check pass.
+
+## October 8, 2026 real alternate-win ordering
+
+The current catalog's three `winGame` cards are the two empty-deck Nami Leaders
+and OP09-118 Roger. A bounded review found no current exported Life-value action
+that reaches the synthetic dual-Nami startup boundary. Ordinary deck movement
+processes cards and defeat immediately, rather than accumulating simultaneous
+empty decks. This source audit is not proof of every possible interaction.
+
+Four real public-command cases now cover Roger attacking Nami with one deck
+card and an active DON-attached Boa. Both seats prove that zero-Life Roger's
+turn-player effect ends the game before Boa draws; the one-Life control instead
+lets Boa draw and Nami win. The existing rule file passes seven tests and scoped
+checks. No engine, card-definition or simulator code changed in this follow-up.
+
+Further bounded audits found no new current-card numeric-grant/negation gap
+after the Teach/Roger repair. General base-setting self-applicability and
+optional affected-card replacement precedence remain source-ambiguous; existing
+synthetic boundaries are not relabeled as demonstrated native-card failures.
+
 ## Test Contract
 
 For each printed behavior clause, add one focused happy path that:
@@ -2550,7 +6015,7 @@ structured card data or engine; `pending` has not been converted.
 | OP04-096     | Corrida Coliseum             | verified | Dynamic Dressrosa gate/keyword, played-turn attack action, Character-only target restriction    |
 | OP05-021     | Revolutionary Army HQ        | verified | Hand + Stage-rest costs, included-type search, reveal-to-hand and remainder ordering            |
 | OP05-040     | Birdcage                     | verified | Both-player Refresh restriction, cost boundary, end-turn K.O. sweep and self-trash              |
-| OP05-097     | Mary Geoise                  | verified | Dynamic hand cost, included-type filter, legal play action/payment, Your Turn boundary          |
+| OP05-097     | Mary Geoise                  | verified | Continuous payment-only discount; exact type; successive payments; Rebecca cost limit; Your Turn boundary          |
 | OP05-117     | Upper Yard                   | verified | Legal Stage play, DON!! payment, included-type search, reveal and bottom ordering               |
 | OP06-041     | The Ark Noah                 | verified | Life Trigger confirmation/play and automatic all-opponent Character rest on play                |
 | OP06-079     | Kingdom of GERMA             | verified | Optional discard + Stage-rest costs, included-type search, reveal and bottom ordering           |

@@ -23,7 +23,7 @@ export const aladdinOnTheEdgeOfAdventureEpic: CharacterCard = {
   franchise: "Aladdin",
   set: "011",
   cardNumber: 211,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 2,

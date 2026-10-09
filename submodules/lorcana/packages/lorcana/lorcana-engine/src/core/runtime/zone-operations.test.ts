@@ -121,6 +121,50 @@ function createTestState() {
 
 describe("Zone Operations", () => {
   describe("moveCard", () => {
+    it("keeps all remaining source positions aligned after a card leaves", () => {
+      const next = create(createTestState(), (draft) => {
+        createZoneOperations(draft).moveCard("card-1", { zone: "discard" });
+      });
+      for (const [index, cardId] of next.ctx.zones.private.zoneCards.deck.entries()) {
+        expect(next.ctx.zones.private.cardIndex[cardId].index).toBe(index);
+      }
+    });
+
+    it("updates destination positions when inserting before another card", () => {
+      const next = create(createTestState(), (draft) => {
+        const ops = createZoneOperations(draft);
+        ops.moveCard("card-1", { zone: "play" });
+        ops.moveCard("card-2", { zone: "play" }, { index: 0 });
+      });
+      expect(next.ctx.zones.private.cardIndex["card-2"].index).toBe(0);
+      expect(next.ctx.zones.private.cardIndex["card-1"].index).toBe(1);
+    });
+
+    it("updates positions for a move within the same zone", () => {
+      const next = create(createTestState(), (draft) => {
+        createZoneOperations(draft).moveCard(
+          "card-3",
+          { zone: "deck", playerId: "p1" },
+          { index: 0 },
+        );
+      });
+      expect(next.ctx.zones.private.zoneCards.deck.slice(0, 3)).toEqual([
+        "card-3",
+        "card-1",
+        "card-2",
+      ]);
+      for (const [index, cardId] of next.ctx.zones.private.zoneCards.deck.entries()) {
+        expect(next.ctx.zones.private.cardIndex[cardId].index).toBe(index);
+      }
+    });
+
+    it("stores the actual appended position when the requested index is out of range", () => {
+      const next = create(createTestState(), (draft) => {
+        createZoneOperations(draft).moveCard("card-1", { zone: "play" }, { index: 100 });
+      });
+      expect(next.ctx.zones.private.zoneCards.play).toEqual(["card-1"]);
+      expect(next.ctx.zones.private.cardIndex["card-1"].index).toBe(0);
+    });
     it("should move card between zones", () => {
       const state = createTestState();
 
@@ -389,6 +433,18 @@ describe("Zone Operations", () => {
   });
 
   describe("shuffle", () => {
+    it("keeps card positions aligned after a deterministic shuffle", () => {
+      const next = create(createTestState(), (draft) => {
+        createZoneOperations(draft, undefined, { random: () => 0 }).shuffle({
+          zone: "deck",
+          playerId: "p1",
+        });
+      });
+      expect(next.ctx.zones.private.zoneCards.deck[0]).not.toBe("card-1");
+      for (const [index, cardId] of next.ctx.zones.private.zoneCards.deck.entries()) {
+        expect(next.ctx.zones.private.cardIndex[cardId].index).toBe(index);
+      }
+    });
     it("should shuffle cards in zone", () => {
       const state = createTestState();
       const originalOrder = [...state.ctx.zones.private.zoneCards.deck];

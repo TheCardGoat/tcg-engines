@@ -1,51 +1,51 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-// Auto-verified: Bonk Punch & Monster (OP17-028) cost=4 power=3000 counter=1000
 describe("OP17-028 Bonk Punch & Monster", () => {
-  test("[On Play] resolves its play effects", () => {
+  test.each([true, false])(
+    "On Play selects only rested cost-6-or-less Characters; select=%s",
+    (select) => {
+      const engine = OnePieceTestEngine.create(
+        { hand: ["OP17-028"], activeDon: 4 },
+        {
+          character: [
+            { cardId: "OP15-032", rested: true },
+            { cardId: "OP16-063", rested: true },
+            "EB01-005",
+          ],
+        },
+      );
+      const target = engine.findCardInZone("north", "character", "OP15-032");
+      engine.playCard("OP17-028");
+      const step = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+      if (step?.kind !== "selectEntity") throw new Error("Expected KO choice");
+      expect(step.candidates.map((c) => c.ref.id)).toEqual([target]);
+      expect(step.min).toBe(0);
+      engine.resolveDecision(
+        "effectTargetSelection",
+        { selectedIds: select ? [target] : [] },
+        "south",
+      );
+      const north = engine.getView("south").players.north;
+      expect(north.trash.some((c) => c.instanceId === target)).toBe(select);
+      expect(north.characters.some((c) => c?.instanceId === target)).toBe(!select);
+      expect(engine.getView("south").prompts).toHaveLength(0);
+    },
+  );
+
+  test("Blocker redirects an attack and protects the Leader", () => {
     const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-028"], activeDon: 6 },
-      { character: ["OP13-013"], activeDon: 5 },
+      { character: ["OP17-028"] },
+      {},
+      { activeSeat: "north" },
     );
-
-    engine.playCard("OP17-028");
-    engine.acceptLeadingOptional("south");
-
-    // Resolve any remaining prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-028",
-    );
+    const blocker = engine.findCardInZone("south", "character", "OP17-028");
+    const life = engine.getView("south").players.south.lifeCount;
+    engine.declareAttack(engine.leader("north"), engine.leader("south"), "north");
+    engine.resolveDecision("battleBlocker", { selectedIds: [blocker] }, "south");
+    const south = engine.getView("south").players.south;
+    expect(south.lifeCount).toBe(life);
+    expect(south.trash.some((c) => c.instanceId === blocker)).toBe(true);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

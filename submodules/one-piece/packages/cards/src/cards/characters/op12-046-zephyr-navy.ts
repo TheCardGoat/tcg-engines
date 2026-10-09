@@ -23,7 +23,7 @@ export const op12ZephyrNavy046: CharacterCard = {
   cost: 5,
   power: 5000,
   counter: 2000,
-  traits: ["FILM Navy"],
+  traits: ["FILM", "Navy"],
   attribute: "strike",
   effect:
     "[On Play] Trash 2 cards from your hand.\n[Activate: Main] You may trash this Character: Return up to 1 Character with a cost of 5 or less to the owner's hand.",

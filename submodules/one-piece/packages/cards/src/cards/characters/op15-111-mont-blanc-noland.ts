@@ -23,7 +23,7 @@ export const op15MontBlancNoland111: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 2000,
-  traits: ["Jaya Botanist"],
+  traits: ["Jaya", "Botanist"],
   attribute: "slash",
   effect:
     "[DON!! x1] [When Attacking] Up to 1 of your [Kalgara] cards gains [Rush] during this turn.\n(This card can attack on the turn in which it is played.)",

@@ -54,15 +54,19 @@ describe('OP14-003 Capone"Gang"Bege', () => {
     protectedEngine.declareAttack(urougeId, protectedEngine.leader("north"));
     const protectedTarget = protectedEngine.pendingDecision("effectTargetSelection", "south")
       .steps[0];
-    expect(protectedTarget).toMatchObject({ kind: "selectEntity", min: 0, max: 0 });
+    expect(protectedTarget).toMatchObject({ kind: "selectEntity", min: 0, max: 1 });
     if (protectedTarget?.kind !== "selectEntity") {
       throw new Error("Expected Urouge's filtered K.O. target choice.");
     }
-    expect(protectedTarget.candidates.map((candidate) => candidate.ref.id)).not.toContain(
+    expect(protectedTarget.candidates.map((candidate) => candidate.ref.id)).toContain(
       protectedBegeId,
     );
-    expect(protectedTarget.candidates).toHaveLength(0);
-    protectedEngine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    expect(protectedTarget.candidates).toHaveLength(1);
+    protectedEngine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [protectedBegeId] },
+      "south",
+    );
     expect(protectedEngine.getView("south").prompts).toHaveLength(0);
     expect(protectedEngine.findCardInZone("north", "character", op14eb04CaponeGangBege003)).toBe(
       protectedBegeId,

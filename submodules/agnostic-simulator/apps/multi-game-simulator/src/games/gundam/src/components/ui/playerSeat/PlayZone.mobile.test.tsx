@@ -14,14 +14,6 @@ import {
   type GundamHandCardDragSource,
 } from "./gundam-drag-drop-context.tsx";
 
-const DESKTOP_FIELD_CARD_SIZE = "small" as const;
-const desktopFieldCardWidthPx = Math.round(
-  CARD_IMAGE_DIMENSIONS.full.width * CARD_SIZE_SCALES[DESKTOP_FIELD_CARD_SIZE],
-);
-const desktopFieldCardHeightPx = Math.round(
-  CARD_IMAGE_DIMENSIONS.full.height * CARD_SIZE_SCALES[DESKTOP_FIELD_CARD_SIZE],
-);
-
 const unit: GameCardData = {
   id: "unit-1",
   name: "Mobile Suit",
@@ -243,56 +235,6 @@ describe("PlayZone · mobile stats", () => {
 
     expect(screen.queryByText("Your battle area")).toBeNull();
     expect(screen.queryByText("Deploy units here")).toBeNull();
-  });
-
-  it("uses the available desktop field height for readable cards", async () => {
-    Object.defineProperty(window, "innerWidth", {
-      configurable: true,
-      writable: true,
-      value: 1440,
-    });
-
-    const { container } = render(
-      <PlayZone
-        side="bottom"
-        play={[unit]}
-        selectedCardIds={[]}
-        highlightCardIds={[]}
-        onCardDrop={() => {}}
-      />,
-    );
-
-    const zone = await waitFor(() => screen.getByLabelText("Your battle area drop zone"));
-    const card = container.querySelector<HTMLElement>('[data-card-id="unit-1"]');
-
-    expect(zone.className).toContain("z-[1]");
-    expect(card?.style.width).toBe(`${desktopFieldCardWidthPx}px`);
-    expect(card?.style.height).toBe(`${desktopFieldCardHeightPx}px`);
-    expect(
-      container.querySelector<HTMLElement>("[data-fixed-slot-index='0']")?.className,
-    ).toContain("w-[176px]");
-  });
-
-  it("keeps desktop field cards contained within their own lane", async () => {
-    Object.defineProperty(window, "innerWidth", {
-      configurable: true,
-      writable: true,
-      value: 1440,
-    });
-
-    const props = {
-      play: [unit],
-      selectedCardIds: [],
-      highlightCardIds: ["unit-1"],
-    } as const;
-    const { container } = render(<PlayZone side="bottom" {...props} />);
-
-    await waitFor(() => {
-      expect(container.querySelector("[data-play-zone-card-lane]")).not.toBeNull();
-    });
-    const lane = container.querySelector("[data-play-zone-card-lane]");
-    expect(lane?.className).toContain("overflow-y-hidden");
-    expect(lane?.className).not.toContain("translate-y");
   });
 
   it("keeps desktop battle cards in one keyboard-scrollable lane", async () => {

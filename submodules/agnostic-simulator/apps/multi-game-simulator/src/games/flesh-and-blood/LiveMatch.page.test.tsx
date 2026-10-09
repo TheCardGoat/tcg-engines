@@ -137,6 +137,8 @@ vi.mock("./FleshAndBloodTabletop", () => ({
     props: Pick<
       ComponentProps<typeof FleshAndBloodTabletop>,
       | "onConcede"
+      | "onUndo"
+      | "canUndo"
       | "pending"
       | "readOnly"
       | "onCardAction"
@@ -144,6 +146,7 @@ vi.mock("./FleshAndBloodTabletop", () => ({
       | "animationVersion"
       | "state"
       | "matchNotice"
+      | "matchActions"
       | "participantPresentation"
     >,
   ) => (
@@ -151,7 +154,15 @@ vi.mock("./FleshAndBloodTabletop", () => ({
       <button type="button" disabled={!props.onConcede} onClick={props.onConcede}>
         Concede from board
       </button>
+      <button
+        type="button"
+        disabled={!props.canUndo || props.pending || props.readOnly}
+        onClick={props.onUndo}
+      >
+        Undo action
+      </button>
       {props.matchNotice}
+      {props.matchActions}
       {Object.values(props.participantPresentation ?? {}).map((player, i) => (
         <div key={i}>
           {player.clock}
@@ -185,6 +196,7 @@ function liveRoute(concede: boolean) {
     error: null,
     session: null,
     matchPageData: {
+      history: { chatMessages: [], freeTextEnabled: true, engineLogs: [] },
       match: {
         status: "in_progress",
         participants: [
@@ -242,6 +254,169 @@ describe.sequential("FAB live concession", () => {
   afterEach(() => {
     cleanup();
     vi.unstubAllGlobals();
+  });
+
+  it("requests hosted undo, consumes the restored state, and clears availability", () => {
+    const route = liveRoute(true);
+    mocks.route.mockReturnValue({
+      ...route,
+      matchPageData: {
+        ...route.matchPageData,
+        game: { ...route.matchPageData.game, undoable: true },
+      },
+    });
+    render(
+      <MantineProvider>
+        <LiveMatchPage />
+      </MantineProvider>,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Undo action" }));
+    expect(mocks.emit).toHaveBeenCalledWith("proposal_send", {
+      gameId: "game-1",
+      actionType: "undo",
+      undoScope: "last_move",
+    });
+    expect(screen.getByRole("button", { name: "Undo action" }).hasAttribute("disabled")).toBe(true);
+    const received = mocks.on.mock.calls.find(([event]) => event === "proposal_received")?.[1];
+    act(() =>
+      received?.({
+        gameId: "game-1",
+        matchId: "match-1",
+        actionType: "undo",
+        senderPlayerId: "p1",
+        deadline: Date.now() + 30_000,
+      }),
+    );
+    expect(screen.getByText("Waiting for your opponent to approve the undo.")).toBeTruthy();
+    const resolved = mocks.on.mock.calls.find(([event]) => event === "proposal_resolved")?.[1];
+    act(() =>
+      resolved?.({
+        gameId: "game-1",
+        matchId: "match-1",
+        actionType: "undo",
+        resolution: "accepted",
+      }),
+    );
+    const update = mocks.on.mock.calls.find(([event]) => event === "state_update")?.[1];
+    act(() =>
+      update?.({
+        gameId: "game-1",
+        stateVersion: 8,
+        state: route.matchPageData.game.view,
+        undoable: false,
+        interactionView: { ...route.matchPageData.game.interactionView, stateVersion: 8 },
+      }),
+    );
+    expect(screen.getByLabelText("Rendered version").textContent).toBe("8");
+    expect(screen.getByRole("button", { name: "Undo action" }).hasAttribute("disabled")).toBe(true);
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
+
+  it("releases an unanswered undo request after its deadline", async () => {
+    const route = liveRoute(true);
+    mocks.route.mockReturnValue({
+      ...route,
+      matchPageData: {
+        ...route.matchPageData,
+        game: { ...route.matchPageData.game, undoable: true },
+      },
+    });
+    render(
+      <MantineProvider>
+        <LiveMatchPage />
+      </MantineProvider>,
+    );
+    const received = mocks.on.mock.calls.find(([event]) => event === "proposal_received")?.[1];
+    act(() =>
+      received?.({
+        gameId: "game-1",
+        matchId: "match-1",
+        actionType: "undo",
+        senderPlayerId: "p1",
+        deadline: Date.now() - 1,
+      }),
+    );
+    await waitFor(() => {
+      expect(screen.queryByText("Waiting for your opponent to approve the undo.")).toBeNull();
+      expect(screen.getByRole("button", { name: "Undo action" }).hasAttribute("disabled")).toBe(
+        false,
+      );
+    });
+  });
+
+  it("keeps hosted undo available after a metadata-only rejoin at the current version", () => {
+    mocks.route.mockReturnValue(liveRoute(true));
+    render(
+      <MantineProvider>
+        <LiveMatchPage />
+      </MantineProvider>,
+    );
+    const joined = mocks.on.mock.calls.find(([event]) => event === "game_joined")?.[1];
+    act(() =>
+      joined?.({
+        gameId: "game-1",
+        stateVersion: 7,
+        players: [
+          { id: "p1", connected: true },
+          { id: "p2", connected: true },
+        ],
+        undoable: true,
+      }),
+    );
+    expect(screen.queryByTestId("fab-live-recovery-notice")).toBeNull();
+    expect(screen.getByRole("button", { name: "Undo action" }).hasAttribute("disabled")).toBe(
+      false,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Undo action" }));
+    expect(mocks.emit).toHaveBeenCalledWith("proposal_send", {
+      gameId: "game-1",
+      actionType: "undo",
+      undoScope: "last_move",
+    });
+  });
+  it("offers turn undo when the hosted engine reports a clean turn start", () => {
+    const route = liveRoute(true);
+    mocks.route.mockReturnValue({
+      ...route,
+      matchPageData: {
+        ...route.matchPageData,
+        game: { ...route.matchPageData.game, undoTurnAvailable: true },
+      },
+    });
+    render(
+      <MantineProvider>
+        <LiveMatchPage />
+      </MantineProvider>,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Undo turn" }));
+    expect(mocks.emit).toHaveBeenCalledWith("proposal_send", {
+      gameId: "game-1",
+      actionType: "undo",
+      undoScope: "turn_start",
+    });
+  });
+  it.each(["Accept", "Decline"])("sends %s through the shared undo proposal flow", (choice) => {
+    mocks.route.mockReturnValue(liveRoute(true));
+    render(
+      <MantineProvider>
+        <LiveMatchPage />
+      </MantineProvider>,
+    );
+    const received = mocks.on.mock.calls.find(([event]) => event === "proposal_received")?.[1];
+    act(() =>
+      received?.({
+        gameId: "game-1",
+        matchId: "match-1",
+        actionType: "undo",
+        senderPlayerId: "p2",
+        deadline: Date.now() + 30_000,
+      }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: `${choice} undo` }));
+    expect(mocks.emit).toHaveBeenCalledWith(
+      choice === "Accept" ? "proposal_accept" : "proposal_decline",
+      { gameId: "game-1", actionType: "undo" },
+    );
   });
 
   it("allows a connected opponent's timeout claim only after the server clock grace expires", () => {
@@ -526,8 +701,10 @@ describe.sequential("FAB live concession", () => {
         gameId: "game-1",
         stateVersion: 9,
         state: {
-          players: [{ id: "p1" }, { id: "p2" }],
+          players: ["p1", "p2"],
           cards: {},
+          life: { p1: 37, p2: 40 },
+          turnNumber: 4,
           result: { kind: "win", winnerId: "p2", loserId: "p1", reason: "concede" },
         },
       }),
@@ -992,11 +1169,13 @@ describe.sequential("FAB live concession", () => {
     expect(screen.queryByText("Starting deck")).toBeNull();
   });
 
-  it("shows the result without analytics and lets the player inspect the board", () => {
+  it("shows the branded result without analytics and lets the player inspect the board", () => {
     const route = liveRoute(false);
     route.matchPageData.game.view = {
-      players: [{ id: "p1" }, { id: "p2" }],
+      players: ["p1", "p2"],
       cards: {},
+      life: { p1: 37, p2: 40 },
+      turnNumber: 4,
       result: { kind: "win", winnerId: "p2", loserId: "p1", reason: "concede" },
     };
     mocks.route.mockReturnValue(route);
@@ -1005,8 +1184,11 @@ describe.sequential("FAB live concession", () => {
         <LiveMatchPage />
       </MantineProvider>,
     );
-    expect(screen.getByRole("dialog").textContent).toContain("Defeat");
-    fireEvent.click(screen.getByRole("button", { name: "Inspect board" }));
+    expect(screen.getByTestId("fab-post-game-summary").textContent).toContain("Defeat");
+    expect(screen.queryByText("The game has ended.")).toBeNull();
+    expect(screen.queryByRole("navigation", { name: "Game summary sections" })).toBeNull();
+    expect(screen.queryByTestId("fab-summary-mock-disclosure")).toBeNull();
+    fireEvent.click(screen.getAllByRole("button", { name: "Inspect board" })[0]);
     expect(screen.queryByRole("dialog")).toBeNull();
     expect(screen.getByRole("button", { name: "Concede from board" })).not.toBeNull();
   });
@@ -1047,6 +1229,10 @@ describe("FAB live session routing", () => {
       </MantineProvider>,
     );
     expect(screen.getByText("Opponent left preparation.")).not.toBeNull();
+    expect(
+      (screen.getByRole("link", { name: "Return to matchmaking" }) as HTMLAnchorElement)
+        .pathname,
+    ).toBe("/flesh-and-blood/matchmaking");
     expect(mocks.join).not.toHaveBeenCalled();
   });
 });

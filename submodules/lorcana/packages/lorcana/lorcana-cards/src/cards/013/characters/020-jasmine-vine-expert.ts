@@ -31,6 +31,7 @@ export const jasmineVineExpert: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_63fc4a03298a41bab40f9ce6546bf972",
+    tcgPlayer: "704554",
   },
   text: [
     {

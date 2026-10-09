@@ -57,4 +57,23 @@ describe("OP15-056 Would You Let Me Eat the Flame-Flame Fruit?", () => {
     expect(engine.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP15-056");
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("Life Trigger draws two cards", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP01-001",
+        life: ["OP15-056", "ST02-002"],
+        deck: ["ST02-002", "ST02-003", "ST02-002"],
+      },
+      {},
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().activateLifeTrigger();
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual([
+      "ST02-002",
+      "ST02-003",
+    ]);
+    expect(e.getView("south").players.south.lifeCount).toBe(1);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP15-056");
+  });
 });

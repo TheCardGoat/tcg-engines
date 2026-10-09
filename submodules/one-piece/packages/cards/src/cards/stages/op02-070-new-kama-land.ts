@@ -28,6 +28,12 @@ export const op02NewKamaLand070: StageCard = {
     effects: [
       {
         trigger: "activateMain",
+        postCostConditions: [
+          {
+            condition: "leaderName",
+            name: "Emporio.Ivankov",
+          },
+        ],
         costs: [
           {
             cost: "restThisCard",
@@ -38,19 +44,11 @@ export const op02NewKamaLand070: StageCard = {
             action: "draw",
             player: "self",
             amount: 1,
-            condition: {
-              condition: "leaderName",
-              name: "Emporio.Ivankov",
-            },
           },
           {
             action: "trashFromHand",
             player: "self",
             amount: 1,
-            condition: {
-              condition: "leaderName",
-              name: "Emporio.Ivankov",
-            },
           },
           {
             action: "trashFromHand",

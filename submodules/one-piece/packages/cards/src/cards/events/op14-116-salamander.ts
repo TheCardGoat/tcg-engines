@@ -65,12 +65,12 @@ export const op14eb04Salamander116: EventCard = {
                   {
                     filter: "trait",
                     value: "Amazon Lily",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Kuja Pirates",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

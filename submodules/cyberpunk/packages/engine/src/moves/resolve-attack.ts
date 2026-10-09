@@ -1,6 +1,6 @@
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
+import type { Effect } from "@tcg/cyberpunk-types";
 import type {
-  ActiveEffect,
   AttackState,
   DefeatReplacementContinuation,
   FightResult,
@@ -17,7 +17,7 @@ import {
   listSacrificialAttachedGear,
   markDefeatAtEndOfTurnIfAttacked,
 } from "../active-effects/index.ts";
-import { availableEddies } from "./eddie-resources.ts";
+import { availableEddies, canSpendSelectedEddies } from "./eddie-resources.ts";
 import {
   continueTriggerResolution,
   enqueueEventTriggers,
@@ -26,8 +26,10 @@ import {
 } from "../ability-executor.ts";
 import { getDefinitionFor } from "../state/lookups.ts";
 import { maybeEndAttackIfParticipantsLeft } from "./end-attack.ts";
-import { removeFromGameIfGoSolo } from "./remove-from-game.ts";
+import { removeFromGameIfLegendMovesToInvalidArea } from "./remove-from-game.ts";
+import { captureDefeatedCardSnapshot } from "../state/defeated-card-snapshot.ts";
 import { resumeSuspendedEndTurn } from "./pass-phase.ts";
+import { formatStolenGigSummary, type StolenGigLogEntry } from "../logging/stolen-gig-summary.ts";
 export interface ResolveAttackInput extends MoveInput {
   args: {
     gigIdsToSteal?: string[];
@@ -42,16 +44,23 @@ export const resolveAttackMove: MoveDefinition<ResolveAttackInput> = {
     if (attack.step === "react" && attack.rivalId === playerId) return true;
     if (attack.step === "attack" && state.G.turnMetadata.activePlayerId === playerId) return true;
     if (
-      (attack.step === "fight" || attack.step === "steal") &&
+      (attack.step === "fight" || attack.step === "fightResult" || attack.step === "steal") &&
       state.G.turnMetadata.activePlayerId === playerId
     )
       return true;
     return false;
   },
 
-  validate({ state, playerId: _playerId }) {
+  validate({ state, playerId }) {
     const attack = state.G.attackState;
     if (!attack) return { valid: false, error: "No attack in progress", errorCode: "NO_ATTACK" };
+    // Only React is a player decision; the other steps are mechanical.
+    if (attack.step === "react" && attack.rivalId !== playerId)
+      return {
+        valid: false,
+        error: "Another player is resolving combat",
+        errorCode: "NOT_PRIORITY_OWNER",
+      };
     return { valid: true };
   },
 
@@ -86,6 +95,11 @@ export const resolveAttackMove: MoveDefinition<ResolveAttackInput> = {
 
     if (attack.step === "fight") {
       executeFight(state, playerId, operations, attack);
+      return;
+    }
+
+    if (attack.step === "fightResult") {
+      executeFightResult(state, operations, attack);
       return;
     }
 
@@ -127,48 +141,131 @@ function executeFight(
     result = "mutual";
   }
 
-  const attackerName = state.G.cardIndex[attack.attackerId as string]
-    ? getDefinitionFor(state.G, attack.attackerId as string).displayName
-    : "";
-  const defenderName = state.G.cardIndex[attack.defenderId as string]
-    ? getDefinitionFor(state.G, attack.defenderId as string).displayName
-    : "";
-  const prevention = consumeNextRivalFightProtection(state, operations, attack);
-  const messageKey = fightMessageKey(result, prevention !== undefined);
+  // Losers whose defeat a sacrificial Gear will absorb (CR: defeat the Gear
+  // instead). Resolved up front so the fight log and the result beat can label
+  // the substitution; executeDefeat still performs it mechanically.
+  const attackerCanDefeat = attackerPower > 0;
+  const defenderCanDefeat = defenderPower > 0;
+  const fightLosers: (CardInstanceId | null)[] =
+    result === "mutual"
+      ? [attack.attackerId, attack.defenderId]
+      : result === "attackerWins"
+        ? [attack.defenderId]
+        : [attack.attackerId];
+  const preventedCardIds = fightLosers.filter((cardId): cardId is CardInstanceId => {
+    if (!cardId) return false;
+    if (cardId === attack.attackerId ? !defenderCanDefeat : !attackerCanDefeat) return false;
+    const card = state.G.cardIndex[cardId as string];
+    if (!card || card.zone !== "field") return false;
+    return findSacrificialAttachedGear(state, cardId as string) !== null;
+  });
+  const preventionSourceCardNames = preventedCardIds.map(
+    (cardId) =>
+      getDefinitionFor(state.G, findSacrificialAttachedGear(state, cardId as string) as string)
+        .displayName,
+  );
 
+  const resolvedAttack: AttackState = {
+    ...attack,
+    kind: "fight",
+    step: "fightResult",
+    fightResolution: {
+      result,
+      attackerPower,
+      defenderPower,
+      protectedCardIds: [],
+      preventionSourceCardNames,
+      ...(preventedCardIds.length > 0 ? { preventedCardIds } : {}),
+    },
+  };
+  // CR 9.18: store the determined result while fight triggers resolve. The
+  // following mechanical step applies the result only after that window drains.
+  operations.game.setAttackState(resolvedAttack);
+  const fightResolvedEvent = {
+    type: "attackResolved" as const,
+    attackerId: attack.attackerId,
+    defenderId: attack.defenderId,
+    rivalId: attack.rivalId,
+    attackKind: "fight" as const,
+    result,
+    ...(preventedCardIds.length > 0 ? { preventedCardIds } : {}),
+    playerId,
+  };
+  operations.event.emit(fightResolvedEvent);
+  enqueueEventTriggers(fightResolvedEvent, state, operations);
+  enqueueFightActiveEffects(state, operations, resolvedAttack, fightResolvedEvent);
+  continueTriggerResolution(state, operations);
+}
+
+function executeFightResult(
+  state: MatchState,
+  operations: import("../operations/index.ts").Operations,
+  attack: Extract<AttackState, { step: "fightResult" }>,
+): void {
+  const resolution = attack.fightResolution;
+  if (
+    state.G.turnMetadata.pendingChoice ||
+    state.G.turnMetadata.currentTrigger ||
+    state.G.turnMetadata.triggerQueue.length > 0
+  )
+    return;
+  const defenderId = attack.defenderId;
+  if (!defenderId) throw new Error("Fight result requires a defender");
+  const attackerName = getDefinitionFor(state.G, attack.attackerId as string).displayName;
+  const defenderName = getDefinitionFor(state.G, defenderId as string).displayName;
   operations.event.emit({
     type: "actionLog",
-    messageKey,
+    messageKey: fightMessageKey(resolution.result, resolution.protectedCardIds, attack),
     params: {
       attackerName,
       defenderName,
-      attackerPower,
-      defenderPower,
-      ...(prevention ? { sourceCardName: prevention.sourceCardName } : {}),
+      attackerPower: resolution.attackerPower,
+      defenderPower: resolution.defenderPower,
+      ...(resolution.preventionSourceCardNames.length > 0
+        ? { sourceCardName: resolution.preventionSourceCardNames.join(" and ") }
+        : {}),
     },
-    playerId,
+    playerId: state.G.turnMetadata.activePlayerId,
+    category: "combat",
+    cardIds: [attack.attackerId as string, defenderId as string],
   });
-
-  executeDefeat(
-    state,
-    playerId,
-    operations,
-    { ...attack, fightResult: result },
-    prevention?.cardId,
-  );
+  executeDefeat(state, operations, attack);
 }
 
 function fightMessageKey(
   result: FightResult,
-  defeatWasPrevented: boolean,
+  protectedCardIds: CardInstanceId[],
+  attack: Extract<AttackState, { step: "fightResult" }>,
 ): import("../types/game-events.ts").ActionLogMessageKey {
-  if (defeatWasPrevented && result === "attackerWins") {
+  const prevented = attack.fightResolution?.preventedCardIds ?? [];
+  const attackerProtected =
+    protectedCardIds.includes(attack.attackerId) || prevented.includes(attack.attackerId);
+  const defenderProtected =
+    attack.defenderId !== null &&
+    (protectedCardIds.includes(attack.defenderId) || prevented.includes(attack.defenderId));
+  if (defenderProtected && result === "attackerWins") {
     return "move.resolveAttack.fight.attackerWins.prevented";
   }
-  if (defeatWasPrevented && result === "mutual") {
+  if (attackerProtected && result === "defenderWins") {
+    return "move.resolveAttack.fight.defenderWins.prevented";
+  }
+  if (attackerProtected && defenderProtected && result === "mutual") {
+    return "move.resolveAttack.fight.mutual.bothPrevented";
+  }
+  if (attackerProtected && result === "mutual") {
+    return "move.resolveAttack.fight.mutual.attackerPrevented";
+  }
+  if (defenderProtected && result === "mutual") {
     return "move.resolveAttack.fight.mutual.prevented";
   }
-  return `move.resolveAttack.fight.${result}` as import("../types/game-events.ts").ActionLogMessageKey;
+  switch (result) {
+    case "attackerWins":
+      return "move.resolveAttack.fight.attackerWins";
+    case "defenderWins":
+      return "move.resolveAttack.fight.defenderWins";
+    case "mutual":
+      return "move.resolveAttack.fight.mutual";
+  }
 }
 
 /**
@@ -184,6 +281,7 @@ function sacrificeGearInsteadOfHost(
   playerId: PlayerId,
   eventMode: "deferred" | "immediate" = "immediate",
 ): void {
+  const snapshot = captureDefeatedCardSnapshot(state, gearId);
   operations.card.detachGear(gearId);
   operations.zone.moveCard(gearId, "trash", playerId);
   const gear = state.G.cardIndex[gearId as string];
@@ -192,8 +290,8 @@ function sacrificeGearInsteadOfHost(
     cardId: gearId,
     defeatedBy,
     playerId: gear?.controllerId ?? playerId,
-    hadAttachedCards: false,
     hostId,
+    snapshot,
   };
   operations.event.emit(gearEvent);
   if (eventMode === "immediate") processEventTriggers(gearEvent, state, operations);
@@ -221,8 +319,16 @@ function defeatHostAndAttachedGear(
     return;
   }
   const host = state.G.cardIndex[hostId as string];
+  const hostSnapshot = captureDefeatedCardSnapshot(state, hostId);
   const attachedGearIds = [...(host?.meta.attachedGearIds ?? [])];
-  const hadAttachedCards = attachedGearIds.length > 0;
+  const attachedGearSnapshots = attachedGearIds.map((gearId) => ({
+    gearId,
+    snapshot: captureDefeatedCardSnapshot(state, gearId),
+  }));
+  const defeatedHostId = host?.meta.attachedToId;
+  if (defeatedHostId) {
+    operations.card.detachGear(hostId);
+  }
   operations.card.moveAttachedGear(hostId, "trash", { detachAfterMove: true });
   operations.zone.moveCard(hostId, "trash", playerId);
   const hostEvent = {
@@ -230,14 +336,16 @@ function defeatHostAndAttachedGear(
     cardId: hostId,
     defeatedBy,
     playerId,
-    hadAttachedCards,
+    snapshot: hostSnapshot,
+    // Defeated Gear must retain its former host for host-targeted triggers.
+    ...(defeatedHostId ? { hostId: defeatedHostId } : {}),
   };
   operations.event.emit(hostEvent);
   if (eventMode === "immediate") enqueueEventTriggers(hostEvent, state, operations);
-  removeFromGameIfGoSolo(state, operations, hostId);
+  removeFromGameIfLegendMovesToInvalidArea(state, operations, hostId);
   if (eventMode === "immediate") continueTriggerResolution(state, operations);
 
-  for (const gearId of attachedGearIds) {
+  for (const { gearId, snapshot } of attachedGearSnapshots) {
     const gear = state.G.cardIndex[gearId as string];
     if (!gear) continue;
     const gearEvent = {
@@ -245,8 +353,8 @@ function defeatHostAndAttachedGear(
       cardId: gearId as import("../types/branded.ts").CardInstanceId,
       defeatedBy,
       playerId: gear.controllerId,
-      hadAttachedCards: false,
       hostId,
+      snapshot,
     };
     operations.event.emit(gearEvent);
     if (eventMode === "immediate") processEventTriggers(gearEvent, state, operations);
@@ -331,6 +439,8 @@ function continuePendingDefeats(
   for (let i = 0; i < pendingDefeats.length; i++) {
     const cardId = pendingDefeats[i]!;
     if (!state.G.cardIndex[cardId as string]) continue;
+    if (continuation.kind === "fight" && state.G.cardIndex[cardId as string]?.zone !== "field")
+      continue;
     const gears = listSacrificialAttachedGear(state, cardId as string);
     if (gears.length >= 2) {
       const rest = [...remaining, ...pendingDefeats.slice(i + 1)];
@@ -362,6 +472,7 @@ function continuePendingDefeats(
   for (const cardId of remaining) {
     const card = state.G.cardIndex[cardId as string];
     if (!card) continue;
+    if (continuation.kind === "fight" && card.zone !== "field") continue;
     defeatHostAndAttachedGear(
       state,
       operations,
@@ -373,16 +484,7 @@ function continuePendingDefeats(
   }
 
   if (continuation.kind === "fight" && attack) {
-    const result = attack.fightResult ?? "mutual";
-    finishFightAfterDefeats(
-      state,
-      operations,
-      attack,
-      continuation.fightPlayerId,
-      continuation.attackerPower,
-      continuation.defenderPower,
-      result,
-    );
+    operations.game.setAttackState(null);
   }
 }
 
@@ -424,15 +526,23 @@ export function resolveEndOfTurnDefeats(
 
 function executeDefeat(
   state: MatchState,
-  playerId: PlayerId,
   operations: import("../operations/index.ts").Operations,
-  attack: AttackState,
-  protectedCardId: string | undefined,
+  attack: Extract<AttackState, { step: "fightResult" }>,
 ) {
-  const result = attack.fightResult ?? "mutual";
+  const resolution = attack.fightResolution;
+  const { result, protectedCardIds } = resolution;
   const defenderId = attack.defenderId;
-  const attackerPower = getEffectivePower(state, attack.attackerId as string);
-  const defenderPower = defenderId ? getEffectivePower(state, defenderId as string) : 0;
+  // CR 9.19 applies the result fixed at power comparison. A fight trigger can
+  // remove the opposing Unit first; use its last valid fight power in that
+  // case so its already determined result can still defeat a surviving loser.
+  const attackerPower =
+    state.G.cardIndex[attack.attackerId as string]?.zone === "field"
+      ? getEffectivePower(state, attack.attackerId as string)
+      : resolution.attackerPower;
+  const defenderPower =
+    defenderId && state.G.cardIndex[defenderId as string]?.zone === "field"
+      ? getEffectivePower(state, defenderId as string)
+      : resolution.defenderPower;
   // CR 9.19.2 — a Unit with 0 power cannot defeat a Unit as the result of a fight.
   const attackerCanDefeat = attackerPower > 0;
   const defenderCanDefeat = defenderPower > 0;
@@ -442,8 +552,9 @@ function executeDefeat(
   if (
     (result === "attackerWins" || result === "mutual") &&
     defenderId &&
+    state.G.cardIndex[defenderId as string]?.zone === "field" &&
     attackerCanDefeat &&
-    protectedCardId !== (defenderId as string) &&
+    !protectedCardIds.includes(defenderId) &&
     !getEffectiveRules(state, defenderId as string).includes("cantBeDefeatedInFight")
   ) {
     pendingDefeats.push(defenderId);
@@ -451,8 +562,9 @@ function executeDefeat(
 
   if (
     (result === "defenderWins" || result === "mutual") &&
+    state.G.cardIndex[attack.attackerId as string]?.zone === "field" &&
     defenderCanDefeat &&
-    protectedCardId !== (attack.attackerId as string) &&
+    !protectedCardIds.includes(attack.attackerId) &&
     !getEffectiveRules(state, attack.attackerId as string).includes("cantBeDefeatedInFight")
   ) {
     pendingDefeats.push(attack.attackerId);
@@ -465,49 +577,16 @@ function executeDefeat(
     {
       kind: "fight",
       remainingCardIds: [],
-      fightPlayerId: playerId,
-      attackerPower,
-      defenderPower,
+      fightPlayerId: state.G.turnMetadata.activePlayerId,
     },
     attack,
   );
 }
 
-function finishFightAfterDefeats(
-  state: MatchState,
-  operations: import("../operations/index.ts").Operations,
-  attack: AttackState,
-  playerId: PlayerId,
-  attackerPower: number,
-  defenderPower: number,
-  result: FightResult,
-): void {
-  const fightResolvedEvent = {
-    type: "attackResolved" as const,
-    attackerId: attack.attackerId,
-    defenderId: attack.defenderId,
-    attackKind: "fight" as const,
-    result: result as "attackerWins" | "defenderWins" | "mutual",
-    playerId,
-  };
-  operations.event.emit(fightResolvedEvent);
-  scheduleGigStealsForDecisiveFightWin(
-    state,
-    operations,
-    attack,
-    result,
-    attackerPower - defenderPower,
-  );
-  processEventTriggers(fightResolvedEvent, state, operations);
-
-  consumeNextFriendlyFightLossDefeat(state, operations, attack, result);
-
-  operations.game.setAttackState(null);
-}
-
 export interface ResolveRedirectDefeatInput {
   args: {
     pass?: boolean;
+    paymentSourceIds?: string[];
   };
 }
 
@@ -520,7 +599,7 @@ export const resolveRedirectDefeatMove: MoveDefinition<ResolveRedirectDefeatInpu
     return (choice.chooserId as string) === (playerId as string);
   },
 
-  validate({ state, playerId, input: _input }) {
+  validate({ state, playerId, input }) {
     const choice = state.G.turnMetadata.pendingChoice;
     if (!choice || choice.type !== "redirectDefeat") {
       return {
@@ -535,6 +614,18 @@ export const resolveRedirectDefeatMove: MoveDefinition<ResolveRedirectDefeatInpu
     if (choice.payload.continuation.kind === "fight" && !state.G.attackState) {
       return { valid: false, error: "No attack in progress", errorCode: "NO_ATTACK" };
     }
+    if (
+      !input.args.pass &&
+      input.args.paymentSourceIds !== undefined &&
+      !canSpendSelectedEddies(
+        state.G,
+        playerId,
+        choice.payload.cost,
+        input.args.paymentSourceIds as CardInstanceId[],
+      )
+    ) {
+      return { valid: false, error: "Invalid payment sources", errorCode: "INVALID_PAYMENT" };
+    }
     return { valid: true };
   },
 
@@ -548,14 +639,38 @@ export const resolveRedirectDefeatMove: MoveDefinition<ResolveRedirectDefeatInpu
       choice.payload;
 
     if (!input.args.pass) {
-      operations.game.spendEddies(playerId, choice.payload.cost, "redirectDefeat");
-      const jackie = state.G.cardIndex[replacementCardId as string];
+      const replacementCard = state.G.cardIndex[replacementCardId as string];
+      const protectedCard = state.G.cardIndex[protectedCardId as string];
+      operations.event.emit({
+        type: "actionLog",
+        messageKey: "move.resolveRedirectDefeat",
+        params: {
+          replacementCardName: replacementCard
+            ? getDefinitionFor(state.G, replacementCardId as string).displayName
+            : "The replacement card",
+          protectedCardName: protectedCard
+            ? getDefinitionFor(state.G, protectedCardId as string).displayName
+            : "the friendly Unit",
+          cost: choice.payload.cost,
+        },
+        playerId,
+        category: "replacement",
+        cardIds: [replacementCardId as string, protectedCardId as string],
+      });
+      operations.game.spendEddies(
+        playerId,
+        choice.payload.cost,
+        "redirectDefeat",
+        input.args.paymentSourceIds === undefined
+          ? undefined
+          : { sourceIds: input.args.paymentSourceIds as CardInstanceId[] },
+      );
       defeatHostAndAttachedGear(
         state,
         operations,
         replacementCardId,
         defeatSourceFor(protectedCardId, continuation, attack),
-        jackie?.controllerId ?? playerId,
+        replacementCard?.controllerId ?? playerId,
         "immediate",
       );
     } else {
@@ -670,37 +785,77 @@ export const resolveSacrificialGearMove: MoveDefinition<ResolveSacrificialGearIn
   },
 };
 
-function scheduleGigStealsForDecisiveFightWin(
+function enqueueFightActiveEffects(
   state: MatchState,
   operations: import("../operations/index.ts").Operations,
-  attack: AttackState,
-  result: FightResult,
-  powerMargin: number,
+  attack: Extract<AttackState, { step: "fightResult" }>,
+  event: Extract<import("../types/game-events.ts").GameEvent, { type: "attackResolved" }>,
 ): void {
-  if (result !== "attackerWins") return;
-
+  const defenderId = attack.defenderId;
+  if (!defenderId) throw new Error("Fight result requires a defender");
   const attacker = state.G.cardIndex[attack.attackerId as string];
-  const effects = state.G.activeEffects.filter(
-    (candidate) =>
-      candidate.kind === "nextFightWinGigSteal" &&
-      candidate.playerId === attacker?.controllerId &&
-      powerMargin >= (candidate.minPowerMargin ?? 3),
+  const defender = state.G.cardIndex[defenderId as string];
+  if (!attacker || !defender) throw new Error("Fight participants must exist at result admission");
+  const result = attack.fightResolution.result;
+  const winnerId =
+    result === "attackerWins" ? attack.attackerId : result === "defenderWins" ? defenderId : null;
+  const loserIds =
+    result === "mutual"
+      ? [attack.attackerId, defenderId]
+      : [result === "attackerWins" ? defenderId : attack.attackerId];
+  const powerMargin = Math.abs(
+    attack.fightResolution.attackerPower - attack.fightResolution.defenderPower,
   );
-  for (const effect of effects) {
-    if (!effect.playerId) continue;
+  const matching = state.G.activeEffects.filter((effect) => {
+    if (!effect.playerId) return false;
+    switch (effect.kind) {
+      case "defeatRivalOnNextFriendlyFightLoss":
+        return loserIds.some(
+          (id) => state.G.cardIndex[id as string]?.controllerId === effect.playerId,
+        );
+      case "preventNextRivalFightDefeat":
+        return (
+          effect.playerId === attacker.controllerId || effect.playerId === defender.controllerId
+        );
+      case "nextFightWinGigSteal":
+        return (
+          winnerId !== null &&
+          state.G.cardIndex[winnerId as string]?.controllerId === effect.playerId &&
+          powerMargin >= (effect.minPowerMargin ?? 3)
+        );
+      default:
+        return false;
+    }
+  });
+
+  for (const effect of matching) {
+    if (!effect.playerId) throw new Error("Pending fight effect requires a controller");
     operations.game.removeActiveEffect(effect.id);
-    operations.game.addBagEntry({
-      id: `fight-steal-${effect.id}`,
-      // Keep the Program as the displayed effect source while binding the
-      // winning Unit separately as the thief for gigStolen event filters.
-      sourceCardId: effect.sourceCardId,
-      sourcePlayerId: effect.playerId,
-      effectIndex: 0,
-      abilityText:
-        "The next time a friendly Unit wins a fight by 3+ power this turn, it also steals a Gig.",
-      suspended: false,
-      delayedTiming: "afterTriggerResolution",
-      delayedEffects: [
+    let resolution: Extract<
+      import("../types/match-state.ts").QueuedTrigger,
+      { kind: "delayed" }
+    >["resolution"];
+    let boundTargets: Record<string, string[]> = {};
+    let abilityText: string;
+    if (effect.kind === "defeatRivalOnNextFriendlyFightLoss") {
+      const opposingId = effect.playerId === attacker.controllerId ? defenderId : attack.attackerId;
+      boundTargets = { opposingUnit: [opposingId as string] };
+      const effects: Effect[] = [
+        { effect: "defeat", target: { selector: "bound", id: "opposingUnit" } },
+      ];
+      resolution = { kind: "effects", effects };
+      abilityText =
+        "The next time a friendly Unit loses a fight this turn, defeat the opposing rival Unit.";
+    } else if (effect.kind === "preventNextRivalFightDefeat") {
+      const protectedCardId =
+        effect.playerId === attacker.controllerId ? attack.attackerId : defenderId;
+      resolution = { kind: "fightProtection", protectedCardId };
+      abilityText =
+        "The next time a rival Unit fights this turn, it doesn't defeat the opposing friendly Unit.";
+    } else if (effect.kind === "nextFightWinGigSteal") {
+      if (!winnerId) throw new Error("Fight-win effect requires a winner");
+      boundTargets = { winningUnit: [winnerId as string] };
+      const effects: Effect[] = [
         {
           effect: "stealGig",
           target: {
@@ -711,8 +866,27 @@ function scheduleGigStealsForDecisiveFightWin(
           },
           source: { selector: "bound", id: "winningUnit" },
         },
-      ],
-      resolvedBindings: { winningUnit: [attack.attackerId as string] },
+      ];
+      resolution = { kind: "effects", effects };
+      abilityText =
+        "The next time a friendly Unit wins a fight by 3+ power this turn, it also steals a Gig.";
+    } else {
+      throw new Error(`Unsupported pending fight effect: ${effect.kind}`);
+    }
+    const order = state.G.turnMetadata.nextTriggerId++;
+    state.G.turnMetadata.triggerQueue.push({
+      kind: "delayed",
+      id: `trigger-${order}`,
+      sourceCardId: effect.sourceCardId,
+      sourcePlayerId: effect.playerId,
+      activeEffectId: effect.id,
+      sourceAbilityIndex: effect.abilityIndex,
+      abilityText,
+      event,
+      contextTargets: {},
+      boundTargets,
+      resolution,
+      order,
     });
   }
 }
@@ -743,84 +917,6 @@ function fightAutoWinner(
   return null;
 }
 
-function consumeNextFriendlyFightLossDefeat(
-  state: MatchState,
-  operations: import("../operations/index.ts").Operations,
-  attack: AttackState,
-  result: FightResult,
-): void {
-  const lossPairs: Array<{
-    loserId: CardInstanceId | null;
-    opposingId: CardInstanceId | null;
-  }> =
-    result === "attackerWins"
-      ? [{ loserId: attack.defenderId, opposingId: attack.attackerId }]
-      : result === "defenderWins"
-        ? [{ loserId: attack.attackerId, opposingId: attack.defenderId }]
-        : [
-            { loserId: attack.attackerId, opposingId: attack.defenderId },
-            { loserId: attack.defenderId, opposingId: attack.attackerId },
-          ];
-
-  for (const { loserId, opposingId } of lossPairs) {
-    if (!loserId || !opposingId) continue;
-    const loser = state.G.cardIndex[loserId as string];
-    const opposing = state.G.cardIndex[opposingId as string];
-    if (!loser || !opposing) continue;
-    const effect = state.G.activeEffects.find(
-      (candidate) =>
-        candidate.kind === "defeatRivalOnNextFriendlyFightLoss" &&
-        (candidate.playerId as string) === (loser.controllerId as string),
-    );
-    if (!effect) continue;
-    operations.game.removeActiveEffect(effect.id);
-    if (opposing.zone === "field") {
-      defeatHostAndAttachedGear(
-        state,
-        operations,
-        opposingId,
-        effect.sourceCardId,
-        opposing.controllerId,
-      );
-    }
-  }
-}
-
-function consumeNextRivalFightProtection(
-  state: MatchState,
-  operations: import("../operations/index.ts").Operations,
-  attack: AttackState,
-): { cardId: string; sourceCardName: string } | undefined {
-  const defenderId = attack.defenderId;
-  if (!defenderId) return undefined;
-
-  const attacker = state.G.cardIndex[attack.attackerId as string];
-  const defender = state.G.cardIndex[defenderId as string];
-  if (!attacker || !defender) return undefined;
-
-  const protection = state.G.activeEffects.find(
-    (effect): effect is ActiveEffect & { playerId: PlayerId } =>
-      effect.kind === "preventNextRivalFightDefeat" && effect.playerId !== undefined,
-  );
-  if (!protection) return undefined;
-
-  const sourcePlayerId = protection.playerId as string;
-  const attackerIsFriendly = (attacker.controllerId as string) === sourcePlayerId;
-  const defenderIsFriendly = (defender.controllerId as string) === sourcePlayerId;
-
-  if (attackerIsFriendly || !defenderIsFriendly) return undefined;
-
-  operations.game.removeActiveEffect(protection.id);
-  const sourceCard = state.G.cardIndex[protection.sourceCardId as string];
-  const sourceDefinition = sourceCard
-    ? getDefinitionFor(state.G, protection.sourceCardId as string)
-    : null;
-  return {
-    cardId: defenderId as string,
-    sourceCardName: sourceDefinition?.displayName ?? sourceDefinition?.name ?? "the active effect",
-  };
-}
-
 function executeSteal(
   state: import("../types/match-state.ts").MatchState,
   playerId: import("../types/branded.ts").PlayerId,
@@ -839,6 +935,7 @@ function executeSteal(
       type: "attackResolved",
       attackerId: attack.attackerId,
       defenderId: null,
+      rivalId: attack.rivalId,
       attackKind: "direct",
       result: "gigsStolen",
       gigsStolen: 0,
@@ -848,7 +945,12 @@ function executeSteal(
     operations.event.emit({
       type: "actionLog",
       messageKey: "move.resolveAttack.direct",
-      params: { attackerName, attackerPower, count: 0 },
+      params: {
+        attackerName,
+        attackerPower,
+        count: 0,
+        stolenGigs: formatStolenGigSummary([]),
+      },
       playerId,
     });
     operations.game.setAttackState(null);
@@ -923,8 +1025,12 @@ export function performGigSteal(opts: {
   playerId: import("../types/branded.ts").PlayerId;
   attackerName: string;
   attackerPower: number;
-}): void {
+}): StolenGigLogEntry[] {
   const { state, operations, attack, gigIds, playerId, attackerName, attackerPower } = opts;
+  const stolenGigs = gigIds.flatMap((gigId) => {
+    const die = state.G.gigDice[gigId as string];
+    return die ? [{ dieType: die.dieType, faceValue: die.faceValue }] : [];
+  });
   if (gigIds.length > 0) {
     markDefeatAtEndOfTurnIfAttacked(state, attack.attackerId);
   }
@@ -950,6 +1056,7 @@ export function performGigSteal(opts: {
     type: "attackResolved",
     attackerId: attack.attackerId,
     defenderId: null,
+    rivalId: attack.rivalId,
     attackKind: "direct",
     result: "gigsStolen",
     gigsStolen: stolenCount,
@@ -958,9 +1065,15 @@ export function performGigSteal(opts: {
   operations.event.emit({
     type: "actionLog",
     messageKey: "move.resolveAttack.direct",
-    params: { attackerName, attackerPower, count: stolenCount },
+    params: {
+      attackerName,
+      attackerPower,
+      count: stolenCount,
+      stolenGigs: formatStolenGigSummary(stolenGigs),
+    },
     playerId,
   });
+  return stolenGigs;
 }
 
 /**
@@ -1061,6 +1174,7 @@ export function buildEffectGigStealPrevention(input: {
   choice.payload.effectSteal = {
     sourcePlayerId: input.sourcePlayerId,
     sourceCardId: input.sourceCardId,
+    sourceCardName: getDefinitionFor(input.state.G, input.sourceCardId as string).displayName,
   };
   return choice;
 }

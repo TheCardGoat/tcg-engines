@@ -22,7 +22,7 @@ export const op10JesusBurgess085: CharacterCard = {
   setId: "OP10",
   cost: 5,
   power: 6000,
-  traits: ["Blackbeard Pirates Dressrosa"],
+  traits: ["Dressrosa", "Blackbeard Pirates"],
   attribute: "strike",
   effect: "[DON!! x1] If you have 8 or more cards in your trash, this Character gains [Rush].",
   effects: {

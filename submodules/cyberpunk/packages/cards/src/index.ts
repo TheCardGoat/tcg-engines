@@ -2,21 +2,28 @@ import type { CardDefinition, RawCardRecord, StructuredCardDefinition } from "@t
 
 export { cards, rawCards } from "./generated.ts";
 export { CYBERPUNK_STARTER_DECK_SOURCE_URL, deckLists, starterDeckLists } from "./decks/index.ts";
-export * from "./promo/index.ts";
-export * from "./PRM01/index.ts";
-export * from "./boxtoppersretail/index.ts";
-export * from "./theheistretailstarterdeck/index.ts";
-export * from "./embracingpowerretailstarterdeck/index.ts";
-export * from "./welcometonightcityretail/index.ts";
+// Canonical card definitions — one authored file per slug under
+// `src/cards/<type>/`, plus the per-type arrays and the assembled
+// `structuredCards` pool. See the generated `src/cards/index.ts`.
+export * from "./cards/index.ts";
 
 import { rawCards } from "./generated.ts";
-import { prm01Cards } from "./PRM01/index.ts";
-import { boxToppersRetailCards } from "./boxtoppersretail/index.ts";
-import { promoCards } from "./promo/index.ts";
-import { theHeistRetailStarterDeckCards } from "./theheistretailstarterdeck/index.ts";
-import { embracingPowerRetailStarterDeckCards } from "./embracingpowerretailstarterdeck/index.ts";
-import { welcomeToNightCityRetailCards } from "./welcometonightcityretail/index.ts";
+import { structuredCards } from "./cards/index.ts";
 import { getMergedCyberpunkCards, setPriority } from "./merged.ts";
+import {
+  collectCardRulings,
+  localizeCardRuling,
+  type CyberpunkRulingLocale,
+  type LocalizedCardRuling,
+} from "./rulings.ts";
+
+export {
+  CYBERPUNK_RULING_LOCALES,
+  isCyberpunkRulingLocale,
+  localizeCardRuling,
+  type CyberpunkRulingLocale,
+  type LocalizedCardRuling,
+} from "./rulings.ts";
 
 /**
  * Resolve a slug to its CANONICAL runtime card.
@@ -55,36 +62,42 @@ export function getRawCardBySlug(slug: string): RawCardRecord | undefined {
   return ordered.find((card) => card.set.code === canonical?.set.code) ?? ordered[0];
 }
 
-export const structuredCards: StructuredCardDefinition[] = [
-  ...promoCards,
-  ...prm01Cards,
-  ...boxToppersRetailCards,
-  ...theHeistRetailStarterDeckCards,
-  ...embracingPowerRetailStarterDeckCards,
-  ...welcomeToNightCityRetailCards,
-];
+/** Keep canonical card FAQs and print-specific rulings from every source row. */
+export function getCardRulingsBySlug(
+  slug: string,
+  locale: CyberpunkRulingLocale = "en",
+): LocalizedCardRuling[] {
+  const canonical = getRawCardBySlug(slug);
+  if (!canonical) return [];
+
+  return collectCardRulings(rawCards, canonical).map((ruling) =>
+    localizeCardRuling(ruling, locale),
+  );
+}
 
 export function getStructuredCardBySlug(slug: string): StructuredCardDefinition | undefined {
   return structuredCards.find((card) => card.slug === slug);
-}
-
-export function getStructuredPromoCardBySlug(slug: string) {
-  return promoCards.find((card) => card.slug === slug);
-}
-
-export function getStructuredPrm01CardBySlug(slug: string) {
-  return prm01Cards.find((card) => card.slug === slug);
 }
 
 // Cross-set card merge — single source of truth shared with the platform card
 // catalog and the deck-save validator so canonical selection + printing sets
 // cannot drift. See `src/merged.ts`.
 export {
+  CYBERPUNK_PACK_COMMON_SLOTS,
+  CYBERPUNK_PACK_RARE_SLOTS,
+  CYBERPUNK_PACK_UNCOMMON_SLOTS,
+  CYBERPUNK_RETAIL_PACK_SET,
+  CYBERPUNK_SIX_PACK_COUNT,
+  createCyberpunkPackSimulator,
+} from "./pack-simulator/index.ts";
+
+export {
   getMergedCyberpunkCards,
   getMergedCyberpunkCardsById,
   legacyAccentMangledSlugAliases,
   mergeDuplicateCards,
   pickCanonicalAndMergePrintings,
+  RUNTIME_SET_CODES,
   setPriority,
   SET_PRIORITY,
   type MergeableCard,
@@ -94,21 +107,23 @@ export {
 // Atelier (alt-art acquisition/rental) data projection for the platform
 // deckbuilder + atelier backend. See `src/atelier.ts`.
 export {
-  CYBERPUNK_ALT_ART_SET_CODES,
-  CYBERPUNK_RARITY_RANK,
   CYBERPUNK_RARITY_TO_CODE,
+  CYBERPUNK_LEGACY_ART_ID_TO_ART_ID,
+  CYBERPUNK_LEGACY_ART_ID_TO_CANONICAL_ID,
   cyberpunkPrintingEffectiveRarityCode,
   cyberpunkRarityCode,
   defaultCyberpunkPrintingId,
+  getCyberpunkArtIdForPrinting,
   getCyberpunkCanonicalForCardId,
   getCyberpunkCardDisplay,
+  getCyberpunkFreeArtIdsForCanonical,
   getCyberpunkPrintingImageUrl,
   getCyberpunkPrintingInfo,
   getCyberpunkPrintingInfosForCanonical,
+  isCyberpunkAlternateArtId,
   isCyberpunkAlternateArtPrinting,
   isCyberpunkPrintingOfCanonical,
   type CyberpunkPrintingInfo,
-  type CyberpunkPrintingSetRef,
   type CyberpunkRarityCode,
 } from "./atelier.ts";
 
@@ -127,12 +142,7 @@ export { DSL_VERSION, MIN_SUPPORTED_DSL_VERSION, assertCompatibleDsl } from "@tc
 // Authoring helpers — derive `timingTriggers` / `keywords` from the abilities
 // array, plus the canonical gear attachment literal. See
 // `packages/cards/src/define.ts` for the implementations.
-export {
-  deriveCardSurface,
-  deriveKeywords,
-  deriveTimingTriggers,
-  gearAttachmentToUnitOrLegend,
-} from "./define.ts";
+export { deriveCardSurface, deriveKeywords, deriveTimingTriggers } from "./define.ts";
 
 // Builder helpers — fluent / factory API for authoring abilities, targets,
 // conditions, and effects without hand-writing the discriminated-union JSON.

@@ -37,7 +37,7 @@ describe("Goro Takemura - Hands Unclean (Embracing Power) jsdom behavior", () =>
 
       await pom.goSolo(goro.instanceId, CYBERPUNK_P1);
 
-      await pom.expectEddies(CYBERPUNK_P1, 1);
+      await pom.expectEddies(CYBERPUNK_P1, 2);
       await pom.expectFieldCardGrantedRule(CYBERPUNK_P1, goro.instanceId, "goSolo", true);
       await pom.expectFieldCardGrantedRule(CYBERPUNK_P1, goro.instanceId, "blocker", true);
 

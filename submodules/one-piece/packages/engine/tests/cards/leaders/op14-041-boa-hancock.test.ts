@@ -60,4 +60,34 @@ describe("OP14-041 Boa Hancock", () => {
     expect(engine.getView("south").players.north.hand).toHaveLength(2);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("draws once for each of three Characters played by Moria's Life Trigger", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op14eb04BoaHancockOp14041041,
+        life: ["OP16-105"],
+        trash: ["OP14-100", "OP14-110", "OP10-036"],
+        deck: Array(5).fill("ST02-002"),
+      },
+      { character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const ids = ["OP14-100", "OP14-110", "OP10-036"].map((id) =>
+      engine.findCardInZone("south", "trash", id),
+    );
+    engine.declareAttack(
+      engine.findCardInZone("north", "character", "EB01-018"),
+      engine.leader("south"),
+      "north",
+    );
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "south");
+    engine.resolveDecision("effectGroupedPlaySelection", { selectedIds: ids }, "south");
+    while (engine.getView("south").prompts.length) {
+      const step = engine.pendingDecision("readyEffectOrder", "south").steps[0];
+      if (step?.kind !== "chooseOption") throw new Error("Expected simultaneous draw order");
+      engine.resolveDecision("readyEffectOrder", { optionId: step.options[0]!.id }, "south");
+    }
+    expect(engine.getView("south").players.south.handCount).toBe(3);
+    expect(engine.getView("south").players.south.deckCount).toBe(2);
+    expect(engine.getView("south").players.south.characters.filter(Boolean)).toHaveLength(3);
+  });
 });

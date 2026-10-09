@@ -43,7 +43,7 @@ describe("OP13-098 Never Existed... in the First Place...", () => {
     });
   });
 
-  test("Main does not offer its DON!! payment or Stage K.O. without an Imu Leader", () => {
+  test("Main pays its optional DON before a non-Imu Leader stops the Stage K.O.", () => {
     const engine = OnePieceTestEngine.create(
       { hand: [op13NeverExistedInTheFirstPlace098], activeDon: 2 },
       { stage: op13TheEmptyThrone099 },
@@ -51,9 +51,10 @@ describe("OP13-098 Never Existed... in the First Place...", () => {
     const stageId = engine.findCardInZone("north", "stage", op13TheEmptyThrone099);
 
     engine.playCard(op13NeverExistedInTheFirstPlace098);
+    engine.asSouth().acceptOptional();
 
     const view = engine.getView("south");
-    expect(view.players.south).toMatchObject({ activeDon: 1, restedDon: 1 });
+    expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 2 });
     expect(view.players.north.stage?.instanceId).toBe(stageId);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);

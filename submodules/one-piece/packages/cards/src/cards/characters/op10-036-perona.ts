@@ -23,7 +23,7 @@ export const op10Perona036: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Thriller Bark Pirates ODYSSEY Muggy Kingdom"],
+  traits: ["ODYSSEY", "Muggy Kingdom", "Thriller Bark Pirates"],
   attribute: "special",
   effect:
     "[Your Turn] [Once Per Turn] If a Character is rested by your effect, set up to 1 of your DON!! cards as active.",

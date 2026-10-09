@@ -67,7 +67,7 @@ export const op06VinsmokeSora063: CharacterCard = {
                 {
                   filter: "trait",
                   value: "The Vinsmoke Family",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cardCategory",

@@ -51,7 +51,7 @@ export const op09BlackHole098: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Blackbeard Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

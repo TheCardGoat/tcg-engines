@@ -26,6 +26,7 @@ describe("condition-evaluator", () => {
       },
       G: {
         lore: { [p1]: 0, [p2]: 0 },
+        inkDrops: { [p1]: 0, [p2]: 0 },
         turnMetadata: {
           cardsPlayedThisTurn: [],
           charactersQuesting: [],
@@ -43,6 +44,8 @@ describe("condition-evaluator", () => {
           cardsPutIntoDiscardThisTurnByOwner: {},
           pendingCostReductionsByPlayer: {},
           cardsDrawnThisTurnByPlayer: {},
+          inkDropsGainedThisTurn: {},
+          inkDropsRemovedThisTurn: {},
         },
         triggeredAbilities: {
           pendingEvents: [],

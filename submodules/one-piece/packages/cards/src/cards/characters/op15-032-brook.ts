@@ -83,7 +83,7 @@ export const op15Brook032: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Straw Hat Crew",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

@@ -15,7 +15,7 @@ export interface CyberpunkDeckImportMessage {
 
 export interface CyberpunkDeckPayload {
   game: "cyberpunk";
-  format: "alpha" | "constructed";
+  format: "constructed";
   deckId?: string;
   deckName?: string;
   playerName?: string;
@@ -113,7 +113,7 @@ export function createPracticeConfigFromDeckPayload(
       ],
     };
   }
-  if (payload.format !== "alpha" && payload.format !== "constructed") {
+  if (payload.format !== "constructed") {
     return {
       success: false,
       errors: [{ code: "UNSUPPORTED_FORMAT", message: "Unsupported Cyberpunk deck format." }],

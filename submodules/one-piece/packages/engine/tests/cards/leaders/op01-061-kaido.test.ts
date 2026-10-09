@@ -28,4 +28,25 @@ describe("OP01-061 Kaido", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("does not add DON!! when its own Character is K.O.'d during its turn", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op01Kaido061,
+      character: [{ cardId: "OP05-087", attachedDon: 1 }, eb01Doma005],
+      activeDon: 1,
+    });
+    const payment = engine.findCardInZone("south", "character", eb01Doma005);
+    engine.attachDon(engine.leader("south"), 1, "south");
+    const donDeckBefore = engine.getView("south").players.south.donDeckCount;
+    engine.declareAttack(
+      engine.findCardInZone("south", "character", "OP05-087"),
+      engine.leader("north"),
+      "south",
+    );
+    engine.asSouth().acceptOptional();
+    const view = engine.getView("south");
+    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(payment);
+    expect(view.players.south.activeDon).toBe(0);
+    expect(view.players.south.donDeckCount).toBe(donDeckBefore);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

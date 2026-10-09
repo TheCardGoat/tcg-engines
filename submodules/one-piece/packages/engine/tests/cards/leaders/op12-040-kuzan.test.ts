@@ -28,4 +28,20 @@ describe("OP12-040 Kuzan", () => {
     expect(view.players.south.characters.some((card) => card?.instanceId === zephyrId)).toBe(true);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("draws for Garp's Navy activation cost only after Garp has finished its play effect", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op12Kuzan040,
+      hand: ["OP12-056", eb01Doma005],
+      deck: ["ST06-007", eb01Doma005],
+      activeDon: 8,
+    });
+    engine.playCard("OP12-056", "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    const view = engine.getView("south");
+    expect(view.players.south.hand.map((card) => card.cardId)).toEqual(["ST06-007"]);
+    expect(view.players.south.characters.filter(Boolean).map((card) => card?.cardId)).toEqual([
+      "OP12-056",
+    ]);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

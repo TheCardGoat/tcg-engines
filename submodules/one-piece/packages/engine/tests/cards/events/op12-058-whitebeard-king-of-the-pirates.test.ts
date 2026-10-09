@@ -64,4 +64,21 @@ describe("OP12-058 I Will Make Whitebeard the King of the Pirates", () => {
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("declining the revealed eligible Character leaves it face-down on top of the deck", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op02EdwardNewgate001,
+      hand: [op12IWillMakeWhitebeardTheKingOfThePirates058],
+      activeDon: 9,
+      deck: [op02EdwardNewgate004, eb01Doma005, eb01Doma005],
+    });
+    const top = engine.findCardInZone("south", "deck", op02EdwardNewgate004);
+    engine.asSouth().play(op12IWillMakeWhitebeardTheKingOfThePirates058);
+    engine.resolveDecision("effectPlaySelection", { selectedIds: [] }, "south");
+    expect(engine.getView("south").players.south.characters.filter(Boolean)).toHaveLength(0);
+    expect(engine.getView("south").players.south.deckCount).toBe(3);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    engine.asSouth().endTurn();
+    engine.asNorth().endTurn();
+    expect(engine.getView("south").players.south.hand.map((c) => c.instanceId)).toContain(top);
+  });
 });

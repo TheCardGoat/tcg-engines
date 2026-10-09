@@ -25,7 +25,7 @@ export const op09Brook111: CharacterCard = {
   counter: 1000,
   trigger:
     'If your Leader has the "Egghead" type and your opponent has 6 or more cards in their hand, your opponent trashes 2 cards from their hand.',
-  traits: ["Straw Hat Crew Egghead"],
+  traits: ["Egghead", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     '[Trigger] If your Leader has the "Egghead" type and your opponent has 6 or more cards in their hand, your opponent trashes 2 cards from their hand.',
@@ -41,7 +41,7 @@ export const op09Brook111: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Egghead",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "handCount",

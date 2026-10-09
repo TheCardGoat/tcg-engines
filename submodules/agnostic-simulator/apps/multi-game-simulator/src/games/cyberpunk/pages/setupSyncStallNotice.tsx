@@ -1,22 +1,29 @@
 import { Alert, Button, Group, Stack, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
+import type { EngineInteractionView } from "@tcg/protocol";
 
 import { useEngine } from "../engine";
 import { SETUP_SYNC_STALL_GRACE_MS, isSetupStateStale } from "./setupSyncStall";
 
 /**
- * True while the local board is stuck in the pre-deal setup state — the
- * engine phase is `setup`, no hands have been dealt, and no pending choice
- * exists. A healthy match passes through this state in moments, so a
- * sustained reading means this client missed its setup `state_update`s.
+ * True while the local board is stuck in the pre-deal setup state without a
+ * known decision. The server interaction view distinguishes a normal wait for
+ * the Rival's first-player choice from a missing setup update.
  *
  * After {@link SETUP_SYNC_STALL_GRACE_MS} the hook fires `onSync` once (the
  * authoritative re-sync request) and surfaces the recovery notice. The notice
  * hides itself as soon as real setup state arrives.
  */
-export function useSetupSyncStall(onSync?: () => void): boolean {
+export function useSetupSyncStall(
+  onSync?: () => void,
+  remoteInteractionView?: EngineInteractionView,
+): boolean {
   const { matchState, humanSide } = useEngine();
-  const stale = isSetupStateStale(matchState, humanSide);
+  const stale = isSetupStateStale(
+    matchState,
+    humanSide,
+    remoteInteractionView?.resolution ? remoteInteractionView.stateVersion : undefined,
+  );
   const [visible, setVisible] = useState(false);
   const autoSyncedRef = useRef(false);
 

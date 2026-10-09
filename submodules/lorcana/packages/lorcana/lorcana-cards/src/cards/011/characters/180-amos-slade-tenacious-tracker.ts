@@ -1,5 +1,4 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { alert } from "../../../helpers/abilities/alert";
 import { amosSladeTenaciousTrackerI18n } from "./180-amos-slade-tenacious-tracker.i18n";
 
 export const amosSladeTenaciousTracker: CharacterCard = {
@@ -30,7 +29,8 @@ export const amosSladeTenaciousTracker: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: false,
-  abilities: [alert],
+  missingImplementation: true,
+  missingTests: true,
   externalIds: {
     lorcast: "crd_da80d9da41e84566969a1c1585dfc75c",
     tcgPlayer: "673738",

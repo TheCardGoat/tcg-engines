@@ -31,6 +31,7 @@ export const buzzLightyearGrounded: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ac3f2a9029364ac283a341245bf36bae",
+    tcgPlayer: "704592",
   },
   text: [
     {

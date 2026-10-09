@@ -16,13 +16,14 @@ describe("OP13-064 Gol.D.Roger", () => {
   test("returns three DON!! to buff its Leader and reduce all opposing Characters through their next End Phase", () => {
     const engine = OnePieceTestEngine.create(
       { hand: [op13GolDRoger064], activeDon: op13GolDRoger064.cost },
-      { character: [eb01Doma005, eb01MountainGod018] },
+      { character: [eb01Doma005, eb01MountainGod018], hand: [eb01Doma005], activeDon: 5 },
       { firstPlayer: "north", activeSeat: "south" },
     );
     const leaderPower = engine.getView("south").players.south.leader.power ?? 0;
     const firstOpponentId = engine.findCardInZone("north", "character", eb01Doma005);
     const secondOpponentId = engine.findCardInZone("north", "character", eb01MountainGod018);
     const donDeckBefore = engine.getView("south").players.south.donDeckCount;
+    const laterId = engine.findCardInZone("north", "hand", eb01Doma005);
 
     engine.playCard(op13GolDRoger064, "south");
     expect(engine.pendingDecision("effectOptional", "south").actorId).toBe("south");
@@ -45,6 +46,12 @@ describe("OP13-064 Gol.D.Roger", () => {
     expect(
       view.players.north.characters.find((card) => card?.instanceId === firstOpponentId)?.power,
     ).toBe((eb01Doma005.power ?? 0) - 2000);
+
+    engine.playCard(eb01Doma005, "north");
+    expect(
+      engine.getView("north").players.north.characters.find((card) => card?.instanceId === laterId)
+        ?.power,
+    ).toBe(eb01Doma005.power);
 
     engine.endTurn("north");
     view = engine.getView("south");

@@ -36,7 +36,7 @@ export const op01BeBeng059: EventCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
-                match: "includes",
+                match: "exact",
               },
             ],
           },
@@ -55,7 +55,7 @@ export const op01BeBeng059: EventCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",

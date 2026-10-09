@@ -80,4 +80,39 @@ describe("OP09-081 Marshall.D.Teach", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: real Nami Life Trigger activates no suppressed OnPlay and pays no hand cost", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP09-081", hand: ["ST02-012"], character: ["ST02-006"] },
+      { life: ["OP08-106"], hand: ["ST06-016"] },
+    );
+    e.asSouth().activateMain(e.leader("south"));
+    e.asSouth().acceptOptional();
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.asNorth().activateLifeTrigger();
+    expect(e.getView("north").players.north.hand.map((c) => c.cardId)).toEqual(["ST06-016"]);
+    expect(e.getView("north").players.north.trash.map((c) => c.cardId)).toContain("OP08-106");
+    expect(e.getView("south").players.south.characters[0]?.cardId).toBe("ST02-006");
+    expect(e.getView("north").prompts).toHaveLength(0);
+  });
+  test("FAQ: combined OnPlay is suppressed but WhenAttacking still freezes its target", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP09-081",
+        hand: ["ST02-012"],
+        character: [{ cardId: "ST02-006", rested: true }],
+      },
+      { hand: ["OP08-023"], character: ["OP08-023"], activeDon: 5 },
+    );
+    const old = e.findCardInZone("north", "character", "OP08-023");
+    const target = e.findCardInZone("south", "character", "ST02-006");
+    e.asSouth().activateMain(e.leader("south"));
+    e.asSouth().acceptOptional();
+    e.asSouth().endTurn();
+    e.asNorth().play("OP08-023");
+    expect(e.getView("north").prompts).toHaveLength(0);
+    e.asNorth().attack(old, e.leader("south"));
+    e.asNorth().chooseTargets(target);
+    e.asNorth().endTurn();
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(true);
+  });
 });

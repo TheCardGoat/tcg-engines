@@ -54,12 +54,12 @@ export const op07GloriosaGrandmaNyon041: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Amazon Lily",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Kuja Pirates",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

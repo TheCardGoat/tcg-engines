@@ -22,7 +22,7 @@ export const op03Minorhinoceros069: CharacterCard = {
   setId: "OP03",
   cost: 3,
   power: 5000,
-  traits: ["Impel Down Jailer Beast"],
+  traits: ["Impel Down", "Jailer Beast"],
   attribute: "strike",
   effect:
     "[On K.O.] If your Leader has the [Impel Down] type, draw 2 cards and trash 1 card from your hand.",
@@ -34,7 +34,7 @@ export const op03Minorhinoceros069: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Impel Down",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

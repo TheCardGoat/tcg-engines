@@ -7,28 +7,12 @@ import { GRAND_ARCHIVE_VISUAL_FIXTURES } from "./fixtures";
 import type { GrandArchiveHarnessFixture } from "./fixtureProjection";
 
 afterEach(cleanup);
-it("stacks the Spirit and earlier levels below one current champion and keeps each inspectable", () => {
-  const fixture = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "champion-lineage")!;
-  mount(fixture, () => true);
-  const arena = screen.getByRole("region", { name: "Your arena" });
-  const lineage = within(arena).getByRole("group", { name: "Rai, Archmage lineage" });
-  const cards = within(lineage).getAllByTestId("card");
-  expect(cards).toHaveLength(3);
-  const names = ["Spirit of Fire", "Rai, Spellcrafter", "Rai, Archmage"];
-  expect(within(arena).queryByRole("region", { name: /inner-lineage/ })).toBeNull();
-  cards.forEach((card, index) => {
-    expect(card.getAttribute("aria-label")).toContain(names[index]);
-    fireEvent.focus(card);
-    expect(screen.getByRole("dialog", { name: `Card preview: ${names[index]}` })).toBeTruthy();
-    fireEvent.blur(card);
-  });
-});
 const base = GRAND_ARCHIVE_VISUAL_FIXTURES.find((fixture) => fixture.id === "opportunity")!;
 const self = base.table.seats.find((seat) => seat.perspective === "bottom")!;
 const opponent = base.table.seats.find((seat) => seat.perspective === "top")!;
 const card = base.entities.find((entity) => entity.face === "public" && entity.kind === "card")!;
 function mount(fixture: GrandArchiveHarnessFixture, submit?: () => boolean, errorMessage?: string) {
-  return render(
+  const result = render(
     <GrandArchiveSimulatorProviders>
       <GrandArchiveTabletop
         fixture={fixture}
@@ -37,87 +21,58 @@ function mount(fixture: GrandArchiveHarnessFixture, submit?: () => boolean, erro
       />
     </GrandArchiveSimulatorProviders>,
   );
+  document.querySelectorAll(".ga-scene-inventory").forEach((node) => node.setAttribute("open", ""));
+  return result;
 }
 
-it("does not duplicate an unlevelled champion with a non-champion lineage attachment", () => {
-  const field = base.table.zones.find((zone) => zone.id === `${self.id}:field`)!;
-  const champion = base.entities.find(
-    (entity) => field.entityIds.includes(entity.id) && entity.kind === "leader",
-  )!;
-  const attachment = {
-    ...card,
-    id: "lineage-attachment",
-    title: "Attached non-champion",
-    dataAttributes: { ...card.dataAttributes, "data-host-id": champion.id },
-  };
+it("inspects the Spirit and earlier levels from the host without duplicating the field champion", async () => {
+  const fixture = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "champion-lineage")!;
+  mount(fixture);
+  const arena = screen.getByRole("region", { name: "Your champion" });
+  expect(arena.querySelectorAll(".ga-scene-card-control")).toHaveLength(1);
+  fireEvent.click(within(arena).getByRole("button", { name: "Inspect Rai, Archmage lineage" }));
+  const lineage = await screen.findByRole("group", { name: "Rai, Archmage lineage" });
+  const layers = within(lineage).getAllByTestId("card");
+  expect(layers).toHaveLength(2);
+  expect(layers[0]!.getAttribute("aria-label")).toContain("Spirit of Fire");
+  expect(layers[1]!.getAttribute("aria-label")).toContain("Rai, Spellcrafter");
+  fireEvent.click(layers[0]!);
+  expect(await screen.findByRole("dialog", { name: "Spirit of Fire" })).toBeTruthy();
+});
+
+it("retains concealed lineage counts without inventing card identities", async () => {
+  const fixture = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "champion-lineage")!;
+  const seat = fixture.table.seats.find((entry) => entry.perspective === "bottom")!;
   mount({
-    ...base,
-    entities: [...base.entities, attachment],
+    ...fixture,
     table: {
-      ...base.table,
-      zones: base.table.zones.map((zone) =>
-        zone.id === `${self.id}:inner-lineage`
-          ? { ...zone, entityIds: [attachment.id], count: 1 }
-          : zone,
+      ...fixture.table,
+      zones: fixture.table.zones.map((zone) =>
+        zone.id === `${seat.id}:inner-lineage` ? { ...zone, entityIds: [], count: 2 } : zone,
       ),
     },
   });
-  const stack = screen.getByRole("group", { name: `${champion.title} lineage` });
-  expect(within(stack).getAllByTestId("card")).toHaveLength(2);
-  const championCard = within(stack).getByRole("button", { name: new RegExp(champion.title) });
-  fireEvent.focus(championCard);
-  expect(screen.getByRole("dialog", { name: `Card preview: ${champion.title}` })).toBeTruthy();
-  fireEvent.blur(championCard);
-  fireEvent.focus(within(stack).getByRole("button", { name: /Attached non-champion/ }));
-  expect(screen.getByRole("dialog", { name: "Card preview: Attached non-champion" })).toBeTruthy();
+  fireEvent.click(
+    within(screen.getByRole("region", { name: "Your arena" })).getByRole("button", {
+      name: "Inner Lineage, 2 cards",
+    }),
+  );
+  const dialog = await screen.findByRole("dialog", { name: "Inner Lineage · 2" });
+  expect(dialog.textContent).toContain("2 concealed cards");
+  expect(within(dialog).queryAllByTestId("card")).toHaveLength(0);
 });
 
-for (const hosted of [false, true]) {
-  it(`preserves concealed lineage cards and counts with hosted visible cards=${hosted}`, () => {
-    const fixture = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "champion-lineage")!;
-    const seat = fixture.table.seats.find((entry) => entry.perspective === "bottom")!;
-    mount({
-      ...fixture,
-      table: {
-        ...fixture.table,
-        zones: fixture.table.zones.map((zone) =>
-          zone.id === `${seat.id}:inner-lineage`
-            ? {
-                ...zone,
-                entityIds: hosted ? zone.entityIds : [],
-                count: (hosted ? zone.entityIds.length : 0) + 2,
-              }
-            : zone,
-        ),
-      },
-    });
-    const zone = screen.getByRole("region", { name: "Your inner-lineage, 2 cards" });
-    const cards = within(zone).getAllByTestId("card");
-    expect(cards).toHaveLength(2);
-    for (const card of cards) {
-      expect(card.getAttribute("data-face")).toBe("hidden");
-      expect(card.getAttribute("data-definition-id")).toBeNull();
-    }
-    expect(within(zone).queryAllByRole("button")).toHaveLength(0);
-  });
-}
-
-it("stacks opponent-owned bottom attachments with their host beneath the Spirit", () => {
+it("includes opponent-owned bottom attachments in their field host inspection", async () => {
   const fixture = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "champion-lineage")!;
   const seat = fixture.table.seats.find((entry) => entry.perspective === "bottom")!;
   const owner = fixture.table.seats.find((entry) => entry.perspective === "top")!;
-  const field = fixture.table.zones.find((zone) => zone.id === `${seat.id}:field`)!;
-  const champion = fixture.entities.find((entity) => field.entityIds.includes(entity.id))!;
+  const hostId = fixture.table.zones.find((zone) => zone.id === `${seat.id}:field`)!.entityIds[0]!;
   const attachment = {
     ...card,
     id: "opposing-bottom-card",
     title: "Opponent-owned bottom card",
     ownerId: owner.id,
-    dataAttributes: {
-      ...card.dataAttributes,
-      "data-host-id": champion.id,
-      "data-lineage-position": -1,
-    },
+    dataAttributes: { ...card.dataAttributes, "data-host-id": hostId, "data-lineage-position": -1 },
   };
   mount({
     ...fixture,
@@ -135,18 +90,11 @@ it("stacks opponent-owned bottom attachments with their host beneath the Spirit"
       ),
     },
   });
-  const stack = screen.getByRole("group", { name: "Rai, Archmage lineage" });
-  const cards = within(stack).getAllByTestId("card");
-  expect(cards).toHaveLength(4);
-  ["Opponent-owned bottom card", "Spirit of Fire", "Rai, Spellcrafter", "Rai, Archmage"].forEach(
-    (name, index) => {
-      expect(cards[index]!.getAttribute("aria-label")).toContain(name);
-      fireEvent.focus(cards[index]!);
-      expect(screen.getByRole("dialog", { name: `Card preview: ${name}` })).toBeTruthy();
-      fireEvent.blur(cards[index]!);
-    },
+  fireEvent.click(screen.getByRole("button", { name: "Inspect Rai, Archmage lineage" }));
+  const group = await screen.findByRole("group", { name: "Rai, Archmage lineage" });
+  expect(within(group).getAllByTestId("card")[0]!.getAttribute("aria-label")).toContain(
+    attachment.title,
   );
-  expect(screen.queryByRole("region", { name: /Opponent inner-lineage/ })).toBeNull();
 });
 
 it("renders presence and disables every fixture mutation while retaining inspection", () => {
@@ -161,8 +109,7 @@ it("renders presence and disables every fixture mutation while retaining inspect
     },
   });
   expect(screen.getByText("Online")).toBeTruthy();
-  expect(screen.getByText("Offline")).toBeTruthy();
-  expect(screen.getByText(/Read-only fixture/)).toBeTruthy();
+  expect(screen.getAllByText("Offline").length).toBeGreaterThan(0);
   for (const name of ["Pass Opportunity", "Concede"]) {
     expect(
       screen.getByRole<HTMLButtonElement>("button", { name: new RegExp(`^${name}$`) }).disabled,
@@ -175,7 +122,7 @@ it("renders presence and disables every fixture mutation while retaining inspect
     expect(button.disabled).toBe(true);
 });
 
-it("renders populated object-specific zones and private Pantheon without inventing identities", () => {
+it("renders populated object-specific zones and private Pantheon without inventing identities", async () => {
   const names = ["intent", "inner-lineage", "loaded", "pantheon"] as const;
   const fixture: GrandArchiveHarnessFixture = {
     ...base,
@@ -200,20 +147,28 @@ it("renders populated object-specific zones and private Pantheon without inventi
     },
   };
   mount(fixture);
-  for (const name of names) {
-    const zone = screen.getByRole("region", { name: `Your ${name}, 1 cards` });
-    expect(zone.querySelector("[data-sim-entity-id]")?.getAttribute("data-sim-entity-id")).toBe(
-      `zone-${name}`,
+  for (const name of ["loaded", "pantheon", "inner-lineage"]) {
+    const label =
+      name === "inner-lineage" ? "Inner Lineage" : name === "loaded" ? "Loaded" : "Pantheon";
+    fireEvent.click(
+      within(screen.getByRole("region", { name: "Your arena" })).getByRole("button", {
+        name: `${label}, 1 cards`,
+      }),
     );
-    expect(within(zone).getByText(card.title)).toBeTruthy();
+    const dialog = await screen.findByRole("dialog", { name: `${label} · 1` });
+    expect(
+      within(dialog).getByRole("button", { name: new RegExp(`^Visible ${name},`) }),
+    ).toBeTruthy();
+    fireEvent.click(within(dialog).getByRole("button", { name: `Close ${label}` }));
   }
-  const hidden = screen.getByRole("region", { name: "Opponent pantheon, 2 cards" });
-  expect(within(hidden).getAllByTestId("card")).toHaveLength(2);
-  for (const face of within(hidden).getAllByTestId("card")) {
-    expect(face.getAttribute("data-face")).toBe("hidden");
-    expect(face.getAttribute("data-definition-id")).toBeNull();
-  }
-  expect(within(hidden).queryAllByRole("button")).toHaveLength(0);
+  fireEvent.click(
+    within(screen.getByRole("region", { name: "Opponent arena" })).getByRole("button", {
+      name: "Pantheon, 2 cards",
+    }),
+  );
+  const hidden = await screen.findByRole("dialog", { name: "Pantheon · 2" });
+  expect(hidden.textContent).toContain("2 concealed cards");
+  expect(within(hidden).queryAllByTestId("card")).toHaveLength(0);
   expect(hidden.textContent).not.toContain("Visible pantheon");
 });
 
@@ -229,7 +184,11 @@ it("inspects only authorized Main Deck reveals without implying deck order", asy
       ),
     },
   });
-  fireEvent.click(screen.getByRole("button", { name: /Your Deck,/ }));
+  fireEvent.click(
+    within(screen.getByRole("region", { name: "Your arena" })).getByRole("button", {
+      name: /Deck,/,
+    }),
+  );
   const dialog = await screen.findByRole("dialog");
   expect(dialog.textContent).toContain("does not indicate deck order");
   expect(dialog.textContent).toContain("39 concealed cards");
@@ -302,8 +261,8 @@ it.each(["main-deck", "material-deck"] as const)(
     );
     const view = render(element([zeta.id, alpha.id]));
     fireEvent.click(
-      screen.getByRole("button", {
-        name: zoneName === "main-deck" ? /Your Deck,/ : /Your Material Deck,/,
+      within(screen.getByRole("region", { name: "Your arena" })).getByRole("button", {
+        name: zoneName === "main-deck" ? /Deck,/ : /Material,/,
       }),
     );
     const dialog = await screen.findByRole("dialog");

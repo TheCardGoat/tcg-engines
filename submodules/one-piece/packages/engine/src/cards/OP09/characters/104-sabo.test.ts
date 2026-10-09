@@ -57,4 +57,17 @@ describe("OP09-104 Sabo", () => {
     expect(engine.getView("north").players.north.deckCount).toBe(deckBefore - 2);
     expect(engine.getView("north").prompts).toHaveLength(0);
   });
+  test("skipping the optional hand addition still takes Life when two remain", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [op09Sabo104, op09BeloBetty112],
+      activeDon: op09Sabo104.cost,
+      life: [eb01Doma005, eb01Fourtricks025],
+    });
+    const bottom = engine.findCardInZone("south", "life", eb01Fourtricks025);
+    engine.asSouth().play(op09Sabo104);
+    engine.asSouth().chooseNoTargets();
+    engine.resolveDecision("effectLifePosition", { optionId: "bottom" }, "south");
+    expect(engine.getView("south").players.south.lifeCount).toBe(1);
+    expect(engine.getView("south").players.south.hand.map((c) => c.instanceId)).toContain(bottom);
+  });
 });

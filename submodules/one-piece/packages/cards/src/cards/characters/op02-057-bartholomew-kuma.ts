@@ -23,7 +23,7 @@ export const op02BartholomewKuma057: CharacterCard = {
   cost: 3,
   power: 3000,
   counter: 1000,
-  traits: ["Revolutionary Army The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Revolutionary Army"],
   attribute: "strike",
   effect:
     "[On Play] Look at 2 cards from the top of your deck; reveal up to 1 [The Seven Warlords of the Sea] type card and add it to your hand. Then, place the rest at the top or bottom of the deck in any order.",
@@ -47,7 +47,7 @@ export const op02BartholomewKuma057: CharacterCard = {
               {
                 filter: "trait",
                 value: "The Seven Warlords of the Sea",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

@@ -24,7 +24,7 @@ export const op17Nami023: CharacterCard = {
   cost: 1,
   power: 1000,
   counter: 2000,
-  traits: ["East Blue Straw Hat Crew"],
+  traits: ["East Blue", "Straw Hat Crew"],
   attribute: "wisdom",
   effect:
     "If one of your {East Blue} or {Straw Hat Crew} type Characters would be K.O.'d, you may rest this Character instead.",
@@ -46,14 +46,14 @@ export const op17Nami023: CharacterCard = {
                   {
                     filter: "trait",
                     value: "East Blue",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
                 [
                   {
                     filter: "trait",
                     value: "Straw Hat Crew",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               ],

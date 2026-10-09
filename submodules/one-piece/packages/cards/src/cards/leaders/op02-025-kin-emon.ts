@@ -30,7 +30,7 @@ export const op02KinEmon025: LeaderCard = {
   setId: "OP02",
   power: 5000,
   life: 5,
-  traits: ["Land of Wano The Akazaya Nine"],
+  traits: ["Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[Activate:Main] [Once Per Turn] If you have 1 or less Characters, the next time you play a [Land of Wano] type Character card with a cost of 3 or more from your hand during this turn, the cost will be reduced by 1.",
@@ -60,7 +60,7 @@ export const op02KinEmon025: LeaderCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cardCategory",

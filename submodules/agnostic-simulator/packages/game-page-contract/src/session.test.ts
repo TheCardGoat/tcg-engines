@@ -39,6 +39,10 @@ function preparation(revision = 3): MatchSession {
     gameId: "g1",
     preparation: {
       object: "game_pregame",
+      phase: "selecting",
+      phaseToken: "test-phase",
+      serverTime: new Date().toISOString(),
+      selectionOutcome: "pending",
       kind: "flesh-and-blood",
       matchId: "m1",
       gameId: "g1",

@@ -31,6 +31,13 @@ export const op04Leo091: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        postCostConditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Dressrosa",
+            match: "exact",
+          },
+        ],
         costs: [
           {
             cost: "restCards",
@@ -60,11 +67,6 @@ export const op04Leo091: CharacterCard = {
                   value: 1,
                 },
               ],
-            },
-            condition: {
-              condition: "leaderTrait",
-              trait: "Dressrosa",
-              match: "includes",
             },
           },
           {

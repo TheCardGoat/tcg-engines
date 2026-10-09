@@ -76,7 +76,7 @@ export const op14eb04Vergo061: CharacterCard = {
             {
               filter: "trait",
               value: "Donquixote Pirates",
-              match: "includes",
+              match: "exact",
             },
           ],
         },

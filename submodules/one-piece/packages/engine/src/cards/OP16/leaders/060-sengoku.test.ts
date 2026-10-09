@@ -79,4 +79,67 @@ describe("OP16-060 Sengoku", () => {
     expect(after.donDeckCount).toBe(donDeckBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test.each([
+    { activeDon: 7, restedDon: 1, attachedDon: 0 },
+    { activeDon: 7, restedDon: 0, attachedDon: 1 },
+    { activeDon: 0, restedDon: 8, attachedDon: 0 },
+  ])("only active DON can pay the eight-DON cost: %j", ({ activeDon, restedDon, attachedDon }) => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP16-060",
+        activeDon,
+        restedDon,
+        character: [{ cardId: "EB01-005", attachedDon }],
+      },
+      {},
+    );
+    expect(() => engine.asSouth().activateMain(engine.leader("south"))).toThrow();
+    expect(engine.getView("south").players.south.activeDon).toBe(activeDon);
+    expect(engine.getView("south").players.south.restedDon).toBe(restedDon);
+  });
+
+  test("eight active DON pay automatically without touching rested or attached DON", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP16-060",
+        activeDon: 8,
+        restedDon: 1,
+        hand: [],
+        character: [{ cardId: "EB01-005", attachedDon: 1 }],
+      },
+      {},
+    );
+    const before = engine.getView("south").players.south.donDeckCount;
+    engine.asSouth().activateMain(engine.leader("south"));
+    engine.asSouth().acceptOptional();
+    const view = engine.getView("south");
+    expect(view.players.south.activeDon).toBe(0);
+    expect(view.players.south.restedDon).toBe(1);
+    expect(view.players.south.characters[0]?.attachedDon).toBe(1);
+    expect(view.players.south.donDeckCount).toBe(before + 8);
+    expect(view.prompts).toHaveLength(0);
+  });
+  test.each([1, 2])(
+    "may play only %i differently named Admirals from a larger hand (FAQ)",
+    (amount) => {
+      let e = OnePieceTestEngine.create(
+        { leaderCardId: "OP16-060", activeDon: 8, hand: ["OP16-063", "OP16-065", "OP16-065"] },
+        {},
+      );
+      e.asSouth().activateMain(e.leader("south"));
+      e.asSouth().acceptOptional();
+      const kuzan = e.findCardInZone("south", "hand", "OP16-063"),
+        sakazuki = e.findCardInZone("south", "hand", "OP16-065");
+      e = OnePieceTestEngine.fromState(JSON.parse(JSON.stringify(e.getState())));
+      e.resolveDecision(
+        "effectPlaySelection",
+        { selectedIds: amount === 1 ? [kuzan] : [kuzan, sakazuki] },
+        "south",
+      );
+      e.resolveDecision("effectAddDon", { optionId: "0" }, "south");
+      expect(e.getView("south").players.south.characters.filter(Boolean)).toHaveLength(amount);
+      expect(e.getView("south").players.south.hand).toHaveLength(3 - amount);
+      expect(e.getView("south").players.south.activeDon).toBe(0);
+    },
+  );
 });

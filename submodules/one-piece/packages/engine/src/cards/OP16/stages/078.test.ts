@@ -16,6 +16,7 @@ describe("OP16-078 Marineford", () => {
     const search = engine.pendingDecision("effectSearchSelection", "south").steps[0];
     if (search?.kind !== "selectEntity") throw new Error("Expected the search choice.");
     const legal = search.candidates.filter((candidate) => candidate.legal);
+    expect(legal.map((c) => c.publicInfo?.cardId)).toEqual(["OP16-063"]);
     if (legal.length > 0) {
       engine.resolveDecision(
         "effectSearchSelection",
@@ -34,6 +35,7 @@ describe("OP16-078 Marineford", () => {
       "south",
     );
 
+    expect(engine.getView("south").players.south.hand.map((c) => c.cardId)).toContain("OP16-063");
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
@@ -61,5 +63,26 @@ describe("OP16-078 Marineford", () => {
       "OP16-078",
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("activation returns DON and rests the Stage before drawing and discarding", () => {
+    const e = OnePieceTestEngine.create({
+      stage: "OP16-078",
+      hand: ["ST02-002"],
+      deck: ["ST02-003", "ST02-002"],
+      activeDon: 2,
+    });
+    const stage = e.findCardInZone("south", "stage", "OP16-078");
+    const donDeck = e.getView("south").players.south.donDeckCount;
+    e.activateEffect(stage, "activateMain", "south");
+    e.asSouth().acceptOptional();
+    expect(e.getView("south").players.south.stage?.rested).toBe(true);
+    expect(e.getView("south").players.south.donDeckCount).toBe(donDeck + 1);
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual([
+      "ST02-002",
+      "ST02-003",
+    ]);
+    e.asSouth().trashFromHand("ST02-002");
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["ST02-003"]);
+    expect(() => e.activateEffect(stage, "activateMain", "south")).toThrow();
   });
 });

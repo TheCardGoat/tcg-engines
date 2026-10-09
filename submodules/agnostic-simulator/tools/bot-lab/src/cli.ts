@@ -47,12 +47,75 @@ async function main(): Promise<void> {
   const flags = parseFlags(rest);
 
   if (command === "help") {
-    console.log("bot-lab doctor|train|evaluate|replay|promote --game <id> [options]");
+    console.log("bot-lab doctor|train|evaluate|replay|promote|gauntlet --game <id> [options]");
+    console.log(
+      "Cyberpunk reference: --reference choombattler --reference-worker <local.js> --reference-catalog <local.json>; reference-manifest --out <manifest.json>",
+    );
     console.log(`registered games: ${listBotLabGames().join(", ") || "none"}`);
     return;
   }
 
-  const adapter = await getBotLabAdapter(required(flags, "game"));
+  const game = required(flags, "game");
+  if (command === "gauntlet") {
+    if (game !== "cyberpunk") throw new Error("This gauntlet supports Cyberpunk");
+    const { runCyberpunkGauntlet } = await import("./cyberpunk-gauntlet.ts");
+    await runCyberpunkGauntlet({
+      directory: resolveUserPath(required(flags, "out")),
+      workers: Number(flags.workers ?? 8),
+      workerPath: resolveUserPath(required(flags, "reference-worker")),
+      catalogPath: resolveUserPath(required(flags, "reference-catalog")),
+      deckIds:
+        flags.decks === undefined
+          ? undefined
+          : required(flags, "decks")
+              .split(",")
+              .map((id) => id.trim()),
+      seedBase: flags["seed-base"] === undefined ? undefined : required(flags, "seed-base"),
+    });
+    return;
+  }
+  if (flags.reference && (game !== "cyberpunk" || flags.reference !== "choombattler")) {
+    throw new Error("The supported reference is --game cyberpunk --reference choombattler");
+  }
+  const adapter =
+    flags.reference === "choombattler"
+      ? (
+          await import("./adapters/cyberpunk-reference/adapter.ts")
+        ).createChoombattlerReferenceAdapter(
+          resolveUserPath(required(flags, "reference-worker")),
+          resolveUserPath(required(flags, "reference-catalog")),
+        )
+      : await getBotLabAdapter(game);
+  if (command === "reference-manifest") {
+    if (flags.reference !== "choombattler")
+      throw new Error("reference-manifest requires --reference choombattler");
+    const suiteId = typeof flags.suite === "string" ? flags.suite : "reference-authored";
+    const blocks = adapter.getPromotionDeckPairs(suiteId).length;
+    writeJson(required(flags, "out"), {
+      schemaVersion: 1,
+      game,
+      candidateId: "expert-oracle",
+      parentStrategyId: "choombattler-expert",
+      informationPolicy: "oracle",
+      hypothesis:
+        "Compare our Expert chooser with the original pinned Choombattler Expert on one native engine",
+      engineRevision: adapter.getEngineRevision(),
+      cardCatalogHash: adapter.getCardCatalogHash(),
+      adapterVersion: adapter.adapterVersion,
+      changes: {},
+      evaluation: {
+        suiteId,
+        seedBase: typeof flags.seed === "string" ? flags.seed : "choombattler-reference-v1",
+        minimumBlocks: blocks,
+        maximumBlocks: blocks,
+        batchSize: blocks,
+        confidenceLevel: 0.95,
+        minimumMeanImprovement: 0,
+        maximumCellRegression: 1,
+      },
+    });
+    return;
+  }
   if (command === "doctor") {
     const result = await adapter.doctor();
     console.log(JSON.stringify(result, null, 2));

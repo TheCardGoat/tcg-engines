@@ -52,6 +52,7 @@ function createBoard(): LorcanaProjectedBoardView {
     players: {
       [playerOneId]: {
         canAddCardToInkwell: false,
+        inkDrops: 0,
         deckCount: 10,
         discard: [],
         hand: [],
@@ -62,6 +63,7 @@ function createBoard(): LorcanaProjectedBoardView {
       },
       [playerTwoId]: {
         canAddCardToInkwell: false,
+        inkDrops: 0,
         deckCount: 10,
         discard: [],
         hand: [],

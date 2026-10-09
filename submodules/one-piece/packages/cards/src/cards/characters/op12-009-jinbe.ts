@@ -23,7 +23,7 @@ export const op12Jinbe009: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Fish-Man The Sun Pirates"],
+  traits: ["Fish-Man", "The Sun Pirates"],
   attribute: "strike",
   effect:
     "[On Play] You may reveal 2 Events from your hand: This Character gains [Rush] during this turn. Then, this Character gains +1000 power until the end of your opponent's next End Phase.",

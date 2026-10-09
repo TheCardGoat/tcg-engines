@@ -20,6 +20,17 @@ describe("OP16-015 Monkey.D.Luffy", () => {
     expect(handCost()).toBe(2);
   });
 
+  test("playing the discounted hand copy restores its printed field cost", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: "OP16-001", hand: ["OP16-015"], activeDon: 6 },
+      {},
+    );
+    engine.asSouth().play("OP16-015");
+    const view = engine.getView("south").players.south;
+    expect(view.activeDon).toBe(4);
+    expect(view.characters.find((c) => c?.cardId === "OP16-015")?.cost).toBe(4);
+  });
+
   test("the hand discount needs both the Ace name and 6 DON!!", () => {
     const engine = OnePieceTestEngine.create(
       {

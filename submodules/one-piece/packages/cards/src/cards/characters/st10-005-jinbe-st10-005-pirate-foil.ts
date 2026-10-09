@@ -33,7 +33,7 @@ export const prb02JinbeSt10005PirateFoil005: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 2000,
-  traits: ["Fish-Man Straw Hat Crew"],
+  traits: ["Fish-Man", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[DON!! x1] [When Attacking] Give up to 1 of your opponent's Characters -2000 power during this turn.",

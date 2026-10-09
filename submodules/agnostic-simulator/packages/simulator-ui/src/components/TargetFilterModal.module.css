@@ -1,0 +1,36 @@
+/* Keep the full-card inspection image inside short landscape dialogs. */
+@media (max-height: 480px) and (min-width: 480px) {
+  .sheet :global(.target-filter-modal-content):has(:global(.target-filter-modal-preview)) {
+    grid-template-columns: minmax(0, 1fr) minmax(8rem, 11rem);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .sheet :global(.target-filter-modal-grid) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .sheet :global(.target-filter-modal-preview) {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    max-height: 100%;
+    overflow: hidden;
+    padding: 0.5rem;
+  }
+
+  .sheet :global(.target-filter-modal-preview) > :first-child {
+    flex: 1 1 0;
+    min-height: 0;
+    max-height: 100%;
+  }
+
+  .sheet :global(.target-filter-modal-preview) > p {
+    flex: none;
+    margin-top: 0.25rem;
+  }
+}

@@ -295,7 +295,17 @@ describe("migrated cards produce the expected shape", () => {
           },
         },
         limits: ["firstTimeEachTurn"],
-        bindings: [{ id: "selectedGig", target: { selector: "gig", controller: "friendly" } }],
+        bindings: [
+          {
+            id: "selectedGig",
+            target: {
+              selector: "gig",
+              controller: "friendly",
+              amount: 1,
+              selection: { mode: "choose", min: 0, max: 1 },
+            },
+          },
+        ],
         effects: [
           {
             effect: "adjustGig",
@@ -311,11 +321,10 @@ describe("migrated cards produce the expected shape", () => {
             amount: 1,
             conditions: [
               {
-                condition: "targetValue",
+                condition: "targetBecameValue",
                 target: { selector: "bound", id: "selectedGig" },
                 property: "gigValue",
-                comparison: "eq",
-                value: 1,
+                value: "min",
               },
             ],
           },

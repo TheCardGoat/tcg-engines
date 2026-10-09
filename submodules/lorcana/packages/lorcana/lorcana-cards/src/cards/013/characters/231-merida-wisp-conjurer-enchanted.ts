@@ -32,6 +32,7 @@ export const meridaWispConjurerEnchanted: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_418bbf00ceac49df9dd203b62d63803f",
+    tcgPlayer: "704572",
   },
   text: [
     {

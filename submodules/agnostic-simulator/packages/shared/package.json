@@ -24,6 +24,7 @@
     "./cyberpunk": "./src/cyberpunk/index.ts",
     "./discord-rich-presence": "./src/discord-rich-presence.ts",
     "./cyberpunk/deck-validation": "./src/cyberpunk/deck-validation.ts",
+    "./cyberpunk/six-pack-deck-validation": "./src/cyberpunk/six-pack-deck-validation.ts",
     "./deck-list-normalize": "./src/deck-list-normalize.ts",
     "./deck-list-parse": "./src/deck-list-parse.ts",
     "./deck-list-errors": "./src/deck-list-errors.ts",

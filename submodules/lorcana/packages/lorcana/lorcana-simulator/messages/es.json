@@ -603,7 +603,7 @@
   "sim.support.submitError": "Failed to submit bug report. Please try again.",
   "sim.support.submitLabel": "Submit",
   "sim.support.submitSuccess": "Thank you for your report!",
-  "sim.support.openTriageLabel": "Open triage request",
+  "sim.support.openTriageLabel": "Ver informe de error",
   "sim.target.cards": "Cards",
   "sim.target.players": "Players",
   "sim.target.selectedCount": "{selectedCount} selected",
@@ -639,5 +639,11 @@
   "sim.postGame.sidebar.goToNextGame": "Go to Next Game →",
   "sim.player.report.openAria": "Denunciar jugador",
   "sim.itemZone.showEarlierAria": "Muestra {count, plural, one {# objeto anterior} other {# objetos anteriores}}",
-  "sim.itemZone.showLaterAria": "Muestra {count, plural, one {# objeto posterior} other {# objetos posteriores}}"
+  "sim.itemZone.showLaterAria": "Muestra {count, plural, one {# objeto posterior} other {# objetos posteriores}}",
+  "sim.inkDropsBadge.instructionStart": "haz clic para empezar a pagar con gotas de tinta",
+  "sim.inkDropsBadge.instructionStop": "haz clic para dejar de pagar con gotas de tinta",
+  "sim.inkDropsBadge.countOne": "{count} gota de tinta",
+  "sim.inkDropsBadge.countMany": "{count} gotas de tinta",
+  "sim.effect.canChallengeReady": "Puede desafiar a personajes preparados",
+  "sim.support.dismissReminderLabel": "Ocultar el recordatorio de comentarios durante una semana"
 }

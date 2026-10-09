@@ -23,7 +23,7 @@ export const op02Inuarashi027: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Land of Wano Minks The Akazaya Nine"],
+  traits: ["Minks", "Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "If all of your DON!! cards are rested, this Character cannot be removed from the field by your opponent's effects.",

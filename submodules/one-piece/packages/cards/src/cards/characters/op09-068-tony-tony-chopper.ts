@@ -23,7 +23,7 @@ export const op09TonyTonyChopper068: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Animal Straw Hat Crew"],
+  traits: ["Animal", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[End of Your Turn] You may return 1 or more DON!! cards from your field to your DON!! deck: Set this Character as active. Then, this Character gains [Blocker] until the end of your opponent's next turn.",

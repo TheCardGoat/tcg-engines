@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from "vite-plus/tes
 
 import AnimationFixturesPage from "./AnimationFixturesPage";
 
-vi.mock("../simulator/audio/sound-service.ts", () => ({
+vi.mock("@tcg/simulator-presentation/audio/sound-service", () => ({
   disposeSimulatorSoundService: vi.fn(),
   initSimulatorSoundService: vi.fn(async () => undefined),
   playSimulatorSound: vi.fn(),
@@ -37,7 +37,7 @@ describe("AnimationFixturesPage · Flesh and Blood", () => {
   });
 
   test("auditions alternate game-agnostic sound packs", async () => {
-    const soundService = await import("../simulator/audio/sound-service.ts");
+    const soundService = await import("@tcg/simulator-presentation/audio/sound-service");
     render(<AnimationFixturesPage onNavigate={vi.fn()} />);
 
     await waitFor(() => expect(screen.getByTestId("sound-pack-original")).not.toBeNull());

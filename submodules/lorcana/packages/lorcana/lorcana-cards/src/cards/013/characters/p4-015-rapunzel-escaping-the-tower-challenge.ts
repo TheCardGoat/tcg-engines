@@ -32,6 +32,7 @@ export const rapunzelEscapingTheTowerP4Challenge: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6afa057b946845d1b46725c7603c50bf",
+    tcgPlayer: "702655",
   },
   text: [
     {

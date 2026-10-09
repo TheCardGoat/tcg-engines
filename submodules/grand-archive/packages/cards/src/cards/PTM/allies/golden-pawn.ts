@@ -45,6 +45,7 @@ export const goldenPawn: GrandArchiveCard<GrandArchiveAbilityDefinition, "card">
                 collection: {
                   zones: ["field"],
                   player: "controller",
+                  excludingSource: true,
                   filter: {
                     kind: "all",
                     filters: [

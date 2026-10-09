@@ -29,6 +29,10 @@ export const minnieMouseCuriousAdventurer: CharacterCard = {
   lore: 1,
   inkable: true,
   vanilla: true,
+  externalIds: {
+    lorcast: "crd_cf3759005287444abf1ea2ee02efd2b1",
+    tcgPlayer: "704601",
+  },
   classifications: ["Dreamborn", "Hero"],
   i18n: minnieMouseCuriousAdventurerI18n,
 };

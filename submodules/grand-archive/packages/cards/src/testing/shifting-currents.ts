@@ -5,7 +5,11 @@ import { expect } from "vitest";
 import { woodlandSquirrels } from "../cards/DOA/allies/woodland-squirrels.ts";
 import { shiftingCurrents } from "../cards/P24/masteries/shifting-currents.ts";
 import { lineageTestChampion } from "./champion-lineage.ts";
-import { grandArchiveAbilityId, requireSingleFace } from "./class-bonus-test-champion.ts";
+import {
+  grandArchiveAbilityId,
+  grantTestChampionLevel,
+  requireSingleFace,
+} from "./class-bonus-test-champion.ts";
 import { answerDecision, passEffectsStack } from "./decisions.ts";
 
 export type ShiftingCurrentsDirection = "north" | "east" | "south" | "west";
@@ -56,8 +60,11 @@ export function startWithShiftingCurrentsNorth(options?: {
   readonly playerOneZones?: FixtureZones;
   readonly playerTwoZones?: FixtureZones;
   readonly lineage?: readonly GrandArchiveAnyCard<GrandArchiveAbilityDefinition>[];
+  readonly extraChampionLevel?: number;
 }): GrandArchiveTestEngine {
-  const starter = kongmingElementalStarter();
+  const starter = options?.extraChampionLevel
+    ? grantTestChampionLevel(kongmingElementalStarter(), options.extraChampionLevel)
+    : kongmingElementalStarter();
   const game = GrandArchiveTestEngine.startFixture({
     pregame: "resolve",
     definitions: [shiftingCurrents],

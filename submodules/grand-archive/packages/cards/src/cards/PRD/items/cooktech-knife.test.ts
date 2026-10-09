@@ -13,3 +13,10 @@ describe("CookTech Knife — Link", () => {
     invalidHost: potionOfHealing,
   });
 });
+
+import { proveLinkedStats } from "../../../testing/linked-stats.ts";
+
+/** @covers 6sZXj2SZW6-a2 */
+describe("Linked stat bonus", () => {
+  proveLinkedStats({ card: cooktechKnife, host: "ally", power: 1, life: 0 });
+});

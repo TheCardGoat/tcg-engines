@@ -41,7 +41,7 @@ export const op16ThePrisonersAreRioting058: EventCard = {
             action: "setBasePower",
             target: {
               player: "self",
-              zones: ["character"],
+              zones: ["leader", "character"],
               count: {
                 amount: "all",
               },
@@ -64,7 +64,7 @@ export const op16ThePrisonersAreRioting058: EventCard = {
             action: "modifyPower",
             target: {
               player: "self",
-              zones: ["character"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
                 upTo: true,

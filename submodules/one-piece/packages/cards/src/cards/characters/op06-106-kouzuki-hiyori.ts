@@ -48,7 +48,7 @@ export const op06KouzukiHiyori106: CharacterCard = {
   cost: 2,
   power: 0,
   counter: 2000,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "wisdom",
 
   effect:

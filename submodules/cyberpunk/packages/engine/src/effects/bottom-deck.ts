@@ -4,6 +4,7 @@ import { SeededRNG } from "../state/rng.ts";
 import type { CardInstanceId, PlayerId } from "../types/branded.ts";
 import { createDefaultMetaForZone } from "../types/card-instance.ts";
 import type { MatchState } from "../types/match-state.ts";
+import { removeFromGameIfLegendMovesToInvalidArea } from "../moves/remove-from-game.ts";
 
 /**
  * Bottom-deck every targeted card and any Gear still attached to those cards
@@ -37,16 +38,8 @@ export function bottomDeckCardsSimultaneously(
     groups.push(group);
   }
 
-  const hostToGear = new Map<string, CardInstanceId[]>();
-  const gearToHost = new Map<string, CardInstanceId>();
   const byOwner = new Map<PlayerId, CardInstanceId[]>();
   for (const group of groups) {
-    const [hostId, ...gearIds] = group;
-    if (!hostId) continue;
-    hostToGear.set(hostId as string, gearIds);
-    for (const gearId of gearIds) {
-      gearToHost.set(gearId as string, hostId);
-    }
     for (const movedId of group) {
       const moved = state.G.cardIndex[movedId as string];
       if (!moved) continue;
@@ -61,7 +54,12 @@ export function bottomDeckCardsSimultaneously(
 
   for (const [owner, ids] of byOwner) {
     const shuffled = rng.shuffle(ids);
-    placeOnBottom(owner, shuffled, hostToGear, gearToHost, state, ops);
+    placeOnBottom(owner, shuffled, state, ops);
+  }
+
+  for (const group of groups) {
+    const hostId = group[0];
+    if (hostId) removeFromGameIfLegendMovesToInvalidArea(state, ops, hostId);
   }
 
   state.ctx.rngState = rng.getState();
@@ -70,8 +68,6 @@ export function bottomDeckCardsSimultaneously(
 function placeOnBottom(
   owner: PlayerId,
   ids: readonly CardInstanceId[],
-  hostToGear: ReadonlyMap<string, CardInstanceId[]>,
-  gearToHost: ReadonlyMap<string, CardInstanceId>,
   state: MatchState,
   ops: Operations,
 ): void {
@@ -95,15 +91,14 @@ function placeOnBottom(
     if (!movedCard) continue;
     const fromZone = fromZones.get(movedId as string) ?? movedCard.zone;
     movedCard.zone = "deck";
-    movedCard.meta = createDefaultMetaForZone("deck", {
-      attachedGearIds: hostToGear.get(movedId as string) ?? [],
-      attachedToId: gearToHost.get(movedId as string) ?? null,
-    });
+    // CR 4.12.1: Gear follows its host once, but is not equipped in the deck.
+    movedCard.meta = createDefaultMetaForZone("deck");
     ops.event.emit({
       type: "cardMoved",
       cardId: movedId,
       fromZone,
       toZone: "deck",
+      deckPlacement: "bottom",
       playerId: owner,
     });
   }

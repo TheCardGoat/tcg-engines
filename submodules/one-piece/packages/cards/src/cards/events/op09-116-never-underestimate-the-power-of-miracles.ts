@@ -68,7 +68,7 @@ export const op09NeverUnderestimateThePowerOfMiracles116: EventCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

@@ -29,9 +29,13 @@ export const pocahontasGuidingTheTribe: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_cc621d8465484cf8a35ac05f444d3f50",
+    tcgPlayer: "704548",
+  },
   text: [
     {
-      title: "Stay Close",
+      title: "STAY CLOSE",
       description: "When you play this character, you may play a character with cost 1 for free.",
     },
   ],

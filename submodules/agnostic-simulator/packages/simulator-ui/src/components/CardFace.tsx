@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
   type CSSProperties,
+  type ImgHTMLAttributes,
   type Ref,
 } from "react";
 
@@ -28,6 +29,7 @@ interface CardFaceBaseProps {
   fill?: boolean;
   fullImageChrome?: "default" | "edge-to-edge";
   fullImageFit?: "cover" | "contain";
+  crossOrigin?: ImgHTMLAttributes<HTMLImageElement>["crossOrigin"];
   selected?: boolean;
   draggable?: boolean;
   targetable?: boolean;
@@ -80,6 +82,7 @@ export const CardFace = memo(
       fill = false,
       fullImageChrome = "default",
       fullImageFit = "contain",
+      crossOrigin,
       imageMode = "full",
       textBoxStart,
       textBoxEnd,
@@ -90,7 +93,7 @@ export const CardFace = memo(
       highlighted = false,
       dimmed = false,
       accessibleLabel,
-      tabIndex = -1,
+      tabIndex,
       onClick,
       onDblClick,
       onContextMenu,
@@ -235,7 +238,7 @@ export const CardFace = memo(
           ),
         )}
         aria-label={ariaLabel}
-        tabIndex={tabIndex}
+        tabIndex={tabIndex ?? (as === "button" ? -1 : undefined)}
         draggable={draggable}
         onClick={handleClick}
         onDoubleClick={handleDblClick}
@@ -303,6 +306,7 @@ export const CardFace = memo(
         ) : usesFullCardImage ? (
           <div className="absolute inset-0" aria-hidden="true">
             <ViewerSafeCardImage
+              crossOrigin={crossOrigin}
               entity={renderedEntity}
               alt={title}
               className={cx(

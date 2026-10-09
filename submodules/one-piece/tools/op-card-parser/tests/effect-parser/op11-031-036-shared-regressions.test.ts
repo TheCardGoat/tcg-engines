@@ -21,8 +21,8 @@ describe("OP11-031 and OP11-036 shared parser regressions", () => {
               {
                 filter: "anyOf",
                 filters: [
-                  { filter: "trait", value: "Fish-Man", match: "includes" },
-                  { filter: "trait", value: "Merfolk", match: "includes" },
+                  { filter: "trait", value: "Fish-Man", match: "exact" },
+                  { filter: "trait", value: "Merfolk", match: "exact" },
                 ],
               },
             ],
@@ -45,7 +45,7 @@ describe("OP11-031 and OP11-036 shared parser regressions", () => {
         {
           filter: "anyOf",
           filters: [
-            { filter: "trait", value: "Neptunian", match: "includes" },
+            { filter: "trait", value: "Neptunian", match: "exact" },
             { filter: "name", value: "Shirahoshi" },
           ],
         },

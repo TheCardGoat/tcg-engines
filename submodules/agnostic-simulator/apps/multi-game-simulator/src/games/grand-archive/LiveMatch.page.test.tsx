@@ -3,6 +3,7 @@ import { createGrandArchiveCatalogSmokeFixture } from "@tcg/grand-archive-engine
 import { GrandArchiveMatchRuntime } from "@tcg/grand-archive-engine/simulator";
 import { GrandArchiveServerEngine } from "@tcg/grand-archive-server-adapter";
 import { buildInteractionSubmission, type InteractionSubmission } from "@tcg/protocol";
+import { MantineProvider } from "@mantine/core";
 import type { GrandArchiveHarnessFixture } from "./fixtureProjection";
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -15,6 +16,7 @@ const mocks = vi.hoisted(() => ({
   leave: vi.fn(),
   release: vi.fn(),
   listeners: new Map<string, (payload: never) => void>(),
+  disconnectListeners: [] as Array<() => void>,
   on: vi.fn((event: string, listener: (payload: never) => void) => {
     mocks.listeners.set(event, listener);
     return vi.fn();
@@ -26,10 +28,16 @@ const mocks = vi.hoisted(() => ({
   acquire: vi.fn(),
   route: vi.fn(),
   refresh: vi.fn(async () => {}),
+  submitPreparation: vi.fn(),
 }));
 
 vi.mock("../../simulator/MatchSessionProvider", () => ({
-  useMatchSession: () => ({ refresh: mocks.refresh, refreshing: false, error: null }),
+  useMatchSession: () => ({
+    refresh: mocks.refresh,
+    submitPreparation: mocks.submitPreparation,
+    refreshing: false,
+    error: null,
+  }),
 }));
 
 vi.mock("../../simulator/providers", () => ({
@@ -46,14 +54,18 @@ vi.mock("./GrandArchiveTabletop", () => ({
     onSubmitProtocolInteraction,
     chat,
     canUndo,
+    canUndoTurn,
     onUndo,
+    onUndoTurn,
     errorMessage,
   }: {
     readonly fixture: GrandArchiveHarnessFixture;
     readonly onSubmitProtocolInteraction?: (submission: InteractionSubmission) => boolean;
     readonly chat?: ReactNode;
     readonly canUndo?: boolean;
+    readonly canUndoTurn?: boolean;
     readonly onUndo?: () => void;
+    readonly onUndoTurn?: () => void;
     readonly errorMessage?: string;
   }) => (
     <>
@@ -82,6 +94,9 @@ vi.mock("./GrandArchiveTabletop", () => ({
       </output>
       <button type="button" disabled={!canUndo} onClick={onUndo}>
         Undo live move
+      </button>
+      <button type="button" disabled={!canUndoTurn} onClick={onUndoTurn}>
+        Undo live turn
       </button>
       {errorMessage ? <p role="alert">{errorMessage}</p> : null}
     </>
@@ -115,6 +130,7 @@ function liveBootstrap() {
           resources: server.getViewerResources({ role: "player" as const, actorId: viewerId }),
           interactionView: server.getInteractionView(viewerId),
           undoable: false,
+          undoTurnAvailable: false,
         },
         match: {
           matchId: "match-1",
@@ -150,6 +166,7 @@ describe("Grand Archive live match", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.listeners.clear();
+    mocks.disconnectListeners.length = 0;
     let status: "connected" | "disconnected" = "connected";
     mocks.acquire.mockReturnValue({
       emit: mocks.emit,
@@ -157,10 +174,16 @@ describe("Grand Archive live match", () => {
       leave: mocks.leave,
       release: mocks.release,
       on: mocks.on,
+      onAuthenticated: (listener: () => void) => {
+        if (status === "connected") listener();
+        mocks.listeners.set("authenticated", listener);
+        return vi.fn();
+      },
       onDisconnected: (listener: () => void) => {
+        mocks.disconnectListeners.push(listener);
         mocks.listeners.set("disconnect", () => {
           status = "disconnected";
-          listener();
+          mocks.disconnectListeners.forEach((callback) => callback());
         });
         return vi.fn();
       },
@@ -178,6 +201,50 @@ describe("Grand Archive live match", () => {
   afterEach(() => {
     cleanup();
     vi.unstubAllGlobals();
+  });
+
+  it("offers matchmaking when the session is cancelled", () => {
+    mocks.route.mockReturnValue({
+      error: null,
+      session: { phase: "cancelled", reason: "The other player left the match." },
+    });
+
+    render(<GrandArchiveLiveMatchPage />);
+
+    expect(screen.getByText("The other player left the match.")).not.toBeNull();
+    expect(
+      (screen.getByRole("link", { name: "Return to matchmaking" }) as HTMLAnchorElement)
+        .pathname,
+    ).toBe("/grand-archive/matchmaking");
+    expect(mocks.join).not.toHaveBeenCalled();
+  });
+
+  it("shows the action cue only while this viewer can act on the connected match", () => {
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout", "setInterval", "clearInterval"] });
+    vi.stubGlobal("matchMedia", (query: string) => ({
+      matches: false,
+      media: query,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    }));
+    const { route } = liveBootstrap();
+    mocks.route.mockReturnValue(route);
+
+    try {
+      render(
+        <MantineProvider>
+          <GrandArchiveLiveMatchPage />
+        </MantineProvider>,
+      );
+      expect(screen.queryByTestId("action-attention-reminder")).toBeNull();
+      act(() => vi.advanceTimersByTime(60_000));
+      expect(screen.getByTestId("action-attention-reminder")).toBeTruthy();
+
+      act(() => emitGateway("disconnect", undefined));
+      expect(screen.queryByTestId("action-attention-reminder")).toBeNull();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("renders the viewer projection and submits the selected protocol interaction", async () => {
@@ -286,16 +353,21 @@ describe("Grand Archive live match", () => {
   it("updates hosted undo and invalidates stale actions without erasing rejection errors", () => {
     const { route } = liveBootstrap();
     route.matchPageData.game.undoable = true;
+    route.matchPageData.game.undoTurnAvailable = true;
     mocks.route.mockReturnValue(route);
     render(<GrandArchiveLiveMatchPage />);
 
     fireEvent.click(screen.getByRole("button", { name: "Undo live move" }));
-    expect(mocks.emit).toHaveBeenCalledWith("execute_move", {
+    expect(mocks.emit).toHaveBeenCalledWith("proposal_send", {
       gameId: "game-1",
-      expectedVersion: 0,
-      moveType: "undo",
-      payload: {},
-      correlationId: "correlation-1",
+      actionType: "undo",
+      undoScope: "last_move",
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Undo live turn" }));
+    expect(mocks.emit).toHaveBeenCalledWith("proposal_send", {
+      gameId: "game-1",
+      actionType: "undo",
+      undoScope: "turn_start",
     });
 
     const bootstrapView = route.matchPageData.game.view;
@@ -403,20 +475,22 @@ it.each([
         },
       },
     });
-    const fetch = vi.fn(
-      async () =>
-        new Response(
-          rejectedResponse === "html"
-            ? "<html>Bad Gateway</html>"
-            : rejectedResponse === "empty"
-              ? ""
-              : JSON.stringify(
-                  rejectedResponse ? { object: "error", status: 422 } : { object: "game_pregame" },
-                ),
-          { status: rejectedResponse === "html" ? 502 : 200 },
-        ),
-    );
-    vi.stubGlobal("fetch", fetch);
+    mocks.submitPreparation.mockReset();
+    if (rejectedResponse === "html" || rejectedResponse === "empty") {
+      mocks.submitPreparation.mockRejectedValue(
+        new Error("Could not save preparation. Synchronize and try again."),
+      );
+    } else {
+      mocks.submitPreparation.mockResolvedValue(
+        rejectedResponse
+          ? {
+              status: "rejected",
+              code: "invalid_selection",
+              message: "Could not save preparation. Synchronize and try again.",
+            }
+          : { status: "accepted" },
+      );
+    }
     render(
       <GrandArchiveSimulatorProviders>
         <GrandArchiveLiveMatchPage />
@@ -432,14 +506,11 @@ it.each([
     expect(screen.getByRole("heading", { name: "Review your starting decks" })).toBeTruthy();
     expect(screen.queryByRole("button", { name: "Submit live action" })).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "Confirm selection" }));
-    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
-    expect(fetch.mock.calls[0]).toEqual([
-      expect.stringContaining("/matches/match-prep/pregame"),
-      expect.objectContaining({
-        method: "PUT",
-        body: JSON.stringify({ gameId: "game-prep", selection: pool.previous }),
-      }),
-    ]);
+    await waitFor(() => expect(mocks.submitPreparation).toHaveBeenCalledTimes(1));
+    expect(mocks.submitPreparation).toHaveBeenCalledWith({
+      type: "confirm_preparation",
+      selection: pool.previous,
+    });
     if (rejectedResponse) {
       await screen.findByText("Could not save preparation. Synchronize and try again.");
       expect(mocks.refresh).not.toHaveBeenCalled();
@@ -447,7 +518,7 @@ it.each([
         screen.getByRole("button", { name: "Confirm selection" }).hasAttribute("disabled"),
       ).toBe(false);
     } else {
-      await waitFor(() => expect(mocks.refresh).toHaveBeenCalled());
+      expect(mocks.refresh).not.toHaveBeenCalled();
     }
     cleanup();
     vi.unstubAllGlobals();

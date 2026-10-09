@@ -9,7 +9,8 @@ import type { CardZone } from "@tcg/cyberpunk-types";
 import type { CardInstanceId, GigDieId, PlayerId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput, MoveValidationResult } from "../types/commands.ts";
 import type { Operations } from "../operations/index.ts";
-import { DIE_MAX_VALUES, type GigDieLocation } from "../types/gig-die.ts";
+import { DIE_MAX_VALUES } from "@tcg/cyberpunk-types";
+import { type GigDieLocation } from "../types/gig-die.ts";
 import { defOf } from "../state/lookups.ts";
 import { abandonCurrentTrigger } from "../ability-executor.ts";
 import { endTurn, resumeSuspendedEndTurn } from "./pass-phase.ts";
@@ -73,16 +74,16 @@ function playerNotFound(): MoveValidationResult {
 
 function syncEddieMembership(
   operations: Operations,
-  player: { eddieCardIds: CardInstanceId[]; eddies: number },
+  player: { eddies: number; spentEddies: number },
   playerId: PlayerId,
-  cardId: CardInstanceId,
   fromZone: CardZone,
   toZone: CardZone,
+  wasSpent: boolean,
 ): void {
   if (fromZone === "eddieArea" && toZone !== "eddieArea") {
-    const idx = player.eddieCardIds.indexOf(cardId);
-    if (idx !== -1) player.eddieCardIds.splice(idx, 1);
-    if (player.eddies > 0) {
+    if (wasSpent) {
+      player.spentEddies = Math.max(0, player.spentEddies - 1);
+    } else if (player.eddies > 0) {
       player.eddies -= 1;
       operations.event.emit({
         type: "eddiesSpent",
@@ -94,7 +95,6 @@ function syncEddieMembership(
     return;
   }
   if (toZone === "eddieArea" && fromZone !== "eddieArea") {
-    if (!player.eddieCardIds.includes(cardId)) player.eddieCardIds.push(cardId);
     operations.game.gainEddies(playerId, 1);
   }
 }
@@ -125,11 +125,12 @@ export const manualSetGigValueMove: MoveDefinition<ManualSetGigValueInput> = {
     const dieId = input.args.dieId as GigDieId;
     const die = state.G.gigDice[dieId as string];
     if (!die) return;
-    operations.gig.setGigValue(dieId, input.args.value);
+    const previousValue = die.faceValue;
+    operations.gig.setGigValue(dieId, input.args.value, null, playerId);
     operations.event.emit({
       type: "actionLog",
       messageKey: "move.manualSetGigValue",
-      params: { dieLabel: die.dieType, value: input.args.value },
+      params: { dieId, dieLabel: die.dieType, previousValue, value: input.args.value },
       playerId,
     });
   },
@@ -225,6 +226,7 @@ export const manualMoveCardMove: MoveDefinition<ManualMoveCardInput> = {
       }
     }
 
+    const wasSpent = card.meta.spent;
     operations.zone.moveCard(cardId, toZone, ownerId, {
       index: toZone === "trash" && input.args.trashPosition === "bottom" ? 0 : undefined,
     });
@@ -236,7 +238,7 @@ export const manualMoveCardMove: MoveDefinition<ManualMoveCardInput> = {
       if (position === "top") operations.zone.moveCardsToTop(ownerId, [cardId]);
       else operations.zone.moveCardsToBottom(ownerId, [cardId]);
     }
-    syncEddieMembership(operations, owner, ownerId, cardId, fromZone, toZone);
+    syncEddieMembership(operations, owner, ownerId, fromZone, toZone, wasSpent);
 
     const cardName = defOf(card).displayName;
     const destination =
@@ -304,7 +306,14 @@ export const manualAttachGearMove: MoveDefinition<ManualAttachGearInput> = {
     if (gear.zone === "eddieArea") {
       const owner = state.G.players[gear.ownerId as string];
       if (owner) {
-        syncEddieMembership(operations, owner, gear.ownerId, gearId, "eddieArea", host.zone);
+        syncEddieMembership(
+          operations,
+          owner,
+          gear.ownerId,
+          "eddieArea",
+          host.zone,
+          gear.meta.spent,
+        );
       }
     }
     if (gear.zone !== host.zone) {
@@ -374,6 +383,7 @@ export const manualExertCardMove: MoveDefinition<ManualExertCardInput> = {
       const owner = state.G.players[card.ownerId as string];
       if (owner && owner.eddies > 0) {
         owner.eddies -= 1;
+        owner.spentEddies += 1;
         operations.event.emit({
           type: "eddiesSpent",
           playerId: card.ownerId,
@@ -412,7 +422,11 @@ export const manualReadyCardMove: MoveDefinition<ManualReadyCardInput> = {
     if (!card) return;
     operations.card.ready(cardId);
     if (card.zone === "eddieArea") {
-      operations.game.gainEddies(card.ownerId, 1);
+      const owner = state.G.players[card.ownerId as string];
+      if (owner && owner.spentEddies > 0) {
+        owner.spentEddies -= 1;
+        operations.game.gainEddies(card.ownerId, 1);
+      }
     }
     operations.event.emit({
       type: "actionLog",
@@ -661,6 +675,9 @@ export const manualSetEddiesMove: MoveDefinition<ManualSetEddiesInput> = {
     if (!owner) return;
     owner.eddies = input.args.amount;
     owner.spentEddies = 0;
+    for (const cardId of owner.zones.eddieArea) {
+      operations.card.ready(cardId);
+    }
     operations.event.emit({
       type: "actionLog",
       messageKey: "move.manualSetEddies",
@@ -783,11 +800,12 @@ export const manualReadyAllMove: MoveDefinition<ManualReadyAllInput> = {
         if (!card?.meta.spent) continue;
         if (getEffectiveRules(state, cardId).includes("cantReady")) continue;
         operations.card.ready(cardId);
-        if (zone === "eddieArea") {
-          operations.game.gainEddies(ownerId as typeof playerId, 1);
-        }
         readyCount += 1;
       }
+    }
+    if (owner.spentEddies > 0) {
+      operations.game.gainEddies(ownerId as typeof playerId, owner.spentEddies);
+      owner.spentEddies = 0;
     }
     if (readyCount > 0) {
       operations.event.emit({

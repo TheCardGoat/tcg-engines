@@ -100,11 +100,15 @@ describe("OP06-062 Vinsmoke Judge", () => {
 
     engine.activateEffect(judgeId, "activateMain", "south");
     engine.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "south");
-    const count = engine.pendingDecision("effectRestDonCount", "south").steps[0];
-    expect(count?.kind).toBe("chooseOption");
-    if (count?.kind !== "chooseOption") throw new Error("Expected Judge's DON!! rest count.");
-    expect(count.options.map((option) => option.id)).toEqual(["0", "1"]);
-    engine.resolveDecision("effectRestDonCount", { optionId: "1" }, "south");
+    const count = engine.pendingDecision("effectMixedRestSelection", "south").steps[0];
+    expect(count?.kind).toBe("payCost");
+    if (count?.kind !== "payCost") throw new Error("Expected Judge's DON!! rest count.");
+    expect(count).toMatchObject({ min: 0, max: 1 });
+    engine.resolveDecision(
+      "effectMixedRestSelection",
+      { selectedIds: ["active-don:north:0"] },
+      "south",
+    );
 
     expect(engine.getView("south").players.south.donDeckCount).toBe(donDeckBefore + 1);
     expect(engine.getView("south").players.north).toMatchObject({ activeDon: 1, restedDon: 1 });

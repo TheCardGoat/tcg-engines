@@ -21,7 +21,7 @@ export const op16WeLlChangeThisMissionFromSneakyToFlashy059: EventCard = {
   rarity: "UC",
   setId: "OP16",
   cost: 1,
-  traits: ["Buggy Pirates Impel Down"],
+  traits: ["Impel Down", "Buggy Pirates"],
   effect:
     "[Main] You may rest 7 of your DON!! cards: Look at 5 cards from the top of your deck; play up to 2 {Impel Down} type Character cards with 6000 power or less. Then, place the rest at the bottom of your deck in any order.\n[Counter] Your Leader gains +3000 power during this battle.",
   effects: {
@@ -55,7 +55,7 @@ export const op16WeLlChangeThisMissionFromSneakyToFlashy059: EventCard = {
               {
                 filter: "trait",
                 value: "Impel Down",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

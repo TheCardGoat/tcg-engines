@@ -41,7 +41,7 @@ export const op13StEthanbaronVNusjuro080: CharacterCard = {
   cost: 6,
   power: 5000,
   counter: 1000,
-  traits: ["Celestial Dragons Five Elders"],
+  traits: ["Celestial Dragons", "Five Elders"],
   attribute: "slash",
   effect:
     "If you have 7 or more cards in your trash, this Character cannot be removed from the field by your opponent's effects and gains [Rush].\n[When Attacking] If you have 10 or more cards in your trash, give up to 1 of your opponent's Characters -2000 power during this turn.",

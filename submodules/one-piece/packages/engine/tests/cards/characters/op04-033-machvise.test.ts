@@ -11,78 +11,91 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP04-033 Machvise", () => {
-  test("rests an opposing cost-5 Character and activates DON!! only at turn end after leaving play", () => {
-    const engine = OnePieceTestEngine.create(
-      {
-        leaderCardId: op01DonquixoteDoflamingo060,
-        hand: [op04Machvise033, op13BrilliantPunk059],
-        character: [eb01Doma005],
-        activeDon: op04Machvise033.cost + op13BrilliantPunk059.cost,
-        restedDon: 1,
-      },
-      {
-        character: [
-          { card: eb01MountainGod018, playedOnTurn: 0 },
-          { card: op01Kaido094, playedOnTurn: 0 },
-          { card: eb01Doma005, playedOnTurn: 0, rested: true },
-        ],
-      },
-    );
-    const ownId = engine.findCardInZone("south", "character", eb01Doma005);
-    const eligibleId = engine.findCardInZone("north", "character", eb01MountainGod018);
-    const tooExpensiveId = engine.findCardInZone("north", "character", op01Kaido094);
-    const alreadyRestedId = engine.findCardInZone("north", "character", eb01Doma005);
+  test.each(["active", "rested"])(
+    "rests an opposing cost-5 Character and activates DON!! only at turn end after leaving play (%s target)",
+    (state) => {
+      const engine = OnePieceTestEngine.create(
+        {
+          leaderCardId: op01DonquixoteDoflamingo060,
+          hand: [op04Machvise033, op13BrilliantPunk059],
+          character: [eb01Doma005],
+          activeDon: op04Machvise033.cost + op13BrilliantPunk059.cost,
+          restedDon: 1,
+        },
+        {
+          character: [
+            { card: eb01MountainGod018, playedOnTurn: 0 },
+            { card: op01Kaido094, playedOnTurn: 0 },
+            { card: eb01Doma005, playedOnTurn: 0, rested: true },
+          ],
+        },
+      );
+      const ownId = engine.findCardInZone("south", "character", eb01Doma005);
+      const eligibleId = engine.findCardInZone("north", "character", eb01MountainGod018);
+      const tooExpensiveId = engine.findCardInZone("north", "character", op01Kaido094);
+      const alreadyRestedId = engine.findCardInZone("north", "character", eb01Doma005);
 
-    engine.playCard(op04Machvise033, "south");
-    const machviseId = engine.findCardInZone("south", "character", op04Machvise033);
+      engine.playCard(op04Machvise033, "south");
+      const machviseId = engine.findCardInZone("south", "character", op04Machvise033);
 
-    const target = engine.pendingDecision("effectTargetSelection", "south");
-    expect(target.actorId).toBe("south");
-    const step = target.steps[0];
-    expect(step?.kind).toBe("selectEntity");
-    if (step?.kind !== "selectEntity") throw new Error("Expected Machvise's rest target.");
-    expect(step).toMatchObject({ min: 0, max: 1 });
-    expect(step.candidates.map((candidate) => candidate.ref.id)).toEqual([eligibleId]);
-    expect(step.candidates.map((candidate) => candidate.ref.id)).not.toContain(ownId);
-    expect(step.candidates.map((candidate) => candidate.ref.id)).not.toContain(tooExpensiveId);
-    expect(step.candidates.map((candidate) => candidate.ref.id)).not.toContain(alreadyRestedId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [eligibleId] }, "south");
+      const target = engine.pendingDecision("effectTargetSelection", "south");
+      expect(target.actorId).toBe("south");
+      const step = target.steps[0];
+      expect(step?.kind).toBe("selectEntity");
+      if (step?.kind !== "selectEntity") throw new Error("Expected Machvise's rest target.");
+      expect(step).toMatchObject({ min: 0, max: 1 });
+      expect(step.candidates.map((candidate) => candidate.ref.id)).toEqual([
+        eligibleId,
+        alreadyRestedId,
+      ]);
+      expect(step.candidates.map((candidate) => candidate.ref.id)).not.toContain(ownId);
+      expect(step.candidates.map((candidate) => candidate.ref.id)).not.toContain(tooExpensiveId);
+      expect(step.candidates.map((candidate) => candidate.ref.id)).toContain(alreadyRestedId);
+      engine.resolveDecision(
+        "effectTargetSelection",
+        { selectedIds: [state === "active" ? eligibleId : alreadyRestedId] },
+        "south",
+      );
 
-    let view = engine.getView("south");
-    expect(
-      view.players.north.characters.find((card) => card?.instanceId === eligibleId)?.rested,
-    ).toBe(true);
-    expect(view.players.south).toMatchObject({ activeDon: 4, restedDon: 5 });
+      let view = engine.getView("south");
+      expect(
+        view.players.north.characters.find((card) => card?.instanceId === eligibleId)?.rested,
+      ).toBe(state === "active");
+      expect(
+        view.players.north.characters.find((card) => card?.instanceId === alreadyRestedId)?.rested,
+      ).toBe(true);
+      expect(view.players.south).toMatchObject({ activeDon: 4, restedDon: 5 });
 
-    engine.playCard(op13BrilliantPunk059, "south");
-    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
-    const payment = engine.pendingDecision("effectCostReturnCharacter", "south").steps[0];
-    expect(payment?.kind).toBe("payCost");
-    if (payment?.kind !== "payCost") throw new Error("Expected Brilliant Punk's return cost.");
-    expect(payment.candidates.map((candidate) => candidate.ref.id)).toEqual(
-      expect.arrayContaining([ownId, machviseId]),
-    );
-    engine.resolveDecision("effectCostReturnCharacter", { selectedIds: [machviseId] }, "south");
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+      engine.playCard(op13BrilliantPunk059, "south");
+      engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+      const payment = engine.pendingDecision("effectCostReturnCharacter", "south").steps[0];
+      expect(payment?.kind).toBe("payCost");
+      if (payment?.kind !== "payCost") throw new Error("Expected Brilliant Punk's return cost.");
+      expect(payment.candidates.map((candidate) => candidate.ref.id)).toEqual(
+        expect.arrayContaining([ownId, machviseId]),
+      );
+      engine.resolveDecision("effectCostReturnCharacter", { selectedIds: [machviseId] }, "south");
+      engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
 
-    view = engine.getView("south");
-    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(machviseId);
-    expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 9 });
+      view = engine.getView("south");
+      expect(view.players.south.hand.map((card) => card.instanceId)).toContain(machviseId);
+      expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 9 });
 
-    engine.endTurn("south");
-    const refresh = engine.pendingDecision("effectSetActiveDon", "south");
-    expect(refresh.actorId).toBe("south");
-    expect(refresh.steps[0]).toMatchObject({
-      kind: "chooseOption",
-      options: [{ id: "0" }, { id: "1" }],
-    });
-    engine.resolveDecision("effectSetActiveDon", { optionId: "1" }, "south");
+      engine.endTurn("south");
+      const refresh = engine.pendingDecision("effectSetActiveDon", "south");
+      expect(refresh.actorId).toBe("south");
+      expect(refresh.steps[0]).toMatchObject({
+        kind: "chooseOption",
+        options: [{ id: "0" }, { id: "1" }],
+      });
+      engine.resolveDecision("effectSetActiveDon", { optionId: "1" }, "south");
 
-    view = engine.getView("south");
-    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(machviseId);
-    expect(view.players.south).toMatchObject({ activeDon: 1, restedDon: 8 });
-    expect(view.prompts).toHaveLength(0);
-  });
+      view = engine.getView("south");
+      expect(view.players.south.hand.map((card) => card.instanceId)).toContain(machviseId);
+      expect(view.players.south).toMatchObject({ activeDon: 1, restedDon: 8 });
+      expect(view.prompts).toHaveLength(0);
+    },
+  );
 
   test("may choose no Character and later choose to activate zero DON!!", () => {
     const engine = OnePieceTestEngine.create(

@@ -1,7 +1,26 @@
 import { expect, test, describe } from "vite-plus/test";
+import { buildCardEffects } from "../../../src/index.ts";
 import { parseActions, parseEffectText } from "../../../src/effect-parser/index.ts";
 
 describe("parseActions", () => {
+  test("public Counter parser gates the revealed card's bottom placement (FAQ Q640)", () => {
+    const block = buildCardEffects(
+      "[Counter] Reveal 1 card from the top of your deck. If the revealed card has a cost of 4 or more, return up to 1 of your Characters to the owner's hand. Then, place the revealed card at the bottom of your deck.",
+    )?.effects?.[0];
+    expect(block?.trigger).toBe("counter");
+    expect(block?.actions).toEqual([
+      expect.objectContaining({
+        action: "revealTopDeckCard",
+        finalPosition: "top",
+        conditional: {
+          filters: [{ filter: "cost", comparison: "gte", value: 4 }],
+          actions: [expect.objectContaining({ action: "returnToHand" })],
+          finalPosition: "bottom",
+        },
+      }),
+    ]);
+  });
+
   test("schedules the Character played by the preceding action to return to its owner's deck", () => {
     const result = parseActions(
       'Draw 1 card and play up to 1 "SWORD" type Character card with a cost of 8 or less other than [Helmeppo] from your trash. Then, place the 1 Character played by this effect at the bottom of the owner\'s deck at the end of this turn.',
@@ -14,7 +33,7 @@ describe("parseActions", () => {
         action: "play",
         source: { player: "self", zone: "trash" },
         filters: expect.arrayContaining([
-          { filter: "trait", value: "SWORD", match: "includes" },
+          { filter: "trait", value: "SWORD", match: "exact" },
           { filter: "cost", comparison: "lte", value: 8 },
           { filter: "excludeName", value: "Helmeppo" },
         ]),
@@ -140,7 +159,7 @@ describe("parseActions", () => {
         action: "search",
         lookCount: 3,
         revealFilters: [
-          { filter: "trait", value: "Donquixote Pirates", match: "includes" },
+          { filter: "trait", value: "Donquixote Pirates", match: "exact" },
           { filter: "cardCategory", value: "character" },
         ],
         remainderPosition: "bottom",
@@ -159,6 +178,7 @@ describe("parseActions", () => {
         action: "revealTopDeckCard",
         player: "self",
         conditional: {
+          finalPosition: "bottom",
           filters: [{ filter: "cost", comparison: "gte", value: 4 }],
           actions: [
             {
@@ -171,7 +191,7 @@ describe("parseActions", () => {
             },
           ],
         },
-        finalPosition: "bottom",
+        finalPosition: "top",
       },
     ]);
   });
@@ -298,7 +318,7 @@ describe("parseActions", () => {
         player: "self",
         zones: ["character"],
         count: { amount: "all" },
-        filters: [{ filter: "trait", value: "Neptunian", match: "includes" }],
+        filters: [{ filter: "trait", value: "Neptunian", match: "exact" }],
       };
       expect(actions.parsed).toEqual([
         { action: "draw", player: "self", amount: 0, amountFromTarget },
@@ -321,17 +341,17 @@ describe("parseActions", () => {
       expect(actions.parsed).toEqual([
         {
           action: "setActive",
-          condition: { condition: "leaderTrait", trait: "Minks", match: "includes" },
+          condition: { condition: "leaderTrait", trait: "Minks", match: "exact" },
           target: {
             player: "self",
             zones: ["character"],
             count: { amount: 2, upTo: true },
-            filters: [{ filter: "trait", value: "Minks", match: "includes" }],
+            filters: [{ filter: "trait", value: "Minks", match: "exact" }],
           },
         },
         {
           action: "setActive",
-          condition: { condition: "leaderTrait", trait: "Minks", match: "includes" },
+          condition: { condition: "leaderTrait", trait: "Minks", match: "exact" },
           target: {
             player: "self",
             zones: ["leader"],

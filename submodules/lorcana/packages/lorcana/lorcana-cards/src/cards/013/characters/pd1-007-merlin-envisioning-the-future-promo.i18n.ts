@@ -50,18 +50,18 @@ export const merlinEnvisioningTheFuturePD1PromoI18n: Record<Languages, I18nPrope
     ],
   },
   it: {
-    name: "Merlin",
-    version: "Envisioning the Future",
+    name: "Merlino",
+    version: "Che si Immagina il Futuro",
     text: [
       {
-        title: "Minor Trickery",
+        title: "Banale Trucchetto",
         description:
-          "When you play this character, you may draw a card from the bottom of your deck.",
+          "Quando giochi questo personaggio, puoi pescare una carta dal fondo del tuo mazzo.",
       },
       {
-        title: "Age of Inconvenience",
+        title: "Tempi Oscuri e Maledettamente Scomodi",
         description:
-          "When this character is banished, put this card from your discard on the bottom of your deck.",
+          "Quando questo personaggio viene esiliato, metti questa carta dai tuoi scarti in fondo al tuo mazzo.",
       },
     ],
   },

@@ -10,9 +10,7 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const gearDyingNightHighCredBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "gearDyingNightHighCred",
   label: "Dying Night - high Street Cred defeats rival gear",
-  references: [
-    "packages/engine/src/cards/welcometonightcityretail/gear/dying-night-v-s-pistol.test.ts",
-  ],
+  references: ["packages/engine/src/cards/gear/dying-night-v-s-pistol.test.ts"],
   async run(pom) {
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",

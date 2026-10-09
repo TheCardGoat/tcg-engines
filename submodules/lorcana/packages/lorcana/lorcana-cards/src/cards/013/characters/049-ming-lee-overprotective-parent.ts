@@ -31,6 +31,7 @@ export const mingLeeOverprotectiveParent: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_0cba97ca8b2d4eb3bdf4e78eceb0e6d9",
+    tcgPlayer: "702680",
   },
   text: [
     {

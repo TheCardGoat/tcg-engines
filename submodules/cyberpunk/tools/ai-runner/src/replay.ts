@@ -10,6 +10,7 @@ import {
   randomStrategy,
   runAutoMatch,
   tacticalStrategy,
+  expertOracleStrategy,
   type AIStrategy,
   type AutoMatchResult,
 } from "@tcg/cyberpunk-engine";
@@ -62,6 +63,7 @@ export interface ReplayStep {
 }
 
 const REPLAY_STRATEGIES: Record<string, AIStrategy> = {
+  "expert-oracle": expertOracleStrategy,
   default: getSafeAutomatedActionStrategyOption().strategy,
   "attack-rival-only": attackRivalOnlyStrategy,
   "first-legal": firstLegalStrategy,

@@ -37,7 +37,7 @@ describe("OP04-031 Donquixote Doflamingo", () => {
     if (!activeId) throw new Error("Expected the active exclusion fixture.");
 
     engine.declareAttack(northLeaderId, engine.leader("south"), "north");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
     engine.endTurn("north");
     engine.playCard(op04DonquixoteDoflamingo031, "south");
 

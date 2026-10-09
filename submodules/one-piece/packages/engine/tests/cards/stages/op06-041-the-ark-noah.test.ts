@@ -22,7 +22,6 @@ describe("OP06-041 The Ark Noah", () => {
     engine.endTurn("north");
     engine.attachDon(attackerId, 3, "south");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const triggerDecision = engine.pendingDecision("lifeTrigger", "north");
     expect(triggerDecision).toMatchObject({

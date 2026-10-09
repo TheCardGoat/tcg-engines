@@ -23,7 +23,7 @@ export const op14eb04HitokiriKamazo035: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Kid Pirates Supernovas SMILE"],
+  traits: ["SMILE", "Supernovas", "Kid Pirates"],
   attribute: "slash",
   effect:
     "[Blocker]\n[Your Turn] [Once Per Turn] When a DON!! card on your field is returned to your DON!! deck, if your Leader has the {Kid Pirates} type, add up to 1 DON!! card from your DON!! deck and rest it.",

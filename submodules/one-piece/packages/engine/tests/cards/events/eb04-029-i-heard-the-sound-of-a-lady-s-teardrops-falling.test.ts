@@ -13,6 +13,23 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 import { SOUTH_ATTACKS_WITHOUT_TURN_SETUP } from "./battle-fixture.shared.ts";
 
 describe("EB04-029 I Heard the Sound...of a Lady's Teardrops Falling", () => {
+  test("a non-Sanji Leader does not look at or trash the available search cards", () => {
+    const e = OnePieceTestEngine.create({
+      hand: ["EB04-029"],
+      activeDon: 1,
+      deck: ["EB01-014", "EB02-008", "EB01-005", "EB01-018"],
+    });
+    e.playCard("EB04-029");
+    expect(e.getView("south").players.south).toMatchObject({
+      activeDon: 0,
+      restedDon: 1,
+      deckCount: 4,
+    });
+    expect(e.getView("south").players.south.hand).toHaveLength(0);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toEqual(["EB04-029"]);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+
   test("lets a Sanji Leader choose either a Sanji or Event from the top 3 and trashes the rest", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: op02Sanji026,
@@ -118,6 +135,7 @@ describe("EB04-029 I Heard the Sound...of a Lady's Teardrops Falling", () => {
       { selectedIds: [engine.leader("north")] },
       "north",
     );
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.lifeCount).toBe(lifeBeforeAttack);
@@ -155,6 +173,7 @@ describe("EB04-029 I Heard the Sound...of a Lady's Teardrops Falling", () => {
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
     engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.hand.map((card) => card.instanceId)).toContain(selectedCostId);

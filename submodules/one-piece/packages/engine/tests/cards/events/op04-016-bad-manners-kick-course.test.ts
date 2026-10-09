@@ -131,6 +131,7 @@ describe("OP04-016 Bad Manners Kick Course", () => {
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
     engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     // Declining optional: trash cost is not paid; +3000 power never applies.

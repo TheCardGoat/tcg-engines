@@ -57,7 +57,7 @@ export const op16Thatch005: CharacterCard = {
             action: "modifyCost",
             target: {
               player: "self",
-              zones: ["hand", "character"],
+              zones: ["hand"],
               count: {
                 amount: 1,
               },

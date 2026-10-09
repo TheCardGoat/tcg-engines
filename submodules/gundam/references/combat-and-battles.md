@@ -1,3 +1,11 @@
+---
+official_source:
+  publisher: "Bandai"
+  url: "https://www.gundam-gcg.com/en/pdf/comprehensiverules_en.pdf?260917="
+  relation: "current_index"
+  copy_version: "1.5.0"
+---
+
 # Combat & Battles
 
 Reference for attack declarations, battle steps, damage, shields, and blocking.  

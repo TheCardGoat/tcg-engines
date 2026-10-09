@@ -1,10 +1,62 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op05MaryGeoise097, op13SaintJalmac085, op13StEthanbaronVNusjuro080 } from "@tcg/op-cards";
+import {
+  op05MaryGeoise097,
+  op05Rebecca091,
+  op13StJaygarciaSaturn083,
+  op02Yamakaji116,
+  op13SaintJalmac085,
+  op13StEthanbaronVNusjuro080,
+} from "@tcg/op-cards";
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
+import { buildCardEffects } from "../../../../../tools/op-card-parser/src/effect-parser/build-effects.ts";
 
 describe("OP05-097 Mary Geoise", () => {
-  test("discounts eligible Celestial Dragons in hand and lets the player pay the computed cost", () => {
+  test("the continuous payment reduction applies to successive paid plays", () => {
+    const engine = OnePieceTestEngine.create({
+      stage: op05MaryGeoise097,
+      hand: [op13SaintJalmac085, op13SaintJalmac085],
+      activeDon: 2,
+    });
+    engine.playCard(op13SaintJalmac085);
+    expect(engine.getView("south").players.south.activeDon).toBe(1);
+    expect(engine.getView("south").players.south.hand[0]?.cost).toBe(2);
+    engine.playCard(op13SaintJalmac085);
+    expect(engine.getView("south").players.south.activeDon).toBe(0);
+    expect(engine.getView("south").players.south.characters.filter(Boolean)).toHaveLength(2);
+  });
+
+  test.each([false, true])(
+    "payment discount does not widen Rebecca's cost limit (parsed=%s)",
+    (parsed) => {
+      const original = op05MaryGeoise097.effects;
+      if (parsed) op05MaryGeoise097.effects = buildCardEffects(op05MaryGeoise097.effect ?? "");
+      try {
+        const engine = OnePieceTestEngine.create({
+          stage: op05MaryGeoise097,
+          hand: [op05Rebecca091, op13StJaygarciaSaturn083, op02Yamakaji116],
+          activeDon: op05Rebecca091.cost,
+        });
+        const saturnId = engine.findCardInZone("south", "hand", op13StJaygarciaSaturn083);
+        const yamakajiId = engine.findCardInZone("south", "hand", op02Yamakaji116);
+        engine.playCard(op05Rebecca091);
+        const play = engine.pendingDecision("effectPlaySelection", "south").steps[0];
+        if (play?.kind !== "selectEntity") throw new Error("Expected Rebecca's play choice.");
+        expect(play.candidates.map((candidate) => candidate.ref.id)).toEqual([yamakajiId]);
+        expect(play.candidates.map((candidate) => candidate.ref.id)).not.toContain(saturnId);
+        engine.resolveDecision("effectPlaySelection", { selectedIds: [yamakajiId] }, "south");
+        expect(
+          engine.getView("south").players.south.hand.find((card) => card.instanceId === saturnId)
+            ?.cost,
+        ).toBe(4);
+        expect(engine.getView("south").prompts).toHaveLength(0);
+      } finally {
+        op05MaryGeoise097.effects = original;
+      }
+    },
+  );
+
+  test("discounts eligible payments while preserving hand cost characteristics", () => {
     const unavailableEngine = OnePieceTestEngine.create({
       hand: [op13SaintJalmac085],
       activeDon: 1,
@@ -42,9 +94,9 @@ describe("OP05-097 Mary Geoise", () => {
       throw new Error("Expected the discounted hand fixtures.");
     }
     expect(hand.map((card) => ({ id: card.instanceId, cost: card.cost }))).toEqual([
-      { id: selectedId, cost: 1 },
-      { id: remainingId, cost: 1 },
-      { id: compositeId, cost: 5 },
+      { id: selectedId, cost: 2 },
+      { id: remainingId, cost: 2 },
+      { id: compositeId, cost: 6 },
     ]);
 
     const actionStep = engine

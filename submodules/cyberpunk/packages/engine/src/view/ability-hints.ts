@@ -27,6 +27,7 @@ export type AbilityRequirementHint =
   | "attackContext"
   | "equippedBoard"
   | "friendlyBoard"
+  | "friendlyFaceDownLegend"
   | "friendlyGig"
   | "friendlyTrash"
   | "rivalBoard"
@@ -254,7 +255,14 @@ function addTargetRequirement(target: TargetDSL, out: Set<AbilityRequirementHint
   const isRival = target.controller === "rival";
   if (target.zones?.includes("trash") && isFriendly) out.add("friendlyTrash");
   if (!target.zones || target.zones.includes("field") || target.zones.includes("legendArea")) {
-    if (isFriendly) out.add("friendlyBoard");
+    const requiresFriendlyFaceDownLegend =
+      isFriendly &&
+      target.zones?.length === 1 &&
+      target.zones[0] === "legendArea" &&
+      target.face === "faceDown" &&
+      target.cardTypes?.includes("legend") === true;
+    if (requiresFriendlyFaceDownLegend) out.add("friendlyFaceDownLegend");
+    else if (isFriendly) out.add("friendlyBoard");
     if (isRival) out.add("rivalBoard");
   }
   if (target.hasAttachedCards && isFriendly) out.add("equippedBoard");

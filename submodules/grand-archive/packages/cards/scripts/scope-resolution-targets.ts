@@ -3,17 +3,21 @@ import type {
   GrandArchiveEffect,
   GrandArchiveSubject,
   GrandArchiveCondition,
+  GrandArchiveModeEffect,
 } from "@tcg/grand-archive-types";
 
 // Paragraphs are compiled independently, but their announcement targets share
 // one card activation. Rename colliding declarations and their typed references.
 // Unknown reference-bearing shapes fail closed instead of silently misbinding.
-export function scopeResolutionTargets(
-  abilities: readonly GrandArchiveAbilityDefinition[],
-): readonly GrandArchiveAbilityDefinition[] {
+function scopeTargets<
+  T extends {
+    readonly id: string;
+    readonly targets?: readonly import("@tcg/grand-archive-types").GrandArchiveTargetDeclaration[];
+    readonly effect: GrandArchiveEffect;
+  },
+>(entries: readonly T[]): readonly (T | null)[] {
   const used = new Set<string>();
-  return abilities.map((ability) => {
-    if (ability.kind !== "card-resolution") return ability;
+  return entries.map((ability) => {
     const renames = new Map<string, string>();
     for (const target of ability.targets ?? []) {
       if (used.has(target.id)) renames.set(target.id, `${ability.id}:${target.id}`);
@@ -52,6 +56,7 @@ export function scopeResolutionTargets(
         case "add-counter":
         case "remove-counter":
         case "set-object-state":
+        case "destroy":
           return { ...value, subject: subject(value.subject) };
         case "keyword-action":
           return "subject" in value && value.subject
@@ -78,13 +83,37 @@ export function scopeResolutionTargets(
         return Object.values(value).some(hasOldReference);
       return false;
     }
-    if (hasOldReference(scoped))
-      return {
+    return hasOldReference(scoped) ? null : scoped;
+  });
+}
+
+export function scopeResolutionTargets(
+  abilities: readonly GrandArchiveAbilityDefinition[],
+): readonly GrandArchiveAbilityDefinition[] {
+  const resolutions = abilities.filter((ability) => ability.kind === "card-resolution");
+  const scoped = scopeTargets(resolutions);
+  let index = 0;
+  return abilities.map((ability) => {
+    if (ability.kind !== "card-resolution") return ability;
+    return (
+      scoped[index++] ?? {
         id: ability.id,
         kind: "unparsed",
         text: ability.text,
         unparsedSegments: [ability.text],
-      };
-    return scoped;
+      }
+    );
   });
+}
+
+/** Selected modes share the activation's target namespace, just like paragraphs. */
+export function scopeModeTargets(
+  modes: readonly GrandArchiveModeEffect[],
+): readonly GrandArchiveModeEffect[] | null {
+  const result: GrandArchiveModeEffect[] = [];
+  for (const mode of scopeTargets(modes)) {
+    if (!mode) return null;
+    result.push(mode);
+  }
+  return result;
 }

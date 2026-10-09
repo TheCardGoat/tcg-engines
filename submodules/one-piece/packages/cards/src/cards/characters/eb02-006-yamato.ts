@@ -47,7 +47,7 @@ export const eb02Yamato006: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Land of Wano",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "leaderName",

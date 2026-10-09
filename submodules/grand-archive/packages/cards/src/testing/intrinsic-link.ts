@@ -91,6 +91,13 @@ function advanceToPlayerMain(
           stateVersion: decision.stateVersion,
           answer: [],
         });
+      else if (decision.kind === "resolve-glimpse")
+        game.player(wait.playerId).execute({
+          move: "answer-decision",
+          decisionId: decision.id,
+          stateVersion: decision.stateVersion,
+          answer: { kind: "reorder", top: decision.cardIds, bottom: [] },
+        });
       else if (decision.kind === "announce-triggered-ability")
         game.player(wait.playerId).execute({
           move: "answer-decision",

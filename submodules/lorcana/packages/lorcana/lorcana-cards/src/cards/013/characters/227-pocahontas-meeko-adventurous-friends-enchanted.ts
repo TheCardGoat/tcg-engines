@@ -35,6 +35,7 @@ export const pocahontasMeekoAdventurousFriendsEnchanted: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1337332b5317428c95c1129cf645924f",
+    tcgPlayer: "704558",
   },
   text: [
     {

@@ -165,16 +165,95 @@ function defaultAbilityDerivationCache(
 
 function functionalStaticSources(program: GrandArchiveMatchProgram, state: GrandArchiveMatchState) {
   const cache = defaultAbilityDerivationCache(program, state);
-  return (cache.functionalStaticSources ??= Object.values(state.objects).flatMap((source) => {
+  if (cache.functionalStaticSources) return cache.functionalStaticSources;
+  const printed = Object.values(state.objects).flatMap((source) => {
     const face = grandArchiveObjectFace(program, source);
-    return grandArchiveObjectPrintedAbilities(program, source).flatMap((ability) =>
+    return grandArchiveObjectPrintedAbilities(program, source, state).flatMap((ability) =>
       ability.kind === "static" &&
       ability.staticKind === "effects" &&
       grandArchiveAbilityIsFunctional(face, ability, source)
         ? [{ source, ability }]
         : [],
     );
-  }));
+  });
+  // Publish the printed baseline before deriving recipients of resolved static-ability
+  // grants. Those derivations consult this same source list; the explicit context keeps
+  // their partial results out of the default per-object caches.
+  cache.functionalStaticSources = printed;
+  const recipients = new Set<GrandArchiveObjectId>();
+  for (const instance of state.continuousEffects) {
+    const effect = instance.effect;
+    if (
+      effect.kind !== "continuous" ||
+      effect.change.kind !== "grant-ability" ||
+      !flattenGrandArchiveAbilities([effect.change.ability]).some(
+        (ability) => ability.kind === "static" && ability.staticKind === "effects",
+      )
+    )
+      continue;
+    const evaluation: GrandArchiveEvaluationContext = {
+      program,
+      state,
+      controllerId: instance.controllerId,
+      ...continuousEffectSourceContext(instance),
+      bindings: instance.bindings,
+      variables: instance.variables,
+      derivingProperties: new Set(["layer-d:granted-static-sources"]),
+    };
+    if (
+      !grandArchiveContinuousEffectIsActive(instance, evaluation) ||
+      (effect.condition && !evaluateGrandArchiveCondition(effect.condition, evaluation))
+    )
+      continue;
+    const candidates =
+      effect.affectedSet === "locked"
+        ? instance.affectedObjectIds.flatMap((id) =>
+            state.objects[id] ? [state.objects[id]!] : [],
+          )
+        : Object.values(state.objects);
+    for (const source of candidates) {
+      if (
+        grandArchiveContinuousEffectAffectsObject(
+          effect,
+          instance.affectedObjectIds,
+          instance.affectedObjectIncarnations,
+          source,
+          evaluation,
+        )
+      )
+        recipients.add(source.id);
+    }
+  }
+  const expanded = [...printed];
+  const included = new Set(printed.map(({ source, ability }) => `${source.id}:${ability.id}`));
+  for (const id of recipients) {
+    const source = state.objects[id];
+    if (!source) continue;
+    const face = grandArchiveObjectFace(program, source);
+    const abilities = deriveGrandArchiveObjectActiveAbilities(
+      program,
+      state,
+      source,
+      new Set(),
+      new Set(),
+      {
+        derivingProperties: new Set(["layer-d:granted-static-sources"]),
+      },
+    );
+    for (const ability of abilities) {
+      if (
+        ability.kind !== "static" ||
+        ability.staticKind !== "effects" ||
+        !grandArchiveAbilityIsFunctional(face, ability, source) ||
+        included.has(`${source.id}:${ability.id}`)
+      )
+        continue;
+      expanded.push({ source, ability });
+      included.add(`${source.id}:${ability.id}`);
+    }
+  }
+  cache.functionalStaticSources = expanded;
+  return expanded;
 }
 
 function isDefaultAbilityDerivationContext(context: GrandArchiveAbilityDerivationContext) {
@@ -276,6 +355,14 @@ function abilityModifierCurrentlyApplies(
   keywords: readonly GrandArchiveKeyword[],
 ): boolean {
   let evaluation = withObjectKeywordOverride(modifier.evaluation, object, keywords);
+  if (modifier.applicationLayer === "D") {
+    evaluation = {
+      ...evaluation,
+      derivingProperties: new Set(evaluation.derivingProperties ?? []).add(
+        `${object.id}:layer-d-keywords`,
+      ),
+    };
+  }
   const source =
     modifier.sourceAbility &&
     abilityGateDependsOnLayerD(modifier.sourceAbility) &&
@@ -629,7 +716,7 @@ function collectAbilityModifiers(
   const cached = cache?.abilityModifiersByObject.get(object);
   if (cached) return cached;
   const modifiers: AbilityModifier[] = [];
-  const baseAbilities = grandArchiveObjectPrintedAbilities(program, object);
+  const baseAbilities = grandArchiveObjectPrintedAbilities(program, object, state);
   const baseKeywords = keywordsFromAbilities(baseAbilities);
   let order = 0;
   for (const { source, ability } of functionalStaticSources(program, state)) {
@@ -796,7 +883,7 @@ function deriveGrandArchiveDependencyKeywordValues(
   object: GrandArchiveCardInstance,
   derivationContext: GrandArchiveAbilityDerivationContext,
 ): readonly GrandArchiveKeyword[] {
-  let keywords = keywordsFromAbilities(grandArchiveObjectPrintedAbilities(program, object));
+  let keywords = keywordsFromAbilities(grandArchiveObjectPrintedAbilities(program, object, state));
   const localContext: GrandArchiveAbilityDerivationContext = {
     ...derivationContext,
     skipCrossObjectKeywordDerivation: true,
@@ -889,7 +976,7 @@ function deriveGrandArchiveObjectActiveAbilities(
     throw new GrandArchiveUnsupportedRuleError("cyclic ability copying");
   }
   const nextPath = new Set(derivationPath).add(object.id);
-  let abilities = grandArchiveObjectPrintedAbilities(program, object);
+  let abilities = grandArchiveObjectPrintedAbilities(program, object, state);
   const pending = collectAbilityModifiers(program, state, object, derivationContext).filter(
     (modifier) => !excludedModifierIds.has(modifier.id),
   );
@@ -1039,6 +1126,7 @@ export function grandArchiveObjectActiveKeywordInstances(
   let instances: readonly GrandArchiveActiveKeywordInstance[] = grandArchiveObjectPrintedAbilities(
     program,
     object,
+    state,
   ).flatMap((ability) => {
     // Hosted keywords belong to their execution object, never also to the
     // printed current face (which duplicates the current lineage card).
@@ -1073,7 +1161,7 @@ export function grandArchiveObjectActiveKeywordInstances(
     (origin): readonly GrandArchiveActiveKeywordInstance[] => {
       if (origin.id === object.id) return [];
       const face = grandArchiveObjectFace(program, origin);
-      return grandArchiveObjectPrintedAbilities(program, origin).flatMap(
+      return grandArchiveObjectPrintedAbilities(program, origin, state).flatMap(
         (ability): readonly GrandArchiveActiveKeywordInstance[] => {
           if (!ability.executionSource || !grandArchiveAbilityIsFunctional(face, ability, origin)) {
             return [];

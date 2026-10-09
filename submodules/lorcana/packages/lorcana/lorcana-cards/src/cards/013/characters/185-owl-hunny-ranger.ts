@@ -31,6 +31,7 @@ export const owlHunnyRanger: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fa4a259a62de4ec18ae91b46b4e93c25",
+    tcgPlayer: "704680",
   },
   text: [
     {

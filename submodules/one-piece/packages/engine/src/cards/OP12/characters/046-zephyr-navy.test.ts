@@ -81,4 +81,15 @@ describe("OP12-046 Zephyr(Navy)", () => {
     expect(view.players.south.trash.map((card) => card.instanceId)).not.toContain(zephyrId);
     expect(view.prompts).toHaveLength(0);
   });
+  test("trashes the one remaining hand card when two cannot be trashed on play", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [op12ZephyrNavy046, eb01Doma005],
+      activeDon: op12ZephyrNavy046.cost,
+    });
+    const discard = engine.findCardInZone("south", "hand", eb01Doma005);
+    engine.asSouth().play(op12ZephyrNavy046);
+    expect(engine.getView("south").players.south.handCount).toBe(0);
+    expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).toEqual([discard]);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

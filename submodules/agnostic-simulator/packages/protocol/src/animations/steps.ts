@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { CinematicSceneSchema } from "./scenes.js";
+import { CinematicStyleSchema } from "./cinematics.js";
 
 import {
   AnimationEntityRefSchema,
@@ -35,6 +37,24 @@ export const SimulatorAudioCueIdSchema = z.enum([
 
 export const AnimationCardFaceSchema = z.enum(["public", "hidden"]);
 
+/** A reveal is either a viewer-safe card face or an anonymous card-back cue. */
+export const AnimationRevealCueSchema = z.discriminatedUnion("kind", [
+  z
+    .object({
+      kind: z.literal("card"),
+      cardId: z.string().min(1),
+      audience: z.discriminatedUnion("kind", [
+        z.object({ kind: z.literal("all") }).strict(),
+        z.object({ kind: z.literal("player"), id: z.string().min(1) }).strict(),
+        z.object({ kind: z.literal("players"), ids: z.array(z.string().min(1)).min(1) }).strict(),
+      ]),
+      title: z.string().optional(),
+      imageUrl: z.string().optional(),
+    })
+    .strict(),
+  z.object({ kind: z.literal("hidden") }).strict(),
+]);
+
 const AnimationStepBaseShape = {
   id: z.string().min(1),
   startAtMs: z.number().int().min(0).optional(),
@@ -51,12 +71,20 @@ export const EntityTransferStepV2Schema = z
     to: AnimationRefSchema.optional(),
     sourceFace: AnimationCardFaceSchema,
     destinationFace: AnimationCardFaceSchema,
+    reveal: AnimationRevealCueSchema.optional(),
     /** Number of game objects represented by this single transfer visual. */
     quantity: z.number().int().positive().optional(),
-    /** Keep the source node visible while the transfer visual departs from it. */
-    sourcePresentation: z.enum(["move", "copy"]).optional(),
-    /** Keep an existing destination node visible beneath the arriving transfer visual. */
-    destinationPresentation: z.enum(["replace", "overlay"]).optional(),
+    /**
+     * "move" — the source node is consumed by the transfer. "copy" — the source
+     * node stays visible while the transfer visual departs from it. "hold" —
+     * the source zone no longer contains the entity in the destination state
+     * (defeats, delayed exits inside multi-beat plans), so the transfer visual
+     * parks visible at the source until this step's start time instead of
+     * leaving the entity invisible during earlier beats.
+     */
+    sourcePresentation: z.enum(["move", "copy", "hold"]).optional(),
+    /** Replace a destination, pass over it, or slide underneath its lower edge. */
+    destinationPresentation: z.enum(["replace", "overlay", "underlay"]).optional(),
   })
   .strict()
   .refine((step) => step.from !== undefined || step.to !== undefined, {
@@ -69,9 +97,25 @@ export const EmphasizeStepV2Schema = z
     type: z.literal("emphasize"),
     at: AnimationRefSchema,
     style: z.enum(["pulse", "spotlight"]).default("pulse"),
+    reveal: AnimationRevealCueSchema.optional(),
     /** Semantic outcome tone; renderers must preserve the label when motion is reduced. */
     tone: z.enum(["positive", "negative", "neutral"]).optional(),
     label: z.string().min(1).optional(),
+    /**
+     * Card whose ability caused this emphasis (e.g. the attacking unit behind
+     * a deck reveal). Public information even when the revealed identities are
+     * private, so viewers can tell why the moment is happening.
+     */
+    sourceCardId: z.string().min(1).optional(),
+    sourceTitle: z.string().optional(),
+    sourceImageUrl: z.string().optional(),
+    /**
+     * Viewer-relative side of the player acting behind this emphasis (e.g.
+     * whoever is looking at a deck top), stamped at the viewer projection
+     * boundary so bystander captions can name the actor instead of an
+     * ownerless "Looking at…".
+     */
+    actorSide: z.enum(["player", "opponent"]).optional(),
   })
   .strict();
 
@@ -104,11 +148,17 @@ export const EffectStepV2Schema = z
   .object({
     ...AnimationStepBaseShape,
     type: z.literal("effect"),
+    /** Optional reusable visual treatment. Omission preserves the existing effect renderer. */
+    cinematic: CinematicStyleSchema.optional(),
+    /** Complete presentation tracks; the owning game supplies outcomes. */
+    scene: CinematicSceneSchema.optional(),
     source: AnimationRefSchema.optional(),
     targets: z.array(AnimationRefSchema).default([]),
     label: z.string().min(1).optional(),
     /** Opt into a staged source-card treatment instead of the compact label-only effect. */
     presentation: z.enum(["source-card"]).optional(),
+    /** Render motion and card art without explanatory copy. */
+    showText: z.boolean().optional(),
     /** Prominent result value shown alongside the effect label, such as a damage amount. */
     valueLabel: z.string().min(1).optional(),
     tone: z.enum(["positive", "negative", "neutral"]).optional(),
@@ -116,7 +166,21 @@ export const EffectStepV2Schema = z
     /** Continue the staged source visual into its final zone instead of mounting a second transfer. */
     sourceExitTo: AnimationRefSchema.optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((step, ctx) => {
+    if (step.scene && (!step.durationMs || step.durationMs < 1))
+      ctx.addIssue({
+        code: "custom",
+        path: ["durationMs"],
+        message: "Scenes require an explicit positive duration",
+      });
+    if (step.scene && step.cinematic)
+      ctx.addIssue({
+        code: "custom",
+        path: ["cinematic"],
+        message: "Use either a full scene or a single cinematic style",
+      });
+  });
 
 export const CombatStepV2Schema = z
   .object({
@@ -128,6 +192,14 @@ export const CombatStepV2Schema = z
     attackKind: z.enum(["direct", "fight"]).optional(),
     label: z.string().min(1).optional(),
     detailLabel: z.string().min(1).optional(),
+    sourceStatus: z.string().min(1).optional(),
+    targetStatus: z.string().min(1).optional(),
+    showText: z.boolean().optional(),
+    /**
+     * Participants defeated by this fight (engine-computed). Renderers use it
+     * to tell combat deaths apart from effect-driven mass defeats.
+     */
+    defeatedCardIds: z.array(z.string().min(1)).optional(),
   })
   .strict();
 

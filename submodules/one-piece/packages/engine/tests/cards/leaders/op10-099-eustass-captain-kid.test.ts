@@ -9,7 +9,7 @@ describe('OP10-099 Eustass"Captain"Kid', () => {
       {
         leaderCardId: op10EustassCaptainKid099,
         life: [eb01Doma005],
-        character: [{ card: op10Urouge101, rested: true, playedOnTurn: 0 }],
+        character: [{ card: op10Urouge101, rested: true, playedOnTurn: 0 }, eb01Doma005],
       },
       { life: [eb01Doma005] },
       { firstPlayer: "north", activeSeat: "south" },
@@ -20,6 +20,7 @@ describe('OP10-099 Eustass"Captain"Kid', () => {
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
     engine.resolveDecision("effectTargetSelection", { selectedIds: [urougeId] }, "south");
 
+    expect(engine.getView("south").prompts).toHaveLength(0);
     const southView = engine.getView("south");
     expect(southView.players.south.life[0]).toMatchObject({
       cardId: eb01Doma005.id,
@@ -34,6 +35,9 @@ describe('OP10-099 Eustass"Captain"Kid', () => {
     expect(blockerStep?.kind).toBe("selectEntity");
     if (blockerStep?.kind !== "selectEntity") throw new Error("Expected a Blocker choice.");
     expect(blockerStep.candidates.map((candidate) => candidate.ref.id)).toContain(urougeId);
+    expect(blockerStep.candidates.map((candidate) => candidate.ref.id)).not.toContain(
+      engine.findCardInZone("south", "character", eb01Doma005),
+    );
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
@@ -64,5 +68,36 @@ describe('OP10-099 Eustass"Captain"Kid', () => {
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("choosing no Character grants no Blocker", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op10EustassCaptainKid099,
+        life: [eb01Doma005],
+        character: [op10Urouge101, eb01Doma005],
+      },
+      { life: [eb01Doma005] },
+    );
+    engine.endTurn("south");
+    engine.asSouth().acceptOptional();
+    engine.asSouth().chooseNoTargets();
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    engine.asNorth().attack(engine.leader("north"), engine.leader("south"));
+    expect(() => engine.pendingDecision("battleBlocker", "south")).toThrow();
+  });
+  test("cannot pay by turning the already face-up top Life face-up again", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP10-099",
+      life: [{ cardId: "EB01-005", faceUp: true, publicKnowledge: true }, "EB01-025"],
+      character: [{ cardId: "OP10-101", rested: true }],
+    });
+    const target = e.findCardInZone("south", "character", "OP10-101");
+    e.asSouth().endTurn();
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === target)?.rested,
+    ).toBe(true);
+    expect(e.getView("north").players.south.life[0]?.cardId).toBe("EB01-005");
+    expect(e.getView("north").players.south.life[1]?.hidden).toBe(true);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

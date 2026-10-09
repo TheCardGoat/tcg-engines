@@ -1,9 +1,10 @@
 import { getCard } from "../../../cards/src/runtime-catalog.ts";
 import type { Target, TargetFilter, TotalConstraint } from "@tcg/op-types";
 import {
-  baseCost,
+  getBaseCost,
   basePower,
-  cardNames,
+  cardMatchesName,
+  cardMatchesTrait,
   donCardsOnField,
   effectBlocksFor,
   getCardAttribute,
@@ -27,23 +28,22 @@ export function matchesTargetFilter(
   sourceInstanceId: string | null,
   candidateId: string,
   filter: TargetFilter,
+  observed?: { basePower?: number; baseCost?: number },
 ): { supported: boolean; matches: boolean } {
   const candidate = getInstance(state, candidateId);
   const card = getCard(candidate.cardId);
 
   switch (filter.filter) {
     case "name":
-      return { supported: true, matches: cardNames(card).includes(filter.value) };
+      return { supported: true, matches: cardMatchesName(card, filter.value) };
     case "excludeName":
-      return { supported: true, matches: !cardNames(card).includes(filter.value) };
+      return { supported: true, matches: !cardMatchesName(card, filter.value) };
     case "excludeSelf":
       return { supported: true, matches: sourceInstanceId !== candidateId };
     case "trait": {
       const expectedTraits = Array.isArray(filter.value) ? filter.value : [filter.value];
       const hasMatchingTrait = expectedTraits.some((expectedTrait) =>
-        filter.match === "includes"
-          ? (card.traits ?? []).some((trait) => trait.includes(expectedTrait))
-          : (card.traits ?? []).includes(expectedTrait),
+        cardMatchesTrait(card, expectedTrait, filter.match),
       );
       return {
         supported: true,
@@ -58,7 +58,10 @@ export function matchesTargetFilter(
       })();
     case "cost":
     case "baseCost": {
-      const value = filter.filter === "cost" ? getCardCost(state, candidateId) : baseCost(card);
+      const value =
+        filter.filter === "cost"
+          ? getCardCost(state, candidateId)
+          : (observed?.baseCost ?? getBaseCost(state, candidateId));
       switch (filter.comparison) {
         case "eq":
           return { supported: true, matches: value === filter.value };
@@ -81,7 +84,7 @@ export function matchesTargetFilter(
       const value =
         filter.filter === "power"
           ? getCardPower(state, candidateId)
-          : (getSetBasePower(state, candidateId) ?? basePower(card));
+          : (observed?.basePower ?? getSetBasePower(state, candidateId) ?? basePower(card));
       switch (filter.comparison) {
         case "eq":
           return { supported: true, matches: value === filter.value };
@@ -131,6 +134,8 @@ export function matchesTargetFilter(
       }
       break;
     }
+    case "faceUp":
+      return { supported: true, matches: candidate.faceUp === filter.value };
     case "state":
       return {
         supported: true,
@@ -179,7 +184,13 @@ export function matchesTargetFilter(
       for (const group of groups) {
         let groupMatches = true;
         for (const nestedFilter of group) {
-          const result = matchesTargetFilter(state, sourceInstanceId, candidateId, nestedFilter);
+          const result = matchesTargetFilter(
+            state,
+            sourceInstanceId,
+            candidateId,
+            nestedFilter,
+            observed,
+          );
           if (!result.supported) {
             return { supported: false, matches: false };
           }
@@ -193,7 +204,13 @@ export function matchesTargetFilter(
     }
     case "allOf": {
       for (const nestedFilter of filter.filters) {
-        const result = matchesTargetFilter(state, sourceInstanceId, candidateId, nestedFilter);
+        const result = matchesTargetFilter(
+          state,
+          sourceInstanceId,
+          candidateId,
+          nestedFilter,
+          observed,
+        );
         if (!result.supported || !result.matches) {
           return result;
         }
@@ -224,7 +241,7 @@ export function matchesTargetFilter(
             return candidate.attachedDon;
         }
       })();
-      const candidateCost = baseCost(card);
+      const candidateCost = getCardCost(state, candidateId);
       switch (filter.comparison) {
         case "eq":
           return { supported: true, matches: candidateCost === referenceValue };

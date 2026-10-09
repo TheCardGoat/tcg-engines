@@ -24,7 +24,7 @@ export const op16PortgasDAce049: CharacterCard = {
   cost: 3,
   power: 0,
   counter: 1000,
-  traits: ["Whitebeard Pirates Impel Down"],
+  traits: ["Impel Down", "Whitebeard Pirates"],
   attribute: "special",
   effect: "[Activate:Main] You may rest this Character: Draw 1 card.",
   effects: {

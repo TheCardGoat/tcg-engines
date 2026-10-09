@@ -99,19 +99,17 @@ export const naturesInsight: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                     kind: "reveal",
                     player: "controller",
                     selection: {
-                      id: "memory-card",
+                      id: "revealed-memory-card",
                       kind: "choice",
                       declared: "resolution",
                       chooser: "controller",
                       count: {
-                        kind: "exactly",
-                        amount: 1,
+                        kind: "all",
                       },
+                      unique: true,
                       candidates: {
                         kind: "card",
-                        zones: ["memory"],
-                        relationship: "zone-of",
-                        player: "controller",
+                        binding: "memory-card",
                       },
                     },
                   },

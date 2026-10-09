@@ -23,7 +23,7 @@ export const op04Karoo004: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Animal Alabasta"],
+  traits: ["Animal", "Alabasta"],
   attribute: "strike",
   effect:
     "[Activate:Main] You may rest this Character: Give up to 1 rested DON!! card to each of your [Alabasta] type Characters.",
@@ -50,7 +50,7 @@ export const op04Karoo004: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Alabasta",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

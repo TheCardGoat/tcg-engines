@@ -27,12 +27,13 @@ export const discardedArmor: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c165a60ae2434c74afc216d65d8eeb9c",
+    tcgPlayer: "704696",
   },
   text: [
     {
       title: "FOUND EQUIPMENT",
       description:
-        "exert — If you discarded a card this turn, chosen character of yours gains Resist +1 until the start of your next turn.",
+        "{E} — If you discarded a card this turn, chosen character of yours gains Resist +1 until the start of your next turn.",
     },
   ],
   abilities: [

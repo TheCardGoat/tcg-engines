@@ -5,7 +5,7 @@ export const op01CavendishBoxTopper008: CharacterCard = {
   id: "OP01-008",
   canonicalId: "OP01-008",
   slug: "cavendish-box-topper",
-  name: "Cavendish (Box Topper)",
+  name: "Cavendish",
   printings: [
     {
       id: "OP01-008",
@@ -23,7 +23,7 @@ export const op01CavendishBoxTopper008: CharacterCard = {
   setId: "OP01",
   cost: 4,
   power: 5000,
-  traits: ["Beautiful Pirates Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Beautiful Pirates"],
   attribute: "slash",
   effect:
     "[On Play] You may add 1 card from the top of your Life cards to your hand: This Character gains [Rush] during this turn. (This card can attack on the turn in which it is played.)",

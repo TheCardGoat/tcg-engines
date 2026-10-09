@@ -33,35 +33,39 @@ describe("OP17-019 I Don't Have Time to Chat With Snot-Nosed Brats", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
-  test("[Main] resolves and moves to trash", () => {
-    const engine = OnePieceTestEngine.create({ hand: ["OP17-019"], activeDon: 3 }, {});
-
+  test("[Main] may take no searched card and still completes the remaining actions", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: ["OP17-019"],
+      deck: ["OP16-003", "OP13-013", "OP13-013", "OP13-013", "OP13-013", "OP13-013"],
+      activeDon: 1,
+    });
     engine.playCard("OP17-019");
-    for (let i = 0; i < 3; i++) {
-      const pending = engine.getView("south").decisions?.[0] as
-        | { extensions?: { resolutionIntent?: string } }
-        | undefined;
-      if (!pending?.extensions?.resolutionIntent) break;
-      for (let i = 0; i < 3; i++) {
-        const pending = engine.getView("south").decisions?.[0] as
-          | { extensions?: { resolutionIntent?: string } }
-          | undefined;
-        if (!pending?.extensions?.resolutionIntent) break;
-        const intent = pending.extensions.resolutionIntent;
-        try {
-          const step = engine.pendingDecision(intent as never, "south").steps[0];
-          if (step?.kind === "selectEntity" || step?.kind === "orderItems") {
-            engine.resolveDecision(intent as never, { selectedIds: [] }, "south");
-          } else if (step?.kind === "chooseOption") {
-            engine.resolveDecision(intent as never, { optionId: "0" }, "south");
-          } else break;
-        } catch {
-          break;
-        }
-      }
-    }
-
-    expect(engine.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP17-019");
+    engine.resolveDecision("effectSearchSelection", { selectedIds: [] }, "south");
+    const order = engine.pendingDecision("effectSearchRemainderOrder", "south").steps[0];
+    if (order?.kind !== "orderItems") throw new Error("Expected the remainder order.");
+    expect(order.candidates).toHaveLength(5);
+    engine.resolveDecision(
+      "effectSearchRemainderOrder",
+      { selectedIds: order.candidates.map((candidate) => candidate.ref.id) },
+      "south",
+    );
+    const south = engine.getView("south").players.south;
+    expect(south.handCount).toBe(0);
+    expect(south.deckCount).toBe(6);
+    expect(south.trash.map((card) => card.cardId)).toContain("OP17-019");
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("Life Trigger gives the Leader1000 for the turn then expires", () => {
+    const e = OnePieceTestEngine.create(
+      { life: ["OP17-019", "EB01-025"] },
+      {},
+      { activeSeat: "north" },
+    );
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.resolveDecision("lifeTrigger", { optionId: "activate" }, "south");
+    expect(e.getView("south").players.south.leader.power).toBe(6000);
+    e.endTurn("north");
+    expect(e.getView("south").players.south.leader.power).toBe(5000);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

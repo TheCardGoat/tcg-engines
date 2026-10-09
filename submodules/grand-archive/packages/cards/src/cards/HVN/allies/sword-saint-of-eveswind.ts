@@ -54,8 +54,8 @@ export const swordSaintOfEveswind: GrandArchiveCard<GrandArchiveAbilityDefinitio
           effect: {
             kind: "conditional",
             condition: {
-              kind: "activation-state",
-              state: "entered-from-banishment",
+              kind: "event-origin",
+              zone: "banishment",
             },
             then: {
               kind: "add-counter",

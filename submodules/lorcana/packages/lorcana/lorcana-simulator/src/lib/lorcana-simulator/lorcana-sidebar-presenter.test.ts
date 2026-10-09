@@ -199,6 +199,7 @@ describe("LorcanaSidebarPresenter", () => {
       players: {
         player_one: {
           canAddCardToInkwell: false,
+          inkDrops: 0,
           lore: 0,
           deckCount: 50,
           handCount: 0,
@@ -209,6 +210,7 @@ describe("LorcanaSidebarPresenter", () => {
         },
         player_two: {
           canAddCardToInkwell: false,
+          inkDrops: 0,
           lore: 0,
           deckCount: 50,
           handCount: 0,
@@ -260,6 +262,7 @@ describe("LorcanaSidebarPresenter", () => {
       players: {
         player_one: {
           canAddCardToInkwell: false,
+          inkDrops: 0,
           lore: 0,
           deckCount: 50,
           handCount: 0,
@@ -270,6 +273,7 @@ describe("LorcanaSidebarPresenter", () => {
         },
         player_two: {
           canAddCardToInkwell: false,
+          inkDrops: 0,
           lore: 0,
           deckCount: 50,
           handCount: 0,
@@ -1433,6 +1437,103 @@ describe("LorcanaSidebarPresenter", () => {
         },
       },
     ]);
+  });
+
+  it("skips an unaccepted optional target choice with a required target count", () => {
+    const executedMoves: Array<Record<string, unknown>> = [];
+    const sourceCard = createCardSnapshot("playerOne", "play", {
+      id: "card-1",
+      name: "Jasmine - Resourceful Infiltrator",
+      type: "character",
+    });
+    const targetCard = createCardSnapshot("playerOne", "play", {
+      id: "target-1",
+      name: "Mulan - Disguised Soldier",
+      type: "character",
+    });
+    const sourceCardId = sourceCard.cardId as CardInstanceId;
+    const targetCardId = targetCard.cardId as CardInstanceId;
+    const board = createBoardWithPendingEffect({
+      id: "pending-1",
+      sourceId: sourceCardId,
+      sourceCardId,
+      controllerId: "player_one",
+      chooserId: "player_one",
+      kind: "target-selection",
+      effect: {
+        type: "ready",
+        target: "CHOSEN_CHARACTER",
+      },
+    });
+    board.stateID = 14;
+    board.pendingEffects = [
+      {
+        ...board.pendingEffects[0]!,
+        selectionContext: {
+          origin: "pending-effect",
+          requestId: "pending-1",
+          kind: "target-selection",
+          sourceCardId,
+          chooserId: playerOneId,
+          currentSelection: {},
+          submitField: "targets",
+          originatesFromOptional: true,
+          targetDsl: [
+            {
+              selector: "chosen",
+              count: 1,
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          ],
+          cardCandidateIds: [targetCardId],
+          playerCandidateIds: [],
+          allowedZones: ["play"],
+          minSelections: 1,
+          maxSelections: 1,
+          ordered: false,
+          autoRejected: false,
+        },
+      },
+    ];
+
+    const presenter = new LorcanaSidebarPresenter(
+      createGameContextStub({
+        boardSnapshot: () => board,
+        cardSnapshotsById: () => ({
+          [sourceCard.cardId]: sourceCard,
+          [targetCard.cardId]: targetCard,
+        }),
+        pendingResolutionMoves: () => [
+          {
+            id: "resolveEffect:pending-1",
+            moveId: "resolveEffect",
+            params: { effectId: "pending-1" },
+          },
+        ],
+        pendingResolutionAutoOpenStateId: () => 14,
+        executeMove: (_moveId, params) => {
+          executedMoves.push(params as Record<string, unknown>);
+          return true;
+        },
+      }),
+    );
+    presenter.skipActionConfirmation = false;
+
+    presenter.syncAutoOpenPendingResolution();
+
+    expect(presenter.availableMovesSelectionState).toMatchObject({
+      mode: "resolution-target",
+      canCancel: true,
+      canDecline: true,
+      declineLabel: "Skip effect",
+      canConfirm: false,
+      title: "Resolve optional effect from Jasmine - Resourceful Infiltrator",
+    });
+
+    expect(presenter.skipActiveResolutionTargetSelection()).toBe(true);
+    expect(executedMoves).toEqual([{ effectId: "pending-1", params: { resolveOptional: false } }]);
+    expect(presenter.resolutionSelectionSession).toBeNull();
   });
 
   it("replaces 'this effect' with the action card name in resolution guidance", () => {

@@ -23,7 +23,7 @@ export const op03Kingbaum100: CharacterCard = {
   cost: 3,
   power: 5000,
   trigger: "You may trash 1 card from the top or bottom of your Life cards: Play this card.",
-  traits: ["Big Mom Pirates Homies"],
+  traits: ["Big Mom Pirates", "Homies"],
   attribute: "strike",
   effect:
     "[Trigger] You may trash 1 card from the top or bottom of your Life cards: Play this card.",

@@ -23,7 +23,7 @@ export const op10KinEmon027: CharacterCard = {
   cost: 2,
   power: 0,
   counter: 2000,
-  traits: ["Land of Wano The Akazaya Nine Punk Hazard"],
+  traits: ["Punk Hazard", "Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[Activate: Main] You may place this Character and 1 [Kin'emon] with 1000 power from your trash at the bottom of your deck in any order: Play up to 1 [Kin'emon] with a cost of 6 from your hand.",
@@ -33,11 +33,8 @@ export const op10KinEmon027: CharacterCard = {
         trigger: "activateMain",
         costs: [
           {
-            cost: "returnThisToDeck",
-            position: "bottom",
-          },
-          {
             cost: "returnTrashToDeck",
+            includeSelf: true,
             amount: 1,
             position: "bottom",
             filters: [

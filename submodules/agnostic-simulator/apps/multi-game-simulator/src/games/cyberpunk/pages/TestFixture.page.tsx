@@ -9,6 +9,7 @@ import {
   type Side,
 } from "../engine";
 import { BoardSharedPage, type BoardSharedPageProps } from "./BoardShared.page";
+import { DemoFixturePage } from "./DemoFixture.page";
 import { NotFound } from "./Tests.page";
 
 const VALID_IDS: ReadonlySet<string> = new Set(listScenarios().map((s) => s.id));
@@ -24,6 +25,10 @@ export function TestFixturePage() {
   const params = useParams<{ fixtureId: string }>();
   const location = useLocation();
   const fixtureId = params.fixtureId ?? "";
+
+  if (fixtureId === "demo") {
+    return <DemoFixturePage />;
+  }
 
   if (!VALID_IDS.has(fixtureId)) {
     return <NotFound />;

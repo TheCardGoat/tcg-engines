@@ -53,7 +53,7 @@ export const eb01Hannyabal021: LeaderCard = {
             cost: "returnCharacter",
             amount: 1,
             filters: [
-              { filter: "trait", value: "Impel Down", match: "includes" },
+              { filter: "trait", value: "Impel Down", match: "exact" },
               { filter: "cost", comparison: "gte", value: 2 },
             ],
           },

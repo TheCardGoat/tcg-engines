@@ -23,7 +23,7 @@ export const op12Hack089: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Fish-Man Revolutionary Army Dressrosa"],
+  traits: ["Fish-Man", "Dressrosa", "Revolutionary Army"],
   attribute: "strike",
   effect:
     'If your Leader has the "Revolutionary Army" type, this Character gains [Blocker] and +4 cost.\n[On K.O.] If your Leader has the "Revolutionary Army" type, K.O. up to 1 of your opponent\'s Characters with a base cost of 4 or less.',
@@ -35,7 +35,7 @@ export const op12Hack089: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Revolutionary Army",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -66,7 +66,7 @@ export const op12Hack089: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Revolutionary Army",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

@@ -53,6 +53,10 @@ export const castling: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> =
                       },
                       {
                         kind: "subtype",
+                        oneOf: ["CHESSMAN"],
+                      },
+                      {
+                        kind: "subtype",
                         oneOf: ["ROOK"],
                       },
                     ],
@@ -95,6 +99,10 @@ export const castling: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> =
                       },
                       {
                         kind: "subtype",
+                        oneOf: ["CHESSMAN"],
+                      },
+                      {
+                        kind: "subtype",
                         oneOf: ["KING"],
                       },
                     ],
@@ -129,8 +137,17 @@ export const castling: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> =
                 kind: "object",
                 zones: ["field"],
                 filter: {
-                  kind: "type",
-                  oneOf: ["ALLY"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY"],
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["CHESSMAN"],
+                    },
+                  ],
                 },
               },
             },

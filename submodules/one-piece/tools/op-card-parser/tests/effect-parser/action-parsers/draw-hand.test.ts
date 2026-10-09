@@ -401,6 +401,7 @@ describe("parseActions — draw with trailing condition", () => {
         restriction: "cannotPlay",
         filters: [],
         sourceZones: ["hand"],
+        origin: "command",
         duration: "thisTurn",
       },
     ]);
@@ -578,7 +579,7 @@ describe("parseActions — draw with trailing condition", () => {
     const block = effects!.effects![0]!;
     expect(block.trigger).toBe("onPlay");
     expect(block.conditions).toEqual([
-      { condition: "leaderTrait", trait: "Minks", match: "includes" },
+      { condition: "leaderTrait", trait: "Minks", match: "exact" },
     ]);
     expect(block.actions).toEqual([
       {

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
+import { welcomeToNightCityRetailJackieWellesRideOrDieChoom as jackie } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2, type GigFixtureEntry } from "./index.ts";
 
 const gigs = (...dieTypes: GigFixtureEntry["dieType"][]): GigFixtureEntry[] =>
@@ -18,6 +19,19 @@ function withWarnSpy(fn: (messages: string[]) => void): void {
 }
 
 describe("createWithFixture turn sync", () => {
+  it("places a Legend face-up in the field without revealing Legends in their own area", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      { field: [{ card: jackie, spent: true }], legendArea: [jackie] },
+      { legendArea: [{ card: jackie, faceDown: false }] },
+    );
+    const [unit] = engine.getCardsInZone("field", P1);
+    expect(unit?.definitionId).toBe(jackie.id);
+    expect(unit?.meta.faceDown).toBe(false);
+    expect(unit?.meta.spent).toBe(true);
+    expect(engine.getCardsInZone("legendArea", P1)[0]?.meta.faceDown).toBe(true);
+    expect(engine.getCardsInZone("legendArea", P2)[0]?.meta.faceDown).toBe(false);
+  });
+
   it("starts default play fixtures without running setup or start-phase preparation", () => {
     const engine = CyberpunkTestEngine.createWithFixture({}, {}, { seed: "fixture-default" });
     const state = engine.getState();
@@ -36,6 +50,21 @@ describe("createWithFixture turn sync", () => {
     expect(state.G.players[P1]!.fixerArea).toHaveLength(6);
     expect(state.G.players[P2]!.gigArea).toHaveLength(0);
     expect(state.G.players[P2]!.fixerArea).toHaveLength(6);
+  });
+
+  it("deals a numeric fixture hand off the deck instead of leaving it empty", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      { hand: 5, deck: 30 },
+      { hand: 4 },
+      { seed: "fixture-numeric-hand" },
+    );
+    const p1 = engine.getState().G.players[P1]!;
+    const p2 = engine.getState().G.players[P2]!;
+    expect(p1.zones.hand).toHaveLength(5);
+    expect(p1.zones.deck).toHaveLength(25);
+    expect(p1.zones.hand.every((id) => !p1.zones.deck.includes(id))).toBe(true);
+    expect(p2.zones.hand).toHaveLength(4);
+    expect(p2.zones.hand.every((id) => !p2.zones.deck.includes(id))).toBe(true);
   });
 
   it("uses explicit fixture gig areas without changing the requested active player", () => {
@@ -166,7 +195,8 @@ describe("createWithFixture turn sync", () => {
 
     expect(state.G.overtime).toBe(true);
     expect(state.G.turnMetadata.overtimeActive).toBe(true);
-    expect(state.G.turnMetadata.previousTurnNoGigTaken).toBe(true);
+    expect(state.G.turnMetadata.previousTurnBeganWithEmptyFixer).toBe(true);
+    expect(state.G.turnMetadata.turnBeganWithEmptyFixer).toBe(true);
     expect(state.G.turnMetadata.gigTakenThisTurn).toBe(false);
     expect(state.G.turnMetadata.pendingChoice).toBeUndefined();
     expect(state.G.players[P1]!.fixerArea).toHaveLength(0);

@@ -23,7 +23,7 @@ export const op10Sengoku031: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Navy Dressrosa"],
+  traits: ["Dressrosa", "Navy"],
   attribute: "wisdom",
   i18n: op10Sengoku031I18n,
 };

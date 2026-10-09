@@ -24,7 +24,7 @@ export const op09Lindbergh114: CharacterCard = {
   power: 4000,
   counter: 1000,
   trigger: "If you and your opponent have a total of 5 or less Life cards, play this card.",
-  traits: ["Minks Revolutionary Army"],
+  traits: ["Minks", "Revolutionary Army"],
   attribute: "special",
   effect:
     "[On Play] If you and your opponent have a total of 5 or less Life cards, K.O. up to 1 of your opponent's Characters with 2000 power or less.",

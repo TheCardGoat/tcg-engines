@@ -22,7 +22,7 @@ export const op13GumGumDawnStamp117: EventCard = {
   setId: "OP13",
   cost: 5,
   trigger: "Draw 1 card.",
-  traits: ["Straw Hat Crew The Four Emperors Egghead"],
+  traits: ["Egghead", "The Four Emperors", "Straw Hat Crew"],
   effect:
     "[Main] You may turn 1 card from the top of your Life cards face-up: K.O. up to 1 of your opponent's Characters with a base cost of 6 or less.",
   effects: {

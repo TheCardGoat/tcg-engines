@@ -1,8 +1,8 @@
 {
   "canonicalIds": {
     "counts": {
-      "cardsWithCanonicalId": 3131,
-      "uniqueCanonicalIds": 2477
+      "cardsWithCanonicalId": 3374,
+      "uniqueCanonicalIds": 2681
     },
     "errors": [],
     "status": "pass",
@@ -10,11 +10,11 @@
   },
   "ids": {
     "counts": {
-      "printingCanonicalMappings": 3131,
-      "shortPrintingMappings": 3131,
-      "totalCards": 3131,
-      "uniquePrintingIds": 3131,
-      "uniqueShortIds": 3131
+      "printingCanonicalMappings": 3374,
+      "shortPrintingMappings": 3374,
+      "totalCards": 3374,
+      "uniquePrintingIds": 3374,
+      "uniqueShortIds": 3374
     },
     "errors": [],
     "status": "pass",
@@ -247,10 +247,10 @@
     },
     "counts": {
       "extra": 0,
-      "mappedCards": 3144,
+      "mappedCards": 3394,
       "missing": 1,
       "missingCultureId": 0,
-      "totalCards": 3210,
+      "totalCards": 3460,
       "unknownCultureId": 66
     },
     "errors": [],
@@ -464,9 +464,9 @@
   },
   "reprintSharedFields": {
     "counts": {
-      "reprintGroupsChecked": 423,
-      "reprintPrintingsCompared": 459,
-      "sharedFieldComparisons": 11016
+      "reprintGroupsChecked": 451,
+      "reprintPrintingsCompared": 491,
+      "sharedFieldComparisons": 11784
     },
     "errors": [],
     "status": "pass",
@@ -474,9 +474,9 @@
   },
   "reprints": {
     "counts": {
-      "reprintGroups": 568,
-      "totalBaseReprints": 762,
-      "totalReprints": 1222
+      "reprintGroups": 603,
+      "totalBaseReprints": 804,
+      "totalReprints": 1296
     },
     "errors": [],
     "status": "pass",

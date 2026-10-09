@@ -23,7 +23,7 @@ export const op09DonquixoteDoflamingo031: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea ODYSSEY"],
+  traits: ["ODYSSEY", "The Seven Warlords of the Sea", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[End of Your Turn] If you have 2 or more rested Characters, set this Character as active.",

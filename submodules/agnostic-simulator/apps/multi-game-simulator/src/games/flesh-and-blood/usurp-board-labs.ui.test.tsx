@@ -18,7 +18,8 @@ describe("UST multi-card board labs · prompt targeting", () => {
     await screen.findByTestId("fab-practice-page", {}, { timeout: 15_000 });
 
     const effect = screen.getByRole("region", { name: "Current effect" });
-    expect(effect.textContent).toContain("Choose a card for Acrid Stench");
+    expect(effect.textContent).toContain("Acrid Stench");
+    expect(effect.textContent).toContain("Choose a card");
 
     const cleric = screen.getByRole("button", {
       name: /^Restless Cleric, card, player-1, Red pitch/,

@@ -23,7 +23,7 @@ export const pocahontasPeacekeeperIconic: CharacterCard = {
   franchise: "Pocahontas",
   set: "011",
   cardNumber: 241,
-  rarity: "common",
+  rarity: "iconic",
   specialRarity: "iconic",
   cost: 5,
   strength: 3,

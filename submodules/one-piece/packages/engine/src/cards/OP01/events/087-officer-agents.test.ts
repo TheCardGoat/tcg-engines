@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op01OfficerAgents087 } from "../../../../../cards/src/cards/events/op01-087-officer-agents.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP01-087 Officer Agents", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op01OfficerAgents087);
-  });
-});

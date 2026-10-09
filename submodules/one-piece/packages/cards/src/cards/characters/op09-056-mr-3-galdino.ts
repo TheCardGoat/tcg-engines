@@ -40,7 +40,7 @@ export const op09Mr3Galdino056: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Former Baroque Works Cross Guild"],
+  traits: ["Cross Guild", "Former Baroque Works"],
   attribute: "special",
   effect:
     '[On Play] Look at 4 cards from the top of your deck; reveal up to 1 "Cross Guild" type card or card with a type including "Baroque Works" other than [Mr.3(Galdino)] and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
@@ -71,7 +71,7 @@ export const op09Mr3Galdino056: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Cross Guild",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",

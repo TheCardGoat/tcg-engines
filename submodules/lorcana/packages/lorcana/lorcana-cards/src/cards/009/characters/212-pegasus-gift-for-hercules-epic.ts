@@ -25,7 +25,7 @@ export const pegasusGiftForHerculesEpic: CharacterCard = {
   franchise: "Hercules",
   set: "009",
   cardNumber: 212,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 1,
   strength: 1,

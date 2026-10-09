@@ -227,6 +227,8 @@ export type Rarity =
   | "super_rare"
   | "legendary"
   | "enchanted"
+  | "epic"
+  | "iconic"
   | "special";
 
 export type SpecialRarity = "enchanted" | "epic" | "iconic" | "promo" | "challenge";

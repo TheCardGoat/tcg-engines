@@ -22,7 +22,7 @@ export const op06GumGumKingKongGatling018: EventCard = {
   setId: "OP06",
   cost: 2,
   trigger: "K.O. up to 1 of your opponent's Characters with 5000 power or less.",
-  traits: ["FILM Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   effect:
     "[Main] Up to 1 of your Leader or Character cards gains +3000 power during this turn. Then, if your opponent has a Character with 7000 power or more, up to 1 of your Leader or Character cards gains +1000 power during this turn.",
   effects: {

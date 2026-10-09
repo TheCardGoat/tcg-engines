@@ -22,6 +22,8 @@ export interface GrandArchiveObservedEvent {
   readonly recipientIds?: readonly GrandArchiveTargetId[];
   readonly recipientIncarnations?: Readonly<Partial<Record<GrandArchiveObjectId, number>>>;
   readonly previousObjectId?: GrandArchiveObjectId;
+  /** Destination host of a move into an object-specific zone. */
+  readonly hostId?: GrandArchiveObjectId;
   readonly amount?: number;
   readonly from?: GrandArchiveZone;
   readonly to?: GrandArchiveZone;
@@ -31,6 +33,7 @@ export interface GrandArchiveObservedEvent {
   readonly stackItemType?: "ability" | "card-activation" | "materialization";
   readonly abilityKind?: "activated" | "triggered";
   readonly abilityId?: string;
+  readonly abilityLabel?: string;
   readonly activationStates?: readonly import("@tcg/grand-archive-types").GrandArchiveActivationState[];
   /** Cost kind this event paid, when the rules-defined payment action records one. */
   readonly paymentCostKind?: "memory" | "reserve";
@@ -114,7 +117,14 @@ function observeGrandArchiveEvent(
     case "object-moved": {
       const paymentCostKind = paymentCostKindForEvent(event);
       const observed: GrandArchiveObservedEvent[] = [
-        { ...base, name: "card-moved", subjectId: event.objectId, from: event.from, to: event.to },
+        {
+          ...base,
+          name: "card-moved",
+          subjectId: event.objectId,
+          from: event.from,
+          to: event.to,
+          ...(event.hostId ? { hostId: event.hostId } : {}),
+        },
       ];
       if (event.to === "field")
         observed.push({
@@ -445,6 +455,7 @@ function observeGrandArchiveEvent(
             stackItemType: "ability",
             abilityKind: "activated",
             abilityId: item.ability.id,
+            ...(item.ability.label ? { abilityLabel: item.ability.label.name } : {}),
             ...(item.sourceId ? { sourceId: item.sourceId } : {}),
           },
           ...targetEvents,

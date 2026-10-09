@@ -17,6 +17,7 @@ export type AnimationStepKind =
   | "phaseChange"
   | "entityStateChange"
   | "randomization"
+  | "actionEmphasis"
   | "gameResult";
 
 export type ResourceKind = "eddies" | "gig";
@@ -35,6 +36,7 @@ interface BaseStep {
 }
 
 export interface CardMoveStep extends BaseStep {
+  deckPlacement?: "top" | "bottom";
   kind: "cardMove";
   cardId: CardInstanceId;
   fromZone: CardZone;
@@ -45,8 +47,8 @@ export interface CardMoveStep extends BaseStep {
   destinationFace?: "public" | "hidden";
   /** Present when this card left a host, so motion starts on that unit/legend. */
   fromHostId?: CardInstanceId;
-  /** Keep a resolving effect card visible before its authoritative trash settle. */
-  presentation?: "resolving-effect";
+  /** Stage a played Program at the resolving-card anchor, or move it out after resolution. */
+  presentation?: "resolving-effect" | "resolved-effect";
 }
 
 export interface CardExitStep extends BaseStep {
@@ -101,7 +103,18 @@ export interface CardRevealStep extends BaseStep {
   cardId: CardInstanceId;
   fromZone: CardZone;
   toZone?: CardZone;
-  playerId: PlayerId;
+  deckPlacement?: "top" | "bottom";
+  audience: "public" | "private";
+  viewerId: PlayerId;
+  /**
+   * Every private viewer of the reveal identities; `undefined` means only
+   * `viewerId`. Ignored for public reveals.
+   */
+  viewerIds?: readonly PlayerId[];
+  /** Owner of the physical source and destination zones, not the viewer. */
+  ownerId: PlayerId;
+  /** Card whose ability caused the reveal, for the display cue's caption. */
+  sourceCardId?: CardInstanceId;
 }
 
 /**
@@ -133,7 +146,7 @@ export interface EffectTargetStep extends BaseStep {
   sourceCardId: CardInstanceId;
   targets: EffectTargetSpec[];
   playerId: PlayerId;
-  presentation?: "source-card";
+  presentation?: "source-card" | "resolving-program";
   sourceExit?: { zone: CardZone; playerId: PlayerId };
   label?: string;
   tone?: "positive" | "negative" | "neutral";
@@ -154,8 +167,13 @@ export interface CombatStep extends BaseStep {
   kind: "combat";
   attackerId: CardInstanceId;
   defenderId: CardInstanceId | null;
+  rivalId: PlayerId;
   attackKind: "fight" | "direct";
   gigsStolen?: number;
+  result?: "attackerWins" | "defenderWins" | "mutual" | "gigsStolen" | "blocked";
+  defeatedCardIds?: CardInstanceId[];
+  /** Participants whose defeat a sacrificial Gear absorbed; labeled on the result beat. */
+  preventedCardIds?: CardInstanceId[];
   playerId: PlayerId;
 }
 
@@ -197,15 +215,28 @@ export interface EntityStateChangeStep extends BaseStep {
 export interface RandomizationStep extends BaseStep {
   kind: "randomization";
   playerId: PlayerId;
-  randomization: "shuffle" | "die";
-  dieId?: GigDieId;
-  resultLabel?: string;
+  randomization: "shuffle";
+  zone: "deck" | "legendArea";
 }
 
 export interface GameResultStep extends BaseStep {
   kind: "gameResult";
   winnerId: PlayerId | null;
   reasonLabel: string;
+}
+
+/** A visual acknowledgment for a choice that has no physical game event. */
+export interface ActionEmphasisStep extends BaseStep {
+  kind: "actionEmphasis";
+  target:
+    | { kind: "card"; cardId: CardInstanceId }
+    | { kind: "zone"; zone: "hand" | "deck" | "field" | "trash"; playerId: PlayerId };
+  tone: "neutral" | "positive" | "negative";
+  /**
+   * Short display label for debuff-style acknowledgments (e.g. "CAN'T ATTACK"
+   * for a granted cantAttack rule). Absent for neutral/positive pulses.
+   */
+  label?: string;
 }
 
 export type AnimationStep =
@@ -224,6 +255,7 @@ export type AnimationStep =
   | PhaseChangeStep
   | EntityStateChangeStep
   | RandomizationStep
+  | ActionEmphasisStep
   | GameResultStep;
 
 export interface AnimationScript {

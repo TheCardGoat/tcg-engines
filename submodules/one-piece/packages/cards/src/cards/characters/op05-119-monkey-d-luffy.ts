@@ -90,7 +90,7 @@ export const op05MonkeyDLuffy119: CharacterCard = {
   setId: "OP05",
   cost: 10,
   power: 12000,
-  traits: ["Straw Hat Crew The Four Emperors"],
+  traits: ["The Four Emperors", "Straw Hat Crew"],
   attribute: "strike",
 
   effect:

@@ -57,8 +57,23 @@ export function choiceModalActionFromInteractionView(
         return presentation === "spatial" && !opts.includeSpatialTargets ? null : action;
       }
       case "resolveDiscardFromHand":
-        return opts.includeSpatialTargets ? action : null;
-      case "resolveRedirectDefeat":
+        // A player can already inspect and select cards in their own visible
+        // hand. Keep that decision on the board, just like other spatial
+        // targets, so a single required discard resolves with one card click.
+        // The modal remains for discard choices whose candidates are not all
+        // visible to the chooser.
+        if (!opts.includeSpatialTargets) {
+          const cardInput = entityInput(action, "cardIds", "card");
+          if (!cardInput) {
+            return null;
+          }
+          return interactionTargetPresentation(
+            cardInput,
+            visibleCandidateIds(cardInput, matchState, opts.visibleHandOwnerId),
+          ) === "spatial"
+            ? null
+            : action;
+        }
         return action;
       case "resolveSacrificialGear": {
         const cardInput = entityInput(action, "cardId", "card");
@@ -71,8 +86,6 @@ export function choiceModalActionFromInteractionView(
         );
         return presentation === "spatial" && !opts.includeSpatialTargets ? null : action;
       }
-      case "resolveFirstPlayer":
-        return action;
       case "resolveCardToMove": {
         const cardInput = entityInput(action, "cardId", "card");
         if (!cardInput) {
@@ -135,7 +148,7 @@ export function getTargetPromptPresentation({
       case "resolveDiscardFromHand":
         return {
           action: spatialAction,
-          presentation: "drawer",
+          presentation: "spatial",
           requestId: spatialAction.requestId,
         };
       case "resolveCardToMove": {
@@ -157,6 +170,17 @@ export function getTargetPromptPresentation({
       default:
         break;
     }
+  }
+
+  // A known Gig reroll is projected as a direct option in the shared prompt.
+  // Do not fall back to the native target drawer for that same engine choice.
+  if (
+    actions.some(
+      (action) =>
+        action.id === "resolveEffectTarget" && optionInput(action, "rerollDieIds") !== null,
+    )
+  ) {
+    return { action: null, presentation: "none", requestId: null };
   }
 
   const nativeTargetRequestId = nativeTargetChoiceModalRequestId(choice);
@@ -250,12 +274,8 @@ export function choiceActionHasRenderableDrawerContent(action: InteractionAction
       return Boolean(optionInput(action, "cardType"));
     case "resolveCardToMove":
       return Boolean(entityInput(action, "cardId", "card"));
-    case "resolveRedirectDefeat":
-      return true;
     case "resolveSacrificialGear":
       return Boolean(entityInput(action, "cardId", "card"));
-    case "resolveFirstPlayer":
-      return true;
     default:
       return false;
   }

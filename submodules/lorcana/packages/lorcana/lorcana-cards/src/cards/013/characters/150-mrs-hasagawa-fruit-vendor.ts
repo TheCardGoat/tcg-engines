@@ -32,6 +32,7 @@ export const mrsHasagawaFruitVendor: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_fa46d57f8eea4d11a0f1a86c62bb4e53",
+    tcgPlayer: "704648",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: mrsHasagawaFruitVendorI18n,

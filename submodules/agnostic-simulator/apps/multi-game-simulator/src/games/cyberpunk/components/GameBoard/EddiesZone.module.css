@@ -16,7 +16,7 @@
   height: 100%;
 }
 
-.zone {
+.dropSlot .zone {
   position: relative;
   z-index: 2;
   box-sizing: border-box;
@@ -28,8 +28,10 @@
   margin: var(--zone-gutter);
   border: 1px solid rgb(var(--side-accent-rgb, 245 230 66) / 24%);
   border-radius: 0;
-  background:
-    linear-gradient(90deg, rgb(245 230 66 / 3%), transparent 38%), var(--board-zone, #090b0f);
+  /* The seat paints the playmat. A filled zone color here covers the empty
+     end of the Eddie row, including art that reads as a card. Two classes
+     beat the shared resource zone's solid background utility. */
+  background: linear-gradient(90deg, rgb(245 230 66 / 5%), transparent 42%);
   padding: 0;
   overflow: visible;
   transition: background 0.15s;
@@ -187,7 +189,7 @@
   right: -5px;
 }
 
-.row {
+.zone .row {
   --eddie-gap: 3px;
 
   position: relative;
@@ -195,6 +197,8 @@
   display: flex;
   gap: var(--eddie-gap);
   align-items: stretch;
+  /* Beat the shared resource row's centered justification so Eddie cards
+     continue from Legends and the open end of the row shows the seat. */
   justify-content: flex-start;
   box-sizing: border-box;
   width: fit-content;
@@ -266,24 +270,6 @@
   outline-offset: 2px;
 }
 
-.paymentSelected::after {
-  content: "PAY";
-  position: absolute;
-  right: 3px;
-  bottom: 3px;
-  z-index: 10;
-  padding: 2px 4px;
-  border: 1px solid #f5e642;
-  background: rgb(7 9 12 / 92%);
-  color: #fff9b2;
-  font-family: Rajdhani, "Arial Narrow", sans-serif;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  pointer-events: none;
-}
-
 .paymentSelected .cardBody {
   border-color: #f5e642;
   box-shadow:
@@ -306,7 +292,8 @@
   filter: saturate(0.96) brightness(0.96) contrast(1);
 }
 
-.card.spent .cardBody {
+.card.spent .cardBody,
+.card.paymentSelected .cardBody {
   /* Full-size rotation keeps the reveal continuous with the state-change
      overlay, which rotates the same footprint without scaling. */
   transform: rotate(90deg);
@@ -362,13 +349,6 @@
 
 .counter strong {
   font: inherit;
-}
-
-.zone.opponent .counter {
-  top: auto;
-  right: calc(100% + 6px);
-  bottom: 8px;
-  left: auto;
 }
 
 /* Persistent "sell here" cue on the local player's desktop row: a dashed

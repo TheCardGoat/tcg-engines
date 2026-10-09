@@ -101,8 +101,21 @@ describe("Peace Offering (Retail) jsdom happy path", () => {
       const sequence = view.container.querySelector<HTMLElement>(
         '[data-testid="prompt-banner-sequence"]',
       );
-      if (!sequence?.textContent?.includes("D6 showing 5 is the source")) {
+      if (
+        !sequence?.textContent?.includes(
+          "Step 2 of 2 — Target Gig: choose the Gig that will receive D6's 5.",
+        )
+      ) {
         throw new Error("Prompt banner did not name the selected Peace Offering source die.");
+      }
+      const selectionPrompt = view.container.querySelector<HTMLElement>(
+        '[data-testid="gig-selection-prompt"]',
+      );
+      if (!selectionPrompt?.textContent?.includes("Step 2 of 2 — Target Gig")) {
+        throw new Error("Gig lane did not identify the target-selection step.");
+      }
+      if (!selectionPrompt.textContent.includes("D6 shows 5")) {
+        throw new Error("Gig lane did not identify the selected source value.");
       }
       expectEqual(
         "no die helper badges after source",

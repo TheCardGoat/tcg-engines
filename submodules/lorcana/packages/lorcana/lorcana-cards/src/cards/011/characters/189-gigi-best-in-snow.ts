@@ -1,5 +1,4 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { alert } from "../../../helpers/abilities/alert";
 import { gigiBestInSnowI18n } from "./189-gigi-best-in-snow.i18n";
 
 export const gigiBestInSnow: CharacterCard = {
@@ -46,7 +45,6 @@ export const gigiBestInSnow: CharacterCard = {
   ],
   classifications: ["Storyborn", "Alien"],
   abilities: [
-    alert,
     {
       id: "5r3-2",
       name: "SO PRETTY",

@@ -5,7 +5,7 @@ export const eb03ThanksForTheTreat038: EventCard = {
   id: "EB03-038",
   canonicalId: "EB03-038",
   slug: "thanks-for-the-treat",
-  name: "Thanks for the Treat.",
+  name: "Thanks for the Treat. ♡",
   printings: [
     {
       id: "EB03-038",
@@ -21,7 +21,7 @@ export const eb03ThanksForTheTreat038: EventCard = {
   rarity: "C",
   setId: "EB03",
   cost: 1,
-  traits: ["The Vinsmoke Family GERMA 66"],
+  traits: ["The Vinsmoke Family", "GERMA 66"],
   effect:
     '[Main] You may rest 1 of your DON!! cards: If the number of DON!! cards on your field is equal to or less than the number on your opponent\'s field and you only have Characters with a type including "GERMA", add up to 2 DON!! cards from your DON!! deck and rest them. [Counter] Your Leader gains +3000 power during this battle.',
   effects: {
@@ -49,6 +49,13 @@ export const eb03ThanksForTheTreat038: EventCard = {
                 {
                   condition: "donFieldComparison",
                   selfComparison: "lte",
+                },
+                {
+                  condition: "zoneCount",
+                  player: "self",
+                  zone: "character",
+                  comparison: "gte",
+                  value: 1,
                 },
                 {
                   condition: "zoneCount",

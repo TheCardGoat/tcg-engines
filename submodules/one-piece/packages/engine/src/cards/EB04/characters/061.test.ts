@@ -2,6 +2,48 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("EB04-061", () => {
+  test.each([0, 1, 2])("hand discount pays the correct cost at Life %s", (life) => {
+    const engine = OnePieceTestEngine.create({
+      hand: ["EB04-061", "EB01-005"],
+      activeDon: 10,
+      life,
+    });
+    engine.asSouth().play("EB04-061");
+    engine.asSouth().declineOptional();
+    const view = engine.getView("south");
+    expect(view.players.south.activeDon).toBe(life <= 1 ? 1 : 0);
+    expect(view.players.south.restedDon).toBe(life <= 1 ? 9 : 10);
+    expect(view.players.south.characters.some((c) => c?.cardId === "EB04-061")).toBe(true);
+    expect(view.prompts).toHaveLength(0);
+  });
+
+  test("the granted Blocker intercepts and both granted effects expire after the opponent turn", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: ["EB04-061", "EB01-005"], activeDon: 10, life: 2 },
+      { character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+    );
+    engine.asSouth().play("EB04-061");
+    engine.asSouth().acceptOptional();
+    const luffy = engine.findCardInZone("south", "character", "EB04-061");
+    engine.asSouth().endTurn();
+    engine.asNorth().attack("EB01-018", engine.leader("south"));
+    engine.asSouth().chooseBlocker(luffy);
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === luffy)?.rested,
+    ).toBe(true);
+    expect(engine.getView("south").players.south.leader.power).toBe(7000);
+    expect(engine.getView("south").players.south.lifeCount).toBe(2);
+    engine.asNorth().endTurn();
+    expect(engine.getView("south").players.south.leader.power).toBe(5000);
+    engine.asSouth().endTurn();
+    engine.asNorth().attack("EB01-018", engine.leader("south"));
+    expect(engine.getView("south").players.south.lifeCount).toBe(1);
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === luffy)?.rested,
+    ).toBe(false);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[On Play] trashing a hand card boosts the Leader and grants [Blocker]", () => {
     // subject token bound in the decline test below
     const engine = OnePieceTestEngine.create(

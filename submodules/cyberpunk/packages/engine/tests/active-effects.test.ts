@@ -3,6 +3,7 @@ import {
   welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailJackieWellesRideOrDieChoom,
   embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailEvelynParkerBeautifulEnigma,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../src/testing/index.ts";
 import {
@@ -13,6 +14,47 @@ import {
 import { clearDefinitionOverride, overrideDefinition } from "../src/state/card-registry.ts";
 import { defOf } from "../src/state/lookups.ts";
 import type { CardCatalog } from "../src/types/match-state.ts";
+
+describe("public legend projection", () => {
+  it("keeps a printed null cost and shows a face-up legend effect source to the rival", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      legendArea: [{ card: welcomeToNightCityRetailEvelynParkerBeautifulEnigma, faceDown: false }],
+      field: [embracingPowerRetailStarterDeckMinotaur],
+    });
+    const legend = engine.getCard(
+      welcomeToNightCityRetailEvelynParkerBeautifulEnigma,
+      "legendArea",
+      P1,
+    );
+    const target = engine.getCard(embracingPowerRetailStarterDeckMinotaur, "field", P1);
+    engine.judgeAddActiveEffect({
+      id: "public-legend-effect",
+      sourceCardId: legend.instanceId,
+      targetCardId: target.instanceId,
+      kind: "powerModifier",
+      powerModifier: 3,
+      duration: "turn",
+      origin: "imperative",
+      abilityIndex: 0,
+    });
+
+    const zones = engine.getFilteredView(P2).players[P1]!.zones;
+    const projectedLegend = (
+      zones.legendArea as Array<{ cost: number | null; effectiveCost: number | null }>
+    )[0]!;
+    const projectedTarget = (
+      zones.field as Array<{ activeEffects: Array<{ sourceCardId?: string; sourceName: string }> }>
+    )[0]!;
+    expect(projectedLegend.cost).toBeNull();
+    expect(projectedLegend.effectiveCost).toBeNull();
+    expect(projectedTarget.activeEffects).toContainEqual(
+      expect.objectContaining({
+        sourceCardId: legend.instanceId,
+        sourceName: welcomeToNightCityRetailEvelynParkerBeautifulEnigma.displayName,
+      }),
+    );
+  });
+});
 
 // ── recomputeActiveEffects ────────────────────────────────────────────────────
 //

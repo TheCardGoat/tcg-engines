@@ -37,8 +37,7 @@ describe("Ridge Rider Shot (ARC063) AAA", () => {
     const Azalea = game.as(azalea);
 
     Azalea.activate(deathDealer);
-    game.advanceToDecision(Azalea, "boolean");
-    Azalea.accept();
+    game.advanceToDecision(Azalea, "entity-target");
     Azalea.target(ridgeRiderShotRed);
     const opt = game.advanceToDecision(Azalea, "partition");
     game.answerDecision(Azalea.id, {

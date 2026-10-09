@@ -122,6 +122,43 @@ describe("Mickey Mouse - Snowboard Ace", () => {
       expect(opponentHandAfter).toBe(opponentHandBeforeDiscard - 1);
     });
 
+    // CR 6.2.1 and 6.2.3: only Mickey leaving play meets this trigger condition.
+    for (const [defenderStrength, mickeyLeaves] of [
+      [2, false],
+      [6, true],
+    ] as const) {
+      it(`triggers only if Mickey leaves after banishing the challenged character (strength ${defenderStrength})`, () => {
+        const defender = createMockCharacter({
+          id: `mickey-lethal-defender-${defenderStrength}`,
+          name: "Defender",
+          cost: 2,
+          strength: defenderStrength,
+          willpower: 2,
+        });
+        const game = LorcanaMultiplayerTestEngine.createWithFixture(
+          { play: [{ card: mickeyMouseSnowboardAce, isDrying: false }], deck: 5 },
+          {
+            play: [{ card: defender, exerted: true }],
+            hand: [opponentHandCard1, opponentHandCard2],
+            deck: 5,
+          },
+        );
+        const p1 = game.asPlayerOne();
+        const p2 = game.asPlayerTwo();
+        expect(p1.challenge(mickeyMouseSnowboardAce, defender)).toBeSuccessfulCommand();
+        expect(p1.getCardZone(mickeyMouseSnowboardAce)).toBe(mickeyLeaves ? "discard" : "play");
+        expect(p2.getCardZone(defender)).toBe("discard");
+        expect(p2.getPendingEffects()).toHaveLength(mickeyLeaves ? 1 : 0);
+        if (mickeyLeaves) {
+          expect(p2.resolveNextPending({ targets: [opponentHandCard1] })).toBeSuccessfulCommand();
+          expect(p2.getCardZone(opponentHandCard1)).toBe("discard");
+        }
+        expect(p2.getCardsInZone("hand", PLAYER_TWO).count).toBe(mickeyLeaves ? 1 : 2);
+        expect(p1.getBagCount()).toBe(0);
+        expect(p2.getPendingEffects()).toHaveLength(0);
+      });
+    }
+
     it("does not trigger when Mickey challenges with Snow Fort and remains in play", () => {
       const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
         {

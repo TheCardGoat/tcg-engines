@@ -61,6 +61,14 @@ export class LocalEngine implements GameEngine {
     return this.runtime.undo(playerId);
   }
 
+  canUndoToTurnStart(playerId: PlayerId): boolean {
+    return this.runtime.canUndoToTurnStart(playerId);
+  }
+
+  undoToTurnStart(playerId: PlayerId): CommandResult | null {
+    return this.runtime.undoToTurnStart(playerId);
+  }
+
   dispose(): void {
     this.runtime.dispose();
   }

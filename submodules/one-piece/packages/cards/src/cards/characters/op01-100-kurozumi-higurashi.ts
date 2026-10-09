@@ -23,7 +23,7 @@ export const op01KurozumiHigurashi100: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Land of Wano Kurozumi Clan"],
+  traits: ["Land of Wano", "Kurozumi Clan"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

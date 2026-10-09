@@ -70,6 +70,25 @@ function cardButton(id: string) {
   if (!button) throw new Error(`Missing hand card ${id}`);
   return button;
 }
+function liveCardButton(id: string) {
+  const button = document.querySelector<HTMLButtonElement>(
+    `.ga-scene-card-control[data-entity-id="${id}"] button[data-sim-entity-id]`,
+  );
+  if (!button) throw new Error(`Missing live board card ${id}`);
+  return button;
+}
+async function accessibleCardRow(id: string) {
+  fireEvent.click(liveCardButton(id));
+  return await screen.findByRole("dialog");
+}
+async function selectAccessibleCard(id: string) {
+  fireEvent.click(liveCardButton(id));
+}
+function openActivity() {
+  const disclosure = screen.queryByRole("button", { name: /(?:Expand|Open) match activity/ });
+  if (disclosure) fireEvent.click(disclosure);
+}
+
 function withAction(action: InteractionAction): GrandArchiveHarnessFixture {
   return {
     ...fixture,
@@ -231,29 +250,22 @@ describe("Grand Archive shared hands", () => {
           <GrandArchiveTabletop fixture={current} onSubmitProtocolInteraction={submit} />
         </GrandArchiveSimulatorProviders>,
       );
-      const card = (id: string) =>
-        document.querySelector<HTMLButtonElement>(
-          `.ga-seat-zone--field button[data-sim-entity-id="${id}"]`,
-        )!;
-      for (const candidate of attacker.candidates) {
-        expect(card(candidate.entity.instanceId).closest(".ga-role-card")?.textContent).toContain(
-          "Attack",
-        );
-      }
+      for (const candidate of attacker.candidates)
+        expect(liveCardButton(candidate.entity.instanceId)).toBeTruthy();
       const chosenId = attacker.candidates[entry === "first-card" ? 0 : 1]!.entity.instanceId;
       if (entry === "sidebar") {
+        openActivity();
         fireEvent.click(screen.getByRole("tab", { name: "Now" }));
         fireEvent.click(within(screen.getByLabelText("Legal actions")).getByRole("button"));
-        expect(document.querySelector('[data-attack-role="source"]')).toBeNull();
         expect(screen.queryByText("Choose attack targets")).toBeNull();
+        await selectAccessibleCard(chosenId);
+      } else {
+        fireEvent.click(liveCardButton(chosenId));
       }
-      fireEvent.click(card(chosenId));
       expect(screen.getByText("Choose attack targets")).toBeTruthy();
-      expect(card(chosenId).closest(".ga-role-card")?.getAttribute("data-attack-role")).toBe(
-        "source",
-      );
       const targetId = targets.candidates[0]!.entity.instanceId;
-      fireEvent.click(card(targetId));
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+      await selectAccessibleCard(targetId);
       fireEvent.click(screen.getByRole("button", { name: "Choose none" }));
       expect(submit).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -289,7 +301,7 @@ describe("Grand Archive shared hands", () => {
     expect(submit).not.toHaveBeenCalled();
   });
 
-  it("keeps mobile counters, inspection, and hand actions in the viewport rails", async () => {
+  it("keeps mobile inspection and legal controls inside the portrait composition", async () => {
     vi.spyOn(window, "innerWidth", "get").mockReturnValue(390);
     const submit = vi.fn(() => true);
     const undo = vi.fn();
@@ -303,34 +315,15 @@ describe("Grand Archive shared hands", () => {
         />
       </GrandArchiveSimulatorProviders>,
     );
-    const yours = await screen.findByRole("group", { name: "Your zone counts" });
-    const opponent = screen.getByRole("group", { name: "Opponent zone counts" });
-    expect(yours.closest("footer")).not.toBeNull();
-    expect(opponent.closest("header")).not.toBeNull();
-    for (const [group, owner] of [
-      [yours, "Your"],
-      [opponent, "Opponent"],
-    ] as const) {
-      expect(within(group).getAllByRole("button")).toHaveLength(5);
-      for (const zone of ["Deck", "Material Deck", "Graveyard", "Banishment", "Memory"]) {
-        expect(
-          within(group).getByRole("button", { name: new RegExp(`^${owner} ${zone},`) }),
-        ).toBeTruthy();
-      }
-    }
-    const actions = screen.getByRole("group", { name: "Hand actions" });
-    expect(actions.closest("footer")).toBe(yours.closest("footer"));
-    expect(screen.getByRole("button", { name: "Actions & history" }).closest("footer")).toBe(
-      actions.closest("footer"),
-    );
-    fireEvent.click(within(yours).getByRole("button", { name: /Your Memory,/ }));
-    const dialog = await screen.findByRole("dialog", { name: /Your Memory/ });
-    expect(within(dialog).getByRole("region", { name: /Your memory,/ })).toBeTruthy();
-    fireEvent.keyDown(dialog, { key: "Escape", code: "Escape" });
+    const board = screen.getByRole("region", { name: "Grand Archive board" });
+    expect(within(board).queryByRole("button", { name: "Cards & actions" })).toBeNull();
+    fireEvent.click(liveCardButton(hand.entityIds[0]!));
+    expect(await screen.findByRole("dialog")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Close card inspection" }));
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
-    fireEvent.click(within(actions).getByRole("button", { name: "Undo" }));
+    fireEvent.click(within(board).getByRole("button", { name: "Undo" }));
     expect(undo).toHaveBeenCalledTimes(1);
-    fireEvent.click(within(actions).getByRole("button", { name: /Pass/ }));
+    fireEvent.click(within(board).getByRole("button", { name: "Pass Opportunity" }));
     const pass = nativeView.actions.find((action) => action.intent === "pass")!;
     expect(submit).toHaveBeenCalledExactlyOnceWith(
       buildInteractionSubmission({ view: nativeView, action: pass }),
@@ -522,7 +515,7 @@ describe("Grand Archive shared hands", () => {
     expect(submit).not.toHaveBeenCalled();
   });
 
-  it("also skips materialization from the sidebar Pass control without a duplicate skip action", () => {
+  it("skips materialization through the single board control", () => {
     const current = GRAND_ARCHIVE_VISUAL_FIXTURES.find(
       (entry) => entry.id === "materialization-hand",
     )!;
@@ -532,12 +525,8 @@ describe("Grand Archive shared hands", () => {
         <GrandArchiveTabletop fixture={current} onSubmitProtocolInteraction={submit} />
       </GrandArchiveSimulatorProviders>,
     );
-    expect(screen.getAllByRole("button", { name: "Skip materialization" })).toHaveLength(2);
-    fireEvent.click(
-      within(screen.getByTestId("grand-archive-sidebar")).getByRole("button", {
-        name: "Skip materialization",
-      }),
-    );
+    expect(screen.getAllByRole("button", { name: "Skip materialization" })).toHaveLength(1);
+    fireEvent.click(screen.getByRole("button", { name: "Skip materialization" }));
     expect(submit).toHaveBeenCalledTimes(1);
   });
 
@@ -619,15 +608,24 @@ describe("Grand Archive shared hands", () => {
     expect(screen.queryByTestId("interaction-resolution-prompt")).toBeNull();
   });
 
-  it("shows the pending effect text immediately without opening prompt controls", async () => {
+  it("leads with response guidance and keeps full effect text in prompt details", async () => {
     const current = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "effects-stack")!;
-    mount(current);
+    const { submit } = mount(current);
     const stack = screen.getByRole("region", { name: /Effects Stack, \d+ layers?/ });
     expect(stack.querySelector('[data-top="true"]')).toBeTruthy();
     expect(screen.queryByRole("button", { name: "Pass Opportunity" })).toBeNull();
-    expect(screen.getAllByRole("button", { name: "Pass Space" })).toHaveLength(1);
-
+    expect(screen.getByText(/You have Opportunity. Respond/)).toBeTruthy();
+    expect(screen.queryByRole("button", { name: /^Cancel/ })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Prompt controls" }));
+    fireEvent.click(screen.getByRole("button", { name: /Show details/ }));
     expect(screen.getByText(/Cardistry/)).toBeTruthy();
+    fireEvent.keyDown(document.body, { code: "Space", key: " " });
+    const pass = current.interactionView!.actions.find(
+      (action) => action.intent === "pass" && action.enabled,
+    )!;
+    expect(submit).toHaveBeenCalledExactlyOnceWith(
+      buildInteractionSubmission({ view: current.interactionView!, action: pass, values: {} }),
+    );
   });
 
   it.each(["card-activation", "materialization", "activated-ability", "triggered-ability"])(
@@ -661,7 +659,7 @@ describe("Grand Archive shared hands", () => {
           name: /Pass/,
         }),
       ).toBeNull();
-      fireEvent.click(screen.getByRole("button", { name: "Pass Space" }));
+      fireEvent.keyDown(document.body, { code: "Space", key: " " });
       const pass = projected.interactionView!.actions.find(
         (action) => action.intent === "pass" && action.enabled,
       )!;
@@ -1032,13 +1030,13 @@ describe("Grand Archive shared hands", () => {
     expect(screen.getByLabelText(`Hide ${title} card image`)).toBeTruthy();
   });
 
-  it.each(["hand", "sidebar", "field", "material-deck"] as const)(
+  it.each(["hand", "sidebar", "field"] as const)(
     "submits all structured inputs from %s",
     async (entry) => {
       const original = withAction(declaration);
       const sourceId = declaration.source!.instanceId;
       const current =
-        entry === "field" || entry === "material-deck"
+        entry === "field"
           ? {
               ...original,
               table: {
@@ -1066,29 +1064,18 @@ describe("Grand Archive shared hands", () => {
         </GrandArchiveSimulatorProviders>,
       );
       if (entry === "sidebar") {
+        openActivity();
         fireEvent.click(screen.getByRole("tab", { name: "Now" }));
         fireEvent.click(within(screen.getByLabelText("Legal actions")).getByRole("button"));
-      } else if (entry === "material-deck") {
-        fireEvent.click(screen.getByRole("button", { name: /Your Material Deck,/ }));
-        const dialog = await screen.findByRole("dialog");
+      } else {
+        const label = current.interactions.find((action) => action.id === declaration.id)!.label;
         fireEvent.click(
-          dialog.querySelector<HTMLButtonElement>(`button[data-sim-entity-id="${sourceId}"]`)!,
+          within(await accessibleCardRow(sourceId)).getByRole("button", {
+            name: label,
+          }),
         );
-      } else if (entry === "field") {
-        expect(screen.queryByRole("button", { name: "Board and material actions" })).toBeNull();
-        const source = document.querySelector<HTMLButtonElement>(
-          `.ga-seat-zone--field button[data-sim-entity-id="${sourceId}"]`,
-        )!;
-        expect(source.closest(".ga-role-card")?.getAttribute("data-actionable")).toBe("true");
-        expect(
-          source.closest(".ga-role-card")?.querySelector(".ga-role-card__actions")?.textContent,
-        ).toBeTruthy();
-        fireEvent.click(
-          document.querySelector<HTMLButtonElement>(
-            `.ga-seat-zone--field button[data-sim-entity-id="${sourceId}"]`,
-          )!,
-        );
-      } else fireEvent.click(cardButton(sourceId));
+        await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+      }
       const prompt = screen.getByTestId("interaction-resolution-prompt");
       expect(document.querySelector(".ga-role-card[data-actionable] ")).toBeNull();
       expect(prompt.textContent).not.toMatch(/object-\d/);
@@ -1097,11 +1084,8 @@ describe("Grand Archive shared hands", () => {
         throw new Error("Expected a structured GA target input");
       }
       const targetId = targetInput.candidates[0]!.entity.instanceId;
-      const target = document.querySelector<HTMLButtonElement>(
-        `.ga-seat-zone button[data-sim-entity-id="${targetId}"]`,
-      );
-      if (!target) throw new Error("Expected the target candidate in the choice drawer");
-      fireEvent.click(target);
+      await selectAccessibleCard(targetId);
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
       const nextInput = declaration.inputs[1];
       const values: Record<string, string[]> = { [targetInput.id]: [targetId] };
       if (nextInput?.kind === "option-selection") {
@@ -1112,7 +1096,7 @@ describe("Grand Archive shared hands", () => {
         const paymentId = nextInput.candidates[0]!.entity.instanceId;
         values[nextInput.id] = [paymentId];
         expect(nextInput).toMatchObject({ min: 1, max: 1, ordered: false });
-        fireEvent.click(cardButton(paymentId));
+        await selectAccessibleCard(paymentId);
         // A singleton payment commits on selection through the shared picker.
         expect(submit).toHaveBeenCalledTimes(1);
       }
@@ -1128,7 +1112,7 @@ describe("Grand Archive shared hands", () => {
     },
   );
 
-  it("bounds hand selections and preserves multiple native inputs through confirmation", async () => {
+  it("commits fixed hand costs on the last required tap and preserves later native inputs", async () => {
     const ids = hand.entityIds.filter((id) => id !== declaration.source!.instanceId).slice(0, 3);
     const action: InteractionAction = {
       ...declaration,
@@ -1163,12 +1147,11 @@ describe("Grand Archive shared hands", () => {
     const current = withAction(action);
     const { submit } = mount(current);
     fireEvent.click(cardButton(action.source!.instanceId));
-    expect(screen.getByRole("button", { name: "Confirm" }).hasAttribute("disabled")).toBe(true);
-    ids.forEach((id) => fireEvent.click(cardButton(id)));
-    expect(cardButton(ids[0]!).getAttribute("aria-pressed")).toBe("true");
-    expect(cardButton(ids[1]!).getAttribute("aria-pressed")).toBe("true");
-    expect(cardButton(ids[2]!).getAttribute("aria-pressed")).toBe("false");
-    fireEvent.click(screen.getByRole("button", { name: "Confirm" }));
+    expect(screen.queryByRole("button", { name: "Confirm" })).toBeNull();
+    fireEvent.click(cardButton(ids[0]!));
+    expect(submit).not.toHaveBeenCalled();
+    fireEvent.click(cardButton(ids[1]!));
+    await screen.findByRole("radio", { name: "Second mode" });
     expect(submit).not.toHaveBeenCalled();
     fireEvent.click(screen.getByRole("radio", { name: "Second mode" }));
     await waitFor(() =>
@@ -1341,7 +1324,10 @@ describe("Grand Archive resolved-attack decision recovery", () => {
     fireEvent.click(targetableButtons().find((button) => button.dataset.simEntityId === targetId)!);
     // The decision advances attacker -> target(s) (Confirm) -> defending player.
     const finishControl = () =>
-      promptButton(/^confirm$/i) ?? promptButton(/choose none/i) ?? promptButton(/^select /i);
+      promptButton(/^confirm$/i) ??
+      promptButton(/use selected/i) ??
+      promptButton(/choose none/i) ??
+      promptButton(/^select /i);
     for (let step = 0; step < 6 && submit.mock.calls.length === 0; step++) {
       const control = finishControl();
       if (!control) break;
@@ -1397,7 +1383,7 @@ describe("Grand Archive resolved-attack decision recovery", () => {
         targetableButtons().find((button) => button.dataset.simEntityId === targetId)!,
       );
       // targetIds is 1..2 in this fixture: confirm the single target to advance.
-      const confirmTarget = promptButton(/^confirm$/i);
+      const confirmTarget = promptButton(/^(confirm|use selected)$/i);
       if (confirmTarget) fireEvent.click(confirmTarget);
       // Terminal step: the defending player is a seat button, not a card — it
       // must carry the shared interaction attribute and name itself in the copy.
@@ -1456,4 +1442,41 @@ describe("Grand Archive resolved-attack decision recovery", () => {
     },
     ENGINE_DECISION_TIMEOUT,
   );
+});
+
+it("distinguishes identical target artwork by player seat during direct selection", async () => {
+  const submit = vi.fn(() => true);
+  render(
+    <GrandArchiveSimulatorProviders>
+      <GrandArchiveTabletop fixture={fixture} onSubmitProtocolInteraction={submit} />
+    </GrandArchiveSimulatorProviders>,
+  );
+  const evasive = fixture.entities.find(
+    (entity) => hand.entityIds.includes(entity.id) && entity.title === "Evasive Maneuvers",
+  )!;
+  fireEvent.click(liveCardButton(evasive.id));
+  fireEvent.click(await screen.findByRole("button", { name: "Activate Evasive Maneuvers" }));
+  await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+  const own = within(screen.getByRole("region", { name: "Your champion" })).getByRole("button", {
+    name: /^Morrigan, Lost Spirit,/,
+  });
+  const opponent = within(screen.getByRole("region", { name: "Opponent champion" })).getByRole(
+    "button",
+    { name: /^Morrigan, Lost Spirit,/ },
+  );
+  expect(own.getAttribute("data-sim-entity-id")).not.toBe(
+    opponent.getAttribute("data-sim-entity-id"),
+  );
+  fireEvent.click(opponent);
+  expect(submit).not.toHaveBeenCalled();
+  const knife = fixture.entities.find(
+    (entity) => hand.entityIds.includes(entity.id) && entity.title === "CookTech Knife",
+  )!;
+  fireEvent.click(liveCardButton(knife.id));
+  expect(submit).toHaveBeenCalledTimes(1);
+  const opposingSeat = fixture.table.seats.find((seat) => seat.perspective !== "bottom")!;
+  const opposingChampion = fixture.entities.find(
+    (entity) => entity.ownerId === opposingSeat.id && entity.title === "Morrigan, Lost Spirit",
+  )!;
+  expect(JSON.stringify(submit.mock.calls[0])).toContain(opposingChampion.id);
 });

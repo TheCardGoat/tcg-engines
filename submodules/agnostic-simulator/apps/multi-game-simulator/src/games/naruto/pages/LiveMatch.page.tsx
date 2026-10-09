@@ -1,3 +1,4 @@
+import { SimulatorLiveChatProvider } from "../../../simulator/providers/live-chat-context";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Action, GameState, LogEntry, PlayerId } from "@tcg-engines/naruto-engine";
@@ -6,11 +7,15 @@ import {
   EngineInteractionView,
   type InteractionSubmissionValue,
   type SimulatorAudioCueId,
+  type PendingProposal,
 } from "@tcg/protocol";
 import { DropClaimControl, SimulatorRouteStatus } from "@tcg/simulator-ui";
 import type { DropEligibility } from "@tcg/protocol";
 import { acquireRootGatewayHandle } from "../../../lib/gateway/root-socket";
 import { useSimulatorAudio } from "../../../simulator/audio";
+import { LiveActionAttention } from "../../../simulator/attention/LiveActionAttention";
+import { LiveMatchChatPanel } from "../../../simulator/chat/LiveMatchChatPanel";
+import { useLiveMatchDocumentTitle } from "../../../simulator/attention/useLiveMatchDocumentTitle";
 import { useSimulatorRoute } from "../../../simulator/providers";
 import { NarutoBoard } from "../board/NarutoBoard";
 import type { NarutoParticipantNames } from "../projection/projectSimulator";
@@ -20,7 +25,7 @@ import type { NarutoParticipantNames } from "../projection/projectSimulator";
  * from the adapter's viewer projection; this deliberately never hydrates a
  * persisted engine snapshot in the browser.
  */
-export function NarutoLiveMatchPage() {
+function NarutoLiveMatchPageContent() {
   const route = useSimulatorRoute();
   const { matchId = "" } = useParams<{ matchId: string }>();
   const bootstrap = route.matchPageData;
@@ -39,6 +44,28 @@ export function NarutoLiveMatchPage() {
   const [interactionView, setInteractionView] = useState<EngineInteractionView | null>(() =>
     parseInteractionView(bootstrap?.game.interactionView),
   );
+  const [stateVersion, setStateVersion] = useState(bootstrap?.game.stateVersion ?? 0);
+  const [canUndo, setCanUndo] = useState(bootstrap?.game.undoable === true);
+  const [canUndoTurn, setCanUndoTurn] = useState(bootstrap?.game.undoTurnAvailable === true);
+  const [undoProposal, setUndoProposal] = useState<PendingProposal | null>(null);
+  useEffect(() => {
+    if (!undoProposal) return;
+    const deadline = undoProposal.deadline;
+    const timeout = window.setTimeout(
+      () => {
+        setUndoProposal((current) => (current?.deadline === deadline ? null : current));
+      },
+      Math.max(0, deadline - Date.now()),
+    );
+    return () => window.clearTimeout(timeout);
+  }, [undoProposal]);
+  useLiveMatchDocumentTitle({
+    game: "Naruto Card Game",
+    turn: state && viewer ? (state.activePlayer === viewer ? "self" : "opponent") : null,
+    priority: state?.priority && viewer ? (state.priority === viewer ? "self" : "opponent") : null,
+    finished: state?.winner != null || bootstrap?.game.status === "completed",
+  });
+  const [connectionReady, setConnectionReady] = useState(false);
   const [dropEligibility, setDropEligibility] = useState<DropEligibility | null>(
     bootstrap?.dropEligibility ?? null,
   );
@@ -66,14 +93,30 @@ export function NarutoLiveMatchPage() {
   useEffect(() => {
     if (!gameId) return;
     const handle = acquireRootGatewayHandle("naruto");
-    const accept = (payload: { gameId: string; state?: unknown; interactionView?: unknown }) => {
+    const accept = (payload: {
+      gameId: string;
+      state?: unknown;
+      interactionView?: unknown;
+      stateVersion?: number;
+      undoable?: boolean;
+      undoTurnAvailable?: boolean;
+      pendingProposal?: PendingProposal | null;
+    }) => {
       if (payload.gameId !== gameId) return;
       const next = projectedState(payload.state);
-      if (next) setState(next);
+      if (next) {
+        setState(next);
+        if (typeof payload.stateVersion === "number") setStateVersion(payload.stateVersion);
+      }
+      if (typeof payload.undoable === "boolean") setCanUndo(payload.undoable);
+      if (typeof payload.undoTurnAvailable === "boolean") setCanUndoTurn(payload.undoTurnAvailable);
+      if (payload.pendingProposal?.actionType === "undo") setUndoProposal(payload.pendingProposal);
       const view = parseInteractionView(payload.interactionView);
       if (view) setInteractionView(view);
     };
     const unsubscribers = [
+      handle.onAuthenticated(() => setConnectionReady(true)),
+      handle.onDisconnected(() => setConnectionReady(false)),
       handle.on("game_joined", (payload) => {
         accept(payload);
         if (payload.gameId === gameId && payload.dropEligibility) {
@@ -85,6 +128,29 @@ export function NarutoLiveMatchPage() {
       }),
       handle.on("state_sync", accept),
       handle.on("state_update", accept),
+      handle.on("proposal_received", (payload) => {
+        if (payload.gameId === gameId && payload.actionType === "undo") setUndoProposal({ ...payload, actionType: "undo" });
+      }),
+      handle.on("proposal_resolved", (payload) => {
+        if (payload.gameId === gameId && payload.actionType === "undo") setUndoProposal(null);
+      }),
+      handle.on("proposal_expired", (payload) => {
+        if (payload.gameId === gameId && payload.actionType === "undo") setUndoProposal(null);
+      }),
+      handle.on("proposal_send:response", (response) => {
+        if (response.status !== "ok") return;
+        if ("resolution" in response.data) {
+          setUndoProposal(null);
+        } else if (response.data.actionType === "undo") {
+          setUndoProposal({ ...response.data, actionType: "undo" });
+        }
+      }),
+      handle.on("proposal_accept:response", () => {
+        setUndoProposal(null);
+      }),
+      handle.on("proposal_decline:response", () => {
+        setUndoProposal(null);
+      }),
       handle.on("move_rejected", (payload) => {
         if (payload.gameId === gameId) {
           handle.emit("request_game_state_sync", { gameId });
@@ -122,6 +188,15 @@ export function NarutoLiveMatchPage() {
     [gameId, state, viewer],
   );
 
+  const sendUndo = (event: "proposal_send" | "proposal_accept" | "proposal_decline",
+    undoScope: "last_move" | "turn_start" = "last_move") => {
+    if (!gameId || !connectionReady) return;
+    const handle = acquireRootGatewayHandle("naruto");
+    handle.emit(event, { gameId, actionType: "undo",
+      ...(event === "proposal_send" ? { undoScope } : {}) });
+    handle.release();
+  };
+
   if (route.error) return <SimulatorRouteStatus title="Match unavailable" message={route.error} />;
   if (bootstrap?.viewer.role !== "player") {
     return (
@@ -141,6 +216,13 @@ export function NarutoLiveMatchPage() {
   }
   return (
     <>
+      <LiveActionAttention
+        gameId={gameId}
+        view={interactionView}
+        viewerId={bootstrap.viewer.actorId}
+        stateVersion={stateVersion}
+        canAct={connectionReady}
+      />
       {dropEligibility ? (
         <div className="pointer-events-auto absolute right-4 top-4 z-20">
           <DropClaimControl
@@ -154,11 +236,30 @@ export function NarutoLiveMatchPage() {
           />
         </div>
       ) : null}
+      {undoProposal ? (
+        <div className="pointer-events-auto absolute left-1/2 top-4 z-30 flex -translate-x-1/2 items-center gap-2 rounded-lg bg-slate-950 px-4 py-3 text-sm text-white shadow-xl" role="status">
+          <span>{undoProposal.senderPlayerId === bootstrap.viewer.actorId
+            ? "Waiting for opponent approval."
+            : undoProposal.undoScope === "turn_start" ? "Opponent requests Undo turn." : "Opponent requests Undo."}</span>
+          {undoProposal.senderPlayerId !== bootstrap.viewer.actorId ? (
+            <><button type="button" onClick={() => sendUndo("proposal_accept")}>Approve</button>
+              <button type="button" onClick={() => sendUndo("proposal_decline")}>Decline</button></>
+          ) : null}
+        </div>
+      ) : null}
+      <div className="pointer-events-auto absolute bottom-24 right-4 z-20 flex gap-2">
+        <button type="button" className="rounded bg-slate-900 px-3 py-2 text-white"
+          disabled={!connectionReady || !canUndoTurn || Boolean(undoProposal)}
+          onClick={() => sendUndo("proposal_send", "turn_start")}>Undo turn</button>
+      </div>
       <NarutoBoard
         state={state}
         viewer={viewer}
         participantNames={participantNames}
         onAction={submit}
+        onUndo={() => sendUndo("proposal_send")}
+        canUndo={connectionReady && canUndo && !undoProposal}
+        chat={<LiveMatchChatPanel />}
         bugReportContext={{
           gameSlug: "naruto",
           gameId,
@@ -300,4 +401,20 @@ function projectedState(value: unknown): GameState | null {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+export function NarutoLiveMatchPage() {
+  const { matchPageData: bootstrap } = useSimulatorRoute();
+  if (!bootstrap || bootstrap.viewer.role !== "player") return <NarutoLiveMatchPageContent />;
+  return (
+    <SimulatorLiveChatProvider
+      gameSlug="naruto"
+      gameId={bootstrap.game.gameId}
+      viewerId={bootstrap.viewer.actorId}
+      initialMessages={bootstrap.history.chatMessages}
+      initialFreeTextEnabled={bootstrap.history.freeTextEnabled}
+    >
+      <NarutoLiveMatchPageContent />
+    </SimulatorLiveChatProvider>
+  );
 }

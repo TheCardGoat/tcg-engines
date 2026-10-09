@@ -45,4 +45,45 @@ describe("OP04-039 Rebecca", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("pays at seven hand cards but neither searches nor trashes, and spends once per turn", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op04Rebecca039,
+      hand: Array(7).fill(eb01Doma005),
+      deck: [op04Orlumbus079, eb01Doma005, eb01Doma005],
+      activeDon: 2,
+    });
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    expect(engine.getView("south").players.south).toMatchObject({
+      activeDon: 1,
+      restedDon: 1,
+      handCount: 7,
+      deckCount: 3,
+      trash: [],
+    });
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(
+      engine.expectFailure({
+        type: "activateEffect",
+        seat: "south",
+        sourceInstanceId: engine.leader("south"),
+        trigger: "activateMain",
+      }).accepted,
+    ).toBe(false);
+    expect(engine.getView("south").players.south.activeDon).toBe(1);
+  });
+
+  test("at six hand cards may take no card and trashes both looked cards", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op04Rebecca039,
+      hand: Array(6).fill(eb01Doma005),
+      deck: [op04Orlumbus079, eb01Doma005, eb01Doma005],
+      activeDon: 1,
+    });
+    const looked = engine.findCardInZone("south", "deck", op04Orlumbus079);
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    engine.resolveDecision("effectSearchSelection", { selectedIds: [] }, "south");
+    expect(engine.getView("south").players.south).toMatchObject({ handCount: 6, deckCount: 1 });
+    expect(engine.getView("south").players.south.trash).toHaveLength(2);
+    expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(looked);
+  });
 });

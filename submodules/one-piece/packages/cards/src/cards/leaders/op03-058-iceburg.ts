@@ -30,7 +30,7 @@ export const op03Iceburg058: LeaderCard = {
   setId: "OP03",
   power: 5000,
   life: 5,
-  traits: ["Galley-La Company Water Seven"],
+  traits: ["Water Seven", "Galley-La Company"],
   attribute: "wisdom",
   effect:
     "This Leader cannot attack. [Activate:Main] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.) You may rest this Leader: Play up to 1 [Galley-La Company] type Character card with a cost of 5 or less from your hand.",
@@ -83,7 +83,7 @@ export const op03Iceburg058: LeaderCard = {
               {
                 filter: "trait",
                 value: "Galley-La Company",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

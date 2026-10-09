@@ -17,7 +17,15 @@ export const jetsamUrsulasSpyI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Meerschaum",
     version: "Ursulas Spion",
-    text: "<Wendig> \\Fies und Glitschig\\ Deine Abschaum-Charaktere erhalten Wendig.",
+    text: [
+      {
+        title: "<Wendig>",
+      },
+      {
+        title: "Fies und Glitschig",
+        description: "Deine Abschaum-Charaktere erhalten Wendig.",
+      },
+    ],
   },
   fr: {
     name: "JETSAM",

@@ -13,34 +13,34 @@ export const rapunzelAppreciativeArtistI18n: Record<Languages, I18nProperties> =
   },
   de: {
     name: "Rapunzel",
-    version: "Wertschätzende Künstlerin",
+    version: "Appreciative Artist",
     text: [
       {
-        title: "Einfühlsame Partnerin",
+        title: "Perceptive Partner",
         description:
-          "Solange du mindestens einen Pascal-Charakter im Spiel hast, erhält dieser Charakter <Behütet>.",
+          "While you have a character named Pascal in play, this character gains <Ward>. (Opponents can't choose them except to challenge.)",
       },
     ],
   },
   fr: {
-    name: "Raiponce",
-    version: "Artiste sensible",
+    name: "Rapunzel",
+    version: "Appreciative Artist",
     text: [
       {
-        title: "Partenaire perspicace",
+        title: "Perceptive Partner",
         description:
-          "Tant que vous avez un personnage Pascal en jeu, ce personnage-ci gagne <Hors d'atteinte>.",
+          "While you have a character named Pascal in play, this character gains <Ward>. (Opponents can't choose them except to challenge.)",
       },
     ],
   },
   it: {
     name: "Rapunzel",
-    version: "Artista Entusiasta",
+    version: "Appreciative Artist",
     text: [
       {
-        title: "Compagno Perspicace",
+        title: "Perceptive Partner",
         description:
-          "Mentre hai in gioco un personaggio chiamato Pascal, questo personaggio ottiene <Protetto>. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
+          "While you have a character named Pascal in play, this character gains <Ward>. (Opponents can't choose them except to challenge.)",
       },
     ],
   },

@@ -33,6 +33,7 @@ export const stitchLittleRocket: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_cc036edd4af94499aec28c45e5a3b2a5",
+    tcgPlayer: "532522",
   },
   text: "Rush",
   classifications: ["Dreamborn", "Hero", "Alien"],

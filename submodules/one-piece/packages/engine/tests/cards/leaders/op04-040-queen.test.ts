@@ -105,4 +105,51 @@ describe("OP04-040 Queen", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test.each(["draw", "neither"])(
+    "with cost eight may choose %s instead of adding Life",
+    (option) => {
+      const engine = OnePieceTestEngine.create(
+        {
+          leaderCardId: op04Queen040,
+          life: 2,
+          character: [op04MonkeyDLuffy014],
+          deck: [eb01Doma005, eb01Fourtricks025],
+          activeDon: 1,
+        },
+        {},
+        { firstPlayer: "north", activeSeat: "south" },
+      );
+      engine.attachDon(engine.leader("south"), 1, "south");
+      engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
+      engine.resolveDecision(
+        "effectActionChoice",
+        { optionId: option === "draw" ? "0" : "1" },
+        "south",
+      );
+      if (option === "neither")
+        engine.resolveDecision("effectAddToLifeFromDeck", { optionId: "0" }, "south");
+      expect(engine.getView("south").players.south).toMatchObject({
+        lifeCount: 2,
+        handCount: option === "draw" ? 1 : 0,
+        deckCount: option === "draw" ? 1 : 2,
+      });
+      expect(engine.getView("south").prompts).toHaveLength(0);
+    },
+  );
+
+  test("an opponent's cost-eight Character does not offer the Life replacement", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op04Queen040, life: 2, deck: [eb01Doma005, eb01Fourtricks025], activeDon: 1 },
+      { character: [op04MonkeyDLuffy014] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    engine.attachDon(engine.leader("south"), 1, "south");
+    engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
+    expect(engine.getView("south").players.south).toMatchObject({
+      handCount: 1,
+      lifeCount: 2,
+      deckCount: 1,
+    });
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

@@ -92,6 +92,7 @@ export type {
   ReplayStep,
   ReplaySummary,
   ReplayPlaybackV1,
+  ReplayChatMessage,
   ReplayAvailability,
   ReplayCloudSaveStatus,
   ReplayTrust,
@@ -261,6 +262,7 @@ export {
   ReplayMetadataSchema,
   ReplayStepSchema,
   ReplaySummarySchema,
+  ReplayChatMessageSchema,
   ReplayPlaybackV1Schema,
   ReplayAvailabilitySchema,
   ReplayTrustSchema,
@@ -276,3 +278,10 @@ export * from "@tcg/protocol/presentation";
 
 export { replayStepPosition } from "./replay.js";
 export type { ReplayReversal } from "./replay.js";
+
+export {
+  PostGameRatingSchema,
+  PostGamePlayerRatingSchema,
+  type PostGameRating,
+  type PostGamePlayerRating,
+} from "./post-game-rating";

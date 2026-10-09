@@ -32,6 +32,10 @@ export const todCopperBestOfFriends: CharacterCard = {
   willpower: 3,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_be1d63d5d11247318a02f49703ec3945",
+    tcgPlayer: "704607",
+  },
   text: [
     {
       title: "Shift 2 {I}",

@@ -108,10 +108,6 @@ export const glassgaleFlock: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                         kind: "type",
                         oneOf: ["ALLY"],
                       },
-                      {
-                        kind: "subtype",
-                        oneOf: ["SHARDWING"],
-                      },
                     ],
                   },
                 },

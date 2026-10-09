@@ -90,8 +90,17 @@ export const senarisSixOfDiamonds: GrandArchiveCard<GrandArchiveAbilityDefinitio
                 kind: "event-object",
                 controller: "controller",
                 filter: {
-                  kind: "subtype",
-                  oneOf: ["SPELL"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "subtype",
+                      oneOf: ["SUITED"],
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["SPELL"],
+                    },
+                  ],
                 },
               },
             },

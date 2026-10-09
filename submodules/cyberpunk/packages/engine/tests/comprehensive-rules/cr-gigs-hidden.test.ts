@@ -289,6 +289,14 @@ describe("CR real-card: gig adjust/swap, spend-icon, hidden areas", () => {
       faceDown: boolean;
     }[];
     expect(rivalLegends.every((c) => c.faceDown && c.cardName === null)).toBe(true);
+    const ownLegends = p1View.players[P1 as string]!.zones.legendArea;
+    if (!Array.isArray(ownLegends)) throw new Error("own Legends must be visible to owner");
+    expect(ownLegends.some((card) => card.color === welcomeToNightCityRetailVStreetkid.color)).toBe(
+      true,
+    );
+    expect(rivalLegends.every((card) => (card as { color?: string | null }).color == null)).toBe(
+      true,
+    );
 
     const ownEddies = p1View.players[P1 as string]!.zones.eddieArea as {
       cardName: string | null;
@@ -298,11 +306,17 @@ describe("CR real-card: gig adjust/swap, spend-icon, hidden areas", () => {
       cardName: string | null;
       revealed: boolean;
     }[];
-    expect(ownEddies.every((c) => !c.revealed && c.cardName === null)).toBe(true);
-    expect(rivalEddies.every((c) => !c.revealed && c.cardName === null)).toBe(true);
+    expect(ownEddies.every((c) => c.revealed && c.cardName === "Floor It")).toBe(true);
+    expect(rivalEddies.every((c) => c.revealed && c.cardName === "Floor It")).toBe(true);
     const sellLog = engine.getLastActionLog();
     if (sellLog?.messageKey !== "move.sellCard") throw new Error("Expected Sell action log");
     expect(stripPrivateFields(sellLog, P2)?.params).toMatchObject({ cardName: "Floor It" });
+    engine.completeTurn({ as: P1 });
+    const hiddenEddies = engine.getFilteredView(P2).players[P1 as string]!.zones.eddieArea as {
+      cardName: string | null;
+      revealed: boolean;
+    }[];
+    expect(hiddenEddies.every((c) => !c.revealed && c.cardName === null)).toBe(true);
   });
 
   it("lets a search of a hidden deck fail to find without revealing", () => {

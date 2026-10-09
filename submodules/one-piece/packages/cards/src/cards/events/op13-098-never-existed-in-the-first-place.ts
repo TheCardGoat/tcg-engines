@@ -21,7 +21,7 @@ export const op13NeverExistedInTheFirstPlace098: EventCard = {
   rarity: "UC",
   setId: "OP13",
   cost: 1,
-  traits: ["Celestial Dragons Five Elders"],
+  traits: ["Celestial Dragons", "Five Elders"],
   effect:
     "[Main] You may rest 1 of your DON!! cards: If your Leader is [Imu], K.O. up to 1 of your opponent's Stages with a cost of 7.\n[Counter] If your Leader is [Imu], up to 1 of your Leader or Character cards gains +4000 power during this battle.",
   effects: {
@@ -29,15 +29,10 @@ export const op13NeverExistedInTheFirstPlace098: EventCard = {
       {
         trigger: "main",
         costs: [{ cost: "restDon", amount: 1 }],
-        conditions: [
-          {
-            condition: "leaderName",
-            name: "Imu",
-          },
-        ],
         actions: [
           {
             action: "ko",
+            condition: { condition: "leaderName", name: "Imu" },
             target: {
               player: "opponent",
               zones: ["stage"],

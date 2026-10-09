@@ -822,9 +822,12 @@
                 (cardId) => !assignedDisplayCards.includes(cardId),
               )
             : []}
+          {@const orderedUnassignedDisplayCards = destination.orderingEnabled
+            ? unassignedDisplayCards.toReversed()
+            : unassignedDisplayCards}
           {@const displayCards = [
             ...assignedDisplayCards,
-            ...unassignedDisplayCards,
+            ...orderedUnassignedDisplayCards,
           ]}
           {@const canDropDraggedHere =
             activeScryDragCardId !== null &&
@@ -890,12 +893,14 @@
 
               <div class="scry-row__stats">
                 <span class="scry-row__count"
-                  >{getScryDestinationCountLabel(destination)}</span
+                  >{isRemainderRow
+                    ? displayCards.length
+                    : getScryDestinationCountLabel(destination)}</span
                 >
               </div>
             </header>
 
-            {#if destination.orderingEnabled && destination.currentCardIds.length >= 2}
+            {#if destination.orderingEnabled && displayCards.length >= 2}
               <div class="scry-row__order-label">
                 {destination.zone === 'deck-bottom'
                   ? '← Drawn last'
@@ -1056,7 +1061,7 @@
               {/if}
             </div>
 
-            {#if destination.orderingEnabled && destination.currentCardIds.length >= 2}
+            {#if destination.orderingEnabled && displayCards.length >= 2}
               <div class="scry-row__order-label">
                 {destination.zone === 'deck-bottom'
                   ? 'Drawn first →'

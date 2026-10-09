@@ -255,6 +255,2032 @@
     "flavorText": "",
     "searchableKeywords": ["Lion King", "Der König der Löwen"]
   },
+  "957": {
+    "name": "Don Kanaille",
+    "version": "Charmanter Pirat",
+    "rulesText": "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Don Kanaille auszuspielen.)%\\Bleibender Eindruck\\ Wenn du diesen Charakter ausspielst, füge jedem gegnerischen Charakter 1 Schaden zu. Dieser Schaden kann nicht durch <Robust> reduziert werden.%\\So geschmeidig\\ Solange dieser Charakter erschöpft ist, erhalten gegnerische beschädigte Charaktere -1 {L}.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Don Kanaille auszuspielen.)"
+      },
+      {
+        "title": "Bleibender Eindruck",
+        "description": "Wenn du diesen Charakter ausspielst, füge jedem gegnerischen Charakter 1 Schaden zu. Dieser Schaden kann nicht durch <Robust> reduziert werden."
+      },
+      {
+        "title": "So geschmeidig",
+        "description": "Solange dieser Charakter erschöpft ist, erhalten gegnerische beschädigte Charaktere -1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "CJC": {
+    "name": "Fru Fru",
+    "version": "VIP-Gast",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "Gazelles kraftvolle Stimme und ihre legendären Auftritte gaben Fru Fru das Gefühl, drei Meter groß zu sein.",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "Qe1": {
+    "name": "Abuelita",
+    "version": "Liebende Großmutter",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "Schuhe hielten die Familie zusammen, aber nun wird Musik der Familie Freude bereiten.",
+    "searchableKeywords": ["Coco"]
+  },
+  "kSA": {
+    "name": "Max Goof",
+    "version": "Musikliebhaber",
+    "rulesText": "<Singen> 5 (Die Kosten dieses Charakters gelten als 5 für das Singen von Liedern.)%\\Die beste Nacht aller Zeiten\\ Solange du mindestens einen weiteren Charakter mit <Singen> im Spiel hast, erhält dieser Charakter +1 {L}.",
+    "text": [
+      {
+        "title": "<Singen> 5 (Die Kosten dieses Charakters gelten als 5 für das Singen von Liedern.)"
+      },
+      {
+        "title": "Die beste Nacht aller Zeiten",
+        "description": "Solange du mindestens einen weiteren Charakter mit <Singen> im Spiel hast, erhält dieser Charakter +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "eeA": {
+    "name": "Gazelle",
+    "version": "Pop-Diva",
+    "rulesText": "<Singen> 4 (Die Kosten dieses Charakters gelten als 4 für das Singen von Liedern.)",
+    "text": "<Singen> 4 (Die Kosten dieses Charakters gelten als 4 für das Singen von Liedern.)",
+    "flavorText": "„Einen ganz besonderen Applaus für Martin, den Luminari an der Rhythmusgitarre!“",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "C4O": {
+    "name": "Kater Karlo",
+    "version": "Arroganter Angeber",
+    "rulesText": "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
+    "text": "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
+    "flavorText": "„Powerline wird ein Foto mit <mir> haben wollen.“",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "gjQ": {
+    "name": "Miriam Mendelsohn",
+    "version": "Fan in der ersten Reihe",
+    "rulesText": "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
+    "text": "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
+    "flavorText": "„Er hat mich angesehen! Er hat mich <direkt> angesehen!“",
+    "searchableKeywords": ["Turning Red", "Rot"]
+  },
+  "5Wa": {
+    "name": "Priya Mangal",
+    "version": "Unbeweglicher Fan",
+    "rulesText": "\\Verschwinde!\\ Wenn du diesen Charakter ausspielst, darfst du einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2 {S} geben.",
+    "text": [
+      {
+        "title": "Verschwinde!",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2 {S} geben."
+      }
+    ],
+    "flavorText": "„Die erste Reihe ist die beste Reihe!“",
+    "searchableKeywords": ["Turning Red", "Rot"]
+  },
+  "cuZ": {
+    "name": "Yax",
+    "version": "Konzertbesucher",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Oh, wow, Mann. Die Bühne ist beleuchtet wie das Große Illuminarium. Moment mal ... ‚Illuminarium‘ ... Nennt man es <deshalb> so? Boah ...“",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "SRT": {
+    "name": "Judy Hopps",
+    "version": "Hilfsbereite Polizistin",
+    "rulesText": "\\Zur Rettung\\ Wenn du diesen Charakter ausspielst, entferne bis zu 2 Schaden von einem Charakter deiner Wahl.",
+    "text": [
+      {
+        "title": "Zur Rettung",
+        "description": "Wenn du diesen Charakter ausspielst, entferne bis zu 2 Schaden von einem Charakter deiner Wahl."
+      }
+    ],
+    "flavorText": "„Ist es die Hitze? Oder bist du einfach nur von den Stars beeindruckt?“",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "Xnj": {
+    "name": "Miguel Rivera",
+    "version": "Vielversprechender Musiker",
+    "rulesText": "\\Publikumsliebling\\ Jedes Mal, wenn dieser Charakter ein Lied singt, sammelst du 1 Legende.",
+    "text": [
+      {
+        "title": "Publikumsliebling",
+        "description": "Jedes Mal, wenn dieser Charakter ein Lied singt, sammelst du 1 Legende."
+      }
+    ],
+    "flavorText": "„Ich werde ein Musiker!“",
+    "searchableKeywords": ["Coco"]
+  },
+  "gFZ": {
+    "name": "Nick Wilde",
+    "version": "Wissbegieriger Hafenmeister",
+    "rulesText": "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Nick Wilde auszuspielen.)%\\Eingeschränkte Route\\ Jedes Mal, wenn dieser Charakter erkundet, darfst du einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges <Abenteuerlustig> geben. (Der Charakter kann nicht herausfordern und muss erkunden, wenn möglich.)",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Nick Wilde auszuspielen.)"
+      },
+      {
+        "title": "Eingeschränkte Route",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, darfst du einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges <Abenteuerlustig> geben. (Der Charakter kann nicht herausfordern und muss erkunden, wenn möglich.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "KR4": {
+    "name": "K.J. Karlo",
+    "version": "Begeisterter Fan",
+    "rulesText": "\\Kennt den Text auswendig\\ Solange du mindestens einen Charakter mit <Singen> im Spiel hast, erhält dieser Charakter +1 {L}.",
+    "text": [
+      {
+        "title": "Kennt den Text auswendig",
+        "description": "Solange du mindestens einen Charakter mit <Singen> im Spiel hast, erhält dieser Charakter +1 {L}."
+      }
+    ],
+    "flavorText": "„Powerline ist <wirklich> der Beste!“",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "gFC": {
+    "name": "Mr. Manchas",
+    "version": "Service mit einem Lächeln",
+    "rulesText": "\\Immer pünktlich\\ Jedes Mal, wenn dieser Charakter erkundet, zahlst du 1 {I} weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
+    "text": [
+      {
+        "title": "Immer pünktlich",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 1 {I} weniger für den nächsten Charakter, den du in diesem Zug ausspielst."
+      }
+    ],
+    "flavorText": "„Ihre ‚Nonstop-Rooftop-Pop-up-Show‘ war brillant!“",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "IsT": {
+    "name": "Nick Wilde",
+    "version": "Offizier für Spielzeugspenden",
+    "rulesText": "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)%\\Gemeinnützige Arbeit\\ Am Ende deines Zuges, falls du in diesem Zug mindestens 2 Charaktere ausgespielt hast, ziehe 1 Karte.",
+    "text": [
+      {
+        "title": "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)"
+      },
+      {
+        "title": "Gemeinnützige Arbeit",
+        "description": "Am Ende deines Zuges, falls du in diesem Zug mindestens 2 Charaktere ausgespielt hast, ziehe 1 Karte."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "Hfj": {
+    "name": "Clawhauser",
+    "version": "Sicherheitsbeauftragter",
+    "rulesText": "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.) %\\Jedermanns Kumpel\\ Du kannst diesen Charakter nicht ausspielen, außer du hast in diesem Zug bereits einen anderen Charakter ausgespielt.",
+    "text": [
+      {
+        "title": "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)"
+      },
+      {
+        "title": "Jedermanns Kumpel",
+        "description": "Du kannst diesen Charakter nicht ausspielen, außer du hast in diesem Zug bereits einen anderen Charakter ausgespielt."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "itE": {
+    "name": "Elisa Maza",
+    "version": "Fleißige Detektivin",
+    "rulesText": "\\Folgt der Spur\\ Wenn du diesen Charakter ausspielst, falls du mindestens einen weiteren Detektiv-Charakter im Spiel hast, zeigt eine gegnerische Person deiner Wahl alle Handkarten vor und wirft eine Karte deiner Wahl, die keine Charakterkarte ist, ab.",
+    "text": [
+      {
+        "title": "Folgt der Spur",
+        "description": "Wenn du diesen Charakter ausspielst, falls du mindestens einen weiteren Detektiv-Charakter im Spiel hast, zeigt eine gegnerische Person deiner Wahl alle Handkarten vor und wirft eine Karte deiner Wahl, die keine Charakterkarte ist, ab."
+      }
+    ],
+    "flavorText": "„Woher kommen diese Geoden?“",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "Vq1": {
+    "name": "Powerline",
+    "version": "Megastar",
+    "rulesText": "<Singen> 9%\\Begleitsänger\\ Einmal während deines Zuges, wenn du ein Lied ausspielst, nimm eine Charakterkarte mit <Singen> aus deinem Ablagestapel zurück auf deine Hand.%\\Perfekte Harmonie\\ Dieser Charakter erhält +1 {L} für jeden deiner anderen Charaktere mit <Singen> im Spiel.",
+    "text": [
+      {
+        "title": "<Singen> 9"
+      },
+      {
+        "title": "Begleitsänger",
+        "description": "Einmal während deines Zuges, wenn du ein Lied ausspielst, nimm eine Charakterkarte mit <Singen> aus deinem Ablagestapel zurück auf deine Hand."
+      },
+      {
+        "title": "Perfekte Harmonie",
+        "description": "Dieser Charakter erhält +1 {L} für jeden deiner anderen Charaktere mit <Singen> im Spiel."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "eff": {
+    "name": "Lionheart",
+    "version": "Amtierender Bürgermeister",
+    "rulesText": "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.) %\\Zustimmungsrate\\ Wenn du diesen Charakter ausspielst, erhalten bis zu 2 Charaktere deiner Wahl in diesem Zug jeweils +1 {L}.",
+    "text": [
+      {
+        "title": "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)"
+      },
+      {
+        "title": "Zustimmungsrate",
+        "description": "Wenn du diesen Charakter ausspielst, erhalten bis zu 2 Charaktere deiner Wahl in diesem Zug jeweils +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "EoX": {
+    "name": "Aurora",
+    "version": "Entzückende Musikerin",
+    "rulesText": "\\Melodischer Refrain\\ Wenn du diesen Charakter ausspielst, nimm 1 Liedkarte, welche du diesen Zug gespielt hast und die 3 oder weniger kostet, aus deinem Ablagestapel zurück auf deine Hand.%\\Freudiger Empfang\\ Am Ende deines Zuges, falls du in diesem Zug mindestens ein Lied ausgespielt hast, sammelst du 1 Legende.",
+    "text": [
+      {
+        "title": "Melodischer Refrain",
+        "description": "Wenn du diesen Charakter ausspielst, nimm 1 Liedkarte, welche du diesen Zug gespielt hast und die 3 oder weniger kostet, aus deinem Ablagestapel zurück auf deine Hand."
+      },
+      {
+        "title": "Freudiger Empfang",
+        "description": "Am Ende deines Zuges, falls du in diesem Zug mindestens ein Lied ausgespielt hast, sammelst du 1 Legende."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Dornröschen", "Sleeping Beauty"]
+  },
+  "V8L": {
+    "name": "Russel",
+    "version": "Auf der Suche nach Abenteuern",
+    "rulesText": "\\Verstecken spielen\\ {E} — Decke die obersten 2 Karten deines Decks auf. Nimm alle aufgedeckten Charakterkarten davon auf deine Hand und lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+    "text": [
+      {
+        "title": "Verstecken spielen",
+        "description": "{E} — Decke die obersten 2 Karten deines Decks auf. Nimm alle aufgedeckten Charakterkarten davon auf deine Hand und lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Oben", "Up"]
+  },
+  "vuy": {
+    "name": "Miguel Rivera",
+    "version": "Straßenmusiker",
+    "rulesText": "\\Teilt die Musik\\ Solange du mindestens eine Liedkarte in deinem Ablagestapel hast, erhält dieser Charakter +1 {L} und <Singen> 3. (Die Kosten dieses Charakters gelten als 3 für das Singen von Liedern.)",
+    "text": [
+      {
+        "title": "Teilt die Musik",
+        "description": "Solange du mindestens eine Liedkarte in deinem Ablagestapel hast, erhält dieser Charakter +1 {L} und <Singen> 3. (Die Kosten dieses Charakters gelten als 3 für das Singen von Liedern.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "zex": {
+    "name": "Goofy",
+    "version": "Kennt die Band",
+    "rulesText": "\\VIP-Zugang\\ Wenn du diesen Charakter ausspielst, falls du mindestens einen Charakter mit <Singen> im Spiel hast, ziehe 1 Karte.",
+    "text": [
+      {
+        "title": "VIP-Zugang",
+        "description": "Wenn du diesen Charakter ausspielst, falls du mindestens einen Charakter mit <Singen> im Spiel hast, ziehe 1 Karte."
+      }
+    ],
+    "flavorText": "„Ich gehöre zu denen!“",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "vC5": {
+    "name": "Micky Maus",
+    "version": "Der Beste der Stadt",
+    "rulesText": "<Abenteuerlustig> (Dieser Charakter kann nicht herausfordern und muss in jedem Zug erkunden, wenn möglich.)%\\Hot Dog!\\ Am Ende deines Zuges, falls dieser Charakter erschöpft ist, erhalten alle Mitspielenden 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "<Abenteuerlustig> (Dieser Charakter kann nicht herausfordern und muss in jedem Zug erkunden, wenn möglich.)"
+      },
+      {
+        "title": "Hot Dog!",
+        "description": "Am Ende deines Zuges, falls dieser Charakter erschöpft ist, erhalten alle Mitspielenden 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Mickey Mouse", "Mickey Maus", "Micky Mouse"]
+  },
+  "eUU": {
+    "name": "Judy Hopps",
+    "version": "Immer wachsam",
+    "rulesText": "<Gestaltwandel> 2 {I} (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Judy Hopps auszuspielen.)%\\Jetzt hab ich dich!\\ Wenn du diesen Charakter ausspielst, falls du in diesem Zug mindestens einen anderen Charakter ausgespielt hast, darfst du einen Charakter deiner Wahl mit 5 oder mehr {S} verbannen.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 2 {I} (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Judy Hopps auszuspielen.)"
+      },
+      {
+        "title": "Jetzt hab ich dich!",
+        "description": "Wenn du diesen Charakter ausspielst, falls du in diesem Zug mindestens einen anderen Charakter ausgespielt hast, darfst du einen Charakter deiner Wahl mit 5 oder mehr {S} verbannen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "6lX": {
+    "name": "Nick Wilde",
+    "version": "Sichert Unterstützung",
+    "rulesText": "\\Ich hab's im Griff\\ Solange du mindestens einen weiteren Detektiv-Charakter im Spiel hast, erhält dieser Charakter <Unterstützen>. (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
+    "text": [
+      {
+        "title": "Ich hab's im Griff",
+        "description": "Solange du mindestens einen weiteren Detektiv-Charakter im Spiel hast, erhält dieser Charakter <Unterstützen>. (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "47o": {
+    "name": "Miguel Rivera",
+    "version": "Erfahrener Musiker",
+    "rulesText": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Miguel Rivera auszuspielen.)%\\Transzendente Leistung\\ Wenn du diesen Charakter ausspielst, nimm 1 Charakterkarte aus deinem Ablagestapel zurück auf deine Hand.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Miguel Rivera auszuspielen.)"
+      },
+      {
+        "title": "Transzendente Leistung",
+        "description": "Wenn du diesen Charakter ausspielst, nimm 1 Charakterkarte aus deinem Ablagestapel zurück auf deine Hand."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "Ae0": {
+    "name": "Owen Burnett",
+    "version": "Xanatos' Assistent",
+    "rulesText": "\\Verluste begrenzen\\ Wenn du diesen Charakter ausspielst, darfst du einen Charakter, Gegenstand oder Ort deiner Wahl, der 2 oder weniger kostet, zurück auf die zugehörige Hand schicken.",
+    "text": [
+      {
+        "title": "Verluste begrenzen",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du einen Charakter, Gegenstand oder Ort deiner Wahl, der 2 oder weniger kostet, zurück auf die zugehörige Hand schicken."
+      }
+    ],
+    "flavorText": "„Mister Xanatos schert sich nicht um die Kosten. Beseitigen Sie das Hindernis sofort.“",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "amS": {
+    "name": "Scuttle",
+    "version": "Leitet den Verkehr",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Als er mir diese Pfeife zeigte, dachte ich: ‚Das ist okay. Was kann schon Schlimmes passieren?‘ Ein großer Fehler.“%—Cordelia, eine Luminari",
+    "searchableKeywords": ["Little Mermaid", "Arielle die Meerjungfrau"]
+  },
+  "ljM": {
+    "name": "David Xanatos",
+    "version": "Mysteriöser Unternehmer",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Es scheint, als würde unsere schöne Stadt doch ein paar Geheimnisse verbergen.“",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "wsg": {
+    "name": "Lexington",
+    "version": "Furchtloser Flieger",
+    "rulesText": "<Wendig> %\\Am Tage aus Stein\\ Solange du 3 oder mehr Karten auf der Hand hast, kann dieser Charakter nicht bereit gemacht werden.",
+    "text": [
+      {
+        "title": "<Wendig>"
+      },
+      {
+        "title": "Am Tage aus Stein",
+        "description": "Solange du 3 oder mehr Karten auf der Hand hast, kann dieser Charakter nicht bereit gemacht werden."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "l5w": {
+    "name": "Merlin",
+    "version": "Experte für Schnickschnack",
+    "rulesText": "\\Rohmaterial\\ Wenn du diesen Charakter ausspielst, falls du mindestens einen Charakter namens Arthur im Spiel hast, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Rohmaterial",
+        "description": "Wenn du diesen Charakter ausspielst, falls du mindestens einen Charakter namens Arthur im Spiel hast, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "„Ah, du hast sie endlich gefunden, oder?“",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "j6r": {
+    "name": "Pepita",
+    "version": "Wachsame Alebrije",
+    "rulesText": "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
+    "text": "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
+    "flavorText": "Onkel Oscar: „<Echte> Alebrijes. Geisterwesen.“%Tante Rosita: „Sie führen Seelen auf ihrer Reise.“",
+    "searchableKeywords": ["Coco"]
+  },
+  "gzW": {
+    "name": "Archimedes",
+    "version": "Hat genug",
+    "rulesText": "<Wendig>",
+    "text": "<Wendig>",
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "q7N": {
+    "name": "Tante Victoria",
+    "version": "Missbilligende Ahnin",
+    "rulesText": "\\Vernichtender Blick\\ Wenn du diesen Charakter ausspielst, wähle einen gegnerischen Charakter. Jener wird zu Beginn seines nächsten Zuges nicht bereit gemacht.",
+    "text": [
+      {
+        "title": "Vernichtender Blick",
+        "description": "Wenn du diesen Charakter ausspielst, wähle einen gegnerischen Charakter. Jener wird zu Beginn seines nächsten Zuges nicht bereit gemacht."
+      }
+    ],
+    "flavorText": "„Setz dich hin und hör den Erwachsenen zu, bevor du noch mehr Ärger machst!“",
+    "searchableKeywords": ["Coco"]
+  },
+  "3tB": {
+    "name": "Dante",
+    "version": "Enthusiastischer Streuner",
+    "rulesText": "\\Alles für dich\\ Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S}).",
+    "text": [
+      {
+        "title": "Alles für dich",
+        "description": "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S})."
+      }
+    ],
+    "flavorText": "„Guter Junge, Dante!“%—Miguel Rivera",
+    "searchableKeywords": ["Coco"]
+  },
+  "Nxf": {
+    "name": "Urgroßmutter Coco",
+    "version": "Zu Besuch im Park",
+    "rulesText": "\\Ferne Erinnerung\\ Jedes Mal, wenn du 1 oder mehrere Karten von deinem Deck auf deinen Ablagestapel legst, erhält dieser Charakter in diesem Zug +1 {L}.",
+    "text": [
+      {
+        "title": "Ferne Erinnerung",
+        "description": "Jedes Mal, wenn du 1 oder mehrere Karten von deinem Deck auf deinen Ablagestapel legst, erhält dieser Charakter in diesem Zug +1 {L}."
+      }
+    ],
+    "flavorText": "„Ich erinnere mich an die Briefe, die mir mein Papá geschickt hat. Sie waren voller Gedichte, die er für mich geschrieben hatte – ich habe sie alle aufbewahrt!“",
+    "searchableKeywords": ["Coco"]
+  },
+  "jhs": {
+    "name": "Naseweis",
+    "version": "Neugierige Fee",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Naseweis findet die ungewöhnlichsten Dinge. Das macht das gemeinsame Reisen zu einem Abenteuer!“%—Cordelia, eine Luminari",
+    "searchableKeywords": ["Peter Pan"]
+  },
+  "SDE": {
+    "name": "Madame Mim",
+    "version": "Schnickschnack-Jägerin",
+    "rulesText": "\\Schwer zu handhaben\\ Solange du mindestens einen Tintentropfen hast, erhält dieser Charakter <Wendig>. (Nur Charaktere mit Wendig können ihn herausfordern.)",
+    "text": [
+      {
+        "title": "Schwer zu handhaben",
+        "description": "Solange du mindestens einen Tintentropfen hast, erhält dieser Charakter <Wendig>. (Nur Charaktere mit Wendig können ihn herausfordern.)"
+      }
+    ],
+    "flavorText": "„Aha! Ein schöner kleiner Tropfen Macht, um meine Bösartigkeit anzutreiben.“",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "kjn": {
+    "name": "Peter Pans Schatten",
+    "version": "Unfassbarer Schelm",
+    "rulesText": "<Wendig> %\\Lieblingstrick\\ Wenn du diesen Charakter ausspielst, darfst du einen gegnerischen Charakter deiner Wahl erschöpfen.",
+    "text": [
+      {
+        "title": "<Wendig>"
+      },
+      {
+        "title": "Lieblingstrick",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du einen gegnerischen Charakter deiner Wahl erschöpfen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Peter Pan"]
+  },
+  "PJW": {
+    "name": "Dante",
+    "version": "Chaotisch und liebenswert",
+    "rulesText": "<Wendig> %\\Im Müll wühlen\\ Solange du 10 oder mehr Karten in deinem Ablagestapel hast, erhält dieser Charakter +1 {L}.",
+    "text": [
+      {
+        "title": "<Wendig>"
+      },
+      {
+        "title": "Im Müll wühlen",
+        "description": "Solange du 10 oder mehr Karten in deinem Ablagestapel hast, erhält dieser Charakter +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "j86": {
+    "name": "Fox Xanatos",
+    "version": "Charismatische Gesetzlose",
+    "rulesText": "<Rasant>",
+    "text": "<Rasant>",
+    "flavorText": "„Schau genau hin, Cordelia, und ich zeige dir, wie ein Star mit solchen Dingen umgeht.“",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "PkS": {
+    "name": "Brooklyn",
+    "version": "Vollgas",
+    "rulesText": "\\Wilde Fahrt\\ 6 {I} — Sammle 1 Legende.%\\Am Tage aus Stein\\ Solange du 3 oder mehr Karten auf der Hand hast, kann dieser Charakter nicht bereit gemacht werden.",
+    "text": [
+      {
+        "title": "Wilde Fahrt",
+        "description": "6 {I} — Sammle 1 Legende."
+      },
+      {
+        "title": "Am Tage aus Stein",
+        "description": "Solange du 3 oder mehr Karten auf der Hand hast, kann dieser Charakter nicht bereit gemacht werden."
+      }
+    ],
+    "flavorText": "„Ich liebe diesen Ofen!“",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "S0B": {
+    "name": "Ururgroßmutter Imelda",
+    "version": "Resolute Ahnin",
+    "rulesText": "\\Lass mich durch\\ Wenn du diesen Charakter ausspielst, lege 3 Karten aus deinem Ablagestapel in beliebiger Reihenfolge unter dein Deck oder verbanne diesen Charakter.",
+    "text": [
+      {
+        "title": "Lass mich durch",
+        "description": "Wenn du diesen Charakter ausspielst, lege 3 Karten aus deinem Ablagestapel in beliebiger Reihenfolge unter dein Deck oder verbanne diesen Charakter."
+      }
+    ],
+    "flavorText": "„Ich habe ein paar Dinge mit dir zu klären!“%—Ururgroßmutter Imelda",
+    "searchableKeywords": ["Coco"]
+  },
+  "AtI": {
+    "name": "Merlin",
+    "version": "Tintentropfen-Bastler",
+    "rulesText": "<Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Merlin auszuspielen.)%\\Was für eine Entdeckung!\\ Wenn du diesen Charakter ausspielst, erschaffe 1 Tintentropfen. Falls du <Gestaltwandel> benutzt hast, um ihn auszuspielen, erschaffe stattdessen 2 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Merlin auszuspielen.)"
+      },
+      {
+        "title": "Was für eine Entdeckung!",
+        "description": "Wenn du diesen Charakter ausspielst, erschaffe 1 Tintentropfen. Falls du <Gestaltwandel> benutzt hast, um ihn auszuspielen, erschaffe stattdessen 2 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "vb5": {
+    "name": "Goliath",
+    "version": "Verwandelter Krieger",
+    "rulesText": "\\Wenn die Nacht hereinbricht\\ Einmal während deines Zuges darfst du eine Karte von deiner Hand auswählen und abwerfen. Wenn du dies tust, verschiebe bis zu 2 Schaden von diesem Charakter zu einem gegnerischen Charakter deiner Wahl.%\\Am Tage aus Stein\\ Solange du 3 oder mehr Karten auf der Hand hast, kann dieser Charakter nicht bereit gemacht werden.",
+    "text": [
+      {
+        "title": "Wenn die Nacht hereinbricht",
+        "description": "Einmal während deines Zuges darfst du eine Karte von deiner Hand auswählen und abwerfen. Wenn du dies tust, verschiebe bis zu 2 Schaden von diesem Charakter zu einem gegnerischen Charakter deiner Wahl."
+      },
+      {
+        "title": "Am Tage aus Stein",
+        "description": "Solange du 3 oder mehr Karten auf der Hand hast, kann dieser Charakter nicht bereit gemacht werden."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "C4J": {
+    "name": "Dante",
+    "version": "Loyaler Alebrije",
+    "rulesText": "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Dante auszuspielen.)%<Wendig> %\\Der Schatz im Müll\\ Solange du 10 oder mehr Karten in deinem Ablagestapel hast, erhält dieser Charakter +2 {L}.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Dante auszuspielen.)"
+      },
+      {
+        "title": "<Wendig>"
+      },
+      {
+        "title": "Der Schatz im Müll",
+        "description": "Solange du 10 oder mehr Karten in deinem Ablagestapel hast, erhält dieser Charakter +2 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "SHv": {
+    "name": "Rapunzel",
+    "version": "Unternehmungslustige Künstlerin",
+    "rulesText": "\\Wie aus dem Bilderbuch\\ Jedes Mal, wenn dieser Charakter erkundet, darfst du einen anderen Charakter wählen und 1 Charakterkarte aus deiner Hand vorzeigen. Falls sie denselben Namen haben, ziehe 1 Karte.",
+    "text": [
+      {
+        "title": "Wie aus dem Bilderbuch",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen anderen Charakter wählen und 1 Charakterkarte aus deiner Hand vorzeigen. Falls sie denselben Namen haben, ziehe 1 Karte."
+      }
+    ],
+    "flavorText": "„Warte noch, Eugene – ich muss deine Nase richtig hinbekommen.“",
+    "searchableKeywords": ["Tangled", "Rapunzel"]
+  },
+  "GzL": {
+    "name": "Demona",
+    "version": "Herrische Zauberkundige",
+    "rulesText": "\\Impetus Improvisus\\ Wähle eine Karte aus deiner Hand und wirf sie ab — Ein Gargoyle-Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Wendig> und <Rasant>. (Nur Charaktere mit Wendig können den Charakter herausfordern. Er kann im selben Zug herausfordern, in dem er ausgespielt wird.)%\\Am Tage aus Stein\\ Solange du 3 oder mehr Karten auf der Hand hast, kann dieser Charakter nicht bereit gemacht werden.",
+    "text": [
+      {
+        "title": "Impetus Improvisus",
+        "description": "Wähle eine Karte aus deiner Hand und wirf sie ab — Ein Gargoyle-Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Wendig> und <Rasant>. (Nur Charaktere mit Wendig können den Charakter herausfordern. Er kann im selben Zug herausfordern, in dem er ausgespielt wird.)"
+      },
+      {
+        "title": "Am Tage aus Stein",
+        "description": "Solange du 3 oder mehr Karten auf der Hand hast, kann dieser Charakter nicht bereit gemacht werden."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "CTD": {
+    "name": "Merlin",
+    "version": "Zutiefst neugierig",
+    "rulesText": "\\Ungenutztes Potenzial\\ Wenn du diesen Charakter ausspielst, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)%\\Spannende Entdeckung\\ Jedes Mal, wenn dieser Charakter erkundet, ziehe 1 Karte.",
+    "text": [
+      {
+        "title": "Ungenutztes Potenzial",
+        "description": "Wenn du diesen Charakter ausspielst, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      },
+      {
+        "title": "Spannende Entdeckung",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, ziehe 1 Karte."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "ONu": {
+    "name": "Archimedes",
+    "version": "Boteneule",
+    "rulesText": "<Rasant> %\\Unverschämtheit!\\ Wenn dieser Charakter durch eine Herausforderung verbannt wird, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "<Rasant>"
+      },
+      {
+        "title": "Unverschämtheit!",
+        "description": "Wenn dieser Charakter durch eine Herausforderung verbannt wird, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "n2V": {
+    "name": "Madame Mim",
+    "version": "Einfallsreiche Trickserin",
+    "rulesText": "\\Oberhand\\ Wenn du diesen Charakter ausspielst, falls du einen Tintentropfen benutzt hast, um ihn auszuspielen, ziehe 2 Karten.%\\Schnickschnack-Spiel\\ Einmal während deines Zuges, wenn du einen Tintentropfen entfernst, ziehe 1 Karte.",
+    "text": [
+      {
+        "title": "Oberhand",
+        "description": "Wenn du diesen Charakter ausspielst, falls du einen Tintentropfen benutzt hast, um ihn auszuspielen, ziehe 2 Karten."
+      },
+      {
+        "title": "Schnickschnack-Spiel",
+        "description": "Einmal während deines Zuges, wenn du einen Tintentropfen entfernst, ziehe 1 Karte."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "gha": {
+    "name": "Pluto, der Spürhund",
+    "version": "Auch mit dabei",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Du bist ganz schön aufgeregt, Jock. Was ist denn da draußen los?“%—Pluto, der Spürhund",
+    "searchableKeywords": ["Susi und Strolch", "Lady and the Tramp"]
+  },
+  "gNn": {
+    "name": "Don Kanaille",
+    "version": "Khans Kurier",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Ich, Don Kanaille, Plünderer von Schätzen und Dieb der Extraklasse, kann niemals von Leuten wie euch gefasst werden!“",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "mgU": {
+    "name": "Hiro Hamada",
+    "version": "Vielseitiger Erfinder",
+    "rulesText": "<Wendig> %\\Turbotriebwerke\\ Wenn du diesen Charakter ausspielst, darfst du 1 {I} bezahlen, um einen deiner Charaktere zu wählen. Jener erhält bis zu Beginn deines nächsten Zuges <Wendig>.",
+    "text": [
+      {
+        "title": "<Wendig>"
+      },
+      {
+        "title": "Turbotriebwerke",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du 1 {I} bezahlen, um einen deiner Charaktere zu wählen. Jener erhält bis zu Beginn deines nächsten Zuges <Wendig>."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "BTW": {
+    "name": "Go Go Tomago",
+    "version": "Extremtesterin",
+    "rulesText": "\\Daten sammeln\\ Jedes Mal, wenn dieser Charakter herausgefordert wird, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Daten sammeln",
+        "description": "Jedes Mal, wenn dieser Charakter herausgefordert wird, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "„Wenn ich mit <einem> Tintentropfen 6 #% schneller bin, was passiert dann, wenn ich <zwei> habe?“",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "gvL": {
+    "name": "Molly Cunningham",
+    "version": "Denkt daran, zu teilen",
+    "rulesText": "\\So lustig!\\ Wenn du diesen Charakter ausspielst, erschaffen du und eine weitere Person deiner Wahl je 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "So lustig!",
+        "description": "Wenn du diesen Charakter ausspielst, erschaffen du und eine weitere Person deiner Wahl je 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "„Mama, Mama! Schau mal, wie alles glänzt!“",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "bVP": {
+    "name": "Kit Wolkenflitzer",
+    "version": "Übermütiger Bär",
+    "rulesText": "\\Glückstag\\ Wenn du diesen Charakter ausspielst, erschaffen du und eine weitere Person deiner Wahl je 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Glückstag",
+        "description": "Wenn du diesen Charakter ausspielst, erschaffen du und eine weitere Person deiner Wahl je 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "„Louie hat Tintentropfen? Glaubst du, er gibt uns welche ab?“",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "cSM": {
+    "name": "Belle",
+    "version": "Reflektierte Autorin",
+    "rulesText": "\\Stadtabenteuer\\ Wenn du diesen Charakter ausspielst, decke die oberste Karte deines Decks auf. Falls sie eine Gegenstandkarte namens Belles Stadtführer oder eine Aktionskarte ist, darfst du sie auf deine Hand nehmen. Falls nicht, lege sie unter dein Deck.",
+    "text": [
+      {
+        "title": "Stadtabenteuer",
+        "description": "Wenn du diesen Charakter ausspielst, decke die oberste Karte deines Decks auf. Falls sie eine Gegenstandkarte namens Belles Stadtführer oder eine Aktionskarte ist, darfst du sie auf deine Hand nehmen. Falls nicht, lege sie unter dein Deck."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Die Schöne und das Biest", "Beauty and the Beast"]
+  },
+  "FRw": {
+    "name": "Fred",
+    "version": "Versammelt das Team",
+    "rulesText": "\\Beraterteam\\ Wenn du diesen Charakter ausspielst, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Super-Charakterkarte oder 1 Gegenstandskarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+    "text": [
+      {
+        "title": "Beraterteam",
+        "description": "Wenn du diesen Charakter ausspielst, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Super-Charakterkarte oder 1 Gegenstandskarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "GBD": {
+    "name": "Käpt'n Hook",
+    "version": "Besorgter Kapitän",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Feen, Kinder und Krokodile sind an Bord der Jolly Roger strengstens verboten.“",
+    "searchableKeywords": ["Peter Pan"]
+  },
+  "m0i": {
+    "name": "Jock",
+    "version": "Genießt die Aussicht",
+    "rulesText": "<Wendig>",
+    "text": "<Wendig>",
+    "flavorText": "„Ach, die Stadt ist so geschäftig! Schau mal, eine ganze Menge neuer Luminari ist gerade bei der Hafenbehörde angekommen!“",
+    "searchableKeywords": ["Susi und Strolch", "Lady and the Tramp"]
+  },
+  "4Ao": {
+    "name": "Susi",
+    "version": "Entspannt und ausgeruht",
+    "rulesText": "<Behütet>",
+    "text": "<Behütet>",
+    "flavorText": "„Dieser Glimmer gibt mir ein Gefühl von Sicherheit. Immer wenn ich sie mit Tinte forme, weiß ich, dass alles gut wird.“%—Cordelia, eine Luminari",
+    "searchableKeywords": ["Susi und Strolch", "Lady and the Tramp"]
+  },
+  "d5C": {
+    "name": "Rebecca Cunningham",
+    "version": "Versierte Managerin",
+    "rulesText": "\\Sorgfaltspflicht\\ Wenn du diesen Charakter ausspielst, darfst du 1 Karte ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen.",
+    "text": [
+      {
+        "title": "Sorgfaltspflicht",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du 1 Karte ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen."
+      }
+    ],
+    "flavorText": "Als Inhaberin von „Höher und Höher“ ist sie stolz darauf, ihr Unternehmen streng zu führen.",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "WJo": {
+    "name": "Shir Khan",
+    "version": "Geschäftstüchtiger Großunternehmer",
+    "rulesText": "\\Einseitiges Geschäft\\ Wenn du diesen Charakter ausspielst, dürfen alle gegnerischen Mitspielenden je 1 Karte aus ihrer Hand auswählen und abwerfen. Für jede gegnerische Person, die keine Karte abwirft, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Einseitiges Geschäft",
+        "description": "Wenn du diesen Charakter ausspielst, dürfen alle gegnerischen Mitspielenden je 1 Karte aus ihrer Hand auswählen und abwerfen. Für jede gegnerische Person, die keine Karte abwirft, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "lBa": {
+    "name": "Horace",
+    "version": "Tollpatsch",
+    "rulesText": "\\Vermasselt\\ Wenn du diesen Charakter ausspielst, füge einem gegnerischen beschädigten Charakter deiner Wahl 1 Schaden zu.",
+    "text": [
+      {
+        "title": "Vermasselt",
+        "description": "Wenn du diesen Charakter ausspielst, füge einem gegnerischen beschädigten Charakter deiner Wahl 1 Schaden zu."
+      }
+    ],
+    "flavorText": "„Pass auf, Jasper – sonst triffst du meine Planke mit deinem Gesicht!“",
+    "searchableKeywords": ["101 Dalmatians", "101 Dalmatiner"]
+  },
+  "kg0": {
+    "name": "Shir Khan",
+    "version": "Skrupelloser Unternehmer",
+    "rulesText": "\\Heimlich Entlassen\\ Wenn du diesen Charakter ausspielst, lege einen gegnerischen Charakter deiner Wahl mit 3 oder weniger {S} unter das zugehörige Deck.",
+    "text": [
+      {
+        "title": "Heimlich Entlassen",
+        "description": "Wenn du diesen Charakter ausspielst, lege einen gegnerischen Charakter deiner Wahl mit 3 oder weniger {S} unter das zugehörige Deck."
+      }
+    ],
+    "flavorText": "„Leider ist Ihre Nützlichkeit nun zu Ende.“",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "SMo": {
+    "name": "Robert Zimuruski",
+    "version": "Tontechniker",
+    "rulesText": "<Behütet> %\\Köstlich!\\ Deine Gegenstände namens Der schiefe Turm von Käsa erhalten \"{E}, 1 {I} — Erschaffe 1 Tintentropfen\". (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "<Behütet>"
+      },
+      {
+        "title": "Köstlich!",
+        "description": "Deine Gegenstände namens Der schiefe Turm von Käsa erhalten \"{E}, 1 {I} — Erschaffe 1 Tintentropfen\". (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "Mq1": {
+    "name": "Baymax",
+    "version": "Laborassistent",
+    "rulesText": "\\Nachschub\\ Wenn du diesen Charakter ausspielst, falls du mindestens 2 Gegenstände im Spiel hast, erschaffe 2 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Nachschub",
+        "description": "Wenn du diesen Charakter ausspielst, falls du mindestens 2 Gegenstände im Spiel hast, erschaffe 2 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "„Meine Analyse kommt zu dem Schluss, dass Tintentropfen die Betriebsergebnisse um 80 #% verbessern können.“",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "B6x": {
+    "name": "Fred",
+    "version": "Großartiger Chef",
+    "rulesText": "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Fred auszuspielen.)%\\Radikale Ressourcen\\ Jedes Mal, wenn du diesen Charakter oder einen anderen Super-Charakter ausspielst, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Fred auszuspielen.)"
+      },
+      {
+        "title": "Radikale Ressourcen",
+        "description": "Jedes Mal, wenn du diesen Charakter oder einen anderen Super-Charakter ausspielst, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "B2t": {
+    "name": "Lester, das Opossum",
+    "version": "Park-Maskottchen",
+    "rulesText": "\\Verschwinde, Doofkopf!\\ Wenn dieser Charakter herausgefordert und verbannt wird, verlieren alle gegnerischen Mitspielenden je 2 Legenden.%\\Maximale Peinlichkeit\\ 6 {I} — Ein gegnerischer Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Impulsiv>. (Er kann nicht erkunden und muss herausfordern, wenn möglich.)",
+    "text": [
+      {
+        "title": "Verschwinde, Doofkopf!",
+        "description": "Wenn dieser Charakter herausgefordert und verbannt wird, verlieren alle gegnerischen Mitspielenden je 2 Legenden."
+      },
+      {
+        "title": "Maximale Peinlichkeit",
+        "description": "6 {I} — Ein gegnerischer Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Impulsiv>. (Er kann nicht erkunden und muss herausfordern, wenn möglich.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "9qv": {
+    "name": "Max Goof",
+    "version": "Karaoke-Star",
+    "rulesText": "\\Starker Remix\\ Wenn du diesen Charakter ausspielst, darfst du eine Liedkarte von deiner Hand auswählen und abwerfen. Wenn du dies tust, ziehe 2 Karten.%\\Brandneue Playlist\\ Solange du 5 oder mehr Liedkarten in deinem Ablagestapel hast, erhält dieser Charakter +3 {L}.",
+    "text": [
+      {
+        "title": "Starker Remix",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du eine Liedkarte von deiner Hand auswählen und abwerfen. Wenn du dies tust, ziehe 2 Karten."
+      },
+      {
+        "title": "Brandneue Playlist",
+        "description": "Solange du 5 oder mehr Liedkarten in deinem Ablagestapel hast, erhält dieser Charakter +3 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "jz8": {
+    "name": "Belle",
+    "version": "Ausgezeichnete Autorin",
+    "rulesText": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Belle auszuspielen.)%\\Hyperia-Reiseführer\\ Jedes Mal, wenn dieser Charakter in deinem Zug erschöpft wird, zahlst du 2 {I} weniger für die nächste Aktion, die du in diesem Zug ausspielst.%\\Geheimnisse von Hyperia\\ Jedes Mal, wenn du in deinem Zug die dritte Aktion ausspielst, sammelst du 3 Legenden.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Belle auszuspielen.)"
+      },
+      {
+        "title": "Hyperia-Reiseführer",
+        "description": "Jedes Mal, wenn dieser Charakter in deinem Zug erschöpft wird, zahlst du 2 {I} weniger für die nächste Aktion, die du in diesem Zug ausspielst."
+      },
+      {
+        "title": "Geheimnisse von Hyperia",
+        "description": "Jedes Mal, wenn du in deinem Zug die dritte Aktion ausspielst, sammelst du 3 Legenden."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Die Schöne und das Biest", "Beauty and the Beast"]
+  },
+  "4EQ": {
+    "name": "Fred",
+    "version": "Großer Stampfer",
+    "rulesText": "\\Kaiju-Schlag\\ Wenn du diesen Charakter ausspielst, darfst du einen Ort deiner Wahl verbannen.",
+    "text": [
+      {
+        "title": "Kaiju-Schlag",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du einen Ort deiner Wahl verbannen."
+      }
+    ],
+    "flavorText": "„Ich glaube, ich habe langsam den Dreh raus.“",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "vFk": {
+    "name": "Minnie Maus",
+    "version": "Eifrige Durchstarterin",
+    "rulesText": "\\Toller Fund\\ Dieser Charakter erhält im Zug einer gegnerischen Person <Robust> +2. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)",
+    "text": [
+      {
+        "title": "Toller Fund",
+        "description": "Dieser Charakter erhält im Zug einer gegnerischen Person <Robust> +2. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)"
+      }
+    ],
+    "flavorText": "Man kann sie immer dabei beobachten, wie sie die Wasserstraßen Hyperias entlangflitzt.",
+    "searchableKeywords": []
+  },
+  "K86": {
+    "name": "Honey Lemon",
+    "version": "Testet die Grenzen aus",
+    "rulesText": "\\Fortgeschrittene Chemie\\ Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du einen deiner Gegenstände verbannen, um 1 Karte zu ziehen und 1 Tintentropfen zu erschaffen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Fortgeschrittene Chemie",
+        "description": "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du einen deiner Gegenstände verbannen, um 1 Karte zu ziehen und 1 Tintentropfen zu erschaffen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "cPq": {
+    "name": "HeiHei",
+    "version": "Am Übergang",
+    "rulesText": "\\Zielloses Umherwandern\\ Einmal während deines Zuges, falls dieser Charakter an einem Ort ist, darfst du ihn kostenlos zu einem deiner anderen Orte bewegen. Wenn du dies tust, sammelst du 1 Legende.",
+    "text": [
+      {
+        "title": "Zielloses Umherwandern",
+        "description": "Einmal während deines Zuges, falls dieser Charakter an einem Ort ist, darfst du ihn kostenlos zu einem deiner anderen Orte bewegen. Wenn du dies tust, sammelst du 1 Legende."
+      }
+    ],
+    "flavorText": "Das beantwortet zwar die Frage nach dem <Wie>, aber nicht nach dem <Warum>.",
+    "searchableKeywords": ["Moana", "Vaiana"]
+  },
+  "2oR": {
+    "name": "Abby Park",
+    "version": "Leidenschaftlicher Fan",
+    "rulesText": "\\Ein Traum wird wahr\\ Wenn du diesen Charakter ausspielst, decke die oberste Karte deines Decks auf. Falls sie eine Charakterkarte mit <Singen> oder eine Liedkarte ist, darfst du sie auf deine Hand nehmen. Falls nicht, lege sie unter dein Deck.",
+    "text": [
+      {
+        "title": "Ein Traum wird wahr",
+        "description": "Wenn du diesen Charakter ausspielst, decke die oberste Karte deines Decks auf. Falls sie eine Charakterkarte mit <Singen> oder eine Liedkarte ist, darfst du sie auf deine Hand nehmen. Falls nicht, lege sie unter dein Deck."
+      }
+    ],
+    "flavorText": "„Das beste – Konzert – ALLER ZEITEN!“",
+    "searchableKeywords": ["Turning Red", "Rot"]
+  },
+  "Yuz": {
+    "name": "Goofy",
+    "version": "Tanzender Superstar",
+    "rulesText": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Goofy auszuspielen.)%<Singen> 6 (Die Kosten dieses Charakters gelten als 6 für das Singen von Liedern.)%\\Im Groove\\ Jedes Mal, wenn dieser Charakter erkundet, erhalten deine anderen Charaktere mit <Singen> in diesem Zug +1 {L}.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Goofy auszuspielen.)"
+      },
+      {
+        "title": "<Singen> 6 (Die Kosten dieses Charakters gelten als 6 für das Singen von Liedern.)"
+      },
+      {
+        "title": "Im Groove",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, erhalten deine anderen Charaktere mit <Singen> in diesem Zug +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "etZ": {
+    "name": "Héctor Rivera",
+    "version": "Weltweite Sensation",
+    "rulesText": "<Gestaltwandel> 4 {I}%\\Großer Erfolg\\ Jedes Mal, wenn dieser Charakter erkundet und jedes erste Mal, wenn er in einem Zug ein Lied singt, schaue dir die obersten 3 Karten deines Decks an. Du darfst 1 Liedkarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten auf deinen Ablagestapel.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 4 {I}"
+      },
+      {
+        "title": "Großer Erfolg",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet und jedes erste Mal, wenn er in einem Zug ein Lied singt, schaue dir die obersten 3 Karten deines Decks an. Du darfst 1 Liedkarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten auf deinen Ablagestapel."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "CaX": {
+    "name": "Yama",
+    "version": "Berüchtigter Verbrecher",
+    "rulesText": "\\Weiter so!\\ 6 {I} — Jedes Mal, wenn in diesem Zug einer deiner Charaktere einen anderen Charakter herausfordert, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Weiter so!",
+        "description": "6 {I} — Jedes Mal, wenn in diesem Zug einer deiner Charaktere einen anderen Charakter herausfordert, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "„Yama lässt sich nicht abzocken!“",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "RwK": {
+    "name": "Abigail Callaghan",
+    "version": "Erfahrene Testpilotin",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Hast du dich jemals gefragt, was es in den Tintenlanden gibt? Mein Luminari und ich haben so viele Dinge gesehen, die du nicht glauben würdest.“",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "6CV": {
+    "name": "Pepita",
+    "version": "Süßes Kätzchen",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "Das kleine Kätzchen ließ sich von den Ringelblumen leiten, so wie es eines Tages andere leiten würde.",
+    "searchableKeywords": ["Coco"]
+  },
+  "1O3": {
+    "name": "Donald Duck",
+    "version": "Taxifahrer",
+    "rulesText": "\\Rush Hour\\ Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug <Rasant>. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
+    "text": [
+      {
+        "title": "Rush Hour",
+        "description": "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug <Rasant>. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)"
+      }
+    ],
+    "flavorText": "„Hau ab, du Trottel! Ich muss noch woanders hin!“",
+    "searchableKeywords": []
+  },
+  "Wi0": {
+    "name": "Goofy",
+    "version": "Begeisterter Tourist",
+    "rulesText": "\\Den Moment festhalten\\ Solange du mindestens einen Charakter mit <Singen> im Spiel hast, erhält dieser Charakter +3 {S}.",
+    "text": [
+      {
+        "title": "Den Moment festhalten",
+        "description": "Solange du mindestens einen Charakter mit <Singen> im Spiel hast, erhält dieser Charakter +3 {S}."
+      }
+    ],
+    "flavorText": "„Max, weißt du, wer das ist? Ich nämlich nicht. Aber die klingen toll!“",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "Qbi": {
+    "name": "Tadashi Hamada",
+    "version": "Sorgt für Aufsehen",
+    "rulesText": "\\Dringende Lieferung\\ Wenn dieser Charakter verbannt wird, erschaffe 2 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Dringende Lieferung",
+        "description": "Wenn dieser Charakter verbannt wird, erschaffe 2 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "„Ich muss diese Tintentropfen noch vor Schließung des Labors zu Hiro und Honey Lemon bringen!“",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "xel": {
+    "name": "Cruella De Vil",
+    "version": "Weicht dem Verkehr aus",
+    "rulesText": "<Rasant>",
+    "text": "<Rasant>",
+    "flavorText": "„Aus dem Weg, ihr Idioten! Ich habe wichtige Geschäfte zu erledigen!“",
+    "searchableKeywords": ["101 Dalmatians", "101 Dalmatiner"]
+  },
+  "gR3": {
+    "name": "Jasper",
+    "version": "Zwielichtiger Bootsfahrer",
+    "rulesText": "<Wendig>",
+    "text": "<Wendig>",
+    "flavorText": "„Du kannst das große Boot benutzen, wenn du es dir <verdient> hast.“%—Cruella de Vil",
+    "searchableKeywords": ["101 Dalmatians", "101 Dalmatiner"]
+  },
+  "QLT": {
+    "name": "Peggy",
+    "version": "Nächtliche Sängerin",
+    "rulesText": "<Singen> 4 (Die Kosten dieses Charakters gelten als 4 für das Singen von Liedern.)",
+    "text": "<Singen> 4 (Die Kosten dieses Charakters gelten als 4 für das Singen von Liedern.)",
+    "flavorText": "In Hyperia finden immer die besten Konzerte statt.",
+    "searchableKeywords": ["Susi und Strolch", "Lady and the Tramp"]
+  },
+  "bUg": {
+    "name": "Stacey",
+    "version": "Powerline-Superfan",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Schau mal – sie hatten die limitierte Powerline-Duftkerze! Die habe ich schon <ewig> gesucht!“",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "sWk": {
+    "name": "Héctor Rivera",
+    "version": "Straßenmusiker",
+    "rulesText": "<Singen> 2 (Die Kosten dieses Charakters gelten als 2 für das Singen von Liedern.)%\\Spielt einen Akkord\\ Wenn du diesen Charakter ausspielst, darfst du die oberste Karte deines Decks auf deinen Ablagestapel legen.",
+    "text": [
+      {
+        "title": "<Singen> 2 (Die Kosten dieses Charakters gelten als 2 für das Singen von Liedern.)"
+      },
+      {
+        "title": "Spielt einen Akkord",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du die oberste Karte deines Decks auf deinen Ablagestapel legen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "RzE": {
+    "name": "Ernesto de la Cruz",
+    "version": "Idol von Millionen",
+    "rulesText": "<Singen> 5 (Die Kosten dieses Charakters gelten als 5 für das Singen von Liedern.)%\\An der Spitze der Charts\\ Solange mindestens eine gegnerische Person eine Liedkarte in ihrem Ablagestapel hat, erhält dieser Charakter +1 {L}.",
+    "text": [
+      {
+        "title": "<Singen> 5 (Die Kosten dieses Charakters gelten als 5 für das Singen von Liedern.)"
+      },
+      {
+        "title": "An der Spitze der Charts",
+        "description": "Solange mindestens eine gegnerische Person eine Liedkarte in ihrem Ablagestapel hat, erhält dieser Charakter +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "6oW": {
+    "name": "Pepita",
+    "version": "Imeldas rechte Hand",
+    "rulesText": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Pepita auszuspielen.)%\\Weisheit der Vorfahren\\ Solange du 10 oder mehr Karten in deinem Ablagestapel hast, erhält dieser Charakter +2 {S} und +2 {L}.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Pepita auszuspielen.)"
+      },
+      {
+        "title": "Weisheit der Vorfahren",
+        "description": "Solange du 10 oder mehr Karten in deinem Ablagestapel hast, erhält dieser Charakter +2 {S} und +2 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "OkB": {
+    "name": "Ernesto de la Cruz",
+    "version": "Skrupelloser Musiker",
+    "rulesText": "<Singen> 8 (Die Kosten dieses Charakters gelten als 8 für das Singen von Liedern.)%\\Um jeden Preis\\ Wenn du diesen Charakter ausspielst, darfst du einen Charakter deiner Wahl mit <Singen> verbannen.",
+    "text": [
+      {
+        "title": "<Singen> 8 (Die Kosten dieses Charakters gelten als 8 für das Singen von Liedern.)"
+      },
+      {
+        "title": "Um jeden Preis",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du einen Charakter deiner Wahl mit <Singen> verbannen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "72S": {
+    "name": "Héctor Rivera",
+    "version": "Gone to Pieces",
+    "rulesText": "<Singer> 6 (This character counts as cost 6 to sing songs.)\n\n\\Feel the Music\\ While you have a song card in your discard, this character gets +1 {L} and gains <Evasive>. (Only characters with Evasive can challenge them.)",
+    "text": [
+      {
+        "title": "<Singer> 6 (This character counts as cost 6 to sing songs.)"
+      },
+      {
+        "title": "Feel the Music",
+        "description": "While you have a song card in your discard, this character gets +1 {L} and gains <Evasive>. (Only characters with Evasive can challenge them.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["D23", "Coco"]
+  },
+  "wf5": {
+    "name": "Strolch",
+    "version": "Flink auf den Beinen",
+    "rulesText": "\\Verfolgen\\ Wenn du diesen Charakter ausspielst, wähle eine Möglichkeit aus:%• Erschöpfe einen Charakter deiner Wahl mit 1 oder weniger {S}.%• Dieser Charakter erhält in diesem Zug <Rasant>. (Er kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
+    "text": [
+      {
+        "title": "Verfolgen",
+        "description": "Wenn du diesen Charakter ausspielst, wähle eine Möglichkeit aus:"
+      },
+      {
+        "title": "• Erschöpfe einen Charakter deiner Wahl mit 1 oder weniger {S}."
+      },
+      {
+        "title": "• Dieser Charakter erhält in diesem Zug <Rasant>. (Er kann im selben Zug herausfordern, in dem er ausgespielt wird.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Susi und Strolch", "Lady and the Tramp"]
+  },
+  "qWA": {
+    "name": "Meilin Lee",
+    "version": "Begeisterter Fan",
+    "rulesText": "<Singen> 5 (Die Kosten dieses Charakters gelten als 5 für das Singen von Liedern.)%\\Superbegeistert\\ Einmal während deines Zuges, wenn du ein Lied ausspielst, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "<Singen> 5 (Die Kosten dieses Charakters gelten als 5 für das Singen von Liedern.)"
+      },
+      {
+        "title": "Superbegeistert",
+        "description": "Einmal während deines Zuges, wenn du ein Lied ausspielst, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Turning Red", "Rot"]
+  },
+  "H1h": {
+    "name": "Roxanne",
+    "version": "Konzertliebhaberin",
+    "rulesText": "\\Heute ist der Tag\\ Wenn du diesen Charakter ausspielst, darfst du ihn und einen deiner anderen Charaktere kostenlos zu demselben Ort bewegen. Wenn du dies tust, erhält der andere Charakter in diesem Zug +1 {L}.",
+    "text": [
+      {
+        "title": "Heute ist der Tag",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du ihn und einen deiner anderen Charaktere kostenlos zu demselben Ort bewegen. Wenn du dies tust, erhält der andere Charakter in diesem Zug +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "j34": {
+    "name": "Wasabi",
+    "version": "Zum Kampf gerufen",
+    "rulesText": "\\Doppelklingen\\ Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einem anderen Charakter Schaden zufügt, füge einem anderen Charakter deiner Wahl Schaden in Höhe der {S} dieses Charakters zu.%\\Gib Alles\\ Solange du mindestens einen Tintentropfen hast, erhält dieser Charakter +2 {S}.",
+    "text": [
+      {
+        "title": "Doppelklingen",
+        "description": "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einem anderen Charakter Schaden zufügt, füge einem anderen Charakter deiner Wahl Schaden in Höhe der {S} dieses Charakters zu."
+      },
+      {
+        "title": "Gib Alles",
+        "description": "Solange du mindestens einen Tintentropfen hast, erhält dieser Charakter +2 {S}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "DKz": {
+    "name": "Gräfin Tremaine",
+    "version": "Spöttische Schnöselin",
+    "rulesText": "\\Feinfühligkeit\\ Einmal während deines Zuges, wenn du ein Lied ausspielst, darfst du diesem Charakter 1 Schaden zufügen. Wenn du dies tust, ziehe 1 Karte..%\\Harte Kritik\\ Gegnerische Charaktere mit <Singen> kommen mit 1 Schaden ins Spiel.",
+    "text": [
+      {
+        "title": "Feinfühligkeit",
+        "description": "Einmal während deines Zuges, wenn du ein Lied ausspielst, darfst du diesem Charakter 1 Schaden zufügen. Wenn du dies tust, ziehe 1 Karte.."
+      },
+      {
+        "title": "Harte Kritik",
+        "description": "Gegnerische Charaktere mit <Singen> kommen mit 1 Schaden ins Spiel."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Cinderella"]
+  },
+  "BqG": {
+    "name": "Mulan",
+    "version": "Meisterin der Kampfkünste",
+    "rulesText": "\\Der Weg der Heldin\\ Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug +2 {S} und \"Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, ziehe 1 Karte\".%\\Kriegerinnengeist\\ Jedes Mal, wenn dieser Charakter erkundet, erhält ein Charakter deiner Wahl in diesem Zug <Rasant>. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
+    "text": [
+      {
+        "title": "Der Weg der Heldin",
+        "description": "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug +2 {S} und \"Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, ziehe 1 Karte\"."
+      },
+      {
+        "title": "Kriegerinnengeist",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, erhält ein Charakter deiner Wahl in diesem Zug <Rasant>. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Mulan"]
+  },
+  "n4y": {
+    "name": "Carl Fredricksen",
+    "version": "Wildnisführer",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Bekommen wir Abzeichen fürs Eisessen? Das wäre doch angebracht!“%—Carl Fredricksen",
+    "searchableKeywords": ["Oben", "Up"]
+  },
+  "WDr": {
+    "name": "Cinderella",
+    "version": "Einfache Schneiderin",
+    "rulesText": "\\Scharfsinniges Auge\\ Wenn du diesen Charakter ausspielst, schaue dir die oberste Karte deines Decks an. Lege sie anschließend entweder auf dein Deck oder darunter.",
+    "text": [
+      {
+        "title": "Scharfsinniges Auge",
+        "description": "Wenn du diesen Charakter ausspielst, schaue dir die oberste Karte deines Decks an. Lege sie anschließend entweder auf dein Deck oder darunter."
+      }
+    ],
+    "flavorText": "„Es ist nicht gerade nach der neuesten Mode, aber das bringe ich schon in Ordnung.“",
+    "searchableKeywords": ["Cinderella"]
+  },
+  "bzr": {
+    "name": "Wasabi",
+    "version": "Zukunftsdenker",
+    "rulesText": "\\Sicherheit geht vor\\ Wenn du diesen Charakter ausspielst, falls du einen Tintentropfen benutzt hast, um ihn auszuspielen, erhalten deine anderen Charaktere bis zu Beginn deines nächsten Zuges <Robust> +1 und <Behütet>. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1. Gegnerische Mitspielende können sie nicht auswählen, außer um sie herauszufordern.)",
+    "text": [
+      {
+        "title": "Sicherheit geht vor",
+        "description": "Wenn du diesen Charakter ausspielst, falls du einen Tintentropfen benutzt hast, um ihn auszuspielen, erhalten deine anderen Charaktere bis zu Beginn deines nächsten Zuges <Robust> +1 und <Behütet>. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1. Gegnerische Mitspielende können sie nicht auswählen, außer um sie herauszufordern.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "y2o": {
+    "name": "Baymax",
+    "version": "Qualifizierter Mediziner",
+    "rulesText": "\\Medizinische Hilfe\\ Jedes Mal, wenn dieser Charakter erkundet, entferne bis zu 2 Schaden von einem Charakter deiner Wahl.",
+    "text": [
+      {
+        "title": "Medizinische Hilfe",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, entferne bis zu 2 Schaden von einem Charakter deiner Wahl."
+      }
+    ],
+    "flavorText": "„Auf einer Skala von 1 bis 10, wie bewertest du deinen Schmerz?“",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "1Eu": {
+    "name": "King Louie",
+    "version": "Eiscreme-Virtuose",
+    "rulesText": "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
+    "text": "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
+    "flavorText": "„Junge, ich habe Geschmacksrichtungen, von denen du bisher nur geträumt hast!“",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "xtK": {
+    "name": "Lafayette",
+    "version": "Ganz Ohr",
+    "rulesText": "<Alarmiert> (Dieser Charakter kann herausfordern, als hätte er Wendig.)",
+    "text": "<Alarmiert> (Dieser Charakter kann herausfordern, als hätte er Wendig.)",
+    "flavorText": "„Ich weiß nicht, <was> ich bewache oder vor <wem> ich es bewache, aber verdammt noch mal, ich werde es <gut> bewachen.“",
+    "searchableKeywords": ["Aristocats"]
+  },
+  "DRn": {
+    "name": "Abigail & Amalie",
+    "version": "Geschwätzige Gänse",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Sag mal, hast du diese Tintenformer gesehen, Abigail?“%„Einfach wunderbar, Amalie. Mir gefällt es sehr, wie gut sie zu den Interessen ihrer Luminari passen.“",
+    "searchableKeywords": ["Aristocats"]
+  },
+  "ATK": {
+    "name": "Honey Lemon",
+    "version": "Geniale Forscherin",
+    "rulesText": "<Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Honey Lemon auszuspielen.)%\\Synthetisieren\\ Jedes Mal, wenn dieser Charakter erkundet, darfst du 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand nehmen. Wenn du dies tust, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Honey Lemon auszuspielen.)"
+      },
+      {
+        "title": "Synthetisieren",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, darfst du 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand nehmen. Wenn du dies tust, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "4C8": {
+    "name": "Go Go Tomago",
+    "version": "Arbeitet spät",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Die Werte dieser Tintentropfen sind unglaublich. Ich frage mich, ob man sie nutzen könnte, um einen Tintenformer zu verbessern.“",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "vTV": {
+    "name": "Madame Mim",
+    "version": "Schnüffelnde Nachbarin",
+    "rulesText": "\\Kein Verstecken\\ Wenn du diesen Charakter ausspielst, schaue dir die Handkarten einer gegnerischen Person deiner Wahl an.",
+    "text": [
+      {
+        "title": "Kein Verstecken",
+        "description": "Wenn du diesen Charakter ausspielst, schaue dir die Handkarten einer gegnerischen Person deiner Wahl an."
+      }
+    ],
+    "flavorText": "„Juu-huuu! Merlin! Womit spielst du denn da? Weißt du nicht, dass es schön ist, seine Spielsachen zu teilen?“",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "FYs": {
+    "name": "Lionheart",
+    "version": "Säubert die Stadt",
+    "rulesText": "<Alarmiert> (Dieser Charakter kann herausfordern, als hätte er Wendig.)%\\Bürgerpflicht\\ 6 {I} — Entferne jeglichen Schaden von einem Charakter oder Ort deiner Wahl.",
+    "text": [
+      {
+        "title": "<Alarmiert> (Dieser Charakter kann herausfordern, als hätte er Wendig.)"
+      },
+      {
+        "title": "Bürgerpflicht",
+        "description": "6 {I} — Entferne jeglichen Schaden von einem Charakter oder Ort deiner Wahl."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "3j6": {
+    "name": "Priscilla",
+    "version": "Effiziente Sachbearbeiterin",
+    "rulesText": "\\Nicht-so-heimliche Schwärmerei\\ Dieser Charakter kommt erschöpft ins Spiel.%\\Archivierungssystem\\ Jedes Mal, wenn dieser Charakter erkundet, darfst du dir die obersten 2 Karten deines Decks anschauen. Nimm 1 davon auf deine Hand und lege die andere verdeckt und erschöpft in deinen Tintenvorrat.",
+    "text": [
+      {
+        "title": "Nicht-so-heimliche Schwärmerei",
+        "description": "Dieser Charakter kommt erschöpft ins Spiel."
+      },
+      {
+        "title": "Archivierungssystem",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, darfst du dir die obersten 2 Karten deines Decks anschauen. Nimm 1 davon auf deine Hand und lege die andere verdeckt und erschöpft in deinen Tintenvorrat."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "kE4": {
+    "name": "Daisy Duck",
+    "version": "Sachkundige Investorin",
+    "rulesText": "\\Für die Zukunft sparen\\ Wenn du diesen Charakter ausspielst, darfst du 1 beliebige Karte aus deiner Hand verdeckt und erschöpft in deinen Tintenvorrat legen.",
+    "text": [
+      {
+        "title": "Für die Zukunft sparen",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du 1 beliebige Karte aus deiner Hand verdeckt und erschöpft in deinen Tintenvorrat legen."
+      }
+    ],
+    "flavorText": "Das Leben in Hyperia war noch nie besser.",
+    "searchableKeywords": []
+  },
+  "EvA": {
+    "name": "Hiro Hamada",
+    "version": "Bahnbrechender Erfinder",
+    "rulesText": "\\Clevere Technik\\ Solange du mindestens einen Gegenstand im Spiel hast, erhält dieser Charakter +1 {L}.",
+    "text": [
+      {
+        "title": "Clevere Technik",
+        "description": "Solange du mindestens einen Gegenstand im Spiel hast, erhält dieser Charakter +1 {L}."
+      }
+    ],
+    "flavorText": "„Was Tadashi aus Baymax gemacht hat, ist unglaublich. Aber mein Bruder hatte nie Zugang zu Tintentropfen.“",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "sMn": {
+    "name": "Honey Lemon",
+    "version": "Unendlich neugierig",
+    "rulesText": "\\Schockierender Durchbruch\\ Jedes Mal, wenn dieser Charakter erkundet, zahlst du 1 {I} weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.",
+    "text": [
+      {
+        "title": "Schockierender Durchbruch",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 1 {I} weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst."
+      }
+    ],
+    "flavorText": "„Diese Geoden haben meine Forschung wirklich beflügelt!“",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "oBC": {
+    "name": "Thomas O’Malley",
+    "version": "Gewiefter Streuner",
+    "rulesText": "\\Glückstreffer\\ Jedes Mal, wenn dieser Charakter erkundet, decken alle Mitspielenden die oberste Karte ihres Decks auf. Bringe die Karte oder Karten mit den höchsten Kosten auf die zugehörigen Hände. Lege die restlichen Karten unter die zugehörigen Decks.",
+    "text": [
+      {
+        "title": "Glückstreffer",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, decken alle Mitspielenden die oberste Karte ihres Decks auf. Bringe die Karte oder Karten mit den höchsten Kosten auf die zugehörigen Hände. Lege die restlichen Karten unter die zugehörigen Decks."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Aristocats"]
+  },
+  "o4Z": {
+    "name": "Duchesse",
+    "version": "Kosmopolitische Katze",
+    "rulesText": "\\Oberschicht\\ Solange du einen der Charaktere mit den höchsten Kosten im Spiel hast, erhält dieser Charakter +1 {L}.%\\Angemessene Umgangsformen\\ Jedes Mal, wenn dieser Charakter erkundet, schaue dir die oberste Karte deines Decks an. Lege sie anschließend entweder auf dein Deck oder darunter.",
+    "text": [
+      {
+        "title": "Oberschicht",
+        "description": "Solange du einen der Charaktere mit den höchsten Kosten im Spiel hast, erhält dieser Charakter +1 {L}."
+      },
+      {
+        "title": "Angemessene Umgangsformen",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, schaue dir die oberste Karte deines Decks an. Lege sie anschließend entweder auf dein Deck oder darunter."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Aristocats"]
+  },
+  "dyQ": {
+    "name": "Judy Hopps",
+    "version": "Tagescamp-Lehrerin",
+    "rulesText": "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)%\\Eine Pfote reichen\\ Wenn du diesen Charakter ausspielst, falls du in diesem Zug mindestens einen anderen Charakter ausgespielt hast, darfst du die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen.",
+    "text": [
+      {
+        "title": "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)"
+      },
+      {
+        "title": "Eine Pfote reichen",
+        "description": "Wenn du diesen Charakter ausspielst, falls du in diesem Zug mindestens einen anderen Charakter ausgespielt hast, darfst du die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "n5b": {
+    "name": "Minnie Maus",
+    "version": "Stadtvisionärin",
+    "rulesText": "<Behütet> %\\Alles nach Plan\\ Am Ende deines Zuges, falls dieser Charakter erschöpft ist, darfst du dir die Karten in deinem Tintenvorrat ansehen und bis zu eine davon auf deine Hand nehmen. Wenn du dies tust, erschöpfe alle Karten in deinem Tintenvorrat.",
+    "text": [
+      {
+        "title": "<Behütet>"
+      },
+      {
+        "title": "Alles nach Plan",
+        "description": "Am Ende deines Zuges, falls dieser Charakter erschöpft ist, darfst du dir die Karten in deinem Tintenvorrat ansehen und bis zu eine davon auf deine Hand nehmen. Wenn du dies tust, erschöpfe alle Karten in deinem Tintenvorrat."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": []
+  },
+  "1wB": {
+    "name": "Arielle",
+    "version": "Sammlerin von Kuriositäten",
+    "rulesText": "\\Einzigartig\\ Jedes Mal, wenn du einen Gegenstand ausspielst, falls der neue Gegenstand einen anderen Namen als alle deine anderen Gegenstände im Spiel hat, ziehe 1 Karte.%\\Persönliche Sammlung\\ Für jeden Gegenstand mit einem unterschiedlichen Namen, den du im Spiel hast, erhält dieser Charakter +1 {L}.",
+    "text": [
+      {
+        "title": "Einzigartig",
+        "description": "Jedes Mal, wenn du einen Gegenstand ausspielst, falls der neue Gegenstand einen anderen Namen als alle deine anderen Gegenstände im Spiel hat, ziehe 1 Karte."
+      },
+      {
+        "title": "Persönliche Sammlung",
+        "description": "Für jeden Gegenstand mit einem unterschiedlichen Namen, den du im Spiel hast, erhält dieser Charakter +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Little Mermaid", "Arielle die Meerjungfrau"]
+  },
+  "aqW": {
+    "name": "Cinderella",
+    "version": "Unbeabsichtigtes Idol",
+    "rulesText": "<Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Cinderella auszuspielen.)%\\Design nach Maß\\ Am Ende deines Zuges darfst du dir die obersten 2 Karten deines Decks anschauen. Lege 1 davon entweder auf dein Deck oder darunter und die andere verdeckt und erschöpft in deinen Tintenvorrat.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Cinderella auszuspielen.)"
+      },
+      {
+        "title": "Design nach Maß",
+        "description": "Am Ende deines Zuges darfst du dir die obersten 2 Karten deines Decks anschauen. Lege 1 davon entweder auf dein Deck oder darunter und die andere verdeckt und erschöpft in deinen Tintenvorrat."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Cinderella"]
+  },
+  "07k": {
+    "name": "Baymax",
+    "version": "Energiegeladen",
+    "rulesText": "<Gestaltwandel> Entferne 2 Tintentropfen. (Du kannst 2 Tintentropfen entfernen, um diesen Charakter auf einen deiner Charaktere namens Baymax auszuspielen.)%\\Überladen\\ Falls du einen Tintentropfen erschaffen würdest, darfst du stattdessen die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> Entferne 2 Tintentropfen. (Du kannst 2 Tintentropfen entfernen, um diesen Charakter auf einen deiner Charaktere namens Baymax auszuspielen.)"
+      },
+      {
+        "title": "Überladen",
+        "description": "Falls du einen Tintentropfen erschaffen würdest, darfst du stattdessen die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "TcQ": {
+    "name": "Bellwether",
+    "version": "Hochqualifiziert",
+    "rulesText": "\\Cleverer Plan\\ Wenn du diesen Charakter ausspielst, darfst du einen gegnerischen Charakter deiner Wahl, der 2 oder weniger kostet, verdeckt und erschöpft in den zugehörigen Tintenvorrat legen.",
+    "text": [
+      {
+        "title": "Cleverer Plan",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du einen gegnerischen Charakter deiner Wahl, der 2 oder weniger kostet, verdeckt und erschöpft in den zugehörigen Tintenvorrat legen."
+      }
+    ],
+    "flavorText": "Alles fügte sich zusammen.",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "OBX": {
+    "name": "Klarabella",
+    "version": "Auf einem Spaziergang",
+    "rulesText": "\\Die Aussicht verbessern\\ Wenn du diesen Charakter ausspielst, darfst du einen Gegenstand deiner Wahl verbannen. Wenn du dies tust, legt die Person, die den Gegenstand im Spiel hatte, die oberste Karte ihres Decks verdeckt und erschöpft in ihren Tintenvorrat.",
+    "text": [
+      {
+        "title": "Die Aussicht verbessern",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du einen Gegenstand deiner Wahl verbannen. Wenn du dies tust, legt die Person, die den Gegenstand im Spiel hatte, die oberste Karte ihres Decks verdeckt und erschöpft in ihren Tintenvorrat."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": []
+  },
+  "gXx": {
+    "name": "Doug",
+    "version": "Liegt auf der Lauer",
+    "rulesText": "<Behütet>",
+    "text": "<Behütet>",
+    "flavorText": "„Aber seid vorsichtig. Doug ist das Gegenteil von freundlich. Er ist <un>freundlich.“%—Herzog von Pitzbühl",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "Kk7": {
+    "name": "Flash",
+    "version": "Effizienter Sachbearbeiter",
+    "rulesText": "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)%\\Nimm... dir... Zeit\\ Alle Charaktere verlieren <Rasant> und können <Rasant> nicht erhalten.",
+    "text": [
+      {
+        "title": "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)"
+      },
+      {
+        "title": "Nimm... dir... Zeit",
+        "description": "Alle Charaktere verlieren <Rasant> und können <Rasant> nicht erhalten."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "DrF": {
+    "name": "Arthur",
+    "version": "Merlins Assistent",
+    "rulesText": "\\Magische Reise\\ Wenn du diesen Charakter ausspielst, darfst du ihn kostenlos zu einem Ort bewegen.%\\Arkane Lieferungen\\ Einmal während deines Zuges, wenn dieser Charakter zu einem Ort bewegt wird, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Magische Reise",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du ihn kostenlos zu einem Ort bewegen."
+      },
+      {
+        "title": "Arkane Lieferungen",
+        "description": "Einmal während deines Zuges, wenn dieser Charakter zu einem Ort bewegt wird, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "S04": {
+    "name": "Edgar Balthazar",
+    "version": "Leidender Butler",
+    "rulesText": "\\Zuverlässiger Regenschirm\\ Solange dieser Charakter unbeschädigt ist, erhält er <Robust> +2. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)",
+    "text": [
+      {
+        "title": "Zuverlässiger Regenschirm",
+        "description": "Solange dieser Charakter unbeschädigt ist, erhält er <Robust> +2. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)"
+      }
+    ],
+    "flavorText": "„Ein bisschen Boshaftigkeit stört mich nicht, aber Unhöflichkeit ist unverzeihlich!“",
+    "searchableKeywords": ["Aristocats"]
+  },
+  "7EL": {
+    "name": "Kit Wolkenflitzer",
+    "version": "Unberechenbarer Kurier",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Entschuldigung! Ich habe eine Lieferung für die andere Seite der Stadt und die kann nicht warten!“",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "ruw": {
+    "name": "Ticktack",
+    "version": "Kanalkrokodil",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "In den Kanälen Hyperias gibt es keine Alligatoren. Es gibt jedoch ein Krokodil.",
+    "searchableKeywords": ["Peter Pan"]
+  },
+  "Imr": {
+    "name": "Tiana",
+    "version": "Restaurantbesitzerin",
+    "rulesText": "\\Handverlesen\\ Wenn du diesen Charakter ausspielst, darfst du 1 Karte ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen.",
+    "text": [
+      {
+        "title": "Handverlesen",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du 1 Karte ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen."
+      }
+    ],
+    "flavorText": "„Hier ist für jeden etwas dabei.“",
+    "searchableKeywords": ["Princess and the Frog", "Küss den Frosch"]
+  },
+  "VHh": {
+    "name": "Raya",
+    "version": "Entschlossene Entdeckerin",
+    "rulesText": "\\Bis ans Ende der Welt\\ Dieser Charakter erhält +1 {L} für jeden Ort, den du im Spiel hast.",
+    "text": [
+      {
+        "title": "Bis ans Ende der Welt",
+        "description": "Dieser Charakter erhält +1 {L} für jeden Ort, den du im Spiel hast."
+      }
+    ],
+    "flavorText": "„Es gibt noch so viel von Lorcana zu entdecken.“",
+    "searchableKeywords": ["Raya und der letzte Drache", "Raya and the Last Dragon"]
+  },
+  "iOz": {
+    "name": "Woolter & Jesse",
+    "version": "Bellwethers Handlanger",
+    "rulesText": "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.) %<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
+    "text": [
+      {
+        "title": "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)"
+      },
+      {
+        "title": "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "t66": {
+    "name": "Napoleon",
+    "version": "Geduldiger Wachhund",
+    "rulesText": "<Alarmiert> (Dieser Charakter kann herausfordern, als hätte er Wendig.)",
+    "text": "<Alarmiert> (Dieser Charakter kann herausfordern, als hätte er Wendig.)",
+    "flavorText": "„Junger Mann, mein Luminari hat mich gebeten, diese Tür zu bewachen, und genau das werde ich auch tun.“",
+    "searchableKeywords": ["Aristocats"]
+  },
+  "nR2": {
+    "name": "Wildkatz",
+    "version": "Unkonventioneller Mechaniker",
+    "rulesText": "\\Nun, das ist kaputt\\ Wenn du diesen Charakter ausspielst, darfst du einen Gegenstand deiner Wahl verbannen.",
+    "text": [
+      {
+        "title": "Nun, das ist kaputt",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du einen Gegenstand deiner Wahl verbannen."
+      }
+    ],
+    "flavorText": "„Oooh Junge, ich brauche eine Spule Draht, einen Spachtel und mindestens sieben Eiswürfel, um das wieder zum Laufen zu bringen.“",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "omF": {
+    "name": "Sir Kay",
+    "version": "Entschlossen, zu gewinnen",
+    "rulesText": "\\Wettbewerbsvorteil\\ Solange du mindestens einen Tintentropfen hast, erhält dieser Charakter <Herausfordern> +3. (Während der Charakter herausfordert, erhält er +3 {S}.)",
+    "text": [
+      {
+        "title": "Wettbewerbsvorteil",
+        "description": "Solange du mindestens einen Tintentropfen hast, erhält dieser Charakter <Herausfordern> +3. (Während der Charakter herausfordert, erhält er +3 {S}.)"
+      }
+    ],
+    "flavorText": "„Pffft. Nicht, dass ich einen Tintentropfen bräuchte, um zu gewinnen. Aber ich sage nicht nein.“",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "yL5": {
+    "name": "Toulouse",
+    "version": "Wild und ungehobelt",
+    "rulesText": "\\Unangemessenes Verhalten\\ Wenn du diesen Charakter ausspielst, können gegnerische Mitspielende bis zu Beginn deines nächsten Zuges keine Aktionen ausspielen.",
+    "text": [
+      {
+        "title": "Unangemessenes Verhalten",
+        "description": "Wenn du diesen Charakter ausspielst, können gegnerische Mitspielende bis zu Beginn deines nächsten Zuges keine Aktionen ausspielen."
+      }
+    ],
+    "flavorText": "So groß wie ein Hausschuh mit dem Herzen eines Tigers.",
+    "searchableKeywords": ["Aristocats"]
+  },
+  "SUz": {
+    "name": "Chief Bogo",
+    "version": "Polizeichef",
+    "rulesText": "\\Ich kenne diese Straßen\\ Jedes Mal, wenn dieser Charakter erkundet, darfst du ihn kostenlos zu einem Hyperia-Ort bewegen. %\\Sofort stehen bleiben!\\ 6 {I} — Ein gegnerischer Charakter deiner Wahl kann bis zu Beginn deines nächsten Zuges nicht herausfordern.",
+    "text": [
+      {
+        "title": "Ich kenne diese Straßen",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, darfst du ihn kostenlos zu einem Hyperia-Ort bewegen."
+      },
+      {
+        "title": "Sofort stehen bleiben!",
+        "description": "6 {I} — Ein gegnerischer Charakter deiner Wahl kann bis zu Beginn deines nächsten Zuges nicht herausfordern."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "JzV": {
+    "name": "Sir Pelinore",
+    "version": "Robuster, als er aussieht",
+    "rulesText": "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)%\\Siegesbeute\\ Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)"
+      },
+      {
+        "title": "Siegesbeute",
+        "description": "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "ctj": {
+    "name": "Arthur",
+    "version": "Schmiedelehrling",
+    "rulesText": "\\Sorgfältige Herstellung\\ Wenn du diesen Charakter ausspielst, darfst du 1 {I} bezahlen, um 1 Tintentropfen zu erschaffen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Sorgfältige Herstellung",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du 1 {I} bezahlen, um 1 Tintentropfen zu erschaffen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "„Man braucht einen starken Arm und einen starken Geist, um diese Tintentropfen herzustellen.“%—Merlin",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "4NQ": {
+    "name": "Berlioz",
+    "version": "Kleiner Rabauke",
+    "rulesText": "\\Scharfe kleine Krallen\\ Wenn du diesen Charakter ausspielst, darfst du einem Charakter deiner Wahl 1 Schaden zufügen.",
+    "text": [
+      {
+        "title": "Scharfe kleine Krallen",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du einem Charakter deiner Wahl 1 Schaden zufügen."
+      }
+    ],
+    "flavorText": "„Das wird es diesem gemeinen alten Butler zeigen.“",
+    "searchableKeywords": ["Aristocats"]
+  },
+  "B3j": {
+    "name": "Marie",
+    "version": "Auf frischer Tat ertappt",
+    "rulesText": "\\Eine kleine Belohnung\\ Jedes Mal, wenn dieser Charakter erkundet, falls ein gegnerischer Charakter in diesem Zug Schaden erhalten hat, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Eine kleine Belohnung",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, falls ein gegnerischer Charakter in diesem Zug Schaden erhalten hat, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "„Gefahr ist keine Entschuldigung dafür, seine Manieren zu vergessen.“",
+    "searchableKeywords": ["Aristocats"]
+  },
+  "EmK": {
+    "name": "Balu",
+    "version": "Lieferpilot",
+    "rulesText": "\\Vorauszahlung\\ Dieser Charakter kann nicht erkunden oder herausfordern, außer du hast in diesem Zug mindestens einen Tintentropfen erschaffen.",
+    "text": [
+      {
+        "title": "Vorauszahlung",
+        "description": "Dieser Charakter kann nicht erkunden oder herausfordern, außer du hast in diesem Zug mindestens einen Tintentropfen erschaffen."
+      }
+    ],
+    "flavorText": "„Ich denke, jetzt ist der beste Zeitpunkt, um zu erwähnen, dass das Trinkgeld nicht in den Versandkosten enthalten ist ...“",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "pP7": {
+    "name": "Koslov",
+    "version": "Imposanter Vollstrecker",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Das waren harte Zeiten, damals. Koslov und ich, wir waren nur zwei junge Säugetiere, die versuchten, sich in der Welt zurechtzufinden. Ich habe ihm geholfen, er hat mir geholfen.“%—Mr. Big",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "LCo": {
+    "name": "Sir Ector",
+    "version": "Stürmischer Ritter",
+    "rulesText": "\\Wohlverdient\\ Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, ziehe 1 Karte.",
+    "text": [
+      {
+        "title": "Wohlverdient",
+        "description": "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, ziehe 1 Karte."
+      }
+    ],
+    "flavorText": "„Ich sage dir, ich dulde Erwins Unsinn mit den Tintentropfen in meinem Haus nicht, und damit basta!“",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "mVf": {
+    "name": "Balu",
+    "version": "Frachtpilot",
+    "rulesText": "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+    "text": "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+    "flavorText": "„Hey, das ist unfair! Ihr seid <Luft>piraten, ihr dürft mich nicht am <Boden> angreifen!“",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "zac": {
+    "name": "Kit Wolkenflitzer",
+    "version": "Zielsicher",
+    "rulesText": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Kit Wolkenflitzer auszuspielen.)%\\Luftakrobatik\\ Jedes Mal, wenn dieser Charakter erkundet, wähle eine Möglichkeit aus: %• Erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)%• Füge einem Charakter deiner Wahl 1 Schaden zu.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Kit Wolkenflitzer auszuspielen.)"
+      },
+      {
+        "title": "Luftakrobatik",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, wähle eine Möglichkeit aus:"
+      },
+      {
+        "title": "• Erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      },
+      {
+        "title": "• Füge einem Charakter deiner Wahl 1 Schaden zu."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "GHQ": {
+    "name": "Arthur",
+    "version": "Turnierritter",
+    "rulesText": "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Arthur auszuspielen.)%<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)%\\Siegesprämie\\ Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, ziehe 1 Karte und erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Arthur auszuspielen.)"
+      },
+      {
+        "title": "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)"
+      },
+      {
+        "title": "Siegesprämie",
+        "description": "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, ziehe 1 Karte und erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "PXK": {
+    "name": "Mr. Big",
+    "version": "Vertriebsmagnat",
+    "rulesText": "\\Kaltmachen\\ Am Ende deines Zuges, falls alle Karten in deinem Tintenvorrat erschöpft sind, wähle einen gegnerischen Charakter. Jener kann bis zu Beginn deines nächsten Zuges nicht herausfordern.",
+    "text": [
+      {
+        "title": "Kaltmachen",
+        "description": "Am Ende deines Zuges, falls alle Karten in deinem Tintenvorrat erschöpft sind, wähle einen gegnerischen Charakter. Jener kann bis zu Beginn deines nächsten Zuges nicht herausfordern."
+      }
+    ],
+    "flavorText": "„Vergiss nicht, dieses Treffen hat nie stattgefunden.“",
+    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+  },
+  "lux": {
+    "name": "Shir Khan",
+    "version": "CEO des Khan-Konzerns",
+    "rulesText": "\\Neuer Anreiz\\ Wenn du diesen Charakter ausspielst, wähle einen Charakter. Jener kann in diesem Zug bereite Charaktere herausfordern.%\\Den Markt erobern\\ Einmal während deines Zuges, wenn einer deiner anderen Charaktere durch eine Herausforderung einen anderen Charakter verbannt, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Neuer Anreiz",
+        "description": "Wenn du diesen Charakter ausspielst, wähle einen Charakter. Jener kann in diesem Zug bereite Charaktere herausfordern."
+      },
+      {
+        "title": "Den Markt erobern",
+        "description": "Einmal während deines Zuges, wenn einer deiner anderen Charaktere durch eine Herausforderung einen anderen Charakter verbannt, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "j6f": {
+    "name": "Tiana",
+    "version": "Festveranstalterin",
+    "rulesText": "<Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Tiana auszuspielen.)%\\Idealer Veranstaltungsort\\ Wenn du diesen Charakter ausspielst, darfst du 2 Karten ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen. Falls du so eine Ortskarte abgeworfen hast, darfst du sie kostenlos aus deinem Ablagestapel ausspielen.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Tiana auszuspielen.)"
+      },
+      {
+        "title": "Idealer Veranstaltungsort",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du 2 Karten ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen. Falls du so eine Ortskarte abgeworfen hast, darfst du sie kostenlos aus deinem Ablagestapel ausspielen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Princess and the Frog", "Küss den Frosch"]
+  },
   "oR5": {
     "name": "Woody",
     "version": "Hilft einem Freund",
@@ -693,11 +2719,11 @@
     "searchableKeywords": ["Black Cauldron", "Taran und der Zauberkessel"]
   },
   "cU7": {
-    "name": "Malefiz",
-    "version": "Hochmütige Zauberin",
+    "name": "Maleficent",
+    "version": "Exultant Spellcaster",
     "rulesText": "",
     "text": "",
-    "flavorText": "„Was für eine Zerstörung! Sieh dich um – Ranken, soweit das Auge reicht. Und wir sitzen mitten drin.“",
+    "flavorText": "\"Such destruction! Look around—vines as far as the eye can see. And here we sit, at the heart of it.\"",
     "searchableKeywords": ["Dornröschen", "Sleeping Beauty"]
   },
   "FIF": {
@@ -1060,18 +3086,18 @@
   },
   "S4A": {
     "name": "Buzz Lightyear",
-    "version": "Bietet Schutz",
-    "rulesText": "\\Actionfigur\\ Wenn du diesen Charakter ausspielst, wähle eine Möglichkeit aus. Falls du mindestens einen anderen Spielzeug-Charakter im Spiel hast, wähle stattdessen beide Möglichkeiten aus: %• Du darfst eine Aktionskarte, die 2 oder weniger kostet, von deinem Ablagestapel zurück auf deine Hand nehmen.%• Du darfst eine Aktion, die 2 oder weniger kostet, kostenlos ausspielen.",
+    "version": "Providing Cover",
+    "rulesText": "\\Action Figure\\ When you play this character, choose one of the following. If you have another Toy character in play, choose both instead:\n• You may return an action card with cost 2 or less from your discard to your hand.\n• You may play an action with cost 2 or less for free.",
     "text": [
       {
-        "title": "Actionfigur",
-        "description": "Wenn du diesen Charakter ausspielst, wähle eine Möglichkeit aus. Falls du mindestens einen anderen Spielzeug-Charakter im Spiel hast, wähle stattdessen beide Möglichkeiten aus:"
+        "title": "Action Figure",
+        "description": "When you play this character, choose one of the following. If you have another Toy character in play, choose both instead:"
       },
       {
-        "title": "• Du darfst eine Aktionskarte, die 2 oder weniger kostet, von deinem Ablagestapel zurück auf deine Hand nehmen."
+        "title": "• You may return an action card with cost 2 or less from your discard to your hand."
       },
       {
-        "title": "• Du darfst eine Aktion, die 2 oder weniger kostet, kostenlos ausspielen."
+        "title": "• You may play an action with cost 2 or less for free."
       }
     ],
     "flavorText": "",
@@ -1323,19 +3349,19 @@
   },
   "Bqs": {
     "name": "Mushu",
-    "version": "Verstohlener Drache",
-    "rulesText": "<Wendig> %\\Ausschlaggebend\\ Jedes Mal, wenn dieser Charakter erkundet, falls mindestens eine gegnerische Person mehr Karten auf der Hand hat als du, darfst du 1 Karte ziehen.",
+    "version": "Stealthy Dragon",
+    "rulesText": "<Evasive> (Only characters with Evasive can challenge this character.)\n\n\\Tip the Scales\\ Whenever this character quests, if an opponent has more cards in their hand than you, you may draw a card.",
     "text": [
       {
-        "title": "<Wendig>"
+        "title": "<Evasive> (Only characters with Evasive can challenge this character.)"
       },
       {
-        "title": "Ausschlaggebend",
-        "description": "Jedes Mal, wenn dieser Charakter erkundet, falls mindestens eine gegnerische Person mehr Karten auf der Hand hat als du, darfst du 1 Karte ziehen."
+        "title": "Tip the Scales",
+        "description": "Whenever this character quests, if an opponent has more cards in their hand than you, you may draw a card."
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Mulan"]
+    "searchableKeywords": ["Mulan", "D23"]
   },
   "QUJ": {
     "name": "Carl Fredricksen & Russel",
@@ -2569,16 +4595,16 @@
   },
   "sCi": {
     "name": "Woody",
-    "version": "Anführer der Spielzeuge",
-    "rulesText": "\\Gehen wir nach Hause\\ Wenn du diesen Charakter ausspielst, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Spielzeug-Charakterkarte oder 1 Andys-Zimmer-Ortskarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+    "version": "Leader of the Toys",
+    "rulesText": "\\Let's Go Home\\ When you play this character, look at the top 4 cards of your deck. You may reveal a Toy character card or a location card named Andy's Room and put it into your hand. Put the rest on the bottom of your deck in any order.",
     "text": [
       {
-        "title": "Gehen wir nach Hause",
-        "description": "Wenn du diesen Charakter ausspielst, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Spielzeug-Charakterkarte oder 1 Andys-Zimmer-Ortskarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck."
+        "title": "Let's Go Home",
+        "description": "When you play this character, look at the top 4 cards of your deck. You may reveal a Toy character card or a location card named Andy's Room and put it into your hand. Put the rest on the bottom of your deck in any order."
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Toy Story"]
+    "searchableKeywords": ["D23", "Toy Story"]
   },
   "vS7": {
     "name": "Chap",
@@ -3229,16 +5255,16 @@
   },
   "xen": {
     "name": "Buzz Lightyear",
-    "version": "Schon unterwegs",
-    "rulesText": "\\Geheime Mission\\ Jedes Mal, wenn du 2 oder weniger {I} bezahlst, um eine Karte auszuspielen, die kein Charakter ist, ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.%\\Das tollste Spielzeug der Welt\\ Jedes Mal, wenn du 2 oder weniger {I} bezahlst, um einen Charakter auszuspielen, füge einem gegnerischen beschädigten Charakter deiner Wahl 1 Schaden zu.",
+    "version": "On the Way",
+    "rulesText": "\\Secret Mission\\ Whenever you pay 2 {I} or less to play a non-character, draw a card, then choose and discard a card.\n\n\\World's Greatest Toy\\ Whenever you pay 2 {I} or less to play a character, deal 1 damage to chosen opposing damaged character.",
     "text": [
       {
-        "title": "Geheime Mission",
-        "description": "Jedes Mal, wenn du 2 oder weniger {I} bezahlst, um eine Karte auszuspielen, die kein Charakter ist, ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab."
+        "title": "Secret Mission",
+        "description": "Whenever you pay 2 {I} or less to play a non-character, draw a card, then choose and discard a card."
       },
       {
-        "title": "Das tollste Spielzeug der Welt",
-        "description": "Jedes Mal, wenn du 2 oder weniger {I} bezahlst, um einen Charakter auszuspielen, füge einem gegnerischen beschädigten Charakter deiner Wahl 1 Schaden zu."
+        "title": "World's Greatest Toy",
+        "description": "Whenever you pay 2 {I} or less to play a character, deal 1 damage to chosen opposing damaged character."
       }
     ],
     "flavorText": "",
@@ -3411,7 +5437,7 @@
     "version": "Sucht von oben bis unten",
     "rulesText": "<Wendig>",
     "text": "<Wendig>",
-    "flavorText": "Lorcana hatte sich verändert. Es fühlte sich irgendwie <größer> an. Aber egal, wie groß es auch werden mochte, er war entschlossen, seinen Freund zu finden.",
+    "flavorText": "„Dieser Pegasus kann fast alles auf seinem Rücken tragen – sogar einen verängstigten Archivar.“\n—Rayyan, ein Luminari",
     "searchableKeywords": ["Hercules"]
   },
   "XG0": {
@@ -4174,16 +6200,16 @@
   },
   "Y1z": {
     "name": "Mr. Incredible",
-    "version": "Bringt den Müll raus",
-    "rulesText": "\\Ka-Pow!\\ Wenn du diesen Charakter ausspielst, darfst du einem gegnerischen Roboter oder Schurken deiner Wahl 2 Schaden zufügen.",
+    "version": "Taking Out the Trash",
+    "rulesText": "\\Ka-Pow!\\ When you play this character, you may deal 2 damage to chosen opposing Robot or Villain character.",
     "text": [
       {
         "title": "Ka-Pow!",
-        "description": "Wenn du diesen Charakter ausspielst, darfst du einem gegnerischen Roboter oder Schurken deiner Wahl 2 Schaden zufügen."
+        "description": "When you play this character, you may deal 2 damage to chosen opposing Robot or Villain character."
       }
     ],
-    "flavorText": "„Schwergewichtige Probleme erfordern schwergewichtige Lösungen.“%—Mr. Incredible",
-    "searchableKeywords": ["Die Unglaublichen", "Incredibles"]
+    "flavorText": "“Heavyweight problems need heavyweight solutions.”\n—Mr. Incredible",
+    "searchableKeywords": ["D23", "Die Unglaublichen", "Incredibles"]
   },
   "NF5": {
     "name": "Lord Dingwall",
@@ -4644,20 +6670,20 @@
     "searchableKeywords": ["Bambi"]
   },
   "FwE": {
-    "name": "Engel",
-    "version": "Sirenen-Sängerin",
-    "rulesText": "\\Underdog\\ Falls dies dein erster Zug ist und du das Spiel nicht begonnen hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.%<Singen> 3 (Die Kosten dieses Charakters gelten als 3 für das Singen von Liedern.)",
+    "name": "Angel",
+    "version": "Siren Singer",
+    "rulesText": "\\Underdog\\ If this is your first turn and you're not the first player, you pay 1 {I} less to play this character.\n\n<Singer> 3 (This character counts as cost 3 to sing songs.)",
     "text": [
       {
         "title": "Underdog",
-        "description": "Falls dies dein erster Zug ist und du das Spiel nicht begonnen hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen."
+        "description": "If this is your first turn and you're not the first player, you pay 1 {I} less to play this character."
       },
       {
-        "title": "<Singen> 3 (Die Kosten dieses Charakters gelten als 3 für das Singen von Liedern.)"
+        "title": "<Singer> 3 (This character counts as cost 3 to sing songs.)"
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Lilo and Stitch", "Lilo und Stitch"]
+    "searchableKeywords": ["D23", "Lilo and Stitch", "Lilo und Stitch"]
   },
   "EI1": {
     "name": "Witwe Tweed",
@@ -4771,16 +6797,16 @@
   },
   "o0i": {
     "name": "Pocahontas",
-    "version": "Folgt dem Wind",
-    "rulesText": "\\Welcher ist denn mein Weg?\\ Jedes Mal, wenn dieser Charakter erkundet, wähle einen anderen erschöpften Charakter und sammle so viele Legenden, wie sein {L}-Wert beträgt.",
+    "version": "Following the Wind",
+    "rulesText": "\\What Is My Path?\\ Whenever this character quests, gain lore equal to another chosen exerted character's {L}.",
     "text": [
       {
-        "title": "Welcher ist denn mein Weg?",
-        "description": "Jedes Mal, wenn dieser Charakter erkundet, wähle einen anderen erschöpften Charakter und sammle so viele Legenden, wie sein {L}-Wert beträgt."
+        "title": "What Is My Path?",
+        "description": "Whenever this character quests, gain lore equal to another chosen exerted character's {L}."
       }
     ],
-    "flavorText": "„In ihr lebt der Geist ihrer Mutter. Sie geht, wohin der Wind sie führt.“%–Kekata",
-    "searchableKeywords": ["Pocahontas"]
+    "flavorText": "“She has her mother’s spirit. She goes wherever the wind takes her.”\n—Kekata",
+    "searchableKeywords": ["D23", "Pocahontas"]
   },
   "l2V": {
     "name": "Darkwing Duck",
@@ -5989,7 +8015,7 @@
   "Dfc": {
     "name": "Micky Maus",
     "version": "Bob Cratchit",
-    "rulesText": "\\Harte Arbeit\\ Jedes Mal, wenn dieser Charakter erkundet, lege die oberste Karte deines Decks verdeckt unter ihn.%\\Ein schenkendes Herz\\ Wenn dieser Charakter durch eine Herausforderung verbannt wird, darfst du alle Karten, die unter diesem Charakter lagen, unter einen deiner anderen Charaktere oder Orte legen.",
+    "rulesText": "\\Harte Arbeit\\ Jedes Mal, wenn dieser Charakter erkundet, lege die oberste Karte deines Decks verdeckt unter ihn.%\\Ein schenkendes Herz\\ Wenn dieser Charakter durch eine Herausforderung verbannt wird, darfst du alle Karten, die unter diesem Charakter lagen, verdeckt unter einen deiner anderen Charaktere oder Orte legen.",
     "text": [
       {
         "title": "Harte Arbeit",
@@ -5997,7 +8023,7 @@
       },
       {
         "title": "Ein schenkendes Herz",
-        "description": "Wenn dieser Charakter durch eine Herausforderung verbannt wird, darfst du alle Karten, die unter diesem Charakter lagen, unter einen deiner anderen Charaktere oder Orte legen."
+        "description": "Wenn dieser Charakter durch eine Herausforderung verbannt wird, darfst du alle Karten, die unter diesem Charakter lagen, verdeckt unter einen deiner anderen Charaktere oder Orte legen."
       }
     ],
     "flavorText": "",
@@ -6630,21 +8656,21 @@
     "searchableKeywords": ["Ducktales"]
   },
   "qnB": {
-    "name": "Micky Maus",
-    "version": "Bernstein-Champion",
-    "rulesText": "\\Weist den Weg\\ Deine anderen Bernstein-Charaktere erhalten +2 {W}.%\\Freundschaftlicher Chor\\ Solange du mindestens 2 weitere Bernstein-Charaktere im Spiel hast, erhält dieser Charakter <Singen> 8. (Die Kosten dieses Charakters gelten als 8 für das Singen von Liedern.)",
+    "name": "Mickey Mouse",
+    "version": "Amber Champion",
+    "rulesText": "\\Leading the Way\\ Your other Amber characters get +2 {W}.\n\n\\Friendly Chorus\\ While you have 2 or more other Amber characters in play, this character gains <Singer> 8. (They count as cost 8 to sing songs.)",
     "text": [
       {
-        "title": "Weist den Weg",
-        "description": "Deine anderen Bernstein-Charaktere erhalten +2 {W}."
+        "title": "Leading the Way",
+        "description": "Your other Amber characters get +2 {W}."
       },
       {
-        "title": "Freundschaftlicher Chor",
-        "description": "Solange du mindestens 2 weitere Bernstein-Charaktere im Spiel hast, erhält dieser Charakter <Singen> 8. (Die Kosten dieses Charakters gelten als 8 für das Singen von Liedern.)"
+        "title": "Friendly Chorus",
+        "description": "While you have 2 or more other Amber characters in play, this character gains <Singer> 8. (They count as cost 8 to sing songs.)"
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Mickey Mouse", "Mickey Maus", "Micky Mouse"]
+    "searchableKeywords": []
   },
   "LYe": {
     "name": "Goofy",
@@ -6808,7 +8834,7 @@
       }
     ],
     "flavorText": "„Diese Welt hat noch viele Geheimnisse, die es zu lüften gilt.“",
-    "searchableKeywords": ["Frozen", "Die Eiskönigin"]
+    "searchableKeywords": ["Clio Schaffner", "Frozen", "Die Eiskönigin"]
   },
   "7CA": {
     "name": "Mushu",
@@ -7918,16 +9944,16 @@
   },
   "Imt": {
     "name": "Judy Hopps",
-    "version": "Auf der Suche nach Hinweisen",
-    "rulesText": "\\Gründliche Ermittlung\\ Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, schaue dir die obersten 3 Karten deines Decks an. Du darfst 1 Detektiv daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+    "version": "Uncovering Clues",
+    "rulesText": "\\Thorough Investigation\\ When you play this character and whenever she quests, look at the top 3 cards of your deck. You may reveal a Detective character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
     "text": [
       {
-        "title": "Gründliche Ermittlung",
-        "description": "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, schaue dir die obersten 3 Karten deines Decks an. Du darfst 1 Detektiv daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck."
+        "title": "Thorough Investigation",
+        "description": "When you play this character and whenever she quests, look at the top 3 cards of your deck. You may reveal a Detective character card and put it into your hand. Put the rest on the bottom of your deck in any order."
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Zootropolis", "Zootopia", "Zoomania"]
+    "searchableKeywords": ["Zootropolis", "D23", "Zootopia", "Zoomania"]
   },
   "6GN": {
     "name": "Pluto",
@@ -9187,8 +11213,16 @@
   "nWR": {
     "name": "Naseweis",
     "version": "Stets hilfsbereit",
-    "rulesText": "<Wendig> \\Feenglanz\\ Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug Wendig.",
-    "text": "<Wendig> \\Feenglanz\\ Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug Wendig.",
+    "rulesText": "<Wendig>\n\\Feenglanz\\ Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug Wendig.",
+    "text": [
+      {
+        "title": "<Wendig>"
+      },
+      {
+        "title": "Feenglanz",
+        "description": "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug Wendig."
+      }
+    ],
     "flavorText": "",
     "searchableKeywords": ["Peter Pan"]
   },
@@ -9521,7 +11555,7 @@
       }
     ],
     "flavorText": "„Wer bist du? Und wie hast du mich gefunden?“",
-    "searchableKeywords": ["Tangled", "Rapunzel"]
+    "searchableKeywords": ["Tangled", "Clio Schaffner", "Rapunzel"]
   },
   "8DB": {
     "name": "Mulan",
@@ -9806,7 +11840,7 @@
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Dornröschen", "Sleeping Beauty"]
+    "searchableKeywords": ["Dornröschen", "Clio Schaffner", "Sleeping Beauty"]
   },
   "z67": {
     "name": "Aurora",
@@ -12005,12 +14039,12 @@
   },
   "wSF": {
     "name": "Anna",
-    "version": "Vertrauensvolle Schwester",
-    "rulesText": "\\Wir können das gemeinsam schaffen\\ Wenn du diesen Charakter ausspielst und einen Elsa-Charakter im Spiel hast, darfst du die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen.",
+    "version": "Trusting Sister",
+    "rulesText": "\\We Can Do This Together\\ When you play this character, if you have a character named Elsa in play, you may put the top card of your deck into your inkwell facedown and exerted.",
     "text": [
       {
-        "title": "Wir können das gemeinsam schaffen",
-        "description": "Wenn du diesen Charakter ausspielst und einen Elsa-Charakter im Spiel hast, darfst du die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen."
+        "title": "We Can Do This Together",
+        "description": "When you play this character, if you have a character named Elsa in play, you may put the top card of your deck into your inkwell facedown and exerted."
       }
     ],
     "flavorText": "",
@@ -13093,15 +15127,15 @@
   },
   "DdM": {
     "name": "Elsa",
-    "version": "Vertraute Schwester",
-    "rulesText": "\\Was tun wir jetzt?\\ Jedes Mal, wenn dieser Charakter erkundet, falls du einen Anna-Charakter im Spiel hast, sammelst du 1 Legende.",
+    "version": "Trusted Sister",
+    "rulesText": "\\What Do We Do Now?\\ Whenever this character quests, if you have a character named Anna in play, gain 1 lore.",
     "text": [
       {
-        "title": "Was tun wir jetzt?",
-        "description": "Jedes Mal, wenn dieser Charakter erkundet, falls du einen Anna-Charakter im Spiel hast, sammelst du 1 Legende."
+        "title": "What Do We Do Now?",
+        "description": "Whenever this character quests, if you have a character named Anna in play, gain 1 lore."
       }
     ],
-    "flavorText": "„Der Angst darf man nicht vertrauen.“",
+    "flavorText": "\"Fear is what can't be trusted.\"",
     "searchableKeywords": ["Frozen", "Die Eiskönigin"]
   },
   "UyZ": {
@@ -15439,19 +17473,19 @@
     "searchableKeywords": ["Aladdin"]
   },
   "Iyt": {
-    "name": "Jasmin",
-    "version": "Königliche Seefahrerin",
-    "rulesText": "\\Auf Befehl der Prinzessin\\ Wenn du diesen Charakter ausspielst, wähle eine Möglichkeit aus:%• Erschöpfe einen beschädigten Charakter deiner Wahl.%• Ein gegnerischer Charakter deiner Wahl erhält in seinem nächsten Zug <Impulsiv>. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
+    "name": "Jasmine",
+    "version": "Royal Seafarer",
+    "rulesText": "\\By Order of the Princess\\ When you play this character, choose one:\n• Exert chosen damaged character.\n• Chosen opposing character gains <Reckless> during their next turn. (They can't quest and must challenge if able.)",
     "text": [
       {
-        "title": "Auf Befehl der Prinzessin",
-        "description": "Wenn du diesen Charakter ausspielst, wähle eine Möglichkeit aus:"
+        "title": "By Order of the Princess",
+        "description": "When you play this character, choose one:"
       },
       {
-        "title": "• Erschöpfe einen beschädigten Charakter deiner Wahl."
+        "title": "• Exert chosen damaged character."
       },
       {
-        "title": "• Ein gegnerischer Charakter deiner Wahl erhält in seinem nächsten Zug <Impulsiv>. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)"
+        "title": "• Chosen opposing character gains <Reckless> during their next turn. (They can't quest and must challenge if able.)"
       }
     ],
     "flavorText": "",
@@ -17122,18 +19156,18 @@
   },
   "3zi": {
     "name": "Elsa",
-    "version": "Der fünfte Geist",
-    "rulesText": "<Rasant> %<Wendig> %\\Kristallisieren\\ Wenn du diesen Charakter ausspielst, erschöpfe einen gegnerischen Charakter deiner Wahl.",
+    "version": "The Fifth Spirit",
+    "rulesText": "<Rush> (This character can challenge the turn they're played.)\n\n<Evasive> (Only characters with Evasive can challenge this character.)\n\n\\Crystallize\\ When you play this character, exert chosen opposing character.",
     "text": [
       {
-        "title": "<Rasant>"
+        "title": "<Rush> (This character can challenge the turn they're played.)"
       },
       {
-        "title": "<Wendig>"
+        "title": "<Evasive> (Only characters with Evasive can challenge this character.)"
       },
       {
-        "title": "Kristallisieren",
-        "description": "Wenn du diesen Charakter ausspielst, erschöpfe einen gegnerischen Charakter deiner Wahl."
+        "title": "Crystallize",
+        "description": "When you play this character, exert chosen opposing character."
       }
     ],
     "flavorText": "",
@@ -17637,19 +19671,19 @@
   },
   "ZiJ": {
     "name": "Donald Duck",
-    "version": "Kuchenschleuderer",
-    "rulesText": "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Donald-Duck-Charaktere auszuspielen.)%\\Pustekuchen\\ Wenn du diesen Charakter ausspielst, falls du <Gestaltwandel> benutzt hast, um diesen Charakter auszuspielen, verlieren alle gegnerischen Mitspielenden je 2 Legenden.%\\Wütende Ente\\ Solange mindestens eine gegnerische Person 10 oder mehr Legenden hat, erhält dieser Charakter +6 {S}.",
+    "version": "Pie Slinger",
+    "rulesText": "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Donald Duck.)\n\n\\Humble Pie\\ When you play this character, if you used <Shift> to play him, each opponent loses 2 lore.\n\n\\Raging Duck\\ While an opponent has 10 or more lore, this character gets +6 {S}.",
     "text": [
       {
-        "title": "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Donald-Duck-Charaktere auszuspielen.)"
+        "title": "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Donald Duck.)"
       },
       {
-        "title": "Pustekuchen",
-        "description": "Wenn du diesen Charakter ausspielst, falls du <Gestaltwandel> benutzt hast, um diesen Charakter auszuspielen, verlieren alle gegnerischen Mitspielenden je 2 Legenden."
+        "title": "Humble Pie",
+        "description": "When you play this character, if you used <Shift> to play him, each opponent loses 2 lore."
       },
       {
-        "title": "Wütende Ente",
-        "description": "Solange mindestens eine gegnerische Person 10 oder mehr Legenden hat, erhält dieser Charakter +6 {S}."
+        "title": "Raging Duck",
+        "description": "While an opponent has 10 or more lore, this character gets +6 {S}."
       }
     ],
     "flavorText": "",
@@ -19620,15 +21654,15 @@
   },
   "Mbz": {
     "name": "Rapunzel",
-    "version": "Wertschätzende Künstlerin",
-    "rulesText": "\\Einfühlsame Partnerin\\ Solange du mindestens einen Pascal-Charakter im Spiel hast, erhält dieser Charakter <Behütet>.",
+    "version": "Appreciative Artist",
+    "rulesText": "\\Perceptive Partner\\ While you have a character named Pascal in play, this character gains <Ward>. (Opponents can't choose them except to challenge.)",
     "text": [
       {
-        "title": "Einfühlsame Partnerin",
-        "description": "Solange du mindestens einen Pascal-Charakter im Spiel hast, erhält dieser Charakter <Behütet>."
+        "title": "Perceptive Partner",
+        "description": "While you have a character named Pascal in play, this character gains <Ward>. (Opponents can't choose them except to challenge.)"
       }
     ],
-    "flavorText": "„Pascal! Eine neue Blume für die Wand!“",
+    "flavorText": "“Pascal! A new flower for the wall!”",
     "searchableKeywords": ["Tangled", "Rapunzel"]
   },
   "IaS": {
@@ -19877,7 +21911,7 @@
   "QEb": {
     "name": "Mickey Mouse",
     "version": "Playful Sorcerer",
-    "rulesText": "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)\n<Resist> +1 (Damage dealt to this character is reduced by 1.)\n\\Sweep Away\\ When you play this character, deal damage to chosen character equal to the number of Broom characters you have in play.",
+    "rulesText": "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)\n\n<Resist> +1 (Damage dealt to this character is reduced by 1.)\n\n\\Sweep Away\\ When you play this character, deal damage to chosen character equal to the number of Broom characters you have in play.",
     "text": [
       {
         "title": "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)"
@@ -22944,16 +24978,16 @@
     "searchableKeywords": ["Little Mermaid", "Arielle die Meerjungfrau"]
   },
   "Z4N": {
-    "name": "Arielle",
-    "version": "Spektakuläre Sängerin",
-    "rulesText": "<Singen> 5 (Die Kosten dieses Charakters gelten als 5 für das Singen von Liedern.)\n\\Musikalisches Debüt\\ Wenn du diesen Charakter ausspielst, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Liedkarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+    "name": "Ariel",
+    "version": "Spectacular Singer",
+    "rulesText": "<Singer> 5 (This character counts as cost 5 to sing songs.)\n\\Musical Debut\\ When you play this character, look at the top 4 cards of your deck. You may reveal a song card and put it into your hand. Put the rest on the bottom of your deck in any order.",
     "text": [
       {
-        "title": "<Singen> 5 (Die Kosten dieses Charakters gelten als 5 für das Singen von Liedern.)"
+        "title": "<Singer> 5 (This character counts as cost 5 to sing songs.)"
       },
       {
-        "title": "Musikalisches Debüt",
-        "description": "Wenn du diesen Charakter ausspielst, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Liedkarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck."
+        "title": "Musical Debut",
+        "description": "When you play this character, look at the top 4 cards of your deck. You may reveal a song card and put it into your hand. Put the rest on the bottom of your deck in any order."
       }
     ],
     "flavorText": "",
@@ -23172,8 +25206,16 @@
   "Af3": {
     "name": "Dr. Facilier",
     "version": "Agent Provocateur",
-    "rulesText": "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Dr.-Facilier-Charaktere auszuspielen.)\\Im Schattenreich\\ Jedes Mal, wenn einer deiner anderen Charaktere durch eine Herausforderung verbannt wird, darfst du jene Karte zurück auf deine Hand nehmen.",
-    "text": "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Dr.-Facilier-Charaktere auszuspielen.)\\Im Schattenreich\\ Jedes Mal, wenn einer deiner anderen Charaktere durch eine Herausforderung verbannt wird, darfst du jene Karte zurück auf deine Hand nehmen.",
+    "rulesText": "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Dr.-Facilier-Charaktere auszuspielen.)\n\\Im Schattenreich\\ Jedes Mal, wenn einer deiner anderen Charaktere durch eine Herausforderung verbannt wird, darfst du jene Karte zurück auf deine Hand nehmen.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Dr.-Facilier-Charaktere auszuspielen.)"
+      },
+      {
+        "title": "Im Schattenreich",
+        "description": "Jedes Mal, wenn einer deiner anderen Charaktere durch eine Herausforderung verbannt wird, darfst du jene Karte zurück auf deine Hand nehmen."
+      }
+    ],
     "flavorText": "",
     "searchableKeywords": ["Princess and the Frog", "Küss den Frosch"]
   },
@@ -23209,8 +25251,16 @@
   "BDi": {
     "name": "Abschaum",
     "version": "Ursulas Spion",
-    "rulesText": "<Rasant> \\Flink und Hinterhältig\\ Deine Meerschaum-Charaktere erhalten Rasant.",
-    "text": "<Rasant> \\Flink und Hinterhältig\\ Deine Meerschaum-Charaktere erhalten Rasant.",
+    "rulesText": "<Rasant>\n\\Flink und Hinterhältig\\ Deine Meerschaum-Charaktere erhalten Rasant.",
+    "text": [
+      {
+        "title": "<Rasant>"
+      },
+      {
+        "title": "Flink und Hinterhältig",
+        "description": "Deine Meerschaum-Charaktere erhalten Rasant."
+      }
+    ],
     "flavorText": "„Wir kennen jemanden, der dir helfen kann … zu einem bestimmten Preis.“",
     "searchableKeywords": ["Little Mermaid", "Arielle die Meerjungfrau"]
   },
@@ -23225,8 +25275,16 @@
   "0Bx": {
     "name": "Meerschaum",
     "version": "Ursulas Spion",
-    "rulesText": "<Wendig> \\Fies und Glitschig\\ Deine Abschaum-Charaktere erhalten Wendig.",
-    "text": "<Wendig> \\Fies und Glitschig\\ Deine Abschaum-Charaktere erhalten Wendig.",
+    "rulesText": "<Wendig>\n\\Fies und Glitschig\\ Deine Abschaum-Charaktere erhalten Wendig.",
+    "text": [
+      {
+        "title": "<Wendig>"
+      },
+      {
+        "title": "Fies und Glitschig",
+        "description": "Deine Abschaum-Charaktere erhalten Wendig."
+      }
+    ],
     "flavorText": "„Wir können dir helfen, alles zu bekommen, was du willst …“",
     "searchableKeywords": ["Little Mermaid", "Arielle die Meerjungfrau"]
   },
@@ -23326,8 +25384,16 @@
   "52N": {
     "name": "Naseweis",
     "version": "Peter Pans Verbündete",
-    "rulesText": "<Wendig> \\Loyal und Hingebungsvoll\\ Deine Peter-Pan-Charaktere erhalten <Herausfordern> +1. (Während sie herausfordern, erhalten sie +1 {S}.)",
-    "text": "<Wendig> \\Loyal und Hingebungsvoll\\ Deine Peter-Pan-Charaktere erhalten <Herausfordern> +1. (Während sie herausfordern, erhalten sie +1 {S}.)",
+    "rulesText": "<Wendig>\n\\Loyal und Hingebungsvoll\\ Deine Peter-Pan-Charaktere erhalten <Herausfordern> +1. (Während sie herausfordern, erhalten sie +1 {S}.)",
+    "text": [
+      {
+        "title": "<Wendig>"
+      },
+      {
+        "title": "Loyal und Hingebungsvoll",
+        "description": "Deine Peter-Pan-Charaktere erhalten <Herausfordern> +1. (Während sie herausfordern, erhalten sie +1 {S}.)"
+      }
+    ],
     "flavorText": "",
     "searchableKeywords": ["Peter Pan"]
   },
@@ -23375,8 +25441,16 @@
   "bXY": {
     "name": "Biest",
     "version": "Schrecken der Wölfe",
-    "rulesText": "<Rasant> \\Brüllen\\ Wenn du diesen Charakter ausspielst, erschöpfe alle gegnerischen beschädigten Charaktere.",
-    "text": "<Rasant> \\Brüllen\\ Wenn du diesen Charakter ausspielst, erschöpfe alle gegnerischen beschädigten Charaktere.",
+    "rulesText": "<Rasant>\n\\Brüllen\\ Wenn du diesen Charakter ausspielst, erschöpfe alle gegnerischen beschädigten Charaktere.",
+    "text": [
+      {
+        "title": "<Rasant>"
+      },
+      {
+        "title": "Brüllen",
+        "description": "Wenn du diesen Charakter ausspielst, erschöpfe alle gegnerischen beschädigten Charaktere."
+      }
+    ],
     "flavorText": "„Ich werde es mit euch allen aufnehmen, wenn es sein muss!“",
     "searchableKeywords": ["Die Schöne und das Biest", "Beauty and the Beast"]
   },
@@ -23446,7 +25520,7 @@
   "Mpt": {
     "name": "Dschinni",
     "version": "Entfesselte Energie",
-    "rulesText": "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Dschinni-Charaktere auszuspielen.)\n<Wendig>\n\\Kosmische Kräfte!\\ Jedes Mal, wenn dieser Charakter erkundet, darfst du eine Aktion, die 5 oder weniger kostet, kostenlos ausspielen.",
+    "rulesText": "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Dschinni-Charaktere auszuspielen.)%<Wendig> %\\Kosmische Kräfte!\\ Jedes Mal, wenn dieser Charakter erkundet, darfst du eine Aktion, die 5 oder weniger kostet, kostenlos ausspielen.",
     "text": [
       {
         "title": "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Dschinni-Charaktere auszuspielen.)"
@@ -23639,8 +25713,16 @@
   "eM3": {
     "name": "Käpt'n Hook",
     "version": "Skrupelloser Pirat",
-    "rulesText": "<Rasant> \\Du Feigling!\\ Solange dieser Charakter erschöpft ist, erhalten gegnerische Charaktere mit Wendig zusätzlich Impulsiv. (Sie können nicht erkunden und müssen herausfordern, wenn möglich.)",
-    "text": "<Rasant> \\Du Feigling!\\ Solange dieser Charakter erschöpft ist, erhalten gegnerische Charaktere mit Wendig zusätzlich Impulsiv. (Sie können nicht erkunden und müssen herausfordern, wenn möglich.)",
+    "rulesText": "<Rasant>\n\\Du Feigling!\\ Solange dieser Charakter erschöpft ist, erhalten gegnerische Charaktere mit Wendig zusätzlich Impulsiv. (Sie können nicht erkunden und müssen herausfordern, wenn möglich.)",
+    "text": [
+      {
+        "title": "<Rasant>"
+      },
+      {
+        "title": "Du Feigling!",
+        "description": "Solange dieser Charakter erschöpft ist, erhalten gegnerische Charaktere mit Wendig zusätzlich Impulsiv. (Sie können nicht erkunden und müssen herausfordern, wenn möglich.)"
+      }
+    ],
     "flavorText": "„Du weißt nicht mal was Kämpfen heißt, du armer Wicht!\"",
     "searchableKeywords": ["Peter Pan"]
   },
@@ -23757,8 +25839,16 @@
   "pVG": {
     "name": "Scar",
     "version": "Schamloser Unruhestifter",
-    "rulesText": "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Scar-Charaktere auszuspielen.)\\Mitreißende Ansprache\\ Wenn du diesen Charakter ausspielst, mache alle deine Charaktere, die 3 oder weniger kosten, bereit. Sie können in diesem Zug nicht mehr erkunden.",
-    "text": "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Scar-Charaktere auszuspielen.)\\Mitreißende Ansprache\\ Wenn du diesen Charakter ausspielst, mache alle deine Charaktere, die 3 oder weniger kosten, bereit. Sie können in diesem Zug nicht mehr erkunden.",
+    "rulesText": "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Scar-Charaktere auszuspielen.)\n\\Mitreißende Ansprache\\ Wenn du diesen Charakter ausspielst, mache alle deine Charaktere, die 3 oder weniger kosten, bereit. Sie können in diesem Zug nicht mehr erkunden.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Scar-Charaktere auszuspielen.)"
+      },
+      {
+        "title": "Mitreißende Ansprache",
+        "description": "Wenn du diesen Charakter ausspielst, mache alle deine Charaktere, die 3 oder weniger kosten, bereit. Sie können in diesem Zug nicht mehr erkunden."
+      }
+    ],
     "flavorText": "„Die Zeit ist gekommen, um uns zu nehmen, was uns gehört!“",
     "searchableKeywords": ["Lion King", "Der König der Löwen"]
   },
@@ -23869,8 +25959,16 @@
   "Abg": {
     "name": "Jasmin",
     "version": "Königin von Agrabah",
-    "rulesText": "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Jasmin-Charaktere auszuspielen.)\\Fürsorge\\ Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du bis zu 2 Schaden von jedem deiner Charaktere entfernen.",
-    "text": "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Jasmin-Charaktere auszuspielen.)\\Fürsorge\\ Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du bis zu 2 Schaden von jedem deiner Charaktere entfernen.",
+    "rulesText": "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Jasmin-Charaktere auszuspielen.)\n\\Fürsorge\\ Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du bis zu 2 Schaden von jedem deiner Charaktere entfernen.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Jasmin-Charaktere auszuspielen.)"
+      },
+      {
+        "title": "Fürsorge",
+        "description": "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du bis zu 2 Schaden von jedem deiner Charaktere entfernen."
+      }
+    ],
     "flavorText": "",
     "searchableKeywords": ["Aladdin"]
   },
@@ -23893,11 +25991,15 @@
   "Yw4": {
     "name": "Maurice",
     "version": "Weltberühmter Erfinder",
-    "rulesText": "\\Versuch's doch mal\\ Jedes Mal, wenn dieser Charakter erkundet, zahlst du 2 {I} weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.\\Es funktioniert!\\ Jedes Mal, wenn du einen Gegenstand ausspielst, darfst du 1 Karte ziehen.",
+    "rulesText": "\\Versuch's doch mal\\ Jedes Mal, wenn dieser Charakter erkundet, zahlst du 2 {I} weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.\n\\Es funktioniert!\\ Jedes Mal, wenn du einen Gegenstand ausspielst, darfst du 1 Karte ziehen.",
     "text": [
       {
         "title": "Versuch's doch mal",
-        "description": "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 2 {I} weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.\\Es funktioniert!\\ Jedes Mal, wenn du einen Gegenstand ausspielst, darfst du 1 Karte ziehen."
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 2 {I} weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst."
+      },
+      {
+        "title": "Es funktioniert!",
+        "description": "Jedes Mal, wenn du einen Gegenstand ausspielst, darfst du 1 Karte ziehen."
       }
     ],
     "flavorText": "",
@@ -23935,11 +26037,15 @@
   "Z2D": {
     "name": "Tamatoa",
     "version": "So glänzend!",
-    "rulesText": "\\Was haben wir denn hier?\\ Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand nehmen.\\Glamourös\\ Dieser Charakter erhält +1 {L} für jeden Gegenstand, den du im Spiel hast.",
+    "rulesText": "\\Was haben wir denn hier?\\ Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand nehmen.\n\\Glamourös\\ Dieser Charakter erhält +1 {L} für jeden Gegenstand, den du im Spiel hast.",
     "text": [
       {
         "title": "Was haben wir denn hier?",
-        "description": "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand nehmen.\\Glamourös\\ Dieser Charakter erhält +1 {L} für jeden Gegenstand, den du im Spiel hast."
+        "description": "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand nehmen."
+      },
+      {
+        "title": "Glamourös",
+        "description": "Dieser Charakter erhält +1 {L} für jeden Gegenstand, den du im Spiel hast."
       }
     ],
     "flavorText": "„Ich bin glänzend, funkle wie ein ungeschliff'ner Diamant.“",
@@ -24166,6 +26272,110 @@
     ],
     "flavorText": "Maui: „Schon mal ein Lavamonster besiegt?“\nVaiana: „Nein. Und du?“",
     "searchableKeywords": ["Moana", "Vaiana"]
+  },
+  "iKo": {
+    "name": "Hafenbehörde",
+    "version": "Zentraler Knotenpunkt",
+    "rulesText": "\\Willkommen in der Stadt\\ Einmal während deines Zuges, wenn einer deiner Charaktere an diesen Ort bewegt wird, erschaffen alle Mitspielenden 1 Tintentropfen und sammeln 1 Legende. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Willkommen in der Stadt",
+        "description": "Einmal während deines Zuges, wenn einer deiner Charaktere an diesen Ort bewegt wird, erschaffen alle Mitspielenden 1 Tintentropfen und sammeln 1 Legende. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "12o": {
+    "name": "Merlins Shop und Schmiede",
+    "version": "Magischer Laden",
+    "rulesText": "\\Offen für Geschäfte\\ Einmal während deines Zuges, wenn ein Charakter an diesen Ort bewegt wird, sammle 1 Legende und ziehe 1 Karte.",
+    "text": [
+      {
+        "title": "Offen für Geschäfte",
+        "description": "Einmal während deines Zuges, wenn ein Charakter an diesen Ort bewegt wird, sammle 1 Legende und ziehe 1 Karte."
+      }
+    ],
+    "flavorText": "„Wenn wir es nicht haben, können wir es herstellen!“ %—Shop-Slogan",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "JEn": {
+    "name": "Die Bohnenranke",
+    "version": "Vorwärts und aufwärts",
+    "rulesText": "\\Die fernen Weiten\\ Charaktere an diesem Ort erhalten +1 {S} und <Wendig>. (Nur Charaktere mit Wendig können sie herausfordern.)",
+    "text": [
+      {
+        "title": "Die fernen Weiten",
+        "description": "Charaktere an diesem Ort erhalten +1 {S} und <Wendig>. (Nur Charaktere mit Wendig können sie herausfordern.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": []
+  },
+  "6s8": {
+    "name": "Land der Toten",
+    "version": "Ringelblumenbrücke",
+    "rulesText": "\\Ehrwürdige Gaben\\ Solange du 10 oder mehr Karten in deinem Ablagestapel hast, erhält dieser Ort +2 {L}.",
+    "text": [
+      {
+        "title": "Ehrwürdige Gaben",
+        "description": "Solange du 10 oder mehr Karten in deinem Ablagestapel hast, erhält dieser Ort +2 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "mjT": {
+    "name": "Khan-Stadion",
+    "version": "Der neueste Stand der Technik",
+    "rulesText": "\\Große Show\\ Charaktere an diesem Ort erhalten +2 {S}.",
+    "text": [
+      {
+        "title": "Große Show",
+        "description": "Charaktere an diesem Ort erhalten +2 {S}."
+      }
+    ],
+    "flavorText": "Man kann den Jubel schon aus mehreren Straßen Entfernung hören.",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "HMj": {
+    "name": "Institut für Technologie",
+    "version": "Honey Lemons Labor",
+    "rulesText": "\\Zeit überwinden\\ Einmal während deines Zuges, wenn einer deiner Super-Charaktere an diesem Ort erkundet, nimm 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand.",
+    "text": [
+      {
+        "title": "Zeit überwinden",
+        "description": "Einmal während deines Zuges, wenn einer deiner Super-Charaktere an diesem Ort erkundet, nimm 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "AUI": {
+    "name": "Hauptbahnhof",
+    "version": "Verkehrsknotenpunkt",
+    "rulesText": "\\Kostenloses Souvenir\\ Einmal während deines Zuges, wenn einer deiner Charaktere an diesen Ort bewegt wird, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Kostenloses Souvenir",
+        "description": "Einmal während deines Zuges, wenn einer deiner Charaktere an diesen Ort bewegt wird, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "RAI": {
+    "name": "Khan-Konzern",
+    "version": "Grünweg-Wahrzeichen",
+    "rulesText": "\\Hohe Sicherheit\\ Charaktere an diesem Ort können nicht herausgefordert werden.",
+    "text": [
+      {
+        "title": "Hohe Sicherheit",
+        "description": "Charaktere an diesem Ort können nicht herausgefordert werden."
+      }
+    ],
+    "flavorText": "Shir Khans Geschäftszentrale, Sitz eines Imperiums aus Tintentropfen.",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
   },
   "gWy": {
     "name": "Rapunzels Turm",
@@ -25276,6 +27486,248 @@
     ],
     "flavorText": "Ein Ort, an dem du findest, was du brauchst, und nicht nur, was du willlst.",
     "searchableKeywords": ["Princess and the Frog", "Küss den Frosch"]
+  },
+  "6Lu": {
+    "name": "Gitarre der Ahnen",
+    "version": "",
+    "rulesText": "\\Musikalisches Vermächtnis\\ Wenn du diesen Gegenstand ausspielst, ziehe 1 Karte.%\\Von Herzen\\ {E}, 1 {I} — Ein Charakter deiner Wahl erhält in diesem Zug <Singen> und die Kosten dieses Charakters gelten als +2 für das Singen von Liedern.",
+    "text": [
+      {
+        "title": "Musikalisches Vermächtnis",
+        "description": "Wenn du diesen Gegenstand ausspielst, ziehe 1 Karte."
+      },
+      {
+        "title": "Von Herzen",
+        "description": "{E}, 1 {I} — Ein Charakter deiner Wahl erhält in diesem Zug <Singen> und die Kosten dieses Charakters gelten als +2 für das Singen von Liedern."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "UTF": {
+    "name": "Lautsprecher-Stapel",
+    "version": "",
+    "rulesText": "\\Dreh sie auf\\ Deine Charaktere mit <Singen> erhalten +1 {S} und +1 {W}.",
+    "text": [
+      {
+        "title": "Dreh sie auf",
+        "description": "Deine Charaktere mit <Singen> erhalten +1 {S} und +1 {W}."
+      }
+    ],
+    "flavorText": "„Du wirst großartig klingen, das verspreche ich dir! Der Käse sorgt für, äh, Käsigkeit.“%—Robert Zimuruski",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "wya": {
+    "name": "Ururgroßmutter Imeldas Segen",
+    "version": "",
+    "rulesText": "\\Familienpflicht\\ {E}, 1 {I} — Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges -1 {S} und kann nicht {E} werden, um Lieder zu singen.",
+    "text": [
+      {
+        "title": "Familienpflicht",
+        "description": "{E}, 1 {I} — Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges -1 {S} und kann nicht {E} werden, um Lieder zu singen."
+      }
+    ],
+    "flavorText": "„Na ja, eigentlich kann sie ihn an jede Bedingung knüpfen, die sie möchte.“%—Mitarbeiter der Abteilung für Familienzusammenführung",
+    "searchableKeywords": ["Coco"]
+  },
+  "DCF": {
+    "name": "Merlins Zauberstab",
+    "version": "",
+    "rulesText": "\\Magische Berührung\\ {E}, Zeige 2 Karten aus deiner Hand mit demselben Namen vor — Du zahlst 1 {I} weniger für die nächste Karte mit diesem Namen, die du in diesem Zug ausspielst.",
+    "text": [
+      {
+        "title": "Magische Berührung",
+        "description": "{E}, Zeige 2 Karten aus deiner Hand mit demselben Namen vor — Du zahlst 1 {I} weniger für die nächste Karte mit diesem Namen, die du in diesem Zug ausspielst."
+      }
+    ],
+    "flavorText": "„Nur eine kleine Abkürzung, um die Dinge voranzubringen.“ %—Merlin",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "XgC": {
+    "name": "Tintenformer-Skates",
+    "version": "",
+    "rulesText": "\\Der neueste Trend\\ {E} — Falls ein Charakter in diesem Zug erkundet hat, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Der neueste Trend",
+        "description": "{E} — Falls ein Charakter in diesem Zug erkundet hat, erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "„Teils Tintenformer, teils Rollerskates. Einfach großartig.“%—Cordelia, eine Luminari",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "h3H": {
+    "name": "Belles Stadtführer",
+    "version": "",
+    "rulesText": "\\Insiderinformationen\\ {E} — Falls du in diesem Zug mindestens 1 Aktion ausgespielt hast, sammle 1 Legende.",
+    "text": [
+      {
+        "title": "Insiderinformationen",
+        "description": "{E} — Falls du in diesem Zug mindestens 1 Aktion ausgespielt hast, sammle 1 Legende."
+      }
+    ],
+    "flavorText": "„Es enthält auch Buchempfehlungen <und> ein Rezept für etwas namens ,das graue Zeug‘?“ %—Cordelia, eine Luminari",
+    "searchableKeywords": ["Die Schöne und das Biest", "Beauty and the Beast"]
+  },
+  "LdD": {
+    "name": "Der schiefe Turm von Käsa",
+    "version": "",
+    "rulesText": "\\Fairer Handel\\ Wenn du diesen Gegenstand ausspielst, darfst du 1 Karte ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen.%\\Extra käsig\\ Solange du 4 Gegenstände namens Der schiefe Turm von Käsa im Spiel hast, erhalten deine Gegenstände <Behütet>. (Gegnerische Mitspielende können sie nicht auswählen.)",
+    "text": [
+      {
+        "title": "Fairer Handel",
+        "description": "Wenn du diesen Gegenstand ausspielst, darfst du 1 Karte ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen."
+      },
+      {
+        "title": "Extra käsig",
+        "description": "Solange du 4 Gegenstände namens Der schiefe Turm von Käsa im Spiel hast, erhalten deine Gegenstände <Behütet>. (Gegnerische Mitspielende können sie nicht auswählen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "aWq": {
+    "name": "Rivera-Familienfoto",
+    "version": "",
+    "rulesText": "\\Die Vergangenheit ehren\\ {E}, 1 {I} — Wähle eine Möglichkeit aus: %• Lege die obersten 2 Karten deines Decks auf deinen Ablagestapel.%• Falls du 10 oder mehr Karten in deinem Ablagestapel hast, sammelst du 1 Legende.",
+    "text": [
+      {
+        "title": "Die Vergangenheit ehren",
+        "description": "{E}, 1 {I} — Wähle eine Möglichkeit aus:"
+      },
+      {
+        "title": "• Lege die obersten 2 Karten deines Decks auf deinen Ablagestapel."
+      },
+      {
+        "title": "• Falls du 10 oder mehr Karten in deinem Ablagestapel hast, sammelst du 1 Legende."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "6g2": {
+    "name": "Die abgerissene Ecke",
+    "version": "",
+    "rulesText": "\\Schöne Erinnerungen\\ {E}, 1 {I} — Falls du 10 oder mehr Karten in deinem Ablagestapel hast, ziehe 1 Karte.%\\Das Foto reparieren\\ Wenn diese Karte von deinem Deck auf deinen Ablagestapel gelegt wird, falls du mindestens einen Gegenstand namens Rivera-Familienfoto im Spiel hast, darfst du diese Karte kostenlos aus deinem Ablagestapel ausspielen.",
+    "text": [
+      {
+        "title": "Schöne Erinnerungen",
+        "description": "{E}, 1 {I} — Falls du 10 oder mehr Karten in deinem Ablagestapel hast, ziehe 1 Karte."
+      },
+      {
+        "title": "Das Foto reparieren",
+        "description": "Wenn diese Karte von deinem Deck auf deinen Ablagestapel gelegt wird, falls du mindestens einen Gegenstand namens Rivera-Familienfoto im Spiel hast, darfst du diese Karte kostenlos aus deinem Ablagestapel ausspielen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "uvh": {
+    "name": "Jukebox",
+    "version": "",
+    "rulesText": "\\Auf Wiederholung\\ Einmal während deines Zuges, wenn du ein Lied ausspielst, falls es denselben Namen wie eine andere Karte in deinem Ablagestapel hat, darfst du einen Charakter deiner Wahl bereit machen. Er kann in diesem Zug nicht mehr erkunden.",
+    "text": [
+      {
+        "title": "Auf Wiederholung",
+        "description": "Einmal während deines Zuges, wenn du ein Lied ausspielst, falls es denselben Namen wie eine andere Karte in deinem Ablagestapel hat, darfst du einen Charakter deiner Wahl bereit machen. Er kann in diesem Zug nicht mehr erkunden."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "FkS": {
+    "name": "Blendender Chemieball",
+    "version": "",
+    "rulesText": "\\Destabilisieren\\ {E}, 2 {I} — Verbanne diesen Gegenstand. %\\Brillanter Ausbruch\\ Wenn dieser Gegenstand in deinem Zug verbannt wird, darfst du 1 Tintentropfen erschaffen. Wenn du dies tust, erhält ein Charakter deiner Wahl in diesem Zug -2 {S}. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Destabilisieren",
+        "description": "{E}, 2 {I} — Verbanne diesen Gegenstand."
+      },
+      {
+        "title": "Brillanter Ausbruch",
+        "description": "Wenn dieser Gegenstand in deinem Zug verbannt wird, darfst du 1 Tintentropfen erschaffen. Wenn du dies tust, erhält ein Charakter deiner Wahl in diesem Zug -2 {S}. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "oxw": {
+    "name": "Chemieball-Prototyp",
+    "version": "",
+    "rulesText": "\\Destabilisieren\\ {E}, 2 {I} — Verbanne diesen Gegenstand.%\\Rätselhafter Ausbruch\\ Wenn dieser Gegenstand in deinem Zug verbannt wird, darfst du 1 Tintentropfen erschaffen. Wenn du dies tust, erhält ein Charakter deiner Wahl bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1. Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": [
+      {
+        "title": "Destabilisieren",
+        "description": "{E}, 2 {I} — Verbanne diesen Gegenstand."
+      },
+      {
+        "title": "Rätselhafter Ausbruch",
+        "description": "Wenn dieser Gegenstand in deinem Zug verbannt wird, darfst du 1 Tintentropfen erschaffen. Wenn du dies tust, erhält ein Charakter deiner Wahl bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1. Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "PsC": {
+    "name": "Fernrohr-Hut",
+    "version": "",
+    "rulesText": "\\Hut-Couture\\ Jedes Mal, wenn du diesen oder einen anderen Gegenstand ausspielst, falls der neue Gegenstand einen anderen Namen als alle deine anderen Gegenstände im Spiel hat, darfst du 1 beliebige Karte aus deiner Hand verdeckt und erschöpft in deinen Tintenvorrat legen.",
+    "text": [
+      {
+        "title": "Hut-Couture",
+        "description": "Jedes Mal, wenn du diesen oder einen anderen Gegenstand ausspielst, falls der neue Gegenstand einen anderen Namen als alle deine anderen Gegenstände im Spiel hat, darfst du 1 beliebige Karte aus deiner Hand verdeckt und erschöpft in deinen Tintenvorrat legen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Little Mermaid", "Arielle die Meerjungfrau"]
+  },
+  "E31": {
+    "name": "Aufgewertete Chemie-Handtasche",
+    "version": "",
+    "rulesText": "\\Sie hat Stauraum!\\ {E}, 1 {I}, Verbanne einen deiner anderen Gegenstände — Schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Gegenstandskarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+    "text": [
+      {
+        "title": "Sie hat Stauraum!",
+        "description": "{E}, 1 {I}, Verbanne einen deiner anderen Gegenstände — Schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Gegenstandskarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "lTH": {
+    "name": "Hyperia-Stadtexpress",
+    "version": "",
+    "rulesText": "\\Einfacher Arbeitsweg\\ {E} — Bewege einen deiner Charaktere kostenlos zu einem Ort.%\\Stilvolle Bequemlichkeit\\ Deine Hyperia-Orte erhalten +2 {W}.",
+    "text": [
+      {
+        "title": "Einfacher Arbeitsweg",
+        "description": "{E} — Bewege einen deiner Charaktere kostenlos zu einem Ort."
+      },
+      {
+        "title": "Stilvolle Bequemlichkeit",
+        "description": "Deine Hyperia-Orte erhalten +2 {W}."
+      }
+    ],
+    "flavorText": "Fahrt mit der Bahn, kommt pünktlich an.",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "osH": {
+    "name": "Piratenflugzeug",
+    "version": "",
+    "rulesText": "\\Weiche dem mal aus!\\ Wenn du diesen Gegenstand ausspielst, darfst du einem Charakter deiner Wahl 1 Schaden zufügen.%\\Fassrolle\\ {E}, 1 {I} — Ein Charakter deiner Wahl erhält in diesem Zug <Alarmiert>. (Der Charakter kann herausfordern, als hätte er Wendig.)",
+    "text": [
+      {
+        "title": "Weiche dem mal aus!",
+        "description": "Wenn du diesen Gegenstand ausspielst, darfst du einem Charakter deiner Wahl 1 Schaden zufügen."
+      },
+      {
+        "title": "Fassrolle",
+        "description": "{E}, 1 {I} — Ein Charakter deiner Wahl erhält in diesem Zug <Alarmiert>. (Der Charakter kann herausfordern, als hätte er Wendig.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
   },
   "0mK": {
     "name": "Powhatans Stab",
@@ -27158,7 +29610,7 @@
       }
     ],
     "flavorText": "Die zerbrochene Krone verfügt über dunkle und geheimnisvolle Kräfte.",
-    "searchableKeywords": []
+    "searchableKeywords": ["Lorcana"]
   },
   "12k": {
     "name": "Amethyst Chromikon",
@@ -28192,6 +30644,268 @@
     ],
     "flavorText": "„Du musst nicht ‚pew pew‘ sagen, wenn du sie benutzt, aber es hilft ungemein.“ – Lilo, Galaktische Heldin",
     "searchableKeywords": ["Lilo and Stitch", "Lilo und Stitch"]
+  },
+  "uqv": {
+    "name": "Die Last des Alltags",
+    "version": "",
+    "rulesText": "%Eine gegnerische Person deiner Wahl zeigt alle Handkarten vor und wirft jede Karte, die keine Charakterkarte ist, ab.",
+    "text": "Eine gegnerische Person deiner Wahl zeigt alle Handkarten vor und wirft jede Karte, die keine Charakterkarte ist, ab.",
+    "flavorText": "",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "x16": {
+    "name": "Never Too Far Apart",
+    "version": "",
+    "rulesText": "<Gemeinsam singen> 9 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 9 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)%Schaue dir die obersten 9 Karten deines Decks an. Decke bis zu 3 Charakterkarten mit <Singen> daraus auf und nimm sie auf deine Hand. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+    "text": [
+      {
+        "title": "<Gemeinsam singen> 9 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 9 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)"
+      },
+      {
+        "title": "Schaue dir die obersten 9 Karten deines Decks an. Decke bis zu 3 Charakterkarten mit <Singen> daraus auf und nimm sie auf deine Hand. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "v5B": {
+    "name": "Denk stets an mich",
+    "version": "",
+    "rulesText": "<Gemeinsam singen> 6 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 6 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)%Du kannst in diesem Zug Charaktere aus deinem Ablagestapel ausspielen. Wenn du dies tust, werden diese erschöpft ausgespielt und du kannst in diesem Zug keine Charaktere mit demselben Namen spielen wie jene, die du auf diese Weise ausgespielt hast.",
+    "text": [
+      {
+        "title": "<Gemeinsam singen> 6 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 6 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)"
+      },
+      {
+        "title": "Du kannst in diesem Zug Charaktere aus deinem Ablagestapel ausspielen. Wenn du dies tust, werden diese erschöpft ausgespielt und du kannst in diesem Zug keine Charaktere mit demselben Namen spielen wie jene, die du auf diese Weise ausgespielt hast."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "WDL": {
+    "name": "Never Gonna Let You Cry",
+    "version": "",
+    "rulesText": "<Gemeinsam singen> 5 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 5 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)%Nimm bis zu 2 Charakterkarten, die 2 oder weniger kosten, aus deinem Ablagestapel zurück auf deine Hand.",
+    "text": [
+      {
+        "title": "<Gemeinsam singen> 5 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 5 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)"
+      },
+      {
+        "title": "Nimm bis zu 2 Charakterkarten, die 2 oder weniger kosten, aus deinem Ablagestapel zurück auf deine Hand."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Turning Red", "Rot"]
+  },
+  "nOm": {
+    "name": "Die ganze Welt kennt Juanita",
+    "version": "",
+    "rulesText": "%Ziehe 2 Karten. Falls du 10 oder mehr Karten in deinem Ablagestapel hast, ziehe stattdessen 3 Karten.",
+    "text": "Ziehe 2 Karten. Falls du 10 oder mehr Karten in deinem Ablagestapel hast, ziehe stattdessen 3 Karten.",
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "rWy": {
+    "name": "Mims Bosheit",
+    "version": "",
+    "rulesText": "Verschiebe bis zu 3 Schaden von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl.",
+    "text": "Verschiebe bis zu 3 Schaden von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl.",
+    "flavorText": "„Dieses bösartige Meisterwerk ist mein bisher bester Fluch!“",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "o6L": {
+    "name": "Higitus Pigitus",
+    "version": "",
+    "rulesText": "%Erschaffe 3 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": "Erschaffe 3 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "7PJ": {
+    "name": "Un Poco Loco",
+    "version": "",
+    "rulesText": "<Gemeinsam singen> 3 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 3 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)%Wähle 2 deiner Charaktere. Falls einer von ihnen 3 oder weniger kostet, nimm beide zurück auf deine Hand.",
+    "text": [
+      {
+        "title": "<Gemeinsam singen> 3 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 3 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)"
+      },
+      {
+        "title": "Wähle 2 deiner Charaktere. Falls einer von ihnen 3 oder weniger kostet, nimm beide zurück auf deine Hand."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "ShR": {
+    "name": "Die Makabere, Manische",
+    "version": "",
+    "rulesText": "%Sammle 2 Legenden. Ziehe 1 Karte.",
+    "text": "Sammle 2 Legenden. Ziehe 1 Karte.",
+    "flavorText": "… Mächtige Madame Mim",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "mqz": {
+    "name": "Kreative Inspiration",
+    "version": "",
+    "rulesText": "Ziehe 4 Karten.",
+    "text": "Ziehe 4 Karten.",
+    "flavorText": "„Ich liebe diese Stadt. Nur ich, mein Tintenformer und ein paar weiße Wände zum Bemalen.“%—Cordelia, eine Luminari",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "s22": {
+    "name": "Luftabwurf",
+    "version": "",
+    "rulesText": "Füge einem Charakter deiner Wahl 3 Schaden zu. Falls der gewählte Charakter beschädigt ist, füge ihm stattdessen 5 Schaden zu.",
+    "text": "Füge einem Charakter deiner Wahl 3 Schaden zu. Falls der gewählte Charakter beschädigt ist, füge ihm stattdessen 5 Schaden zu.",
+    "flavorText": "„Wir müssen die Fracht nicht stehlen, Boss. Sie kommt direkt zu uns!“%—Schrotthaufen",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "ojw": {
+    "name": "Above the Crowd",
+    "version": "",
+    "rulesText": "%Lege einen gegnerischen Charakter deiner Wahl mit 3 oder weniger {S} unter das zugehörige Deck.",
+    "text": "Lege einen gegnerischen Charakter deiner Wahl mit 3 oder weniger {S} unter das zugehörige Deck.",
+    "flavorText": "",
+    "searchableKeywords": ["Goofy - Der Film", "Goofy Movie"]
+  },
+  "FIu": {
+    "name": "Balu und seine Crew",
+    "version": "",
+    "rulesText": "%Ziehe 1 Karte. Du und eine weitere Person deiner Wahl erschaffen je 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": "Ziehe 1 Karte. Du und eine weitere Person deiner Wahl erschaffen je 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "flavorText": "",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "5lt": {
+    "name": "Das ist das Geschäft",
+    "version": "",
+    "rulesText": "Eine gegnerische Person deiner Wahl sucht sich eine Möglichkeit aus:%• Sie zeigt alle Handkarten vor und wirft eine Karte deiner Wahl ab. Sie erhält 2 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)%• Du ziehst 1 Karte und erschaffst 2 Tintentropfen.",
+    "text": [
+      {
+        "title": "Eine gegnerische Person deiner Wahl sucht sich eine Möglichkeit aus:"
+      },
+      {
+        "title": "• Sie zeigt alle Handkarten vor und wirft eine Karte deiner Wahl ab. Sie erhält 2 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)"
+      },
+      {
+        "title": "• Du ziehst 1 Karte und erschaffst 2 Tintentropfen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "IpT": {
+    "name": "Freche Provokation",
+    "version": "",
+    "rulesText": "Ein gegnerischer Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Impulsiv> und kann, falls du 2 oder mehr gegnerische Mitspielende hast, deine Charaktere oder Orte nicht herausfordern. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
+    "text": "Ein gegnerischer Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Impulsiv> und kann, falls du 2 oder mehr gegnerische Mitspielende hast, deine Charaktere oder Orte nicht herausfordern. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
+    "flavorText": "",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "M4n": {
+    "name": "Chemische Reaktion",
+    "version": "",
+    "rulesText": "Ziehe 1 Karte. Du darfst einen deiner Gegenstände verbannen. Wenn du dies tust, wählt eine gegnerische Person deiner Wahl 1 Karte aus ihrer Hand und wirft sie ab.",
+    "text": "Ziehe 1 Karte. Du darfst einen deiner Gegenstände verbannen. Wenn du dies tust, wählt eine gegnerische Person deiner Wahl 1 Karte aus ihrer Hand und wirft sie ab.",
+    "flavorText": "„Es <sollte> sicher sein.“",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "zN3": {
+    "name": "Einschüchterungstaktik",
+    "version": "",
+    "rulesText": "Verbanne einen Charakter deiner Wahl mit 2 oder weniger {S}.",
+    "text": "Verbanne einen Charakter deiner Wahl mit 2 oder weniger {S}.",
+    "flavorText": "„Was hatten die Tintentropfen hier im Khan-Stadion zu suchen? Wir wollen Antworten, und du wirst sie uns geben.“",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "Tuy": {
+    "name": "Grenzen überschreiten",
+    "version": "",
+    "rulesText": "Wähle einen deiner Charaktere. Jener erhält in diesem Zug beim Herausfordern keinen Schaden. Erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": "Wähle einen deiner Charaktere. Jener erhält in diesem Zug beim Herausfordern keinen Schaden. Erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "flavorText": "„Deine Chemie-Bälle haben keine Chance gegen diese verbesserten Plasmaklingen!“",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "dTt": {
+    "name": "Durchbohrt dich ihr Blick",
+    "version": "",
+    "rulesText": "%Wähle und verbanne einen deiner Charaktere, um einen Charakter deiner Wahl zu verbannen.",
+    "text": "Wähle und verbanne einen deiner Charaktere, um einen Charakter deiner Wahl zu verbannen.",
+    "flavorText": "… dann wirst du ganz still",
+    "searchableKeywords": ["101 Dalmatians", "101 Dalmatiner"]
+  },
+  "XHF": {
+    "name": "Muss ich jetzt auch leider gehen",
+    "version": "",
+    "rulesText": "%Lege die obersten 3 Karten deines Decks auf deinen Ablagestapel. Ein Charakter deiner Wahl erhält in diesem Zug +1 {S} für jede Liedkarte in deinem Ablagestapel.",
+    "text": "Lege die obersten 3 Karten deines Decks auf deinen Ablagestapel. Ein Charakter deiner Wahl erhält in diesem Zug +1 {S} für jede Liedkarte in deinem Ablagestapel.",
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "DSF": {
+    "name": "Kein dunkles Zeitalter mehr",
+    "version": "",
+    "rulesText": "Lege die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat. Erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": "Lege die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat. Erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "flavorText": "„Was für seltsame Steine! Ich bringe besser einen zu Merlin.“",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "UNK": {
+    "name": "Die andere Musik ist nur Verschnitt",
+    "version": "",
+    "rulesText": "%Schaue dir die obersten 3 Karten deines Decks an. Lege 1 davon verdeckt und erschöpft in deinen Tintenvorrat, 1 zurück auf dein Deck und 1 darunter.",
+    "text": "Schaue dir die obersten 3 Karten deines Decks an. Lege 1 davon verdeckt und erschöpft in deinen Tintenvorrat, 1 zurück auf dein Deck und 1 darunter.",
+    "flavorText": "",
+    "searchableKeywords": ["Aristocats"]
+  },
+  "7qV": {
+    "name": "Intensive Recherche",
+    "version": "",
+    "rulesText": "Schaue dir die obersten 2 Karten deines Decks an. Nimm 1 davon auf deine Hand und lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck. Falls du einen Tintentropfen benutzt hast, um diese Aktion auszuspielen, schaue dir stattdessen die obersten 5 Karten deines Decks an.",
+    "text": "Schaue dir die obersten 2 Karten deines Decks an. Nimm 1 davon auf deine Hand und lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck. Falls du einen Tintentropfen benutzt hast, um diese Aktion auszuspielen, schaue dir stattdessen die obersten 5 Karten deines Decks an.",
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6", "Baymax - Riesiges Robowabohu"]
+  },
+  "PdU": {
+    "name": "Hau ab!",
+    "version": "",
+    "rulesText": "Lege einen gegnerischen Charakter deiner Wahl, der 2 oder weniger kostet, verdeckt und erschöpft in den zugehörigen Tintenvorrat.",
+    "text": "Lege einen gegnerischen Charakter deiner Wahl, der 2 oder weniger kostet, verdeckt und erschöpft in den zugehörigen Tintenvorrat.",
+    "flavorText": "„Zum letzten Mal: Ich nehme keine Lehrlinge auf!“",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "iRc": {
+    "name": "Turnierkampf",
+    "version": "",
+    "rulesText": "Füge einem Charakter deiner Wahl 2 Schaden zu. Falls du einen Tintentropfen benutzt hast, um diese Aktion auszuspielen, füge dem gewählten Charakter stattdessen 5 Schaden zu.",
+    "text": "Füge einem Charakter deiner Wahl 2 Schaden zu. Falls du einen Tintentropfen benutzt hast, um diese Aktion auszuspielen, füge dem gewählten Charakter stattdessen 5 Schaden zu.",
+    "flavorText": "„Das Turnier erfordert auch eine große Gewandtheit. Es ist eine hoch entwickelte Wissenschaft.“%—Sir Pelinore",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "Ati": {
+    "name": "Tintenexplosion",
+    "version": "",
+    "rulesText": "Füge einem gegnerischen Charakter deiner Wahl 4 Schaden zu. Erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": "Füge einem gegnerischen Charakter deiner Wahl 4 Schaden zu. Erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "flavorText": "„Ich bevorzuge den Begriff ‚unvorhergesehene, schnelle Dekonstruktion‘.“%—Honey Lemon",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "PuN": {
+    "name": "Khan-Frachtzustellung",
+    "version": "",
+    "rulesText": "Ziehe 1 Karte. Erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "text": "Ziehe 1 Karte. Erschaffe 1 Tintentropfen. (Ein Tintentropfen kann entfernt werden, um 1 {I} zu bezahlen.)",
+    "flavorText": "„Was wir verkaufen, ist Macht. Die Macht der Bequemlichkeit.“%—Shir Khan",
+    "searchableKeywords": ["Käpt'n Balu und seine tollkühne Crew", "Talespin"]
+  },
+  "cie": {
+    "name": "Alle kommen dann bei mir zusammen",
+    "version": "",
+    "rulesText": "%Spiele einen Ort aus deiner Hand oder deinem Ablagestapel kostenlos aus. Falls ein Charakter dieses Lied gesungen hat, darfst du ihn kostenlos zu jenem Ort bewegen.",
+    "text": "Spiele einen Ort aus deiner Hand oder deinem Ablagestapel kostenlos aus. Falls ein Charakter dieses Lied gesungen hat, darfst du ihn kostenlos zu jenem Ort bewegen.",
+    "flavorText": "",
+    "searchableKeywords": ["Princess and the Frog", "Küss den Frosch"]
   },
   "3Jh": {
     "name": "Ohne dich",

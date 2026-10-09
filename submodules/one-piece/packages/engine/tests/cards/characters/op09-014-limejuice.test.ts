@@ -26,4 +26,27 @@ describe("OP09-014 Limejuice", () => {
 
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: chosen Blocker stays disabled after its power rises above4000, then recovers next turn", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP09-014", "OP04-056"], character: ["OP09-004"], activeDon: 9 },
+      { character: ["P-101"], life: 4 },
+    );
+    const blocker = e.findCardInZone("north", "character", "P-101");
+    expect(e.getView("north").players.north.characters[0]?.power).toBe(4000);
+    e.asSouth().play("OP09-014");
+    e.asSouth().chooseTargets(blocker);
+    e.asSouth().play("OP04-056");
+    e.asSouth().chooseTargets(e.findCardInZone("south", "character", "OP09-004"));
+    expect(e.getView("north").players.north.characters[0]?.power).toBe(5000);
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    expect(e.getView("north").players.north.lifeCount).toBe(3);
+    expect(e.getView("north").players.north.characters[0]?.rested).toBe(false);
+    e.asSouth().endTurn();
+    e.asNorth().endTurn();
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    e.asNorth().chooseBlocker(blocker);
+    // No usable Counter remains, so the Counter Step ends automatically.
+    expect(e.getView("north").players.north.lifeCount).toBe(3);
+    expect(e.getView("north").players.north.trash.map((c) => c.instanceId)).toContain(blocker);
+  });
 });

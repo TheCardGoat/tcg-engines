@@ -85,8 +85,17 @@ export const swordSaintsVow: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
               subject: {
                 kind: "event-object",
                 filter: {
-                  kind: "type",
-                  oneOf: ["ACTION"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ACTION"],
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["CRAFT"],
+                    },
+                  ],
                 },
               },
             },

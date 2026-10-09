@@ -57,7 +57,7 @@ export const op06ThrillerBark098: StageCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",
@@ -68,7 +68,7 @@ export const op06ThrillerBark098: StageCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Thriller Bark Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

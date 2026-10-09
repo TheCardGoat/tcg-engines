@@ -1,6 +1,6 @@
 import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
-import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
+import { processAttackDeclarationTriggers } from "../ability-executor.ts";
 import { consumeRuleUse, getEffectiveRules } from "../active-effects/index.ts";
 import { defOf, getDefinitionFor } from "../state/lookups.ts";
 import { hasPlayedProgramThisTurn, satisfiesMustAttackRequirement } from "./attack-requirements.ts";
@@ -54,6 +54,9 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
       return { valid: false, error: "Not in main phase", errorCode: "WRONG_PHASE" };
     if (state.G.attackState)
       return { valid: false, error: "Attack already in progress", errorCode: "ATTACK_IN_PROGRESS" };
+
+    if (state.G.turnMetadata.activePlayerId !== playerId)
+      return { valid: false, error: "Not your turn", errorCode: "NOT_YOUR_TURN" };
 
     const attacker = state.G.cardIndex[attackerId];
     if (!attacker)
@@ -140,6 +143,7 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
       rivalId: opponentId,
       kind: "direct",
       step: "attack",
+      unblockableAtDeclaration: getEffectiveRules(state, attackerId).includes("cantBeBlocked"),
     });
 
     const attackerName = state.G.cardIndex[attackerId]
@@ -150,6 +154,7 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
       type: "attackDeclared" as const,
       attackerId: attackerId as CardInstanceId,
       defenderId: null,
+      rivalId: opponentId,
       attackKind: "direct" as const,
       playerId,
     };
@@ -163,13 +168,8 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
       playerId,
     });
 
-    processCardSpentEventsSince(
+    processAttackDeclarationTriggers(
       eventsBeforeSpend,
-      state as import("../types/match-state.ts").MatchState,
-      operations,
-    );
-
-    processEventTriggers(
       attackDeclaredEvent,
       state as import("../types/match-state.ts").MatchState,
       operations,

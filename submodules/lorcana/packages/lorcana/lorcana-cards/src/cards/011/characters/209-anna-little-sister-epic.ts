@@ -23,7 +23,7 @@ export const annaLittleSisterEpic: CharacterCard = {
   franchise: "Frozen",
   set: "011",
   cardNumber: 209,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 2,
   strength: 2,

@@ -48,7 +48,7 @@ describe("OP09-089 Stronger", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("without the required Leader still pays both costs and reduces cost but does not draw", () => {
+  test("without the required Leader still pays both costs but neither draws nor reduces cost", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [op09Stronger089],
@@ -63,7 +63,6 @@ describe("OP09-089 Stronger", () => {
 
     engine.activateEffect(strongerId, "activateMain", "south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [targetId] }, "south");
 
     const view = engine.getView("south");
     expect(view.players.south.trash.map((card) => card.instanceId)).toEqual(
@@ -71,7 +70,7 @@ describe("OP09-089 Stronger", () => {
     );
     expect(view.players.south).toMatchObject({ handCount: 0, deckCount: 2 });
     expect(view.players.north.characters.find((card) => card?.instanceId === targetId)?.cost).toBe(
-      3,
+      eb01MountainGod018.cost,
     );
     expect(view.prompts).toHaveLength(0);
   });

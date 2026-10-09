@@ -92,6 +92,9 @@ export class GundamServerEngine implements ServerGameEngine {
     if (moveType === "undo") {
       return this.undo(actorId, context);
     }
+    if (moveType === "undoToTurnStart") {
+      return this.undoToTurnStart(actorId, context);
+    }
     const prevStateID = this.engine.getStateID();
     const result = this.engine.executeCommand(
       {
@@ -331,12 +334,12 @@ export class GundamServerEngine implements ServerGameEngine {
   }
 
   canUndo(playerId: string): boolean {
-    return this.engine.canUndo(playerId as never);
+    return this.engine.canUndo(playerId as PlayerId);
   }
 
   undo(playerId: string, context: DispatchContext): DispatchResult {
     const currentStateID = this.engine.getStateID();
-    const result = this.engine.undo(playerId as never);
+    const result = this.engine.undo(playerId as PlayerId);
     if (!result) {
       return {
         success: false,
@@ -346,6 +349,24 @@ export class GundamServerEngine implements ServerGameEngine {
       };
     }
     return this.#toDispatchResult(result, context, playerId, "undo");
+  }
+
+  canUndoToTurnStart(playerId: string): boolean {
+    return this.engine.canUndoToTurnStart(playerId as PlayerId);
+  }
+
+  undoToTurnStart(playerId: string, context: DispatchContext): DispatchResult {
+    const currentStateID = this.engine.getStateID();
+    const result = this.engine.undoToTurnStart(playerId as PlayerId);
+    if (!result) {
+      return {
+        success: false,
+        error: "No clean turn-start checkpoint is available.",
+        errorCode: "UNDO_TO_TURN_START_NOT_AVAILABLE",
+        stateID: currentStateID,
+      };
+    }
+    return this.#toDispatchResult(result, context, playerId, "undoToTurnStart");
   }
 
   /**
@@ -508,8 +529,11 @@ export class GundamServerEngine implements ServerGameEngine {
       timestamp: Date.now(),
       sourceAuthority: context.sourceAuthority,
       newStateID: stateVersion,
-      transitionType: moveType === "undo" ? "undo" : "move",
-      ...(moveType === "undo" ? { undoneStateID: result.processedCommand.prevStateID } : {}),
+      transitionType:
+        moveType === "undo" || moveType === "undoToTurnStart" ? "undo" : "move",
+      ...(moveType === "undo" || moveType === "undoToTurnStart"
+        ? { undoneStateID: result.processedCommand.prevStateID }
+        : {}),
     };
 
     const engineLogRecords: EngineLogRecord[] = (result.moveLogs ?? []).map((log) => ({

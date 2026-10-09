@@ -23,7 +23,7 @@ export const op02RoronoaZoro043: CharacterCard = {
   cost: 4,
   power: 6000,
   counter: 1000,
-  traits: ["Film Straw Hat Crew Supernovas"],
+  traits: ["FILM", "Supernovas", "Straw Hat Crew"],
   attribute: "slash",
   i18n: op02RoronoaZoro043I18n,
 };

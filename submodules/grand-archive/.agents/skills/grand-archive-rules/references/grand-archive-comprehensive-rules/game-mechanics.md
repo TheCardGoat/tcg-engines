@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics"
+  relation: "current_index"
+---
+
 # Game Mechanics
 
 The following pages will discuss these topics:&#x20;

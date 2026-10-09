@@ -29,6 +29,10 @@ export const drHamstervielEvilObserver: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_c2efacd932144d2c8177a7e797ea3d58",
+    tcgPlayer: "704679",
+  },
   text: [
     {
       title: "Alert",

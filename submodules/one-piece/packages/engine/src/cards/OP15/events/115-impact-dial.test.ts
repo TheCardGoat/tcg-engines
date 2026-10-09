@@ -27,4 +27,20 @@ describe("OP15-115 Impact Dial", () => {
     expect(south.hand.map((card) => card.cardId)).toContain(topLifeCard);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("Life Trigger K.O.s a cost-4 Character without taking another Life card", () => {
+    const e = OnePieceTestEngine.create(
+      { life: ["OP15-115", "ST02-002"] },
+      { character: ["OP16-002", "EB01-018"] },
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    const target = e.findCardInZone("north", "character", "OP16-002");
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().activateLifeTrigger();
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.north.trash.map((c) => c.instanceId)).toContain(target);
+    expect(e.getView("south").players.north.characters.filter(Boolean)).toHaveLength(1);
+    expect(e.getView("south").players.south.lifeCount).toBe(1);
+    expect(e.getView("south").players.south.handCount).toBe(0);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP15-115");
+  });
 });

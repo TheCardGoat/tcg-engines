@@ -46,7 +46,7 @@ export const op09GolDRoger118: CharacterCard = {
   setId: "OP09",
   cost: 10,
   power: 13000,
-  traits: ["Roger Pirates King of the Pirates"],
+  traits: ["King of the Pirates", "Roger Pirates"],
   attribute: "slash",
 
   effect:

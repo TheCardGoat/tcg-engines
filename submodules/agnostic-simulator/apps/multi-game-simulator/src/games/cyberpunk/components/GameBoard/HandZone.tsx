@@ -244,7 +244,12 @@ export function HandZone({
                   style={{ display: "contents" }}
                   aria-hidden
                 >
-                  <CardImage faceDown disablePreview alt="Opponent card" />
+                  <CardImage
+                    faceDown
+                    disablePreview
+                    alt="Opponent card"
+                    side={side ?? (opponent ? "opponent" : "player")}
+                  />
                 </div>
               ) : (
                 <Card

@@ -20,10 +20,29 @@ function createEngine(trashCount: number) {
 }
 
 describe("OP15-093 The Risky Brothers", () => {
-  test("with 15+ trash it self-trashes to grant a [Monkey.D.Luffy] [Rush: Character]", () => {
-    const engine = createEngine(15);
+  test("self-trash reaches fifteen and grants a newly played Luffy Rush: Character, not Leader attacks", () => {
+    let engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP05-001",
+        character: [op15TheRiskyBrothers093],
+        hand: ["OP16-095"],
+        trash: Array.from({ length: 14 }, () => FILLER),
+        activeDon: 2,
+      },
+      { leaderCardId: "ST01-001", character: [{ card: eb01Doma005, rested: true }], hand: [] },
+    );
+    engine.asSouth().play("OP16-095");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
     const brothersId = engine.findCardInZone("south", "character", op15TheRiskyBrothers093);
     const luffyId = engine.findCardInZone("south", "character", "OP16-095");
+    const opponent = engine.findCardInZone("north", "character", eb01Doma005);
+    const beforeGrant = engine.expectFailure({
+      type: "declareAttack",
+      seat: "south",
+      attackerId: luffyId,
+      targetId: opponent,
+    });
+    engine = OnePieceTestEngine.fromState(beforeGrant.state);
 
     engine.activateEffect(brothersId, "activateMain", "south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
@@ -32,39 +51,49 @@ describe("OP15-093 The Risky Brothers", () => {
     expect(grant.candidates.map((candidate) => candidate.ref.id)).toEqual([luffyId]);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [luffyId] }, "south");
 
-    // The second half of the printed effect grants the "Slash" attribute to
-    // the same Character.
-    const attribute = engine.pendingDecision("effectTargetSelection", "south").steps[0];
-    if (attribute?.kind !== "selectEntity") throw new Error("Expected the attribute grant.");
-    expect(attribute.candidates.map((candidate) => candidate.ref.id)).toEqual([luffyId]);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [luffyId] }, "south");
-
     const view = engine.getView("south").players.south;
     expect(view.trash.map((card) => card.cardId)).toContain(op15TheRiskyBrothers093.id);
     // The granted "Slash" attribute is player-visible on the buffed card.
     const luffyCard = view.characters.find((c) => c?.instanceId === luffyId);
-    console.log(
-      "ATTR:",
-      JSON.stringify({
-        mods: Object.values(engine.getState().modifiers).map((m) => [
-          m.type,
-          m.targetId,
-          m.attribute,
-        ]),
-      }),
-    );
     expect(luffyCard?.attribute).toContain("slash");
-    // Rush: Character — the just-played Luffy can now attack.
-    expect(() => engine.asSouth().attack(luffyId, engine.asNorth().leader())).not.toThrow();
+    const leaderAttack = engine.expectFailure({
+      type: "declareAttack",
+      seat: "south",
+      attackerId: luffyId,
+      targetId: engine.leader("north"),
+    });
+    engine = OnePieceTestEngine.fromState(leaderAttack.state);
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === luffyId)
+        ?.rested,
+    ).toBe(false);
+    engine.asSouth().attack(luffyId, opponent);
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === luffyId)
+        ?.rested,
+    ).toBe(true);
     expect(engine.getView("south").prompts).toHaveLength(0);
+    engine.endTurn("south");
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === luffyId)
+        ?.attribute,
+    ).not.toContain("slash");
   });
 
-  test("does not open with 14 or fewer cards in trash", () => {
+  test("checks the trash threshold after paying the self-trash cost", () => {
     const engine = createEngine(14);
     const brothersId = engine.findCardInZone("south", "character", op15TheRiskyBrothers093);
+    const luffyId = engine.findCardInZone("south", "character", "OP16-095");
 
-    expect(() => engine.activateEffect(brothersId, "activateMain", "south")).toThrow();
-    expect(engine.getView("south").players.south.trash).toHaveLength(14);
+    engine.activateEffect(brothersId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [luffyId] }, "south");
+
+    expect(engine.getView("south").players.south.trash).toHaveLength(15);
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === luffyId)
+        ?.attribute,
+    ).toContain("slash");
   });
   test("declining the self-trash leaves the Character and trash untouched", () => {
     const engine = createEngine(15);

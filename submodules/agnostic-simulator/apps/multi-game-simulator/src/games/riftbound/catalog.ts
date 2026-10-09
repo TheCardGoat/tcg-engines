@@ -1,5 +1,5 @@
 import { apiUrl } from "../../runtime/gameRuntimeApi";
-import type { RiftboundClientCardDefinitionV1 } from "./state";
+import type { RiftboundClientCardDefinitionV1 } from "@tcg/riftbound-tabletop";
 
 interface RiftboundUiCard {
   canonical_id: string;

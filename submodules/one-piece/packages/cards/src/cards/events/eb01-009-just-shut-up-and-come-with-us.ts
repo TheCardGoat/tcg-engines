@@ -38,7 +38,7 @@ export const eb01JustShutUpAndComeWithUs009: EventCard = {
   rarity: "C",
   setId: "EB01",
   cost: 1,
-  traits: ["Straw Hat Crew Drum Kingdom"],
+  traits: ["Drum Kingdom", "Straw Hat Crew"],
   effect:
     "[Counter] Look at 5 cards from the top of your deck and play up to 1 [Animal] type Character card with a cost of 3 or less. Then, place the rest at the bottom of your deck in any order.",
   effects: {
@@ -66,7 +66,7 @@ export const eb01JustShutUpAndComeWithUs009: EventCard = {
               {
                 filter: "trait",
                 value: "Animal",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

@@ -21,7 +21,7 @@ export const op02DiableJambeVenaisonShoot046: EventCard = {
   rarity: "UC",
   setId: "OP02",
   cost: 2,
-  traits: ["Film Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   effect:
     "[Main] K.O. up to 1 of your opponent's rested Characters with a cost of 4 or less. [Trigger] Play up to 1 Character card with a cost of 4 or less and no base effect from your hand.",
   effects: {

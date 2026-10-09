@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-// Auto-verified: Blamenco (OP17-011) cost=5 power=6000 counter=1000
 describe("OP17-011 Blamenco", () => {
   test("[DON!! x2] [When Attacking] gives an opposing Character -4000 power for the turn", () => {
     const engine = OnePieceTestEngine.create(
@@ -26,21 +25,17 @@ describe("OP17-011 Blamenco", () => {
     expect(hajrudin()?.power).toBe(6000);
   });
 
-  test("[Continuous] survives the turn handoff", () => {
+  test("one attached DON does not activate the attack power reduction", () => {
     const engine = OnePieceTestEngine.create(
       { character: [{ cardId: "OP17-011", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
+      { character: ["OP01-018"] },
     );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-011",
-    );
+    const target = engine.findCardInZone("north", "character", "OP01-018");
+    engine.asSouth().attack("OP17-011", engine.asNorth().leader());
+    expect(
+      engine.getView("south").players.north.characters.find((card) => card?.instanceId === target)
+        ?.power,
+    ).toBe(6000);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

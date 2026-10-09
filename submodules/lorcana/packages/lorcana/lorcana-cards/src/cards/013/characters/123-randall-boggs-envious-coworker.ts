@@ -31,12 +31,16 @@ export const randallBoggsEnviousCoworker: CharacterCard = {
   willpower: 1,
   lore: 0,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_77e63110b6c6421a872ea5ef6f2aeca2",
+    tcgPlayer: "702668",
+  },
   text: [
     {
       title: "Evasive",
     },
     {
-      title: "After-Hours Project",
+      title: "AFTER-HOURS PROJECT",
       description: "While all cards in your inkwell are exerted, this character gets +2 {L}.",
     },
   ],

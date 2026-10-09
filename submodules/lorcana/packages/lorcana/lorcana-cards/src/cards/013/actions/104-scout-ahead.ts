@@ -26,6 +26,7 @@ export const scoutAhead: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7e4498c77e4a448b816dc9a6b6780139",
+    tcgPlayer: "704613",
   },
   text: "If an opponent has more lore than you, gain 2 lore.",
   abilities: [

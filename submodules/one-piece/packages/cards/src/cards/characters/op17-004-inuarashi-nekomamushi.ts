@@ -23,7 +23,7 @@ export const op17InuarashiNekomamushi004: CharacterCard = {
   cost: 3,
   power: 2000,
   counter: 2000,
-  traits: ["Land of Wano Minks Whitebeard Pirates"],
+  traits: ["Minks", "Land of Wano", "Whitebeard Pirates"],
   attribute: "slash",
   effect:
     '[On Play] Up to 1 of your {Land of Wano} type Characters or up to 1 of your Characters with a type including "Whitebeard Pirates" gains [Rush] during this turn. (This card can attack on the turn in which it is played.)',
@@ -49,7 +49,7 @@ export const op17InuarashiNekomamushi004: CharacterCard = {
                       {
                         filter: "trait",
                         value: "Land of Wano",
-                        match: "includes",
+                        match: "exact",
                       },
                     ],
                     [

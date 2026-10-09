@@ -23,7 +23,7 @@ export const op02Inazuma050: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Revolutionary Army Impel Down"],
+  traits: ["Impel Down", "Revolutionary Army"],
   attribute: "slash",
   effect:
     "If you have 1 or less cards in your hand, this Character gains +2000 power. [Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

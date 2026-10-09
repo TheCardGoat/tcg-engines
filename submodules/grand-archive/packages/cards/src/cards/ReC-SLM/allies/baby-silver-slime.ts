@@ -45,6 +45,7 @@ export const babySilverSlime: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                 collection: {
                   zones: ["field"],
                   player: "controller",
+                  excludingSource: true,
                   filter: {
                     kind: "all",
                     filters: [

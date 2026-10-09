@@ -23,7 +23,7 @@ export const op07GeckoMoria083: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["The Seven Warlords of the Sea Thriller Bark Pirates"],
+  traits: ["The Seven Warlords of the Sea", "Thriller Bark Pirates"],
   attribute: "special",
   effect:
     "[Activate: Main] You may place 4 [Thriller Bark Pirates] type cards from your trash at the bottom of your deck in any order: This Character gains [Banish] and +1000 power during this turn. (When this card deals damage, the target card is trashed without activating its Trigger.)",
@@ -40,7 +40,7 @@ export const op07GeckoMoria083: CharacterCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

@@ -38,7 +38,13 @@ interface ActiveImport {
 type StartupState =
   | { status: "idle" }
   | { status: "launching"; warnings: string[] }
-  | { status: "error"; message: string; warnings: string[] };
+  | { status: "error"; message: string; warnings: string[]; canRetry: boolean };
+
+interface MatchmakingImport {
+  payload: string;
+  config: PracticeMatchConfig;
+  warnings: string[];
+}
 
 interface QuickMatchResponse {
   object: "quick_match";
@@ -116,6 +122,7 @@ export function WebviewPracticePage() {
   const [activeImport, setActiveImport] = useState<ActiveImport | null>(null);
   const [errors, setErrors] = useState<DeckImportError[]>([]);
   const [startup, setStartup] = useState<StartupState>({ status: "idle" });
+  const matchmakingImportRef = useRef<MatchmakingImport | null>(null);
   const latestImportRef = useRef<ActiveImport | null>(activeImport);
   latestImportRef.current = activeImport;
 
@@ -172,6 +179,23 @@ export function WebviewPracticePage() {
     });
   }, []);
 
+  const startHostedPractice = useCallback((matchmakingImport: MatchmakingImport) => {
+    setStartup({ status: "launching", warnings: matchmakingImport.warnings });
+    launchHostedPracticeForPayload(matchmakingImport.payload, matchmakingImport.config)
+      .then((response) => {
+        savePracticeMatchConfig(configForLiveMatchRedirect(matchmakingImport.config, response));
+        window.location.replace(liveMatchHref(response, matchmakingImport.config.botStrategyId));
+      })
+      .catch((error: unknown) => {
+        setStartup({
+          status: "error",
+          message: error instanceof Error ? error.message : "The match service did not respond.",
+          warnings: matchmakingImport.warnings,
+          canRetry: true,
+        });
+      });
+  }, []);
+
   useEffect(() => {
     if (typeof window === "undefined") {
       return;
@@ -185,20 +209,17 @@ export function WebviewPracticePage() {
 
     const matchmakingImport = loadMatchmakingPayloadFromQuery();
     if (matchmakingImport) {
-      setStartup({ status: "launching", warnings: matchmakingImport.warnings });
-      launchHostedPracticeForPayload(matchmakingImport.payload, matchmakingImport.config)
-        .then((response) => {
-          savePracticeMatchConfig(configForLiveMatchRedirect(matchmakingImport.config, response));
-          window.location.replace(liveMatchHref(response, matchmakingImport.config.botStrategyId));
-        })
-        .catch((error) => {
-          setStartup({
-            status: "error",
-            message:
-              error instanceof Error ? error.message : "Unable to create a synced practice match.",
-            warnings: matchmakingImport.warnings,
-          });
-        });
+      matchmakingImportRef.current = matchmakingImport;
+      startHostedPractice(matchmakingImport);
+      return;
+    }
+    if (new URLSearchParams(window.location.search).get("source") === "matchmaking") {
+      setStartup({
+        status: "error",
+        message: "The practice link is incomplete or invalid.",
+        warnings: [],
+        canRetry: false,
+      });
       return;
     }
 
@@ -229,7 +250,7 @@ export function WebviewPracticePage() {
       window.removeEventListener("focus", announceReadyIfWaiting);
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
-  }, [announceReady, handleImportMessage]);
+  }, [announceReady, handleImportMessage, startHostedPractice]);
 
   const onMatchEnded = useCallback(
     (result: { winnerId: string | null; reason: string | null }) => {
@@ -253,6 +274,7 @@ export function WebviewPracticePage() {
     }
     return (
       <BoardSharedPage
+        showFirstGameInvitation
         key={activeImport.config.matchId}
         scenarioId={DEFAULT_SCENARIO}
         initialEngineBuilder={() => createPracticeEngine(activeImport.config)}
@@ -272,8 +294,8 @@ export function WebviewPracticePage() {
 
   if (startup.status === "launching" || startup.status === "error") {
     return (
-      <main className={classes.page}>
-        <div className={classes.shell}>
+      <main className={`${classes.page} ${classes.startupPage}`}>
+        <div className={`${classes.shell} ${classes.startupShell}`}>
           <header className={classes.header}>
             <p className={classes.eyebrow}>Cyberpunk · practice</p>
             <h1 className={classes.title}>
@@ -281,10 +303,38 @@ export function WebviewPracticePage() {
             </h1>
             <p className={classes.lead}>
               {startup.status === "launching"
-                ? "Creating a synced client-authoritative bot match."
-                : startup.message}
+                ? "Setting up your match against the bot. This may take a moment."
+                : startup.canRetry
+                  ? "We couldn't start your match against the bot. Please try again, or return to matchmaking."
+                  : "We couldn't read the deck from this practice link. Return to matchmaking and choose a deck again."}
             </p>
           </header>
+          {startup.status === "error" ? (
+            <section className={classes.panel} role="alert" aria-label="Practice match error">
+              <p className={classes.errorDetail}>{startup.message}</p>
+              <div className={classes.recoveryActions}>
+                {startup.canRetry ? (
+                  <button
+                    className={classes.button}
+                    type="button"
+                    onClick={() => {
+                      if (matchmakingImportRef.current) {
+                        startHostedPractice(matchmakingImportRef.current);
+                      }
+                    }}
+                  >
+                    Try again
+                  </button>
+                ) : null}
+                <a
+                  className={startup.canRetry ? classes.recoveryLink : classes.buttonLink}
+                  href={matchmakingReturnUrl()}
+                >
+                  Return to matchmaking
+                </a>
+              </div>
+            </section>
+          ) : null}
           {startup.warnings.length > 0 ? (
             <section className={classes.warningPanel} aria-label="Practice deck warnings">
               <h2 className={classes.warningTitle}>Practice deck warnings</h2>
@@ -371,11 +421,7 @@ function base64UrlDecode(value: string): string {
   return atob(padded);
 }
 
-function loadMatchmakingPayloadFromQuery(): {
-  payload: string;
-  config: PracticeMatchConfig;
-  warnings: string[];
-} | null {
+function loadMatchmakingPayloadFromQuery(): MatchmakingImport | null {
   if (typeof window === "undefined") {
     return null;
   }

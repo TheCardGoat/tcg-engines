@@ -17,6 +17,13 @@ export interface AnimatedEntityNodeProps extends Omit<
   readonly entityId: string;
   readonly zoneRef?: { kind: "zone"; id: string; ownerId?: string };
   readonly density: AnimationNodeDensity;
+  /**
+   * Opt out of Motion layout animation entirely. Surfaces whose slots never
+   * reflow (static racks) or whose projection is unreliable inside scaled
+   * ancestors should disable it: a mis-projected layout pass leaves stale
+   * transforms (tilted, oversized, clipped cards) that outlive the animation.
+   */
+  readonly disableLayoutAnimation?: boolean;
   readonly children: React.ReactNode;
 }
 
@@ -24,6 +31,7 @@ export function AnimatedEntityNode({
   entityId,
   zoneRef,
   density,
+  disableLayoutAnimation = false,
   children,
   style,
   ...divProps
@@ -32,7 +40,8 @@ export function AnimatedEntityNode({
   const compiledPlan = runtime?.compiledPlan;
   const transferActive = hasEntityTransfer(entityId, compiledPlan);
   const sourceExitActive = hasSourceCardExit(entityId, compiledPlan);
-  const layoutActive = entityParticipatesInLayout(entityId, zoneRef?.id, compiledPlan);
+  const layoutActive =
+    !disableLayoutAnimation && entityParticipatesInLayout(entityId, zoneRef?.id, compiledPlan);
   const isPresent = useIsPresent();
   const ref = useAnimationNode(
     { kind: "entity", id: entityId },

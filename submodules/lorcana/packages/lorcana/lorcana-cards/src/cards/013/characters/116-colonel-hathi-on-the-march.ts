@@ -29,9 +29,13 @@ export const colonelHathiOnTheMarch: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_f3f33662ebab451a96e3a5297e001e89",
+    tcgPlayer: "704624",
+  },
   text: [
     {
-      title: "Hup, Two, Three, Four",
+      title: "HUP, TWO, THREE, FOUR",
       description:
         "Whenever this character quests, you may move him to one of your locations for free.",
     },

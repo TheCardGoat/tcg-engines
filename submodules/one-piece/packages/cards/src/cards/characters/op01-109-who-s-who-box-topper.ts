@@ -5,7 +5,7 @@ export const op01WhoSWhoBoxTopper109: CharacterCard = {
   id: "OP01-109",
   canonicalId: "OP01-109",
   slug: "who-s-who-box-topper",
-  name: "Who's.Who (Box Topper)",
+  name: "Who's.Who",
   printings: [
     {
       id: "OP01-109",

@@ -18,7 +18,7 @@ describe("OP07-069 through OP07-119 parser regressions", () => {
           target: {
             player: "self",
             zones: ["leader", "character"],
-            filters: [{ filter: "trait", value: "Egghead", match: "includes" }],
+            filters: [{ filter: "trait", value: "Egghead", match: "exact" }],
           },
         },
       ],
@@ -32,7 +32,7 @@ describe("OP07-069 through OP07-119 parser regressions", () => {
       effects: [
         {
           trigger: "trigger",
-          conditions: [{ condition: "leaderTrait", trait: "Egghead", match: "includes" }],
+          conditions: [{ condition: "leaderTrait", trait: "Egghead", match: "exact" }],
           actions: [{ action: "draw", player: "self", amount: 2 }],
         },
       ],

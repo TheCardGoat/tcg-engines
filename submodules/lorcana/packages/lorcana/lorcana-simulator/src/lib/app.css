@@ -165,6 +165,9 @@ body[data-immersive-app="active"] {
 }
 
 body[data-immersive-app="active"] {
+  position: fixed;
+  inset: 0;
+  width: 100%;
   -webkit-touch-callout: none;
 }
 

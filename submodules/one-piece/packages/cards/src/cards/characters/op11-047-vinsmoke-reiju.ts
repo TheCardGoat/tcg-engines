@@ -31,7 +31,7 @@ export const op11VinsmokeReiju047: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 2000,
-  traits: ["The Vinsmoke Family GERMA 66"],
+  traits: ["The Vinsmoke Family", "GERMA 66"],
   attribute: "special",
   effect:
     '[On Play] If your Leader has the "The Vinsmoke Family" type, look at 5 cards from the top of your deck; reveal up to 1 card with a type including "GERMA" and add it to your hand. Then, trash the rest.',
@@ -43,7 +43,7 @@ export const op11VinsmokeReiju047: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "The Vinsmoke Family",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

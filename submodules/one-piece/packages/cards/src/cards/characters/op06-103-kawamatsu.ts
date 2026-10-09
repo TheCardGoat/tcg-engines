@@ -26,8 +26,14 @@ export const op06Kawamatsu103: CharacterCard = {
   attribute: "slash",
   effect:
     "[When Attacking] You may trash 2 cards from your hand: Add up to 1 of your Characters with 0 power to the top or bottom of the owner's Life cards face-up.",
+  trigger: "If your opponent has 3 or less Life cards, play this card.",
   effects: {
     effects: [
+      {
+        trigger: "trigger",
+        conditions: [{ condition: "lifeCount", player: "opponent", comparison: "lte", value: 3 }],
+        actions: [{ action: "playThisCard" }],
+      },
       {
         trigger: "whenAttacking",
         costs: [

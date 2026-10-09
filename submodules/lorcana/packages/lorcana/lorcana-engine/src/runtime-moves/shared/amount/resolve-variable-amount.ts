@@ -109,6 +109,23 @@ function getCardLoreValue(
 }
 
 function getCardStrength(context: VariableAmountResolutionContext, cardId: CardInstanceId): number {
+  const retainedStrength = context.eventSnapshot?.sourceStrengthWhenLeftPlay;
+  if (
+    cardId === context.sourceId &&
+    typeof retainedStrength === "number" &&
+    Number.isFinite(retainedStrength)
+  )
+    return retainedStrength;
+  const zone = context.ctx.framework.zones.getCardZone(cardId)?.split(":", 1)[0];
+  const lastKnownStrength = context.ctx.cards.require(cardId).meta?.lastKnownStrength;
+  if (
+    cardId === context.sourceId &&
+    zone !== "play" &&
+    typeof lastKnownStrength === "number" &&
+    Number.isFinite(lastKnownStrength)
+  ) {
+    return lastKnownStrength;
+  }
   return getEffectiveStrength(
     context.ctx.cards.getDefinition(cardId) as any,
     getDerivedState(context),
@@ -199,6 +216,10 @@ function listCardsInScope(
       ),
     ),
   );
+}
+
+function normalizeNameForCount(name: string): string {
+  return name.trim().toLowerCase();
 }
 
 function resolveOpponentScopedValue(
@@ -954,6 +975,23 @@ function evaluateAggregate(
               }).length,
             controller,
           );
+        case "songs-in-discard":
+          return resolveOpponentScopedValue(
+            context,
+            (playerId) =>
+              context.ctx.framework.zones
+                .getCards({
+                  zone: "discard",
+                  playerId,
+                })
+                .filter((cardId) => {
+                  const definition = context.ctx.cards.getDefinition(cardId) as
+                    | { cardType?: string; actionSubtype?: string }
+                    | undefined;
+                  return definition?.cardType === "action" && definition?.actionSubtype === "song";
+                }).length,
+            controller,
+          );
         case "characters":
         case "characters-in-play":
           return resolveOpponentScopedValue(
@@ -965,6 +1003,25 @@ function evaluateAggregate(
                   | undefined;
                 return definition?.cardType === "character";
               }).length,
+            controller,
+          );
+        case "distinct-item-names-in-play":
+          return resolveOpponentScopedValue(
+            context,
+            (playerId) => {
+              const names = new Set<string>();
+              for (const cardId of context.ctx.framework.zones.getCards({
+                zone: "play",
+                playerId,
+              })) {
+                const definition = context.ctx.cards.getDefinition(cardId) as
+                  | { cardType?: string; name?: string }
+                  | undefined;
+                if (definition?.cardType !== "item" || !definition.name) continue;
+                names.add(normalizeNameForCount(definition.name));
+              }
+              return names.size;
+            },
             controller,
           );
         case "distinct-character-ink-types":

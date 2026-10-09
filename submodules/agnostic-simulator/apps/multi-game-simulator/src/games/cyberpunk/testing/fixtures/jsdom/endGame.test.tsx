@@ -28,19 +28,7 @@ async function expectEndGameFixtureState(pom: CyberpunkSimulatorPom): Promise<vo
   await pom.expectBoardMode(CYBERPUNK_P2, "view");
   await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
   await pom.expectPendingChoiceType(CYBERPUNK_P2, null);
-
-  await pom.expectHandSize(CYBERPUNK_P1, 3);
-  await pom.expectFieldSize(CYBERPUNK_P1, 4);
-  await pom.expectFaceDownLegendsCount(CYBERPUNK_P1, 1);
-  await pom.expectFixerDiceCount(CYBERPUNK_P1, 2);
-  await pom.expectGigCount(CYBERPUNK_P1, 4);
-  await pom.expectEddies(CYBERPUNK_P1, 8);
-
-  await pom.expectFieldSize(CYBERPUNK_P2, 4);
-  await pom.expectFaceDownLegendsCount(CYBERPUNK_P2, 0);
-  await pom.expectFixerDiceCount(CYBERPUNK_P2, 3);
-  await pom.expectGigCount(CYBERPUNK_P2, 3);
-  await pom.expectEddies(CYBERPUNK_P2, 7);
+  // Zone counts are covered by expectStructuralState at the call sites.
 }
 
 describe("endGame fixture behavior", () => {

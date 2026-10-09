@@ -23,7 +23,7 @@ export const op12EmporioIvankov065: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Revolutionary Army Impel Down"],
+  traits: ["Impel Down", "Revolutionary Army"],
   attribute: "special",
   effect:
     "If you have 4 or more Events in your trash, this Character gains [Blocker].\n[On K.O.] Add up to 1 Event from your trash to your hand.",

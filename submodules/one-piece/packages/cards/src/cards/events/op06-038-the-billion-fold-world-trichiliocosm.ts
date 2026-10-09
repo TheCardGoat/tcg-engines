@@ -47,7 +47,7 @@ export const op06TheBillionFoldWorldTrichiliocosm038: EventCard = {
   setId: "OP06",
   cost: 1,
   trigger: "K.O. up to 1 of your opponent's rested Characters with a cost of 3 or less.",
-  traits: ["Straw Hat Crew Dressrosa"],
+  traits: ["Dressrosa", "Straw Hat Crew"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +2000 power during this battle. Then, if you have 8 or more rested cards, that card gains an additional +2000 power during this battle.",
   effects: {

@@ -27,6 +27,7 @@ export const piercingAttack: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c8bafccee86e44229bddbe6438d98d99",
+    tcgPlayer: "704611",
   },
   text: "Deal 2 damage to chosen character. This damage can't be reduced by Resist.",
   abilities: [

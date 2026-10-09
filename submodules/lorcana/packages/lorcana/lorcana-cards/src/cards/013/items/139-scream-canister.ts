@@ -25,9 +25,13 @@ export const screamCanister: ItemCard = {
   rarity: "uncommon",
   cost: 2,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_42894d119f024c98a862b94027113619",
+    tcgPlayer: "702701",
+  },
   text: [
     {
-      title: "Erratic Screams",
+      title: "ERRATIC SCREAMS",
       description:
         "{E}, 2 {I} — Exert all cards in your inkwell. Exert chosen opposing character with 2 {S} or less.",
     },

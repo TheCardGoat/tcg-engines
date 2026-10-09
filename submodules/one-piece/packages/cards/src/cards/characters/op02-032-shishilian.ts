@@ -51,7 +51,7 @@ export const op02Shishilian032: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Minks",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",

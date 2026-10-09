@@ -9,10 +9,10 @@
   },
   "compilerVersion": 1,
   "cardCount": 2495,
-  "abilityCount": 4545,
+  "abilityCount": 4544,
   "outputFingerprint": {
     "algorithm": "sha256",
-    "value": "4334e1152c2c5af8836b944b06bc40e034180a645686e0b493e60d3021e45c73",
+    "value": "6db0495483150d92781eb9124428a7accd2489b6b9ca573a28c0f93ee069b1b9",
     "files": [
       "packages/cards/src/cards/ALC/actions/assemble-the-ancients.ts",
       "packages/cards/src/cards/ALC/actions/astra-sight.ts",

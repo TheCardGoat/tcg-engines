@@ -54,7 +54,7 @@ export const op11LetSCrashThisWedding060: EventCard = {
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

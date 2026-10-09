@@ -1,3 +1,4 @@
+import { cancelFrame, frame } from "motion";
 import { useCallback, useLayoutEffect, useRef } from "react";
 
 export interface UseStickToBottomOptions {
@@ -17,13 +18,33 @@ export function useStickToBottom<T extends HTMLElement>(
   const scrollRef = useRef<T | null>(null);
   const stuckRef = useRef(true);
 
-  const scrollToBottom = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) {
-      return;
-    }
-    el.scrollTop = el.scrollHeight;
+  const pendingRef = useRef<(() => void) | null>(null);
+  const cancelScroll = useCallback(() => {
+    pendingRef.current?.();
+    pendingRef.current = null;
   }, []);
+
+  const scrollToBottom = useCallback(() => {
+    cancelScroll();
+    const el = scrollRef.current;
+    if (!el) return;
+    let height = 0;
+    const write = () => {
+      if (scrollRef.current === el) el.scrollTop = height;
+      pendingRef.current = null;
+    };
+    const read = () => {
+      height = el.scrollHeight;
+      frame.render(write);
+    };
+    // Share Motion's read/write phases instead of forcing layout inside React's
+    // commit, between the board's DOM mutations and geometry measurements.
+    pendingRef.current = () => {
+      cancelFrame(read);
+      cancelFrame(write);
+    };
+    frame.read(read);
+  }, [cancelScroll]);
 
   const onScroll = useCallback(() => {
     const el = scrollRef.current;
@@ -32,14 +53,16 @@ export function useStickToBottom<T extends HTMLElement>(
     }
     const distance = el.scrollHeight - el.scrollTop - el.clientHeight;
     stuckRef.current = always || distance <= thresholdPx;
-  }, [always, thresholdPx]);
+    if (!stuckRef.current) cancelScroll();
+  }, [always, cancelScroll, thresholdPx]);
 
   useLayoutEffect(() => {
     if (always || stuckRef.current) {
       scrollToBottom();
     }
+    return cancelScroll;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [always, scrollToBottom, ...deps]);
+  }, [always, cancelScroll, scrollToBottom, ...deps]);
 
   return { scrollRef, onScroll, scrollToBottom };
 }

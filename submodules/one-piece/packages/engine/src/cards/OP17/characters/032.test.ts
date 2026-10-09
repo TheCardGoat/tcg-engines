@@ -1,96 +1,54 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
-
-// Auto-verified: Limejuice (OP17-032) cost=1 power=2000 counter=2000
 describe("OP17-032 Limejuice", () => {
-  test("[On Play] resolves its play effects", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-032"], activeDon: 3 },
-      { character: ["OP13-013"], activeDon: 5 },
-    );
-
-    engine.playCard("OP17-032");
-    engine.acceptLeadingOptional("south");
-
-    // Resolve all pending prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (!intent) break;
-      const step = engine.pendingDecision(intent, "south").steps[0];
-      if (step?.kind === "selectEntity" && step.candidates && step.candidates.length > 0) {
-        const legalCands = step.candidates.filter((c) => c.legal);
-        if (legalCands.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [legalCands[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else if (step?.kind === "chooseOption") {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: step.options?.[0]?.id ?? "no" },
-          "south",
-        );
-      } else if (step?.kind === "payCost") {
-        const cands = step.candidates ?? [];
-        if (cands.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [cands[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          break;
-        }
-      } else if (step?.kind === "orderItems") {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { selectedIds: step.candidates?.map((c: { ref: { id: string } }) => c.ref.id) ?? [] },
-          "south",
-        );
-      } else if (step?.kind === "confirm") {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      } else {
-        break;
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-032",
-    );
+  test("selects and reveals an Allies card, then preserves chosen bottom order after restore", () => {
+    let e = OnePieceTestEngine.create({
+      hand: ["OP17-032"],
+      deck: ["OP17-026", "OP17-002", "OP17-027", "OP17-006"],
+      activeDon: 1,
+    });
+    const ally = e.findCardInZone("south", "deck", "OP17-026"),
+      wrong = e.findCardInZone("south", "deck", "OP17-002"),
+      benn = e.findCardInZone("south", "deck", "OP17-027"),
+      unlooked = e.findCardInZone("south", "deck", "OP17-006");
+    e.playCard("OP17-032");
+    const step = e.pendingDecision("effectSearchSelection", "south").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected search selection");
+    expect(step.candidates.filter((c) => c.legal).map((c) => c.ref.id)).toEqual([ally, benn]);
+    expect(step.candidates.map((c) => c.ref.id)).not.toContain(unlooked);
+    e = OnePieceTestEngine.fromState(JSON.parse(JSON.stringify(e.getState())));
+    e.resolveDecision("effectSearchSelection", { selectedIds: [ally] }, "south");
+    const order = [benn, wrong];
+    e.resolveDecision("effectSearchRemainderOrder", { selectedIds: order }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toEqual([ally]);
+    // Physical order is intentionally checked through the saved state; deck faces are private.
+    expect(e.getState().players.south.deck).toEqual([unlooked, ...order]);
+    expect(e.getView("north").logs.some((l) => l.message.includes("reveals Fugar"))).toBe(true);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
-
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-032", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
-    );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-032",
-    );
-    expect(engine.getView("south").prompts).toHaveLength(0);
+  test("declines optional search selection with eligible cards and orders all three to bottom", () => {
+    let e = OnePieceTestEngine.create({
+      hand: ["OP17-032"],
+      deck: ["OP17-026", "OP17-002", "OP17-027", "OP17-006"],
+      activeDon: 1,
+    });
+    const ally = e.findCardInZone("south", "deck", "OP17-026"),
+      wrong = e.findCardInZone("south", "deck", "OP17-002"),
+      benn = e.findCardInZone("south", "deck", "OP17-027"),
+      unlooked = e.findCardInZone("south", "deck", "OP17-006");
+    e.playCard("OP17-032");
+    const step = e.pendingDecision("effectSearchSelection", "south").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected search selection");
+    expect(step.candidates.filter((c) => c.legal).map((c) => c.ref.id)).toEqual([ally, benn]);
+    expect(step.candidates.map((c) => c.ref.id)).not.toContain(unlooked);
+    e = OnePieceTestEngine.fromState(JSON.parse(JSON.stringify(e.getState())));
+    e.resolveDecision("effectSearchSelection", { selectedIds: [] }, "south");
+    const order = [benn, wrong, ally];
+    e.resolveDecision("effectSearchRemainderOrder", { selectedIds: order }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toEqual([]);
+    // Physical order is intentionally checked through the saved state; deck faces are private.
+    expect(e.getState().players.south.deck).toEqual([unlooked, ...order]);
+    expect(e.getView("north").logs.some((l) => l.message.includes("reveals Fugar"))).toBe(false);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

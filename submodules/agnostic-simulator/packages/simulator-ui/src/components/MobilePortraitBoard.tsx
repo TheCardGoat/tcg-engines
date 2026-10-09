@@ -254,32 +254,38 @@ export function MobileBattlefieldLane({
       setMeasuredOverflow((current) => (fieldOverflowMatches(current, next) ? current : next));
     };
     const scheduleUpdate = () => {
-      if (frame !== null) {
-        window.cancelAnimationFrame(frame);
-      }
+      if (frame !== null) return;
       frame = window.requestAnimationFrame(update);
     };
 
     update();
-    scroller.addEventListener("scroll", update, { passive: true });
+    scroller.addEventListener("scroll", scheduleUpdate, { passive: true });
     window.addEventListener("resize", scheduleUpdate);
 
     const observer =
       typeof ResizeObserver === "undefined" ? null : new ResizeObserver(scheduleUpdate);
-    observer?.observe(scroller);
-    for (const child of Array.from(scroller.children)) {
-      if (child instanceof HTMLElement) {
-        observer?.observe(child);
+    const observeChildren = () => {
+      observer?.disconnect();
+      observer?.observe(scroller);
+      for (const child of Array.from(scroller.children)) {
+        if (child instanceof HTMLElement) observer?.observe(child);
       }
-    }
+    };
+    observeChildren();
+    const childrenObserver = new MutationObserver(() => {
+      observeChildren();
+      scheduleUpdate();
+    });
+    childrenObserver.observe(scroller, { childList: true });
 
     return () => {
       if (frame !== null) {
         window.cancelAnimationFrame(frame);
       }
-      scroller.removeEventListener("scroll", update);
+      scroller.removeEventListener("scroll", scheduleUpdate);
       window.removeEventListener("resize", scheduleUpdate);
       observer?.disconnect();
+      childrenObserver.disconnect();
     };
   }, [scrollAxis, scrollCueLabel, scrollCues, scrollTargetSelector]);
 
@@ -297,10 +303,11 @@ export function MobileBattlefieldLane({
         : scrollAxis === "horizontal"
           ? scroller.scrollWidth - scroller.clientWidth
           : scroller.scrollHeight - scroller.clientHeight;
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? "instant"
+      : "smooth";
     scroller.scrollTo(
-      scrollAxis === "horizontal"
-        ? { left: target, behavior: "smooth" }
-        : { top: target, behavior: "smooth" },
+      scrollAxis === "horizontal" ? { left: target, behavior } : { top: target, behavior },
     );
   };
 
@@ -407,6 +414,7 @@ export function MobileZoneInventoryPopover({
 }: MobileZoneInventoryPopoverProps) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
 
@@ -451,10 +459,25 @@ export function MobileZoneInventoryPopover({
   }, [open]);
 
   return (
-    <div ref={popoverRef} className={cx(classes.zonePopover, className)} {...props}>
+    <div
+      ref={popoverRef}
+      className={cx(classes.zonePopover, className)}
+      {...props}
+      onKeyDown={(event) => {
+        props.onKeyDown?.(event);
+        if (!event.defaultPrevented && event.key === "Escape" && open) {
+          event.preventDefault();
+          event.stopPropagation();
+          setOpen(false);
+          triggerRef.current?.focus();
+        }
+      }}
+    >
       <button
         type="button"
+        ref={triggerRef}
         className={classes.zonePopoverButton}
+        aria-haspopup="dialog"
         aria-expanded={open}
         aria-controls={open ? panelId : undefined}
         onClick={() => setOpen((current) => !current)}

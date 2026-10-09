@@ -49,7 +49,7 @@ export const op01Raizo052: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Land of Wano The Akazaya Nine"],
+  traits: ["Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect: "[When Attacking] [Once Per Turn] If you have 2 or more rested Characters, draw 1 card.",
   effects: {

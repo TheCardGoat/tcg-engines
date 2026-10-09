@@ -25,6 +25,10 @@ export const itsGonnaBeGreat: ActionCard = {
   rarity: "common",
   cost: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_e166ee85c2ff44e6bf459362216daa62",
+    tcgPlayer: "704639",
+  },
   text: "Ready chosen character. They can't quest for the rest of this turn.",
   actionSubtype: "song",
   abilities: [

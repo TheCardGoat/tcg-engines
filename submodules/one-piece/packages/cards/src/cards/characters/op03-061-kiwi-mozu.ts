@@ -23,7 +23,7 @@ export const op03KiwiMozu061: CharacterCard = {
   cost: 2,
   power: 4000,
   counter: 1000,
-  traits: ["Water Seven The Franky Family"],
+  traits: ["Water Seven", "The Franky Family"],
   attribute: "slash",
   i18n: op03KiwiMozu061I18n,
 };

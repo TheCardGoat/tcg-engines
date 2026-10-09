@@ -158,22 +158,32 @@ export function extractCardNumberFromIdentifier(identifier: string): number | nu
 export function buildLorcastFullIndex(cards: LorcastFullCard[]): LorcastFullIndex {
   const index: LorcastFullIndex = new Map();
   let collisionCount = 0;
+  let upgradedCount = 0;
   const sampleKeys: string[] = [];
 
   for (const card of cards) {
     const key = createMatchKey(card.name, card.version);
-    if (index.has(key)) {
-      collisionCount++;
-      if (sampleKeys.length < 5 && !sampleKeys.includes(key)) {
-        sampleKeys.push(key);
-      }
+    const incumbent = index.get(key);
+    if (!incumbent) {
+      index.set(key, card);
+      continue;
     }
-    index.set(key, card);
+    collisionCount++;
+    if (sampleKeys.length < 5 && !sampleKeys.includes(key)) {
+      sampleKeys.push(key);
+    }
+    // Reprints in newer sets add duplicate rows that often lack tcgplayer_id;
+    // only replace the incumbent when the challenger is strictly richer, so
+    // externalIds stay stable as reprint sets are added upstream.
+    if (incumbent.tcgplayer_id == null && card.tcgplayer_id != null) {
+      index.set(key, card);
+      upgradedCount++;
+    }
   }
 
   if (collisionCount > 0) {
     console.warn(
-      `  Lorcast full index: ${collisionCount} duplicate name|version key(s); last Lorcast row wins (metadata may not match every printing). Sample keys: ${sampleKeys.join("; ")}`,
+      `  Lorcast full index: ${collisionCount} duplicate name|version key(s); kept the richest row per key (${upgradedCount} upgraded with tcgplayer_id). Sample keys: ${sampleKeys.join("; ")}`,
     );
   }
 

@@ -17,6 +17,7 @@ export type Cost =
   | ReturnThisToDeckCost
   | ReturnThisAndHandToDeckCost
   | AddLifeToHandCost
+  | AddCharacterToLifeCost
   | RevealFromHandCost
   | ReturnTrashToDeckCost
   | RestCardsCost
@@ -56,19 +57,20 @@ export interface GiveDonCost {
   donState?: "rested" | "active";
   /** Whose Leader/Characters receive the DON!!; defaults to the effect controller. */
   recipientPlayer?: Player;
+  /** Which field zones can receive the DON!!; defaults to Leader and Character. */
+  recipientZones?: Array<"leader" | "character">;
+  /** Printed restrictions on the receiving Leader or Character. */
+  recipientFilters?: TargetFilter[];
 }
 
-export type ReturnDonCost =
-  | {
-      cost: "returnDon";
-      amount: number;
-      minimumAmount?: never;
-    }
-  | {
-      cost: "returnDon";
-      minimumAmount: number;
-      amount?: never;
-    };
+/** DON!! -N returns field DON!! to the deck; printed given-DON costs may return it rested. */
+export type ReturnDonCost = {
+  cost: "returnDon";
+} & ({ amount: number; minimumAmount?: never } | { minimumAmount: number; amount?: never }) &
+  (
+    | { destination?: "donDeck"; donState?: "active" | "rested" | "any" }
+    | { destination: "costAreaRested"; donState: "attached" }
+  );
 
 export interface TrashFromHandCost {
   cost: "trashFromHand";
@@ -97,6 +99,8 @@ export interface TrashThisCardCost {
 export interface TurnLifeFaceUpCost {
   cost: "turnLifeFaceUp";
   count: number;
+  /** Defaults to top; any permits any eligible Life; choice permits only the top or bottom card. */
+  position?: "top" | "any" | "choice";
   /** Defaults to true for legacy definitions. False turns currently face-up Life face-down. */
   faceUp?: boolean;
 }
@@ -137,6 +141,15 @@ export interface ReturnThisAndHandToDeckCost {
   position: "top" | "bottom";
 }
 
+export interface AddCharacterToLifeCost {
+  cost: "addCharacterToLife";
+  amount: number;
+  player?: "self" | "opponent";
+  filters?: TargetFilter[];
+  position: "top" | "bottom" | "choice";
+  faceUp?: boolean;
+}
+
 export interface AddLifeToHandCost {
   cost: "addLifeToHand";
   amount: number;
@@ -151,7 +164,10 @@ export interface RevealFromHandCost {
 
 export interface ReturnTrashToDeckCost {
   cost: "returnTrashToDeck";
+  /** Number of cards selected from trash, excluding the source. */
   amount: number;
+  /** Return the source Character together with the trash cards in one chosen order. */
+  includeSelf?: true;
   position: "top" | "bottom";
   filters?: TargetFilter[];
 }

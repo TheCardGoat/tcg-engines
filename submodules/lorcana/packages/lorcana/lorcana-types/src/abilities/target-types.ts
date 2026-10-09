@@ -651,6 +651,10 @@ export interface NotItemFilter {
  * All filters that can be applied to any card type
  * Specific card types may only support a subset
  */
+export interface PlayedThisTurnFilter {
+  type: "played-this-turn";
+}
+
 export type CardFilter =
   // State
   | StatusFilter
@@ -677,6 +681,7 @@ export type CardFilter =
   | ZoneFilter
   | OwnerFilter
   | ChallengedThisTurnFilter
+  | PlayedThisTurnFilter
   | NamedCardFilter
   | UnderParentFilter
   | AtLocationFilter
@@ -845,11 +850,13 @@ export type LocationTargetEnum =
  */
 export type LocationFilter =
   | HasNameFilter
+  | HasClassificationFilter
   | CardTypeFilter
   | WillpowerComparisonFilter
   | MoveCostComparisonFilter
   // Source/Reference
   | SourceFilter
+  | SameLocationAsSourceFilter
   // Zone/Owner
   | ZoneFilter
   | OwnerFilter
@@ -994,7 +1001,13 @@ export type CardTargetEnum =
   | "CHARACTER_OR_ITEM" // Character or item card
   | "BANISHED_CHARACTER"; // The character that was banished
 
-export type CardTarget = CardTargetEnum | CharacterTarget | LocationTarget | ItemTarget;
+/** A query whose filters can apply to any card type, including actions. */
+export type CardQuery = TargetDSL<CardFilter[] | CardSelectionFilter, LorcanaContext> & {
+  reference?: TargetReference;
+  filters?: CardFilter[];
+};
+
+export type CardTarget = CardTargetEnum | CardQuery | CharacterTarget | LocationTarget | ItemTarget;
 
 // ============================================================================
 // Type Guards

@@ -17,7 +17,7 @@ describe("EB04-053", () => {
     const handBefore = engine.getView("south").players.south.handCount;
     engine.asNorth().attack("OP16-003", engine.asSouth().leader());
     engine.asSouth().chooseBlocker(selfId);
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
 
     expect(engine.getView("south").players.south.handCount).toBe(handBefore + 1);
     expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(selfId);

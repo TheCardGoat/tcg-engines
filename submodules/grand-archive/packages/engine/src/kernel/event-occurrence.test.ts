@@ -256,3 +256,47 @@ describe("Grand Archive event occurrence windows", () => {
     ).toHaveLength(1);
   });
 });
+
+it("counts first damage per source and resets only after a real zone change", () => {
+  const fixture = setup();
+  const damage = (sourceId: GrandArchiveObjectId) => ({
+    type: "damage-marked" as const,
+    sourceId,
+    objectId: fixture.p1ChampionId,
+    amount: 1,
+  });
+  const transaction = new GrandArchiveTransactionKernel().transact(fixture.ready, [
+    damage(fixture.p2AttackerId),
+    damage(fixture.p2AttackerId),
+    damage(fixture.p3AttackerId),
+    { type: "object-moved", objectId: fixture.p2AttackerId, from: "field", to: "field" },
+    damage(fixture.p2AttackerId),
+    { type: "object-moved", objectId: fixture.p2AttackerId, from: "field", to: "hand" },
+    { type: "object-moved", objectId: fixture.p2AttackerId, from: "hand", to: "field" },
+    damage(fixture.p2AttackerId),
+  ]);
+  const source = transaction.state.objects[fixture.stoneId]!;
+  const matches = transaction.result.events
+    .flatMap(observeGrandArchiveCommittedEvent)
+    .filter((event) => event.name === "damage-dealt")
+    .map((observed) =>
+      matchesGrandArchiveEventPattern(
+        {
+          name: "damage-dealt",
+          occurrence: { count: 1, window: "game", subjectScope: "same-object" },
+        },
+        observed,
+        source,
+        {
+          program: fixture.program,
+          state: transaction.state,
+          controllerId: fixture.p1,
+          sourceId: source.id,
+          abilityBearerId: source.id,
+          abilityId: "source-first-damage",
+          bindings: {},
+        },
+      ),
+    );
+  expect(matches).toEqual([true, false, true, false, true]);
+});

@@ -32,7 +32,7 @@ export const op14eb04RoronoaZoroOp14015015: CharacterCard = {
   setId: "OP14",
   cost: 7,
   power: 8000,
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     "[Rush] (This card can attack on the turn in which it is played.) [When Attacking] Give up to 1 of your opponent's Characters −1000 power during this turn.",

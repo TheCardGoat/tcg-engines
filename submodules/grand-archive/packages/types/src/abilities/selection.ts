@@ -136,6 +136,13 @@ export type GrandArchiveSelectionCandidates =
       readonly filter?: GrandArchiveCardFilter;
     }
   | {
+      readonly kind: "object";
+      readonly binding: GrandArchiveBinding;
+      readonly excluding?: readonly [GrandArchiveBinding, ...GrandArchiveBinding[]];
+      readonly zones?: never;
+      readonly filter?: GrandArchiveCardFilter;
+    }
+  | {
       readonly kind: "player";
       readonly players:
         | readonly GrandArchiveRelativePlayer[]
@@ -204,6 +211,8 @@ export type GrandArchiveSelectionCandidates =
 export type GrandArchiveTargetDeclaration = GrandArchiveSelectionBase & {
   readonly kind: "target";
   readonly declared: "announcement";
+  /** Each selected target must receive at least one unit; checked after costs determine the amount. */
+  readonly distributedAmount?: import("./amount.ts").GrandArchiveAmount;
   readonly candidates: GrandArchiveSelectionCandidates;
 };
 

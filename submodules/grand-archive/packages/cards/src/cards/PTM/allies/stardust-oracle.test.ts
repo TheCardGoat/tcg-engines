@@ -12,3 +12,9 @@ describe("Stardust Oracle — Imbue keyword", () => {
     requirement: "source-elements",
   });
 });
+
+import { proveClassPhaseSummon } from "../../../testing/class-phase-summon.ts";
+import { astralShard } from "../../DTR/tokens/astral-shard.ts";
+/** @covers EPy8OUmPxa-a3 */
+describe("stardustOracle phase summon", () =>
+  proveClassPhaseSummon(stardustOracle, astralShard, "end", false));

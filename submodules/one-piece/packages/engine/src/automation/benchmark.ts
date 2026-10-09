@@ -43,7 +43,7 @@ export interface DeckBenchmarkOptions {
   games?: number;
   seedBase?: number;
   /** Ordered strategy pairs; south plays the first id, north the second. */
-  matchups?: readonly [BenchmarkStrategyId, BenchmarkStrategyId][];
+  matchups?: readonly (readonly [BenchmarkStrategyId, BenchmarkStrategyId])[];
   /** Decks included in the pair matrix (default: all). */
   deckIds?: readonly TestDeckId[];
   /** Cross pairs per deck in addition to its mirror (cyclic over deckIds). */
@@ -298,9 +298,10 @@ if (import.meta.main) {
     }
     return id as BenchmarkStrategyId;
   });
-  const matchups: readonly [BenchmarkStrategyId, BenchmarkStrategyId][] = challengers.flatMap(
-    (challenger) => opponents.map((opponent) => [challenger, opponent] as const),
-  );
+  const matchups: readonly (readonly [BenchmarkStrategyId, BenchmarkStrategyId])[] =
+    challengers.flatMap((challenger) =>
+      opponents.map((opponent) => [challenger, opponent] as const),
+    );
 
   const deckArg = readListArg("decks");
   const defaultDecks: TestDeckId[] = full

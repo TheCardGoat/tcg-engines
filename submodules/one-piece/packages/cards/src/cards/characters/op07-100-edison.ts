@@ -23,7 +23,7 @@ export const op07Edison100: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 2000,
-  traits: ["Scientist Egghead"],
+  traits: ["Scientist", "Egghead"],
   attribute: "wisdom",
   effect:
     "[On Play] If you have 2 or less Life cards, draw 2 cards and trash 2 card from your hand. [Trigger] If your Leader is [Vegapunk], play this card.",

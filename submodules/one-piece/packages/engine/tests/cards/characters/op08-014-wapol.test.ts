@@ -68,4 +68,12 @@ describe("OP08-014 Wapol", () => {
       6000,
     );
   });
+  test("FAQ: no opposing Character still grants the separate self power boost", () => {
+    const e = OnePieceTestEngine.create({ character: [{ cardId: "OP08-014", attachedDon: 1 }] });
+    e.asSouth().attack(e.findCardInZone("south", "character", "OP08-014"), e.leader("north"));
+    expect(e.getView("south").players.south.characters[0]?.power).toBe(9000);
+    expect(e.getView("north").players.north.lifeCount).toBe(3);
+    e.asSouth().endTurn();
+    expect(e.getView("south").players.south.characters[0]?.power).toBe(8000);
+  });
 });

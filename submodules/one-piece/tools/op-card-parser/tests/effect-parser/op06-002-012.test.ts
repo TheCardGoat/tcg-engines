@@ -13,14 +13,14 @@ describe("OP06-002 through OP06-012 Character parser regressions", () => {
     ).toHaveLength(1);
   });
 
-  test("keeps Ivankov's Revolutionary Army search inclusive", () => {
+  test("keeps Ivankov's Revolutionary Army search exact", () => {
     expect(
       JSON.stringify(
         buildCardEffects(
           "[On Play] Look at 3 cards from the top of your deck and play up to 1 [Revolutionary Army] type Character card with 5000 power or less. Then, place the rest at the bottom of your deck in any order.",
         ),
       ),
-    ).toContain('"match":"includes"');
+    ).toContain('"match":"exact"');
   });
 
   test("parses Shuraiya's official dual trigger with one shared Once Per Turn key", () => {

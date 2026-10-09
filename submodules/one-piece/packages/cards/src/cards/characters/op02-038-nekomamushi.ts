@@ -22,7 +22,7 @@ export const op02Nekomamushi038: CharacterCard = {
   setId: "OP02",
   cost: 3,
   power: 4000,
-  traits: ["Land of Wano Minks The Akazaya Nine"],
+  traits: ["Minks", "Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

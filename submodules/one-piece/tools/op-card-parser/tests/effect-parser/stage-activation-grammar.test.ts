@@ -36,7 +36,7 @@ describe("Stage activation grammar", () => {
           filters: [
             { filter: "dynamicCost", comparison: "lte", source: "selfDonCount" },
             { filter: "color", value: "black" },
-            { filter: "trait", value: "Five Elders", match: "includes" },
+            { filter: "trait", value: "Five Elders", match: "exact" },
             { filter: "cardCategory", value: "character" },
           ],
         },
@@ -60,7 +60,7 @@ describe("Stage activation grammar", () => {
             player: "self",
             zones: ["leader", "character"],
             count: { amount: 1, upTo: true },
-            filters: [{ filter: "trait", value: "Straw Hat Crew", match: "includes" }],
+            filters: [{ filter: "trait", value: "Straw Hat Crew", match: "exact" }],
           },
           value: 1000,
           duration: "thisTurn",

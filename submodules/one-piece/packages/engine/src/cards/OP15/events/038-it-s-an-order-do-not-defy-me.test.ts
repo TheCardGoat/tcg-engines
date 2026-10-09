@@ -7,7 +7,11 @@ describe("OP15-038 It's an Order! Do Not Defy Me!!", () => {
     const engine = OnePieceTestEngine.create(
       { hand: ["OP15-038"], activeDon: 1 },
       {
-        character: [{ cardId: "OP13-013", rested: true, attachedDon: 2 }, "OP16-003"],
+        character: [
+          { cardId: "OP13-013", rested: true, attachedDon: 2 },
+          { cardId: "EB01-005", rested: true, attachedDon: 1 },
+          "OP16-003",
+        ],
         activeDon: 5,
       },
     );
@@ -16,6 +20,7 @@ describe("OP15-038 It's an Order! Do Not Defy Me!!", () => {
     engine.playCard("OP15-038");
     const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     if (target?.kind !== "selectEntity") throw new Error("Expected the freeze target.");
+    expect(target.candidates.map((c) => c.ref.id)).toEqual([higumaId]);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [higumaId] }, "south");
 
     engine.endTurn("south");

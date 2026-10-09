@@ -29,9 +29,13 @@ export const vixeyExpertFisher: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_fc2532363c67421eb4fa47cd45af9576",
+    tcgPlayer: "704569",
+  },
   text: [
     {
-      title: "Stealing In",
+      title: "STEALING IN",
       description:
         "When you play this character, if you have a character with Evasive in play, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
     },

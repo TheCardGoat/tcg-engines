@@ -21,7 +21,7 @@ export const op08BurnBlade117: EventCard = {
   rarity: "UC",
   setId: "OP08",
   cost: 5,
-  traits: ["Sky Island Shandian Warrior"],
+  traits: ["Sky Island", "Shandian Warrior"],
   effect:
     "[Main] You may trash 1 card from the top of your Life cards: K.O. up to 1 of your opponent's Characters with a cost of 7 or less. [Trigger] You may add 1 card from the top of your Life cards to your hand: Add up to 1 card from your hand to the top of your Life cards.",
   effects: {

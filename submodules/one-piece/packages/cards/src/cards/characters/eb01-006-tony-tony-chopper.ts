@@ -39,7 +39,7 @@ export const eb01TonyTonyChopper006: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Animal Straw Hat Crew"],
+  traits: ["Animal", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)[DON!! x2][When Attacking] Give up to 1 of your opponent's Characters -3000 power during this turn.",

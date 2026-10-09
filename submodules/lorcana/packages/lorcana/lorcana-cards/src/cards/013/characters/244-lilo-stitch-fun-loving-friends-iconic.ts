@@ -27,7 +27,7 @@ export const liloStitchFunlovingFriendsIconic: CharacterCard = {
   franchise: "Lilo and Stitch",
   set: "013",
   cardNumber: 244,
-  rarity: "common",
+  rarity: "iconic",
   specialRarity: "iconic",
   cost: 5,
   strength: 3,
@@ -36,6 +36,7 @@ export const liloStitchFunlovingFriendsIconic: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dadb6d9a8ac54b6c8caad9225f07afa8",
+    tcgPlayer: "702650",
   },
   text: [
     {

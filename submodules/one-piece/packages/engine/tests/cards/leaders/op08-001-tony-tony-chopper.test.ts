@@ -39,6 +39,8 @@ describe("OP08-001 Tony Tony.Chopper", () => {
       "south",
     );
 
+    for (let n = 0; n < 3; n++)
+      engine.resolveDecision("effectGiveDonEachCount", { optionId: "1" }, "south");
     const view = engine.getView("south");
     expect(view.players.south.leader.power).toBe(5000);
     expect(view.players.south.lifeCount).toBe(4);
@@ -53,5 +55,23 @@ describe("OP08-001 Tony Tony.Chopper", () => {
     ).toBe(0);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+  test("each chosen recipient may independently receive zero or one DON", () => {
+    let e = OnePieceTestEngine.create({
+      leaderCardId: "OP08-001",
+      character: ["OP01-015", "OP08-016"],
+      restedDon: 2,
+    });
+    const a = e.findCardInZone("south", "character", "OP01-015"),
+      b = e.findCardInZone("south", "character", "OP08-016");
+    e.asSouth().activateMain(e.leader("south"));
+    e.asSouth().chooseTargets(a, b);
+    e.resolveDecision("effectGiveDonEachCount", { optionId: "0" }, "south");
+    e = OnePieceTestEngine.fromState(JSON.parse(JSON.stringify(e.getState())));
+    e.resolveDecision("effectGiveDonEachCount", { optionId: "1" }, "south");
+    expect(
+      e.getView("south").players.south.characters.flatMap((c) => (c ? [c.attachedDon] : [])),
+    ).toEqual([0, 1]);
+    expect(e.getView("south").players.south.restedDon).toBe(1);
   });
 });

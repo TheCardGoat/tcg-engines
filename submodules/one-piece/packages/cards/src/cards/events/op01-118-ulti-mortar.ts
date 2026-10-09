@@ -28,6 +28,7 @@ export const op01UltiMortar118: EventCard = {
     effects: [
       {
         trigger: "counter",
+        optional: true,
         costs: [
           {
             cost: "returnDon",

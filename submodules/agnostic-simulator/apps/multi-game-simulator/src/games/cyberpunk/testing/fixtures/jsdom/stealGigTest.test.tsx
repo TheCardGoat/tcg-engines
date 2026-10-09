@@ -43,24 +43,18 @@ describe("stealGigTest fixture behavior", () => {
       }
 
       await pom.attackRival(attacker.instanceId, CYBERPUNK_P1);
-      let attack = await pom.getAttackState();
+      const attack = await pom.getAttackState();
       if (!attack) {
         throw new Error("Expected direct attack state after attackRival.");
       }
       expectEqual("direct attack kind", attack.kind, "direct");
-      expectEqual("direct attack step", attack.step, "attack");
+      expectEqual("direct attack opens the rival react window", attack.step, "react");
       await pom.expectFieldCardSpent(CYBERPUNK_P1, attacker.instanceId, true);
 
-      await pom.resolveAttack(CYBERPUNK_P1);
-      attack = await pom.getAttackState();
-      expectEqual("direct attack React step", attack?.step, "react");
-
+      // The rival's pass closes the react window and the mechanical steal step
+      // then auto-resolves (top-of-area pick) in the same resolution.
       await pom.resolveAttack(CYBERPUNK_P2, { pass: true });
-      attack = await pom.getAttackState();
-      expectEqual("direct attack steal step", attack?.step, "steal");
-
-      await pom.resolveAttack(CYBERPUNK_P1, { gigIdsToSteal: [stolenGig.id] });
-      expectEqual("attack cleared after steal", await pom.getAttackState(), null);
+      expectEqual("attack cleared after the rival passes", await pom.getAttackState(), null);
       await pom.expectGigCount(CYBERPUNK_P1, 5);
       await pom.expectGigCount(CYBERPUNK_P2, 2);
 

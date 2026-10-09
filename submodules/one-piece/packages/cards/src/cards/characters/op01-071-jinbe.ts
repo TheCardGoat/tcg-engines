@@ -22,7 +22,7 @@ export const op01Jinbe071: CharacterCard = {
   setId: "OP01",
   cost: 4,
   power: 2000,
-  traits: ["Fish-Man Straw Hat Crew"],
+  traits: ["Fish-Man", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[On Play] Place up to 1 Character with a cost of 3 or less at the bottom of the owner's deck. [Trigger] Play this card.  This card has been officially errata'd.",

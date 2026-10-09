@@ -58,7 +58,7 @@ export const op04Igaram002: CharacterCard = {
               {
                 filter: "trait",
                 value: "Alabasta",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

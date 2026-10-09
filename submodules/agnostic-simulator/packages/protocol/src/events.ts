@@ -13,6 +13,7 @@
 import type {
   ActivityUpdateMsg,
   DropPlayerMsg,
+  ForfeitMatchMsg,
   ExecuteMoveMsg,
   GatewayPingMsg,
   HeartbeatMsg,
@@ -80,6 +81,14 @@ import type {
   TournamentUpdatePayload,
 } from "./payloads.js";
 import type { PlayableGameSlug } from "./games.js";
+import type { z } from "zod";
+import type {
+  RequestPreparationSyncMessage,
+  ConfirmPreparationMessage,
+  ChoosePreparationFirstPlayerMessage,
+  PreparationSnapshot,
+  PreparationCommandResult,
+} from "./preparation.js";
 
 /**
  * Stripped version of the client→server messages: the ws-gateway has already
@@ -89,6 +98,13 @@ type Without<T, K extends string> = Omit<T, K>;
 type Payload<T extends { type: string }> = Without<T, "type">;
 
 export interface ClientToServerEvents {
+  request_preparation_sync: (
+    payload: Payload<z.infer<typeof RequestPreparationSyncMessage>>,
+  ) => void;
+  confirm_preparation: (payload: Payload<z.infer<typeof ConfirmPreparationMessage>>) => void;
+  choose_preparation_first_player: (
+    payload: Payload<z.infer<typeof ChoosePreparationFirstPlayerMessage>>,
+  ) => void;
   ping: (payload: Payload<GatewayPingMsg>) => void;
   join_game: (payload: Payload<JoinGameMsg>) => void;
   execute_move: (payload: Payload<ExecuteMoveMsg>) => void;
@@ -104,6 +120,7 @@ export interface ClientToServerEvents {
   matchmaking_decline: (payload: Payload<MatchmakingDeclineMsg>) => void;
   skip_opponent_turn: (payload: Payload<SkipOpponentTurnMsg>) => void;
   drop_player: (payload: Payload<DropPlayerMsg>) => void;
+  forfeit_match: (payload: Payload<ForfeitMatchMsg>) => void;
   request_game_state_sync: (payload: Payload<RequestGameStateSyncMsg>) => void;
   proposal_send: (payload: Payload<ProposalSendMsg>) => void;
   proposal_accept: (payload: Payload<ProposalAcceptMsg>) => void;
@@ -115,6 +132,11 @@ export interface ClientToServerEvents {
 }
 
 export interface ServerToClientEvents {
+  preparation_state: (payload: { snapshot: PreparationSnapshot; correlationId?: string }) => void;
+  preparation_command_result: (payload: {
+    result: PreparationCommandResult;
+    correlationId: string;
+  }) => void;
   /** Public invalidation only; the authenticated session endpoint projects private state. */
   match_session_changed: (payload: { matchId: string; revision: number }) => void;
   pong: (payload: GatewayPongPayload) => void;
@@ -160,6 +182,8 @@ export interface ServerToClientEvents {
   friend_message: (payload: FriendMessagePayload) => void;
   public_lobby_rooms_snapshot: (payload: PublicLobbyRoomsSnapshotPayload) => void;
   matchmaking_dashboard_snapshot: (payload: MatchmakingDashboardSnapshotPayload) => void;
+  matchmaking_online_count: (payload: { onlinePlayers: number | null }) => void;
+  matchmaking_dashboard_changed: (payload: Record<string, never>) => void;
 
   // Explicit response events for the call/response pattern (§5).
   // The ws-gateway is stateless: there is no pendingAcks map. The client
@@ -174,6 +198,7 @@ export interface ServerToClientEvents {
   "reconnect:response": (payload: Response<GameJoinedPayload, ErrorPayload>) => void;
   "request_game_state_sync:response": (payload: Response<StateSyncPayload, ErrorPayload>) => void;
   "push_state:response": (payload: Response<PushStateResultPayload, ErrorPayload>) => void;
+  "forfeit_match:response": (payload: Response<{ matchId: string }, ErrorPayload>) => void;
   "proposal_send:response": (
     payload: Response<ProposalReceivedPayload | ProposalResolvedPayload, ErrorPayload>,
   ) => void;

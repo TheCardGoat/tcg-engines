@@ -1,4 +1,11 @@
-import { useEffect, useState } from "react";
+import {
+  createContext,
+  createElement,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import { PLAYER_SIDE_TO_ID, useEngine, type Side } from "../../engine";
 
 interface ClockSnapshot {
@@ -9,10 +16,10 @@ interface ClockSnapshot {
 
 /**
  * Shared priority clock. Each side owns a separate countdown, and only the
- * side currently holding priority ticks down. Each consumer creates an
- * independent ticker; only one component is mounted per layout variant.
+ * side currently holding priority ticks down. The match owns one ticker,
+ * independent of the active renderer and sidebar visibility.
  */
-export function useGameClock(
+function useClockTicker(
   prioritySide: Side,
   { initialSeconds = 720, paused = false }: { initialSeconds?: number; paused?: boolean } = {},
 ) {
@@ -138,4 +145,18 @@ function isClockSnapshot(value: unknown): value is ClockSnapshot {
     return false;
   }
   return typeof (value as { reserveMsRemaining?: unknown }).reserveMsRemaining === "number";
+}
+
+const GameClockContext = createContext<ReturnType<typeof useClockTicker> | null>(null);
+
+export function GameClockProvider({ children }: { children: ReactNode }) {
+  const { prioritySide, matchState } = useEngine();
+  const clock = useClockTicker(prioritySide, { paused: matchState.G.gameEnded });
+  return createElement(GameClockContext.Provider, { value: clock }, children);
+}
+
+export function useGameClock() {
+  const clock = useContext(GameClockContext);
+  if (!clock) throw new Error("Game clock requires GameClockProvider");
+  return clock;
 }

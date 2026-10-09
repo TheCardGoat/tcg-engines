@@ -12,11 +12,17 @@ export function markLastEffectPerformed(
 ): void {
   if (eventSnapshot) {
     eventSnapshot.lastEffectPerformed = performed;
+    eventSnapshot.anyEffectPerformed = eventSnapshot.anyEffectPerformed === true || performed;
+    eventSnapshot.effectOutcomeReported = true;
   }
 }
 
 export function resetLastEffectPerformed(
   eventSnapshot: DynamicAmountEventSnapshot | undefined,
 ): void {
-  markLastEffectPerformed(eventSnapshot, false);
+  // Reset the local if-you-do prerequisite, not the whole ability outcome.
+  if (eventSnapshot) {
+    eventSnapshot.lastEffectPerformed = false;
+    eventSnapshot.effectOutcomeReported = false;
+  }
 }

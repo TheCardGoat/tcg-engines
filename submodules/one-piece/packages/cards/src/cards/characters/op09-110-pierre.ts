@@ -24,7 +24,7 @@ export const op09Pierre110: CharacterCard = {
   power: 2000,
   counter: 1000,
   trigger: "Play this card.",
-  traits: ["Animal Sky Island"],
+  traits: ["Animal", "Sky Island"],
   attribute: "strike",
   effect: "[On Play] Draw 2 cards and trash 2 cards from your hand.",
   effects: {

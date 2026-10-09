@@ -5,7 +5,7 @@ export const op01Mr2BonKureiBentham084: CharacterCard = {
   id: "OP01-084",
   canonicalId: "OP01-084",
   slug: "mr-2-bon-kurei-bentham/op01-084",
-  name: "Mr.2.Bon.Kurei (Bentham)",
+  name: "Mr.2.Bon.Kurei(Bentham)",
   printings: [
     {
       id: "OP01-084",
@@ -53,7 +53,7 @@ export const op01Mr2BonKureiBentham084: CharacterCard = {
               {
                 filter: "trait",
                 value: "Baroque Works",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

@@ -31,6 +31,10 @@ export const sunYeeRedPandaSpirit: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_8876f6dd20db473bb3aa2e97df698a43",
+    tcgPlayer: "704627",
+  },
   text: [
     {
       title: "Temporary Red Panda Shift 2 {I}",

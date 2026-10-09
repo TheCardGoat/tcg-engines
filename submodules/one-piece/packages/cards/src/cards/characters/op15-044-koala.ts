@@ -23,7 +23,7 @@ export const op15Koala044: CharacterCard = {
   cost: 3,
   power: 2000,
   counter: 1000,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "strike",
   effect:
     "[Blocker]\n[On K.O.] Look at 3 cards from the top of your deck; reveal up to 1 {Dressrosa} type Event and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
@@ -48,7 +48,7 @@ export const op15Koala044: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

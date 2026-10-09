@@ -69,8 +69,18 @@ export const schwartzCastler: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                 zones: ["field"],
                 player: "each-opponent",
                 filter: {
-                  kind: "type",
-                  oneOf: ["ALLY", "CHAMPION"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY", "CHAMPION"],
+                    },
+                    {
+                      kind: "parity",
+                      property: "life",
+                      value: "even",
+                    },
+                  ],
                 },
               },
             },

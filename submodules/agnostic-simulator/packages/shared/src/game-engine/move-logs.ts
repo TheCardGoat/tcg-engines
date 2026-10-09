@@ -38,6 +38,8 @@ export interface CanonicalPlayerNarrativeLog {
   readonly kind: "player-narrative";
   readonly schemaVersion: number;
   readonly commandId: string;
+  /** Undo receipt: consequences after this state are no longer active. */
+  readonly restoredCheckpointStateID?: number;
   readonly moveType: string;
   readonly actorId: string;
   readonly timestamp: number;
@@ -77,6 +79,9 @@ export function isCanonicalPlayerNarrativeLog(log: unknown): log is CanonicalPla
     typeof (log as { schemaVersion?: unknown }).schemaVersion !== "number" ||
     !Number.isFinite((log as { schemaVersion: number }).schemaVersion) ||
     typeof (log as { commandId?: unknown }).commandId !== "string" ||
+    !isOptionalStateID(
+      (log as { restoredCheckpointStateID?: unknown }).restoredCheckpointStateID,
+    ) ||
     typeof (log as { moveType?: unknown }).moveType !== "string" ||
     typeof (log as { actorId?: unknown }).actorId !== "string" ||
     typeof (log as { timestamp?: unknown }).timestamp !== "number" ||
@@ -99,6 +104,12 @@ export function isCanonicalPlayerNarrativeLog(log: unknown): log is CanonicalPla
       isPrivateMessageMap(
         (entry as { privateMessageByPlayerId?: unknown }).privateMessageByPlayerId,
       ),
+  );
+}
+
+function isOptionalStateID(value: unknown): boolean {
+  return (
+    value === undefined || (typeof value === "number" && Number.isInteger(value) && value >= 0)
   );
 }
 
@@ -128,6 +139,9 @@ export function composePlayerNarrativeForViewer(
     kind: log.kind,
     schemaVersion: log.schemaVersion,
     commandId: log.commandId,
+    ...(log.restoredCheckpointStateID !== undefined
+      ? { restoredCheckpointStateID: log.restoredCheckpointStateID }
+      : {}),
     moveType: log.moveType,
     actorId: log.actorId,
     timestamp: log.timestamp,

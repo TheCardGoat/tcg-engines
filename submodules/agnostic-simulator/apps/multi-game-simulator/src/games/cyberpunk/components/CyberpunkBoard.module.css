@@ -8,6 +8,11 @@
   font-family: "Share Tech Mono", monospace;
 }
 
+:global(html[data-cyberpunk-card-renderer] [data-animation-label]),
+:global(html[data-cyberpunk-card-renderer] [data-animation-label-only]) {
+  display: none !important;
+}
+
 .boardWrap {
   /* Hand-anchoring bleed shared by .handTop/.handBottom (which are siblings
      of .boardShell, so vars defined only on .boardShell do not cascade to
@@ -110,6 +115,29 @@
 .playerSide > * {
   position: relative;
   z-index: 1;
+}
+
+.playmat {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(180deg, rgb(7 9 12 / 16%), rgb(7 9 12 / 28%)), var(--cp-playmat-image);
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: contain;
+}
+
+.opponentSide > .playmat,
+.playerSide > .playmat {
+  position: absolute;
+  z-index: 0;
+}
+
+/* Mirror around the seat so the art stays on the opponent Eddie side. */
+.playmatMirrored {
+  transform: scaleX(-1);
 }
 
 .opponentSide::before,

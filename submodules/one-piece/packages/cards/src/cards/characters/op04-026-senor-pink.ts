@@ -57,7 +57,7 @@ export const op04SenorPink026: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Donquixote Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
           {
@@ -79,7 +79,7 @@ export const op04SenorPink026: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Donquixote Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

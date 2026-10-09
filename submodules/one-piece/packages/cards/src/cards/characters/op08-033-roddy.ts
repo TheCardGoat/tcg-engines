@@ -39,7 +39,7 @@ export const op08Roddy033: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Minks",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "restedCardCount",

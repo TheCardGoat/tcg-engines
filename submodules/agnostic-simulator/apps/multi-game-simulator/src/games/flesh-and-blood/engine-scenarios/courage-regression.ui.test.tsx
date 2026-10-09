@@ -46,7 +46,7 @@ describe("FAB Courage visual scenario", () => {
 
     await waitFor(() => {
       const history = screen.getByRole("region", { name: "Match history" }).textContent ?? "";
-      expect(history.match(/You created Courage/g)).toHaveLength(2);
+      expect(history.match(/Visit The Prize Room created Courage for You/g)).toHaveLength(2);
     });
 
     expect(screen.getByRole("region", { name: "Match history" }).textContent).toContain(

@@ -7,7 +7,6 @@ import {
 import { SimulatorRouteStatus } from "@tcg/simulator-ui";
 import { useMatchSession } from "../../simulator/MatchSessionProvider";
 import { MatchSessionRecovery } from "../../simulator/MatchSessionRecovery";
-import { playUrl } from "../../runtime/gameRuntimeApi";
 import { GrandArchivePreparation } from "./GrandArchivePreparation";
 import { useState } from "react";
 
@@ -16,7 +15,7 @@ export function GrandArchivePreparationPage({
 }: {
   session: Extract<MatchSession, { phase: "preparation" }>;
 }) {
-  const { refresh } = useMatchSession();
+  const { submitPreparation } = useMatchSession();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const view = session.preparation;
@@ -33,29 +32,16 @@ export function GrandArchivePreparationPage({
       />
     );
   }
-  const submit = async (suffix: string, body: object) => {
-    const response = await fetch(
-      playUrl(
-        "grand-archive",
-        `/matches/${encodeURIComponent(session.match.matchId)}/pregame${suffix}`,
-      ),
-      {
-        method: "PUT",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ gameId: view.gameId, ...body }),
-      },
+  const submit = async (
+    _suffix: string,
+    body: { gameId?: string; firstPlayerId: string } | { gameId?: string; selection: unknown },
+  ) => {
+    const result = await submitPreparation(
+      "firstPlayerId" in body
+        ? { type: "choose_preparation_first_player", firstPlayerId: body.firstPlayerId }
+        : { type: "confirm_preparation", selection: body.selection },
     );
-    const result: unknown = await response.json().catch(() => null);
-    if (
-      !response.ok ||
-      typeof result !== "object" ||
-      result === null ||
-      !("object" in result) ||
-      result.object !== "game_pregame"
-    )
-      throw new Error("Could not save preparation. Synchronize and try again.");
-    await refresh();
+    if (result.status === "rejected") throw new Error(result.message);
   };
   return (
     <>

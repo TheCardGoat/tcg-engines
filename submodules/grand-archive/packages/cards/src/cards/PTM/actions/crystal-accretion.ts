@@ -30,19 +30,11 @@ export const crystalAccretion: GrandArchiveCard<GrandArchiveAbilityDefinition, "
           id: "HDeEE7YPTl-a1",
           kind: "card-resolution",
           text: "Put a sheen counter on each unit with a sheen counter on it.",
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              unique: true,
-              candidates: {
-                kind: "object",
+          effect: {
+            kind: "add-counter",
+            subject: {
+              kind: "each",
+              collection: {
                 zones: ["field"],
                 filter: {
                   kind: "all",
@@ -60,13 +52,6 @@ export const crystalAccretion: GrandArchiveCard<GrandArchiveAbilityDefinition, "
                   ],
                 },
               },
-            },
-          ],
-          effect: {
-            kind: "add-counter",
-            subject: {
-              kind: "bound",
-              binding: "target-1",
             },
             counter: {
               named: "sheen",

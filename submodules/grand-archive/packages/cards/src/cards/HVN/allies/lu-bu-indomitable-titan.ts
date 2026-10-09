@@ -297,6 +297,34 @@ export const luBuIndomitableTitan: GrandArchiveCard<GrandArchiveAbilityDefinitio
               },
             },
           },
+          variables: [
+            {
+              symbol: "X",
+              kind: "derived",
+              amount: {
+                kind: "calculate",
+                operator: "add",
+                operands: [
+                  {
+                    kind: "property",
+                    subject: {
+                      kind: "event-recipient",
+                    },
+                    property: "power",
+                    basis: "last-known",
+                  },
+                  {
+                    kind: "property",
+                    subject: {
+                      kind: "event-recipient",
+                    },
+                    property: "life",
+                    basis: "last-known",
+                  },
+                ],
+              },
+            },
+          ],
           effect: {
             kind: "deal-damage",
             source: {

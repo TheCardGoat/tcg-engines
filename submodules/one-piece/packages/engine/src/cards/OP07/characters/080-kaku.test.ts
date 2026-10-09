@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op07Kaku080 } from "../../../../../cards/src/cards/characters/op07-080-kaku.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP07-080 Kaku", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op07Kaku080);
-  });
-});

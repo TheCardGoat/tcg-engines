@@ -39,7 +39,7 @@ export const op16BennBeckman012: CharacterCard = {
             amount: 1,
           },
         ],
-        conditions: [
+        postCostConditions: [
           {
             condition: "leaderTrait",
             trait: "Red-Haired Pirates",

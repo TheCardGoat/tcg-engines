@@ -495,13 +495,13 @@ describe("Comprehensive Rules 1: Game Overview", () => {
 
     south.play(op03OneTwoJango039);
     // Otama is the only Character with a cost of 1 or less, but she is already
-    // rested, so the rest action offers no candidates and cannot be performed.
+    // rested, so it remains selectable but the rest action is not performed.
     const decision = south.pendingDecision("effectTargetSelection");
     const step = decision.steps[0];
     expect(step?.kind).toBe("selectEntity");
     if (step?.kind !== "selectEntity") throw new Error("Expected a target decision.");
-    expect(step.candidates.map((candidate) => candidate.ref.id)).not.toContain(otamaId);
-    south.chooseNoTargets();
+    expect(step.candidates.map((candidate) => candidate.ref.id)).toContain(otamaId);
+    south.chooseTargets(otamaId);
     south.chooseTargets(eb01MountainGod018);
 
     const northView = north.view();

@@ -76,6 +76,7 @@ describe("OP09-078 Gum-Gum Giant", () => {
     const donDeckBefore = before.donDeckCount;
     const deckBefore = before.deckCount;
     engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
     const after = engine.getView("north").players.north;
     // Declined optional Counter costs: no DON!! return, no hand trash, no draw 2.
     expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
@@ -84,5 +85,27 @@ describe("OP09-078 Gum-Gum Giant", () => {
     expect(after.hand.map((card) => card.instanceId)).toContain(paymentId);
     expect(after.trash.map((card) => card.instanceId)).not.toContain(paymentId);
     expect(engine.getView("north").prompts).toHaveLength(0);
+  });
+  test("a non-Straw-Hat Leader pays both costs but gets neither power nor draw", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST01-001" },
+      { leaderCardId: "ST02-001", hand: ["OP09-078", "ST02-002"], activeDon: 3 },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const event = e.findCardInZone("north", "hand", "OP09-078");
+    e.declareAttack(e.leader("south"), e.leader("north"), "south");
+    e.resolveDecision("battleCounter", { selectedIds: [event] }, "north");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "north");
+    e.resolveDecision(
+      "effectCostReturnDon",
+      { selectedIds: ["active-don:0", "rested-don:0"] },
+      "north",
+    );
+    const v = e.getView("north");
+    expect(v.players.north.deckCount).toBe(10);
+    expect(v.players.north.leader.power).toBe(5000);
+    expect(v.players.north.lifeCount).toBe(4);
+    expect(v.players.north.trash.map((c) => c.cardId)).toContain("ST02-002");
+    expect(v.prompts).toHaveLength(0);
   });
 });

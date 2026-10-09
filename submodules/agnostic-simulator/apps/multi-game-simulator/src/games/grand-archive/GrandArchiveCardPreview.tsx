@@ -1,7 +1,15 @@
 import type { SimulatorEntity } from "@tcg/simulator-contract";
 import { CardFace } from "@tcg/simulator-ui";
 import { getGrandArchiveCard } from "@tcg/grand-archive-cards";
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import { grandArchiveCardPresentation } from "@tcg/grand-archive-server-adapter";
 
 interface GrandArchiveCardPreviewContextValue {
@@ -15,7 +23,7 @@ const GrandArchiveCardPreviewContext = createContext<GrandArchiveCardPreviewCont
 );
 
 export function grandArchiveEntityWithPrintedDetails(entity: SimulatorEntity): SimulatorEntity {
-  if (entity.details) return entity;
+  if (entity.face !== "public" || entity.details) return entity;
   const definitionId = entity.dataAttributes?.["data-definition-id"];
   const card = typeof definitionId === "string" ? getGrandArchiveCard(definitionId) : undefined;
   if (!card?.effect) return entity;
@@ -45,18 +53,23 @@ export function GrandArchiveCardPreviewProvider({ children }: { readonly childre
         return;
       setPreview(undefined);
     };
+    const dismissOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setPreview(undefined);
+    };
     document.addEventListener("pointerdown", dismiss);
-    return () => document.removeEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", dismissOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", dismiss);
+      document.removeEventListener("keydown", dismissOnEscape);
+    };
   }, [preview]);
+  const show = useCallback((entity: SimulatorEntity) => {
+    setPreview(entity.face === "public" ? entity : undefined);
+  }, []);
+  const hide = useCallback(() => setPreview(undefined), []);
   const value = useMemo<GrandArchiveCardPreviewContextValue>(
-    () => ({
-      previewedEntityId: preview?.id,
-      show: (entity) => {
-        if (entity.face === "public") setPreview(entity);
-      },
-      hide: () => setPreview(undefined),
-    }),
-    [preview?.id],
+    () => ({ previewedEntityId: preview?.id, show, hide }),
+    [preview?.id, show, hide],
   );
 
   return (
@@ -67,10 +80,12 @@ export function GrandArchiveCardPreviewProvider({ children }: { readonly childre
           id="ga-card-preview"
           className="ga-hand-preview"
           data-testid="ga-card-preview"
+          data-ga-overlay="card-preview"
           role="dialog"
           aria-label={`Card preview: ${preview.title}`}
         >
           <CardFace
+            crossOrigin="anonymous"
             as="div"
             entity={grandArchiveCardPresentation({
               ...preview,

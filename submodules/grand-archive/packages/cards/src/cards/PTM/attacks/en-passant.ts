@@ -74,7 +74,11 @@ export const enPassant: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> 
                         },
                         {
                           kind: "subtype",
-                          oneOf: ["CHESSMAN", "PAWN"],
+                          oneOf: ["CHESSMAN"],
+                        },
+                        {
+                          kind: "subtype",
+                          oneOf: ["PAWN"],
                         },
                       ],
                     },

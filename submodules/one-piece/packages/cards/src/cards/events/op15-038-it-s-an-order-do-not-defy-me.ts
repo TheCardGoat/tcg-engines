@@ -21,7 +21,7 @@ export const op15ItSAnOrderDoNotDefyMe038: EventCard = {
   rarity: "R",
   setId: "OP15",
   cost: 1,
-  traits: ["Krieg Pirates East Blue"],
+  traits: ["East Blue", "Krieg Pirates"],
   effect:
     "[Main] Up to 1 of your opponent's rested Characters with a cost of 8 or less that has 2 or more DON!! cards given will not become active in your opponent's next Refresh Phase.[Counter] Up to 1 of your [Krieg] cards gains +4000 power during this battle.",
   effects: {
@@ -39,6 +39,7 @@ export const op15ItSAnOrderDoNotDefyMe038: EventCard = {
                 upTo: true,
               },
               filters: [
+                { filter: "attachedDon", comparison: "gte", value: 2 },
                 {
                   filter: "state",
                   value: "rested",

@@ -33,7 +33,7 @@ export const eb02Gaimon012: CharacterCard = {
           {
             condition: "hasCard",
             player: "self",
-            zone: "character",
+            zone: "field",
             filters: [
               {
                 filter: "name",

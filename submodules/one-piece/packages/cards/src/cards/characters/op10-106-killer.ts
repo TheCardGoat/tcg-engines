@@ -22,7 +22,7 @@ export const op10Killer106: CharacterCard = {
   setId: "OP10",
   cost: 3,
   power: 5000,
-  traits: ["Kid Pirates Supernovas"],
+  traits: ["Supernovas", "Kid Pirates"],
   attribute: "slash",
   effect:
     '[On K.O.] If your Leader has the "Supernovas" type, look at 3 cards from the top of your deck; reveal up to 1 "Supernovas" or "Kid Pirates" type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
@@ -34,7 +34,7 @@ export const op10Killer106: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Supernovas",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -53,8 +53,8 @@ export const op10Killer106: CharacterCard = {
               {
                 filter: "anyOf",
                 filters: [
-                  { filter: "trait", value: "Supernovas", match: "includes" },
-                  { filter: "trait", value: "Kid Pirates", match: "includes" },
+                  { filter: "trait", value: "Supernovas", match: "exact" },
+                  { filter: "trait", value: "Kid Pirates", match: "exact" },
                 ],
               },
             ],

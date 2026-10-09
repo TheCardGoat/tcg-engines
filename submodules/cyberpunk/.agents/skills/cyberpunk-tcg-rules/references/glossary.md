@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weird Co."
+  url: "https://cyberpunktcg.com/comprehensive-rules"
+  relation: "current_index"
+---
+
 # Cyberpunk TCG Terms and Keywords
 
 > Extracted from the local official comprehensive-rules mirror. Cite the numbered rule in the source for implementation or player-facing rulings.

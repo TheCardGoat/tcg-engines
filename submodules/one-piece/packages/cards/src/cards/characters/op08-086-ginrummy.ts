@@ -23,7 +23,7 @@ export const op08Ginrummy086: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   attribute: "strike",
   effect:
     "[On Play] If your opponent has a Character with a cost of 0, draw 2 cards and trash 2 cards from your hand.",

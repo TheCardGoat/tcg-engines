@@ -23,7 +23,7 @@ export const op11Ripper096: CharacterCard = {
   cost: 1,
   power: 1000,
   counter: 1000,
-  traits: ["Navy East Blue"],
+  traits: ["East Blue", "Navy"],
   attribute: "wisdom",
   effect:
     'If you have a black "Navy" type Character other than [Ripper], this Character gains [Blocker].\n(After your opponent declares an attack, you may rest this card to make it the new target of the attack.)',
@@ -43,7 +43,7 @@ export const op11Ripper096: CharacterCard = {
               {
                 filter: "trait",
                 value: "Navy",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "excludeName",

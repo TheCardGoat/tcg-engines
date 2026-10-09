@@ -44,7 +44,7 @@ export const op16Marineford078: StageCard = {
               {
                 filter: "trait",
                 value: "Navy",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

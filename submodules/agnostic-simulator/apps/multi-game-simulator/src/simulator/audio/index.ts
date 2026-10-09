@@ -10,10 +10,13 @@ export {
   playSimulatorSound,
   setSimulatorSoundPack,
   setSimulatorSoundVolume,
-} from "./sound-service";
+} from "@tcg/simulator-presentation/audio/sound-service";
 export {
   SIMULATOR_SOUND_PACKS,
   type SimulatorSoundPack,
   type SimulatorSoundPackId,
-} from "./sound-packs";
-export { collectScheduledSimulatorAudioCues, type ScheduledSimulatorAudioCue } from "./scheduler";
+} from "@tcg/simulator-presentation/audio/sound-packs";
+export {
+  collectScheduledSimulatorAudioCues,
+  type ScheduledSimulatorAudioCue,
+} from "@tcg/simulator-presentation/audio/scheduler";

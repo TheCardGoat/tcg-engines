@@ -37,39 +37,48 @@ export const alkahest: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> =
               actor: "controller",
             },
           },
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
+          effect: {
+            kind: "choose",
+            selection: {
+              id: "chosen-counter-object",
+              kind: "choice",
+              declared: "resolution",
               chooser: "controller",
               count: {
                 kind: "exactly",
                 amount: 1,
               },
-              unique: true,
               candidates: {
                 kind: "object",
                 zones: ["field"],
                 relationship: "controlled-by",
                 player: "controller",
                 filter: {
-                  kind: "type",
-                  oneOf: ["ITEM"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ITEM"],
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["POTION"],
+                    },
+                  ],
                 },
               },
             },
-          ],
-          effect: {
-            kind: "add-counter",
-            subject: {
-              kind: "bound",
-              binding: "target-1",
+            effect: {
+              kind: "add-counter",
+              subject: {
+                kind: "bound",
+                binding: "chosen-counter-object",
+              },
+              counter: {
+                named: "age",
+              },
+              amount: 1,
             },
-            counter: {
-              named: "age",
-            },
-            amount: 1,
           },
         },
         {
@@ -115,7 +124,7 @@ export const alkahest: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> =
                               property: "memory-cost",
                               basis: "base",
                             },
-                            operator: "lte",
+                            operator: "eq",
                             right: 0,
                           },
                         },

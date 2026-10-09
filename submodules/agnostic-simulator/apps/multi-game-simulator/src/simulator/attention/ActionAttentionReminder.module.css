@@ -1,0 +1,109 @@
+.root,
+.off {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 60;
+  width: max-content;
+  max-width: min(27rem, calc(100vw - 2rem));
+  color: var(--mantine-color-text);
+  background: var(--mantine-color-body);
+  border: 1px solid var(--mantine-color-yellow-6);
+  border-radius: var(--mantine-radius-md);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.25);
+}
+
+.root {
+  padding: 0.65rem 0.8rem;
+}
+.off {
+  left: auto;
+  top: auto;
+  right: 1rem;
+  bottom: calc(5.5rem + env(safe-area-inset-bottom));
+  transform: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.7rem;
+  cursor: pointer;
+}
+.heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.83rem;
+}
+.heading svg {
+  color: var(--mantine-color-yellow-6);
+  flex: 0 0 auto;
+}
+.close {
+  margin-left: auto;
+  display: flex;
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.3rem;
+}
+.detail {
+  margin-top: 0.55rem;
+  font-size: 0.8rem;
+}
+.detail p {
+  margin: 0 0 0.55rem;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.sound {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.7rem;
+  cursor: pointer;
+}
+.disable {
+  display: block;
+  margin-top: 0.5rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.root button:focus-visible,
+.off:focus-visible {
+  outline: 2px solid var(--mantine-color-yellow-6);
+  outline-offset: 2px;
+}
+@media (max-width: 767px) {
+  .root,
+  .off {
+    max-width: calc(100vw - 1.3rem);
+  }
+  .off {
+    right: 0.65rem;
+    bottom: calc(5rem + env(safe-area-inset-bottom));
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .root[data-stage="1"] {
+    animation: attention-in 260ms ease-out;
+  }
+}
+@keyframes attention-in {
+  from {
+    transform: translate(-50%, calc(-50% + 0.35rem));
+    opacity: 0.75;
+  }
+  to {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}

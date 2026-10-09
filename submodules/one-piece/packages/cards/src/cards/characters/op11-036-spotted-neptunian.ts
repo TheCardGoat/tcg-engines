@@ -56,7 +56,7 @@ export const op11SpottedNeptunian036: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Neptunian",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "name",

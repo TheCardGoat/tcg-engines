@@ -23,7 +23,7 @@ export const op09Monster012: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Animal Red-Haired Pirates"],
+  traits: ["Animal", "Red-Haired Pirates"],
   attribute: "strike",
   effect:
     "If your Character [Bonk Punch] would be K.O.'d by an effect, you may trash this Character instead.",

@@ -1,19 +1,27 @@
 import { replayStepPosition } from "@tcg/game-page-contract";
 import { ReplayPlaybackV1Schema, type ReplayPlaybackV1 } from "@tcg/game-page-contract";
 import { materializeReplayStateAtCursor } from "@tcg/game-page-contract/replay-materializer";
+import { withParticipantReplayChat } from "./replay-chat-fetch";
 
 export { applyReplayPatch } from "@tcg/game-page-contract/replay-materializer";
 
 export async function fetchReplayPlayback(
   url: string,
   fetcher: typeof fetch = fetch,
+  signal?: AbortSignal,
 ): Promise<ReplayPlaybackV1> {
   const response = await fetcher(url, {
     credentials: "include",
     headers: { Accept: "application/json" },
+    signal,
   });
   if (!response.ok) throw new Error(`Failed to fetch replay (${response.status}).`);
-  return ReplayPlaybackV1Schema.parse(await response.json());
+  return withParticipantReplayChat(
+    ReplayPlaybackV1Schema.parse(await response.json()),
+    url,
+    fetcher,
+    signal,
+  );
 }
 
 export const REPLAY_MOVE_INTERVAL_MS = 800;

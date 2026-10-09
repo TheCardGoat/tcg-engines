@@ -12,7 +12,7 @@ import type { DeckStrategyProfile } from "../../src/automation/deck-profile.ts";
 import type { DecisionContext } from "../../src/automation/types.ts";
 import type { AvailableMove } from "../../src/view/player-prompt.ts";
 import type { FilteredCardView } from "../../src/view/filter.ts";
-import type { PlayerId } from "../../src/types/branded.ts";
+import { createCardInstanceId, createPlayerId, type PlayerId } from "../../src/types/branded.ts";
 
 type CardShape = Partial<
   Pick<
@@ -34,6 +34,9 @@ function makeCard(shape: CardShape): FilteredCardView {
     power: shape.power ?? 0,
     effectivePower: shape.power ?? 0,
     cost: shape.cost ?? 0,
+    effectiveCost: shape.cost ?? 0,
+    costEffects: [],
+    activeEffects: [],
     type: shape.type ?? "unit",
     classifications: [],
     hasSellTag: shape.hasSellTag ?? false,
@@ -41,6 +44,7 @@ function makeCard(shape: CardShape): FilteredCardView {
     attachedToId: null,
     hasLag: false,
     hasAttackedThisTurn: false,
+    hasStolenGigThisTurn: false,
     grantedRules: [],
     keywords: shape.keywords ?? [],
     triggerHints: [],
@@ -342,8 +346,9 @@ describe("greedy deck profiles — deny-steal blocking", () => {
       {
         p1GigCount: 2,
         attackState: {
-          attackerId: "raider",
+          attackerId: createCardInstanceId("raider"),
           defenderId: null,
+          rivalId: createPlayerId("p1"),
           kind: "direct",
           step: "react",
           redirectedByBlocker: false,

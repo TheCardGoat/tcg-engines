@@ -16,9 +16,7 @@ export function redactSensitive(value: unknown, depth = 0): unknown {
   }
   const out: Record<string, unknown> = {};
   for (const [key, item] of Object.entries(value as Record<string, unknown>)) {
-    out[key] = SENSITIVE_KEY_PATTERN.test(key)
-      ? "[redacted]"
-      : redactSensitive(item, depth + 1);
+    out[key] = SENSITIVE_KEY_PATTERN.test(key) ? "[redacted]" : redactSensitive(item, depth + 1);
   }
   return out;
 }
@@ -28,4 +26,10 @@ export function logDebugPayload(label: string, payload: unknown): void {
   if (!isGatewayPacketLoggingEnabled()) return;
   // eslint-disable-next-line no-console
   console.log(label, redactSensitive(payload));
+}
+
+/** Freeze values at log time; copying a console line includes the complete JSON. */
+export function logDebugSnapshot(label: string, payload: unknown): void {
+  if (!isGatewayPacketLoggingEnabled()) return;
+  console.log(`${label} ${JSON.stringify(redactSensitive(payload))}`);
 }

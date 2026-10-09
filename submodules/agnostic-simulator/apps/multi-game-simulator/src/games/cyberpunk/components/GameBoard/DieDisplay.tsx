@@ -1,4 +1,6 @@
-import { useUserConfig, type DieType } from "../../engine";
+import type { DieType } from "@tcg/cyberpunk-types";
+import { TabletopDie } from "@tcg/simulator-ui";
+import { useUserConfig } from "../../engine";
 import classes from "./DieDisplay.module.css";
 import { getDiceImageUrl } from "../DieAssets/dieAssets";
 
@@ -40,12 +42,15 @@ function ShapeDisplay({ dieType, faceValue, label, side, size }: Props) {
   const isRolledGig = size === "md" && faceValue !== undefined;
 
   return (
-    <div
+    <TabletopDie
+      label={label}
+      value={faceValue}
+      appearance="bare"
+      data-cyberpunk-die-face
       className={`${classes.fixerSlot} ${shape} ${side ? classes[side] : ""} ${isRolledGig ? classes.rolled : ""}`}
-      aria-label={faceValue !== undefined ? `${label} showing ${faceValue}` : label}
     >
       <span className={classes.dieText}>{text}</span>
-    </div>
+    </TabletopDie>
   );
 }
 
@@ -56,13 +61,15 @@ function ImageDisplay({ dieType, faceValue, label, size }: Props) {
   const sizeClass = size === "md" ? classes.imgMd : classes.imgSm;
 
   return (
-    <div className={`${classes.imgWrap} ${sizeClass}`}>
-      <img
-        src={src}
-        alt={faceValue !== undefined ? `${label} showing ${faceValue}` : label}
-        className={classes.img}
-      />
-    </div>
+    <TabletopDie
+      label={label}
+      value={faceValue}
+      appearance="bare"
+      data-cyberpunk-die-face
+      className={`${classes.imgWrap} ${sizeClass}`}
+    >
+      <img src={src} alt="" className={classes.img} />
+    </TabletopDie>
   );
 }
 
@@ -75,9 +82,12 @@ function FontDisplay({ dieType, faceValue, label, side, size }: Props) {
   const sideClass = side ? classes[side] : "";
 
   return (
-    <div
+    <TabletopDie
+      label={label}
+      value={faceValue}
+      appearance="bare"
+      data-cyberpunk-die-face
       className={`${classes.fontWrap} ${sizeClass} ${sideClass}`}
-      aria-label={faceValue !== undefined ? `${label} showing ${faceValue}` : label}
     >
       <span
         style={{
@@ -89,7 +99,7 @@ function FontDisplay({ dieType, faceValue, label, side, size }: Props) {
       >
         {code}
       </span>
-    </div>
+    </TabletopDie>
   );
 }
 

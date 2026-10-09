@@ -22,7 +22,7 @@ export const op14eb04Disappointed099: EventCard = {
   setId: "OP14",
   cost: 1,
   trigger: "Activate this card's [Main] effect.",
-  traits: ["Baroque Works The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
   effect:
     '[Main] Look at 3 cards from the top of your deck; reveal up to 1 card with a type including "Baroque Works" other than [Disappointed?] and add it to your hand. Then, trash the rest.',
   effects: {

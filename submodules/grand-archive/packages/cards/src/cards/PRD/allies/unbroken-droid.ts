@@ -76,7 +76,7 @@ export const unbrokenDroid: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                               property: "memory-cost",
                               basis: "base",
                             },
-                            operator: "lte",
+                            operator: "eq",
                             right: 0,
                           },
                         },

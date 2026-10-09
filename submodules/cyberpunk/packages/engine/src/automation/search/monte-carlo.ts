@@ -3,7 +3,7 @@ import type { CommandEnvelope } from "../../types/commands.ts";
 import type { AIStrategy, EngineHandle, MoveDecision } from "../types.ts";
 import { greedyStrategy } from "../strategies/greedy.ts";
 import { randomStrategy } from "../strategies/random.ts";
-import { enumerateCandidateActions, runRollout } from "./shared.ts";
+import { chooseExecutableAction, enumerateCandidateActions, runRollout } from "./shared.ts";
 import { createSeededBotRandom } from "@tcg/bot-core";
 
 /**
@@ -45,9 +45,10 @@ export function createMonteCarloStrategy(opts: MonteCarloOptions = {}): AIStrate
         return { kind: "stuck", reason: "monte-carlo: requires ctx.engine" };
       }
 
-      const candidates = enumerateCandidateActions(ctx.prompt);
+      const candidates = enumerateCandidateActions(ctx.engine.getPrompt(ctx.playerId));
       if (candidates.length === 0) return { kind: "stuck", reason: "no actionable moves" };
-      if (candidates.length === 1) return candidates[0]!;
+      if (candidates.length === 1)
+        return chooseExecutableAction(ctx.engine, ctx.playerId, candidates);
 
       let bestDecision = candidates[0]!;
       let bestScore = Number.NEGATIVE_INFINITY;
@@ -66,6 +67,7 @@ export function createMonteCarloStrategy(opts: MonteCarloOptions = {}): AIStrate
           rolloutStrategy,
           evaluationSeed,
         );
+        if (score === Number.NEGATIVE_INFINITY) continue;
         if (score > bestScore) {
           bestScore = score;
           bestDecision = decision;
@@ -80,10 +82,15 @@ export function createMonteCarloStrategy(opts: MonteCarloOptions = {}): AIStrate
         if (rolloutPolicyDecision.kind === "command") {
           const preferredKey = actionKey(rolloutPolicyDecision);
           const preferred = tiedBest.find((candidate) => actionKey(candidate) === preferredKey);
-          if (preferred) return preferred;
+          if (preferred)
+            return chooseExecutableAction(ctx.engine, ctx.playerId, [preferred, ...tiedBest]);
         }
       }
-      return bestDecision;
+      return chooseExecutableAction(ctx.engine, ctx.playerId, [
+        bestDecision,
+        ...tiedBest,
+        ...candidates,
+      ]);
     },
   };
 }

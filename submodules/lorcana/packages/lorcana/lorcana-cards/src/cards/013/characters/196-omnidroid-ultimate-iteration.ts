@@ -34,12 +34,11 @@ export const omnidroidUltimateIteration: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dce73ba526114978b851ac2f673a02bc",
+    tcgPlayer: "704691",
   },
   text: [
     {
-      title: "Shift 6",
-      description:
-        "(You may pay 6 ink to play this on top of one of your characters named Omnidroid.)",
+      title: "Shift 6 {I}",
     },
     {
       title: "Resist +2",

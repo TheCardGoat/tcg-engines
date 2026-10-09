@@ -32,7 +32,7 @@ export const op14eb04BoaHancockOp14041041: LeaderCard = {
   setId: "OP14",
   power: 5000,
   life: 4,
-  traits: ["Kuja Pirates", "The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Kuja Pirates"],
   attribute: "special",
   effect:
     "[Opponent's Turn] When you play a Character, draw 1 card. [DON!!x1] [Once Per Turn] When one of your {Amazon Lily} or {Kuja Pirates} type Characters with 5000 base power or more is K.O.'d add up to 1 card from the top of your opponent's Life cards to the owner's hand.",
@@ -62,8 +62,8 @@ export const op14eb04BoaHancockOp14041041: LeaderCard = {
             {
               filter: "anyOf",
               groups: [
-                [{ filter: "trait", value: "Amazon Lily", match: "includes" }],
-                [{ filter: "trait", value: "Kuja Pirates", match: "includes" }],
+                [{ filter: "trait", value: "Amazon Lily", match: "exact" }],
+                [{ filter: "trait", value: "Kuja Pirates", match: "exact" }],
               ],
             },
             {

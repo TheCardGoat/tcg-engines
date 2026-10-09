@@ -12,3 +12,8 @@ describe("Aenean Frostlance — fixed damage", () => {
     targetKind: "unit",
   });
 });
+
+import { proveAeneanDamageLevels } from "../../../testing/aenean-damage-levels.ts";
+/** @covers NXGaB1dYwL-a2 @covers NXGaB1dYwL-a3 */
+describe("Aenean Frostlance level replacements", () =>
+  proveAeneanDamageLevels(aeneanFrostlance, true));

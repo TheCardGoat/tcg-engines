@@ -6,6 +6,24 @@ import { op15NicoRobin109 } from "../../../../../cards/src/cards/characters/op15
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP15-109 Nico Robin", () => {
+  test("a non-Straw-Hat Leader can pay Life but cannot replenish Life or play", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: "OP01-061",
+      hand: [op15NicoRobin109, op15GanFall102],
+      activeDon: 7,
+      life: 3,
+    });
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    engine.playCard(op15NicoRobin109);
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    const south = engine.getView("south").players.south;
+    expect(south.lifeCount).toBe(2);
+    expect(south.deckCount).toBe(deckBefore);
+    expect(south.hand.map((card) => card.cardId)).toContain(op15GanFall102.id);
+    expect(south.characters.filter(Boolean)).toHaveLength(1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[On Play] pays top Life, moves a deck card to Life, and plays a Sky Island Character", () => {
     const engine = OnePieceTestEngine.create(
       {

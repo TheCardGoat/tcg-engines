@@ -1,3 +1,11 @@
+---
+official_source:
+  publisher: "Fantasy Flight Games"
+  url: "https://cdn.starwarsunlimited.com//SWH_Comp_Rules_2_0_abd621bde5.pdf"
+  relation: "exact_document"
+  copy_version: "2.0"
+---
+
 # Zones
 
 Use for zone ownership, visibility, movement, in-play/out-of-play status, and

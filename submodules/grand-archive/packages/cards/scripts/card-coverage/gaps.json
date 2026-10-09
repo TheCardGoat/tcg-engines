@@ -2955,9 +2955,9 @@
       "family": "imbued-multi-mode-target-collision",
       "kind": "engine-primitive",
       "primitive": "packages/engine/src/procedures/activation/activation.ts",
-      "status": "blocked",
+      "status": "resolved",
       "repro": "Printed 'Choose one. If this is imbued, choose two instead' modes each declare their own target-1; collectGrandArchiveModeTargets rejects any multi-mode selection with 'Selected modes contain duplicate target declaration ids', so the imbued activation can never be announced.",
-      "blockedBy": "Mode-scoped target declarations need per-mode namespacing (announcement keys and binding resolution) before multi-mode selection with same-id targets is expressible.",
+      "resolvedBy": "Compiler scopes colliding mode target declarations and typed effect references. Public Decree tests prove Imbue payment, independent targets, optional targets, all Vermilion modes and rejection rollback. Topsy uses a conditional-count fixture and its optional discard target now resolves to no action when omitted.",
       "members": [
         {
           "canonicalId": "7cx66hjlgx",
@@ -2977,9 +2977,9 @@
       "family": "link-fixture-blocked",
       "kind": "definition",
       "primitive": "packages/cards/src/testing/intrinsic-link.ts",
-      "status": "blocked",
+      "status": "resolved",
       "repro": "Lakereaving Chill (item-or-weapon link) announces legally against a WEAPON host, resolves, and lands in the graveyard instead of the field; Jovian Hilt X Ultra and Message in Shadows sacrifice-proof fixtures fight turn-boundary trigger announcements from fixture cards.",
-      "blockedBy": "Link commit semantics for ability-removing linked statics need a focused engine investigation; the shared fixture needs announcement-shaped drains.",
+      "resolvedBy": "Lakereaving Chill keeps the attachment as effect source and removes abilities from the linked host. Jovian Hilt uses the linked weapon directly instead of inventing a target. The Link fixture handles Glimpse through a public decision. Runtime tests prove legal hosts, invalid host rejection, attack prohibition and sacrifice after host removal.",
       "members": [
         {
           "canonicalId": "7wX0tZmhYb",
@@ -2999,9 +2999,9 @@
       "family": "flip-face-keyword-groups",
       "kind": "definition",
       "primitive": "packages/cards/src/testing/keyword-group.ts",
-      "status": "blocked",
+      "status": "resolved",
       "repro": "Printed keyword groups on double-faced cards' flip faces cannot be asserted by fielding the card: the object materializes as its default face and the group only becomes active after a transform fixture exists.",
-      "blockedBy": "Shared transform (flip) entry fixture for double-faced cards.",
+      "resolvedBy": "Public Whirlwind Threads activations earn the required quest counters. The printed Fatestone activation consumes them and transforms the same object, enabling only its reverse-face keywords; declining retains the original face and counters.",
       "members": [
         {
           "canonicalId": "6ce5rzrjd9",

@@ -6,7 +6,29 @@ import { OnePieceTestEngine } from "../../../index.ts";
 const OPPONENTS_TURN = { firstPlayer: "south", activeSeat: "north" } as const;
 
 describe("EB04-044 Koby", () => {
-  test("under a {Navy} Leader discards a hand card instead of being removed", () => {
+  test("a Former Navy Leader permits the replacement because its type includes Navy", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP02-072",
+        character: [{ card: eb04Koby044, rested: true }],
+        hand: ["OP16-096"],
+      },
+      { character: [{ cardId: "OP16-096", playedOnTurn: 0 }] },
+      OPPONENTS_TURN,
+    );
+    const koby = engine.findCardInZone("south", "character", eb04Koby044);
+    const payment = engine.findCardInZone("south", "hand", "OP16-096");
+    engine.asNorth().attack("OP16-096", koby);
+    engine.asSouth().chooseCounter();
+    engine.resolveDecision("battleKoReplacement", { selectedIds: [payment] }, "south");
+    const view = engine.getView("south");
+    expect(view.players.south.characters.map((c) => c?.instanceId)).toContain(koby);
+    expect(view.players.south.trash.map((c) => c.instanceId)).toContain(payment);
+    expect(view.players.south.handCount).toBe(0);
+    expect(view.prompts).toHaveLength(0);
+  });
+
+  test("under a {Navy} Leader shares one replacement across removal events, once per turn", () => {
     const engine = OnePieceTestEngine.create(
       {
         leaderCardId: "OP16-060",
@@ -14,7 +36,12 @@ describe("EB04-044 Koby", () => {
         hand: ["OP16-096", "OP16-039"],
         activeDon: 2,
       },
-      { character: [{ cardId: "OP16-096", rested: false, playedOnTurn: 0 }] },
+      {
+        character: [
+          { cardId: "OP16-096", rested: false, playedOnTurn: 0 },
+          { cardId: "OP16-096", rested: false, playedOnTurn: 0 },
+        ],
+      },
       OPPONENTS_TURN,
     );
     const kobyId = engine.findCardInZone("south", "character", eb04Koby044);
@@ -32,6 +59,17 @@ describe("EB04-044 Koby", () => {
       engine.findCardInZone("south", "hand", "OP16-039"),
     ]);
     expect(view.prompts).toHaveLength(0);
+
+    const nextAttacker = view.players.north.characters.find(
+      (card) => card && card.instanceId !== attackerId,
+    );
+    if (!nextAttacker?.instanceId) throw new Error("Expected the second attacker.");
+    engine.declareAttack(nextAttacker.instanceId, kobyId, "north");
+    // No usable Counter remains, so the Counter Step ends automatically.
+    const afterSecondAttack = engine.getView("south");
+    expect(afterSecondAttack.players.south.trash.map((card) => card.instanceId)).toContain(kobyId);
+    expect(afterSecondAttack.players.south.handCount).toBe(1);
+    expect(afterSecondAttack.prompts).toHaveLength(0);
   });
 
   test("never opens under a non-{Navy} Leader", () => {

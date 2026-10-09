@@ -33,6 +33,7 @@ export const genieHardToGrasp: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fbd50cee68644238a38bb3dc1e2a13fb",
+    tcgPlayer: "704568",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Ally"],

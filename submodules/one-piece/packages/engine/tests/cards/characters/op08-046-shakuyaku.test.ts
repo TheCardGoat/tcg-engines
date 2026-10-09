@@ -99,7 +99,7 @@ describe("OP08-046 Shakuyaku", () => {
     const targetId = engine.findCardInZone("north", "character", eb01Doma005);
 
     engine.declareAttack(attackerId, targetId, "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    // No usable Counter remains, so the Counter Step ends automatically.
 
     const view = engine.getView("south");
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(targetId);
@@ -125,5 +125,22 @@ describe("OP08-046 Shakuyaku", () => {
       view.players.south.characters.find((card) => card?.instanceId === shakuyakuId)?.rested,
     ).toBe(false);
     expect(view.prompts).toHaveLength(0);
+  });
+  test("FAQ: already rested Shakuyaku still reacts to own effect removal", () => {
+    const e = OnePieceTestEngine.create(
+      { character: [{ cardId: "OP08-046", rested: true }], hand: ["OP04-056"], activeDon: 6 },
+      {
+        character: ["ST02-012"],
+        hand: ["ST02-012", "ST02-006", "ST04-003", "ST15-002", "OP01-026"],
+      },
+    );
+    e.asSouth().play("OP04-056");
+    e.asSouth().chooseTargets(e.findCardInZone("north", "character", "ST02-012"));
+    const selected = e.findCardInZone("north", "hand", "ST02-006");
+    const before = e.getView("north").players.north.deckCount;
+    e.asNorth().chooseTargets(selected);
+    expect(e.getView("north").players.north.handCount).toBe(4);
+    expect(e.getView("north").players.north.deckCount).toBe(before + 1);
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(true);
   });
 });

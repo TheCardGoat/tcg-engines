@@ -17,7 +17,7 @@ describe("OP13-025 Koby", () => {
               condition: "compound",
               operator: "or",
               conditions: [
-                { condition: "leaderTrait", trait: "FILM", match: "includes" },
+                { condition: "leaderTrait", trait: "FILM", match: "exact" },
                 { condition: "leaderAttribute", attribute: "strike" },
               ],
             },

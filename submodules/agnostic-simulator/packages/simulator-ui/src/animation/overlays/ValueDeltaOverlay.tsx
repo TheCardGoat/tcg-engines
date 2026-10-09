@@ -26,6 +26,7 @@ export function ValueDeltaOverlay() {
         <motion.div
           key={compiled.step.id}
           data-animation-overlay="value-delta"
+          data-animation-label-only
           initial={{ transform: "translate3d(0, 8px, 0)", opacity: 0 }}
           animate={{ transform: "translate3d(0, -32px, 0)", opacity: [0, 1, 0] }}
           transition={{

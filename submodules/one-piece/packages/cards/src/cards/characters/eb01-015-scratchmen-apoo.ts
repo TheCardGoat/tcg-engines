@@ -39,7 +39,7 @@ export const eb01ScratchmenApoo015: CharacterCard = {
   cost: 1,
   power: 1000,
   counter: 2000,
-  traits: ["On-Air Pirates Supernovas"],
+  traits: ["Supernovas", "On-Air Pirates"],
   attribute: "special",
   effect: "[On Play] Rest up to 1 of your opponent's Characters with a cost of 2 or less.",
   effects: {

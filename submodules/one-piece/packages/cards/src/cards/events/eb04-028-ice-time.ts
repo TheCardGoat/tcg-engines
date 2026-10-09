@@ -56,7 +56,7 @@ export const op14eb04IceTime028: EventCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Navy",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

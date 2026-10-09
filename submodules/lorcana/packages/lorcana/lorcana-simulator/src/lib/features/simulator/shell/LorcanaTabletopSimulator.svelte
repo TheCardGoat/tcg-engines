@@ -89,6 +89,11 @@
 
   interface LorcanaTabletopSimulatorProps {
     engine: LorcanaEngineBase;
+    /** Hosted matches request undo through the shared proposal flow. */
+    onRequestUndo?: (() => void) | null;
+    /** Hosted matches can undo back to the start of the current turn. */
+    onUndoTurn?: (() => void) | null;
+    canUndoTurn?: boolean;
     readModel?: Pick<LorcanaSimulatorReadModel, "getMoveLog"> &
       Partial<Pick<LorcanaSimulatorReadModel, "subscribeStateUpdates">>;
     playerSettings?: LorcanaPlayerSettingsMap;
@@ -122,6 +127,8 @@
     /** Override which side appears at the bottom (e.g. replay viewer perspective). */
     ownerSide?: LorcanaPlayerSide | null;
     /** Regression-harness override; production callers should use the transport lifecycle. */
+    /** Controlled reminder state for the existing browser regression harness. */
+    supportReminderOverride?: boolean | null;
     commandStatusOverride?: AuthoritativeCommandStatus | null;
     /** Regression-harness override for recovered feedback. */
     staleRecoveryCompletionCountOverride?: number | null;
@@ -129,6 +136,9 @@
 
   let {
     engine,
+    onRequestUndo = null,
+    onUndoTurn = null,
+    canUndoTurn = false,
     readModel,
     playerSettings = {},
     playerMetadataMap = {},
@@ -154,6 +164,7 @@
     moderationMatchId = null,
     boardOverlay,
     ownerSide: ownerSideOverride = null,
+    supportReminderOverride = null,
     commandStatusOverride = null,
     staleRecoveryCompletionCountOverride = null,
   }: LorcanaTabletopSimulatorProps = $props();
@@ -209,6 +220,7 @@
     (() => {
       const context = bugReportContextFromBoard(boardSnapshot, {
         platform: layoutMode,
+        gameId: postGameGameId,
         matchId: moderationMatchId,
       });
       if (!context || !commandDiagnostic) return context;
@@ -408,6 +420,12 @@
   });
 
   $effect(() => {
+    if (supportReminderOverride !== null) {
+      supportReminderVisible = supportReminderOverride;
+      supportReminderOpen = supportReminderOverride;
+      supportReminderVariantIndex = supportReminderOverride ? 0 : null;
+      return;
+    }
     const nextReminderState = resolveSupportReminderState({
       variantCount: SIMULATOR_SUPPORT_REMINDER_VARIANTS.length,
     });
@@ -659,7 +677,8 @@
     }
 
     const execute = () => {
-      submitAvailableMove(move);
+      if (categoryId === "undo" && onRequestUndo) onRequestUndo();
+      else submitAvailableMove(move);
     };
     const result = togglePendingDirectMove(pendingDirectMove, move, execute, source);
 
@@ -807,6 +826,8 @@
           onTriggerUndo={() => {
             handleConfirmableDirectMoveCategory("undo", "pointer");
           }}
+          {onUndoTurn}
+          {canUndoTurn}
           onTriggerQuestAll={() => {
             handleConfirmableDirectMoveCategory("quest-all", "pointer");
           }}
@@ -862,6 +883,8 @@
               {matchContext}
               onNextGame={onNextGame ?? undefined}
               onReturnToMatchmaking={handleReturnToMatchmaking}
+              {onUndoTurn}
+              {canUndoTurn}
               {boardOverlay}
             />
           {:else}
@@ -906,6 +929,8 @@
               {matchContext}
               onNextGame={onNextGame ?? undefined}
               onReturnToMatchmaking={handleReturnToMatchmaking}
+              {onUndoTurn}
+              {canUndoTurn}
               {boardOverlay}
             />
           {:else}

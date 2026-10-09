@@ -21,7 +21,7 @@ export const op04HappinessPunch017: EventCard = {
   rarity: "C",
   setId: "OP04",
   cost: 1,
-  traits: ["Alabasta Straw Hat Crew"],
+  traits: ["Alabasta", "Straw Hat Crew"],
   effect:
     "[Counter] Give up to 1 of your opponent's Leader or Character cards -2000 power during this turn. Then, if your Leader is active, give up to 1 of your opponent's Leader or Character cards -1000 power during this turn.",
   effects: {

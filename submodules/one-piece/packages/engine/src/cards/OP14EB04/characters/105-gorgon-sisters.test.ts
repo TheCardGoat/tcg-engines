@@ -40,6 +40,9 @@ describe("OP14-105 Gorgon Sisters", () => {
     expect(reveal).toMatchObject({ min: 3, max: 3 });
     expect(reveal.candidates.map((candidate) => candidate.ref.id)).not.toContain(wrongTraitId);
     engine.resolveDecision("effectCostRevealFromHand", { selectedIds: revealIds }, "south");
+    for (const _recipient of [engine.leader("south"), sourceId, characterId]) {
+      engine.resolveDecision("effectGiveDonEachCount", { optionId: "1" }, "south");
+    }
 
     const view = engine.getView("south");
     expect(view.players.south.leader.attachedDon).toBe(1);

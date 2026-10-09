@@ -5,7 +5,7 @@ export const op02Mr2BonKureiBentham064: CharacterCard = {
   id: "OP02-064",
   canonicalId: "OP02-064",
   slug: "mr-2-bon-kurei-bentham/op02-064",
-  name: "Mr.2.Bon.Kurei (Bentham)",
+  name: "Mr.2.Bon.Kurei(Bentham)",
   printings: [
     {
       id: "OP02-064",
@@ -23,7 +23,7 @@ export const op02Mr2BonKureiBentham064: CharacterCard = {
   cost: 5,
   power: 5000,
   counter: 2000,
-  traits: ["Impel Down Former Baroque Works"],
+  traits: ["Impel Down", "Former Baroque Works"],
   attribute: "strike",
   effect:
     "[DON!! x1] [When Attacking] You may trash 1 card from your hand: Place up to 1 Character with a cost of 2 or less at the bottom of the owner's deck. Then, at the end of this battle, place this Character at the bottom of the owner's deck.",

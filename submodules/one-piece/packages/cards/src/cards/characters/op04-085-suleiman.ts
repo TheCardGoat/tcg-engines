@@ -35,7 +35,7 @@ export const op04Suleiman085: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Dressrosa",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -65,7 +65,7 @@ export const op04Suleiman085: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Dressrosa",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

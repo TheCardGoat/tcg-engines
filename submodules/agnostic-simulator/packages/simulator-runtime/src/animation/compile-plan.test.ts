@@ -58,24 +58,25 @@ describe("compileAnimationPlan", () => {
       ],
     } satisfies AnimationPlanV2);
 
+    // Expectations are at the default "normal" speed (0.7× of the base table).
     expect(
       Object.fromEntries(compiled.steps.map((step) => [step.step.id, step.durationMs])),
     ).toEqual({
-      transfer: 560,
-      emphasize: 800,
-      state: 560,
-      effect: 800,
-      combat: 800,
-      value: 800,
-      phase: 800,
-      random: 800,
-      comparison: 800,
-      result: 1_200,
-      hold: 100,
+      transfer: 392,
+      emphasize: 560,
+      state: 392,
+      effect: 560,
+      combat: 560,
+      value: 560,
+      phase: 560,
+      random: 560,
+      comparison: 560,
+      result: 840,
+      hold: 70,
     });
-    expect(compiled.primaryDurationMs).toBe(1_200);
-    expect(compiled.interactionBlockingDurationMs).toBe(1_200);
-    expect(compiled.reflowDurationMs).toBe(240);
+    expect(compiled.primaryDurationMs).toBe(840);
+    expect(compiled.interactionBlockingDurationMs).toBe(840);
+    expect(compiled.reflowDurationMs).toBe(168);
   });
 
   it("keeps phase and turn feedback visible without extending the command lock", () => {
@@ -104,8 +105,8 @@ describe("compileAnimationPlan", () => {
       ],
     });
 
-    expect(compiled.primaryDurationMs).toBe(1_600);
-    expect(compiled.interactionBlockingDurationMs).toBe(440);
+    expect(compiled.primaryDurationMs).toBe(1_120);
+    expect(compiled.interactionBlockingDurationMs).toBe(308);
   });
 
   it("does not lock commands for phase-only feedback", () => {
@@ -124,7 +125,7 @@ describe("compileAnimationPlan", () => {
       ],
     });
 
-    expect(compiled.primaryDurationMs).toBe(4_000);
+    expect(compiled.primaryDurationMs).toBe(2_800);
     expect(compiled.interactionBlockingDurationMs).toBe(0);
   });
 
@@ -136,8 +137,18 @@ describe("compileAnimationPlan", () => {
     } satisfies AnimationPlanV2;
 
     expect(compileAnimationPlan(plan, "fast")).toMatchObject({
-      primaryDurationMs: 400,
-      interactionBlockingDurationMs: 400,
+      primaryDurationMs: 280,
+      interactionBlockingDurationMs: 280,
+      reflowDurationMs: 0,
+    });
+    expect(compileAnimationPlan(plan, "normal")).toMatchObject({
+      primaryDurationMs: 560,
+      interactionBlockingDurationMs: 560,
+      reflowDurationMs: 0,
+    });
+    expect(compileAnimationPlan(plan, "slow")).toMatchObject({
+      primaryDurationMs: 880,
+      interactionBlockingDurationMs: 880,
       reflowDurationMs: 0,
     });
     expect(compileAnimationPlan(plan, "off")).toMatchObject({

@@ -29,9 +29,13 @@ export const todCleverFox: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_40091465bb8a4c1f8cfeee57f8bd7aba",
+    tcgPlayer: "704596",
+  },
   text: [
     {
-      title: "Problem Solving",
+      title: "PROBLEM SOLVING",
       description: "When you play this character, draw 2 cards, then choose and discard a card.",
     },
   ],

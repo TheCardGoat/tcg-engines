@@ -40,7 +40,7 @@ export const op10Perona092: CharacterCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

@@ -52,12 +52,21 @@ export const hiroHamadaRoboticsProdigy: CharacterCard = {
           {
             type: "or",
             filters: [
-              { type: "card-type", value: "item" },
+              {
+                type: "card-type",
+                value: "item",
+              },
               {
                 type: "and",
                 filters: [
-                  { type: "card-type", value: "character" },
-                  { type: "has-classification", classification: "Robot" },
+                  {
+                    type: "card-type",
+                    value: "character",
+                  },
+                  {
+                    type: "has-classification",
+                    classification: "Robot",
+                  },
                 ],
               },
             ],

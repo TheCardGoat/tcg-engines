@@ -460,6 +460,8 @@ export interface CompoundEffect {
  */
 export interface ForEachOpponentEffect {
   type: "for-each-opponent";
+  /** Runtime continuation cursor. Omitted on printed card definitions. */
+  remainingOpponentIds?: string[];
   effect: Effect;
   condition?: Condition;
 }

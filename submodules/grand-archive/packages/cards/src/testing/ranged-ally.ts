@@ -14,14 +14,20 @@ export function proveRangedAlly({
   ranged,
   classBonus,
   additionalClassRanged = 0,
+  supportCard,
+  supportRanged = 0,
   declineOptionalAttackEffect = false,
+  declineOptionalDistantEffect = false,
 }: {
   readonly card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>;
   readonly power: number;
   readonly ranged: number;
   readonly classBonus: boolean;
   readonly additionalClassRanged?: number;
+  readonly supportCard?: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>;
+  readonly supportRanged?: number;
   readonly declineOptionalAttackEffect?: boolean;
+  readonly declineOptionalDistantEffect?: boolean | "class-bonus";
 }): void {
   for (const matchingClass of [true, false]) {
     for (const distant of [true, false]) {
@@ -32,7 +38,7 @@ export function proveRangedAlly({
           playerOne: {
             champion,
             zones: {
-              field: [card],
+              field: supportCard ? [card, supportCard] : [card],
               hand: distant ? [reposition, woodlandSquirrels] : [],
               "main-deck": [woodlandSquirrels],
             },
@@ -47,7 +53,14 @@ export function proveRangedAlly({
             targets: { "target-1": [ally.objectId] },
             reservePayment: [{ kind: "card", cardId: player.card(woodlandSquirrels).objectId }],
           });
-          expect(game.resolveStackUntilChoice()).toBe("stack-empty");
+          if (
+            declineOptionalDistantEffect === true ||
+            (declineOptionalDistantEffect === "class-bonus" && matchingClass)
+          ) {
+            passEffectsStack(game);
+            answerDecision(game, "resolve-optional-effect", false);
+            passEffectsStack(game);
+          } else expect(game.resolveStackUntilChoice()).toBe("stack-empty");
         }
         expect(game.state.objects[ally.objectId]?.states.has("distant")).toBe(distant);
         player.declareAttack(ally, target);
@@ -63,7 +76,8 @@ export function proveRangedAlly({
           power +
             (distant && (!classBonus || matchingClass)
               ? ranged + (matchingClass ? additionalClassRanged : 0)
-              : 0),
+              : 0) +
+            (distant ? supportRanged : 0),
         );
       });
     }

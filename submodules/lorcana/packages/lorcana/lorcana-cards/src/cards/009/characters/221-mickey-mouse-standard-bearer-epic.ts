@@ -22,7 +22,7 @@ export const mickeyMouseStandardBearerEpic: CharacterCard = {
   inkType: ["steel"],
   set: "009",
   cardNumber: 221,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 2,
   strength: 1,

@@ -39,7 +39,7 @@ export const op08Nami106: CharacterCard = {
   cost: 5,
   power: 5000,
   counter: 1000,
-  traits: ["Straw Hat Crew Egghead"],
+  traits: ["Egghead", "Straw Hat Crew"],
   attribute: "special",
 
   effect:

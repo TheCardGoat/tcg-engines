@@ -68,6 +68,7 @@ export function FixtureIndex({ variant = "dev" }: FixtureIndexProps) {
             </a>
             <span className={classes.breadcrumbCurrent}>Cyberpunk fixtures</span>
           </nav>
+          <Link to={cyberpunkSimulatorPath("/creator")}>Create your own board state →</Link>
           <div className={classes.headerGrid}>
             <div>
               <p className={classes.eyebrow}>
@@ -84,11 +85,11 @@ export function FixtureIndex({ variant = "dev" }: FixtureIndexProps) {
             </div>
             <div className={classes.summary} aria-label="Fixture summary">
               <span className={classes.summaryItem}>
-                <span className={classes.summaryValue}>{scenarios.length}</span>
+                <span className={classes.summaryValue}>{scenarios.length + 1}</span>
                 <span className={classes.summaryLabel}>Routes</span>
               </span>
               <span className={classes.summaryItem}>
-                <span className={classes.summaryValue}>{activeGroups.length}</span>
+                <span className={classes.summaryValue}>{activeGroups.length + 1}</span>
                 <span className={classes.summaryLabel}>Groups</span>
               </span>
               <span className={classes.summaryItem}>
@@ -98,6 +99,26 @@ export function FixtureIndex({ variant = "dev" }: FixtureIndexProps) {
             </div>
           </div>
         </header>
+        <section className={classes.group} aria-labelledby="demo-fixture-heading">
+          <div className={classes.groupHeader}>
+            <h2 id="demo-fixture-heading" className={classes.groupTitle}>
+              Try the game
+            </h2>
+          </div>
+          <ul className={classes.list}>
+            <li className={classes.item}>
+              <Link to={cyberpunkSimulatorPath("/tests/demo")} className={classes.link}>
+                <span className={classes.index}>01</span>
+                <span className={classes.label}>Quick demo</span>
+                <span className={classes.path}>/tests/demo</span>
+                <span className={classes.description}>
+                  Start a game against a bot with two randomly selected recommended decks. Mirror
+                  matches are possible.
+                </span>
+              </Link>
+            </li>
+          </ul>
+        </section>
         <section className={classes.releaseBench} aria-labelledby="latest-release-heading">
           <div className={classes.groupHeader}>
             <div>

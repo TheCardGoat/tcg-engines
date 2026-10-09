@@ -36,7 +36,7 @@ export const op02LandOfWano048: StageCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

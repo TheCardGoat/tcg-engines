@@ -61,7 +61,7 @@ export const op11LuffyTarouSp005: CharacterCard = {
               {
                 filter: "trait",
                 value: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

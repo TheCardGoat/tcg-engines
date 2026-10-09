@@ -37,4 +37,17 @@ describe("OP16-055 Mr.2 Bon.Kurei", () => {
       .players.south.characters.find((card) => card?.cardId === "OP16-055")?.power;
     expect(power).toBe(1000);
   });
+  test("copies the Leader's current modified power, then expires at turn end", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ cardId: "OP16-055", attachedDon: 1 }] },
+      { character: ["OP15-092"], trash: 20 },
+    );
+    const source = engine.findCardInZone("south", "character", "OP16-055");
+    const before = engine.getView("south").players.south.characters[0]!.power!;
+    expect(engine.getView("south").players.north.leader.power).toBe(7000);
+    engine.declareAttack(source, engine.leader("north"), "south");
+    expect(engine.getView("south").players.south.characters[0]?.power).toBe(8000);
+    engine.endTurn("south");
+    expect(engine.getView("south").players.south.characters[0]?.power).toBe(before - 1000);
+  });
 });

@@ -22,7 +22,7 @@ export const op14eb04TimeForTheCounterattack018: EventCard = {
   setId: "OP14",
   cost: 1,
   trigger: "Play up to 1 red Character card with 2000 power or less from your hand.",
-  traits: ["Heart Pirates Supernovas The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Supernovas", "Heart Pirates"],
   effect:
     "[Counter] If there is a Character with 8000 power or more, up to 1 of your Leader or Character cards gains +4000 power during this battle.",
   effects: {

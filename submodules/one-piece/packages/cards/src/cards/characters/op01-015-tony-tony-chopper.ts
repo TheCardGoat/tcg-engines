@@ -23,7 +23,7 @@ export const op01TonyTonyChopper015: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Animal Straw Hat Crew"],
+  traits: ["Animal", "Straw Hat Crew"],
   attribute: "wisdom",
   effect:
     '[DON!! x1] [When Attacking] You may trash 1 card from your hand: Add up to 1 "Straw Hat Crew" type Character card other than [Tony Tony.Chopper] with a cost of 4 or less from your trash to your hand.  This card has been officially errata\'d.',
@@ -57,7 +57,7 @@ export const op01TonyTonyChopper015: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cardCategory",

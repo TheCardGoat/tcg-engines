@@ -23,7 +23,7 @@ export const op09TrafalgarLaw030: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Heart Pirates Supernovas ODYSSEY"],
+  traits: ["ODYSSEY", "Supernovas", "Heart Pirates"],
   attribute: "slash",
   effect:
     "[On Play] You may return 1 of your Characters to the owner's hand: Play up to 1 {ODYSSEY} type Character card with a cost of 3 or less other than [Trafalgar Law] from your hand.",
@@ -61,7 +61,7 @@ export const op09TrafalgarLaw030: CharacterCard = {
               {
                 filter: "trait",
                 value: "ODYSSEY",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

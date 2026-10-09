@@ -1,69 +1,42 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
-
-// Auto-verified: Ulti & Page One (OP17-060) cost=6 power=6000 counter=1000
 describe("OP17-060 Ulti & Page One", () => {
-  test("[On Play] resolves its play effects", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-060"], activeDon: 8 },
-      { character: ["OP13-013"], activeDon: 5 },
+  test("adds active DON before selecting a power3000 Character to K.O.", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST04-001", hand: ["OP17-060"], activeDon: 6, donDeckCount: 4 },
+      { character: ["EB01-005", "EB01-025"] },
     );
-
-    engine.playCard("OP17-060");
-    engine.acceptLeadingOptional("south");
-
-    // Resolve any remaining prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-060",
-    );
+    const target = e.findCardInZone("north", "character", "EB01-005");
+    e.playCard("OP17-060");
+    e.resolveDecision("effectAddDon", { optionId: "1" }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(1);
+    const choice = e.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (choice?.kind !== "selectEntity") throw new Error("Expected KO target");
+    expect(choice.candidates.map((c) => c.ref.id)).toEqual([target]);
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.north.trash.map((c) => c.instanceId)).toContain(target);
+    expect(e.getView("south").players.south.restedDon).toBe(6);
   });
-
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-060", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
+  test("declining the optional DON addition still performs the following K.O.", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST04-001", hand: ["OP17-060"], activeDon: 6, donDeckCount: 4 },
+      { character: ["EB01-005"] },
     );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-060",
+    const target = e.findCardInZone("north", "character", "EB01-005");
+    e.playCard("OP17-060");
+    e.resolveDecision("effectAddDon", { optionId: "0" }, "south");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+    expect(e.getView("south").players.north.trash.map((c) => c.instanceId)).toContain(target);
+  });
+  test("wrong Leader receives neither DON nor K.O.", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP01-001", hand: ["OP17-060"], activeDon: 6, donDeckCount: 4 },
+      { character: ["EB01-005"] },
     );
-    expect(engine.getView("south").prompts).toHaveLength(0);
+    e.playCard("OP17-060");
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+    expect(e.getView("south").players.north.characters.filter(Boolean)).toHaveLength(1);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

@@ -22,7 +22,7 @@ export const op07MrTanaka008: CharacterCard = {
   setId: "OP07",
   cost: 3,
   power: 3000,
-  traits: ["FILM Grantesoro"],
+  traits: ["FILM", "Grantesoro"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [Trigger] Play this card.",

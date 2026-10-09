@@ -15,7 +15,7 @@ export const mrIncredibleTakingOutTheTrash: CharacterCard = {
       imageUrl: "",
     },
   ],
-  reprints: ["set12-185"],
+  reprints: ["set12-d23-015", "set12-185"],
   cardType: "character",
   name: "Mr. Incredible",
   version: "Taking Out the Trash",

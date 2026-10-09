@@ -55,4 +55,23 @@ describe("EB02-022 Usopp", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("FAQ: Shanks reduces Usopp below 5000 so two other large Characters still permit play", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["EB02-022", "EB01-005"], activeDon: 4, character: ["ST02-009", "EB01-018"] },
+      { character: ["OP09-004"] },
+    );
+    const played = e.findCardInZone("south", "hand", "EB01-005");
+    e.asSouth().play("EB02-022");
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.cardId === "EB02-022")?.power,
+    ).toBe(4000);
+    expect(
+      e
+        .getView("south")
+        .players.south.characters.filter((c) => c && c.power !== null && c.power >= 5000),
+    ).toHaveLength(2);
+    e.resolveDecision("effectPlaySelection", { selectedIds: [played] }, "south");
+    expect(e.findCardInZone("south", "character", "EB01-005")).toBe(played);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

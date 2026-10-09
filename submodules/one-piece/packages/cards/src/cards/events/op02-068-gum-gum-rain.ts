@@ -38,7 +38,7 @@ export const op02GumGumRain068: EventCard = {
   rarity: "R",
   setId: "OP02",
   cost: 0,
-  traits: ["Straw Hat Crew Impel Down"],
+  traits: ["Impel Down", "Straw Hat Crew"],
   effect:
     "[Counter] You may trash 1 card from your hand: Up to 1 of your Leader or Character cards gains +3000 power during this battle. [Trigger] Return up to 1 Character with a cost of 2 or less to the owner's hand.",
   effects: {

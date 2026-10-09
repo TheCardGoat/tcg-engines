@@ -48,6 +48,7 @@ describe("OP02-045 Three Sword Style Oni Giri", () => {
       effectCharacterId,
     );
     engine.resolveDecision("effectPlaySelection", { selectedIds: [vanillaId] }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.lifeCount).toBe(lifeBefore);
@@ -57,43 +58,53 @@ describe("OP02-045 Three Sword Style Oni Giri", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
-  test("maps the Life Trigger to the opponent's cost-5-or-less Leader or Character", () => {
-    const engine = OnePieceTestEngine.create(
-      {
-        character: [
-          { card: eb01MountainGod018, playedOnTurn: 0 },
-          { card: op01KinEmon040, playedOnTurn: 0 },
-        ],
-      },
-      {
-        life: [op02ThreeSwordStyleOniGiri045],
-      },
-      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
-    );
-    const cost5Id = engine.findCardInZone("south", "character", eb01MountainGod018);
-    const cost6Id = engine.findCardInZone("south", "character", op01KinEmon040);
-    const targetLeaderId = engine.leader("south");
+  test.each([false, true])(
+    "maps the Life Trigger to the opponent's cost-5-or-less Leader or Character (already rested: %s)",
+    (chooseRested) => {
+      const engine = OnePieceTestEngine.create(
+        {
+          character: [
+            { card: eb01MountainGod018, playedOnTurn: 0 },
+            { card: op01KinEmon040, playedOnTurn: 0 },
+          ],
+        },
+        {
+          life: [op02ThreeSwordStyleOniGiri045],
+        },
+        SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+      );
+      const cost5Id = engine.findCardInZone("south", "character", eb01MountainGod018);
+      const cost6Id = engine.findCardInZone("south", "character", op01KinEmon040);
+      const targetLeaderId = engine.leader("south");
 
-    engine.declareAttack(cost5Id, engine.leader("north"), "south");
-    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+      engine.declareAttack(cost5Id, engine.leader("north"), "south");
+      engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
 
-    const restDecision = engine.pendingDecision("effectTargetSelection", "north");
-    const restStep = restDecision.steps[0];
-    expect(restStep?.kind).toBe("selectEntity");
-    if (restStep?.kind !== "selectEntity") {
-      throw new Error("Expected the damaged player to choose an opposing card to rest.");
-    }
-    expect(restStep.candidates.map((candidate) => candidate.ref.id)).toContain(targetLeaderId);
-    expect(restStep.candidates.map((candidate) => candidate.ref.id)).not.toContain(cost5Id);
-    expect(restStep.candidates.map((candidate) => candidate.ref.id)).not.toContain(cost6Id);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [targetLeaderId] }, "north");
+      const restDecision = engine.pendingDecision("effectTargetSelection", "north");
+      const restStep = restDecision.steps[0];
+      expect(restStep?.kind).toBe("selectEntity");
+      if (restStep?.kind !== "selectEntity") {
+        throw new Error("Expected the damaged player to choose an opposing card to rest.");
+      }
+      expect(restStep.candidates.map((candidate) => candidate.ref.id)).toContain(targetLeaderId);
+      expect(restStep.candidates.map((candidate) => candidate.ref.id)).toContain(cost5Id);
+      expect(restStep.candidates.map((candidate) => candidate.ref.id)).not.toContain(cost6Id);
+      engine.resolveDecision(
+        "effectTargetSelection",
+        { selectedIds: [chooseRested ? cost5Id : targetLeaderId] },
+        "north",
+      );
 
-    const view = engine.getView("north");
-    expect(view.players.south.leader.rested).toBe(true);
-    expect(view.players.south.characters.find((card) => card?.instanceId === cost6Id)?.rested).toBe(
-      false,
-    );
-    expect(view.prompts).toHaveLength(0);
-    expect(engine.getState().capabilityHistory).toHaveLength(0);
-  });
+      const view = engine.getView("north");
+      expect(
+        view.players.south.characters.find((card) => card?.instanceId === cost5Id)?.rested,
+      ).toBe(true);
+      expect(view.players.south.leader.rested).toBe(!chooseRested);
+      expect(
+        view.players.south.characters.find((card) => card?.instanceId === cost6Id)?.rested,
+      ).toBe(false);
+      expect(view.prompts).toHaveLength(0);
+      expect(engine.getState().capabilityHistory).toHaveLength(0);
+    },
+  );
 });

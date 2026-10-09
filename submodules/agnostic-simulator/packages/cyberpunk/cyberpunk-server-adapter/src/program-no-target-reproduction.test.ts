@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vite-plus/test";
+import { describe, expect, test, vi } from "vite-plus/test";
 import {
   AIPlayer,
   CyberpunkTestEngine,
@@ -227,7 +227,7 @@ describe("server adapter automated action strategy dispatch", () => {
     expect(result.decisionDiagnostics?.depthReached).toBeGreaterThanOrEqual(0);
   });
 
-  test("the default compatibility id resolves to the promoted strategy", () => {
+  test("the default compatibility id resolves to Expert", () => {
     const serverEngine = new CyberpunkServerEngine(
       new LocalEngine(createProgramHeavyNoTargetState()),
     );
@@ -238,8 +238,8 @@ describe("server adapter automated action strategy dispatch", () => {
     );
 
     expect(result.finalResult.success).toBe(true);
-    expect(result.strategyId).toBe("tactical");
-    expect(result.decisionDiagnostics?.strategyId).toBe("tactical");
+    expect(result.strategyId).toBe("expert-oracle");
+    expect(result.decisionDiagnostics?.strategyId).toBe("expert-oracle");
   });
 
   test("takeAutomatedAction uses the requested engine strategy to choose Program args", () => {
@@ -289,7 +289,65 @@ describe("server adapter automated action strategy dispatch", () => {
 
     expect(result.finalResult.success).toBe(true);
     if (!result.finalResult.success) return;
-    expect(result.finalResult.acceptedMoveRecord?.moveId).toBe("playCard");
-    expect(result.selectedCandidate?.family).toBe("playCard");
+    expect(result.strategyId).toBe("expert-oracle");
+    expect(result.finalResult.acceptedMoveRecord?.moveId).toBe("callLegend");
+    expect(result.selectedCandidate?.family).toBe("callLegend");
+  });
+
+  test("recovers when a stale prompt advertises an unavailable ability", () => {
+    const local = new LocalEngine(createProgramHeavyNoTargetState());
+    const serverEngine = new CyberpunkServerEngine(local);
+    const authoritativePrompt = local.getPrompt(P2);
+    const sourceCardId = local.getState().G.players[P2 as string]!.zones.hand[0]!;
+    vi.spyOn(local, "getPrompt").mockImplementationOnce(() => ({
+      ...authoritativePrompt,
+      availableMoves: [
+        {
+          moveId: "activateAbility",
+          inputSpec: {
+            type: "selectAbility",
+            candidates: [
+              {
+                cardId: sourceCardId as string,
+                abilityIndex: 0,
+                eddieCost: 0,
+                spendsCard: false,
+                effectHints: ["stealGig", "defeat"],
+              },
+            ],
+          },
+        },
+      ],
+    }));
+
+    const result = serverEngine.takeAutomatedAction(
+      { strategyId: "greedy" },
+      { gameId: "stale-alt-ability", sourceAuthority: "server" },
+    );
+
+    expect(result.finalResult.success).toBe(true);
+    expect(result.fallbackTaken).toBe("automation-recovery:passPhase");
+    expect(result.selectedCandidate?.family).toBe("passPhase");
+    expect(serverEngine.getActivePlayerId()).toBe(P1);
+  });
+
+  test("uses an engine board correction when no normal exit is available", () => {
+    const local = new LocalEngine(createProgramHeavyNoTargetState());
+    const serverEngine = new CyberpunkServerEngine(local);
+    vi.spyOn(local, "getPrompt").mockReturnValue({
+      status: "action",
+      availableMoves: [],
+      choice: null,
+    });
+
+    const result = serverEngine.takeAutomatedAction(
+      { strategyId: "greedy" },
+      { gameId: "blocked-bot-board-correction", sourceAuthority: "server" },
+    );
+
+    expect(result.finalResult.success).toBe(true);
+    expect(result.fallbackTaken).toBe("automation-recovery:manualForcePassTurn");
+    expect(result.selectedCandidate?.family).toBe("manualForcePassTurn");
+    expect(serverEngine.getActivePlayerId()).toBe(P1);
   });
 });

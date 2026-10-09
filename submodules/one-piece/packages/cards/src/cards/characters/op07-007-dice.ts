@@ -23,7 +23,7 @@ export const op07Dice007: CharacterCard = {
   cost: 4,
   power: 6000,
   counter: 1000,
-  traits: ["FILM Grantesoro"],
+  traits: ["FILM", "Grantesoro"],
   attribute: "strike",
   effect: "NULL",
   i18n: op07Dice007I18n,

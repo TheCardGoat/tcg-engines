@@ -23,7 +23,7 @@ export const op10Enel025: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["ODYSSEY Sky Island"],
+  traits: ["ODYSSEY", "Sky Island"],
   attribute: "special",
   effect:
     "[On Play] If you have 2 or more rested Characters, draw 3 cards and trash 2 cards from your hand.",

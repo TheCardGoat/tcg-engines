@@ -11,9 +11,7 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const legendRiverWardDetectiveOnTheHuntBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendRiverWardDetectiveOnTheHunt",
   label: "River Ward - attack trigger equips free gear",
-  references: [
-    "packages/engine/src/cards/welcometonightcityretail/legends/river-ward-detective-on-the-hunt.test.ts",
-  ],
+  references: ["packages/engine/src/cards/legends/river-ward-detective-on-the-hunt.test.ts"],
   async run(pom) {
     const river = await pom.getCardInZoneByDefinitionId(
       "legendArea",

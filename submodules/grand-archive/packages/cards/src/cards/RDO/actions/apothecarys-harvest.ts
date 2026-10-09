@@ -59,10 +59,39 @@ export const apothecarysHarvest: GrandArchiveCard<GrandArchiveAbilityDefinition,
           kind: "card-resolution",
           text: "Summon a Blightroot, Manaroot, Silvershine, Fraysia, Razorvine, and a Springleaf token.",
           effect: {
-            kind: "summon",
-            object: "Blightroot, Manaroot, Silvershine, Fraysia, Razorvine, and a Springleaf",
-            controller: "controller",
-            bindResultAs: "summoned-token",
+            kind: "sequence",
+            effects: [
+              {
+                kind: "summon",
+                object: "Blightroot",
+                controller: "controller",
+              },
+              {
+                kind: "summon",
+                object: "Manaroot",
+                controller: "controller",
+              },
+              {
+                kind: "summon",
+                object: "Silvershine",
+                controller: "controller",
+              },
+              {
+                kind: "summon",
+                object: "Fraysia",
+                controller: "controller",
+              },
+              {
+                kind: "summon",
+                object: "Razorvine",
+                controller: "controller",
+              },
+              {
+                kind: "summon",
+                object: "Springleaf",
+                controller: "controller",
+              },
+            ],
           },
         },
       ],

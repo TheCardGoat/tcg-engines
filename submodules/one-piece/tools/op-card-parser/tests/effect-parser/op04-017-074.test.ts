@@ -45,7 +45,7 @@ describe("OP04-017/018/055/056/057/074 Event transformations", () => {
     });
   });
 
-  test("preserves Enchanting Vertigo Dance's inclusive Leader trait and Trigger", () => {
+  test("preserves Enchanting Vertigo Dance's exact Leader trait and Trigger", () => {
     expect(
       buildCardEffects(
         "[Main] If your Leader has the [Alabasta] type, give up to 2 of your opponent's Characters -2000 power during this turn. [Trigger] Activate this card's [Main] effect.",
@@ -54,7 +54,7 @@ describe("OP04-017/018/055/056/057/074 Event transformations", () => {
       effects: [
         {
           trigger: "main",
-          conditions: [{ condition: "leaderTrait", trait: "Alabasta", match: "includes" }],
+          conditions: [{ condition: "leaderTrait", trait: "Alabasta", match: "exact" }],
           actions: [
             {
               action: "modifyPower",
@@ -216,6 +216,7 @@ describe("OP04-017/018/055/056/057/074 Event transformations", () => {
       effects: [
         {
           trigger: "counter",
+          optional: true,
           costs: [{ cost: "returnDon", amount: 1 }],
           actions: [
             {

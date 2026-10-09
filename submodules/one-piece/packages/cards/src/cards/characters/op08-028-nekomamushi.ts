@@ -23,7 +23,7 @@ export const op08Nekomamushi028: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Minks The Akazaya Nine"],
+  traits: ["Minks", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[On Play] If your opponent has 7 or more rested cards, this Character gains [Rush] during this turn. (This card can attack on the turn in which it is played.)",

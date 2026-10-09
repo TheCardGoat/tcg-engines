@@ -34,9 +34,8 @@ describe("full-engine real-card acceptance", () => {
         ],
         hand: [welcomeToNightCityRetailBonnieAndClyde],
         gigArea: [{ dieType: "d6", faceValue: 3 }],
-        fixerDice: [],
+        fixerDice: ["d4", "d8", "d10", "d12", "d20"],
       },
-      { autoGainGig: false },
     );
 
     engine.attackRival(welcomeToNightCityRetailDelamainCab, { as: P1 });

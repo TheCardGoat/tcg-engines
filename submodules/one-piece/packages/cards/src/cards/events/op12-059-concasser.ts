@@ -21,7 +21,7 @@ export const op12Concasser059: EventCard = {
   rarity: "UC",
   setId: "OP12",
   cost: 1,
-  traits: ["Straw Hat Crew Sky Island"],
+  traits: ["Sky Island", "Straw Hat Crew"],
   effect:
     "[Main] If your Leader is [Sanji], draw 1 card.\n[Counter] If you have 4 or more Events in your trash, up to 1 of your Leader gains +4000 power during this battle.",
   effects: {

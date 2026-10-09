@@ -23,7 +23,7 @@ export const op10Brook091: CharacterCard = {
   cost: 3,
   power: 0,
   counter: 1000,
-  traits: ["Straw Hat Crew Dressrosa"],
+  traits: ["Dressrosa", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     '[Activate: Main] You may rest this Character and 1 of your "Dressrosa" type Leader or Stage cards: K.O. up to 1 of your opponent\'s Characters with a cost of 1 or less. Then, trash 2 cards from the top of your deck.',
@@ -42,7 +42,7 @@ export const op10Brook091: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "anyOf",

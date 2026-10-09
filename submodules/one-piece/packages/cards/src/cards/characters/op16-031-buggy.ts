@@ -24,7 +24,7 @@ export const op16Buggy031: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Buggy Pirates Impel Down"],
+  traits: ["Impel Down", "Buggy Pirates"],
   attribute: "slash",
   effect: "[On K.O.] Play up to 1 [Prisoner of Impel Down] card from your hand.",
   effects: {

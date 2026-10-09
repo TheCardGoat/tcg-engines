@@ -43,7 +43,7 @@ export const op15RoronoaZoro094: CharacterCard = {
             {
               filter: "trait",
               value: "Straw Hat Crew",
-              match: "includes",
+              match: "exact",
             },
             {
               filter: "excludeSelf",

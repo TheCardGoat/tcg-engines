@@ -31,6 +31,7 @@ export const meilinLeeLosingControl: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_82ecd57e01d94bd18159ea10240ea41f",
+    tcgPlayer: "704552",
   },
   text: [
     {

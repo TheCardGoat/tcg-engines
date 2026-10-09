@@ -1,11 +1,28 @@
 import { describe, expect, test } from "vite-plus/test";
 import {
+  CyberpunkTestEngine,
   defOf,
   privateField,
+  stripPrivateFields,
   type CardInstanceId,
+  type CommandResult,
+  type GigDieId,
+  type GenericActionLog,
   type MoveLog,
   type PlayerId,
 } from "@tcg/cyberpunk-engine";
+import {
+  welcomeToNightCityRetailAdamSmasherEnderOfLegends,
+  welcomeToNightCityRetailArasakaEmergencyRadioport,
+  welcomeToNightCityRetailDetonate,
+  welcomeToNightCityRetailDumDumMaelstromTriggerman,
+  welcomeToNightCityRetailJackieWellesMamaSFavorite,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailPepeNajarroWorkingDoubles,
+  welcomeToNightCityRetailVStreetkid,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailZetatechFaceplate,
+} from "@tcg/cyberpunk-cards";
 
 import type { MoveLogEntry } from "./EngineProvider";
 import { DEFAULT_SCENARIO, getScenario } from "./fixtures/scenarios";
@@ -17,6 +34,152 @@ const ATTACKER_ID = "attacker-1" as CardInstanceId;
 const DEFENDER_ID = "defender-1" as CardInstanceId;
 
 describe("projectMoveLogEntries", () => {
+  test("shows Dum Dum's automatic target and power result after activation", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      field: [
+        {
+          card: welcomeToNightCityRetailSwordwiseHuscle,
+          spent: true,
+          hasLag: false,
+          attachedGears: [welcomeToNightCityRetailKiroshiOptics],
+        },
+      ],
+      legendArea: [
+        {
+          card: welcomeToNightCityRetailDumDumMaelstromTriggerman,
+          faceDown: false,
+          spent: false,
+        },
+      ],
+      eddies: 1,
+    });
+    const result = engine.activateAbility(welcomeToNightCityRetailDumDumMaelstromTriggerman, 2, {
+      as: P1,
+    });
+    const logs: MoveLogEntry[] = result.moveLogs.map((log, index) => ({
+      id: index + 1,
+      side: "player",
+      log,
+    }));
+
+    expect(
+      projectMoveLogEntries(engine.getState(), logs, "player").map((entry) => entry.message),
+    ).toEqual([
+      "Dum Dum: Maelstrom Triggerman activated its ability.",
+      "Dum Dum: Maelstrom Triggerman gave Swordwise Huscle +1 power.",
+    ]);
+  });
+
+  test("keeps Pepe's spend, Faceplate, and ATTACK resolution logs in the Attack section", () => {
+    const pepe = welcomeToNightCityRetailPepeNajarroWorkingDoubles;
+    const faceplate = welcomeToNightCityRetailZetatechFaceplate;
+    const radioport = welcomeToNightCityRetailArasakaEmergencyRadioport;
+    const jackie = welcomeToNightCityRetailJackieWellesMamaSFavorite;
+    const v = welcomeToNightCityRetailVStreetkid;
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        deck: [welcomeToNightCityRetailDetonate],
+        field: [{ card: pepe, spent: false, hasLag: false, attachedGears: [faceplate, radioport] }],
+        legendArea: [
+          { card: jackie, faceDown: false, spent: true },
+          { card: v, faceDown: false, spent: true },
+          { card: welcomeToNightCityRetailAdamSmasherEnderOfLegends, faceDown: true, spent: true },
+        ],
+        gigArea: [
+          { dieType: "d4", faceValue: 1 },
+          { dieType: "d6", faceValue: 2 },
+          { dieType: "d8", faceValue: 3 },
+          { dieType: "d10", faceValue: 4 },
+        ],
+      },
+      undefined,
+      { preserveDeckOrder: true },
+    );
+    engine.judgeSpendCard(jackie, { as: P1 });
+    engine.judgeSpendCard(v, { as: P1 });
+
+    const logs: MoveLogEntry[] = [];
+    const record = (result: CommandResult) => {
+      if (!result.success) throw new Error(`Expected move to succeed: ${result.error}`);
+      for (const log of result.moveLogs) {
+        logs.push({ id: logs.length + 1, side: "player", log });
+      }
+    };
+
+    record(engine.attackRival(pepe, { as: P1 }));
+    const firstChoice = engine.getPrompt(P1).choice;
+    if (firstChoice?.type !== "chooseTrigger") throw new Error("Expected trigger order");
+    const faceplateOption = firstChoice.payload.options.find(
+      (option) => option.cardName === faceplate.displayName,
+    );
+    if (!faceplateOption) throw new Error("Expected Faceplate");
+    record(
+      engine.executeMove("resolveTrigger", { args: { triggerId: faceplateOption.triggerId } }, P1),
+    );
+    record(engine.resolveAdjustGig(engine.findGigIdByType(P1, "d10"), 3, { as: P1 }));
+
+    const secondChoice = engine.getPrompt(P1).choice;
+    if (secondChoice?.type !== "chooseTrigger") throw new Error("Expected remaining triggers");
+    const pepeOption = secondChoice.payload.options.find(
+      (option) => option.cardName === pepe.displayName,
+    );
+    if (!pepeOption) throw new Error("Expected Pepe");
+    record(engine.executeMove("resolveTrigger", { args: { triggerId: pepeOption.triggerId } }, P1));
+    const readyResult = engine.resolveEffectTargetIds(
+      [engine.findCardId(jackie, "legendArea", P1), engine.findCardId(v, "legendArea", P1)],
+      { as: P1, allowPendingChoice: true, reason: "Radioport remains pending" },
+    );
+    if (!readyResult) throw new Error("Expected ready result");
+    record(readyResult);
+
+    const radioportChoice = engine.getPrompt(P1).choice;
+    expect(radioportChoice?.type).toBe("chooseTarget");
+    const lookedAt = engine.resolveEffectTarget(welcomeToNightCityRetailAdamSmasherEnderOfLegends, {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "Radioport's optional Call decision follows the look decision",
+    });
+    record(lookedAt);
+    record(
+      engine.resolveEffectTarget(welcomeToNightCityRetailAdamSmasherEnderOfLegends, { as: P1 }),
+    );
+
+    expect(logs.some((entry) => entry.log.type === "lookAtCards")).toBe(true);
+    expect(
+      logs.some(
+        (entry) => entry.log.type === "action" && entry.log.messageKey === "effect.callLegend.free",
+      ),
+    ).toBe(true);
+    const entries = projectMoveLogEntries(engine.getState(), logs, "player");
+    expect(entries.map((entry) => entry.message)).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Pepe Najarro"),
+        expect.stringContaining("Zetatech Faceplate"),
+      ]),
+    );
+    expect(entries.map((entry) => [entry.message, entry.section?.id])).toEqual(
+      entries.map((entry) => [entry.message, "attack"]),
+    );
+  });
+
+  test("shows a local concession entry only while the server interaction is pending", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+
+    const pending = projectMoveLogEntries(matchState, [], "player", "concede");
+
+    expect(pending).toEqual([
+      expect.objectContaining({
+        id: "pending-concede",
+        seatId: "p1",
+        message: "Conceding the game…",
+        sourceKey: "cyberpunk.concede.pending",
+      }),
+    ]);
+
+    matchState.G.gameEnded = true;
+    expect(projectMoveLogEntries(matchState, [], "player", "concede")).toEqual([]);
+  });
+
   test("projects setup mulligan logs without exposing drawn card instance ids", () => {
     const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
     const drawn = [
@@ -352,6 +515,10 @@ describe("projectMoveLogEntries", () => {
           attackerName: "Placide - Voodoo Sentinel",
           attackerPower: 11,
           stolenCount: 2,
+          stolenGigs: [
+            { dieType: "d4", faceValue: 1 },
+            { dieType: "d6", faceValue: 3 },
+          ],
         },
       },
     ];
@@ -361,7 +528,7 @@ describe("projectMoveLogEntries", () => {
     ).toEqual([
       "Attack: Placide - Voodoo Sentinel spent to attack the rival Gig area.",
       "React: rival passed on Placide - Voodoo Sentinel's attack.",
-      "Steal: Placide - Voodoo Sentinel stole 2 Gigs at 11 power.",
+      "Steal: Placide - Voodoo Sentinel stole 2 Gigs (D4 with value 1; D6 with value 3) at 11 power.",
     ]);
     expect(
       projectMoveLogEntries(matchState, moveLogs, "player").map((entry) => entry.section),
@@ -369,6 +536,351 @@ describe("projectMoveLogEntries", () => {
       { id: "attack", label: "Attack", tone: "attack" },
       { id: "react", label: "React", tone: "react" },
       { id: "steal", label: "Steal", tone: "steal" },
+    ]);
+  });
+
+  test("projects an automatic steal with the die type and face value", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const moveLogs: MoveLogEntry[] = [
+      {
+        id: 1,
+        side: "player",
+        log: {
+          type: "action",
+          messageKey: "move.resolveAttack.direct",
+          params: {
+            attackerName: "Rogue Amendiares: Queen of the Afterlife",
+            attackerPower: 4,
+            count: 1,
+            stolenGigs: "1 Gig (D4 with value 1)",
+          },
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+        },
+      },
+    ];
+
+    expect(projectMoveLogEntries(matchState, moveLogs, "player")[0]?.message).toBe(
+      "Steal: Rogue Amendiares: Queen of the Afterlife stole 1 Gig (D4 with value 1) at 4 power.",
+    );
+  });
+
+  test("keeps steal-trigger logs in the Steal step until the attack ends", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const moveLogs: MoveLogEntry[] = [
+      {
+        id: 1,
+        side: "player",
+        log: {
+          type: "attackRival",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+          attackerId: ATTACKER_ID,
+          attackerName: "Maelstrom Goons",
+        },
+      },
+      {
+        id: 2,
+        side: "player",
+        log: {
+          type: "resolveStealGigs",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+          attackerName: "Maelstrom Goons",
+          attackerPower: 5,
+          stolenCount: 1,
+          stolenGigs: [{ dieType: "d12", faceValue: 10 }],
+        },
+      },
+      {
+        id: 3,
+        side: "player",
+        log: {
+          type: "action",
+          messageKey: "trigger.autoResolved",
+          params: {
+            cardName: "Maelstrom Goons",
+            abilityText: "When this Unit steals a Gig, if it's equipped, a Rival discards 1.",
+          },
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+        } satisfies GenericActionLog,
+      },
+      {
+        id: 4,
+        side: "opponent",
+        log: {
+          type: "resolveDiscardFromHand",
+          playerId: P2,
+          timestamp: 0,
+          turnNumber: 1,
+          discardedCount: 1,
+          discardedCards: [
+            {
+              cardId: "discarded-card" as CardInstanceId,
+              cardName: "Lizzy Wizzy: Delicate Weapon",
+            },
+          ],
+        },
+      },
+    ];
+
+    expect(
+      projectMoveLogEntries(matchState, moveLogs, "player").map((entry) => entry.section?.id),
+    ).toEqual(["attack", "steal", "steal", "steal"]);
+  });
+
+  test("ends the combat at the steal — plays after it are not reactions", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const moveLogs: MoveLogEntry[] = [
+      {
+        id: 1,
+        side: "player",
+        log: {
+          type: "attackRival",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+          attackerId: ATTACKER_ID,
+          attackerName: "6th Street Recruits",
+        },
+      },
+      {
+        id: 2,
+        side: "player",
+        log: {
+          type: "resolveStealGigs",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+          attackerName: "6th Street Recruits",
+          attackerPower: 8,
+          stolenCount: 1,
+          stolenGigs: [{ dieType: "d6", faceValue: 2 }],
+        },
+      },
+      {
+        id: 3,
+        side: "player",
+        log: {
+          type: "action",
+          messageKey: "trigger.autoResolved",
+          params: {
+            cardName: "6th Street Recruits",
+            abilityText: "When a friendly Unit steals a d6, increase a Gig by up to 6.",
+          },
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+        } satisfies GenericActionLog,
+      },
+      {
+        id: 4,
+        side: "player",
+        log: {
+          type: "action",
+          messageKey: "trigger.targetResolved",
+          params: { targetNames: "D12", sourceCardName: "6th Street Recruits" },
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+        } satisfies GenericActionLog,
+      },
+      {
+        id: 5,
+        side: "player",
+        log: {
+          type: "playCard",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+          cardId: "carnage-1" as CardInstanceId,
+          cardName: "Carnage at the Colosseum",
+          cost: 3,
+        },
+      },
+      {
+        id: 6,
+        side: "player",
+        log: {
+          type: "action",
+          messageKey: "trigger.targetResolved",
+          params: {
+            targetNames: "6th Street Recruits",
+            sourceCardName: "Carnage at the Colosseum",
+          },
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+        } satisfies GenericActionLog,
+      },
+    ];
+
+    expect(
+      projectMoveLogEntries(matchState, moveLogs, "player").map((entry) => entry.section?.id),
+    ).toEqual(["attack", "steal", "steal", "steal", undefined, undefined]);
+    expect(
+      projectMoveLogEntries(matchState, moveLogs, "player").map((entry) => entry.tags),
+    ).toEqual([["combat"], ["combat"], ["move", "combat"], ["move", "combat"], ["move"], ["move"]]);
+  });
+
+  test("ends the combat at the steal for action-key plays too", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const moveLogs: MoveLogEntry[] = [
+      {
+        id: 1,
+        side: "player",
+        log: {
+          type: "attackRival",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+          attackerId: ATTACKER_ID,
+          attackerName: "6th Street Recruits",
+        },
+      },
+      {
+        id: 2,
+        side: "player",
+        log: {
+          type: "resolveStealGigs",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+          attackerName: "6th Street Recruits",
+          attackerPower: 8,
+          stolenCount: 1,
+          stolenGigs: [{ dieType: "d6", faceValue: 2 }],
+        },
+      },
+      {
+        id: 3,
+        side: "player",
+        log: {
+          type: "action",
+          messageKey: "move.playCard",
+          params: { cardName: "Carnage at the Colosseum", cost: 3 },
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+        } satisfies GenericActionLog,
+      },
+    ];
+
+    expect(
+      projectMoveLogEntries(matchState, moveLogs, "player").map((entry) => entry.section?.id),
+    ).toEqual(["attack", "steal", undefined]);
+  });
+
+  test("ends the combat at the steal for a resolved card-to-play too", () => {
+    // resolveCardToPlay is the typed-move sibling of move.playCard (the
+    // choice-resolution half of playing a card): it must close the steal
+    // context exactly like the action-key path does.
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const moveLogs: MoveLogEntry[] = [
+      {
+        id: 1,
+        side: "player",
+        log: {
+          type: "attackRival",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+          attackerId: ATTACKER_ID,
+          attackerName: "6th Street Recruits",
+        },
+      },
+      {
+        id: 2,
+        side: "player",
+        log: {
+          type: "resolveStealGigs",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+          attackerName: "6th Street Recruits",
+          attackerPower: 8,
+          stolenCount: 1,
+          stolenGigs: [{ dieType: "d6", faceValue: 2 }],
+        },
+      },
+      {
+        id: 3,
+        side: "player",
+        log: {
+          type: "resolveCardToPlay",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+          cardId: "carnage-1" as CardInstanceId,
+          cardName: "Carnage at the Colosseum",
+        },
+      },
+    ];
+
+    expect(
+      projectMoveLogEntries(matchState, moveLogs, "player").map((entry) => entry.section?.id),
+    ).toEqual(["attack", "steal", undefined]);
+  });
+
+  test("keeps Panam's optional discard and resulting draw in the declared attack", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const moveLogs: MoveLogEntry[] = [
+      {
+        id: 1,
+        side: "player",
+        log: {
+          type: "attackRival",
+          playerId: P1,
+          timestamp: 1,
+          turnNumber: 1,
+          attackerId: ATTACKER_ID,
+          attackerName: "Panam Palmer: Strength Through Family",
+        },
+      },
+      {
+        id: 2,
+        side: "player",
+        log: {
+          type: "resolveDiscardFromHand",
+          playerId: P1,
+          timestamp: 2,
+          turnNumber: 1,
+          discardedCount: 1,
+          discardedCards: [
+            { cardId: "discarded-card" as CardInstanceId, cardName: "Rogue Amendiares" },
+          ],
+        },
+      },
+      {
+        id: 3,
+        side: "player",
+        log: {
+          type: "action",
+          messageKey: "effect.draw.resolved",
+          params: {
+            sourceCardName: "Panam Palmer: Strength Through Family",
+            drawnCount: 2,
+            drawnCardNames: "Fool on the Hill, MaxTac Squadron",
+          },
+          playerId: P1,
+          timestamp: 3,
+          turnNumber: 1,
+        } satisfies GenericActionLog,
+      },
+    ];
+
+    const entries = projectMoveLogEntries(matchState, moveLogs, "player");
+
+    expect(entries.map((entry) => entry.section?.id)).toEqual(["attack", "attack", "attack"]);
+    expect(entries.map((entry) => entry.message)).toEqual([
+      "Attack: Panam Palmer: Strength Through Family spent to attack the rival Gig area.",
+      "Discarded 1 card: Rogue Amendiares.",
+      "Panam Palmer: Strength Through Family drew 2 card(s): Fool on the Hill, MaxTac Squadron.",
     ]);
   });
 
@@ -420,17 +932,92 @@ describe("projectMoveLogEntries", () => {
           turnNumber: 1,
         } as unknown as MoveLog,
       },
+      {
+        id: 4,
+        side: "opponent",
+        log: {
+          type: "cardDefeated",
+          playerId: P2,
+          timestamp: 0,
+          turnNumber: 1,
+          wasUnit: true,
+          cardId: DEFENDER_ID,
+          cardName: "Psycho Squad",
+        },
+      },
+      {
+        id: 5,
+        side: "player",
+        log: {
+          type: "action",
+          messageKey: "move.playCard",
+          params: { cardName: "Floor It", cost: 1 },
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+        },
+      },
     ];
 
     const entries = projectMoveLogEntries(matchState, moveLogs, "player");
 
-    expect(entries.map((entry) => entry.section?.id)).toEqual(["attack", "react", "fight"]);
+    expect(entries.map((entry) => entry.section?.id)).toEqual([
+      "attack",
+      "react",
+      "fight",
+      "fight",
+      undefined,
+    ]);
     expect(entries.map((entry) => entry.tags)).toEqual([
       ["combat"],
       ["combat"],
       ["move", "combat"],
+      ["move", "combat"],
+      ["move"],
     ]);
-    expect(entries[2]?.message).toBe("Fight: Modded Kusanagi (11) defeated Psycho Squad (6).");
+    expect(entries[2]?.message).toBe("Fight: Modded Kusanagi (11) won against Psycho Squad (6).");
+    expect(entries[3]?.message).toBe("Psycho Squad was defeated.");
+  });
+
+  test("shows before and after values for Gig changes and swaps", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const logs: MoveLogEntry[] = [
+      {
+        id: 1,
+        side: "player",
+        log: {
+          type: "gigValueChanged",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+          dieId: "gig-1" as GigDieId,
+          dieType: "d6",
+          previousValue: 5,
+          newValue: 3,
+        },
+      },
+      {
+        id: 2,
+        side: "player",
+        log: {
+          type: "gigsSwapped",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+          friendlyDieType: "d4",
+          friendlyValue: 2,
+          rivalDieType: "d8",
+          rivalValue: 6,
+        },
+      },
+    ];
+
+    expect(projectMoveLogEntries(matchState, logs, "player").map((entry) => entry.message)).toEqual(
+      [
+        "Adjusted D6 gig die from 5 to 3.",
+        "Swapped friendly D4 Gig (2) with rival D8 Gig (6); friendly Gig value 2 to 6, rival 6 to 2.",
+      ],
+    );
   });
 
   test("groups QUICK program play and resolution in the React section", () => {
@@ -617,6 +1204,68 @@ describe("projectMoveLogEntries", () => {
     );
   });
 
+  test("keeps a later public reveal after a private search resolves", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const moveLogs: MoveLogEntry[] = [
+      {
+        id: 1,
+        side: "player",
+        log: {
+          type: "searchDeck",
+          revealedCount: 1,
+          revealedCardNames: privateField(["Private Card"], [P1]),
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+        },
+      },
+      {
+        id: 2,
+        side: "player",
+        log: {
+          type: "action",
+          messageKey: "move.searchDeck.reveal",
+          params: { count: 1 },
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+        },
+      },
+      {
+        id: 3,
+        side: "player",
+        log: {
+          type: "action",
+          messageKey: "move.resolveSearchDeck",
+          params: { count: 0, looked: 1 },
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+        },
+      },
+      {
+        id: 4,
+        side: "player",
+        log: {
+          type: "action",
+          messageKey: "move.searchDeck.revealNamed",
+          params: { count: 1, revealedCardNames: "Public Card" },
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 1,
+        },
+      },
+    ];
+
+    const entries = projectMoveLogEntries(matchState, moveLogs, "player");
+
+    expect(entries.map((entry) => entry.message)).toEqual([
+      "Revealed the top 1 cards of the deck: Private Card.",
+      "Searched the top 1 cards (Private Card) and found 0.",
+      "Revealed the top 1 cards of the deck: Public Card.",
+    ]);
+  });
+
   test("includes revealed card names on count-only search resolution logs", () => {
     const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
     const revealedIds = matchState.G.players[P1]!.zones.deck.slice(0, 3);
@@ -653,6 +1302,86 @@ describe("projectMoveLogEntries", () => {
     expect(entries[1]?.message).toBe(
       `Searched the top ${revealedIds.length} cards (${revealedNames.join(", ")}) and found 0.`,
     );
+  });
+
+  test("shows search names only to the viewer who saw them after deck cards are masked", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const revealedIds = matchState.G.players[P1]!.zones.deck.slice(0, 3);
+    const revealedNames = revealedIds.map((id) => defOf(matchState.G.cardIndex[id]!).displayName);
+    const maskedState = structuredClone(matchState);
+    for (const id of revealedIds) delete maskedState.G.cardIndex[id];
+    const revealLog: MoveLog = {
+      type: "searchDeck",
+      revealedCount: revealedIds.length,
+      revealed: privateField(revealedIds, [P1]),
+      revealedCardNames: privateField(revealedNames, [P1]),
+      playerId: P1,
+      timestamp: 0,
+      turnNumber: 1,
+    };
+    const resolutionLog: MoveLog = {
+      type: "action",
+      messageKey: "move.resolveSearchDeck",
+      params: { count: 0, looked: revealedIds.length },
+      playerId: P1,
+      timestamp: 0,
+      turnNumber: 1,
+    };
+    const ownerLogs: MoveLogEntry[] = [
+      { id: 1, side: "player", log: stripPrivateFields(revealLog, P1) },
+      { id: 2, side: "player", log: resolutionLog },
+    ];
+    const rivalLogs: MoveLogEntry[] = [
+      { id: 1, side: "opponent", log: stripPrivateFields(revealLog, P2) },
+      { id: 2, side: "opponent", log: resolutionLog },
+    ];
+
+    const owner = projectMoveLogEntries(maskedState, ownerLogs, "player");
+    const rival = projectMoveLogEntries(maskedState, rivalLogs, "opponent");
+
+    expect(owner[0]?.message).toContain(revealedNames.join(", "));
+    expect(owner[0]?.cardRefs?.map((ref) => ref.name)).toEqual(revealedNames);
+    expect(owner[1]?.message).toContain(`(${revealedNames.join(", ")})`);
+    expect(rival[0]?.message).toBe(`Revealed the top ${revealedIds.length} cards of the deck.`);
+    expect(rival[0]?.cardRefs).toBeUndefined();
+    expect(rival[1]?.message).toBe(`Searched the top ${revealedIds.length} cards and found 0.`);
+  });
+
+  test("uses each search's own names when two searches happen in one turn", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const search = (id: number, names: string[]): MoveLogEntry => ({
+      id,
+      side: "player",
+      log: {
+        type: "searchDeck",
+        revealedCount: names.length,
+        revealedCardNames: privateField(names, [P1]),
+        playerId: P1,
+        timestamp: 0,
+        turnNumber: 1,
+      },
+    });
+    const resolve = (id: number): MoveLogEntry => ({
+      id,
+      side: "player",
+      log: {
+        type: "action",
+        messageKey: "move.resolveSearchDeck",
+        params: { count: 0, looked: 1 },
+        playerId: P1,
+        timestamp: 0,
+        turnNumber: 1,
+      },
+    });
+
+    const entries = projectMoveLogEntries(
+      matchState,
+      [search(1, ["First Card"]), resolve(2), search(3, ["Second Card"]), resolve(4)],
+      "player",
+    );
+
+    expect(entries[1]?.message).toContain("(First Card)");
+    expect(entries[3]?.message).toContain("(Second Card)");
   });
 
   test("uses named search resolution logs when searched cards move to hand", () => {
@@ -1229,5 +1958,96 @@ describe("projectMoveLogEntries", () => {
       "Game over (Deck out).",
       "Game over (Concession).",
     ]);
+  });
+
+  test("renders the persisted overtime-start log for both players", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const moveLogs: MoveLogEntry[] = [
+      {
+        id: 1,
+        side: "system",
+        log: {
+          type: "action",
+          playerId: P2,
+          timestamp: 0,
+          turnNumber: 14,
+          messageKey: "game.overtimeStarted",
+          params: {},
+        },
+      },
+    ];
+
+    expect(projectMoveLogEntries(matchState, moveLogs, "player")[0]?.message).toBe(
+      "Overtime began. The first player to hold 7 Gigs wins immediately.",
+    );
+    expect(projectMoveLogEntries(matchState, moveLogs, "opponent")[0]?.message).toBe(
+      "Overtime began. The first player to hold 7 Gigs wins immediately.",
+    );
+  });
+
+  test("attributes concede action logs to You or Rival instead of the raw player id", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const moveLogs: MoveLogEntry[] = [
+      {
+        id: 1,
+        side: "player",
+        log: {
+          type: "action",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 3,
+          messageKey: "move.concede",
+          params: {},
+        },
+      },
+      {
+        id: 2,
+        side: "opponent",
+        log: {
+          type: "action",
+          playerId: P2,
+          timestamp: 1,
+          turnNumber: 4,
+          messageKey: "move.concede",
+          params: {},
+        },
+      },
+    ];
+
+    expect(
+      projectMoveLogEntries(matchState, moveLogs, "player").map((entry) => entry.message),
+    ).toEqual(["You conceded the game.", "Rival conceded the game."]);
+    expect(
+      projectMoveLogEntries(matchState, moveLogs, "opponent").map((entry) => entry.message),
+    ).toEqual(["Rival conceded the game.", "You conceded the game."]);
+  });
+
+  test("renders both empty-Fixer turn warnings for both players", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const moveLogs: MoveLogEntry[] = (
+      ["game.overtimeFirstEmptyTurn", "game.overtimeFinalTurn"] as const
+    ).map((messageKey, index): MoveLogEntry => ({
+      id: index + 1,
+      side: "system",
+      log: {
+        type: "action",
+        playerId: P1,
+        timestamp: index,
+        turnNumber: 13 + index,
+        messageKey,
+        params: {},
+      },
+    }));
+
+    const expected = [
+      "Both Fixer areas began empty. Overtime begins after one more turn that starts this way.",
+      "Both Fixer areas began empty for a second turn. Overtime begins when this turn ends.",
+    ];
+    expect(
+      projectMoveLogEntries(matchState, moveLogs, "player").map((entry) => entry.message),
+    ).toEqual(expected);
+    expect(
+      projectMoveLogEntries(matchState, moveLogs, "opponent").map((entry) => entry.message),
+    ).toEqual(expected);
   });
 });

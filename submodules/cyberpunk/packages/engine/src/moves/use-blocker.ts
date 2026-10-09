@@ -1,7 +1,11 @@
 import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
-import { getEffectiveRules, isReadyFieldBlocker } from "../active-effects/index.ts";
+import {
+  getEffectivePower,
+  getEffectiveRules,
+  isReadyFieldBlocker,
+} from "../active-effects/index.ts";
 import { getDefinitionFor } from "../state/lookups.ts";
 
 export interface UseBlockerInput extends MoveInput {
@@ -20,12 +24,14 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
 
     // Attacker with cantBeBlocked prevents all blocking.
     const attackerRules = getEffectiveRules(state, attack.attackerId as string);
-    if (attackerRules.includes("cantBeBlocked")) return false;
+    if (attack.unblockableAtDeclaration || attackerRules.includes("cantBeBlocked")) return false;
 
     const player = state.G.players[playerId as string];
     if (!player) return false;
 
-    return player.zones.field.some((id) => isReadyFieldBlocker(state, id as string));
+    return player.zones.field.some(
+      (id) => id !== attack.defenderId && isReadyFieldBlocker(state, id as string),
+    );
   },
 
   validate({ state, playerId, input }) {
@@ -36,6 +42,15 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
     }
     if (attack.rivalId !== playerId) {
       return { valid: false, error: "Not your react step", errorCode: "NOT_YOUR_REACT" };
+    }
+
+    // A Unit already defending this attack cannot redirect it to itself.
+    if (blockerId === attack.defenderId) {
+      return {
+        valid: false,
+        error: "Defender cannot block its own attack",
+        errorCode: "ALREADY_DEFENDING",
+      };
     }
 
     const blocker = state.G.cardIndex[blockerId];
@@ -57,7 +72,7 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
 
     // Attacker with cantBeBlocked cannot be blocked.
     const attackerRules = getEffectiveRules(state, attack.attackerId as string);
-    if (attackerRules.includes("cantBeBlocked")) {
+    if (attack.unblockableAtDeclaration || attackerRules.includes("cantBeBlocked")) {
       return { valid: false, error: "Attacker can't be blocked", errorCode: "CANT_BE_BLOCKED" };
     }
 
@@ -67,7 +82,7 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
   execute({ state, playerId, input, operations }) {
     const { blockerId } = input.args;
     const attack = state.G.attackState;
-    if (!attack) return;
+    if (!attack || attack.step !== "react") return;
 
     const blockerName = state.G.cardIndex[blockerId]
       ? getDefinitionFor(state.G, blockerId).displayName
@@ -75,6 +90,8 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
     const attackerName = state.G.cardIndex[attack.attackerId as string]
       ? getDefinitionFor(state.G, attack.attackerId as string).displayName
       : "";
+    const blockerPower = getEffectivePower(state, blockerId);
+    const attackerPower = getEffectivePower(state, attack.attackerId as string);
 
     const eventsBeforeSpend = operations.event.getEmittedEvents().length;
     operations.card.spend(blockerId as CardInstanceId);
@@ -90,11 +107,18 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
       kind: "fight",
       step: "react",
       redirectedByBlocker: true,
+      redirectedTargets: [...(attack.redirectedTargets ?? []), attack.defenderId],
     });
     operations.event.emit({
       type: "actionLog",
       messageKey: "move.useBlocker",
-      params: { blockerName, attackerName, originalAttackKind: attack.kind },
+      params: {
+        blockerName,
+        blockerPower,
+        attackerName,
+        attackerPower,
+        originalAttackKind: attack.kind,
+      },
       playerId,
     });
 

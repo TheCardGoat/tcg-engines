@@ -43,4 +43,15 @@ describe("OP08-061 Charlotte Oven", () => {
     expect(view.players.south.activeDon).toBe(1);
     expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(targetId);
   });
+  test("printed1000 Counter prevents an equal-power Leader hit", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP08-061", "P-012"] },
+      { activeDon: 0 },
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().chooseCounter("OP08-061");
+    expect(e.getView("south").players.south.lifeCount).toBe(4);
+    expect(e.getView("south").players.south.trash.some((c) => c.cardId === "OP08-061")).toBe(true);
+  });
 });

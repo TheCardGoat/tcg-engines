@@ -58,7 +58,7 @@ export const op17CharlottePerospero110: CharacterCard = {
               {
                 filter: "trait",
                 value: "Big Mom Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

@@ -1,3 +1,4 @@
+export { ifIDidntHaveYouP4Challenge } from "./p4-014-if-i-didnt-have-you-challenge";
 export { ifIDidntHaveYou } from "./032-if-i-didnt-have-you";
 export { imNeverNotByYourSide } from "./033-im-never-not-by-your-side";
 export { bestiesAssemble } from "./034-besties-assemble";

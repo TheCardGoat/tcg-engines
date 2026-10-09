@@ -23,7 +23,7 @@ export const op05Holly110: CharacterCard = {
   cost: 3,
   power: 5000,
   counter: 1000,
-  traits: ["Animal Sky Island"],
+  traits: ["Animal", "Sky Island"],
   attribute: "strike",
   effect: "NULL",
   i18n: op05Holly110I18n,

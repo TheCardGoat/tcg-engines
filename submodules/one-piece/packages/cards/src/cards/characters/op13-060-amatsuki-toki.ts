@@ -23,7 +23,7 @@ export const op13AmatsukiToki060: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Land of Wano Roger Pirates"],
+  traits: ["Land of Wano", "Roger Pirates"],
   attribute: "wisdom",
   effect:
     "If your Character with a type including \"Roger Pirates\" would be K.O.'d by your opponent's effect, you may trash this Character instead.",

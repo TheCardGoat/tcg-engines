@@ -15,6 +15,26 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("EB01-028 Gum-Gum Champion Rifle", () => {
+  test("a non-Impel Down Leader gets neither power nor an opponent return (FAQ Q639)", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }, eb01Fourtricks025] },
+      { hand: [eb01GumGumChampionRifle028], activeDon: 1, life: 4 },
+    );
+    const attacker = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const activeCharacter = engine.findCardInZone("south", "character", eb01Fourtricks025);
+    const event = engine.findCardInZone("north", "hand", eb01GumGumChampionRifle028);
+    engine.declareAttack(attacker, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [event] }, "north");
+    const view = engine.getView("north");
+    expect(view.players.south.characters.some((card) => card?.instanceId === activeCharacter)).toBe(
+      true,
+    );
+    expect(view.players.north.leader.power).toBe(5000);
+    expect(view.players.north.lifeCount).toBe(3);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(event);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("maps its Counter power choice to the defender and active return choice to the opponent", () => {
     const engine = OnePieceTestEngine.create(
       {

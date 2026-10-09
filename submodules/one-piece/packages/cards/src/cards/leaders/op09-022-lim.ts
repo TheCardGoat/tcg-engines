@@ -54,7 +54,7 @@ export const op09Lim022: LeaderCard = {
             count: { amount: 1, upTo: true },
             filters: [
               { filter: "cardCategory", value: "character" },
-              { filter: "trait", value: "ODYSSEY", match: "includes" },
+              { filter: "trait", value: "ODYSSEY", match: "exact" },
               { filter: "cost", comparison: "lte", value: 5 },
             ],
           },

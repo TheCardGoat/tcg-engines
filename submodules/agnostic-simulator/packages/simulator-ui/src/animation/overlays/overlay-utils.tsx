@@ -30,7 +30,9 @@ export function centerForRef(
       : (registry.get(ref).find((record) => record.presence === preferredPresence) ??
         registry.getPreferred(ref));
   const rect = preferred?.node.getBoundingClientRect();
-  return rect ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 } : null;
+  return rect && rect.width > 0 && rect.height > 0
+    ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
+    : null;
 }
 
 export function centerForBoardOverlay(registry: AnimationNodeRegistry) {
@@ -71,5 +73,29 @@ export function overlayPortalRoot(children: React.ReactNode) {
     >
       {children}
     </div>
+  );
+}
+
+/** Capture scroll positions, not animated bounding boxes (camera tracks move those). */
+export function captureOverlayScroll(
+  registry: AnimationNodeRegistry,
+  boardRef: AnimationRef = simulatorBoardCenterAnimationRef,
+) {
+  const parents: { node: HTMLElement; x: number; y: number }[] = [];
+  let node = registry.getPreferred(boardRef)?.node ?? null;
+  while (node) {
+    if (node !== document.scrollingElement)
+      parents.push({ node, x: node.scrollLeft, y: node.scrollTop });
+    node = node.parentElement;
+  }
+  return { x: window.scrollX, y: window.scrollY, parents };
+}
+export function overlayScrollDisplacement(origin: ReturnType<typeof captureOverlayScroll>) {
+  return origin.parents.reduce(
+    (offset, parent) => ({
+      x: offset.x + parent.x - parent.node.scrollLeft,
+      y: offset.y + parent.y - parent.node.scrollTop,
+    }),
+    { x: origin.x - window.scrollX, y: origin.y - window.scrollY },
   );
 }

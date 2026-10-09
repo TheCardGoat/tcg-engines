@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ClockReadout, ConnectionPanel, TurnIndicator } from "@tcg/simulator-ui";
 
 import { buildMountedHref } from "../routes/router-paths.ts";
+import { ActionAttentionReminder } from "../simulator/attention/ActionAttentionReminder";
 import { projectConnectionPanelDiagnostic } from "../simulator/connection-panel-projection";
 import classes from "./SimulatorUiFixturesPage.module.css";
 import {
@@ -11,11 +12,13 @@ import {
 
 export default function SimulatorUiFixturesPage() {
   const [state, setState] = useState<SimulatorUiFixtureState>("connected");
+  const [showAttention, setShowAttention] = useState(false);
   const diagnostic = fixtureDiagnostic(state);
 
   useEffect(() => {
     const resolvedState = readFixtureState();
     setState(resolvedState);
+    setShowAttention(new URLSearchParams(window.location.search).get("attention") === "1");
     document.title = `Simulator UI fixtures · ${resolvedState}`;
   }, []);
 
@@ -28,23 +31,34 @@ export default function SimulatorUiFixturesPage() {
           <p>Deterministic connection and clock states for desktop and mobile inspection.</p>
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "flex-end" }}>
+          <a href={buildMountedHref("/animation-fixtures")} className={classes.backLink}>
+            Animations and opening scenes
+          </a>
+          <a href={buildMountedHref("/component-catalog")} className={classes.backLink}>
+            Component catalog
+          </a>
           <a
             href={buildMountedHref("/simulator-ui-fixtures/interaction-prompt")}
             className={classes.backLink}
           >
             Interactive prompts
           </a>
-          <a href={buildMountedHref("/")} className={classes.backLink}>
+          <a href={buildMountedHref("/simulator-ui-fixtures")} className={classes.backLink}>
             Back to fixtures
           </a>
         </div>
       </header>
 
+      <p>
+        <a href={buildMountedHref("/simulator-ui-fixtures/interactions")}>
+          Interaction test inventory
+        </a>
+      </p>
       <nav className={classes.stateNav} aria-label="Fixture state">
         {SIMULATOR_UI_CONNECTION_FIXTURE_STATES.map((candidate) => (
           <a
             key={candidate}
-            href={`${buildMountedHref("/simulator-ui-fixtures")}?state=${candidate}`}
+            href={`${buildMountedHref("/simulator-ui-fixtures/connection-clocks")}?state=${candidate}`}
             aria-current={candidate === state ? "page" : undefined}
           >
             {candidate}
@@ -99,7 +113,12 @@ export default function SimulatorUiFixturesPage() {
         </div>
 
         <div className={classes.playfield}>
-          <section className={classes.board} aria-label="Fixture playfield">
+          <section
+            className={classes.board}
+            aria-label="Fixture playfield"
+            data-action-attention-target
+            tabIndex={-1}
+          >
             <span>Opponent field</span>
             <div className={classes.centerLine} />
             <span>Your field</span>
@@ -129,6 +148,9 @@ export default function SimulatorUiFixturesPage() {
           </aside>
         </div>
       </section>
+      {showAttention ? (
+        <ActionAttentionReminder decision={{ key: "fixture-decision", label: "Your priority" }} />
+      ) : null}
     </main>
   );
 }
@@ -144,7 +166,7 @@ function readFixtureState(): SimulatorUiFixtureState {
 function fixtureDiagnostic(state: SimulatorUiFixtureState) {
   return {
     gameSlug: "fixture",
-    route: `/simulator-ui-fixtures?state=${state}`,
+    route: `/simulator-ui-fixtures/connection-clocks?state=${state}`,
     endpoint: { realtimeConfigured: true },
     connection: {
       status: state,

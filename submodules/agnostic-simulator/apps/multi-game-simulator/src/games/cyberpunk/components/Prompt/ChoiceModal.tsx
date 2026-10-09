@@ -1,12 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
+import { usePromptSkin } from "./PromptSkin";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { Tooltip } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import {
   IconArrowBarToDown,
   IconArrowBarToUp,
   IconArrowRight,
   IconCircleDashedCheck,
+  IconCards,
+  IconMaximize,
   IconMinus,
+  IconMinimize,
+  IconRefresh,
   IconTargetArrow,
 } from "@tabler/icons-react";
 import {
@@ -28,7 +34,9 @@ import {
 } from "../../engine";
 import { buildCyberpunkDeckReveal } from "../../engine/deckRevealProjection";
 import { CardImage } from "../GameBoard/CardImage";
+import { useCardInspect } from "../GameBoard/CardInspectContext";
 import { CardNameToken } from "../CardDisplay/CardNameToken";
+import { CyberpunkRulesText } from "../CardContext/CyberpunkRulesText";
 import { useLocalTargetSelection } from "./useLocalTargetSelection";
 import {
   choiceActionHasRenderableDrawerContent,
@@ -39,13 +47,16 @@ import {
 import {
   setChoiceModalOpen,
   setChoiceModalMinimized,
+  setChoiceModalExpanded,
   useChoiceModalExplicitlyClosed,
+  useChoiceModalExpanded,
   useChoiceModalMinimized,
   useChoiceModalOpen,
 } from "./choiceModalState";
 import { booleanInput, entityInput, numberInput, optionInput } from "./interactionInputs";
 import { playCardPromptCopy, unaffordablePlayReason } from "./playCardAffordability";
 import { useCyberpunkAnimationActive } from "../../animation/CyberpunkAnimationActivityContext";
+import { usePaymentSelection } from "../PaymentSelection/PaymentSelectionContext";
 import { buildAdjustGigOptions } from "../adjustGigOptions";
 import classes from "./ChoiceModal.module.css";
 
@@ -64,11 +75,15 @@ type ChoiceModalPlacement = "top" | "bottom";
  * onto a unit, etc.) are handled inline by Card.tsx and don't surface here.
  *
  * Modal choices (including chooseEffect) dispatch through interaction actions.
+ * This is the native Cyberpunk sheet, not @tcg/simulator-ui's ChoiceModal.
+ * See ./index.ts for the prompt surface map and ./PromptBanner.tsx for inline
+ * binary decisions such as Kerry's known Gig reroll.
  */
 export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
+  const promptSkin = usePromptSkin();
   const [placement, setPlacement] = useState<ChoiceModalPlacement>("bottom");
   const animationActive = useCyberpunkAnimationActive();
-  const { humanSide, matchState } = useEngine();
+  const { humanSide, matchState, hasPendingRemoteMove } = useEngine();
   const interactionView = useEngineInteractionView(side);
   const prompt = useNativePromptPresentation(side);
   const localTargetSelection = useLocalTargetSelection(side);
@@ -97,11 +112,15 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
     targetPromptPresentation.presentation === "spatial"
       ? targetPromptPresentation.requestId
       : null;
+  const currentRequestId = requestId ?? autoAction?.requestId ?? undefined;
+  const minimized = useChoiceModalMinimized(side, currentRequestId);
+  const triggerExpanded = useChoiceModalExpanded(side, currentRequestId);
   const storedOpened = useChoiceModalOpen(side, requestId ?? undefined);
   const spatialChoiceOpened =
     targetPromptPresentation.presentation === "spatial" &&
     targetPromptPresentation.requestId !== null &&
-    storedOpened;
+    targetPromptPresentation.action?.id !== "resolveDiscardFromHand" &&
+    (storedOpened || minimized);
   const requestedAction =
     targetPromptPresentation.presentation === "drawer" || spatialChoiceOpened
       ? targetPromptPresentation.action
@@ -112,8 +131,6 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
     nativeTargetChoiceModalRequestId(prompt.choice)
       ? targetPromptPresentation.requestId
       : null;
-  const currentRequestId = requestId ?? autoAction?.requestId ?? undefined;
-  const minimized = useChoiceModalMinimized(side, currentRequestId);
   const actionRequestId = autoAction?.requestId;
   const localTargetChoiceOpen = spatialChoiceOpened && localTargetSelection !== null;
   const canRenderChoice =
@@ -130,9 +147,12 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
   const explicitlyClosed = useChoiceModalExplicitlyClosed(side, requestId ?? undefined);
   const opened =
     storedOpened || (side === humanSide && !minimized && !explicitlyClosed && canAutoOpenChoice);
-  const action = opened ? requestedAction : autoAction;
+  const action = opened || minimized ? requestedAction : autoAction;
   const nativeTargetChoice =
-    opened && !requestedAction && nativeTargetRequestId && isNativeTargetChoice(prompt.choice)
+    (opened || minimized) &&
+    !requestedAction &&
+    nativeTargetRequestId &&
+    isNativeTargetChoice(prompt.choice)
       ? prompt.choice
       : null;
   const hasRenderableActionContent = action
@@ -197,6 +217,7 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
 
   if (
     animationActive ||
+    hasPendingRemoteMove ||
     side !== humanSide ||
     !canRenderChoice ||
     (!hasRenderableModalContent && !shouldRenderEmptyDrawer)
@@ -208,23 +229,25 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
     : action
       ? modalTitle(action)
       : "Choose target";
-  if (minimized) {
-    return null;
-  }
   if (!currentRequestId) {
     return null;
   }
   const dialog = (
     <div
       className={`${classes.scrim} ${surface === "mobile" ? classes.mobileScrim : ""}`}
+      // Keep the request mounted so minimizing does not discard a partial choice.
+      style={{ display: minimized ? "none" : undefined }}
+      data-prompt-skin={promptSkin}
       role="dialog"
       aria-modal="true"
+      aria-label={title}
       data-placement={placement}
       data-surface={surface}
     >
       <div
         className={`${classes.sheet} ${surface === "mobile" ? classes.mobileSheet : ""}`}
         data-testid="choice-modal-sheet"
+        data-decision-type={action?.id}
         data-placement={placement}
         data-surface={surface}
       >
@@ -243,6 +266,27 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
               <IconArrowBarToUp size={14} stroke={1.8} />
             )}
           </button>
+          {action?.id === "resolveTrigger" ? (
+            <button
+              type="button"
+              className={classes.iconButton}
+              data-testid="choice-modal-toggle-expanded"
+              aria-label={
+                triggerExpanded ? "Switch to compact effect list" : "Switch to expanded effect list"
+              }
+              title={triggerExpanded ? "Compact" : "Expanded"}
+              onClick={() => {
+                if (!currentRequestId) return;
+                setChoiceModalExpanded(side, currentRequestId, !triggerExpanded);
+              }}
+            >
+              {triggerExpanded ? (
+                <IconMinimize size={14} stroke={1.8} />
+              ) : (
+                <IconMaximize size={14} stroke={1.8} />
+              )}
+            </button>
+          ) : null}
           <button
             type="button"
             className={classes.minimizeButton}
@@ -255,9 +299,17 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
           </button>
         </div>
         {action && hasRenderableActionContent ? (
-          <ChoiceContent action={action} side={side} choice={prompt.choice} />
+          <ChoiceContent
+            key={currentRequestId}
+            action={action}
+            side={side}
+            choice={prompt.choice}
+            surface={surface}
+            triggerExpanded={triggerExpanded}
+          />
         ) : nativeTargetChoice && hasRenderableNativeTargetChoice ? (
           <NativeTargetChoiceContent
+            key={currentRequestId}
             choice={nativeTargetChoice}
             requestId={currentRequestId}
             side={side}
@@ -274,6 +326,50 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
 }
 
 type NativeTargetChoice = Extract<NonNullable<PlayerPrompt["choice"]>, { type: "chooseTarget" }>;
+
+function PromptChoiceHeader({
+  title,
+  optional = false,
+  kind = "target",
+}: {
+  title: ReactNode;
+  optional?: boolean;
+  kind?: "target" | "effect";
+}) {
+  const description =
+    kind === "effect"
+      ? "Required effect — choose one effect to continue."
+      : optional
+        ? "Optional effect — you may choose no target."
+        : "Required target — choose a target to continue.";
+  const RequirementIcon =
+    kind === "effect" ? IconCards : optional ? IconCircleDashedCheck : IconTargetArrow;
+
+  return (
+    <div className={classes.targetHeader} data-testid="choice-modal-header">
+      <Tooltip
+        label={description}
+        position="top-start"
+        openDelay={0}
+        withArrow
+        withinPortal
+        zIndex={4700}
+        classNames={{ tooltip: classes.targetHeaderTooltip }}
+      >
+        <span
+          className={classes.targetHeaderStatus}
+          role="img"
+          aria-label={description}
+          tabIndex={0}
+          data-testid="choice-modal-requirement"
+        >
+          <RequirementIcon size={22} stroke={2} aria-hidden="true" />
+        </span>
+      </Tooltip>
+      <p className={classes.targetHeaderTitle}>{title}</p>
+    </div>
+  );
+}
 
 function isTargetChoiceModalAction(action: InteractionAction | null): boolean {
   switch (action?.id) {
@@ -416,18 +512,23 @@ function NativeTargetChoiceContent({
     };
     return (
       <>
-        <p className={classes.title}>
-          {sourceName ? (
-            <>
-              Choose Gig for <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
-            </>
-          ) : (
-            "Choose Gig"
-          )}
-        </p>
+        <PromptChoiceHeader
+          optional={canSkip}
+          title={
+            sourceName ? (
+              <>
+                Choose Gig for <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
+              </>
+            ) : (
+              "Choose Gig"
+            )
+          }
+        />
         <p className={classes.subtitle}>{gigTargetSubtitle(required, max)}</p>
         {choice.payload.source?.rulesText ? (
-          <p className={classes.sourceLine}>{choice.payload.source.rulesText}</p>
+          <p className={classes.sourceLine} data-testid="target-modal-source-rules">
+            <CyberpunkRulesText text={choice.payload.source.rulesText} />
+          </p>
         ) : null}
         <div className={classes.options}>
           {targetIds.map((dieId) => {
@@ -500,16 +601,26 @@ function NativeTargetChoiceContent({
     );
   }
   const summaries = targetIds.map((cardId) => cardSummary(matchState, cardId)).filter(Boolean);
-  const allUnits = summaries.length > 0 && summaries.every((summary) => summary?.type === "unit");
+  const hasLegend = summaries.some((summary) => summary?.type === "legend");
+  const allEquipHosts =
+    summaries.length > 0 &&
+    summaries.every((summary) => summary?.type === "unit" || summary?.type === "legend");
+  const allGear = summaries.length > 0 && summaries.every((summary) => summary?.type === "gear");
   const sourceRules = choice.payload.source?.rulesText?.toLowerCase() ?? "";
   const playCardCopy =
     choice.payload.targetPurpose === "playCard"
       ? playCardPromptCopy(choice.payload.availableEddiesAfterCosts)
       : null;
-  const title = playCardCopy ? (
+  const instructionTitle = playCardCopy ? (
     playCardCopy.title
-  ) : allUnits && choice.payload.targetPurpose === "attachHost" ? (
-    "Choose Unit to equip"
+  ) : allEquipHosts && choice.payload.targetPurpose === "attachHost" ? (
+    hasLegend ? (
+      "Choose Unit or face-up Legend to equip"
+    ) : (
+      "Choose Unit to equip"
+    )
+  ) : allGear && choice.payload.targetPurpose === "gearToPlay" ? (
+    "Choose Gear to play"
   ) : choice.payload.source ? (
     <>
       Choose target for{" "}
@@ -523,15 +634,19 @@ function NativeTargetChoiceContent({
   );
   const subtitle = playCardCopy
     ? playCardCopy.subtitle
-    : allUnits && choice.payload.targetPurpose === "attachHost"
-      ? "Pick the friendly Unit that will receive the Gear."
-      : sourceRules.toLowerCase().includes("rival unit")
-        ? "Pick the rival Unit to target."
-        : effectTargetSubtitle(
-            required,
-            max,
-            nativeChoiceHasMultipleTargetZones(matchState, targetIds),
-          );
+    : allEquipHosts && choice.payload.targetPurpose === "attachHost"
+      ? hasLegend
+        ? "Pick the friendly Unit or face-up Legend that will receive the Gear."
+        : "Pick the friendly Unit that will receive the Gear."
+      : allGear && choice.payload.targetPurpose === "gearToPlay"
+        ? "Pick the Gear you want to play."
+        : sourceRules.toLowerCase().includes("rival unit")
+          ? "Pick the rival Unit to target."
+          : effectTargetSubtitle(
+              required,
+              max,
+              nativeChoiceHasMultipleTargetZones(matchState, targetIds),
+            );
   const submitTargets = (targetIds: string[]) => {
     dispatch({
       type: "resolveEffectTarget",
@@ -555,8 +670,22 @@ function NativeTargetChoiceContent({
   };
   return (
     <>
-      <p className={classes.title}>{title}</p>
+      <PromptChoiceHeader
+        optional={canSkip}
+        title={
+          sourceName ? (
+            <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
+          ) : (
+            instructionTitle
+          )
+        }
+      />
       <p className={classes.subtitle}>{subtitle}</p>
+      {choice.payload.source?.rulesText ? (
+        <p className={classes.sourceLine} data-testid="target-modal-source-rules">
+          <CyberpunkRulesText text={choice.payload.source.rulesText} />
+        </p>
+      ) : null}
       <TargetCandidateGrid
         candidates={targetIds.map((cardId) => {
           const unavailableReason =
@@ -625,8 +754,9 @@ function NativeTargetChoiceContent({
 }
 
 function modalTitle(action: InteractionAction): string {
-  if (optionInput(action, "effectId")) {
-    return "Choose effect";
+  if (optionInput(action, "effectId") || action.id === "resolveChooseEffect") {
+    const sourceName = textParam(action.text.params, "sourceDisplayName");
+    return sourceName ? `${sourceName} — Choose effect` : "Choose effect";
   }
   switch (action.id) {
     case "resolveScry":
@@ -641,8 +771,6 @@ function modalTitle(action: InteractionAction): string {
       return "Choose target";
     case "resolveCardToMove":
       return "Choose target";
-    case "resolveRedirectDefeat":
-      return "Redirect defeat";
     case "resolveSacrificialGear":
       return "Choose gear";
     default:
@@ -654,12 +782,18 @@ function ChoiceContent({
   action,
   side,
   choice,
+  surface,
+  triggerExpanded = false,
 }: {
   action: InteractionAction;
   side: Side;
   choice: PlayerPrompt["choice"];
+  surface: "desktop" | "mobile";
+  /** Pending-effect chooser only: false renders the compact card-image row. */
+  triggerExpanded?: boolean;
 }) {
   const { dispatch, matchState } = useEngine();
+  const { dispatchCostedAction } = usePaymentSelection();
   const interactionView = useEngineInteractionView(side);
   const [selectedSearchIds, setSelectedSearchIds] = useState<string[]>([]);
   const [selectedTargetIds, setSelectedTargetIds] = useState<string[]>([]);
@@ -686,10 +820,17 @@ function ChoiceContent({
       }
       const action = interactionSubmissionToEngineAction(submission, PLAYER_SIDE_TO_ID[side]);
       if (action) {
-        dispatch(action);
+        if (
+          (action.type === "resolveRedirectDefeat" && !action.pass) ||
+          (action.type === "resolveCardToPlay" && !action.pass)
+        ) {
+          dispatchCostedAction(action);
+        } else {
+          dispatch(action);
+        }
       }
     },
-    [dispatch, interactionView, side],
+    [dispatch, dispatchCostedAction, interactionView, side],
   );
   const choiceResetKey = `${action.requestId}:${action.id}`;
 
@@ -719,9 +860,22 @@ function ChoiceContent({
   const effectInput = optionInput(action, "optionId") ?? optionInput(action, "effectId");
   if (effectInput && (action.id === "resolveChooseEffect" || action.id === "resolveEffectTarget")) {
     const effects = effectInput.options;
+    const sourceName = textParam(action.text.params, "sourceDisplayName");
+    const sourceCardId = textParam(action.text.params, "sourceCardId");
     return (
       <>
-        <p className={classes.title}>Choose effect</p>
+        <PromptChoiceHeader
+          kind="effect"
+          title={
+            sourceName ? (
+              <>
+                <SourceCardName cardId={sourceCardId} fallbackName={sourceName} /> — Choose effect
+              </>
+            ) : (
+              "Choose effect"
+            )
+          }
+        />
         <p className={classes.subtitle}>Pick one effect to resolve.</p>
         <div className={classes.options}>
           {effects.map((eff) => (
@@ -792,7 +946,11 @@ function ChoiceContent({
               ? `Showing ${selectedDie?.faceValue}. Choose its resulting value.`
               : gigTargetSubtitle(dieInput.min, dieInput.max)}
           </p>
-          {sourceRules ? <p className={classes.sourceLine}>{sourceRules}</p> : null}
+          {sourceRules ? (
+            <p className={classes.sourceLine} data-testid="target-modal-source-rules">
+              <CyberpunkRulesText text={sourceRules} />
+            </p>
+          ) : null}
           {selectedDieId ? (
             <div className={classes.options}>
               {adjustmentOptions.map((option) => (
@@ -875,6 +1033,7 @@ function ChoiceContent({
         const passInput = booleanInput(action, "pass");
         const sourceName = textParam(action.text.params, "sourceDisplayName");
         const sourceCardId = textParam(action.text.params, "sourceCardId");
+        const sourceRules = textParam(action.text.params, "sourceRulesText");
         const copy = effectTargetChoiceCopy(
           matchState,
           action,
@@ -901,18 +1060,18 @@ function ChoiceContent({
         };
         return (
           <>
-            <p className={classes.title}>
-              {copy.title ? (
-                copy.title
-              ) : sourceName ? (
-                <>
-                  Choose target for{" "}
+            <PromptChoiceHeader
+              optional={canSkip}
+              title={
+                sourceName ? (
                   <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
-                </>
-              ) : (
-                "Choose target"
-              )}
-            </p>
+                ) : copy.title ? (
+                  copy.title
+                ) : (
+                  "Choose target"
+                )
+              }
+            />
             <p className={classes.subtitle}>
               {copy.subtitle ??
                 effectTargetSubtitle(
@@ -921,6 +1080,11 @@ function ChoiceContent({
                   hasMultipleTargetZones(matchState, targetInput.candidates),
                 )}
             </p>
+            {sourceRules ? (
+              <p className={classes.sourceLine} data-testid="target-modal-source-rules">
+                <CyberpunkRulesText text={sourceRules} />
+              </p>
+            ) : null}
             <TargetCandidateGrid
               candidates={targetInput.candidates.map((candidate) => {
                 const cardId = candidate.entity.instanceId;
@@ -951,6 +1115,7 @@ function ChoiceContent({
                   type="button"
                   className={classes.secondary}
                   onClick={() => setSelectedTargetIds([])}
+                  disabled={selectedCount === 0}
                 >
                   Clear
                 </button>
@@ -1026,7 +1191,11 @@ function ChoiceContent({
               )}
             </p>
             <p className={classes.subtitle}>{gigTargetSubtitle(required, max)}</p>
-            {sourceRules ? <p className={classes.sourceLine}>{sourceRules}</p> : null}
+            {sourceRules ? (
+              <p className={classes.sourceLine} data-testid="target-modal-source-rules">
+                <CyberpunkRulesText text={sourceRules} />
+              </p>
+            ) : null}
             <div className={classes.options}>
               {dieTargetInput.candidates.map((candidate) => {
                 const dieId = candidate.entity.instanceId;
@@ -1129,7 +1298,15 @@ function ChoiceContent({
       const required = passInput ? max : cardInput.min;
       const selectedCount = selectedTargetIds.length;
       const canConfirm = selectedCount >= required && selectedCount <= max;
+      const autoConfirmSingleTarget = required === 1 && max === 1;
+      const submitDiscard = (cardIds: string[]) => {
+        submitInteraction("resolveDiscardFromHand", { cardIds });
+      };
       const toggleCard = (cardId: string) => {
+        if (autoConfirmSingleTarget) {
+          submitDiscard([cardId]);
+          return;
+        }
         setSelectedTargetIds((current) =>
           current.includes(cardId)
             ? current.filter((id) => id !== cardId)
@@ -1160,35 +1337,41 @@ function ChoiceContent({
               const selected = selectedTargetIds.includes(cardId);
               const summary = cardSummary(matchState, cardId);
               return (
-                <button
-                  key={cardId}
-                  type="button"
-                  className={`${classes.option} ${classes.cardOption} ${
-                    selected ? classes.optionSelected : ""
-                  }`}
-                  aria-label={`${selected ? "Selected" : "Select"} ${summary?.name ?? cardId}`}
-                  aria-pressed={selected}
-                  onClick={() => toggleCard(cardId)}
-                >
-                  <CardArt summary={summary} fallbackName={cardId} />
-                  <CardMeta summary={summary} />
-                  {selected ? <span className={classes.selectedMark}>Selected</span> : null}
-                </button>
+                <div key={cardId} className={classes.cardChoice}>
+                  <button
+                    type="button"
+                    className={`${classes.option} ${classes.cardOption} ${
+                      selected ? classes.optionSelected : ""
+                    }`}
+                    aria-label={`${selected ? "Selected" : "Select"} ${summary?.name ?? cardId}`}
+                    aria-pressed={selected}
+                    onClick={() => toggleCard(cardId)}
+                  >
+                    <CardArt summary={summary} fallbackName={cardId} />
+                    <CardMeta summary={summary} />
+                    {selected ? <span className={classes.selectedMark}>Selected</span> : null}
+                  </button>
+                  <CardInspectButton summary={summary} fallbackName={cardId} />
+                </div>
               );
             })}
           </div>
           <div className={classes.actions}>
-            <span className={classes.selectionCount}>
-              {selectedCount}/{max} selected
-            </span>
-            <button
-              type="button"
-              className={classes.secondary}
-              onClick={() => setSelectedTargetIds([])}
-              disabled={selectedCount === 0}
-            >
-              Clear
-            </button>
+            {!autoConfirmSingleTarget ? (
+              <>
+                <span className={classes.selectionCount}>
+                  {selectedCount}/{max} selected
+                </span>
+                <button
+                  type="button"
+                  className={classes.secondary}
+                  onClick={() => setSelectedTargetIds([])}
+                  disabled={selectedCount === 0}
+                >
+                  Clear
+                </button>
+              </>
+            ) : null}
             {passInput ? (
               <button
                 type="button"
@@ -1201,18 +1384,20 @@ function ChoiceContent({
                 Skip effect
               </button>
             ) : null}
-            <button
-              type="button"
-              className={classes.primary}
-              data-testid="discard-from-hand-confirm"
-              disabled={!canConfirm}
-              onClick={() => {
-                if (!canConfirm) return;
-                submitInteraction("resolveDiscardFromHand", { cardIds: selectedTargetIds });
-              }}
-            >
-              Discard selected
-            </button>
+            {!autoConfirmSingleTarget ? (
+              <button
+                type="button"
+                className={classes.primary}
+                data-testid="discard-from-hand-confirm"
+                disabled={!canConfirm}
+                onClick={() => {
+                  if (!canConfirm) return;
+                  submitDiscard(selectedTargetIds);
+                }}
+              >
+                Discard selected
+              </button>
+            ) : null}
           </div>
         </>
       );
@@ -1278,23 +1463,27 @@ function ChoiceContent({
                       const disabled = !selected && usedCardIds.has(cardId);
                       const summary = cardSummary(matchState, cardId);
                       return (
-                        <button
-                          key={cardId}
-                          type="button"
-                          className={`${classes.option} ${classes.cardOption} ${
-                            selected ? classes.optionSelected : ""
-                          }`}
-                          disabled={disabled}
-                          data-testid="prevent-steal-card-option"
-                          data-card-id={cardId}
-                          aria-label={`${selected ? "Selected" : "Select"} ${summary?.name ?? cardId} (cost ${costByCard.get(cardId) ?? "?"})`}
-                          aria-pressed={selected}
-                          onClick={() => togglePair(row.dieId, cardId)}
-                        >
-                          <CardArt summary={summary} fallbackName={cardId} />
-                          <CardMeta summary={summary} />
-                          {selected ? <span className={classes.selectedMark}>Selected</span> : null}
-                        </button>
+                        <div key={cardId} className={classes.cardChoice}>
+                          <button
+                            type="button"
+                            className={`${classes.option} ${classes.cardOption} ${
+                              selected ? classes.optionSelected : ""
+                            }`}
+                            disabled={disabled}
+                            data-testid="prevent-steal-card-option"
+                            data-card-id={cardId}
+                            aria-label={`${selected ? "Selected" : "Select"} ${summary?.name ?? cardId} (cost ${costByCard.get(cardId) ?? "?"})`}
+                            aria-pressed={selected}
+                            onClick={() => togglePair(row.dieId, cardId)}
+                          >
+                            <CardArt summary={summary} fallbackName={cardId} />
+                            <CardMeta summary={summary} />
+                            {selected ? (
+                              <span className={classes.selectedMark}>Selected</span>
+                            ) : null}
+                          </button>
+                          <CardInspectButton summary={summary} fallbackName={cardId} />
+                        </div>
                       );
                     })}
                     {row.matchingCardIds.length === 0 ? (
@@ -1350,7 +1539,11 @@ function ChoiceContent({
       if (!triggerInput) return null;
       const canPass = !triggerInput.required;
       const pendingCount = triggerInput.options.length;
-      const rollContext = triggerRollContext(triggerInput.options);
+      const rollContext = triggerRollContext(triggerInput.options, choice);
+      const compactRollQueue = surface === "mobile" && rollContext !== null && pendingCount <= 3;
+      // The pending-effect chooser defaults to a compact row of card images;
+      // the sheet's expand toggle brings back the full list (titles + text).
+      const compactChooser = triggerExpanded !== true && !compactRollQueue;
       const mandatoryCount = triggerInput.options.filter(
         (option) =>
           !booleanParam(option.text.params, "optional") &&
@@ -1358,19 +1551,27 @@ function ChoiceContent({
       ).length;
       return (
         <>
-          <p className={classes.title}>
-            {rollContext
-              ? "Choose the next Gig roll effect"
-              : pendingCount > 1
-                ? "Choose the next effect"
-                : "Resolve the pending effect"}
+          <p className={`${classes.title} ${compactChooser ? classes.compactChooserTitle : ""}`}>
+            {compactRollQueue
+              ? "Resolve Gig roll effects"
+              : rollContext
+                ? "Choose the next Gig roll effect"
+                : pendingCount > 1
+                  ? "Choose the next effect"
+                  : "Resolve the pending effect"}
           </p>
-          <p className={classes.subtitle}>
-            {pendingCount === 1
-              ? canPass
-                ? "Resolve this optional effect, or skip it."
-                : "This required effect must resolve before the game continues."
-              : `${pendingCount} effects are pending. Pick one to resolve now; you’ll choose again if others remain.`}
+          <p
+            className={`${classes.subtitle} ${
+              compactChooser ? classes.compactChooserSubtitle : ""
+            }`}
+          >
+            {compactRollQueue
+              ? "Choose the order. Each effect remains pending until it resolves."
+              : pendingCount === 1
+                ? canPass
+                  ? "Resolve this optional effect, or skip it."
+                  : "This required effect must resolve before the game continues."
+                : `${pendingCount} effects are pending — pick one to resolve now.`}
           </p>
           {rollContext ? (
             <div className={classes.rollContext} data-testid="trigger-roll-context">
@@ -1382,7 +1583,11 @@ function ChoiceContent({
               </span>
             </div>
           ) : null}
-          <div className={classes.triggerOptions}>
+          <div
+            className={`${classes.triggerOptions} ${
+              compactRollQueue ? classes.compactRollQueue : ""
+            } ${compactChooser ? classes.triggerCompactRow : ""}`}
+          >
             {triggerInput.options.map((option) => {
               const optional = booleanParam(option.text.params, "optional") === true;
               const containsOptionalEffect =
@@ -1395,49 +1600,118 @@ function ChoiceContent({
                 : containsOptionalEffect
                   ? "choice"
                   : "required";
-              return (
-                <button
-                  key={option.id}
-                  type="button"
-                  className={`${classes.option} ${classes.triggerCardOption}`}
-                  data-option-requirement={requirement}
-                  data-testid="pending-effect-option"
-                  onClick={() => {
-                    submitInteraction("resolveTrigger", { triggerId: option.id });
-                  }}
-                >
-                  <CardArt summary={summary} fallbackName={fallbackName} />
-                  <span className={classes.triggerOptionBody}>
-                    <span className={classes.triggerOptionHeader}>
-                      <span className={classes.triggerOptionTitle}>{fallbackName}</span>
-                      <span className={classes.requirementBadge}>
-                        {requirement === "choice"
-                          ? "Includes choice"
-                          : requirement === "optional"
-                            ? "Optional"
-                            : "Required"}
+              const compactPresentation = rollContext
+                ? rollTriggerPresentation({
+                    option,
+                    rollContext,
+                    remainingCount: pendingCount - 1,
+                  })
+                : null;
+              if (compactChooser) {
+                return (
+                  <button
+                    key={option.id}
+                    type="button"
+                    className={classes.triggerCompactCard}
+                    data-option-requirement={requirement}
+                    data-testid="pending-effect-option"
+                    aria-label={`Resolve ${fallbackName} next`}
+                    title={fallbackName}
+                    onClick={() => {
+                      submitInteraction("resolveTrigger", { triggerId: option.id });
+                    }}
+                  >
+                    <CardArt summary={summary} fallbackName={fallbackName} />
+                    <span className={classes.compactCardName}>{fallbackName}</span>
+                    {requirement !== "required" ? (
+                      <span className={classes.compactCardTag}>
+                        {requirement === "choice" ? "Choice" : "Optional"}
                       </span>
-                    </span>
-                    <span className={classes.triggerOptionCopy}>
-                      {textParam(option.text.params, "abilityText") ?? "Resolve effect"}
-                    </span>
-                    <span className={classes.resolveNextLabel}>
-                      Resolve next <IconArrowRight size={14} stroke={1.9} aria-hidden="true" />
-                    </span>
-                  </span>
-                </button>
+                    ) : null}
+                  </button>
+                );
+              }
+              return (
+                <div
+                  key={option.id}
+                  className={`${classes.cardChoice} ${compactRollQueue ? classes.compactRollChoice : ""}`}
+                >
+                  <button
+                    type="button"
+                    className={`${classes.option} ${
+                      compactRollQueue ? classes.compactRollOption : classes.triggerCardOption
+                    }`}
+                    data-option-requirement={requirement}
+                    data-testid="pending-effect-option"
+                    aria-label={`Resolve ${fallbackName} next`}
+                    onClick={() => {
+                      submitInteraction("resolveTrigger", { triggerId: option.id });
+                    }}
+                  >
+                    {compactRollQueue && compactPresentation ? (
+                      <>
+                        <span className={classes.compactRollIcon} aria-hidden="true">
+                          {compactPresentation.kind === "reroll" ? (
+                            <IconRefresh size={21} stroke={2} />
+                          ) : compactPresentation.kind === "draw" ? (
+                            <IconCards size={21} stroke={2} />
+                          ) : (
+                            <IconArrowRight size={21} stroke={2} />
+                          )}
+                        </span>
+                        <span className={classes.compactRollBody}>
+                          <span className={classes.triggerOptionHeader}>
+                            <span className={classes.compactRollTitle}>
+                              {compactPresentation.title}
+                            </span>
+                            <span className={classes.requirementBadge}>
+                              {requirement === "choice"
+                                ? "Includes choice"
+                                : requirement === "optional"
+                                  ? "Optional"
+                                  : "Required"}
+                            </span>
+                          </span>
+                          <span className={classes.compactRollCopy}>
+                            {compactPresentation.detail}
+                          </span>
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <CardArt summary={summary} fallbackName={fallbackName} />
+                        <span className={classes.triggerOptionBody}>
+                          <span className={classes.triggerOptionHeader}>
+                            <span className={classes.triggerOptionTitle}>{fallbackName}</span>
+                          </span>
+                          <span className={classes.triggerOptionCopy}>
+                            {textParam(option.text.params, "abilityText") ?? "Resolve effect"}
+                          </span>
+                          <span className={classes.resolveCue} aria-hidden="true">
+                            <IconArrowRight size={14} stroke={1.9} />
+                          </span>
+                        </span>
+                      </>
+                    )}
+                  </button>
+                  {compactRollQueue ? null : (
+                    <CardInspectButton summary={summary} fallbackName={fallbackName} />
+                  )}
+                </div>
               );
             })}
             {canPass ? (
               <button
                 type="button"
-                className={`${classes.option} ${classes.passOption}`}
+                className={`${classes.option} ${classes.passOption} ${
+                  compactChooser ? classes.triggerCompactSkip : ""
+                }`}
                 onClick={() => {
                   submitInteraction("resolveTrigger", { pass: true });
                 }}
               >
-                <span>Skip optional effects</span>
-                {mandatoryCount > 0 ? (
+                <span>{compactChooser ? "Skip optional" : "Skip optional effects"}</span>
+                {mandatoryCount > 0 && !compactChooser ? (
                   <span className={classes.triggerOptionCopy}>
                     {mandatoryCount === 1
                       ? "The required effect will resolve next."
@@ -1447,6 +1721,17 @@ function ChoiceContent({
               </button>
             ) : null}
           </div>
+          {compactRollQueue ? (
+            <p className={classes.compactRollSource}>
+              Effects from{" "}
+              <SourceCardName
+                cardId={textParam(triggerInput.options[0]?.text.params, "sourceCardId")}
+                fallbackName={
+                  textParam(triggerInput.options[0]?.text.params, "cardName") ?? "this card"
+                }
+              />
+            </p>
+          ) : null}
         </>
       );
     }
@@ -1552,49 +1837,51 @@ function ChoiceContent({
               const selectable = candidate.enabled !== false;
               const ineligibleReason = textParam(candidate.disabledText?.params, "label");
               return (
-                <button
-                  key={cardId}
-                  type="button"
-                  className={`${classes.option} ${classes.searchOption} ${
-                    selected ? classes.optionSelected : ""
-                  } ${selectable ? "" : classes.optionUnavailable}`}
-                  data-testid="search-deck-card"
-                  data-instance-id={cardId}
-                  data-card-id={cardId}
-                  data-definition-id={summary?.definitionId}
-                  data-card-name={summary?.name}
-                  data-card-type={summary?.type ?? undefined}
-                  data-card-color={summary?.color}
-                  data-cost={summary?.cost ?? undefined}
-                  data-power={summary?.power ?? undefined}
-                  data-selected={selected ? "true" : "false"}
-                  data-selectable={selectable ? "true" : "false"}
-                  aria-pressed={multiSelect ? selected : undefined}
-                  aria-disabled={selectable ? undefined : true}
-                  aria-label={`${
-                    selectable
-                      ? selected
-                        ? "Selected"
-                        : "Select"
-                      : (ineligibleReason ?? "Not eligible")
-                  } ${summary?.name ?? cardId}`}
-                  title={selectable ? undefined : ineligibleReason}
-                  onClick={() => {
-                    if (!selectable) {
-                      return;
-                    }
-                    if (multiSelect) {
-                      toggleSearchCard(cardId);
-                    } else {
-                      submitScry([cardId]);
-                    }
-                  }}
-                >
-                  <CardArt summary={summary} fallbackName={cardId} />
-                  <CardMeta summary={summary} />
-                  {!selectable ? <span className={classes.invalidMark}>Not eligible</span> : null}
-                  {selected ? <span className={classes.selectedMark}>Selected</span> : null}
-                </button>
+                <div key={cardId} className={classes.cardChoice}>
+                  <button
+                    type="button"
+                    className={`${classes.option} ${classes.searchOption} ${
+                      selected ? classes.optionSelected : ""
+                    } ${selectable ? "" : classes.optionUnavailable}`}
+                    data-testid="search-deck-card"
+                    data-instance-id={cardId}
+                    data-card-id={cardId}
+                    data-definition-id={summary?.definitionId}
+                    data-card-name={summary?.name}
+                    data-card-type={summary?.type ?? undefined}
+                    data-card-color={summary?.color}
+                    data-cost={summary?.cost ?? undefined}
+                    data-power={summary?.power ?? undefined}
+                    data-selected={selected ? "true" : "false"}
+                    data-selectable={selectable ? "true" : "false"}
+                    aria-pressed={multiSelect ? selected : undefined}
+                    aria-disabled={selectable ? undefined : true}
+                    aria-label={`${
+                      selectable
+                        ? selected
+                          ? "Selected"
+                          : "Select"
+                        : (ineligibleReason ?? "Not eligible")
+                    } ${summary?.name ?? cardId}`}
+                    title={selectable ? undefined : ineligibleReason}
+                    onClick={() => {
+                      if (!selectable) {
+                        return;
+                      }
+                      if (multiSelect) {
+                        toggleSearchCard(cardId);
+                      } else {
+                        submitScry([cardId]);
+                      }
+                    }}
+                  >
+                    <CardArt summary={summary} fallbackName={cardId} />
+                    <CardMeta summary={summary} />
+                    {!selectable ? <span className={classes.invalidMark}>Not eligible</span> : null}
+                    {selected ? <span className={classes.selectedMark}>Selected</span> : null}
+                  </button>
+                  <CardInspectButton summary={summary} fallbackName={cardId} />
+                </div>
               );
             })}
           </div>
@@ -1654,49 +1941,70 @@ function ChoiceContent({
         turnNumber: matchState.G.turnMetadata.turnNumber,
         matchState,
       });
+      const revealedCardLabel = `${revealedCount} card${revealedCount === 1 ? "" : "s"}`;
       return (
-        <>
-          <p className={classes.kicker}>Revealed cards</p>
-          {sourceName ? (
-            <p className={classes.sourceLine}>
-              Resolving <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
-            </p>
-          ) : null}
-          <p className={classes.title}>Choose where they go</p>
-          <p className={classes.subtitle}>
-            {revealedCount} card{revealedCount === 1 ? "" : "s"} revealed from the top of the deck.
-          </p>
-          <DeckRevealShelf
-            reveal={reveal}
-            presentation="inline"
-            className={classes.promptRevealCards}
-          />
-          <div className={classes.options}>
+        <div className={classes.searchFlow}>
+          <div className={`${classes.searchHeader} ${classes.revealDestinationHeader}`}>
+            <div className={classes.searchTitleBlock}>
+              <div className={classes.searchIdentityRow}>
+                {sourceName ? (
+                  <p className={classes.sourceLine}>
+                    Resolving <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
+                  </p>
+                ) : null}
+              </div>
+              <div className={classes.searchBrief}>
+                <p className={classes.title}>Choose where the revealed cards go</p>
+                <p className={classes.subtitle}>The Rival chooses one destination.</p>
+              </div>
+            </div>
+            <div className={`${classes.searchMeter} ${classes.revealDestinationMeter}`}>
+              <span>Revealed</span>
+              <strong>{revealedCount}</strong>
+              <span>{revealedCount === 1 ? "card" : "cards"}</span>
+            </div>
+          </div>
+          <div className={classes.revealDestinationStage}>
+            <DeckRevealShelf
+              reveal={reveal}
+              presentation="inline"
+              className={`${classes.promptRevealCards} ${classes.revealDestinationCards}`}
+            />
+          </div>
+          <div
+            className={`${classes.actions} ${classes.revealDestinationActions}`}
+            data-testid="reveal-destination-actions"
+          >
             {destinationInput.options.map((option) => {
-              const label =
-                option.id === "trash"
-                  ? drawAmount > 0
-                    ? `Trash them and draw ${drawAmount}`
-                    : "Trash them"
-                  : "Add them to hand";
+              const trashesCards = option.id === "trash";
+              const label = trashesCards
+                ? `Trash ${revealedCardLabel}`
+                : `Add ${revealedCardLabel} to hand`;
+              const consequence = trashesCards
+                ? drawAmount > 0
+                  ? `Then draw ${drawAmount}.`
+                  : "Move them to the trash."
+                : "Keep every revealed card.";
               return (
                 <button
                   key={option.id}
                   type="button"
-                  className={classes.option}
+                  className={`${classes.option} ${classes.revealDestinationOption}`}
                   data-testid="reveal-destination-option"
                   data-destination={option.id}
+                  aria-label={`${label}. ${consequence}`}
                   disabled={!action.enabled || option.enabled === false}
                   onClick={() => {
                     submitInteraction("resolveRevealDestination", { destination: option.id });
                   }}
                 >
-                  {label}
+                  <span className={classes.revealDestinationOptionLabel}>{label}</span>
+                  <span className={classes.revealDestinationOptionConsequence}>{consequence}</span>
                 </button>
               );
             })}
           </div>
-        </>
+        </div>
       );
     }
 
@@ -1839,66 +2147,6 @@ function ChoiceContent({
         </>
       );
     }
-    case "resolveRedirectDefeat": {
-      const sourceName = textParam(action.text.params, "sourceDisplayName");
-      const sourceCardId = textParam(action.text.params, "sourceCardId");
-      const cost = numberParam(action.text.params, "cost") ?? 1;
-      return (
-        <>
-          <p className={classes.title}>Redirect this defeat?</p>
-          <p className={classes.subtitle}>
-            Spend {cost} €$ to defeat{" "}
-            {sourceName ? (
-              <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
-            ) : (
-              "this Legend"
-            )}{" "}
-            instead of the friendly Unit.
-          </p>
-          <div className={classes.actions}>
-            <button
-              type="button"
-              className={classes.primary}
-              data-testid="redirect-defeat-apply"
-              onClick={() => submitInteraction("resolveRedirectDefeat", { pass: false })}
-            >
-              Spend {cost} €$
-            </button>
-            <button
-              type="button"
-              className={classes.secondary}
-              data-testid="redirect-defeat-decline"
-              onClick={() => submitInteraction("resolveRedirectDefeat", { pass: true })}
-            >
-              Let the Unit be defeated
-            </button>
-          </div>
-        </>
-      );
-    }
-    case "resolveFirstPlayer":
-      return (
-        <>
-          <p className={classes.title}>Go first or second?</p>
-          <p className={classes.subtitle}>You won the random determination.</p>
-          <div className={classes.actions}>
-            <button
-              type="button"
-              className={classes.primary}
-              onClick={() => submitInteraction("resolveFirstPlayer", { goFirst: true })}
-            >
-              Go first
-            </button>
-            <button
-              type="button"
-              className={classes.secondary}
-              onClick={() => submitInteraction("resolveFirstPlayer", { goFirst: false })}
-            >
-              Go second
-            </button>
-          </div>
-        </>
-      );
     default:
       return null;
   }
@@ -1969,49 +2217,52 @@ function TargetCandidateGrid({ candidates }: { candidates: readonly TargetCandid
 function TargetCandidateButton({ candidate }: { candidate: TargetCandidateView }) {
   const name = candidate.summary?.name ?? candidate.cardId;
   return (
-    <button
-      type="button"
-      className={`${classes.option} ${classes.cardOption} ${
-        candidate.selected ? classes.optionSelected : ""
-      } ${candidate.selectable ? "" : classes.optionUnavailable}`}
-      data-testid="target-modal-card"
-      data-card-id={candidate.cardId}
-      data-zone={candidate.source.zone ?? ""}
-      data-owner-id={candidate.source.ownerId ?? ""}
-      data-host-name={candidate.host?.name ?? ""}
-      data-selectable={candidate.selectable ? "true" : "false"}
-      aria-label={`${targetCandidateActionLabel(candidate)} ${name}${
-        candidate.host ? ` attached to ${candidate.host.name}` : ""
-      } from ${candidate.source.label}${
-        candidate.unavailableReason ? `. ${candidate.unavailableReason}` : ""
-      }`}
-      aria-disabled={candidate.selectable ? undefined : true}
-      aria-pressed={candidate.selected}
-      onClick={() => {
-        if (!candidate.selectable) {
-          explainUnavailableTarget(candidate);
-          return;
-        }
-        candidate.onSelect();
-      }}
-    >
-      <span className={classes.zoneBadge} data-testid="target-modal-zone-badge">
-        {candidate.source.label}
-      </span>
-      <CardArt summary={candidate.summary} fallbackName={candidate.cardId} />
-      <CardMeta summary={candidate.summary} />
-      {candidate.host ? (
-        <span className={classes.hostMeta} data-testid="target-modal-host">
-          On {candidate.host.name}
+    <div className={classes.cardChoice}>
+      <button
+        type="button"
+        className={`${classes.option} ${classes.cardOption} ${
+          candidate.selected ? classes.optionSelected : ""
+        } ${candidate.selectable ? "" : classes.optionUnavailable}`}
+        data-testid="target-modal-card"
+        data-card-id={candidate.cardId}
+        data-zone={candidate.source.zone ?? ""}
+        data-owner-id={candidate.source.ownerId ?? ""}
+        data-host-name={candidate.host?.name ?? ""}
+        data-selectable={candidate.selectable ? "true" : "false"}
+        aria-label={`${targetCandidateActionLabel(candidate)} ${name}${
+          candidate.host ? ` attached to ${candidate.host.name}` : ""
+        } from ${candidate.source.label}${
+          candidate.unavailableReason ? `. ${candidate.unavailableReason}` : ""
+        }`}
+        aria-disabled={candidate.selectable ? undefined : true}
+        aria-pressed={candidate.selected}
+        onClick={() => {
+          if (!candidate.selectable) {
+            explainUnavailableTarget(candidate);
+            return;
+          }
+          candidate.onSelect();
+        }}
+      >
+        <span className={classes.zoneBadge} data-testid="target-modal-zone-badge">
+          {candidate.source.label}
         </span>
-      ) : null}
-      {!candidate.selectable ? (
-        <span className={classes.costBlock} data-testid="target-modal-unaffordable">
-          {candidate.unavailableReason ?? "Not a target"}
-        </span>
-      ) : null}
-      {candidate.selected ? <span className={classes.selectedMark}>Selected</span> : null}
-    </button>
+        <CardArt summary={candidate.summary} fallbackName={candidate.cardId} />
+        <CardMeta summary={candidate.summary} />
+        {candidate.host ? (
+          <span className={classes.hostMeta} data-testid="target-modal-host">
+            On {candidate.host.name}
+          </span>
+        ) : null}
+        {!candidate.selectable ? (
+          <span className={classes.costBlock} data-testid="target-modal-unaffordable">
+            {candidate.unavailableReason ?? "Not a target"}
+          </span>
+        ) : null}
+        {candidate.selected ? <span className={classes.selectedMark}>Selected</span> : null}
+      </button>
+      <CardInspectButton summary={candidate.summary} fallbackName={candidate.cardId} />
+    </div>
   );
 }
 
@@ -2075,6 +2326,7 @@ function effectTargetSubtitle(required: number, max: number, hasMultipleZones: b
   const selectionText = `${interactionBoundsCopy(
     { required: required > 0, min: required, max },
     "card",
+    { includeStatus: false },
   )}.`;
   return hasMultipleZones
     ? `${selectionText} Targets are grouped by source zone.`
@@ -2082,7 +2334,7 @@ function effectTargetSubtitle(required: number, max: number, hasMultipleZones: b
 }
 
 function gigTargetSubtitle(required: number, max: number): string {
-  return `${interactionBoundsCopy({ required: required > 0, min: required, max }, "Gig")}.`;
+  return `${interactionBoundsCopy({ required: required > 0, min: required, max }, "Gig", { includeStatus: false })}.`;
 }
 
 function gigDieSummary(
@@ -2181,11 +2433,20 @@ function booleanParam(
   return typeof value === "boolean" ? value : undefined;
 }
 
-function triggerRollContext(options: OptionSelectionInput["options"] | undefined) {
+function triggerRollContext(
+  options: OptionSelectionInput["options"] | undefined,
+  nativeChoice: PlayerPrompt["choice"],
+) {
+  const nativeContexts = new Map(
+    nativeChoice?.type === "chooseTrigger"
+      ? nativeChoice.payload.options.map((option) => [option.triggerId, option.context] as const)
+      : [],
+  );
   const contexts = (options ?? [])
     .map((option) => {
-      const dieType = textParam(option.text.params, "rollDieType");
-      const result = numberParam(option.text.params, "rollResult");
+      const nativeContext = nativeContexts.get(option.id);
+      const dieType = textParam(option.text.params, "rollDieType") ?? nativeContext?.dieType;
+      const result = numberParam(option.text.params, "rollResult") ?? nativeContext?.result;
       if (!dieType || result === undefined) return null;
       const sides = Number.parseInt(dieType.replace(/^d/i, ""), 10);
       return {
@@ -2202,6 +2463,57 @@ function triggerRollContext(options: OptionSelectionInput["options"] | undefined
   )
     ? first
     : null;
+}
+
+type RollTriggerPresentation = {
+  kind: "reroll" | "draw" | "effect";
+  title: string;
+  detail: string;
+};
+
+function rollTriggerPresentation({
+  option,
+  rollContext,
+  remainingCount,
+}: {
+  option: OptionSelectionInput["options"][number];
+  rollContext: NonNullable<ReturnType<typeof triggerRollContext>>;
+  remainingCount: number;
+}): RollTriggerPresentation {
+  const abilityText = textParam(option.text.params, "abilityText") ?? "Resolve effect";
+  const remainingEffectCopy =
+    remainingCount === 1
+      ? "One effect remains pending."
+      : remainingCount > 1
+        ? `${remainingCount} effects remain pending.`
+        : "";
+  if (/\breroll\b/i.test(abilityText)) {
+    return {
+      kind: "reroll",
+      title: `Reroll the ${rollContext.dieType.toUpperCase()}`,
+      detail: `Replace result ${rollContext.result}. ${remainingEffectCopy}`.trim(),
+    };
+  }
+  const firstDraw = /\bdraw\s+(\d+)\b/i.exec(abilityText)?.[1];
+  const d20Draw = /\bd20\b[^.]*\bdraw\s+(\d+)\b/i.exec(abilityText)?.[1];
+  const drawCount =
+    rollContext.dieType.toLowerCase() === "d20" ? (d20Draw ?? firstDraw) : firstDraw;
+  if (drawCount) {
+    const cardLabel = drawCount === "1" ? "card" : "cards";
+    const resultLabel = rollContext.boundary
+      ? `Current result is ${rollContext.boundary}.`
+      : `Current result is ${rollContext.result}.`;
+    return {
+      kind: "draw",
+      title: `Draw ${drawCount} ${cardLabel}`,
+      detail: `${resultLabel} ${remainingEffectCopy}`.trim(),
+    };
+  }
+  return {
+    kind: "effect",
+    title: "Resolve effect",
+    detail: `${abilityText} ${remainingEffectCopy}`.trim(),
+  };
 }
 
 function delimitedTextParam(params: InteractionAction["text"]["params"], key: string): string[] {
@@ -2268,6 +2580,7 @@ function CardArt({ summary, fallbackName }: { summary: CardSummary | null; fallb
         alt={name}
         cardType={summary?.type ?? undefined}
         color={summary?.color}
+        className={classes.dialogCardImage}
         previewDetails={
           summary
             ? {
@@ -2284,6 +2597,41 @@ function CardArt({ summary, fallbackName }: { summary: CardSummary | null; fallb
         }
       />
     </span>
+  );
+}
+
+function CardInspectButton({
+  summary,
+  fallbackName,
+}: {
+  summary: CardSummary | null;
+  fallbackName: string;
+}) {
+  const { inspect } = useCardInspect();
+  if (!summary?.imageUrl) {
+    return null;
+  }
+
+  const name = summary.name || fallbackName;
+  const imageUrl = summary.imageUrl;
+  return (
+    <button
+      type="button"
+      className={classes.cardInspectButton}
+      data-testid="choice-card-inspect"
+      aria-label={`Inspect ${name}`}
+      title={`Inspect ${name}`}
+      onClick={() => {
+        inspect({
+          imageUrl,
+          face: "public",
+          name,
+          color: summary.color,
+        });
+      }}
+    >
+      <IconMaximize size={17} stroke={2} aria-hidden="true" />
+    </button>
   );
 }
 
@@ -2445,16 +2793,28 @@ function effectTargetChoiceCopy(
 ): { title: string | null; subtitle: string | null } {
   const summaries = cardIds.map((cardId) => cardSummary(matchState, cardId)).filter(Boolean);
   const zones = cardIds.map((cardId) => matchState.G.cardIndex[cardId]?.zone);
-  const allUnits = summaries.length > 0 && summaries.every((summary) => summary?.type === "unit");
+  const hasLegend = summaries.some((summary) => summary?.type === "legend");
+  const allEquipHosts =
+    summaries.length > 0 &&
+    summaries.every((summary) => summary?.type === "unit" || summary?.type === "legend");
   const allGear = summaries.length > 0 && summaries.every((summary) => summary?.type === "gear");
   const allTrash = zones.length > 0 && zones.every((zone) => zone === "trash");
   const targetPurpose = textParam(action.text.params, "targetPurpose");
   const sourceRules = textParam(action.text.params, "sourceRulesText")?.toLowerCase() ?? "";
 
-  if (allUnits && targetPurpose === "attachHost") {
+  if (allEquipHosts && targetPurpose === "attachHost") {
     return {
-      title: "Choose Unit to equip",
-      subtitle: "Pick the friendly Unit that will receive the Gear.",
+      title: hasLegend ? "Choose Unit or face-up Legend to equip" : "Choose Unit to equip",
+      subtitle: hasLegend
+        ? "Pick the friendly Unit or face-up Legend that will receive the Gear."
+        : "Pick the friendly Unit that will receive the Gear.",
+    };
+  }
+
+  if (allGear && targetPurpose === "gearToPlay") {
+    return {
+      title: "Choose Gear to play",
+      subtitle: "Pick the Gear you want to play.",
     };
   }
 

@@ -100,4 +100,77 @@ describe("OP10-042 Usopp", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: Tsuru's minus-two cost leaves Bartolomeo at two", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP10-042", character: ["OP04-089"] },
+      { leaderCardId: "ST01-001", hand: ["OP02-106"], activeDon: 1 },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const b = e.findCardInZone("south", "character", "OP04-089");
+    e.asNorth().play("OP02-106");
+    e.asNorth().chooseTargets(b);
+    expect(e.getView("south").players.south.characters.find((c) => c?.instanceId === b)?.cost).toBe(
+      2,
+    );
+  });
+  test("FAQ: Kaku's minus-three cost disables Usopp's threshold boost", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP10-042", character: ["OP04-089"] },
+      {
+        leaderCardId: "ST01-001",
+        hand: ["OP07-080"],
+        trash: ["OP07-080", "OP07-080"],
+        activeDon: 4,
+      },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const b = e.findCardInZone("south", "character", "OP04-089");
+    e.asNorth().play("OP07-080");
+    e.asNorth().acceptOptional();
+    const p = e.pendingDecision("effectCostReturnTrashToDeck", "north").steps[0];
+    if (p?.kind !== "payCost") throw new Error("Expected trash order");
+    e.resolveDecision(
+      "effectCostReturnTrashToDeck",
+      { selectedIds: p.candidates.map((c) => c.ref.id) },
+      "north",
+    );
+    e.asNorth().chooseTargets(b);
+    expect(e.getView("south").players.south.characters.find((c) => c?.instanceId === b)?.cost).toBe(
+      0,
+    );
+  });
+  test("FAQ: active-player Issho applies before non-turn Usopp's cost threshold", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP10-042", character: ["OP04-089"] },
+      { leaderCardId: "ST01-001", character: ["OP03-078"], activeDon: 1 },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const b = e.findCardInZone("south", "character", "OP04-089");
+    e.asNorth().attachDon(e.findCardInZone("north", "character", "OP03-078"), 1);
+    expect(e.getView("south").players.south.characters.find((c) => c?.instanceId === b)?.cost).toBe(
+      0,
+    );
+  });
+  test("may activate without drawing when the removed Character makes its hand exceed five", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op10Usopp042,
+        hand: Array.from({ length: 5 }, () => eb01Doma005),
+        character: [op04Bartolomeo089],
+        deck: [eb01Doma005, eb01Doma005],
+      },
+      { hand: [op10Kyros046], activeDon: 7 },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const returned = engine.findCardInZone("south", "character", op04Bartolomeo089);
+    engine.asNorth().play(op10Kyros046);
+    engine.asNorth().chooseTargets(returned);
+    engine.asSouth().acceptOptional();
+    expect(engine.getView("south").players.south.hand).toHaveLength(6);
+    expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).toContain(
+      returned,
+    );
+    expect(engine.getView("south").players.south.deckCount).toBe(2);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

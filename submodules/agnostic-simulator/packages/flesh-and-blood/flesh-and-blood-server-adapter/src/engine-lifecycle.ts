@@ -1,3 +1,4 @@
+import { readFabUndoState } from "./undo.ts";
 import { createFabClock, readFabClock } from "./clock.ts";
 import {
   allFleshAndBloodCards,
@@ -382,6 +383,10 @@ export function fleshAndBloodSerializeEngine(
     gameSlug: "flesh-and-blood",
     state: fab.getState(),
     historyLength: 0,
+    metadata: {
+      undoCheckpoints: fab.getUndoCheckpoints(),
+      turnStartCheckpoint: fab.getTurnStartCheckpoint(),
+    },
     cardsMaps,
   };
 }
@@ -403,9 +408,12 @@ export async function fleshAndBloodRestoreEngine(
     snapshot.state && typeof snapshot.state === "object" && "ctx" in snapshot.state
       ? (({ ctx: _clock, ...state }) => state)(snapshot.state)
       : snapshot.state;
+  const undoState = readFabUndoState(snapshot.metadata);
   return new FleshAndBloodServerEngine(
     new FabMatchRuntime(restoreFabMatchSnapshot(nativeState, context)),
     clock,
+    undoState.checkpoints,
+    undoState.turnStart,
   );
 }
 

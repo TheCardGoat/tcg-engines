@@ -21,7 +21,7 @@ export const op13GuessWeLlHaveAnotherScrapYouCanOnlyRiskDeathWhileYouReStillAliv
   rarity: "UC",
   setId: "OP13",
   cost: 1,
-  traits: ["Roger Pirates King of the Pirates"],
+  traits: ["King of the Pirates", "Roger Pirates"],
   effect:
     "[Main] You may rest 1 of your DON!! cards: If your Leader is [Gol.D.Roger] and you have any DON!! cards given, add up to 1 DON!! card from your DON!! deck and rest it.\n[Counter] Your Leader gains +3000 power during this battle.",
   effects: {

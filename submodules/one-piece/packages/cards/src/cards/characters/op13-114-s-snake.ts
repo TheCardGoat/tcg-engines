@@ -32,7 +32,7 @@ export const op13SSnake114: CharacterCard = {
   power: 5000,
   counter: 1000,
   trigger: "You may trash 1 card from your hand: Play this card.",
-  traits: ["Egghead Seraphim"],
+  traits: ["Seraphim", "Egghead"],
   attribute: "special",
   effect:
     "[On Play]/[When Attacking] You may turn 1 card from the top of your Life cards face-up: Give up to 1 of your opponent's Characters −2000 power during this turn.",

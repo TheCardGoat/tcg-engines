@@ -31,7 +31,7 @@ export const op07Carina005: CharacterCard = {
   cost: 3,
   power: 0,
   counter: 1000,
-  traits: ["FILM Grantesoro"],
+  traits: ["FILM", "Grantesoro"],
   attribute: "wisdom",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] Give up to 1 of your opponent's Characters -2000 power during this turn.",

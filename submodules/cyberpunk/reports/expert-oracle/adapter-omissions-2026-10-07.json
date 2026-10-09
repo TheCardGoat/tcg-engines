@@ -1,0 +1,1078 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-07",
+  "adapterVersion": "choombattler-reference-2",
+  "engineRevision": "fnv1a32:13c0e6d4",
+  "cardCatalogHash": "fnv1a32:0ca3b018",
+  "workerSha256": "c834449c4463db4aa01e4ceaaa3de59afd460db90f0379a723b78a995369fa40",
+  "catalogSha256": "0e130e4d982f7c42bbe571ec82cc33b3e841cd8aea211d37e1c59122c9c9caf3",
+  "sourceSha256": {
+    "runtime.ts": "869d10b0ac672a33295c0bc18f43b01365cf91303b0a6f297138fa704b4ac1af",
+    "native-engine.ts": "daab130820c17d7917014bc1263b7d1ccdc56585677b32eba0a6eb1460ff0f60",
+    "projection.ts": "f6fa0512bfefddc6395a35b7a0d244351999e97cd0f23fb151a93a7d1690e750",
+    "adapter.ts": "3449a22179e4c97045a331ea8bd1dcdd02de0c355e5af9e8b19e02b9a9c8de00",
+    "projection.test.ts": "bf1a08cd13945af83976abd3ade9a1510e3bcc4c9b11ae38074d178e75b8352f",
+    "reference.test.ts": "acc3d479999221ecd75ff9b49a3e3c548005f9cc5e973fccca3de14fef22e84d"
+  },
+  "validation": {
+    "botLabTestsPassed": 26,
+    "typeAndLintChecks": "passed for adapter sources and native view type",
+    "originalMessageHandlerParityPositions": 12,
+    "sameScheduleMatches": 12,
+    "legalRulesWins": 12,
+    "exactRepeatedLegs": [0, 9]
+  },
+  "comparison": {
+    "oursBefore": 2,
+    "oursAfter": 2,
+    "choombattlerAfter": 10,
+    "games": 12,
+    "changedFinalStates": 3,
+    "perDeck": [
+      {
+        "deck": "authored-rry-llorona-steel-dragon",
+        "oursBefore": 2,
+        "oursAfter": 2,
+        "games": 4
+      },
+      {
+        "deck": "authored-rry-detonate-gear-curve",
+        "oursBefore": 0,
+        "oursAfter": 0,
+        "games": 4
+      },
+      {
+        "deck": "authored-ryb-low-cost-tempo",
+        "oursBefore": 0,
+        "oursAfter": 0,
+        "games": 4
+      }
+    ]
+  },
+  "rulesHandoff": {
+    "citations": ["8.6.2.1", "9.3.2.3", "9.5", "9.9.1", "10.22.3", "10.23.1", "11.11.2"],
+    "behaviorConstraints": [
+      "Use native legality and visibility predicates; do not invent global target permissions.",
+      "Apply while-attacking and while-fighting power only with the native combat context.",
+      "A Blocker replaces the attack target; preserve the prior target while native effects wait.",
+      "Use native effect storage and cleanup to determine duration; preserve public source redaction.",
+      "Separate own-turn Calls from rival-turn Calls; reset event-derived attack and steal flags at native turn advance."
+    ],
+    "testImplications": [
+      "Assert native modifier expiry and parent-fork isolation.",
+      "Assert fighting power, pending combat, and blocker redirects.",
+      "Assert native restrictions, inherited keywords, and Go Solo discounts.",
+      "Assert hidden Legends, Eddies, and effect-source redaction.",
+      "Assert card and player delayed effects, conditional defeat, and Call and Fixer turn flags."
+    ],
+    "ambiguities": [
+      "Reference environment intentionally retains native reducer semantics, including its own overtime rule; this repair does not reconcile rules differences between engines."
+    ]
+  },
+  "matches": [
+    {
+      "game": {
+        "index": 0,
+        "block": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-0",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-0",
+        "swap": false,
+        "deckA": "authored-rry-llorona-steel-dragon",
+        "deckB": "authored-rry-llorona-steel-dragon",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert"
+      },
+      "input": {
+        "candidateManifest": {
+          "schemaVersion": 1,
+          "game": "cyberpunk",
+          "candidateId": "expert-oracle",
+          "parentStrategyId": "choombattler-expert",
+          "informationPolicy": "oracle",
+          "hypothesis": "Adapter v2 repair; unchanged chooser, decks, seeds, and native reducer",
+          "engineRevision": "fnv1a32:13c0e6d4",
+          "cardCatalogHash": "fnv1a32:0ca3b018",
+          "adapterVersion": "choombattler-reference-2",
+          "changes": {},
+          "evaluation": {
+            "suiteId": "reference-authored",
+            "seedBase": "cyberpunk-gauntlet-2026-10-07-v1",
+            "minimumBlocks": 1,
+            "maximumBlocks": 1,
+            "batchSize": 1,
+            "confidenceLevel": 0.95,
+            "minimumMeanImprovement": 0,
+            "maximumCellRegression": 1
+          }
+        },
+        "baselineStrategyId": "choombattler-expert",
+        "scheduledMatch": {
+          "blockId": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-0",
+          "pairId": "authored-rry-llorona-steel-dragon",
+          "legId": "seat-1",
+          "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-0",
+          "p1DeckId": "authored-rry-llorona-steel-dragon",
+          "p2DeckId": "authored-rry-llorona-steel-dragon",
+          "p1Controller": "candidate",
+          "p2Controller": "baseline"
+        }
+      },
+      "record": {
+        "blockId": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-0",
+        "legId": "seat-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-0",
+        "candidateSeat": "p1",
+        "candidateDeckId": "authored-rry-llorona-steel-dragon",
+        "baselineDeckId": "authored-rry-llorona-steel-dragon",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 12,
+        "actionCount": 104,
+        "finalStateHash": "fnv1a32:39163f40"
+      },
+      "previous": {
+        "index": 0,
+        "block": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-0",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-0",
+        "swap": false,
+        "deckA": "authored-rry-llorona-steel-dragon",
+        "deckB": "authored-rry-llorona-steel-dragon",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert",
+        "winner": "a",
+        "reason": "rules-win",
+        "valid": true,
+        "failedStrategy": null,
+        "actions": 104,
+        "turns": 12,
+        "finalHash": "fnv1a32:39163f40",
+        "traceHash": "fnv1a32:55870442",
+        "elapsedMs": 68787.192167
+      },
+      "elapsedMs": 80412.71554100001
+    },
+    {
+      "game": {
+        "index": 1,
+        "block": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-0",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-0",
+        "swap": true,
+        "deckA": "authored-rry-llorona-steel-dragon",
+        "deckB": "authored-rry-llorona-steel-dragon",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert"
+      },
+      "input": {
+        "candidateManifest": {
+          "schemaVersion": 1,
+          "game": "cyberpunk",
+          "candidateId": "expert-oracle",
+          "parentStrategyId": "choombattler-expert",
+          "informationPolicy": "oracle",
+          "hypothesis": "Adapter v2 repair; unchanged chooser, decks, seeds, and native reducer",
+          "engineRevision": "fnv1a32:13c0e6d4",
+          "cardCatalogHash": "fnv1a32:0ca3b018",
+          "adapterVersion": "choombattler-reference-2",
+          "changes": {},
+          "evaluation": {
+            "suiteId": "reference-authored",
+            "seedBase": "cyberpunk-gauntlet-2026-10-07-v1",
+            "minimumBlocks": 1,
+            "maximumBlocks": 1,
+            "batchSize": 1,
+            "confidenceLevel": 0.95,
+            "minimumMeanImprovement": 0,
+            "maximumCellRegression": 1
+          }
+        },
+        "baselineStrategyId": "choombattler-expert",
+        "scheduledMatch": {
+          "blockId": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-0",
+          "pairId": "authored-rry-llorona-steel-dragon",
+          "legId": "seat-2",
+          "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-0",
+          "p1DeckId": "authored-rry-llorona-steel-dragon",
+          "p2DeckId": "authored-rry-llorona-steel-dragon",
+          "p1Controller": "baseline",
+          "p2Controller": "candidate"
+        }
+      },
+      "record": {
+        "blockId": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-0",
+        "legId": "seat-2",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-0",
+        "candidateSeat": "p2",
+        "candidateDeckId": "authored-rry-llorona-steel-dragon",
+        "baselineDeckId": "authored-rry-llorona-steel-dragon",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 10,
+        "actionCount": 85,
+        "finalStateHash": "fnv1a32:de55e0bb"
+      },
+      "previous": {
+        "index": 1,
+        "block": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-0",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-0",
+        "swap": true,
+        "deckA": "authored-rry-llorona-steel-dragon",
+        "deckB": "authored-rry-llorona-steel-dragon",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert",
+        "winner": "b",
+        "reason": "rules-win",
+        "valid": true,
+        "failedStrategy": null,
+        "actions": 85,
+        "turns": 10,
+        "finalHash": "fnv1a32:de55e0bb",
+        "traceHash": "fnv1a32:64c87f70",
+        "elapsedMs": 58627.769250000005
+      },
+      "elapsedMs": 70778.257667
+    },
+    {
+      "game": {
+        "index": 2,
+        "block": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-1",
+        "swap": false,
+        "deckA": "authored-rry-llorona-steel-dragon",
+        "deckB": "authored-rry-llorona-steel-dragon",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert"
+      },
+      "input": {
+        "candidateManifest": {
+          "schemaVersion": 1,
+          "game": "cyberpunk",
+          "candidateId": "expert-oracle",
+          "parentStrategyId": "choombattler-expert",
+          "informationPolicy": "oracle",
+          "hypothesis": "Adapter v2 repair; unchanged chooser, decks, seeds, and native reducer",
+          "engineRevision": "fnv1a32:13c0e6d4",
+          "cardCatalogHash": "fnv1a32:0ca3b018",
+          "adapterVersion": "choombattler-reference-2",
+          "changes": {},
+          "evaluation": {
+            "suiteId": "reference-authored",
+            "seedBase": "cyberpunk-gauntlet-2026-10-07-v1",
+            "minimumBlocks": 1,
+            "maximumBlocks": 1,
+            "batchSize": 1,
+            "confidenceLevel": 0.95,
+            "minimumMeanImprovement": 0,
+            "maximumCellRegression": 1
+          }
+        },
+        "baselineStrategyId": "choombattler-expert",
+        "scheduledMatch": {
+          "blockId": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-1",
+          "pairId": "authored-rry-llorona-steel-dragon",
+          "legId": "seat-1",
+          "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-1",
+          "p1DeckId": "authored-rry-llorona-steel-dragon",
+          "p2DeckId": "authored-rry-llorona-steel-dragon",
+          "p1Controller": "candidate",
+          "p2Controller": "baseline"
+        }
+      },
+      "record": {
+        "blockId": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-1",
+        "legId": "seat-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "authored-rry-llorona-steel-dragon",
+        "baselineDeckId": "authored-rry-llorona-steel-dragon",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 12,
+        "actionCount": 100,
+        "finalStateHash": "fnv1a32:aeb47049"
+      },
+      "previous": {
+        "index": 2,
+        "block": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-1",
+        "swap": false,
+        "deckA": "authored-rry-llorona-steel-dragon",
+        "deckB": "authored-rry-llorona-steel-dragon",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert",
+        "winner": "b",
+        "reason": "rules-win",
+        "valid": true,
+        "failedStrategy": null,
+        "actions": 100,
+        "turns": 12,
+        "finalHash": "fnv1a32:aeb47049",
+        "traceHash": "fnv1a32:35127bc4",
+        "elapsedMs": 65776.43583300001
+      },
+      "elapsedMs": 78401.400792
+    },
+    {
+      "game": {
+        "index": 3,
+        "block": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-1",
+        "swap": true,
+        "deckA": "authored-rry-llorona-steel-dragon",
+        "deckB": "authored-rry-llorona-steel-dragon",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert"
+      },
+      "input": {
+        "candidateManifest": {
+          "schemaVersion": 1,
+          "game": "cyberpunk",
+          "candidateId": "expert-oracle",
+          "parentStrategyId": "choombattler-expert",
+          "informationPolicy": "oracle",
+          "hypothesis": "Adapter v2 repair; unchanged chooser, decks, seeds, and native reducer",
+          "engineRevision": "fnv1a32:13c0e6d4",
+          "cardCatalogHash": "fnv1a32:0ca3b018",
+          "adapterVersion": "choombattler-reference-2",
+          "changes": {},
+          "evaluation": {
+            "suiteId": "reference-authored",
+            "seedBase": "cyberpunk-gauntlet-2026-10-07-v1",
+            "minimumBlocks": 1,
+            "maximumBlocks": 1,
+            "batchSize": 1,
+            "confidenceLevel": 0.95,
+            "minimumMeanImprovement": 0,
+            "maximumCellRegression": 1
+          }
+        },
+        "baselineStrategyId": "choombattler-expert",
+        "scheduledMatch": {
+          "blockId": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-1",
+          "pairId": "authored-rry-llorona-steel-dragon",
+          "legId": "seat-2",
+          "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-1",
+          "p1DeckId": "authored-rry-llorona-steel-dragon",
+          "p2DeckId": "authored-rry-llorona-steel-dragon",
+          "p1Controller": "baseline",
+          "p2Controller": "candidate"
+        }
+      },
+      "record": {
+        "blockId": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-1",
+        "legId": "seat-2",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-1",
+        "candidateSeat": "p2",
+        "candidateDeckId": "authored-rry-llorona-steel-dragon",
+        "baselineDeckId": "authored-rry-llorona-steel-dragon",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 12,
+        "actionCount": 112,
+        "finalStateHash": "fnv1a32:b831bab4"
+      },
+      "previous": {
+        "index": 3,
+        "block": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-1",
+        "swap": true,
+        "deckA": "authored-rry-llorona-steel-dragon",
+        "deckB": "authored-rry-llorona-steel-dragon",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert",
+        "winner": "a",
+        "reason": "rules-win",
+        "valid": true,
+        "failedStrategy": null,
+        "actions": 111,
+        "turns": 12,
+        "finalHash": "fnv1a32:13b7a433",
+        "traceHash": "fnv1a32:746a85f6",
+        "elapsedMs": 108802.029875
+      },
+      "elapsedMs": 137083.005791
+    },
+    {
+      "game": {
+        "index": 4,
+        "block": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-0",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-0",
+        "swap": false,
+        "deckA": "authored-rry-detonate-gear-curve",
+        "deckB": "authored-rry-detonate-gear-curve",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert"
+      },
+      "input": {
+        "candidateManifest": {
+          "schemaVersion": 1,
+          "game": "cyberpunk",
+          "candidateId": "expert-oracle",
+          "parentStrategyId": "choombattler-expert",
+          "informationPolicy": "oracle",
+          "hypothesis": "Adapter v2 repair; unchanged chooser, decks, seeds, and native reducer",
+          "engineRevision": "fnv1a32:13c0e6d4",
+          "cardCatalogHash": "fnv1a32:0ca3b018",
+          "adapterVersion": "choombattler-reference-2",
+          "changes": {},
+          "evaluation": {
+            "suiteId": "reference-authored",
+            "seedBase": "cyberpunk-gauntlet-2026-10-07-v1",
+            "minimumBlocks": 1,
+            "maximumBlocks": 1,
+            "batchSize": 1,
+            "confidenceLevel": 0.95,
+            "minimumMeanImprovement": 0,
+            "maximumCellRegression": 1
+          }
+        },
+        "baselineStrategyId": "choombattler-expert",
+        "scheduledMatch": {
+          "blockId": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-0",
+          "pairId": "authored-rry-detonate-gear-curve",
+          "legId": "seat-1",
+          "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-0",
+          "p1DeckId": "authored-rry-detonate-gear-curve",
+          "p2DeckId": "authored-rry-detonate-gear-curve",
+          "p1Controller": "candidate",
+          "p2Controller": "baseline"
+        }
+      },
+      "record": {
+        "blockId": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-0",
+        "legId": "seat-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-0",
+        "candidateSeat": "p1",
+        "candidateDeckId": "authored-rry-detonate-gear-curve",
+        "baselineDeckId": "authored-rry-detonate-gear-curve",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 14,
+        "actionCount": 129,
+        "finalStateHash": "fnv1a32:4e5ccc6f"
+      },
+      "previous": {
+        "index": 4,
+        "block": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-0",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-0",
+        "swap": false,
+        "deckA": "authored-rry-detonate-gear-curve",
+        "deckB": "authored-rry-detonate-gear-curve",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert",
+        "winner": "b",
+        "reason": "rules-win",
+        "valid": true,
+        "failedStrategy": null,
+        "actions": 129,
+        "turns": 14,
+        "finalHash": "fnv1a32:4e5ccc6f",
+        "traceHash": "fnv1a32:a2d4bad4",
+        "elapsedMs": 96763.537833
+      },
+      "elapsedMs": 121433.10075
+    },
+    {
+      "game": {
+        "index": 5,
+        "block": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-0",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-0",
+        "swap": true,
+        "deckA": "authored-rry-detonate-gear-curve",
+        "deckB": "authored-rry-detonate-gear-curve",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert"
+      },
+      "input": {
+        "candidateManifest": {
+          "schemaVersion": 1,
+          "game": "cyberpunk",
+          "candidateId": "expert-oracle",
+          "parentStrategyId": "choombattler-expert",
+          "informationPolicy": "oracle",
+          "hypothesis": "Adapter v2 repair; unchanged chooser, decks, seeds, and native reducer",
+          "engineRevision": "fnv1a32:13c0e6d4",
+          "cardCatalogHash": "fnv1a32:0ca3b018",
+          "adapterVersion": "choombattler-reference-2",
+          "changes": {},
+          "evaluation": {
+            "suiteId": "reference-authored",
+            "seedBase": "cyberpunk-gauntlet-2026-10-07-v1",
+            "minimumBlocks": 1,
+            "maximumBlocks": 1,
+            "batchSize": 1,
+            "confidenceLevel": 0.95,
+            "minimumMeanImprovement": 0,
+            "maximumCellRegression": 1
+          }
+        },
+        "baselineStrategyId": "choombattler-expert",
+        "scheduledMatch": {
+          "blockId": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-0",
+          "pairId": "authored-rry-detonate-gear-curve",
+          "legId": "seat-2",
+          "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-0",
+          "p1DeckId": "authored-rry-detonate-gear-curve",
+          "p2DeckId": "authored-rry-detonate-gear-curve",
+          "p1Controller": "baseline",
+          "p2Controller": "candidate"
+        }
+      },
+      "record": {
+        "blockId": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-0",
+        "legId": "seat-2",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-0",
+        "candidateSeat": "p2",
+        "candidateDeckId": "authored-rry-detonate-gear-curve",
+        "baselineDeckId": "authored-rry-detonate-gear-curve",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 13,
+        "actionCount": 105,
+        "finalStateHash": "fnv1a32:1626cc5f"
+      },
+      "previous": {
+        "index": 5,
+        "block": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-0",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-0",
+        "swap": true,
+        "deckA": "authored-rry-detonate-gear-curve",
+        "deckB": "authored-rry-detonate-gear-curve",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert",
+        "winner": "b",
+        "reason": "rules-win",
+        "valid": true,
+        "failedStrategy": null,
+        "actions": 105,
+        "turns": 13,
+        "finalHash": "fnv1a32:1626cc5f",
+        "traceHash": "fnv1a32:be43af10",
+        "elapsedMs": 55989.233083
+      },
+      "elapsedMs": 74701.681958
+    },
+    {
+      "game": {
+        "index": 6,
+        "block": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-1",
+        "swap": false,
+        "deckA": "authored-rry-detonate-gear-curve",
+        "deckB": "authored-rry-detonate-gear-curve",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert"
+      },
+      "input": {
+        "candidateManifest": {
+          "schemaVersion": 1,
+          "game": "cyberpunk",
+          "candidateId": "expert-oracle",
+          "parentStrategyId": "choombattler-expert",
+          "informationPolicy": "oracle",
+          "hypothesis": "Adapter v2 repair; unchanged chooser, decks, seeds, and native reducer",
+          "engineRevision": "fnv1a32:13c0e6d4",
+          "cardCatalogHash": "fnv1a32:0ca3b018",
+          "adapterVersion": "choombattler-reference-2",
+          "changes": {},
+          "evaluation": {
+            "suiteId": "reference-authored",
+            "seedBase": "cyberpunk-gauntlet-2026-10-07-v1",
+            "minimumBlocks": 1,
+            "maximumBlocks": 1,
+            "batchSize": 1,
+            "confidenceLevel": 0.95,
+            "minimumMeanImprovement": 0,
+            "maximumCellRegression": 1
+          }
+        },
+        "baselineStrategyId": "choombattler-expert",
+        "scheduledMatch": {
+          "blockId": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-1",
+          "pairId": "authored-rry-detonate-gear-curve",
+          "legId": "seat-1",
+          "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-1",
+          "p1DeckId": "authored-rry-detonate-gear-curve",
+          "p2DeckId": "authored-rry-detonate-gear-curve",
+          "p1Controller": "candidate",
+          "p2Controller": "baseline"
+        }
+      },
+      "record": {
+        "blockId": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-1",
+        "legId": "seat-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "authored-rry-detonate-gear-curve",
+        "baselineDeckId": "authored-rry-detonate-gear-curve",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 15,
+        "actionCount": 131,
+        "finalStateHash": "fnv1a32:3a80cd01"
+      },
+      "previous": {
+        "index": 6,
+        "block": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-1",
+        "swap": false,
+        "deckA": "authored-rry-detonate-gear-curve",
+        "deckB": "authored-rry-detonate-gear-curve",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert",
+        "winner": "b",
+        "reason": "rules-win",
+        "valid": true,
+        "failedStrategy": null,
+        "actions": 138,
+        "turns": 15,
+        "finalHash": "fnv1a32:ddec3866",
+        "traceHash": "fnv1a32:a45ff717",
+        "elapsedMs": 97671.051875
+      },
+      "elapsedMs": 119011.487417
+    },
+    {
+      "game": {
+        "index": 7,
+        "block": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-1",
+        "swap": true,
+        "deckA": "authored-rry-detonate-gear-curve",
+        "deckB": "authored-rry-detonate-gear-curve",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert"
+      },
+      "input": {
+        "candidateManifest": {
+          "schemaVersion": 1,
+          "game": "cyberpunk",
+          "candidateId": "expert-oracle",
+          "parentStrategyId": "choombattler-expert",
+          "informationPolicy": "oracle",
+          "hypothesis": "Adapter v2 repair; unchanged chooser, decks, seeds, and native reducer",
+          "engineRevision": "fnv1a32:13c0e6d4",
+          "cardCatalogHash": "fnv1a32:0ca3b018",
+          "adapterVersion": "choombattler-reference-2",
+          "changes": {},
+          "evaluation": {
+            "suiteId": "reference-authored",
+            "seedBase": "cyberpunk-gauntlet-2026-10-07-v1",
+            "minimumBlocks": 1,
+            "maximumBlocks": 1,
+            "batchSize": 1,
+            "confidenceLevel": 0.95,
+            "minimumMeanImprovement": 0,
+            "maximumCellRegression": 1
+          }
+        },
+        "baselineStrategyId": "choombattler-expert",
+        "scheduledMatch": {
+          "blockId": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-1",
+          "pairId": "authored-rry-detonate-gear-curve",
+          "legId": "seat-2",
+          "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-1",
+          "p1DeckId": "authored-rry-detonate-gear-curve",
+          "p2DeckId": "authored-rry-detonate-gear-curve",
+          "p1Controller": "baseline",
+          "p2Controller": "candidate"
+        }
+      },
+      "record": {
+        "blockId": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-1",
+        "legId": "seat-2",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-1",
+        "candidateSeat": "p2",
+        "candidateDeckId": "authored-rry-detonate-gear-curve",
+        "baselineDeckId": "authored-rry-detonate-gear-curve",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 11,
+        "actionCount": 74,
+        "finalStateHash": "fnv1a32:6ca328a2"
+      },
+      "previous": {
+        "index": 7,
+        "block": "authored-rry-detonate-gear-curve/expert-oracle-vs-choombattler-expert/seed-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-detonate-gear-curve/seed-1",
+        "swap": true,
+        "deckA": "authored-rry-detonate-gear-curve",
+        "deckB": "authored-rry-detonate-gear-curve",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert",
+        "winner": "b",
+        "reason": "rules-win",
+        "valid": true,
+        "failedStrategy": null,
+        "actions": 74,
+        "turns": 11,
+        "finalHash": "fnv1a32:6ca328a2",
+        "traceHash": "fnv1a32:aacf572d",
+        "elapsedMs": 34062.605583000004
+      },
+      "elapsedMs": 39191.110375000004
+    },
+    {
+      "game": {
+        "index": 8,
+        "block": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-0",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-0",
+        "swap": false,
+        "deckA": "authored-ryb-low-cost-tempo",
+        "deckB": "authored-ryb-low-cost-tempo",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert"
+      },
+      "input": {
+        "candidateManifest": {
+          "schemaVersion": 1,
+          "game": "cyberpunk",
+          "candidateId": "expert-oracle",
+          "parentStrategyId": "choombattler-expert",
+          "informationPolicy": "oracle",
+          "hypothesis": "Adapter v2 repair; unchanged chooser, decks, seeds, and native reducer",
+          "engineRevision": "fnv1a32:13c0e6d4",
+          "cardCatalogHash": "fnv1a32:0ca3b018",
+          "adapterVersion": "choombattler-reference-2",
+          "changes": {},
+          "evaluation": {
+            "suiteId": "reference-authored",
+            "seedBase": "cyberpunk-gauntlet-2026-10-07-v1",
+            "minimumBlocks": 1,
+            "maximumBlocks": 1,
+            "batchSize": 1,
+            "confidenceLevel": 0.95,
+            "minimumMeanImprovement": 0,
+            "maximumCellRegression": 1
+          }
+        },
+        "baselineStrategyId": "choombattler-expert",
+        "scheduledMatch": {
+          "blockId": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-0",
+          "pairId": "authored-ryb-low-cost-tempo",
+          "legId": "seat-1",
+          "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-0",
+          "p1DeckId": "authored-ryb-low-cost-tempo",
+          "p2DeckId": "authored-ryb-low-cost-tempo",
+          "p1Controller": "candidate",
+          "p2Controller": "baseline"
+        }
+      },
+      "record": {
+        "blockId": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-0",
+        "legId": "seat-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-0",
+        "candidateSeat": "p1",
+        "candidateDeckId": "authored-ryb-low-cost-tempo",
+        "baselineDeckId": "authored-ryb-low-cost-tempo",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 15,
+        "actionCount": 179,
+        "finalStateHash": "fnv1a32:ededaf0c"
+      },
+      "previous": {
+        "index": 8,
+        "block": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-0",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-0",
+        "swap": false,
+        "deckA": "authored-ryb-low-cost-tempo",
+        "deckB": "authored-ryb-low-cost-tempo",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert",
+        "winner": "b",
+        "reason": "rules-win",
+        "valid": true,
+        "failedStrategy": null,
+        "actions": 178,
+        "turns": 15,
+        "finalHash": "fnv1a32:a58fba25",
+        "traceHash": "fnv1a32:afb49bda",
+        "elapsedMs": 150097.71575
+      },
+      "elapsedMs": 201627.803333
+    },
+    {
+      "game": {
+        "index": 9,
+        "block": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-0",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-0",
+        "swap": true,
+        "deckA": "authored-ryb-low-cost-tempo",
+        "deckB": "authored-ryb-low-cost-tempo",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert"
+      },
+      "input": {
+        "candidateManifest": {
+          "schemaVersion": 1,
+          "game": "cyberpunk",
+          "candidateId": "expert-oracle",
+          "parentStrategyId": "choombattler-expert",
+          "informationPolicy": "oracle",
+          "hypothesis": "Adapter v2 repair; unchanged chooser, decks, seeds, and native reducer",
+          "engineRevision": "fnv1a32:13c0e6d4",
+          "cardCatalogHash": "fnv1a32:0ca3b018",
+          "adapterVersion": "choombattler-reference-2",
+          "changes": {},
+          "evaluation": {
+            "suiteId": "reference-authored",
+            "seedBase": "cyberpunk-gauntlet-2026-10-07-v1",
+            "minimumBlocks": 1,
+            "maximumBlocks": 1,
+            "batchSize": 1,
+            "confidenceLevel": 0.95,
+            "minimumMeanImprovement": 0,
+            "maximumCellRegression": 1
+          }
+        },
+        "baselineStrategyId": "choombattler-expert",
+        "scheduledMatch": {
+          "blockId": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-0",
+          "pairId": "authored-ryb-low-cost-tempo",
+          "legId": "seat-2",
+          "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-0",
+          "p1DeckId": "authored-ryb-low-cost-tempo",
+          "p2DeckId": "authored-ryb-low-cost-tempo",
+          "p1Controller": "baseline",
+          "p2Controller": "candidate"
+        }
+      },
+      "record": {
+        "blockId": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-0",
+        "legId": "seat-2",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-0",
+        "candidateSeat": "p2",
+        "candidateDeckId": "authored-ryb-low-cost-tempo",
+        "baselineDeckId": "authored-ryb-low-cost-tempo",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 11,
+        "actionCount": 87,
+        "finalStateHash": "fnv1a32:64137b0a"
+      },
+      "previous": {
+        "index": 9,
+        "block": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-0",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-0",
+        "swap": true,
+        "deckA": "authored-ryb-low-cost-tempo",
+        "deckB": "authored-ryb-low-cost-tempo",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert",
+        "winner": "b",
+        "reason": "rules-win",
+        "valid": true,
+        "failedStrategy": null,
+        "actions": 87,
+        "turns": 11,
+        "finalHash": "fnv1a32:64137b0a",
+        "traceHash": "fnv1a32:8391b4a3",
+        "elapsedMs": 40573.530625
+      },
+      "elapsedMs": 57318.3365
+    },
+    {
+      "game": {
+        "index": 10,
+        "block": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-1",
+        "swap": false,
+        "deckA": "authored-ryb-low-cost-tempo",
+        "deckB": "authored-ryb-low-cost-tempo",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert"
+      },
+      "input": {
+        "candidateManifest": {
+          "schemaVersion": 1,
+          "game": "cyberpunk",
+          "candidateId": "expert-oracle",
+          "parentStrategyId": "choombattler-expert",
+          "informationPolicy": "oracle",
+          "hypothesis": "Adapter v2 repair; unchanged chooser, decks, seeds, and native reducer",
+          "engineRevision": "fnv1a32:13c0e6d4",
+          "cardCatalogHash": "fnv1a32:0ca3b018",
+          "adapterVersion": "choombattler-reference-2",
+          "changes": {},
+          "evaluation": {
+            "suiteId": "reference-authored",
+            "seedBase": "cyberpunk-gauntlet-2026-10-07-v1",
+            "minimumBlocks": 1,
+            "maximumBlocks": 1,
+            "batchSize": 1,
+            "confidenceLevel": 0.95,
+            "minimumMeanImprovement": 0,
+            "maximumCellRegression": 1
+          }
+        },
+        "baselineStrategyId": "choombattler-expert",
+        "scheduledMatch": {
+          "blockId": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-1",
+          "pairId": "authored-ryb-low-cost-tempo",
+          "legId": "seat-1",
+          "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-1",
+          "p1DeckId": "authored-ryb-low-cost-tempo",
+          "p2DeckId": "authored-ryb-low-cost-tempo",
+          "p1Controller": "candidate",
+          "p2Controller": "baseline"
+        }
+      },
+      "record": {
+        "blockId": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-1",
+        "legId": "seat-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-1",
+        "candidateSeat": "p1",
+        "candidateDeckId": "authored-ryb-low-cost-tempo",
+        "baselineDeckId": "authored-ryb-low-cost-tempo",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 12,
+        "actionCount": 104,
+        "finalStateHash": "fnv1a32:180b0b46"
+      },
+      "previous": {
+        "index": 10,
+        "block": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-1",
+        "swap": false,
+        "deckA": "authored-ryb-low-cost-tempo",
+        "deckB": "authored-ryb-low-cost-tempo",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert",
+        "winner": "b",
+        "reason": "rules-win",
+        "valid": true,
+        "failedStrategy": null,
+        "actions": 104,
+        "turns": 12,
+        "finalHash": "fnv1a32:180b0b46",
+        "traceHash": "fnv1a32:0cbea9f5",
+        "elapsedMs": 41361.23579199999
+      },
+      "elapsedMs": 58552.023958
+    },
+    {
+      "game": {
+        "index": 11,
+        "block": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-1",
+        "swap": true,
+        "deckA": "authored-ryb-low-cost-tempo",
+        "deckB": "authored-ryb-low-cost-tempo",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert"
+      },
+      "input": {
+        "candidateManifest": {
+          "schemaVersion": 1,
+          "game": "cyberpunk",
+          "candidateId": "expert-oracle",
+          "parentStrategyId": "choombattler-expert",
+          "informationPolicy": "oracle",
+          "hypothesis": "Adapter v2 repair; unchanged chooser, decks, seeds, and native reducer",
+          "engineRevision": "fnv1a32:13c0e6d4",
+          "cardCatalogHash": "fnv1a32:0ca3b018",
+          "adapterVersion": "choombattler-reference-2",
+          "changes": {},
+          "evaluation": {
+            "suiteId": "reference-authored",
+            "seedBase": "cyberpunk-gauntlet-2026-10-07-v1",
+            "minimumBlocks": 1,
+            "maximumBlocks": 1,
+            "batchSize": 1,
+            "confidenceLevel": 0.95,
+            "minimumMeanImprovement": 0,
+            "maximumCellRegression": 1
+          }
+        },
+        "baselineStrategyId": "choombattler-expert",
+        "scheduledMatch": {
+          "blockId": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-1",
+          "pairId": "authored-ryb-low-cost-tempo",
+          "legId": "seat-2",
+          "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-1",
+          "p1DeckId": "authored-ryb-low-cost-tempo",
+          "p2DeckId": "authored-ryb-low-cost-tempo",
+          "p1Controller": "baseline",
+          "p2Controller": "candidate"
+        }
+      },
+      "record": {
+        "blockId": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-1",
+        "legId": "seat-2",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-1",
+        "candidateSeat": "p2",
+        "candidateDeckId": "authored-ryb-low-cost-tempo",
+        "baselineDeckId": "authored-ryb-low-cost-tempo",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 13,
+        "actionCount": 107,
+        "finalStateHash": "fnv1a32:564d7546"
+      },
+      "previous": {
+        "index": 11,
+        "block": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-1",
+        "swap": true,
+        "deckA": "authored-ryb-low-cost-tempo",
+        "deckB": "authored-ryb-low-cost-tempo",
+        "strategyA": "expert-oracle",
+        "strategyB": "choombattler-expert",
+        "winner": "b",
+        "reason": "rules-win",
+        "valid": true,
+        "failedStrategy": null,
+        "actions": 107,
+        "turns": 13,
+        "finalHash": "fnv1a32:564d7546",
+        "traceHash": "fnv1a32:743809c1",
+        "elapsedMs": 47659.62645899999
+      },
+      "elapsedMs": 60662.123416999995
+    }
+  ],
+  "exactRepeats": [
+    {
+      "index": 0,
+      "exactRepeat": true,
+      "record": {
+        "blockId": "authored-rry-llorona-steel-dragon/expert-oracle-vs-choombattler-expert/seed-0",
+        "legId": "seat-1",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-rry-llorona-steel-dragon/seed-0",
+        "candidateSeat": "p1",
+        "candidateDeckId": "authored-rry-llorona-steel-dragon",
+        "baselineDeckId": "authored-rry-llorona-steel-dragon",
+        "winner": "candidate",
+        "termination": "rules-win",
+        "turnCount": 12,
+        "actionCount": 104,
+        "finalStateHash": "fnv1a32:39163f40"
+      },
+      "elapsedMs": 87213.481375
+    },
+    {
+      "index": 9,
+      "exactRepeat": true,
+      "record": {
+        "blockId": "authored-ryb-low-cost-tempo/expert-oracle-vs-choombattler-expert/seed-0",
+        "legId": "seat-2",
+        "seed": "cyberpunk-gauntlet-2026-10-07-v1/reference/authored-ryb-low-cost-tempo/seed-0",
+        "candidateSeat": "p2",
+        "candidateDeckId": "authored-ryb-low-cost-tempo",
+        "baselineDeckId": "authored-ryb-low-cost-tempo",
+        "winner": "baseline",
+        "termination": "rules-win",
+        "turnCount": 11,
+        "actionCount": 87,
+        "finalStateHash": "fnv1a32:64137b0a"
+      },
+      "elapsedMs": 47497.236875
+    }
+  ],
+  "limits": [
+    "Native actions remain opaque choices to the unchanged TCG Online chooser.",
+    "Delayed native effects without a verified shared semantic equivalent keep their native keys.",
+    "Past event-derived flags require setup and continuous adapter history; an arbitrary raw midgame snapshot cannot recover them.",
+    "This is a small reference-engine diagnostic, not a production strength or promotion gate."
+  ]
+}

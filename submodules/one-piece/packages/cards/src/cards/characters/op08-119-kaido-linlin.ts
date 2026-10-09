@@ -31,7 +31,7 @@ export const op08KaidoLinlin119: CharacterCard = {
   setId: "OP08",
   cost: 10,
   power: 12000,
-  traits: ["Animal Kingdom Pirates The Four Emperors Big Mom Pirates"],
+  traits: ["The Four Emperors", "Animal Kingdom Pirates", "Big Mom Pirates"],
   attribute: ["special", "strike"],
   effect:
     "[When Attacking] DON!! -10: K.O. all Characters other than this Character. Then, add up to 1 card from the top of your deck to the top of your Life cards and trash up to 1 card from the top of your opponent's Life cards.",

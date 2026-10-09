@@ -31,6 +31,7 @@ export const painRunningWithScissors: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5cd9936e32dc4b1bb6640e0b6e7c9aac",
+    tcgPlayer: "704571",
   },
   text: [
     {

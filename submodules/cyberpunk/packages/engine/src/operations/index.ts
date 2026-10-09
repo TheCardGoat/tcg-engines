@@ -9,7 +9,8 @@ import type {
 } from "../types/index.ts";
 import type { CardInstanceId, PlayerId, GigDieId } from "../types/branded.ts";
 import { createDefaultMetaForZone, type CardMeta } from "../types/card-instance.ts";
-import type { DieType, GigDieLocation } from "../types/gig-die.ts";
+import type { DieType } from "@tcg/cyberpunk-types";
+import type { GigDieLocation } from "../types/gig-die.ts";
 import type { MoveLog } from "../logging/move-log.ts";
 import {
   canSpendSelectedEddies,
@@ -76,6 +77,7 @@ export interface GameOperations {
     options?: SpendEddiesOptions,
   ): void;
   gainEddies(playerId: PlayerId, amount: number): void;
+  readyEddies(playerId: PlayerId, amount: number): void;
   setPhase(phase: import("../types/match-state.ts").GamePhase): void;
   setAttackState(attack: import("../types/match-state.ts").AttackState | null): void;
   addActiveEffect(effect: ActiveEffect): void;
@@ -102,7 +104,12 @@ export interface GigRelocateTarget {
 export interface GigOperations {
   takeFromFixer(playerId: PlayerId, dieId: GigDieId, rollDie: (dieType: DieType) => number): void;
   moveGig(dieId: GigDieId, toPlayerId: PlayerId, sourceCardId?: CardInstanceId): void;
-  setGigValue(dieId: GigDieId, value: number): void;
+  setGigValue(
+    dieId: GigDieId,
+    value: number,
+    sourcePlayerId: PlayerId | null,
+    adjustedByPlayerId?: PlayerId,
+  ): void;
   /**
    * Silent gig transfer for board correction. Emits `gigDieMoved` only — never
    * steal/roll events, and never overtime win checks.
@@ -165,12 +172,19 @@ export function createOperations(
       const fromList = playerState.zones[fromZone];
       const idx = fromList.indexOf(cardId);
       if (idx !== -1) fromList.splice(idx, 1);
+      if (fromZone === "eddieArea" && toZone !== "eddieArea") {
+        const eddieIndex = playerState.eddieCardIds.indexOf(cardId);
+        if (eddieIndex !== -1) playerState.eddieCardIds.splice(eddieIndex, 1);
+      }
 
       const toList = playerState.zones[toZone];
       if (opts?.index !== undefined) {
         toList.splice(opts.index, 0, cardId);
       } else {
         toList.push(cardId);
+      }
+      if (toZone === "eddieArea" && fromZone !== "eddieArea") {
+        playerState.eddieCardIds.push(cardId);
       }
 
       card.zone = toZone;
@@ -187,6 +201,13 @@ export function createOperations(
         fromZone,
         toZone,
         playerId: owner,
+        ...(toZone === "deck"
+          ? opts?.index === 0
+            ? { deckPlacement: "top" as const }
+            : opts?.index === undefined || opts.index >= toList.length - 1
+              ? { deckPlacement: "bottom" as const }
+              : {}
+          : {}),
       });
     },
 
@@ -267,7 +288,7 @@ export function createOperations(
   const card: CardOperations = {
     spend(cardId) {
       const c = G.cardIndex[cardId as string];
-      if (!c) return;
+      if (!c || c.meta.spent) return;
       c.meta.spent = true;
       events.push({ type: "cardSpent", cardId, playerId: c.controllerId });
     },
@@ -335,10 +356,12 @@ export function createOperations(
       const host = G.cardIndex[hostId as string];
       if (!host) return;
 
+      const detachAfterMove =
+        opts?.detachAfterMove ?? (toZone !== "field" && toZone !== "legendArea");
       const gearIds = [...host.meta.attachedGearIds];
       for (const gearId of gearIds) {
         zone.moveCard(gearId, toZone, host.ownerId);
-        if (opts?.detachAfterMove) {
+        if (detachAfterMove) {
           card.detachGear(gearId);
         } else {
           const gear = G.cardIndex[gearId as string];
@@ -380,8 +403,20 @@ export function createOperations(
           }
           events.push({ type: "cardSpent", cardId, playerId: card.controllerId });
         }
-        playerState.eddies -= selectedEddies;
-        playerState.spentEddies = (playerState.spentEddies ?? 0) + selectedEddies;
+        const remainingEddies = amount - options.sourceIds.length;
+        const totalEddiesSpent = selectedEddies + remainingEddies;
+        playerState.eddies -= totalEddiesSpent;
+        playerState.spentEddies = (playerState.spentEddies ?? 0) + totalEddiesSpent;
+        let remainingPoolTokens = remainingEddies;
+        for (const cardId of playerState.eddieCardIds) {
+          if (remainingPoolTokens <= 0) break;
+          const card = G.cardIndex[cardId as string];
+          if (!card || card.meta.spent) continue;
+          card.meta.spent = true;
+          card.meta.faceDown = true;
+          remainingPoolTokens--;
+          events.push({ type: "cardSpent", cardId, playerId: card.controllerId });
+        }
         events.push({ type: "eddiesSpent", playerId, amount, forWhat });
         return;
       }
@@ -443,6 +478,29 @@ export function createOperations(
       if (!playerState) return;
       playerState.eddies += amount;
       events.push({ type: "eddiesGained", playerId, amount });
+    },
+
+    readyEddies(playerId, amount) {
+      const playerState = G.players[playerId as string];
+      if (!playerState || amount <= 0) return;
+      const readiedAmount = Math.min(amount, playerState.spentEddies ?? 0);
+      if (readiedAmount <= 0) return;
+
+      // Eddies have aggregate resource counts and physical face-down cards.
+      // Keep both representations in sync so the board and orientation
+      // animation agree with the available-Eddie counter.
+      let cardsToReady = readiedAmount;
+      for (const cardId of playerState.eddieCardIds) {
+        if (cardsToReady <= 0) break;
+        const eddie = G.cardIndex[cardId as string];
+        if (!eddie?.meta.spent) continue;
+        card.ready(cardId);
+        cardsToReady--;
+      }
+
+      playerState.spentEddies = (playerState.spentEddies ?? 0) - readiedAmount;
+      playerState.eddies += readiedAmount;
+      events.push({ type: "eddiesGained", playerId, amount: readiedAmount });
     },
 
     setPhase(phase) {
@@ -543,10 +601,12 @@ export function createOperations(
       }
 
       G.turnMetadata.abilityFiredThisTurn = [];
+      G.turnMetadata.firstTimeEventsThisTurn = [];
       G.turnMetadata.triggerQueue = [];
       G.turnMetadata.currentTrigger = undefined;
 
       for (const c of Object.values(G.cardIndex)) {
+        c.meta.playedThisTurn = false;
         if (c.controllerId !== playerId) continue;
         c.meta.hasStolenGigThisTurn = false;
         if (c.zone !== "field") continue;
@@ -628,16 +688,18 @@ export function createOperations(
       checkOvertimeMajority();
     },
 
-    setGigValue(dieId, value) {
+    setGigValue(dieId, value, sourcePlayerId, adjustedByPlayerId) {
       const die = G.gigDice[dieId as string];
       if (!die) return;
       const prev = die.faceValue;
       die.faceValue = value;
       events.push({
         type: "gigValueChanged",
+        sourcePlayerId,
         dieId,
         previousValue: prev,
         newValue: value,
+        adjustedByPlayerId,
         playerId: die.ownerId,
       });
     },
@@ -653,7 +715,7 @@ export function createOperations(
       if (!fromPlayer || !toPlayer) return;
       if (fromPlayerId === target.ownerId && fromLocation === target.location) {
         if (target.faceValue !== undefined && target.location === "gigArea") {
-          gig.setGigValue(dieId, target.faceValue);
+          gig.setGigValue(dieId, target.faceValue, null);
         }
         return;
       }
@@ -691,6 +753,7 @@ export function createOperations(
       if (event.type === "cardPlayed") {
         const card = G.cardIndex[event.cardId as string];
         if (card) {
+          card.meta.playedThisTurn = true;
           const playedCardTypes =
             G.turnMetadata.playedCardTypesThisTurn[event.playerId as string] ?? [];
           playedCardTypes.push(defOf(card).type);

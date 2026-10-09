@@ -23,7 +23,7 @@ export const eb01Fourtricks025: CharacterCard = {
   cost: 3,
   power: 5000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   attribute: "slash",
   i18n: eb01Fourtricks025I18n,
 };

@@ -21,7 +21,7 @@ export const op01ArtificialDevilFruitSmile116: EventCard = {
   rarity: "UC",
   setId: "OP01",
   cost: 2,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   effect:
     "[Main] Look at 5 cards from the top of your deck; play up to 1 \"SMILE\" type Character card with a cost of 3 or less. Then, place the rest at the bottom of your deck in any order. [Trigger] Activate this card's [Main] effect.  This card has been officially errata'd.",
   effects: {
@@ -49,7 +49,7 @@ export const op01ArtificialDevilFruitSmile116: EventCard = {
               {
                 filter: "trait",
                 value: "SMILE",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

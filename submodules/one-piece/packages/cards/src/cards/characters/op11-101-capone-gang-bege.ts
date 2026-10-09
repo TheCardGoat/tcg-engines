@@ -31,7 +31,7 @@ export const op11CaponeGangBege101: CharacterCard = {
   cost: 2,
   power: 1000,
   counter: 1000,
-  traits: ["Firetank Pirates Supernovas"],
+  traits: ["Supernovas", "Firetank Pirates"],
   attribute: "ranged",
   effect:
     '[Blocker]\n[Once Per Turn] If your "Supernovas" type Character other than [Capone"Gang"Bege] would be removed from the field by your opponent\'s effect, you may add it to the top of your Life cards face-down instead.',
@@ -50,7 +50,7 @@ export const op11CaponeGangBege101: CharacterCard = {
             {
               filter: "trait",
               value: "Supernovas",
-              match: "includes",
+              match: "exact",
             },
             {
               filter: "excludeName",

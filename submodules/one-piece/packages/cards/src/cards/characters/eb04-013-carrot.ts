@@ -43,7 +43,7 @@ export const op14eb04Carrot013: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Minks",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -60,7 +60,7 @@ export const op14eb04Carrot013: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Minks",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

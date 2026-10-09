@@ -74,4 +74,19 @@ describe("EB01-031 Kalifa", () => {
     );
     expect(view.prompts).toHaveLength(0);
   });
+  test("a wrong Leader can pay DON minus one but gets no Water Seven result", () => {
+    const e = OnePieceTestEngine.create({
+      hand: ["EB01-031"],
+      trash: ["EB01-031", "EB01-005"],
+      activeDon: 6,
+    });
+    e.playCard("EB01-031");
+    const before = e.getView("south").players.south;
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    e.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "south");
+    expect(e.getView("south").players.south.donDeckCount).toBe(before.donDeckCount + 1);
+    expect(e.getView("south").players.south.trash).toHaveLength(2);
+    expect(e.getView("south").players.south.hand).toHaveLength(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

@@ -77,4 +77,24 @@ describe("OP06-102 Kamakiri", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test.each([3, 4])("Life Trigger checks own Life after damage at boundary %i", (lifeCount) => {
+    const engine = OnePieceTestEngine.create(
+      { life: [op06Kamakiri102, ...Array.from({ length: lifeCount - 1 }, () => "EB01-005")] },
+      { life: 4, character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const physicalId = engine.findCardInZone("south", "life", op06Kamakiri102);
+    engine
+      .asNorth()
+      .attack(engine.findCardInZone("north", "character", "EB01-018"), engine.leader("south"));
+    engine.asSouth().activateLifeTrigger();
+    const view = engine.getView("south");
+    expect(view.players.south.characters.some((card) => card?.instanceId === physicalId)).toBe(
+      lifeCount === 3,
+    );
+    expect(view.players.south.trash.some((card) => card.instanceId === physicalId)).toBe(
+      lifeCount === 4,
+    );
+    expect(view.prompts).toHaveLength(0);
+  });
 });

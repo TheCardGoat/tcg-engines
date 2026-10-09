@@ -23,7 +23,7 @@ export const op07CurlyDadan004: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Mountain Bandits Mountain Bandits"],
+  traits: ["Mountain Bandits"],
   attribute: "slash",
   effect:
     "[On Play] You may trash 1 card from your hand: Look at 5 cards from the top of your deck; reveal up to 1 Character card with 2000 power or less and add it to your hand. Then, place the rest at the bottom of your deck in any order.",

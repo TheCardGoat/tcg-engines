@@ -27,6 +27,9 @@ interface ExpectedMulliganStats {
   mid: number;
   high: number;
   units: number;
+  gear: number;
+  programs: number;
+  otherTypes: number;
   sellable: number;
 }
 
@@ -51,6 +54,9 @@ function expectedMulliganStats(container: HTMLElement, side: string): ExpectedMu
     mid: 0,
     high: 0,
     units: 0,
+    gear: 0,
+    programs: 0,
+    otherTypes: 0,
     sellable: 0,
   };
   for (const card of zone.querySelectorAll('[data-testid="hand-card"]')) {
@@ -61,12 +67,16 @@ function expectedMulliganStats(container: HTMLElement, side: string): ExpectedMu
     }
     expected.counted += 1;
     const cost = card.getAttribute("data-cost");
-    if (cost === null) continue;
-    const costNumber = Number(cost);
-    if (costNumber <= 2) expected.low += 1;
-    else if (costNumber <= 5) expected.mid += 1;
-    else expected.high += 1;
+    if (cost !== null) {
+      const costNumber = Number(cost);
+      if (costNumber <= 2) expected.low += 1;
+      else if (costNumber <= 5) expected.mid += 1;
+      else expected.high += 1;
+    }
     if (cardType === "unit") expected.units += 1;
+    else if (cardType === "gear") expected.gear += 1;
+    else if (cardType === "program") expected.programs += 1;
+    else expected.otherTypes += 1;
     if (card.getAttribute("data-has-sell-tag") === "true") expected.sellable += 1;
   }
   return expected;
@@ -80,6 +90,9 @@ function expectStripMatches(strip: Element, expected: ExpectedMulliganStats): vo
     mid: strip.getAttribute("data-mid"),
     high: strip.getAttribute("data-high"),
     units: strip.getAttribute("data-units"),
+    gear: strip.getAttribute("data-gear"),
+    programs: strip.getAttribute("data-programs"),
+    otherTypes: strip.getAttribute("data-other-types"),
     sellable: strip.getAttribute("data-sellable"),
   };
   expectEqual("mulligan stats counted", actual.counted, `${expected.counted}`);
@@ -88,10 +101,47 @@ function expectStripMatches(strip: Element, expected: ExpectedMulliganStats): vo
   expectEqual("mulligan stats mid curve", actual.mid, `${expected.mid}`);
   expectEqual("mulligan stats high curve", actual.high, `${expected.high}`);
   expectEqual("mulligan stats units", actual.units, `${expected.units}`);
+  expectEqual("mulligan stats gear", actual.gear, `${expected.gear}`);
+  expectEqual("mulligan stats programs", actual.programs, `${expected.programs}`);
+  expectEqual("mulligan stats other types", actual.otherTypes, `${expected.otherTypes}`);
   expectEqual("mulligan stats sellable", actual.sellable, `${expected.sellable}`);
 }
 
 describe("gameStart fixture behavior", () => {
+  test("mulligan prompt shows each player's turn order through both hand decisions", async () => {
+    const { pom, container, unmount } = renderGameStartPom();
+    try {
+      const first = await pom.getActivePlayerId();
+      const second = await pom.getOpponentOf(first);
+      await pom.takeControl(first);
+      expectEqual(
+        "first player mulligan title",
+        container.querySelector('[data-state="mulligan"] [data-testid="prompt-banner-title"]')
+          ?.textContent,
+        "Mulligan — You go first",
+      );
+
+      await pom.mulligan(first);
+      await pom.takeControl(second);
+      expectEqual(
+        "second player mulligan title",
+        container.querySelector('[data-state="mulligan"] [data-testid="prompt-banner-title"]')
+          ?.textContent,
+        "Mulligan — You go second",
+      );
+
+      await pom.keepHand(second);
+      expectEqual("phase after both decisions", await pom.getPhase(), "start");
+      expectEqual(
+        "mulligan prompt removed",
+        container.querySelector('[data-state="mulligan"]'),
+        null,
+      );
+    } finally {
+      unmount();
+    }
+  });
+
   test("starts both players in setup with six cards, private legends, fixer dice, and no gigs", async () => {
     const { pom, unmount } = renderGameStartPom();
     try {
@@ -177,6 +227,9 @@ describe("gameStart fixture behavior", () => {
             mid: 0,
             high: 0,
             units: 0,
+            gear: 0,
+            programs: 0,
+            otherTypes: 0,
             sellable: 0,
           });
         }

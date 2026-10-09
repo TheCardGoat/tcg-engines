@@ -4,7 +4,7 @@ export const prb01BartolomeoP029JollyRogerFoil029I18n: OPCardI18n = {
   en: {
     name: "Bartolomeo",
     effect:
-      '[End of your Turn] You may rest this Character: Set up to 1 of your "FILM" type Characters other than [Bartolomeo] as active.',
+      "[End of Your Turn] You may rest this Character: Set up to 1 of your {FILM} type Characters other than [Bartolomeo] as active.",
     imageUrl: "https://www.optcgapi.com/media/static/Card_Images/P-029_p3.jpg",
   },
 };

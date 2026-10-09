@@ -24,6 +24,12 @@ function activationLabel(name: string, text: string, isAttack: boolean): string 
   return description ? `Activate ${name} — ${description}` : `Activate ${name}`;
 }
 
+function activationDescription(text: string, displayName: string | undefined): string {
+  // A short name is only present when authored for this ability. Otherwise,
+  // retain the printed wording, including the cost and timing.
+  return displayName ?? text;
+}
+
 function catalogActivationCandidates(
   state: FabRulesSnapshot,
   view: FabRulesView,
@@ -63,7 +69,7 @@ function catalogActivationCandidates(
         abilityType: ability.abilityType,
         label: activationLabel(
           object.current.names.join(" // ") || shortId(instanceId),
-          ability.displayName ?? ability.text,
+          activationDescription(ability.text, ability.displayName),
           isAttack,
         ),
         isAttack,
@@ -91,7 +97,7 @@ function catalogActivationCandidates(
         abilityType: ability.abilityType,
         label: activationLabel(
           object.current.names.join(" // ") || shortId(instanceId),
-          ability.displayName ?? ability.text,
+          activationDescription(ability.text, ability.displayName),
           isAttack,
         ),
         isAttack,
@@ -119,7 +125,7 @@ function catalogActivationCandidates(
         abilityType: ability.abilityType,
         label: activationLabel(
           object.current.names.join(" // ") || shortId(instanceId),
-          ability.displayName ?? ability.text,
+          activationDescription(ability.text, ability.displayName),
           isAttack,
         ),
         isAttack,
@@ -149,7 +155,7 @@ function catalogActivationCandidates(
           abilityType: ability.abilityType,
           label: activationLabel(
             object.current.names.join(" // ") || shortId(instanceId),
-            ability.displayName ?? ability.text,
+            activationDescription(ability.text, ability.displayName),
             isAttack,
           ),
           isAttack,
@@ -178,7 +184,7 @@ function catalogActivationCandidates(
         abilityType: ability.abilityType,
         label: activationLabel(
           object.current.names.join(" // ") || shortId(instanceId),
-          ability.displayName ?? ability.text,
+          activationDescription(ability.text, ability.displayName),
           isAttack,
         ),
         isAttack,

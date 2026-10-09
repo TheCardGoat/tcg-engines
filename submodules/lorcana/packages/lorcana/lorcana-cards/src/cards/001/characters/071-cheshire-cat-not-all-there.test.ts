@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaMultiplayerTestEngine, PLAYER_ONE, PLAYER_TWO } from "@tcg/lorcana-engine/testing";
 import { cheshireCatNotAllThere } from "./071-cheshire-cat-not-all-there";
-import { teKTheBurningOne } from "./126-te-k-the-burning-one";
+import { teKTheBurningOne } from "./126-te-ka-the-burning-one";
 
 describe("Cheshire Cat - Not All There", () => {
   describe("LOSE SOMETHING? When this character is challenged and banished, banish the challenging character.", () => {

@@ -2,6 +2,31 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("EB04-054", () => {
+  test("On Play adds the exact top deck card to Life at two Life", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: ["EB04-054"],
+      activeDon: 7,
+      life: 2,
+      deck: ["EB01-005", "OP12-013", "OP12-017"],
+    });
+    const top = engine.findCardInZone("south", "deck", "EB01-005");
+    engine.asSouth().play("EB04-054");
+    engine.resolveDecision("effectAddToLifeFromDeck", { optionId: "1" }, "south");
+    expect(engine.findCardInZone("south", "life", "EB01-005")).toBe(top);
+    expect(engine.getView("south").players.south.lifeCount).toBe(3);
+    expect(engine.getView("south").players.south.deckCount).toBe(2);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("On Play at three Life cannot add Life", () => {
+    const engine = OnePieceTestEngine.create({ hand: ["EB04-054"], activeDon: 7, life: 3 });
+    const before = engine.getView("south").players.south.deckCount;
+    engine.asSouth().play("EB04-054");
+    expect(engine.getView("south").players.south.lifeCount).toBe(3);
+    expect(engine.getView("south").players.south.deckCount).toBe(before);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[On K.O.] adds the top card of the opponent's Life to the owner's hand", () => {
     const engine = OnePieceTestEngine.create(
       { character: [{ cardId: "EB04-054", rested: true }], activeDon: 5 },

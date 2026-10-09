@@ -10,17 +10,25 @@ export function proveConditionalWeaponPower({
   withAlly,
   targetAlly,
   expectedDamage,
+  attackReserveCost = 0,
 }: {
   card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>;
   classBonus: boolean;
   withAlly: boolean;
   targetAlly: boolean;
   expectedDamage: number;
+  attackReserveCost?: number;
 }): void {
   it(`deals ${expectedDamage}, class=${classBonus}, controlled ally=${withAlly}, target ally=${targetAlly}`, () => {
     const champion = createClassBonusTestChampion(card, classBonus, "activation-discount");
     const game = GrandArchiveTestEngine.startFixture({
-      playerOne: { champion, zones: { field: [card, ...(withAlly ? [woodlandSquirrels] : [])] } },
+      playerOne: {
+        champion,
+        zones: {
+          field: [card, ...(withAlly ? [woodlandSquirrels] : [])],
+          hand: Array.from({ length: attackReserveCost }, () => woodlandSquirrels),
+        },
+      },
       playerTwo: { champion, zones: { field: [card, giantTortoise] } },
     });
     const p = game.player("player-one"),
@@ -31,7 +39,12 @@ export function proveConditionalWeaponPower({
       p.declareAttack(p.card(champion), defender, { weaponIds: [q.card(card).objectId] }),
     ).toThrow();
     expect(game.state).toEqual(before);
-    p.declareAttack(p.card(champion), defender, { weaponIds: [p.card(card).objectId] });
+    p.declareAttack(p.card(champion), defender, {
+      weaponIds: [p.card(card).objectId],
+      reservePayment: p
+        .cards(woodlandSquirrels, { zone: "hand" })
+        .map((ref) => ({ kind: "card", cardId: ref.objectId })),
+    });
     expect(game.state.objects[defender.objectId]!.damage).toBe(0);
     game.resolveCombatWithoutRetaliation();
     expect(game.state.objects[defender.objectId]!.damage).toBe(expectedDamage);

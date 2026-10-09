@@ -31,6 +31,7 @@ export const quackerjackLoonyToymaker: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_16b794fd9cf642e3853383e2c06593bc",
+    tcgPlayer: "704646",
   },
   text: [
     {

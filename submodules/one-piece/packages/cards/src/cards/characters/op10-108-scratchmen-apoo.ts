@@ -40,7 +40,7 @@ export const op10ScratchmenApoo108: CharacterCard = {
   cost: 1,
   power: 1000,
   counter: 1000,
-  traits: ["On-Air Pirates Supernovas"],
+  traits: ["Supernovas", "On-Air Pirates"],
   attribute: "ranged",
   effect:
     'If you have a yellow "Supernovas" type Character other than [Scratchmen Apoo], this Character gains [Blocker].',
@@ -60,7 +60,7 @@ export const op10ScratchmenApoo108: CharacterCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "excludeName",

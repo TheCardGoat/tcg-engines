@@ -23,7 +23,7 @@ export const op10Issho023: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Navy Dressrosa"],
+  traits: ["Dressrosa", "Navy"],
   attribute: "slash",
   effect:
     '[On Play] If your Leader has the "Navy" type, rest up to 2 of your opponent\'s Characters with a cost of 5 or less.',
@@ -35,7 +35,7 @@ export const op10Issho023: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Navy",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

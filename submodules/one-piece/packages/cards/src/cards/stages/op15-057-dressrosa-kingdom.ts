@@ -32,7 +32,7 @@ export const op15DressrosaKingdom057: StageCard = {
           {
             condition: "leaderTrait",
             trait: "Dressrosa",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -48,6 +48,19 @@ export const op15DressrosaKingdom057: StageCard = {
         costs: [
           {
             cost: "restThisCard",
+          },
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "anyOf",
+                filters: [
+                  { filter: "cardCategory", value: "event" },
+                  { filter: "cardCategory", value: "stage" },
+                ],
+              },
+            ],
           },
         ],
         actions: [

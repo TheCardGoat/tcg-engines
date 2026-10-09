@@ -23,7 +23,7 @@ export const mickeyMouseBobCratchitEpic: CharacterCard = {
   franchise: "Mickey's Christmas Carol",
   set: "011",
   cardNumber: 219,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 2,
   strength: 3,

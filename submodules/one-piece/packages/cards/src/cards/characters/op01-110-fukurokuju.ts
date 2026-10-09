@@ -23,7 +23,7 @@ export const op01Fukurokuju110: CharacterCard = {
   cost: 6,
   power: 8000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates Land of Wano"],
+  traits: ["Land of Wano", "Animal Kingdom Pirates"],
   attribute: "special",
   i18n: op01Fukurokuju110I18n,
 };

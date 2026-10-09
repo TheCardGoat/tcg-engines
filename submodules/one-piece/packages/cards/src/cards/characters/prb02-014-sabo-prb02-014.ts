@@ -33,7 +33,7 @@ export const prb02SaboPrb02014014: CharacterCard = {
   cost: 6,
   power: 6000,
   counter: 2000,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "special",
   effect:
     "If you have 15 or more cards in your trash, give this card in your hand -3 cost.[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

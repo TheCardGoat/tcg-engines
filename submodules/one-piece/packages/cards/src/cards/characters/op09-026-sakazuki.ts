@@ -22,7 +22,7 @@ export const op09Sakazuki026: CharacterCard = {
   setId: "OP09",
   cost: 6,
   power: 7000,
-  traits: ["Navy ODYSSEY"],
+  traits: ["ODYSSEY", "Navy"],
   attribute: "special",
   effect:
     "[On Play] If you have 2 or more rested Characters, K.O. up to 1 of your opponent's Characters with a cost of 5 or less.",

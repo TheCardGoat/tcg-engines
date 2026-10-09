@@ -88,22 +88,79 @@ describe("OP15-002 Lucy", () => {
     expect(leaderActivationIsLegal(engine)).toBe(false);
   });
 
-  test("[When Attacking] may be declined", () => {
+  test("[When Attacking] may be declined without trashing an eligible Event", () => {
     const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP15-002", attachedDon: 2 }], activeDon: 5 },
-      { activeDon: 5 },
+      { leaderCardId: op15Lucy002, hand: [eb02GumGumGiantPistol021] },
+      {},
     );
-    const donBefore =
-      engine.getView("south").players.south.activeDon +
-      engine.getView("south").players.south.restedDon;
+    engine.asSouth().attack(engine.leader("south"), engine.leader("north"));
+    engine.asSouth().declineOptional();
+    expect(engine.getView("south").players.south.hand.map((card) => card.cardId)).toEqual([
+      "EB02-021",
+    ]);
+    expect(engine.getView("south").players.south.leader?.power).toBe(5000);
+  });
 
-    engine.asSouth().attack("OP15-002", engine.asNorth().leader());
-    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
-
-    expect(
-      engine.getView("south").players.south.activeDon +
-        engine.getView("south").players.south.restedDon,
-    ).toBe(donBefore);
-    expect(engine.getView("south").prompts).toHaveLength(0);
+  test("an Event's Life Trigger during Lucy's turn does not count as Event activation", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op15Lucy002,
+        character: [{ card: eb01MountainGod018, playedOnTurn: 0, attachedDon: 2 }],
+        hand: [],
+        life: [eb02GumGumGiantPistol021, eb01Doma005],
+      },
+      { character: [{ cardId: "EB03-055", rested: true }, eb01Doma005], hand: [] },
+    );
+    engine
+      .asSouth()
+      .attack(
+        engine.findCardInZone("south", "character", eb01MountainGod018),
+        engine.findCardInZone("north", "character", "EB03-055"),
+      );
+    engine.asNorth().acceptOptional();
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "south");
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.findCardInZone("north", "character", eb01Doma005)] },
+      "south",
+    );
+    expect(engine.getView("south").players.south.lifeCount).toBe(1);
+    expect(engine.getView("south").players.south.trash.map((card) => card.cardId)).toContain(
+      "EB02-021",
+    );
+    expect(leaderActivationIsLegal(engine)).toBe(false);
+    engine.expectFailure({
+      type: "activateEffect",
+      seat: "south",
+      sourceInstanceId: engine.leader("south"),
+      trigger: "activateMain",
+    });
+  });
+  test("opponent attack can trash both an Event and Stage, protects Lucy, and expires after battle", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op15Lucy002, hand: ["ST01-017", op02IceAge117, eb01Doma005] },
+      { character: [{ cardId: "ST02-002", playedOnTurn: 0 }], hand: [] },
+      { activeSeat: "north" },
+    );
+    const lifeBefore = engine.getView("south").players.south.lifeCount;
+    engine
+      .asNorth()
+      .attack(engine.findCardInZone("north", "character", "ST02-002"), engine.leader("south"));
+    engine.asSouth().acceptOptional();
+    const step = engine.pendingDecision("effectTrashFromHandSelection", "south").steps[0];
+    if (step.kind !== "selectEntity") throw new Error("Expected Event/Stage selection");
+    expect(step.candidates).toHaveLength(2);
+    engine.resolveDecision(
+      "effectTrashFromHandSelection",
+      { selectedIds: step.candidates.map((card) => card.ref.id) },
+      "south",
+    );
+    expect(engine.getView("south").players.south.leader?.power).toBe(7000);
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore);
+    expect(engine.getView("south").players.south.leader?.power).toBe(5000);
+    expect(engine.getView("south").players.south.hand.map((card) => card.cardId)).toEqual([
+      "EB01-005",
+    ]);
   });
 });

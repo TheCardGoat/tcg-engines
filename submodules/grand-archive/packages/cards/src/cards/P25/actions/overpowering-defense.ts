@@ -74,13 +74,11 @@ export const overpoweringDefense: GrandArchiveCard<GrandArchiveAbilityDefinition
           kind: "card-resolution",
           text: "Negate all card activations you don't control.",
           effect: {
-            kind: "negate",
-            subject: {
-              kind: "each",
-              collection: {
-                zones: ["effects-stack"],
-                player: "opponent",
-              },
+            kind: "negate-matching-stack-items",
+            candidates: {
+              kind: "stack-item",
+              itemTypes: ["card-activation"],
+              controller: "opponent",
             },
           },
         },

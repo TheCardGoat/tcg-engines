@@ -23,7 +23,7 @@ export const op11JaguarDSaul075: CharacterCard = {
   cost: 6,
   power: 6000,
   trigger: "Activate this card's [On Play] effect.",
-  traits: ["Giant Former Navy Ohara"],
+  traits: ["Giant", "Ohara", "Former Navy"],
   attribute: "strike",
   effect:
     "[On Play] If your Leader is [Nico Robin] and you have 7 or more DON!! cards on your field, draw 2 cards.",

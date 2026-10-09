@@ -10,7 +10,7 @@ import {
 export const gearGorillaArmsBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "gearGorillaArms",
   label: "Gorilla Arms - extra same-sided gig steal",
-  references: ["packages/engine/src/cards/welcometonightcityretail/gear/gorilla-arms.test.ts"],
+  references: ["packages/engine/src/cards/gear/gorilla-arms.test.ts"],
   async run(pom) {
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",

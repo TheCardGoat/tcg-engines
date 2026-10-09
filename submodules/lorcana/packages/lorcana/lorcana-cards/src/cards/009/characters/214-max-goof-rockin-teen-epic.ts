@@ -25,7 +25,7 @@ export const maxGoofRockinTeenEpic: CharacterCard = {
   franchise: "Goofy Movie",
   set: "009",
   cardNumber: 214,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 4,

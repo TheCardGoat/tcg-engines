@@ -31,7 +31,7 @@ export const op16KinEmon082: CharacterCard = {
   setId: "OP16",
   cost: 4,
   power: 6000,
-  traits: ["Land of Wano The Akazaya Nine"],
+  traits: ["Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "This Character gains +3 cost. [On Play] If your Leader has the {Land of Wano} type, look at 5 cards from the top of your deck; reveal up to 1 {Land of Wano} type card and add it to your hand. Then, trash the rest.",
@@ -43,7 +43,7 @@ export const op16KinEmon082: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Land of Wano",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -62,7 +62,7 @@ export const op16KinEmon082: CharacterCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",
@@ -78,7 +78,7 @@ export const op16KinEmon082: CharacterCard = {
             action: "modifyCost",
             target: {
               player: "self",
-              zones: ["hand", "character"],
+              zones: ["character"],
               count: {
                 amount: 1,
               },

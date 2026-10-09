@@ -72,7 +72,7 @@ describe("OP04-079 Orlumbus", () => {
     ).toBe(opposingCost);
   });
 
-  test("may choose zero opposing Characters, then excludes protected Dressrosa from the mandatory K.O.", () => {
+  test("may choose zero opposing Characters, then may choose a protected Dressrosa for the mandatory K.O.", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [op04Orlumbus079, protectedDressrosaCharacter],
@@ -101,22 +101,24 @@ describe("OP04-079 Orlumbus", () => {
     const koTarget = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     expect(koTarget?.kind).toBe("selectEntity");
     if (koTarget?.kind !== "selectEntity") throw new Error("Expected mandatory Dressrosa K.O.");
-    expect(koTarget.candidates.map((candidate) => candidate.ref.id)).toEqual([orlumbusId]);
-    expect(koTarget.candidates.map((candidate) => candidate.ref.id)).not.toContain(protectedId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [orlumbusId] }, "south");
+    expect(koTarget.candidates.map((candidate) => candidate.ref.id)).toEqual(
+      expect.arrayContaining([orlumbusId, protectedId]),
+    );
+
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [protectedId] }, "south");
 
     const view = engine.getView("south");
     expect(
       view.players.north.characters.find((card) => card?.instanceId === opposingId)?.cost,
     ).toBe(opposingCost);
     expect(view.players.south.characters.some((card) => card?.instanceId === orlumbusId)).toBe(
-      false,
+      true,
     );
     expect(view.players.south.characters.some((card) => card?.instanceId === protectedId)).toBe(
       true,
     );
     expect(view.players.south.trash.map((card) => card.instanceId)).toEqual(
-      expect.arrayContaining([...trashedDeckIds, orlumbusId]),
+      expect.arrayContaining(trashedDeckIds),
     );
     expect(engine.getState().players.south.deck).toEqual([untouchedDeckId]);
     expect(engine.getState().capabilityHistory).toHaveLength(0);

@@ -22,10 +22,17 @@ describe("OP12-042 Alvida", () => {
 
   test("gains 1 cost while controlling two other base-cost-5-or-more Characters", () => {
     const engine = OnePieceTestEngine.create({
-      character: [op12Alvida042, eb01MountainGod018, eb01Crocus041],
+      character: [op12Alvida042, eb01Crocus041],
+      hand: [eb01MountainGod018],
+      activeDon: eb01MountainGod018.cost,
     });
     const alvidaId = engine.findCardInZone("south", "character", op12Alvida042);
 
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === alvidaId)
+        ?.cost,
+    ).toBe(4);
+    engine.asSouth().play(eb01MountainGod018);
     expect(
       engine.getView("south").players.south.characters.find((card) => card?.instanceId === alvidaId)
         ?.cost,

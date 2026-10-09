@@ -2,6 +2,26 @@ import type { SimulatorEntity } from "@tcg/simulator-contract";
 
 export type SimulatorEntityFace = "public" | "hidden";
 
+export function hiddenCardEntity(
+  backImageUrl?: string,
+  hiddenBackLayout?: SimulatorEntity["hiddenBackLayout"],
+): SimulatorEntity {
+  return {
+    id: "hidden-card",
+    title: "Hidden card",
+    subtitle: "Private information",
+    kind: "card",
+    ownerId: "hidden",
+    face: "hidden",
+    states: [],
+    backImageUrl,
+    hiddenBackLayout,
+    imageAspectRatio: hiddenBackLayout === "square" ? 1 : undefined,
+    stats: [],
+    traits: [],
+  };
+}
+
 /**
  * Produce the only entity shape that card renderers may use.
  *
@@ -19,18 +39,5 @@ export function projectSimulatorEntityForFace(
     return { ...entity, face: "public" };
   }
 
-  return {
-    id: "hidden-card",
-    title: "Hidden card",
-    subtitle: "Private information",
-    kind: "card",
-    ownerId: "hidden",
-    face: "hidden",
-    states: [],
-    backImageUrl: entity.backImageUrl,
-    hiddenBackLayout: entity.hiddenBackLayout,
-    imageAspectRatio: entity.hiddenBackLayout === "square" ? 1 : undefined,
-    stats: [],
-    traits: [],
-  };
+  return hiddenCardEntity(entity.backImageUrl, entity.hiddenBackLayout);
 }

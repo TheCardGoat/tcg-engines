@@ -7,10 +7,6 @@ import {
   consumeLimit,
   clearLimitsForTurn,
   clearAllLimits,
-  isSelectableBinding,
-  buildBindingChoice,
-  buildOptionalChoice,
-  buildChooseChoice,
 } from "./abilities.ts";
 
 // ── Dummy Types ──────────────────────────────────────────────────────────────
@@ -120,61 +116,5 @@ describe("clearAllLimits", () => {
     ];
     clearAllLimits(records);
     expect(records).toHaveLength(0);
-  });
-});
-
-// ── Selectable Binding Detection ─────────────────────────────────────────────
-
-describe("isSelectableBinding", () => {
-  it("returns true when explicitly selectable", () => {
-    const binding = { id: "bind-1", target: "any-target" };
-    const result = isSelectableBinding(binding, () => true);
-    expect(result).toBe(true);
-  });
-
-  it("returns false when not explicitly selectable", () => {
-    const binding = { id: "bind-1", target: "fixed-target" };
-    const result = isSelectableBinding(binding, () => false);
-    expect(result).toBe(false);
-  });
-});
-
-// ── Pending Choice Envelopes ─────────────────────────────────────────────────
-
-describe("buildBindingChoice", () => {
-  it("constructs a binding choice envelope", () => {
-    const ability: Ability = { kind: "triggered", text: "", effects: [] };
-    const choice = buildBindingChoice("ch-1", "p1", ability, "bind-a", "target-a", 1, 3);
-    expect(choice).toEqual({
-      choiceId: "ch-1",
-      playerId: "p1",
-      ability,
-      awaiting: {
-        type: "binding",
-        id: "bind-a",
-        target: "target-a",
-        min: 1,
-        max: 3,
-      },
-    });
-  });
-});
-
-describe("buildOptionalChoice", () => {
-  it("constructs an optional choice envelope", () => {
-    const ability: Ability = { kind: "activated", text: "", effects: [] };
-    const choice = buildOptionalChoice("ch-2", "p2", ability, "step-0", "target-b", 0, 1);
-    expect(choice.awaiting.type).toBe("optional");
-    expect(choice.awaiting.min).toBe(0);
-    expect(choice.awaiting.max).toBe(1);
-  });
-});
-
-describe("buildChooseChoice", () => {
-  it("constructs a choose choice envelope", () => {
-    const ability: Ability = { kind: "activated", text: "", effects: [] };
-    const choice = buildChooseChoice("ch-3", "p1", ability, "step-1", "target-c", 1, 1);
-    expect(choice.awaiting.type).toBe("choose");
-    expect(choice.awaiting.id).toBe("step-1");
   });
 });

@@ -37,6 +37,7 @@ export interface EventLogPanelProps {
   /** Optional diagnostic projection export; callers should expose this only in development. */
   rawCopyText?: string;
   embedded?: boolean;
+  appearance?: "grouped" | "timeline";
   /** Parent activity tabs already name this panel, so the redundant title bar can be removed. */
   showHeader?: boolean;
   /** Optional host for the options control when a product shell owns the visible header. */
@@ -52,6 +53,10 @@ export interface EventLogPanelProps {
   autoScroll?: "when-near-bottom" | "always";
   /** Optional seat display names for speaker labels; defaults to generic P1/P2 chips. */
   seatLabels?: { player?: string; opponent?: string };
+  /** Game-provided name of the player whose turn this group represents. */
+  turnPlayerLabel?: (turn: number) => string | undefined;
+  /** Player-facing noun for activity counts. */
+  countUnit?: "entry" | "log";
 }
 
 type SeatLabels = NonNullable<EventLogPanelProps["seatLabels"]>;
@@ -226,12 +231,18 @@ function phaseSummary(entries: readonly SimulatorEventLogEntry[]): string | null
   return `${phases.slice(0, 2).join(" / ")} +${phases.length - 2}`;
 }
 
-function entryCountLabel(count: number): string {
-  return count === 1 ? "1 entry" : `${count} entries`;
+function entryCountLabel(count: number, unit: "entry" | "log" = "entry"): string {
+  return `${count} ${count === 1 ? unit : unit === "entry" ? "entries" : "logs"}`;
 }
 
-function SectionEntryCount({ count }: { readonly count: number }) {
-  const label = entryCountLabel(count);
+function SectionEntryCount({
+  count,
+  unit,
+}: {
+  readonly count: number;
+  readonly unit: "entry" | "log";
+}) {
+  const label = entryCountLabel(count, unit);
   return (
     <span
       className={classes.sectionCount}
@@ -244,8 +255,12 @@ function SectionEntryCount({ count }: { readonly count: number }) {
   );
 }
 
-function activitySummaryLabel(entryCount: number, chatCount: number): string {
-  const entryLabel = entryCountLabel(entryCount);
+function activitySummaryLabel(
+  entryCount: number,
+  chatCount: number,
+  unit: "entry" | "log",
+): string {
+  const entryLabel = entryCountLabel(entryCount, unit);
   if (chatCount === 0) return entryLabel;
   const chatLabel = chatCount === 1 ? "1 message" : `${chatCount} messages`;
   return `${entryLabel}, ${chatLabel}`;
@@ -263,12 +278,15 @@ export function EventLogPanel({
   copyText,
   rawCopyText,
   embedded = false,
+  appearance = "grouped",
   showHeader = true,
   controlsContainer,
   turnExpansion = "all",
   sectionExpansion = "all",
   autoScroll = "when-near-bottom",
   seatLabels,
+  turnPlayerLabel,
+  countUnit = "entry",
 }: EventLogPanelProps) {
   const [activeFilter, setActiveFilter] = useState<TagFilter>("all");
   const [turnExpansionOverrides, setTurnExpansionOverrides] = useState<Map<number, boolean>>(
@@ -370,7 +388,7 @@ export function EventLogPanel({
 
   const showReadableCopy = readableCopy || copyText !== undefined;
   const showCopyActions = showReadableCopy || rawCopyText !== undefined;
-  const activitySummary = activitySummaryLabel(entries.length, chatMessages.length);
+  const activitySummary = activitySummaryLabel(entries.length, chatMessages.length, countUnit);
 
   const copyEventLog = useCallback(async (kind: "readable" | "raw", text: string) => {
     const ok = await copyTextToClipboard(text);
@@ -560,7 +578,7 @@ export function EventLogPanel({
               aria-expanded={false}
               onClick={() => sectionControl.onToggle(chunk)}
             >
-              <SectionEntryCount count={chunk.entries.length} />
+              <SectionEntryCount count={chunk.entries.length} unit={countUnit} />
               <IconChevronRight size={13} stroke={2.2} aria-hidden="true" />
             </button>
           </div>
@@ -600,7 +618,7 @@ export function EventLogPanel({
               aria-expanded={true}
               onClick={() => sectionControl.onToggle(chunk)}
             >
-              <SectionEntryCount count={chunk.entries.length} />
+              <SectionEntryCount count={chunk.entries.length} unit={countUnit} />
               <IconChevronDown size={13} stroke={2.2} aria-hidden="true" />
             </button>
           </div>
@@ -613,7 +631,7 @@ export function EventLogPanel({
               <span className={classes.sectionLabel}>
                 {renderSectionLabel ? renderSectionLabel(chunk.section) : chunk.section.label}
               </span>
-              <SectionEntryCount count={chunk.entries.length} />
+              <SectionEntryCount count={chunk.entries.length} unit={countUnit} />
               {chunk.section.meta ? (
                 <span className={classes.sectionMeta}>{chunk.section.meta}</span>
               ) : null}
@@ -666,8 +684,10 @@ export function EventLogPanel({
     <section
       className={`${classes.panel} ${embedded ? classes.panelEmbedded : ""}`}
       aria-label="Event log"
+      data-appearance={appearance}
       data-testid="event-log"
       data-count={entries.length}
+      data-controls-hosted={controlsContainer ? "true" : undefined}
     >
       {showHeader ? (
         <div className={classes.header}>
@@ -813,7 +833,7 @@ export function EventLogPanel({
             const latestTurn = sortedTurns[sortedTurns.length - 1];
             const defaultExpanded = turnExpansion === "all" || turn === latestTurn;
             const isExpanded = turnExpansionOverrides.get(turn) ?? defaultExpanded;
-            const turnPhaseSummary = phaseSummaryForRows(turnData.rows);
+            const turnPhaseSummary = turnPlayerLabel?.(turn) ?? phaseSummaryForRows(turnData.rows);
             // The newest section of an expanded turn stays open; older
             // sections collapse behind their summaries (overridable).
             let lastSectionKey: string | null = null;
@@ -847,12 +867,21 @@ export function EventLogPanel({
                   aria-expanded={isExpanded}
                 >
                   <span className={classes.turnTitle}>
+                    {appearance === "timeline" ? (
+                      isExpanded ? (
+                        <IconChevronDown size={13} aria-hidden="true" />
+                      ) : (
+                        <IconChevronRight size={13} aria-hidden="true" />
+                      )
+                    ) : null}
                     {turn === 0 ? "Messages" : `Turn ${turn}`}
                   </span>
                   {turnPhaseSummary ? (
                     <span className={classes.turnMeta}>{turnPhaseSummary}</span>
                   ) : null}
-                  <span className={classes.turnCount}>{activityCountLabel(turnData.rows)}</span>
+                  <span className={classes.turnCount}>
+                    {activityCountLabel(turnData.rows, countUnit)}
+                  </span>
                 </button>
                 {isExpanded && renderChunks(turnData.chunks, sectionControl)}
               </div>
@@ -1017,12 +1046,12 @@ function phaseSummaryForRows(rows: readonly ActivityRow[]): string | null {
   return phaseSummary(entries);
 }
 
-function activityCountLabel(rows: readonly ActivityRow[]): string {
+function activityCountLabel(rows: readonly ActivityRow[], unit: "entry" | "log"): string {
   const entryCount = rows.filter((row) => row.type === "entry").length;
   const chatCount = rows.length - entryCount;
   if (entryCount === 0) return chatCount === 1 ? "1 message" : `${chatCount} messages`;
-  if (chatCount === 0) return entryCountLabel(entryCount);
-  return `${entryCountLabel(entryCount)}, ${chatCount === 1 ? "1 message" : `${chatCount} messages`}`;
+  if (chatCount === 0) return entryCountLabel(entryCount, unit);
+  return `${entryCountLabel(entryCount, unit)}, ${chatCount === 1 ? "1 message" : `${chatCount} messages`}`;
 }
 
 function emptyEventLogMessage(

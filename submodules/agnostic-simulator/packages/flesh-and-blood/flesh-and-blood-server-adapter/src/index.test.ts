@@ -1,5 +1,7 @@
 import { getPlayGameConfig } from "@tcg/shared/game-adapter";
 import { readFabClock, fabRemainingMs } from "./clock.ts";
+import { azalea } from "@tcg/flesh-and-blood-cards/cards/heroes/azalea";
+import { azaleaAceInTheHole } from "@tcg/flesh-and-blood-cards/cards/heroes/azalea-ace-in-the-hole";
 import { riptideLurkerOfTheDeep } from "@tcg/flesh-and-blood-cards/cards/heroes/riptide-lurker-of-the-deep";
 import { deathDealer } from "@tcg/flesh-and-blood-cards/cards/weapons/death-dealer";
 import { driftwoodQuiver } from "@tcg/flesh-and-blood-cards/cards/equipment/driftwood-quiver";
@@ -117,8 +119,17 @@ describe("fleshAndBloodServerAdapter", () => {
       fleshAndBloodServerAdapter.matchmakingIdentity?.listOpponentIdentities("blitz") ?? [];
     const ccHeroes =
       fleshAndBloodServerAdapter.matchmakingIdentity?.listOpponentIdentities("cc") ?? [];
-    expect(blitzHeroes).toContainEqual(expect.objectContaining({ id: DASH_YOUNG_CANONICAL }));
+    const livingLegendHeroes =
+      fleshAndBloodServerAdapter.matchmakingIdentity?.listOpponentIdentities("ll") ?? [];
+    expect(blitzHeroes).toContainEqual(expect.objectContaining({ id: azalea.canonicalId }));
+    expect(blitzHeroes).not.toContainEqual(expect.objectContaining({ id: DASH_YOUNG_CANONICAL }));
     expect(ccHeroes).not.toContainEqual(expect.objectContaining({ id: DASH_YOUNG_CANONICAL }));
+    expect(ccHeroes).not.toContainEqual(
+      expect.objectContaining({ id: azaleaAceInTheHole.canonicalId }),
+    );
+    expect(livingLegendHeroes).toContainEqual(
+      expect.objectContaining({ id: azaleaAceInTheHole.canonicalId }),
+    );
     expect(
       fleshAndBloodServerAdapter.matchmakingIdentity?.listOpponentIdentities("unknown"),
     ).toEqual([]);

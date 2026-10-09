@@ -32,4 +32,28 @@ describe("OP13-039 Gum-Gum Snake Shot", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
     expect(engine.getView("south").players.south.lifeCount).toBeGreaterThanOrEqual(0);
   });
+  test("Counter K.O.s the attacker before damage while excluding active and expensive Characters", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [
+          { card: op12Gyukimaru024, playedOnTurn: 0 },
+          eb01Doma005,
+          { card: eb01MountainGod018, rested: true },
+        ],
+      },
+      { hand: [op13GumGumSnakeShot039], activeDon: 2 },
+    );
+    const attacker = engine.findCardInZone("south", "character", op12Gyukimaru024);
+    engine.asSouth().attack(attacker, engine.leader("north"));
+    engine.asNorth().chooseCounter(op13GumGumSnakeShot039);
+    const step = engine.pendingDecision("effectTargetSelection", "north").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected Counter KO choice");
+    expect(step.candidates.map((c) => c.ref.id)).toEqual([attacker]);
+    engine.asNorth().chooseTargets(attacker);
+    expect(engine.getView("north").players.north.lifeCount).toBe(4);
+    expect(engine.getView("north").players.south.trash.map((c) => c.instanceId)).toContain(
+      attacker,
+    );
+    expect(engine.getView("north").prompts).toHaveLength(0);
+  });
 });

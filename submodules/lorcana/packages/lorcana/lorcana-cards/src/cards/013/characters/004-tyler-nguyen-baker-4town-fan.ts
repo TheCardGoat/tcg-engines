@@ -32,6 +32,7 @@ export const tylerNguyenbaker4townFan: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_a751d313e33c4a43a841a327c73108e3",
+    tcgPlayer: "704541",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: tylerNguyenbaker4townFanI18n,

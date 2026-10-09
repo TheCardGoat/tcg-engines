@@ -23,7 +23,7 @@ export const op03Namule007: CharacterCard = {
   cost: 3,
   power: 5000,
   counter: 1000,
-  traits: ["Fish-Man Whitebeard Pirates"],
+  traits: ["Fish-Man", "Whitebeard Pirates"],
   attribute: "strike",
   i18n: op03Namule007I18n,
 };

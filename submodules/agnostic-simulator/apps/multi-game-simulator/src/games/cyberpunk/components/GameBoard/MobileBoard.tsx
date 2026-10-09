@@ -1,3 +1,6 @@
+import { FloatingChatComposer } from "../ChatPanel/FloatingChatComposer";
+import { CombatPriorityShortcut } from "../PaymentSelection/CombatPriorityShortcut";
+import { CyberpunkPaymentSelectionShortcut } from "../PaymentSelection/PaymentSelectionPlayerAction";
 import {
   useCallback,
   useEffect,
@@ -12,9 +15,11 @@ import {
 import { Drawer } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import {
+  IconArrowBackUp,
   IconBug,
   IconBulb,
   IconDotsVertical,
+  IconDeviceMobile,
   IconFlag3,
   IconHistory,
   IconMessageCircle,
@@ -31,6 +36,7 @@ import type {
   SimulatorTargetFilter,
 } from "@tcg/simulator-contract";
 import {
+  AnimatedZoneSlot,
   DropClaimControl,
   EventLogPanel,
   MobileBattlefieldLane,
@@ -57,8 +63,7 @@ import { TrashZone } from "./TrashZone";
 import { useGameClock } from "./useGameClock";
 import { useGameState } from "./gameStateContext";
 import { DeferredAiControlPanel } from "../AiControlPanel/DeferredAiControlPanel";
-import { FloatingChatComposer } from "../ChatPanel/FloatingChatComposer";
-import { mapChatMessage } from "../ChatPanel/ChatPanel";
+import { mapChatMessage, useCyberpunkChatActivity } from "../ChatPanel/ChatPanel";
 import { ChoiceModal } from "../Prompt/ChoiceModal";
 import { PromptBanner } from "../Prompt/PromptBanner";
 import { PaymentSelectionPrompt } from "../PaymentSelection/PaymentSelectionPrompt";
@@ -73,13 +78,19 @@ import {
   type LiveMatchSidebarConfig,
   type LiveMatchSidebarParticipant,
 } from "../BoardRuntimeContext";
+import {
+  cyberpunkPlaymatSeatStyle,
+  cyberpunkSeatPlaymat,
+  useCyberpunkFixturePlaymatId,
+} from "../../playmats";
+import type { CyberpunkSeatVisuals } from "../../seatVisuals";
 import { CombatArrowOverlay } from "./CombatArrowOverlay";
 import { OpponentDisconnectOverlay } from "./OpponentDisconnectOverlay";
 import {
   otherSide,
   PLAYER_SIDE_TO_ID,
   formatPlayerIdentityMeta,
-  handContainsPrivateCards,
+  handContainsHiddenIdentities,
   isVisibleSubscriptionTier,
   useBoardMode,
   useEngine,
@@ -94,6 +105,8 @@ import {
   type MoveLogEntry,
 } from "../../engine";
 import { projectMoveLogEntries } from "../../engine/moveLogProjection";
+import { cyberpunkZoneAnchorId } from "../../engine/projectSimulator";
+import { cyberpunkTurnPlayerLabels } from "../../engine/turnPlayerLabels";
 import { interactionViewCanAttackRival } from "../../engine/interactionViewHelpers";
 import { isRealHumanParticipant } from "../../live-match-participants";
 import {
@@ -102,8 +115,10 @@ import {
 } from "../../engine/live/playerConnectionState";
 import { useDragDrop } from "./DragDropContext";
 import { useZoneDroppable } from "./useZoneDroppable";
-import { useLastSoldCardForSide, type LastSoldCard } from "./useLastSoldCard";
+import { soldCardImageUrl, useLastSoldCardForSide, type LastSoldCard } from "./useLastSoldCard";
 import { useDeckRevealForSide } from "./deckReveal";
+import { usePeekedLegendsForSide } from "./peekedLegends";
+import { rivalTimeoutExpired } from "./rivalTimeout";
 import { apiUrl } from "../../../../runtime/gameRuntimeApi";
 import classes from "./MobileBoard.module.css";
 
@@ -583,6 +598,7 @@ function CyberpunkZoneSummaryBar({
   const fixer = fixerSummary(zones);
   const availableFixerSlots = fixerSummarySlots(zones).filter((slot) => slot.active);
   const scrollTarget: ZoneInventorySection = "deck";
+  const zoneOwnerId = String(PLAYER_SIDE_TO_ID[side]);
   const toneClass = opponent ? classes.zoneSummaryRival : classes.zoneSummaryPlayer;
   const summaryLabel = (
     <span className={classes.zoneSummaryLabel}>
@@ -590,15 +606,36 @@ function CyberpunkZoneSummaryBar({
         <span>Hand</span>
         <strong>{zones.hand.length}</strong>
       </span>
-      <span className={classes.zoneSummaryChip}>
+      <AnimatedZoneSlot
+        animationRef={{
+          kind: "zone",
+          id: cyberpunkZoneAnchorId("deck", side),
+          ownerId: zoneOwnerId,
+        }}
+        className={classes.zoneSummaryChip}
+      >
         <span>Deck</span>
         <strong>{zones.deckCount}</strong>
-      </span>
-      <span className={classes.zoneSummaryChip}>
+      </AnimatedZoneSlot>
+      <AnimatedZoneSlot
+        animationRef={{
+          kind: "zone",
+          id: cyberpunkZoneAnchorId("trash", side),
+          ownerId: zoneOwnerId,
+        }}
+        className={classes.zoneSummaryChip}
+      >
         <span>Trash</span>
         <strong>{zones.trashCount}</strong>
-      </span>
-      <span className={`${classes.zoneSummaryChip} ${classes.zoneSummaryFixerChip}`}>
+      </AnimatedZoneSlot>
+      <AnimatedZoneSlot
+        className={`${classes.zoneSummaryChip} ${classes.zoneSummaryFixerChip}`}
+        animationRef={{
+          kind: "zone",
+          id: side === "player" ? "p-fixer" : "opp-fixer",
+          ownerId: zoneOwnerId,
+        }}
+      >
         <span className={classes.zoneSummaryMain}>
           <span>Fixer</span>
           <strong>{fixer.value}</strong>
@@ -615,17 +652,24 @@ function CyberpunkZoneSummaryBar({
             </span>
           ))}
         </span>
-      </span>
+      </AnimatedZoneSlot>
       <span className={classes.zoneSummaryChip}>
         <span>SC</span>
         <strong>{zones.streetCred}</strong>
       </span>
-      <span className={classes.zoneSummaryChip}>
-        <span>Eddies</span>
+      <AnimatedZoneSlot
+        className={classes.zoneSummaryChip}
+        animationRef={{
+          kind: "zone",
+          id: cyberpunkZoneAnchorId("eddieArea", side),
+          ownerId: zoneOwnerId,
+        }}
+      >
+        <span data-zone-summary-eddies>Eddies</span>
         <strong>
           {eddies.availableCount}/{eddies.totalCount}
         </strong>
-      </span>
+      </AnimatedZoneSlot>
     </span>
   );
 
@@ -663,64 +707,25 @@ function CyberpunkMobileLedgerContent({
   rivalLegendCount,
   friendlyLegends,
   friendlyLegendCount,
-  density,
-  rivalLayout,
-  friendlyLayout,
+  resolvingCardHost,
 }: {
   rivalLegends: ReactNode;
   rivalLegendCount?: number;
   friendlyLegends: ReactNode;
   friendlyLegendCount?: number;
-  density: MobileLedgerDensity;
-  rivalLayout: MobileLedgerSideLayout;
-  friendlyLayout: MobileLedgerSideLayout;
+  resolvingCardHost: HTMLElement | null;
 }) {
   return (
     <CenterRow
       mobileLedger={{
         rivalLegends,
         rivalLegendCount,
-        rivalLayout,
         friendlyLegends,
         friendlyLegendCount,
-        friendlyLayout,
-        density,
+        resolvingCardHost,
       }}
     />
   );
-}
-
-type MobileLedgerDensity = "scoreOnly" | "singleRow" | "stacked";
-type MobileLedgerSideLayout = "scoreOnly" | "compact" | "singleRow" | "stacked";
-
-function mobileLedgerDensity(
-  friendlyLayout: MobileLedgerSideLayout,
-  rivalLayout: MobileLedgerSideLayout,
-): MobileLedgerDensity {
-  if (friendlyLayout === "stacked" || rivalLayout === "stacked") {
-    return "stacked";
-  }
-  if (friendlyLayout === "singleRow" || rivalLayout === "singleRow") {
-    return "singleRow";
-  }
-  return "scoreOnly";
-}
-
-function mobileLedgerSideLayout(
-  legends: ReadonlyArray<{ faceDown: boolean }>,
-  tone: "friendly" | "rival",
-): MobileLedgerSideLayout {
-  if (legends.length === 0) {
-    return "scoreOnly";
-  }
-  const faceUpCount = legends.filter((legend) => !legend.faceDown).length;
-  if (faceUpCount === 0) {
-    return tone === "friendly" ? "compact" : "scoreOnly";
-  }
-  if (legends.length === 1) {
-    return "singleRow";
-  }
-  return "stacked";
 }
 
 function MobileSellReveal({
@@ -750,7 +755,7 @@ function MobileSellReveal({
       cardName: saleCardName,
       side: saleSide,
     });
-    const timer = window.setTimeout(() => setVisibleSale(null), 1350);
+    const timer = window.setTimeout(() => setVisibleSale(null), 820);
     return () => window.clearTimeout(timer);
   }, [saleCardId, saleCardName, saleId, saleSide]);
 
@@ -768,11 +773,11 @@ function MobileSellReveal({
       aria-label={`${opponent ? "Rival" : "You"} sold ${visibleSale.cardName}`}
     >
       <div className={classes.sellRevealCard}>
-        <CardImage imageUrl={card?.imageUrl} alt={card?.name ?? visibleSale.cardName} />
-      </div>
-      <div className={classes.sellRevealLabel}>
-        <span>{opponent ? "Rival sold" : "Sold"}</span>
-        <strong>{visibleSale.cardName}</strong>
+        <CardImage
+          imageUrl={card?.imageUrl ?? soldCardImageUrl(visibleSale.cardName)}
+          alt={card?.name ?? visibleSale.cardName}
+          disablePreview
+        />
       </div>
     </div>
   );
@@ -780,7 +785,7 @@ function MobileSellReveal({
 
 function MobileClockChip({ side, label }: { side: Side; label: string }) {
   const { activeSide, prioritySide, turnNumber, phase, gameEnded, overtimeActive } = useGameState();
-  const clock = useGameClock(prioritySide, { paused: gameEnded });
+  const clock = useGameClock();
   const { humanSide } = useEngine();
   const time = clock[side];
   const tone = side === humanSide ? "friendly" : "rival";
@@ -931,7 +936,7 @@ function MobilePlayerActions({
   onClose: () => void;
 }) {
   const engine = useEngine();
-  const { matchState } = engine;
+  const { matchState, canUndoToTurnStart, dispatch, pendingRemoteActionId } = engine;
   const correctionAction = boardCorrectionMenuAction(engine);
   const { dropEligibility } = useCyberpunkBoardRuntime();
   const [friendState, setFriendState] = useState<"idle" | "loading" | "done">("idle");
@@ -1115,9 +1120,28 @@ function MobilePlayerActions({
             >
               <span>{correctionAction.label}</span>
             </button>
-            <button type="button" role="menuitem" data-danger="true" onClick={onConcede}>
+            <button
+              type="button"
+              role="menuitem"
+              data-testid="mobile-undo-turn-start"
+              disabled={!canUndoToTurnStart}
+              onClick={() => {
+                dispatch({ type: "undoToTurnStart" });
+                onClose();
+              }}
+            >
+              <IconArrowBackUp size={16} stroke={2.2} aria-hidden="true" />
+              <span>Undo to turn start</span>
+            </button>
+            <button
+              type="button"
+              role="menuitem"
+              data-danger="true"
+              disabled={pendingRemoteActionId === "concede"}
+              onClick={onConcede}
+            >
               <IconFlag3 size={16} stroke={2.2} aria-hidden="true" />
-              <span>Concede game</span>
+              <span>{pendingRemoteActionId === "concede" ? "Conceding…" : "Concede game"}</span>
             </button>
           </>
         ) : (
@@ -1328,6 +1352,7 @@ function MobileRailIdentity({
             isVisibleSubscriptionTier(identity?.subscriptionTier) ? "true" : undefined
           }
         >
+          {identity?.isMobile ? <IconDeviceMobile size={11} aria-label="On mobile" /> : null}
           {identity?.displayName ?? fallback}
         </strong>
         {meta ? <span>{meta}</span> : null}
@@ -1341,26 +1366,40 @@ export function MobileBoard({
   playerConnections,
   onClaimRivalDrop,
   liveMatchSidebar,
+  seatVisuals,
 }: {
   playerIdentities?: PlayerIdentityBySide;
   playerConnections?: PlayerConnectionBySide;
   connectionDiagnostic?: SimulatorConnectionDiagnosticInput;
   onClaimRivalDrop?: () => void;
   liveMatchSidebar?: LiveMatchSidebarConfig;
+  seatVisuals?: Partial<Record<Side, CyberpunkSeatVisuals>>;
 }) {
-  const { dispatch, humanSide, moveLogs, matchState, boardCorrectionEnabled, chatMessages } =
-    useEngine();
+  const engine = useEngine();
+  const {
+    dispatch,
+    humanSide,
+    moveLogs,
+    matchState,
+    canUndo,
+    canUndoToTurnStart,
+    boardCorrectionEnabled,
+    pendingRemoteActionId,
+  } = engine;
+  const correctionAction = boardCorrectionMenuAction(engine);
   const { paymentSelectionActive } = usePaymentSelection();
   const cardContextMenu = useCardContextMenuApi();
-  const { dropEligibility, viewerCanSeePrivateHand } = useCyberpunkBoardRuntime();
+  const { dropEligibility } = useCyberpunkBoardRuntime();
   const { fieldCardSize } = useUserConfig();
   const { activeSide, prioritySide, phase, gameEnded, winnerSide, winReason } = useGameState();
   const rivalSide = otherSide(humanSide);
   const [drawer, setDrawer] = useState<DrawerKey>(null);
+  const chatActivity = useCyberpunkChatActivity(drawer === "activity");
   const activityFeedRef = useRef<HTMLDivElement | null>(null);
   const [actionFocus, setActionFocus] = useState<"self" | "opponent">("opponent");
   const [confirmingConcede, setConfirmingConcede] = useState(false);
   const [trashViewerSide, setTrashViewerSide] = useState<Side | null>(null);
+  const [resolvingCardHost, setResolvingCardHost] = useState<HTMLDivElement | null>(null);
   const [promptPlacement, setPromptPlacement] = useState<"player" | "rival">("player");
   const close = () => setDrawer(null);
   const scrollActivityToLatest = useCallback(() => {
@@ -1374,19 +1413,34 @@ export function MobileBoard({
   );
   const humanIdentity = playerIdentities?.[humanSide];
   const rivalIdentity = playerIdentities?.[rivalSide];
+  const fixturePlaymatId = useCyberpunkFixturePlaymatId(true);
+  const humanPlaymat =
+    seatVisuals?.[humanSide]?.playmat ??
+    cyberpunkSeatPlaymat({
+      playmatId: humanIdentity?.playmatId,
+      subscriptionTier: humanIdentity?.subscriptionTier,
+      fixturePlaymatId,
+    });
+  const rivalPlaymat =
+    seatVisuals?.[rivalSide]?.playmat ??
+    cyberpunkSeatPlaymat({
+      playmatId: rivalIdentity?.playmatId,
+      subscriptionTier: rivalIdentity?.subscriptionTier,
+      fixturePlaymatId,
+    });
   const humanIdentityMeta = formatPlayerIdentityMeta(humanIdentity);
   const rivalIdentityMeta = formatPlayerIdentityMeta(rivalIdentity);
   const rivalClaimAvailable = isConnectionDisconnected(playerConnections?.[rivalSide]);
   const humanConnectionStatus = connectionUiStatus(playerConnections?.[humanSide]);
-  const rivalConnectionStatus = connectionUiStatus(playerConnections?.[rivalSide]);
-  const clock = useGameClock(prioritySide, { paused: gameEnded });
-  const rivalTimeoutExpired = Boolean(
-    onClaimRivalDrop &&
-    !gameEnded &&
-    humanConnectionStatus === "connected" &&
-    rivalConnectionStatus === "connected" &&
-    clock[rivalSide].seconds <= 0,
-  );
+  const clock = useGameClock();
+  const isRivalTimeoutExpired = rivalTimeoutExpired({
+    humanSide,
+    rivalSide,
+    playerConnections,
+    onClaimRivalDrop,
+    gameEnded,
+    rivalSeconds: clock[rivalSide].seconds,
+  });
   const humanLastSold = useLastSoldCardForSide(moveLogs, humanSide);
   const rivalLastSold = useLastSoldCardForSide(moveLogs, rivalSide);
   const humanDeckReveal = useDeckRevealForSide(humanSide);
@@ -1466,8 +1520,11 @@ export function MobileBoard({
     promptMode !== "select-target" &&
     canDockHandHelper(humanHandMeasurement, bottomSectionWidth, human.legendArea.length);
   const eventLogEntries = useMemo(
-    () => projectMoveLogEntries(matchState, moveLogs, humanSide).slice(-MOBILE_EVENT_LOG_ENTRY_CAP),
-    [humanSide, matchState, moveLogs],
+    () =>
+      projectMoveLogEntries(matchState, moveLogs, humanSide, pendingRemoteActionId).slice(
+        -MOBILE_EVENT_LOG_ENTRY_CAP,
+      ),
+    [humanSide, matchState, moveLogs, pendingRemoteActionId],
   );
   const eventLogCopyText = useMemo(
     () => formatCyberpunkEventLogReadableCopy(eventLogEntries),
@@ -1488,9 +1545,6 @@ export function MobileBoard({
 
   const rivalLedgerLegends = legendsOf(rival.legendArea, rivalPeekedLegends);
   const friendlyLedgerLegends = legendsOf(human.legendArea, humanPeekedLegends);
-  const rivalLedgerLayout = mobileLedgerSideLayout(rivalLedgerLegends, "rival");
-  const friendlyLedgerLayout = mobileLedgerSideLayout(friendlyLedgerLegends, "friendly");
-  const ledgerDensity = mobileLedgerDensity(friendlyLedgerLayout, rivalLedgerLayout);
   const rivalFieldUnits = fieldUnitsOf(rival.field);
   const friendlyFieldUnits = fieldUnitsOf(human.field);
   const rivalFieldCount = rivalFieldUnits.length;
@@ -1517,7 +1571,6 @@ export function MobileBoard({
         data-side={humanSide}
         data-active-side={activeSide}
         data-phase={phase}
-        data-ledger-density={ledgerDensity}
         data-field-balance={fieldBalance}
         data-game-status={gameEnded ? "ended" : "active"}
         data-field-card-size={fieldCardSize}
@@ -1551,6 +1604,12 @@ export function MobileBoard({
                     <IconHistory size={15} stroke={2.2} aria-hidden="true" />
                     <span className={classes.gameControlLabel}>Activity</span>
                   </button>
+                  {(!liveMatchSidebar || liveMatchSidebar.localPlayerId) && (
+                    <>
+                      <CyberpunkPaymentSelectionShortcut />
+                      <CombatPriorityShortcut />
+                    </>
+                  )}
                   {mobileHumanMatch && liveMatchSidebar ? (
                     <button
                       type="button"
@@ -1563,6 +1622,22 @@ export function MobileBoard({
                       <span className={classes.gameControlLabel}>Actions</span>
                     </button>
                   ) : null}
+                  <button
+                    type="button"
+                    className={classes.gameControlButton}
+                    aria-label="Open more match options"
+                    title="More"
+                    onClick={() => {
+                      if (mobileHumanMatch && liveMatchSidebar) {
+                        openPlayerActions("self");
+                        return;
+                      }
+                      setDrawer("activity");
+                    }}
+                  >
+                    <IconDotsVertical size={17} stroke={2.2} aria-hidden="true" />
+                    <span className={classes.gameControlLabel}>More</span>
+                  </button>
                 </div>
               }
               center={<MobileClockChip side={rivalSide} label="Rival" />}
@@ -1634,6 +1709,11 @@ export function MobileBoard({
               cardCount={rival.hand.length}
               side={rivalSide}
             />
+            <div
+              ref={setResolvingCardHost}
+              className={classes.resolvingProgramHost}
+              data-resolving-program-host
+            />
           </div>
         }
         opponentZoneSummary={
@@ -1652,32 +1732,40 @@ export function MobileBoard({
           <MobileBattlefieldLane
             className={`${classes.fieldBand} ${classes.opponentFieldBand} ${classes.opp}`}
             side="opponent"
+            data-playmat-id={rivalPlaymat.id}
+            data-playmat-src={rivalPlaymat.src ?? ""}
+            style={cyberpunkPlaymatSeatStyle(rivalPlaymat.src)}
             priority={prioritySide === rivalSide}
             scrollTargetSelector='[data-testid="field-cards"]'
             scrollCueLabel="rival field cards"
             scrollCues={rivalFieldOverflow}
           >
+            {rivalPlaymat.src ? (
+              <div
+                className={`${classes.playmat} ${classes.playmatMirrored}`}
+                data-mobile-field-overlay=""
+                aria-hidden="true"
+              />
+            ) : null}
             <FieldZone units={rivalFieldUnits} opponent side={rivalSide} scrollAxis="horizontal" />
             <OpponentDisconnectOverlay
               variant="opponent"
               connection={playerConnections?.[rivalSide]}
               onClaimDrop={onClaimRivalDrop}
-              claimAvailable={rivalClaimAvailable || rivalTimeoutExpired}
-              timeoutExpired={rivalTimeoutExpired}
+              claimAvailable={rivalClaimAvailable || isRivalTimeoutExpired}
+              timeoutExpired={isRivalTimeoutExpired}
               dropEligibility={dropEligibility}
             />
           </MobileBattlefieldLane>
         }
         ledger={
-          <div className={classes.center} data-ledger-density={ledgerDensity}>
+          <div className={classes.center}>
             <CyberpunkMobileLedgerContent
-              density={ledgerDensity}
               rivalLegendCount={rivalLedgerLegends.length}
-              rivalLayout={rivalLedgerLayout}
               rivalLegends={<LegendsZone legends={rivalLedgerLegends} opponent side={rivalSide} />}
-              friendlyLayout={friendlyLedgerLayout}
               friendlyLegendCount={friendlyLedgerLegends.length}
               friendlyLegends={<LegendsZone legends={friendlyLedgerLegends} side={humanSide} />}
+              resolvingCardHost={resolvingCardHost}
             />
             <MobileDirectAttackDropTarget />
             <MobileSellDropTarget />
@@ -1689,11 +1777,17 @@ export function MobileBoard({
           <MobileBattlefieldLane
             className={`${classes.fieldBand} ${classes.playerFieldBand}`}
             side="player"
+            data-playmat-id={humanPlaymat.id}
+            data-playmat-src={humanPlaymat.src ?? ""}
+            style={cyberpunkPlaymatSeatStyle(humanPlaymat.src)}
             priority={prioritySide === humanSide}
             scrollTargetSelector='[data-testid="field-cards"]'
             scrollCueLabel="friendly field cards"
             scrollCues={humanFieldOverflow}
           >
+            {humanPlaymat.src ? (
+              <div className={classes.playmat} data-mobile-field-overlay="" aria-hidden="true" />
+            ) : null}
             <FieldZone units={friendlyFieldUnits} side={humanSide} scrollAxis="horizontal" />
             {humanConnectionStatus === "disconnected" ||
             humanConnectionStatus === "reconnecting" ? (
@@ -1721,7 +1815,7 @@ export function MobileBoard({
             data-dock-helpers={dockHumanHelpers ? "true" : "false"}
           >
             <MobileHandZone
-              faceDown={viewerCanSeePrivateHand === false && handContainsPrivateCards(human.hand)}
+              faceDown={handContainsHiddenIdentities(human.hand)}
               onMeasure={measureHumanHand}
               cards={human.hand.map((c) => ({
                 imageUrl: c.imageUrl,
@@ -1806,15 +1900,26 @@ export function MobileBoard({
               center={<MobileClockChip side={humanSide} label="Your" />}
               right={
                 <div className={`${classes.gameControls} ${classes.mobilePhaseControls}`}>
-                  <PassTurnControl compact compactLabelStyle="action" actionsOnly />
                   <button
                     type="button"
                     className={classes.mobileConcedeAction}
-                    disabled={gameEnded}
+                    disabled={gameEnded || pendingRemoteActionId === "concede"}
                     onClick={requestConcede}
                   >
-                    Concede
+                    {pendingRemoteActionId === "concede" ? "Conceding…" : "Concede"}
                   </button>
+                  <button
+                    type="button"
+                    className={classes.mobileUndoAction}
+                    aria-label="Undo last move"
+                    title="Undo last move"
+                    disabled={!canUndo || gameEnded}
+                    onClick={() => dispatch({ type: "undo" })}
+                  >
+                    <IconArrowBackUp size={15} stroke={2.2} aria-hidden="true" />
+                    <span>Undo</span>
+                  </button>
+                  <PassTurnControl compact compactLabelStyle="action" actionsOnly />
                 </div>
               }
             />
@@ -1855,7 +1960,7 @@ export function MobileBoard({
             config={liveMatchSidebar}
             model={mobileHumanMatch}
             focus={actionFocus}
-            opponentTimeoutExpired={rivalTimeoutExpired}
+            opponentTimeoutExpired={isRivalTimeoutExpired}
             onConcede={requestConcede}
             onClaimRivalDrop={onClaimRivalDrop}
             onClose={close}
@@ -1901,12 +2006,25 @@ export function MobileBoard({
         classNames={drawerClassNames}
       >
         <SimulatorActivityTabs
+          {...chatActivity}
+          secondaryLabel="Details"
           log={
             <div ref={activityFeedRef} className={classes.activityFeed}>
               <EventLogPanel
                 embedded
                 entries={eventLogEntries}
-                chatMessages={chatMessages.map((message) => mapChatMessage(message, humanSide))}
+                turnPlayerLabel={cyberpunkTurnPlayerLabels(
+                  matchState,
+                  moveLogs,
+                  playerIdentities,
+                  humanSide,
+                )}
+                countUnit="log"
+                chatMessages={engine.chatMessages.map((message) =>
+                  mapChatMessage(message, engine.humanSide),
+                )}
+                turnExpansion="latest"
+                appearance="timeline"
                 renderMessage={renderCyberpunkEventLogMessage}
                 copyText={eventLogCopyText}
                 rawCopyText={rawEventLogCopyText}
@@ -1925,58 +2043,30 @@ export function MobileBoard({
                 />
               ) : null}
               <UserConfigButton />
+              <button
+                type="button"
+                className={classes.mobileActivityUtilityAction}
+                data-testid={`mobile-${correctionAction.id}`}
+                disabled={correctionAction.disabled}
+                onClick={correctionAction.run}
+              >
+                {correctionAction.label}
+              </button>
+              <button
+                type="button"
+                className={classes.mobileActivityUtilityAction}
+                data-testid="mobile-undo-turn-start"
+                disabled={!canUndoToTurnStart}
+                onClick={() => dispatch({ type: "undoToTurnStart" })}
+              >
+                Undo to turn start
+              </button>
             </div>
           }
         />
       </Drawer>
     </>
   );
-}
-
-function usePeekedLegendsForSide(
-  moveLogs: ReadonlyArray<MoveLogEntry>,
-  side: Side,
-  turnNumber: number,
-): { ids: Set<string>; indexes: Set<number> } {
-  const ownerId = String(PLAYER_SIDE_TO_ID[side]);
-  return useMemo(() => {
-    const ids = new Set<string>();
-    const indexes = new Set<number>();
-    for (const entry of moveLogs) {
-      const log = entry.log;
-      if (
-        log.type === "lookAtCards" &&
-        log.turnNumber === turnNumber &&
-        log.zone === "legendArea" &&
-        log.ownerId === ownerId &&
-        Array.isArray(log.cardIds)
-      ) {
-        for (const cardId of log.cardIds) {
-          ids.add(cardId);
-        }
-        continue;
-      }
-      if (
-        log.type !== "action" ||
-        log.turnNumber !== turnNumber ||
-        log.messageKey !== "trigger.targetResolved" ||
-        log.params.sourceCardName !== "Kiroshi Optics" ||
-        log.params.targetKind !== "legend" ||
-        log.params.targetZone !== "legendArea" ||
-        log.params.targetOwnerId !== ownerId ||
-        typeof log.params.targetNames !== "string"
-      ) {
-        continue;
-      }
-      if (typeof log.params.targetId === "string") {
-        ids.add(log.params.targetId);
-      }
-      if (typeof log.params.targetIndex === "number") {
-        indexes.add(log.params.targetIndex);
-      }
-    }
-    return { ids, indexes };
-  }, [moveLogs, ownerId, turnNumber]);
 }
 
 function formatCyberpunkEventLogReadableCopy(entries: readonly SimulatorEventLogEntry[]): string {

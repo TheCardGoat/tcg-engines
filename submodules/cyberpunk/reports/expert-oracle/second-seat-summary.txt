@@ -1,0 +1,18 @@
+
+Strategy A (p1): tactical
+Strategy B (p2): expert-oracle
+Matches:         8
+Decks:           2
+Deck pairs:      4
+Cards covered:   26/124 (missed 98)
+Cards missed:    6th-street-recruits, adam-smasher-metal-over-meat, adrenaline-converter, all-is-lost, animals-wrecker, appetite-for-destruction, arasaka-emergency-radioport, augmented-negotiators, bonnie-and-clyde, bootleg-black-sapphire-show, caliber-totentanz-s-top-dog, carnage-at-the-colosseum, chrome-fang, chrome-reverie, cyberpsychosis, deadman-transmitter, delamain-cab, delamain-rideshare-ai, detonate, dexter-deshawn-one-last-chance, don-t-fear-the-reaper, dying-night-v-s-pistol, el-sombreron-la-venganza-lenta, emergency-atlus, evelyn-parker-scheming-siren, field-operator, fool-on-the-hill, gilded-maton, gorilla-arms, gunpoint-diplomacy, hacked-corpo, heywood-ripperdoc, industrial-assembly, jacked-in-voodoo-boy, jackie-welles-ride-or-die-choom, japantown-jonin, johnny-silverhand-never-stop-fighting, judy-alvarez-nothing-to-doubt, kerry-eurodyne-the-last-rockerboy, la-llorona-ghost-of-the-past, les-elemens, live-with-the-aftermath, lizzy-wizzy-delicate-weapon, maelstrom-goons, maelstrom-zealots, maman-brigitte-spirit-of-death, mantis-blades, maxtac-av, maxtac-heavy, memory-relapse, meredith-stout-stone-cold-corpo, minotaur, misty-olszewski-mender-of-broken-spirits, modded-kusanagi, modded-muramasa, mox-inciters, mt0d12-flathead, nadia-fighting-through-grief, nocturne-op55-n1, octant, offduty-malfini, over-the-edge, pacifica-netrunner, pepe-najarro-working-doubles, psycho-squad, pyramid-song, riding-nomad, rita-wheeler-no-stupid-questions, rockn-rockerboy, rogue-amendiares-queen-of-the-afterlife, royce-don-t-call-me-simon, ruthless-lowlife, safety-override, satori-sword-of-saburo, saul-bright-stormrider, screw-lovelorn-fool, shattered-memories, sketchy-ripper, swordwise-huscle, t-bug-amateur-philosopher, take-control, tetratronic-rippler, the-relic-experimental-biochip, three-mouths-one-desire, towerfall, trauma-team-operatives, tyger-s-whisper, unlikely-bond, v-roamer-of-the-badlands, valentino-guerrera, valentino-street-racer, viktor-vektor-drop-your-illusions, we-gotta-live-together, westbrook-netrunner, wild-in-the-streets, wraith-marauders, yorinobu-arasaka-steel-dragon, zetatech-berserk
+Wins p1:         3 (37.5%)
+Wins p2:         5 (62.5%)
+Draws:           0
+Illegal moves:   0
+Avg turns:       11.9
+Avg steps:       90.1
+Reasons:
+  winCondition   8
+
+Saved recording: reports/expert-oracle/second-seat-replay.json

@@ -36,6 +36,7 @@ export const op03Gaimon043: CharacterCard = {
             action: "trashFromDeck",
             player: "self",
             amount: 3,
+            thenRequiresFullAmount: true,
             thenActions: [
               {
                 action: "trashThisCard",

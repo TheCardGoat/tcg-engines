@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="48" viewBox="0 0 600 48">
+  <defs>
+    <linearGradient id="steel" x2="0" y2="1"><stop stop-color="#88877e"/><stop offset=".13" stop-color="#303638"/><stop offset=".65" stop-color="#151a1c"/><stop offset="1" stop-color="#54564f"/></linearGradient>
+    <linearGradient id="glass" x2="0" y2="1"><stop stop-color="#070c0e"/><stop offset="1" stop-color="#171c1d"/></linearGradient>
+    <filter id="grain"><feTurbulence baseFrequency=".72" numOctaves="3" seed="8" result="noise"/><feComposite in="noise" in2="SourceGraphic" operator="in"/><feBlend in="SourceGraphic" mode="soft-light"/></filter>
+  </defs>
+  <path d="M12 3H586L598 14V36L587 46H12L2 36V14Z" fill="#030708" opacity=".7"/>
+  <path d="M12 2H586L597 13V34L586 44H12L3 34V13Z" fill="url(#steel)" stroke="#77786e" stroke-width=".8" filter="url(#grain)"/>
+  <path d="M24 8H577L587 17V30L577 38H24L14 30V17Z" fill="url(#glass)" stroke="#030709" stroke-width="3"/>
+  <path d="M24 9H577M24 39H577" stroke="#abb0a0" stroke-opacity=".25"/>
+  <path d="M202 13V34M398 13V34" stroke="#8a9188" stroke-opacity=".3"/>
+  <g fill="#0a0d0e" stroke="#98978a" stroke-width=".7"><circle cx="9" cy="23" r="3"/><circle cx="591" cy="23" r="3"/></g>
+  <path d="M7 25L11 21M589 25L593 21" stroke="#696e69"/>
+  <path d="M43 4h35m143 0h18m290 0h33M58 42h17m344 0h22" stroke="#b3b1a4" stroke-opacity=".5"/>
+</svg>

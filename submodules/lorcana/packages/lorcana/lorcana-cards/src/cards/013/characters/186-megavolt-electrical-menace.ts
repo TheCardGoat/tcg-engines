@@ -31,6 +31,7 @@ export const megavoltElectricalMenace: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_55dccae9eb0b4f79b68bcf7e1d853e07",
+    tcgPlayer: "704681",
   },
   text: [
     {

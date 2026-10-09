@@ -65,7 +65,7 @@ export const stonescaleBand: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                   },
                   candidates: {
                     kind: "card",
-                    zones: ["hand"],
+                    zones: ["hand", "memory"],
                     relationship: "zone-of",
                     player: "controller",
                     filter: {

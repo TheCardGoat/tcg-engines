@@ -41,7 +41,7 @@ describe("OP07-109 Monkey.D.Luffy", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("above two Life still trashes itself and draws but does not K.O.", () => {
+  test("above two Life pays self-trash but neither K.O.s nor draws", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [op07MonkeyDLuffy109],
@@ -52,14 +52,14 @@ describe("OP07-109 Monkey.D.Luffy", () => {
     );
     const luffyId = engine.findCardInZone("south", "character", op07MonkeyDLuffy109);
     const opposingId = engine.findCardInZone("north", "character", eb01Fourtricks025);
-    const drawnId = engine.getState().players.south.deck[0]!;
 
     engine.activateEffect(luffyId, "activateMain", "south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
 
     const view = engine.getView("south");
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(luffyId);
-    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(drawnId);
+    expect(view.players.south.hand).toHaveLength(0);
+    expect(view.players.south.deckCount).toBe(2);
     expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(opposingId);
     expect(view.prompts).toHaveLength(0);
   });

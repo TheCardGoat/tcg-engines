@@ -223,6 +223,12 @@ describe("buildResolutionSelectionContext", () => {
             },
           },
           {
+            type: "return-from-discard",
+            target: "CONTROLLER",
+            destination: "hand",
+            cardType: "item",
+          },
+          {
             type: "optional",
             effect: {
               type: "return-from-discard",
@@ -269,6 +275,7 @@ describe("buildResolutionSelectionContext", () => {
       "Put chosen card on the bottom of their deck.",
       "Return a character with cost 2 or less from your discard to your hand.",
       "Play a character with cost 2 or less from your hand for free.",
+      "Return an item from your discard to your hand.",
       "Return 2 items from an opponent's discard to the top of their deck.",
       "Play a character with cost 4 or less from your hand or your discard for free.",
       "Play a character with cost 1 from your hand.",
@@ -552,6 +559,43 @@ describe("buildResolutionSelectionContext", () => {
     expect(selection.autoResolvedSlots).toEqual(["from"]);
   });
 
+  it("auto-binds a SELF character while leaving its destination chooser-fillable", () => {
+    const source = "source" as CardInstanceId;
+    const destination = "destination" as CardInstanceId;
+    const { ctx } = createMinimalSelectionTestContext({
+      [source]: { id: "source", cardType: "character" },
+      [destination]: { id: "destination", cardType: "location" },
+    });
+    ctx.framework.zones.getCards = () => [source, destination];
+    ctx.framework.zones.getCardZone = () => "play";
+    const selection = buildResolutionSelectionContext({
+      origin: "pending-effect",
+      requestId: "req-self-move",
+      sourceCardId: source,
+      chooserId: PLAYER_ONE,
+      cardPlayed: createCardPlayedPayload(source, PLAYER_ONE),
+      effect: {
+        type: "move-to-location",
+        character: "SELF",
+        cost: "free",
+        location: {
+          selector: "chosen",
+          count: 1,
+          owner: "you",
+          zones: ["play"],
+          cardTypes: ["location"],
+        },
+      },
+      resolutionInput: {},
+      ctx,
+    });
+    expect(selection?.kind).toBe("target-selection");
+    if (selection?.kind !== "target-selection") throw new Error("Expected a destination prompt");
+    expect(selection.autoResolvedSlots).toEqual(["subject"]);
+    expect(selection.cardCandidateIds).toEqual([destination]);
+    expect(selection.targetDsl).toHaveLength(1);
+  });
+
   it("sets expectedSlottedKind for move-to-location effect descriptors", () => {
     const source = "source" as CardInstanceId;
     const { ctx } = createMinimalSelectionTestContext({
@@ -787,4 +831,46 @@ describe("buildResolutionSelectionContext", () => {
     }
     expect(selection.chooserId).toBe(PLAYER_TWO);
   });
+});
+
+// CR 6.1.2: a conditional mode can resolve without an effect. CR 6.1.5.2
+// separately requires an "or" branch to be performable.
+describe("conditional mode legality", () => {
+  for (const type of ["choice", "or"] as const) {
+    it(`${type} distinguishes a false conditional mode from an impossible or branch`, () => {
+      const source = "conditional-mode-source" as CardInstanceId;
+      const { ctx } = createMinimalSelectionTestContext({
+        [source]: { id: "conditional-mode-source", cardType: "item" },
+      });
+      const selection = buildResolutionSelectionContext({
+        origin: "pending-effect",
+        requestId: `conditional-${type}`,
+        sourceCardId: source,
+        chooserId: PLAYER_ONE,
+        cardPlayed: createCardPlayedPayload(source, PLAYER_ONE),
+        effect: {
+          type,
+          options: [
+            { type: "gain-lore", amount: 1, target: "CONTROLLER" },
+            {
+              type: "conditional",
+              condition: {
+                type: "resource-count",
+                what: "cards-in-discard",
+                controller: "you",
+                comparison: "greater-or-equal",
+                value: 10,
+              },
+              then: { type: "gain-lore", amount: 1, target: "CONTROLLER" },
+            },
+          ],
+        },
+        resolutionInput: {},
+        ctx,
+      });
+      expect(selection?.kind).toBe("choice-selection");
+      if (selection?.kind !== "choice-selection") throw new Error("Expected choice prompt");
+      expect(selection.options.map((option) => option.legal)).toEqual([true, type === "choice"]);
+    });
+  }
 });

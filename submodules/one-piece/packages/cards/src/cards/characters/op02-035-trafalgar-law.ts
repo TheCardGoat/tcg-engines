@@ -23,7 +23,7 @@ export const op02TrafalgarLaw035: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Film Heart Pirates Supernovas"],
+  traits: ["FILM", "Supernovas", "Heart Pirates"],
   attribute: "slash",
   effect:
     "[Activate:Main] (1) (You may rest the specified number of DON!! cards in your cost area.) You may return this Character to the owner's hand: Play up to 1 Character with a cost of 3 from your hand.",

@@ -6,7 +6,7 @@ import type {
   RiftboundClientMatchActionV1,
   RiftboundClientMatchStateV1,
   RiftboundZone,
-} from "./state";
+} from "@tcg/riftbound-tabletop";
 
 export const riftboundAnimationAdapter: GameAnimationAdapter<
   RiftboundClientMatchStateV1,

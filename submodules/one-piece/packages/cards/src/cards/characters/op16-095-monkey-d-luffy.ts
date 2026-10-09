@@ -24,7 +24,7 @@ export const op16MonkeyDLuffy095: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 2000,
-  traits: ["Land of Wano Straw Hat Crew"],
+  traits: ["Land of Wano", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[On Play] Up to 1 of your black {Land of Wano} type Characters gains [Unblockable] during this turn. (This card cannot be blocked.)",
@@ -50,7 +50,7 @@ export const op16MonkeyDLuffy095: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

@@ -1,49 +1,25 @@
-# Lorcana Simulator Package
+# Lorcana Simulator
 
-`@tcg/lorcana-simulator` is the Svelte 5 board, dev harness, fixtures, and
-player-facing simulator UI. Read the Lorcana submodule guide and rules skill
-before changing rules-facing behavior.
+Svelte 5 board, dev harness, fixtures, and player UI. This package can use both
+the engine and cards; tests that need both belong under `src/testing/`.
 
-## Package Boundary
+- Reuse local and ShadCN Svelte components and existing styling patterns.
+- Localize player-facing strings with Paraglide.
+- The development console is at `http://localhost:5174/`; production root
+  and `/matchmaking` redirect to the platform lobby.
+- Reuse `/tests/regressions` fixtures when they match the case. Engine
+  regressions use `src/testing/regressions/` and `createRegressionTestEngine`;
+  browser regressions use `e2e/regressions/` and shared route helpers.
 
-- The simulator may consume `@tcg/lorcana-engine` and
-  `@tcg/lorcana-cards`.
-- `@tcg/lorcana-engine` must not import `@tcg/lorcana-cards`, including in
-  tests, because that creates a cycle.
-- Tests that require both the engine harness and real card definitions belong
-  under `src/testing/**` in this package.
+Run from this package: `vp dev`, `vp run check-types`, `vp run test:unit`,
+`vp run test:rules`, or `vp run test:e2e`, as needed for the change.
 
-## UI Rules
+Choose the smallest check first. Card/engine regressions under `src/testing/`
+run locally without `vp dev` or platform services. Select the affected test
+file with the configured runner instead of running every suite.
 
-- Reuse local or ShadCN Svelte components first.
-- Use DaisyUI only when no local/ShadCN component fits, then Tailwind utilities.
-- Write custom CSS only when those layers cannot express the requirement.
-- Keep player-facing strings localized through the existing Paraglide setup.
-- Preserve Svelte 5 patterns already used by adjacent components.
-
-## Visual Regression Routes
-
-- `http://localhost:5174/` is the dark-only development console. The production
-  root redirects to the platform matchmaking lobby (`/matchmaking` 308s to the
-  platform app; the lobby, private rooms, and practice entry live in the
-  platform web app).
-- `http://localhost:5174/tests/regressions` indexes saved player-report
-  fixtures. Search it before adding a new case.
-- Reuse one fixture when board state is materially the same. Put engine
-  assertions in `src/testing/regressions/` with
-  `createRegressionTestEngine`; put browser assertions in `e2e/regressions/`
-  with the shared route helpers.
-
-## Commands
-
-Run from this package:
-
-- Development: `vp dev`
-- Type check: `vp run check-types`
-- Unit/rules tests: `vp run test:unit` or `vp run test:rules`
-- Focused Bun test: `bun test <path-to-test>`
-- Browser tests: `vp run test:e2e`
-- Build: `vp build`
-
-Run the smallest relevant test first. User-visible changes also need browser
-proof through the existing fixture or route.
+For visuals or UI interactions, reuse an existing server or run only `vp dev`
+here and open the local devtools or `/tests/regressions` fixture. Inspect the
+changed view and exercise the interaction. Auth, matchmaking, hosted transport,
+or persistence changes can need platform integration; local simulator work
+does not require it.

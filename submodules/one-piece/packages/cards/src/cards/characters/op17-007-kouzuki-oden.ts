@@ -22,10 +22,10 @@ export const op17KouzukiOden007: CharacterCard = {
   setId: "OP17",
   cost: 7,
   power: 8000,
-  traits: ["Land of Wano Kouzuki Clan Whitebeard Pirates"],
+  traits: ["Land of Wano", "Kouzuki Clan", "Whitebeard Pirates"],
   attribute: "slash",
   effect:
-    '[On Play] If your Leader is [Edward.Newgate] or has the {Land of Wano} type, play up to 1 {Land of Wano} type Character card with a type including "Whitebeard Pirates" with 6000 power or less from your hand.',
+    '[On Play] If your Leader is [Edward.Newgate] or has the {Land of Wano} type, play up to 1 {Land of Wano} type Character card or Character card with a type including "Whitebeard Pirates" with 6000 power or less from your hand.',
   effects: {
     effects: [
       {
@@ -42,7 +42,7 @@ export const op17KouzukiOden007: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Land of Wano",
-                match: "includes",
+                match: "exact",
               },
             ],
           },
@@ -60,14 +60,11 @@ export const op17KouzukiOden007: CharacterCard = {
             },
             filters: [
               {
-                filter: "trait",
-                value: "Land of Wano",
-                match: "includes",
-              },
-              {
-                filter: "trait",
-                value: "Whitebeard Pirates",
-                match: "includes",
+                filter: "anyOf",
+                groups: [
+                  [{ filter: "trait", value: "Land of Wano", match: "exact" }],
+                  [{ filter: "trait", value: "Whitebeard Pirates", match: "includes" }],
+                ],
               },
               {
                 filter: "power",

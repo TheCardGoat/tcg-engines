@@ -32,7 +32,7 @@ import {
   op11Zephyr006,
   op13BoaHancock051,
   op13CurlyDadan009,
-  op13SaintJalmac085,
+  op02Kuzan121,
   op13StEthanbaronVNusjuro080,
   op13TheEmptyThrone099,
   op13WindmillVillage022,
@@ -690,33 +690,23 @@ describe("2-7 Cost", () => {
   });
 
   test("2-7-6: an effect may make a cost less than the written value", () => {
-    // OP05-097 Mary Geoise discounts eligible Celestial Dragons in hand.
-    // OP13-085 Saint Jalmac has a printed cost of 2.
-    expect(op13SaintJalmac085.cost).toBe(2);
-
-    const withoutStage = OnePieceTestEngine.create({
-      hand: [op13SaintJalmac085],
-      activeDon: 1,
-    });
+    const engine = OnePieceTestEngine.create(
+      { hand: [op02Kuzan121], activeDon: 10 },
+      { character: [eb01Doma005] },
+    );
+    const targetId = engine.asNorth().findInZone("character", eb01Doma005);
+    expect(engine.asSouth().view().players.north.characters[0]?.cost).toBe(1);
+    engine.asSouth().play(op02Kuzan121);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
     expect(
-      withoutStage.expectFailure({
-        type: "playCard",
-        seat: "south",
-        instanceId: withoutStage.findCardInZone("south", "hand", op13SaintJalmac085),
-      }).accepted,
-    ).toBe(false);
-
-    const engine = OnePieceTestEngine.create({
-      stage: op05MaryGeoise097,
-      hand: [op13SaintJalmac085],
-      activeDon: 1,
-    });
-    const handCard = engine.asSouth().view().players.south.hand[0];
-    expect(handCard?.cost).toBe(1);
-
-    engine.asSouth().play(op13SaintJalmac085);
-
-    expect(engine.asSouth().view().players.south.restedDon).toBe(1);
+      engine
+        .asSouth()
+        .view()
+        .players.north.characters.find((card) => card?.instanceId === targetId)?.cost,
+    ).toBe(0);
+    expect(eb01Doma005.cost).toBe(1);
+    engine.endTurn("south");
+    expect(engine.asNorth().view().players.north.characters[0]?.cost).toBe(1);
   });
 });
 

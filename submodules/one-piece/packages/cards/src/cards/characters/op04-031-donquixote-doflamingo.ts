@@ -47,7 +47,7 @@ export const op04DonquixoteDoflamingo031: CharacterCard = {
   setId: "OP04",
   cost: 10,
   power: 10000,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   attribute: "special",
 
   effect:

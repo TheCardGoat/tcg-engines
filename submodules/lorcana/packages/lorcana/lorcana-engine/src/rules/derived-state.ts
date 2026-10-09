@@ -1,4 +1,5 @@
 import type { CardInstanceId, DeepReadonly, PlayerId, FrameworkStateSnapshot } from "#core";
+import { createPlayerId } from "#core";
 import type { ModifyStatEffect, StatFloorEffect } from "@tcg/lorcana-types";
 import type { MaterializedStaticEffect, StaticEffectRegistry } from "./static-effect-registry";
 import { cardHasName, getKeywordValue as getBaseKeywordValue } from "../card-utils";
@@ -10,6 +11,9 @@ import {
   evaluateStaticCondition as _evaluateStaticCondition,
   getSelfStaticCostReductionAmount as _getSelfStaticCostReductionAmount,
   hasStaticSelfRestriction as _hasStaticSelfRestriction,
+  hasStaticCardRestriction,
+  hasStaticPlayerRestriction,
+  getStaticSelfRestrictionBypass,
   isCardInPlay as _isCardInPlay,
   matchesStaticAbilityTarget as _matchesStaticAbilityTarget,
   resolveStaticVariableAmount as _resolveStaticVariableAmount,
@@ -1419,16 +1423,17 @@ export function getActiveTemporaryMap(
   return activeEntries.length > 0 ? Object.fromEntries(activeEntries) : undefined;
 }
 
-export function getDerivedHasQuestRestriction(
+function getDerivedHasActionRestriction(
   meta: LorcanaCardMeta | undefined,
   currentTurn: number,
   state: DerivedStateContext,
   cardInstanceId: CardInstanceId | undefined,
   getDefinitionByInstanceId: (cardId: CardInstanceId) => LorcanaCardDefinition | undefined,
-  registry?: StaticEffectRegistry,
+  registry: StaticEffectRegistry | undefined,
+  restriction: "cant-quest" | "cant-challenge",
 ): boolean {
   if (
-    hasTemporaryRestriction(meta, currentTurn, "cant-quest", {
+    hasTemporaryRestriction(meta, currentTurn, restriction, {
       isSourceInPlay: (sourceId) => isSourceInPlayForProjection(state, sourceId),
     })
   ) {
@@ -1436,6 +1441,26 @@ export function getDerivedHasQuestRestriction(
   }
 
   if (cardInstanceId) {
+    const staticState = flattenDerivedState(state);
+    const controllerId = state.ctx.zones?.private?.cardIndex?.[cardInstanceId]?.controllerID;
+    if (
+      registry &&
+      (hasStaticCardRestriction({
+        state: staticState,
+        cardId: cardInstanceId,
+        restriction,
+        registry,
+      }) ||
+        (controllerId &&
+          hasStaticPlayerRestriction({
+            state: staticState,
+            playerId: createPlayerId(controllerId),
+            restriction,
+            registry,
+          })))
+    ) {
+      return true;
+    }
     const getCardWillpowerByInstanceId = registry
       ? (id: CardInstanceId) =>
           getEffectiveWillpower(
@@ -1450,14 +1475,63 @@ export function getDerivedHasQuestRestriction(
       hasStaticSelfRestriction({
         state,
         cardId: cardInstanceId,
-        restriction: "cant-quest",
+        restriction: restriction,
         getDefinitionByInstanceId,
         getCardWillpowerByInstanceId,
       })
     ) {
-      return true;
+      const bypass = getStaticSelfRestrictionBypass({
+        state: staticState,
+        cardId: cardInstanceId,
+        restriction,
+        getDefinitionByInstanceId,
+      });
+      const readyInk = controllerId
+        ? (state.ctx.zones?.private?.zoneCards?.[`inkwell:${controllerId}`] ?? []).filter(
+            (id) => state.ctx.zones?.private?.cardMeta?.[id]?.state !== "exerted",
+          ).length
+        : 0;
+      return !bypass || !controllerId || readyInk < bypass.cost.ink;
     }
   }
 
   return false;
+}
+
+export function getDerivedHasQuestRestriction(
+  meta: LorcanaCardMeta | undefined,
+  currentTurn: number,
+  state: DerivedStateContext,
+  cardInstanceId: CardInstanceId | undefined,
+  getDefinitionByInstanceId: (cardId: CardInstanceId) => LorcanaCardDefinition | undefined,
+  registry?: StaticEffectRegistry,
+): boolean {
+  return getDerivedHasActionRestriction(
+    meta,
+    currentTurn,
+    state,
+    cardInstanceId,
+    getDefinitionByInstanceId,
+    registry,
+    "cant-quest",
+  );
+}
+
+export function getDerivedHasChallengeRestriction(
+  meta: LorcanaCardMeta | undefined,
+  currentTurn: number,
+  state: DerivedStateContext,
+  cardInstanceId: CardInstanceId | undefined,
+  getDefinitionByInstanceId: (cardId: CardInstanceId) => LorcanaCardDefinition | undefined,
+  registry?: StaticEffectRegistry,
+): boolean {
+  return getDerivedHasActionRestriction(
+    meta,
+    currentTurn,
+    state,
+    cardInstanceId,
+    getDefinitionByInstanceId,
+    registry,
+    "cant-challenge",
+  );
 }

@@ -12,3 +12,15 @@ describe("Bolt of Diamonds — fixed damage", () => {
     targetKind: "unit",
   });
 });
+
+import { proveLevelActivationDiscount } from "../../../testing/class-bonus-activation-discount.ts";
+/** @covers ek5r5YlFQv-a1 */
+describe("boltOfDiamonds — level discount", () => {
+  proveLevelActivationDiscount({
+    card: boltOfDiamonds,
+    discount: 2,
+    threshold: 2,
+    classBonus: false,
+    preparation: "ordinary",
+  });
+});

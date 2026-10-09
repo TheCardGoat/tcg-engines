@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import {
+  getCard,
   eb01Doma005,
   eb01MountainGod018,
   op01Crocodile062,
@@ -73,4 +74,53 @@ describe("OP01-085 Mr.3 (Galdino)", () => {
 
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+});
+
+// The synthetic Event isolates the duration boundary. Galdino and Officer Agents
+// retain their printed effects; every game transition uses public commands.
+test("Galdino played during the opponent's turn expires before a synthetic extra turn", () => {
+  const extraTurnEvent = getCard("OP01-059");
+  const originalEffects = extraTurnEvent.effects;
+  try {
+    extraTurnEvent.effects = {
+      effects: [{ trigger: "main", actions: [{ action: "extraTurn" }] }],
+    };
+    const engine = OnePieceTestEngine.create(
+      { hand: [extraTurnEvent], activeDon: 3, character: [{ card: eb01Doma005, playedOnTurn: 0 }] },
+      { leaderCardId: op01Crocodile062, hand: ["OP01-087", op01Mr3Galdino085], activeDon: 2 },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const targetId = engine.findCardInZone("south", "character", eb01Doma005);
+    engine.playCard(extraTurnEvent, "south");
+    engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
+    engine.resolveDecision(
+      "battleCounter",
+      {
+        selectedIds: [engine.findCardInZone("north", "hand", "OP01-087")],
+      },
+      "north",
+    );
+    engine.resolveDecision(
+      "effectPlaySelection",
+      {
+        selectedIds: [engine.findCardInZone("north", "hand", op01Mr3Galdino085)],
+      },
+      "north",
+    );
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [targetId] }, "north");
+    expect(
+      engine.expectFailure({
+        type: "declareAttack",
+        seat: "south",
+        attackerId: targetId,
+        targetId: engine.leader("north"),
+      }).accepted,
+    ).toBe(false);
+    engine.endTurn("south");
+    expect(engine.getState().activeSeat).toBe("south");
+    engine.declareAttack(targetId, engine.leader("north"), "south");
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+  } finally {
+    extraTurnEvent.effects = originalEffects;
+  }
 });

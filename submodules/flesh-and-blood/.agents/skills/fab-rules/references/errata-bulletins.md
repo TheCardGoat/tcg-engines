@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/errata-bulletins/"
+  relation: "current_index"
+---
+
 # Official Flesh and Blood Errata Bulletins
 
 Errata is the highest-priority source in this skill. If an erratum applies,

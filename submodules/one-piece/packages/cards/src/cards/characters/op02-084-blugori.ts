@@ -23,7 +23,7 @@ export const op02Blugori084: CharacterCard = {
   cost: 1,
   power: 3000,
   counter: 1000,
-  traits: ["Animal Impel Down"],
+  traits: ["Animal", "Impel Down"],
   attribute: "slash",
   i18n: op02Blugori084I18n,
 };

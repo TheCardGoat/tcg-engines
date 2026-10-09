@@ -15,6 +15,9 @@ catalogs:
     '@floating-ui/dom':
       specifier: ^1.7.6
       version: 1.7.6
+    '@mantine/core':
+      specifier: 9.0.0
+      version: 9.0.0
     '@mantine/dropzone':
       specifier: 9.0.0
       version: 9.0.0
@@ -395,6 +398,9 @@ importers:
       '@tcg/riftbound-cards':
         specifier: link:../../../riftbound/packages/cards
         version: link:../../../riftbound/packages/cards
+      '@tcg/riftbound-tabletop':
+        specifier: link:../../packages/riftbound/riftbound-tabletop
+        version: link:../../packages/riftbound/riftbound-tabletop
       '@tcg/riftbound-types':
         specifier: link:../../../riftbound/packages/types
         version: link:../../../riftbound/packages/types
@@ -404,6 +410,9 @@ importers:
       '@tcg/simulator-contract':
         specifier: link:../../packages/simulator-contract
         version: link:../../packages/simulator-contract
+      '@tcg/simulator-presentation':
+        specifier: workspace:*
+        version: link:../../packages/simulator-presentation
       '@tcg/simulator-runtime':
         specifier: link:../../packages/simulator-runtime
         version: link:../../packages/simulator-runtime
@@ -1055,6 +1064,9 @@ importers:
       '@tcg/riftbound-decks':
         specifier: link:../../../../riftbound/packages/decks
         version: link:../../../../riftbound/packages/decks
+      '@tcg/riftbound-tabletop':
+        specifier: link:../riftbound-tabletop
+        version: link:../riftbound-tabletop
       '@tcg/riftbound-types':
         specifier: link:../../../../riftbound/packages/types
         version: link:../../../../riftbound/packages/types
@@ -1074,6 +1086,31 @@ importers:
       vitest:
         specifier: npm:@voidzero-dev/vite-plus-test@0.1.24
         version: '@voidzero-dev/vite-plus-test@0.1.24(patch_hash=f54f4f3c30095637c7c946ca4e37e64c4f09dfee2c1c28ddbdab2bf6af337d39)(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@typescript/typescript6@6.0.2)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@24.12.4)(@typescript/typescript6@6.0.2)(esbuild@0.28.0)(jiti@2.7.0)(publint@0.3.21)(sugarss@5.0.1(postcss@8.5.15))(tsx@4.22.3)(yaml@2.9.0))(esbuild@0.28.0)(jiti@2.7.0)(jsdom@29.1.1(@noble/hashes@2.2.0))(publint@0.3.21)(sugarss@5.0.1(postcss@8.5.15))(tsx@4.22.3)(yaml@2.9.0)'
+
+  packages/riftbound/riftbound-tabletop:
+    dependencies:
+      '@tcg/shared':
+        specifier: link:../../shared
+        version: link:../../shared
+      '@tcg/simulator-contract':
+        specifier: link:../../simulator-contract
+        version: link:../../simulator-contract
+      '@tcg/simulator-runtime':
+        specifier: link:../../simulator-runtime
+        version: link:../../simulator-runtime
+    devDependencies:
+      '@typescript/native':
+        specifier: 'catalog:'
+        version: typescript@7.0.2
+      typescript:
+        specifier: 'catalog:'
+        version: '@typescript/typescript6@6.0.2'
+      vite-plus:
+        specifier: 'catalog:'
+        version: 0.2.4(@opentelemetry/api@1.9.1)(@types/node@24.12.4)(@typescript/typescript6@6.0.2)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@24.12.4)(@typescript/typescript6@6.0.2)(esbuild@0.28.0)(jiti@2.7.0)(publint@0.3.21)(sugarss@5.0.1(postcss@8.5.15))(tsx@4.22.3)(yaml@2.9.0))(esbuild@0.28.0)(jiti@2.7.0)(jsdom@29.1.1(@noble/hashes@2.2.0))(publint@0.3.21)(sugarss@5.0.1(postcss@8.5.15))(svelte@5.55.10(@typescript-eslint/types@8.60.0))(tsx@4.22.3)(yaml@2.9.0)
+      vitest:
+        specifier: npm:@voidzero-dev/vite-plus-test@0.1.24
+        version: '@voidzero-dev/vite-plus-test@0.1.24(patch_hash=f54f4f3c30095637c7c946ca4e37e64c4f09dfee2c1c28ddbdab2bf6af337d39)(@opentelemetry/api@1.9.1)(@types/node@24.12.4)(@typescript/typescript6@6.0.2)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@24.12.4)(@typescript/typescript6@6.0.2)(esbuild@0.28.0)(jiti@2.7.0)(publint@0.3.21)(sugarss@5.0.1(postcss@8.5.15))(tsx@4.22.3)(yaml@2.9.0))(esbuild@0.28.0)(jiti@2.7.0)(jsdom@29.1.1(@noble/hashes@2.2.0))(publint@0.3.21)(sugarss@5.0.1(postcss@8.5.15))(tsx@4.22.3)(yaml@2.9.0)'
 
   packages/shared:
     dependencies:
@@ -1117,6 +1154,55 @@ importers:
       '@typescript/native':
         specifier: 'catalog:'
         version: typescript@7.0.2
+
+  packages/simulator-presentation:
+    dependencies:
+      '@mantine/core':
+        specifier: 'catalog:'
+        version: 9.0.0(@mantine/hooks@9.0.0(react@19.2.6))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      '@tcg/protocol':
+        specifier: workspace:*
+        version: link:../protocol
+      '@tcg/simulator-runtime':
+        specifier: workspace:*
+        version: link:../simulator-runtime
+      howler:
+        specifier: ^2.2.4
+        version: 2.2.4
+    devDependencies:
+      '@react-three/fiber':
+        specifier: 'catalog:'
+        version: 9.7.0(@types/react@19.2.15)(immer@11.1.11)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(three@0.180.0)
+      '@types/howler':
+        specifier: ^2.2.12
+        version: 2.2.13
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.15
+      '@types/react-dom':
+        specifier: 'catalog:'
+        version: 19.2.3(@types/react@19.2.15)
+      '@types/three':
+        specifier: 'catalog:'
+        version: 0.180.0
+      react:
+        specifier: 'catalog:'
+        version: 19.2.6
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.2.6(react@19.2.6)
+      three:
+        specifier: 'catalog:'
+        version: 0.180.0
+      typescript:
+        specifier: 'catalog:'
+        version: '@typescript/typescript6@6.0.2'
+      vite-plus:
+        specifier: 'catalog:'
+        version: 0.2.4(@opentelemetry/api@1.9.1)(@types/node@24.12.4)(@typescript/typescript6@6.0.2)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@24.12.4)(@typescript/typescript6@6.0.2)(esbuild@0.28.0)(jiti@2.7.0)(publint@0.3.21)(sugarss@5.0.1(postcss@8.5.15))(tsx@4.22.3)(yaml@2.9.0))(esbuild@0.28.0)(jiti@2.7.0)(jsdom@29.1.1(@noble/hashes@2.2.0))(publint@0.3.21)(sugarss@5.0.1(postcss@8.5.15))(svelte@5.55.10(@typescript-eslint/types@8.60.0))(tsx@4.22.3)(yaml@2.9.0)
+      vitest:
+        specifier: npm:@voidzero-dev/vite-plus-test@0.1.24
+        version: '@voidzero-dev/vite-plus-test@0.1.24(patch_hash=f54f4f3c30095637c7c946ca4e37e64c4f09dfee2c1c28ddbdab2bf6af337d39)(@opentelemetry/api@1.9.1)(@types/node@24.12.4)(@typescript/typescript6@6.0.2)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@24.12.4)(@typescript/typescript6@6.0.2)(esbuild@0.28.0)(jiti@2.7.0)(publint@0.3.21)(sugarss@5.0.1(postcss@8.5.15))(tsx@4.22.3)(yaml@2.9.0))(esbuild@0.28.0)(jiti@2.7.0)(jsdom@29.1.1(@noble/hashes@2.2.0))(publint@0.3.21)(sugarss@5.0.1(postcss@8.5.15))(tsx@4.22.3)(yaml@2.9.0)'
 
   packages/simulator-runtime:
     dependencies:
@@ -1294,6 +1380,18 @@ importers:
 
   tools/bot-lab:
     dependencies:
+      '@tcg/alpha-clash-cards':
+        specifier: link:../../../alpha-clash/packages/cards
+        version: link:../../../alpha-clash/packages/cards
+      '@tcg/alpha-clash-engine':
+        specifier: link:../../../alpha-clash/packages/engine
+        version: link:../../../alpha-clash/packages/engine
+      '@tcg/alpha-clash-server-adapter':
+        specifier: workspace:*
+        version: link:../../packages/alpha-clash/alpha-clash-server-adapter
+      '@tcg/alpha-clash-types':
+        specifier: link:../../../alpha-clash/packages/types
+        version: link:../../../alpha-clash/packages/types
       '@tcg/bot-core':
         specifier: workspace:*
         version: link:../../packages/bot-core
@@ -1318,6 +1416,9 @@ importers:
       '@tcg/op-engine':
         specifier: link:../../../one-piece/packages/engine
         version: link:../../../one-piece/packages/engine
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
     devDependencies:
       '@types/node':
         specifier: 'catalog:'

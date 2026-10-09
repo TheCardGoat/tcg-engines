@@ -29,3 +29,8 @@ export {
   type GrandArchiveReplayV1,
 } from "./replay.ts";
 export { grandArchiveCardPresentation, grandArchiveConcealedCard } from "./card-presentation.ts";
+
+export type {
+  GrandArchiveStackPresentation,
+  GrandArchiveStackEffectPresentation,
+} from "./stack-presentation.ts";

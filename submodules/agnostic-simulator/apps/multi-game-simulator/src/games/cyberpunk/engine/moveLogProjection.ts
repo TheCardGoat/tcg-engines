@@ -2,6 +2,8 @@ import {
   defOf,
   enMessages,
   formatActionLog,
+  formatStolenGigSummary,
+  stripPrivateFields,
   type MatchState,
   type MoveLog,
 } from "@tcg/cyberpunk-engine";
@@ -32,23 +34,34 @@ interface ProjectionContext {
 export function projectMoveLogEntries(
   matchState: MatchState,
   moveLogs: readonly MoveLogEntry[],
-  _humanSide: Side,
+  humanSide: Side,
+  pendingActionId?: string | null,
 ): SimulatorEventLogEntry[] {
   const fallbackTimestamp = new Date(matchState.ctx.stateID ?? 0).toISOString();
   const combatContext: CombatLogContext = { open: false, current: null };
   const projectionContext: ProjectionContext = {
-    searchRevealNamesByPlayerTurn: searchRevealNamesByPlayerTurn(matchState, moveLogs),
+    searchRevealNamesByPlayerTurn: new Map(),
   };
   let currentPhase = initialProjectedPhase(matchState, moveLogs);
 
-  return moveLogs
+  const viewerLogs = moveLogs.map((entry) => ({
+    ...entry,
+    log: stripPrivateFields(entry.log, PLAYER_SIDE_TO_ID[humanSide]),
+  }));
+  const entries = viewerLogs
     .filter(
-      (entry) =>
-        !isRedundantSearchRevealAction(entry, moveLogs) &&
-        !isRedundantSearchResolutionAction(entry, moveLogs),
+      (entry, index) =>
+        !isRedundantSearchRevealAction(entry, index, viewerLogs) &&
+        !isRedundantSearchResolutionAction(entry, index, viewerLogs),
     )
     .map((entry) => {
       const log = entry.log;
+      if (log.type === "searchDeck") {
+        projectionContext.searchRevealNamesByPlayerTurn.set(
+          searchRevealContextKey(log.playerId, log.turnNumber),
+          searchRevealNames(matchState, log) ?? [],
+        );
+      }
       const phase = phaseForLog(log, currentPhase);
       currentPhase = nextPhaseAfterLog(log, phase);
       const section = combatSectionForLog(log, combatContext);
@@ -58,7 +71,7 @@ export function projectMoveLogEntries(
         phase,
         seatId: entry.side === "system" ? undefined : String(PLAYER_SIDE_TO_ID[entry.side]),
         timestamp: logTimestamp(log) ?? fallbackTimestamp,
-        message: sentenceFor(matchState, log, projectionContext),
+        message: sentenceFor(matchState, log, projectionContext, humanSide),
         tags: moveLogTags(log.type, section),
         entityIds: moveLogEntityIds(log),
         cardRefs: moveLogCardRefs(matchState, log),
@@ -68,6 +81,21 @@ export function projectMoveLogEntries(
       }
       return projected;
     });
+
+  if (pendingActionId === "concede" && !matchState.G.gameEnded) {
+    entries.push({
+      id: "pending-concede",
+      turn: matchState.G.turnMetadata.turnNumber,
+      phase: currentPhase,
+      seatId: String(PLAYER_SIDE_TO_ID[humanSide]),
+      timestamp: new Date().toISOString(),
+      message: "Conceding the game…",
+      sourceKey: "cyberpunk.concede.pending",
+      tags: ["move"],
+    });
+  }
+
+  return entries;
 }
 
 function initialProjectedPhase(matchState: MatchState, moveLogs: readonly MoveLogEntry[]): string {
@@ -78,24 +106,17 @@ function initialProjectedPhase(matchState: MatchState, moveLogs: readonly MoveLo
   return firstPhaseChange?.log.fromPhase ?? matchState.G.gamePhase;
 }
 
-function searchRevealNamesByPlayerTurn(
+function searchRevealNames(
   matchState: MatchState,
-  moveLogs: readonly MoveLogEntry[],
-): Map<string, string[]> {
-  const reveals = new Map<string, string[]>();
-  for (const entry of moveLogs) {
-    const log = entry.log;
-    if (log.type !== "searchDeck") {
-      continue;
-    }
-    const names = cardRefsFromIds(matchState, cardIdsFromPrivateField(log.revealed))?.map(
-      (card) => card.name,
-    );
-    if (names && names.length > 0) {
-      reveals.set(searchRevealContextKey(log.playerId, log.turnNumber), names);
-    }
+  log: Extract<MoveLog, { type: "searchDeck" }>,
+): string[] | undefined {
+  const names = unwrapPrivateFieldValue(log.revealedCardNames);
+  if (Array.isArray(names) && names.every((name): name is string => typeof name === "string")) {
+    return names;
   }
-  return reveals;
+  return cardRefsFromIds(matchState, cardIdsFromPrivateField(log.revealed))?.map(
+    (card) => card.name,
+  );
 }
 
 function searchRevealContextKey(playerId: unknown, turnNumber: unknown): string {
@@ -104,6 +125,7 @@ function searchRevealContextKey(playerId: unknown, turnNumber: unknown): string 
 
 function isRedundantSearchRevealAction(
   entry: MoveLogEntry,
+  index: number,
   moveLogs: readonly MoveLogEntry[],
 ): boolean {
   const log = entry.log;
@@ -114,29 +136,46 @@ function isRedundantSearchRevealAction(
   ) {
     return false;
   }
-  return moveLogs.some(
-    (candidate) =>
-      candidate.log.type === "searchDeck" &&
-      candidate.log.playerId === log.playerId &&
-      candidate.log.turnNumber === log.turnNumber,
-  );
+  for (let previous = index - 1; previous >= 0; previous--) {
+    const candidate = moveLogs[previous]?.log;
+    if (candidate?.playerId !== log.playerId || candidate.turnNumber !== log.turnNumber) continue;
+    if (
+      candidate.type === "action" &&
+      (candidate.messageKey === "move.searchDeck.reveal" ||
+        candidate.messageKey === "move.searchDeck.revealNamed")
+    ) {
+      return false;
+    }
+    if (
+      candidate.type === "action" &&
+      (candidate.messageKey === "move.resolveSearchDeck" ||
+        candidate.messageKey === "move.resolveSearchDeckNamed")
+    ) {
+      return false;
+    }
+    if (candidate.type === "searchDeck") return true;
+  }
+  return false;
 }
 
 function isRedundantSearchResolutionAction(
   entry: MoveLogEntry,
+  index: number,
   moveLogs: readonly MoveLogEntry[],
 ): boolean {
   const log = entry.log;
   if (log.type !== "action" || log.messageKey !== "move.resolveSearchDeck") {
     return false;
   }
-  return moveLogs.some(
-    (candidate) =>
-      candidate.log.type === "action" &&
-      candidate.log.messageKey === "move.resolveSearchDeckNamed" &&
-      candidate.log.playerId === log.playerId &&
-      candidate.log.turnNumber === log.turnNumber,
-  );
+  for (let next = index + 1; next < moveLogs.length; next++) {
+    const candidate = moveLogs[next]?.log;
+    if (candidate?.playerId !== log.playerId || candidate.turnNumber !== log.turnNumber) continue;
+    if (candidate.type === "searchDeck") return false;
+    if (candidate.type !== "action") continue;
+    if (candidate.messageKey === "move.resolveSearchDeck") return false;
+    if (candidate.messageKey === "move.resolveSearchDeckNamed") return true;
+  }
+  return false;
 }
 
 function logTurn(log: MoveLog): number {
@@ -220,19 +259,37 @@ function combatSectionForLog(
       context.current = "react";
       return COMBAT_LOG_SECTIONS.react;
     case "callLegend":
-      if (!context.open) return undefined;
-      context.current = "react";
-      return COMBAT_LOG_SECTIONS.react;
     case "playCard":
     case "resolveCardToPlay":
     case "activateAbility":
+      // CR 9.25: once damage (fight) or the steal resolved, the attack is
+      // over — later plays are main-phase moves, not combat reactions.
+      if (context.current === "fight" || context.current === "steal") {
+        context.open = false;
+        context.current = null;
+      }
       if (!context.open) return undefined;
       context.current = "react";
       return COMBAT_LOG_SECTIONS.react;
     case "resolveStealGigs":
+      // CR 9.24 resolves triggers caused by stealing before the attack ends
+      // (CR 9.25). Keep this context open so those result logs stay in Steal;
+      // the next player play (playCard/resolveCardToPlay/activateAbility/
+      // callLegend) ends the combat for grouping purposes.
+      context.open = true;
       context.current = "steal";
-      context.open = false;
       return COMBAT_LOG_SECTIONS.steal;
+    case "resolveDiscardFromHand":
+    case "lookAtCards":
+      if (!context.open) return undefined;
+      return COMBAT_LOG_SECTIONS[context.current ?? "attack"];
+    case "cardDefeated":
+      if (!context.open || context.current !== "fight") return undefined;
+      return COMBAT_LOG_SECTIONS.fight;
+    case "gigValueChanged":
+    case "gigsSwapped":
+      if (!context.open) return undefined;
+      return COMBAT_LOG_SECTIONS[context.current ?? "attack"];
     case "action":
       return actionLogCombatSection(log, context);
     case "turnStarted":
@@ -253,6 +310,19 @@ function actionLogCombatSection(
   context: CombatLogContext,
 ): CombatLogSection | undefined {
   const key = log.messageKey;
+  // CR 9.25: once damage (fight) or the steal resolved, the attack is over —
+  // later plays are main-phase moves, not combat reactions.
+  if (
+    (context.current === "fight" || context.current === "steal") &&
+    (key === "move.playCard" ||
+      key === "move.playCard.gear" ||
+      key === "move.callLegend" ||
+      key === "move.activateAbility" ||
+      key === "move.activateAbility.attached")
+  ) {
+    context.open = false;
+    context.current = null;
+  }
   if (key === "move.attackUnit" || key === "move.attackRival") {
     context.open = true;
     context.current = "attack";
@@ -280,7 +350,7 @@ function actionLogCombatSection(
     (key === "trigger.defeatedTarget" && context.open && context.current === "fight")
   ) {
     context.current = "fight";
-    context.open = false;
+    context.open = true;
     return COMBAT_LOG_SECTIONS.fight;
   }
   if (key === "move.resolveAttack.direct" || key === "trigger.stealGig") {
@@ -299,9 +369,7 @@ function isCombatContextActionKey(messageKey: string): boolean {
   return (
     messageKey === "move.activateAbility.attached" ||
     messageKey === "move.resolveAdjustGig" ||
-    messageKey === "effect.callLegend.free" ||
-    messageKey === "effect.draw.resolved" ||
-    messageKey === "effect.draw.skipped" ||
+    messageKey.startsWith("effect.") ||
     messageKey.startsWith("trigger.")
   );
 }
@@ -309,6 +377,7 @@ function isCombatContextActionKey(messageKey: string): boolean {
 function moveLogEntityIds(log: MoveLog): string[] | undefined {
   switch (log.type) {
     case "playCard":
+    case "cardDefeated":
     case "sellCard":
     case "resolveCardToPlay":
     case "activateAbility":
@@ -340,6 +409,7 @@ function moveLogCardRefs(
 ): { id?: string; name: string }[] | undefined {
   switch (log.type) {
     case "playCard":
+    case "cardDefeated":
     case "sellCard":
     case "resolveCardToPlay":
     case "activateAbility":
@@ -369,7 +439,10 @@ function moveLogCardRefs(
     case "resolveStealGigs":
       return log.attackerName ? [{ name: log.attackerName }] : undefined;
     case "searchDeck":
-      return cardRefsFromIds(matchState, cardIdsFromPrivateField(log.revealed));
+      return searchRevealNames(matchState, log)?.map((name, index) => {
+        const id = cardIdsFromPrivateField(log.revealed)?.[index];
+        return id ? { id, name } : { name };
+      });
     case "lookAtCards":
       return cardRefsFromIds(matchState, cardIdsFromPrivateField(log.cardIds));
     case "resolveDiscardFromHand":
@@ -467,7 +540,12 @@ function uniqueCardRefs(
   });
 }
 
-function sentenceFor(matchState: MatchState, log: MoveLog, context: ProjectionContext): string {
+function sentenceFor(
+  matchState: MatchState,
+  log: MoveLog,
+  context: ProjectionContext,
+  humanSide: Side,
+): string {
   // Server-generated drop logs aren't part of the engine's MoveLog union,
   // but they can arrive from the gateway during live matches.
   const raw = log as unknown as { type?: string; reason?: unknown };
@@ -492,6 +570,12 @@ function sentenceFor(matchState: MatchState, log: MoveLog, context: ProjectionCo
   switch (log.type) {
     case "playCard":
       return `Played ${log.cardName} for ${log.cost} eddie${log.cost === 1 ? "" : "s"}.`;
+    case "cardDefeated":
+      return `${log.cardName} was defeated.`;
+    case "gigValueChanged":
+      return `Adjusted ${log.dieType.toUpperCase()} gig die from ${log.previousValue} to ${log.newValue}.`;
+    case "gigsSwapped":
+      return `Swapped friendly ${log.friendlyDieType.toUpperCase()} Gig (${log.friendlyValue}) with rival ${log.rivalDieType.toUpperCase()} Gig (${log.rivalValue}); friendly Gig value ${log.friendlyValue} to ${log.rivalValue}, rival ${log.rivalValue} to ${log.friendlyValue}.`;
     case "sellCard":
       return `Sold ${log.cardName}.`;
     case "callLegend":
@@ -546,14 +630,18 @@ function sentenceFor(matchState: MatchState, log: MoveLog, context: ProjectionCo
         ? `Discarded ${log.discardedCount} card${log.discardedCount === 1 ? "" : "s"}: ${discardedNames.join(", ")}.`
         : `Discarded ${log.discardedCount} card${log.discardedCount === 1 ? "" : "s"}.`;
     }
-    case "resolveStealGigs":
+    case "resolveStealGigs": {
+      const stolenGigSummary = log.stolenGigs
+        ? formatStolenGigSummary(log.stolenGigs)
+        : `${log.stolenCount} Gig${log.stolenCount === 1 ? "" : "s"}`;
       return log.attackerName
-        ? `Steal: ${log.attackerName} stole ${log.stolenCount} Gig${
-            log.stolenCount === 1 ? "" : "s"
-          }${log.attackerPower === undefined ? "" : ` at ${log.attackerPower} power`}.`
-        : `Steal: stole ${log.stolenCount} Gig${log.stolenCount === 1 ? "" : "s"}${
+        ? `Steal: ${log.attackerName} stole ${stolenGigSummary}${
+            log.attackerPower === undefined ? "" : ` at ${log.attackerPower} power`
+          }.`
+        : `Steal: stole ${stolenGigSummary}${
             log.attackerPower === undefined ? "" : ` at ${log.attackerPower} power`
           }.`;
+    }
     case "concede":
       return "Conceded the game.";
     case "undo":
@@ -563,9 +651,7 @@ function sentenceFor(matchState: MatchState, log: MoveLog, context: ProjectionCo
     case "activateAbility":
       return `${log.cardName} activated its ability.`;
     case "searchDeck": {
-      const revealedNames = cardRefsFromIds(matchState, cardIdsFromPrivateField(log.revealed))?.map(
-        (card) => card.name,
-      );
+      const revealedNames = searchRevealNames(matchState, log);
       if (revealedNames && revealedNames.length > 0) {
         return `Revealed the top ${log.revealedCount} cards of the deck: ${revealedNames.join(
           ", ",
@@ -593,6 +679,15 @@ function sentenceFor(matchState: MatchState, log: MoveLog, context: ProjectionCo
         ? `Game over (${winReasonPhrase(log.reason)}).`
         : `Game ended in a draw (${winReasonPhrase(log.reason)}).`;
     case "action":
+      if (log.messageKey === "setup.firstPlayerChoice") {
+        const order = log.params.order;
+        if (order === "first" || order === "second") {
+          return `${log.playerId === PLAYER_SIDE_TO_ID[humanSide] ? "You" : "Rival"} chose to go ${order}.`;
+        }
+      }
+      if (log.messageKey === "move.concede") {
+        return `${log.playerId === PLAYER_SIDE_TO_ID[humanSide] ? "You" : "Rival"} conceded the game.`;
+      }
       if (log.messageKey === "effect.draw.resolved") {
         const params = log.params as Record<string, unknown>;
         const sourceCardName =

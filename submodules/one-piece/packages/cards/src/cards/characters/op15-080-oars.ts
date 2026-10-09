@@ -23,7 +23,7 @@ export const op15Oars080: CharacterCard = {
   cost: 4,
   power: 0,
   counter: 1000,
-  traits: ["Giant Thriller Bark Pirates"],
+  traits: ["Giant", "Thriller Bark Pirates"],
   attribute: "strike",
   effect:
     "If you have [Gecko Moria] with 10000 power or more on your field and there are no other [Oars] cards, this Character gains +7000 power.\n[On K.O.] You may place 3 cards from your trash at the bottom of your deck in any order: Play this Character card from your trash.",
@@ -60,7 +60,7 @@ export const op15Oars080: CharacterCard = {
           {
             condition: "hasCard",
             player: "self",
-            zone: "character",
+            zone: "field",
             filters: [
               {
                 filter: "name",
@@ -76,7 +76,7 @@ export const op15Oars080: CharacterCard = {
           {
             condition: "zoneCount",
             player: "self",
-            zone: "character",
+            zone: "field",
             comparison: "eq",
             value: 0,
             filters: [

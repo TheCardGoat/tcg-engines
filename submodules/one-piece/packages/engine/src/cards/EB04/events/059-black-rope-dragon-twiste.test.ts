@@ -3,6 +3,42 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("EB04-059 Black Rope Dragon Twister", () => {
+  test("may decline the Main Life payment without revealing Life or removing Characters", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: ["EB04-059"], activeDon: 6, life: ["OP12-013", "OP12-017"] },
+      { character: ["OP13-013", "OP17-012"] },
+    );
+    engine.playCard("EB04-059");
+    const fieldBefore = engine.getView("south").players.north.characters;
+    const lifeBefore = engine.getView("north").players.south.life;
+    expect(lifeBefore.every((card) => card.hidden && card.cardId === null)).toBe(true);
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    expect(engine.getView("south").players.north.characters).toEqual(fieldBefore);
+    expect(engine.getView("north").players.south.life).toEqual(lifeBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("declining the first target group still permits the second group", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: ["EB04-059"], activeDon: 8, life: 2 },
+      { character: ["EB01-005", "EB01-005"] },
+    );
+    const kept = engine.getView("south").players.north.characters[0]!.instanceId;
+    const selected = engine.getView("south").players.north.characters[1]?.instanceId;
+    if (!selected) throw new Error("Expected second opposing Character");
+    engine.playCard("EB04-059");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    expect(
+      engine.getView("south").players.north.characters.some((card) => card?.instanceId === kept),
+    ).toBe(true);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [selected] }, "south");
+    const view = engine.getView("south");
+    expect(view.players.north.characters.some((card) => card?.instanceId === kept)).toBe(true);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(selected);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("[Main] flips top Life face-up and K.O.s a cost-6-or-less and a cost-5-or-less Character when behind on board", () => {
     const engine = OnePieceTestEngine.create(
       { hand: ["EB04-059"], activeDon: 6, life: ["OP12-013", "OP12-017"] },
@@ -26,8 +62,13 @@ describe("EB04-059 Black Rope Dragon Twister", () => {
     expect(firstIds).toContain(blenheimId);
     expect(firstIds).not.toContain(newgateId);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [higumaId] }, "south");
+    expect(
+      engine
+        .getView("south")
+        .players.north.characters.some((card) => card?.instanceId === higumaId),
+    ).toBe(true);
 
-    // Second K.O.: up to 1 with cost 5 or less (Higuma is already gone).
+    // Second K.O.: up to 1 with cost 5 or less (Higuma is already selected).
     const second = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     if (second?.kind !== "selectEntity") throw new Error("Expected the second K.O. target.");
     expect(second.candidates.map((c) => c.ref.id)).toEqual([blenheimId]);
@@ -74,7 +115,7 @@ describe("EB04-059 Black Rope Dragon Twister", () => {
     engine.endTurn("south");
     engine.asNorth().attack("OP16-003", engine.asSouth().leader());
     // Decline the counter so damage lands; the flipped Life card asks for its [Trigger].
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
     engine.pendingDecision("lifeTrigger", "south");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "south");
 

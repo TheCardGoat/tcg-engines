@@ -32,6 +32,7 @@ export const isabelaMadrigalKindCultivator: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_0720242347b14666bc3a97f5a1c64b00",
+    tcgPlayer: "704540",
   },
   classifications: ["Storyborn", "Ally", "Madrigal"],
   i18n: isabelaMadrigalKindCultivatorI18n,

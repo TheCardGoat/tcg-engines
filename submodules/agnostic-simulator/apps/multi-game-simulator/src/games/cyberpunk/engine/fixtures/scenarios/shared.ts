@@ -51,13 +51,32 @@ export const powerThreeMockUnit = {
 } satisfies FixtureCardEntry;
 
 export const endGamePlayer: PlayerFixture = {
+  // Nine cards exercise the overlapping hand fan and the hand paging controls.
+  // Gear definitions here must not overlap the attached gears on either field
+  // (the fixture instance mapper resolves definitions per role).
   hand: [
     c.welcomeToNightCityRetailMoxInciters,
     c.welcomeToNightCityRetailSwordwiseHuscle,
     c.welcomeToNightCityRetailFloorIt,
+    c.welcomeToNightCityRetailCorpoSecurity,
+    c.welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+    c.welcomeToNightCityRetailSecondhandBombus,
+    c.welcomeToNightCityRetailRebootOptics,
+    c.welcomeToNightCityRetailGorillaArms,
+    c.welcomeToNightCityRetailZetatechFaceplate,
   ],
   field: [
-    { card: c.welcomeToNightCityRetailSecondhandBombus, spent: false },
+    {
+      card: c.welcomeToNightCityRetailSecondhandBombus,
+      spent: false,
+      // Overwatch {Spend} activation demo: pay 1 €$, discard 1, defeat a spent
+      // rival unit (the rival seat keeps two spent units to defeat).
+      attachedGears: [
+        c.welcomeToNightCityRetailOverwatchPanamSGift,
+        c.welcomeToNightCityRetailSandevistan,
+        c.welcomeToNightCityRetailMandibularUpgrade,
+      ],
+    },
     { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false },
     { card: c.embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay, spent: true },
     {
@@ -85,11 +104,22 @@ export const endGamePlayer: PlayerFixture = {
 };
 
 export const endGameOpponent: PlayerFixture = {
-  hand: 4,
+  hand: 7,
   field: [
-    { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+    {
+      card: c.embracingPowerRetailStarterDeckMinotaur,
+      spent: false,
+      attachedGears: [
+        c.welcomeToNightCityRetailSatoriSwordOfSaburo,
+        c.welcomeToNightCityRetailKiroshiOptics,
+      ],
+    },
     { card: c.welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: true },
-    { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+    {
+      card: c.welcomeToNightCityRetailCorpoSecurity,
+      spent: false,
+      attachedGears: [c.welcomeToNightCityRetailDyingNightVSPistol],
+    },
     { card: c.welcomeToNightCityRetailSecondhandBombus, spent: true },
   ],
   legendArea: [
@@ -111,10 +141,14 @@ export const startBase: PlayerFixture = {
 };
 
 export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
+  regressionDetonateDetachesGear: "regression:detonate-detaches-gear",
+  regressionCarnageTargetsFieldedLegend: "regression:carnage-targets-fielded-legend",
   pepeReadyLegendsPrompt: "scenario:pepeReadyLegendsPrompt",
   regressionCardEffectRedirectDefeatChoice: "scenario:regressionCardEffectRedirectDefeatChoice",
   regressionCardEffectSacrificialGearChoice: "scenario:regressionCardEffectSacrificialGearChoice",
   regressionRedirectDefeatChoice: "scenario:regressionRedirectDefeatChoice",
+  fightResultBeforeDefeats: "scenario:fightResultBeforeDefeats",
+  pendingFightEffectOrder: "scenario:pendingFightEffectOrder",
   pendingEffectsRiverRelicAdamSmasher: "scenario:pendingEffectsRiverRelicAdamSmasher",
   deckSearchThreeMouthsPrompt: "scenario:deckSearchThreeMouthsPrompt",
   deckSearchHanakoPrompt: "scenario:deckSearchHanakoPrompt",
@@ -122,8 +156,15 @@ export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
   deckSearchViktorPrompt: "scenario:deckSearchViktorPrompt",
   deckSearchRiverWardPrompt: "scenario:deckSearchRiverWardPrompt",
   deckSearchTetratronicPrompt: "scenario:deckSearchTetratronicPrompt",
+  revealDestinationFoolOnTheHillPrompt: "scenario:revealDestinationFoolOnTheHillPrompt",
   gameStart: "scenario:gameStart",
+  firstPlayerChoice: "scenario:firstPlayerChoice:0",
   boardTappedResourcesQa: "scenario:boardTappedResourcesQa",
+  paymentAllResourcesQa: "scenario:paymentAllResourcesQa",
+  paymentFullEddiesQa: "scenario:paymentFullEddiesQa",
+  paymentQuickAbilityQa: "scenario:paymentQuickAbilityQa",
+  paymentOnlyEddiesQa: "scenario:paymentOnlyEddiesQa",
+  paymentPhysicalEddiesQa: "scenario:paymentPhysicalEddiesQa",
   retailCardCatalog: "scenario:retailCardCatalog",
   retailProgramTargetBench: "scenario:retailProgramTargetBench",
   retailCombatGigBench: "scenario:retailCombatGigBench",
@@ -132,14 +173,23 @@ export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
   mobileLedgerOneLegend: "scenario:mobileLedgerOneLegend",
   mobileLedgerTwoLegends: "scenario:mobileLedgerTwoLegends",
   mobileLedgerThreeLegends: "scenario:mobileLedgerThreeLegends",
+  overtimeCenterRow: "scenario:overtimeCenterRow",
+  overtimeCountdown: "scenario:overtimeCountdown",
+  gigWinThreatHud: "scenario:gigWinThreatHud",
   mobileLedgerFriendlyOneRivalThree: "scenario:mobileLedgerFriendlyOneRivalThree",
   mobileLedgerFriendlyZeroRivalTwo: "scenario:mobileLedgerFriendlyZeroRivalTwo",
   retailPr2295Cards: "scenario:retailPr2295Cards",
   retailNewCardAbilities: "scenario:retailNewCardAbilities",
   openingMain: "scenario:openingMain",
+  trashProgramPreview: "scenario:trashProgramPreview",
+  emptyFieldPlayTargets: "scenario:emptyFieldPlayTargets",
+  openingMainNoSellable: "scenario:openingMainNoSellable",
+  combatPriorityHold: "scenario:combatPriorityHold",
   attackStep: "scenario:attackStep",
   reactStep: "scenario:reactStep",
   chooseCardTarget: "scenario:chooseCardTarget",
+  chooseDiscardFromHand: "scenario:chooseDiscardFromHand",
+  handFanOverflow: "scenario:handFanOverflow",
   opponentTurn: "scenario:opponentTurn",
   stealGigTest: "scenario:stealGigTest",
   endGame: "scenario:endGame",
@@ -206,6 +256,7 @@ export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
   progChromeReverieRetail: "scenario:progChromeReverieRetail",
   progCyberpsychosisRetail: "scenario:progCyberpsychosisRetail",
   progPeaceOfferingRetail: "scenario:progPeaceOfferingRetail",
+  progPeaceOfferingInvalidCopyStillDraws: "scenario:progPeaceOfferingInvalidCopyStillDraws",
   progLiveWithTheAftermathRetail: "scenario:progLiveWithTheAftermathRetail",
   progLiveWithTheAftermathActiveOnlyRetail: "scenario:progLiveWithTheAftermathActiveOnlyRetail",
   progLiveWithTheAftermathRivalOnlyRetail: "scenario:progLiveWithTheAftermathRivalOnlyRetail",
@@ -292,6 +343,7 @@ export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
   unitLizzyWizzyDelicateWeaponRetail: "scenario:unitLizzyWizzyDelicateWeaponRetail",
   unitMistyOlszewskiMenderOfBrokenSpiritsRetail:
     "scenario:unitMistyOlszewskiMenderOfBrokenSpiritsRetail",
+  unitRogueReadyEddiesAfterSteal: "scenario:unitRogueReadyEddiesAfterSteal",
   unitNadiaFightingThroughGriefRetail: "scenario:unitNadiaFightingThroughGriefRetail",
   unitOffdutyMalfiniRetail: "scenario:unitOffdutyMalfiniRetail",
   unitSaulBrightStormriderRetail: "scenario:unitSaulBrightStormriderRetail",
@@ -312,6 +364,12 @@ export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
   progTheHeist: "scenario:progTheHeist",
   progTheHeistFreePlay: "scenario:progTheHeistFreePlay",
   progTrustNoOne: "scenario:progTrustNoOne",
+  progNocturneOp55N1: "scenario:progNocturneOp55N1",
+  progSynapseBurnout: "scenario:progSynapseBurnout",
+  progTowerfall: "scenario:progTowerfall",
+  progWeGottaLiveTogether: "scenario:progWeGottaLiveTogether",
+  progSafetyOverride: "scenario:progSafetyOverride",
+  progWildInTheStreets: "scenario:progWildInTheStreets",
   legendJudyAlvarezBraindanceMaestro: "scenario:legendJudyAlvarezBraindanceMaestro",
   unitAltCunninghamMotherOfDaemons: "scenario:unitAltCunninghamMotherOfDaemons",
   unitMaelstromZealots: "scenario:unitMaelstromZealots",

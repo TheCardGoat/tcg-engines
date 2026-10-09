@@ -24,7 +24,7 @@ export const op03Hatchan033: CharacterCard = {
   power: 4000,
   counter: 2000,
   trigger: "If your Leader has the {East Blue} type, play this card.",
-  traits: ["Fish-Man Arlong Pirates East Blue"],
+  traits: ["Fish-Man", "East Blue", "Arlong Pirates"],
   attribute: "slash",
   effect: "[Trigger] If your Leader has the {East Blue} type, play this card.",
   effects: {
@@ -35,7 +35,7 @@ export const op03Hatchan033: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "East Blue",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [{ action: "playThisCard" }],

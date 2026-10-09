@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/high-seas/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "High Seas"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/high-seas/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: d992b555598448baf6194b01abc336d1820ee7703397a25aca32e3894185bf52
 ---

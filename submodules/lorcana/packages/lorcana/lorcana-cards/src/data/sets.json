@@ -115,5 +115,14 @@
     "type": "EXPANSION",
     "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set13/thumbnails/fe2829261aac7710e9e163b7d86bf72a082d387c364f963a1780d0b682a1fbc1.png",
     "totalCards": 207
+  },
+  "set14": {
+    "id": "set14",
+    "name": "Hyperia City",
+    "code": "014",
+    "sortNumber": 18,
+    "type": "EXPANSION",
+    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set14/thumbnails/9804e387ee592616cdeef4f1da81c15bd13b3184b3d3e9f234fdbc60f5f2477c.png",
+    "totalCards": 204
   }
 }

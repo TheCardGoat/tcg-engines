@@ -20,7 +20,7 @@ describe("EB02-015 Jewelry Bonney", () => {
       },
       {
         character: [{ card: eb01MountainGod018, rested: true, playedOnTurn: 0 }],
-        deck: [eb01Doma005],
+        deck: [eb01Doma005, eb01Doma005],
       },
       { firstPlayer: "north", activeSeat: "south" },
     );

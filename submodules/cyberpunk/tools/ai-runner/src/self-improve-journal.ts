@@ -87,12 +87,13 @@ function nameMistake(dump: CoachMatchDump): string {
   if (HUNG.has(dump.reason)) return `hung:${dump.reason}`;
   const profile = deckProfileFor(dump.deckAId ?? "");
   const core = new Set(profile?.coreCards ?? []);
+  const curveSpare = new Set(profile?.curveSellCards ?? []);
   const legendHosts = preferredLegendHostNames(profile);
   const inPlay = new Map<string, Map<string, string>>();
   const namesById = new Map<string, string>();
-  for (const step of dump.steps) {
+  for (const [index, step] of dump.steps.entries()) {
     harvestNames(step, namesById);
-    const line = walkStep(step, core, legendHosts, inPlay);
+    const line = walkStep(step, dump.steps, index, core, curveSpare, legendHosts, inPlay);
     applyBoard(step, inPlay, namesById);
     if (line) return line;
   }
@@ -221,7 +222,10 @@ function goSoloCardName(step: CoachDumpStep): string {
 
 function walkStep(
   step: CoachDumpStep,
+  steps: readonly CoachDumpStep[],
+  index: number,
   core: ReadonlySet<string>,
+  curveSpare: ReadonlySet<string>,
   legendHosts: ReadonlySet<string>,
   inPlay: Map<string, Map<string, string>>,
 ): string | undefined {
@@ -229,7 +233,11 @@ function walkStep(
   if (step.kind === "stuck") return `hung:stuck`;
   if (step.move === "goSolo" && (step.stepIndex ?? 0) < 40) {
     const name = goSoloCardName(step);
-    if (name && matchesAny(name, legendHosts)) {
+    if (
+      name &&
+      matchesAny(name, legendHosts) &&
+      !soloEarnsImmediateValue(steps, index, step, name)
+    ) {
       return `early-go-solo:step-${step.stepIndex}`;
     }
   }
@@ -239,11 +247,56 @@ function walkStep(
     const name = typeof sold.cardName === "string" ? sold.cardName : "";
     const soldId = typeof sold.cardId === "string" ? sold.cardId : undefined;
     if (name && coreKey(name, core)) {
+      const ownTurn = typeof sold.turnNumber === "number" ? Math.ceil(sold.turnNumber / 2) : 0;
+      if (ownTurn >= 1 && ownTurn <= 5 && matchesAny(name, curveSpare)) return undefined;
       if (extraCoreAlreadyInPlay(inPlay, step.playerId, name, soldId, core)) return undefined;
       return `sold-engine:${name}:step-${step.stepIndex}`;
     }
   }
   return undefined;
+}
+
+/** A same-turn steal or winning fight is not a speculative early Go Solo. */
+function soloEarnsImmediateValue(
+  steps: readonly CoachDumpStep[],
+  index: number,
+  solo: CoachDumpStep,
+  name: string,
+): boolean {
+  const soloId = solo.args?.cardId;
+  let attacked = false;
+  for (const step of steps.slice(index + 1)) {
+    if (step.playerId === solo.playerId && step.move === "passPhase") break;
+    if (
+      (step.move === "attackRival" || step.move === "attackUnit") &&
+      step.args?.attackerId === soloId
+    ) {
+      attacked = true;
+    }
+    if (!attacked) continue;
+    for (const log of step.moveLogs) {
+      if (
+        log.type === "resolveStealGigs" &&
+        typeof log.attackerName === "string" &&
+        namesMatch(log.attackerName, name) &&
+        log.stolenCount > 0
+      ) {
+        return true;
+      }
+      if (
+        log.type !== "action" ||
+        typeof log.params?.attackerName !== "string" ||
+        !namesMatch(log.params.attackerName, name)
+      ) {
+        continue;
+      }
+      if (log.messageKey === "move.resolveAttack.direct" && Number(log.params?.count) > 0) {
+        return true;
+      }
+      if (log.messageKey === "move.resolveAttack.fight.attackerWins") return true;
+    }
+  }
+  return false;
 }
 
 /** True until a named gap is addressed. keep-gate unblocks only after keep/reject. */

@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-miscellaneous-topics/default-case"
+  relation: "current_index"
+---
+
 # Default Case
 
 #### General Rules:

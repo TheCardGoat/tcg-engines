@@ -12,6 +12,7 @@
   import { useLorcanaSidebarPresenter } from "@/features/simulator/context/game-context.svelte.js";
   import type { ConfirmableDirectMoveCategoryId } from "@/features/simulator/model/direct-action-state.js";
   import { getQuestAllSummary } from "@/features/simulator/model/turn-action-rail.js";
+  import { buildPostGameSummary } from "@/features/simulator/post-game/summary.js";
   import EventLogPanel from "@/features/simulator/panels/EventLogPanel.svelte";
   import PlayerInfo from "@/features/simulator/panels/PlayerInfo.svelte";
   import type { MatchNavigationContext } from "@/features/simulator/model/contracts.js";
@@ -28,6 +29,8 @@
     onDismissSupportReminder?: () => void;
     pendingDirectMoveCategoryId?: ConfirmableDirectMoveCategoryId | null;
     onTriggerUndo?: (() => void) | null;
+    onUndoTurn?: (() => void) | null;
+    canUndoTurn?: boolean;
     onTriggerQuestAll?: (() => void) | null;
     matchContext?: MatchNavigationContext | null;
     onNextGame?: (() => void) | null;
@@ -48,6 +51,8 @@
     onDismissSupportReminder,
     pendingDirectMoveCategoryId = null,
     onTriggerUndo = null,
+    onUndoTurn = null,
+    canUndoTurn = false,
     onTriggerQuestAll = null,
     matchContext = null,
     onNextGame = null,
@@ -80,6 +85,25 @@
   const moveLogEntries = $derived(sidebar.moveLogEntries);
   const ownerSide = $derived(sidebar.ownerSide);
   const activeSide = $derived(sidebar.activeSide);
+  const terminalSummary = $derived(
+    boardSnapshot?.status === "finished"
+      ? buildPostGameSummary({ board: boardSnapshot, entries: [], viewerSide: ownerSide })
+      : null,
+  );
+  const terminalResultLabel = $derived.by(() => {
+    switch (terminalSummary?.outcome.viewerResult) {
+      case "victory": return m["sim.postGame.result.victory"]({});
+      case "defeat": return m["sim.postGame.result.defeat"]({});
+      case "spectator": return m["sim.postGame.result.spectator"]({});
+      default: return m["sim.postGame.result.complete"]({});
+    }
+  });
+  const terminalReason = $derived(
+    terminalSummary?.outcome.reason
+      ?.replaceAll("player_one", m["sim.player.side.playerOne"]({}))
+      .replaceAll("player_two", m["sim.player.side.playerTwo"]({}))
+      ?? null,
+  );
   const showRawLogRegistryJson = $derived(sidebar.showRawLogRegistryJson);
   const canUndo = $derived(
     !readOnly && sidebar.moveCategorySummaries.some((summary) => summary.categoryId === "undo"),
@@ -310,6 +334,12 @@
   <Sidebar.Footer class="sidebar-footer-sticky">
     {#if isPostGame}
       <div class="sidebar-post-game-strip" aria-label={m["sim.postGame.sidebar.navigationAria"]({})}>
+        {#if terminalSummary}
+          <div role="status">
+            <strong>{terminalResultLabel}</strong>
+            {#if terminalReason}<p>{terminalReason}</p>{/if}
+          </div>
+        {/if}
         {#if matchContext && matchContext.format !== "best_of_1"}
           <div class="sidebar-post-game-score">
             {#if matchContext.nextGameId}
@@ -393,6 +423,21 @@
             <span>{concedeLabel}</span>
           </Button>
         </div>
+
+        {#if onUndoTurn}
+          <Button
+            variant="outline"
+            class="sidebar-action-button sidebar-action-button--undo-turn"
+            onclick={() => onUndoTurn?.()}
+            disabled={!canUndoTurn}
+            aria-label={canUndoTurn ? "Undo turn" : "Undo turn unavailable"}
+            title={canUndoTurn ? "Undo turn" : "Undo turn unavailable"}
+            data-testid="undo-turn"
+          >
+            <Undo2 class="size-4" />
+            <span>Undo turn</span>
+          </Button>
+        {/if}
 
       </div>
     {/if}
@@ -685,11 +730,16 @@
     font-size: 0.7rem;
   }
 
-  :global(.sidebar-action-button--undo) {
+  :global(.sidebar-action-button--undo),
+  :global(.sidebar-action-button--undo-turn) {
     border-color: rgba(125, 211, 252, 0.22);
     background:
       linear-gradient(180deg, rgba(8, 47, 73, 0.88), rgba(15, 23, 42, 0.96));
     color: #e0f2fe;
+  }
+
+  :global(.sidebar-action-button--undo-turn) {
+    width: 100%;
   }
 
   :global(.sidebar-action-button--concede) {

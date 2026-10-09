@@ -1,0 +1,19 @@
+{
+  "aOff": [],
+  "bOff": [
+    "remove-targets"
+  ],
+  "games": 1080,
+  "aWins": 549,
+  "aLosses": 531,
+  "draws": 0,
+  "aWinRate": 0.5083,
+  "pairs": 540,
+  "aSweeps": 186,
+  "bSweeps": 177,
+  "splits": 177,
+  "pairedImprovement": 0.0167,
+  "failures": [],
+  "avgSteps": 93.1,
+  "elapsedMs": 1056629
+}

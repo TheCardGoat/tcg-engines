@@ -13,7 +13,7 @@ export const theVineToweringStalk: CharacterCard = {
       artId: "set13-197",
       setCode: "set13",
       collectorNumber: "197",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -24,7 +24,7 @@ export const theVineToweringStalk: CharacterCard = {
   inkType: ["steel"],
   set: "013",
   cardNumber: 197,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 10,
   strength: 10,
   willpower: 10,
@@ -32,6 +32,7 @@ export const theVineToweringStalk: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_50500ac5aee74cc590b870231c6dd497",
+    tcgPlayer: "702662",
   },
   text: [
     {

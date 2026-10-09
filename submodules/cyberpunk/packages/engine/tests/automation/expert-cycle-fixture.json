@@ -1,0 +1,544 @@
+{
+  "seed": "expert-botlab-holdout-2026-10-03-v1/authored-judy-top-deck-discount-mirror/authored-judy-top-deck-discount-mirror/block-0/a-seat-2",
+  "deckId": "authored-judy-top-deck-discount",
+  "playerId": "p2",
+  "commands": [
+    {
+      "playerId": "p2",
+      "move": "resolveFirstPlayer",
+      "args": {
+        "goFirst": true
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "mulligan",
+      "args": {}
+    },
+    {
+      "playerId": "p1",
+      "move": "mulligan",
+      "args": {}
+    },
+    {
+      "playerId": "p2",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_860959115"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_303453689"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_85591186"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_657970125"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-1"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_860959115",
+        "value": 7
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "passPhase",
+      "args": {}
+    },
+    {
+      "playerId": "p1",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_840128017"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_770475977"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_92823699"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "passPhase",
+      "args": {}
+    },
+    {
+      "playerId": "p2",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_496459286"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_333142374"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_245906055"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_245906055",
+        "abilityIndex": 0
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_240645458"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "passPhase",
+      "args": {}
+    },
+    {
+      "playerId": "p2",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_205925024"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_884555128"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "passPhase",
+      "args": {}
+    },
+    {
+      "playerId": "p1",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_600851123"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_905670518"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "passPhase",
+      "args": {}
+    },
+    {
+      "playerId": "p2",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_568075285"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_538945602"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_992075478"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_704155011"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-8"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "resolveChooseEffect",
+      "args": {
+        "optionId": "bottom-deck"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_240645458"]
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_770475977"]
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "attackRival",
+      "args": {
+        "attackerId": "ci_770475977"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "callLegend",
+      "args": {
+        "legendId": "ci_228164422"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "resolveStealGigs",
+      "args": {
+        "dieIds": ["gd_600851123"]
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "passPhase",
+      "args": {}
+    },
+    {
+      "playerId": "p1",
+      "move": "resolveCardTypeChoice",
+      "args": {
+        "cardType": "unit"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_893764124"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_81759943"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "attackUnit",
+      "args": {
+        "attackerId": "ci_905670518",
+        "defenderId": "ci_770475977"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "resolveAttack",
+      "args": {
+        "pass": true
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_245906055",
+        "abilityIndex": 0
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_618912584"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-12"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "resolveChooseEffect",
+      "args": {
+        "optionId": "bottom-deck"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_884555128"]
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "resolveEffectTarget",
+      "args": {
+        "targetIds": ["ci_905670518"]
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_85591186",
+        "abilityIndex": 1
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "passPhase",
+      "args": {}
+    },
+    {
+      "playerId": "p1",
+      "move": "gainGig",
+      "args": {
+        "dieId": "gd_433797079"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_300998007"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_439952767"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "passPhase",
+      "args": {}
+    },
+    {
+      "playerId": "p2",
+      "move": "sellCard",
+      "args": {
+        "cardId": "ci_61444797"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_85591186",
+        "abilityIndex": 1
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "resolveCardToMove",
+      "args": {
+        "cardId": "ci_349404607"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "activateAbility",
+      "args": {
+        "cardId": "ci_245906055",
+        "abilityIndex": 0
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_349404607"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "resolveTrigger",
+      "args": {
+        "triggerId": "trigger-18"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_449486304"
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "resolveAdjustGig",
+      "args": {
+        "kind": "adjust",
+        "dieId": "gd_572737594",
+        "value": 1
+      }
+    },
+    {
+      "playerId": "p2",
+      "move": "passPhase",
+      "args": {}
+    },
+    {
+      "playerId": "p1",
+      "move": "playCard",
+      "args": {
+        "cardId": "ci_611073282"
+      }
+    },
+    {
+      "playerId": "p1",
+      "move": "passPhase",
+      "args": {}
+    }
+  ],
+  "deck": {
+    "id": "authored-judy-top-deck-discount",
+    "archetype": "authored-botlab",
+    "title": "Judy — Top-of-Deck Discount, Not a Guaranteed Top",
+    "legends": [
+      "alt-cunningham-soulkiller-architect",
+      "jackie-welles-pour-one-out-for-me",
+      "judy-alvarez-braindance-maestro"
+    ],
+    "mainDeck": [
+      "evelyn-parker-scheming-siren",
+      "evelyn-parker-scheming-siren",
+      "evelyn-parker-scheming-siren",
+      "jacked-in-voodoo-boy",
+      "jacked-in-voodoo-boy",
+      "jacked-in-voodoo-boy",
+      "mt0d12-flathead",
+      "mt0d12-flathead",
+      "mt0d12-flathead",
+      "judy-alvarez-nothing-to-doubt",
+      "judy-alvarez-nothing-to-doubt",
+      "judy-alvarez-nothing-to-doubt",
+      "placide-voodoo-sentinel",
+      "placide-voodoo-sentinel",
+      "placide-voodoo-sentinel",
+      "misty-olszewski-mender-of-broken-spirits",
+      "misty-olszewski-mender-of-broken-spirits",
+      "netwatch-netdriver",
+      "netwatch-netdriver",
+      "netwatch-netdriver",
+      "trust-no-one",
+      "trust-no-one",
+      "trust-no-one",
+      "chrome-reverie",
+      "chrome-reverie",
+      "chrome-reverie",
+      "pyramid-song",
+      "pyramid-song",
+      "pyramid-song",
+      "towerfall",
+      "towerfall",
+      "towerfall",
+      "floor-it",
+      "floor-it",
+      "floor-it",
+      "les-elemens",
+      "les-elemens",
+      "les-elemens",
+      "reboot-optics",
+      "reboot-optics"
+    ],
+    "coveredSlugs": [
+      "chrome-reverie",
+      "evelyn-parker-scheming-siren",
+      "floor-it",
+      "jacked-in-voodoo-boy",
+      "judy-alvarez-nothing-to-doubt",
+      "les-elemens",
+      "misty-olszewski-mender-of-broken-spirits",
+      "mt0d12-flathead",
+      "netwatch-netdriver",
+      "placide-voodoo-sentinel",
+      "pyramid-song",
+      "reboot-optics",
+      "towerfall",
+      "trust-no-one"
+    ]
+  }
+}

@@ -59,54 +59,68 @@ describe("OP04-038 The Weak Do Not Have the Right to Choose How They Die!!!", ()
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
-  test("Counter exposes the same ordered choices after Event payment", () => {
-    const engine = OnePieceTestEngine.create(
-      {
-        character: [
-          { card: eb01Doma005, playedOnTurn: 0 },
-          { card: eb01MountainGod018, playedOnTurn: 0 },
-        ],
-      },
-      {
-        hand: [op04TheWeakDoNotHaveTheRightToChooseHowTheyDie038],
-        activeDon: 5,
-        life: 2,
-      },
-      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
-    );
-    const attackerId = engine.findCardInZone("south", "character", eb01Doma005);
-    const otherId = engine.findCardInZone("south", "character", eb01MountainGod018);
-    const eventId = engine.findCardInZone(
-      "north",
-      "hand",
-      op04TheWeakDoNotHaveTheRightToChooseHowTheyDie038,
-    );
+  test.each([false, true])(
+    "Counter exposes the same ordered choices after Event payment (already rested: %s)",
+    (chooseRested) => {
+      const engine = OnePieceTestEngine.create(
+        {
+          character: [
+            { card: eb01Doma005, playedOnTurn: 0 },
+            { card: eb01MountainGod018, playedOnTurn: 0 },
+          ],
+        },
+        {
+          hand: [op04TheWeakDoNotHaveTheRightToChooseHowTheyDie038],
+          activeDon: 5,
+          life: 2,
+        },
+        SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+      );
+      const attackerId = engine.findCardInZone("south", "character", eb01Doma005);
+      const otherId = engine.findCardInZone("south", "character", eb01MountainGod018);
+      const eventId = engine.findCardInZone(
+        "north",
+        "hand",
+        op04TheWeakDoNotHaveTheRightToChooseHowTheyDie038,
+      );
 
-    engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+      engine.declareAttack(attackerId, engine.leader("north"), "south");
+      engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
 
-    const restDecision = engine.pendingDecision("effectTargetSelection", "north");
-    const restStep = restDecision.steps[0];
-    expect(restStep?.kind).toBe("selectEntity");
-    if (restStep?.kind !== "selectEntity") {
-      throw new Error("Expected the defender to receive the Counter rest choice.");
-    }
-    expect(restStep.candidates.map((candidate) => candidate.ref.id)).toEqual([
-      engine.leader("south"),
-      otherId,
-    ]);
-    expect(restStep.candidates.map((candidate) => candidate.ref.id)).not.toContain(attackerId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [otherId] }, "north");
+      const restDecision = engine.pendingDecision("effectTargetSelection", "north");
+      const restStep = restDecision.steps[0];
+      expect(restStep?.kind).toBe("selectEntity");
+      if (restStep?.kind !== "selectEntity") {
+        throw new Error("Expected the defender to receive the Counter rest choice.");
+      }
+      expect(restStep.candidates.map((candidate) => candidate.ref.id)).toEqual([
+        engine.leader("south"),
+        attackerId,
+        otherId,
+      ]);
+      expect(restStep.candidates.map((candidate) => candidate.ref.id)).toContain(attackerId);
+      engine.resolveDecision(
+        "effectTargetSelection",
+        { selectedIds: [chooseRested ? attackerId : otherId] },
+        "north",
+      );
 
-    const koDecision = engine.pendingDecision("effectTargetSelection", "north");
-    expect(koDecision.steps[0]).toMatchObject({ kind: "selectEntity", min: 0, max: 1 });
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "north");
+      const koDecision = engine.pendingDecision("effectTargetSelection", "north");
+      expect(koDecision.steps[0]).toMatchObject({ kind: "selectEntity", min: 0, max: 1 });
+      engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "north");
 
-    const view = engine.getView("north");
-    expect(view.players.north).toMatchObject({ activeDon: 0, restedDon: 5 });
-    expect(view.prompts).toHaveLength(0);
-    expect(engine.getState().capabilityHistory).toHaveLength(0);
-  });
+      const view = engine.getView("north");
+      expect(
+        view.players.south.characters.find((card) => card?.instanceId === attackerId)?.rested,
+      ).toBe(true);
+      expect(
+        view.players.south.characters.find((card) => card?.instanceId === otherId)?.rested,
+      ).toBe(!chooseRested);
+      expect(view.players.north).toMatchObject({ activeDon: 0, restedDon: 5 });
+      expect(view.prompts).toHaveLength(0);
+      expect(engine.getState().capabilityHistory).toHaveLength(0);
+    },
+  );
 
   test("Life Trigger maps the optional count for reactivating up to five DON!!", () => {
     const engine = OnePieceTestEngine.create(

@@ -5,6 +5,7 @@ import { USURP_BOARD_LAB_SCENARIOS } from "./usurp-board-labs";
 describe("UST multi-card board labs", () => {
   it("registers the zombie-choice and gloomblade Usurp boards", () => {
     expect(Object.keys(USURP_BOARD_LAB_SCENARIOS)).toEqual([
+      "usurp-corpse-cover-defense-board",
       "usurp-zombie-choice-board",
       "usurp-gloomblade-usurp-board",
       "usurp-gloomblade-pitch-board",

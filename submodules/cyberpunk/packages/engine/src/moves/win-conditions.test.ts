@@ -177,26 +177,21 @@ describe("win conditions", () => {
     });
   });
 
-  describe("overtime — begins after the last player's 7th turn (turn 15)", () => {
-    it("does not activate overtime before turn 15", () => {
-      const engine = engineWithGigs(3, 3);
+  describe("overtime — begins after two consecutive empty-Fixer starts", () => {
+    it("does not activate after the first empty-Fixer turn", () => {
+      const engine = engineWithGigs(6, 6);
 
-      // Pass 12 turns → turn 13 begins (first player's 7th turn).
-      for (let i = 0; i < 12; i++) {
-        engine.completeTurn();
-      }
+      engine.completeTurn();
 
       expect(engine.getState().G.turnMetadata.overtimeActive).toBe(false);
       expect(engine.isGameOver()).toBe(false);
     });
 
-    it("activates overtime at the start of turn 15", () => {
-      const engine = engineWithGigs(3, 3);
+    it("activates after the second consecutive empty-Fixer turn", () => {
+      const engine = engineWithGigs(6, 6);
 
-      // Pass 14 turns → turn 15 begins (after last player's 7th turn).
-      for (let i = 0; i < 14; i++) {
-        engine.completeTurn();
-      }
+      engine.completeTurn();
+      engine.completeTurn();
 
       expect(engine.getState().G.turnMetadata.overtimeActive).toBe(true);
       expect(engine.isGameOver()).toBe(false);
@@ -212,9 +207,12 @@ describe("win conditions", () => {
         }),
       );
 
-      engine.judgeSetTurnMetadata({ turnNumber: 14 });
+      engine.judgeSetTurnMetadata({
+        previousTurnBeganWithEmptyFixer: true,
+        turnBeganWithEmptyFixer: true,
+      });
 
-      // Turn 14 ends → turn 15 begins, overtime activates, majority = 7.
+      // The second empty-Fixer turn ends, overtime activates, and majority = 7.
       // P1 has 7 gigs → wins immediately.
       engine.completeTurn();
 

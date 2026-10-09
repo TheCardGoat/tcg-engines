@@ -22,7 +22,7 @@ export const op14eb04DonTWorryIMHere057: EventCard = {
   setId: "OP14",
   cost: 2,
   trigger: "Draw 2 cards.",
-  traits: ["Fish-Man The Seven Warlords of the Sea The Sun Pirates"],
+  traits: ["Fish-Man", "The Seven Warlords of the Sea", "The Sun Pirates"],
   effect:
     "[Main] All of your {Fish-Man} or {Merfolk} type Leader and Character cards gain +1000 power during this turn.",
   effects: {
@@ -45,12 +45,12 @@ export const op14eb04DonTWorryIMHere057: EventCard = {
                     {
                       filter: "trait",
                       value: "Fish-Man",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "trait",
                       value: "Merfolk",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                 },

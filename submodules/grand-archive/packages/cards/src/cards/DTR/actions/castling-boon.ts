@@ -46,6 +46,10 @@ export const castlingBoon: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
                     },
                     {
                       kind: "subtype",
+                      oneOf: ["CHESSMAN"],
+                    },
+                    {
+                      kind: "subtype",
                       oneOf: ["ROOK"],
                     },
                   ],

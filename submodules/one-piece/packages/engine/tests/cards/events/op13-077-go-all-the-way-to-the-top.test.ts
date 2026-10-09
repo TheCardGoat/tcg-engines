@@ -11,6 +11,32 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 import { SOUTH_ATTACKS_WITHOUT_TURN_SETUP } from "./battle-fixture.shared.ts";
 
 describe("OP13-077 Go All the Way to the Top!!", () => {
+  test("declining the first target group still permits the second group", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: ["OP13-077"],
+        activeDon: 8,
+        life: 2,
+        character: [{ card: eb01Doma005, attachedDon: 1 }],
+      },
+      { character: ["EB01-005", "EB01-005"] },
+    );
+    const kept = engine.getView("south").players.north.characters[0]!.instanceId;
+    const selected = engine.getView("south").players.north.characters[1]?.instanceId;
+    if (!selected) throw new Error("Expected second opposing Character");
+    engine.playCard("OP13-077");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    expect(
+      engine.getView("south").players.north.characters.some((card) => card?.instanceId === kept),
+    ).toBe(true);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [selected] }, "south");
+    const view = engine.getView("south");
+    expect(view.players.north.characters.some((card) => card?.instanceId === kept)).toBe(true);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(selected);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("Main pays three DON!! and K.O.s separate base-4000 and base-3000 Characters", () => {
     const engine = OnePieceTestEngine.create(
       {
@@ -26,6 +52,11 @@ describe("OP13-077 Go All the Way to the Top!!", () => {
     engine.playCard(op13GoAllTheWayToTheTop077);
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
     engine.resolveDecision("effectTargetSelection", { selectedIds: [power4kId] }, "south");
+    expect(
+      engine
+        .getView("south")
+        .players.north.characters.some((card) => card?.instanceId === power4kId),
+    ).toBe(true);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [power3kId] }, "south");
 
     expect(engine.getView("south").players.north.trash.map((card) => card.instanceId)).toEqual(
@@ -35,7 +66,7 @@ describe("OP13-077 Go All the Way to the Top!!", () => {
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
-  test("Counter leaves the defending Leader at +3000 for the rest of the turn", () => {
+  test("Counter power expires when this battle ends", () => {
     const engine = OnePieceTestEngine.create(
       { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
       { hand: [op13GoAllTheWayToTheTop077], activeDon: 1 },
@@ -47,7 +78,8 @@ describe("OP13-077 Go All the Way to the Top!!", () => {
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
 
-    expect(engine.getView("north").players.north.leader.power).toBe(8000);
+    expect(engine.getView("north").players.north.leader.power).toBe(5000);
+    expect(engine.getView("north").players.north.lifeCount).toBe(4);
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });

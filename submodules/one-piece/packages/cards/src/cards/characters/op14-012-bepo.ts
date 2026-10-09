@@ -23,7 +23,7 @@ export const op14eb04Bepo012: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Heart Pirates Minks"],
+  traits: ["Minks", "Heart Pirates"],
   attribute: "strike",
   effect:
     "[When Attacking] If this Character has 5000 power or more, give up to 2 rested DON!! cards to your Leader or 1 of your Characters.",

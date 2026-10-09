@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-game-zones/game-zones-field"
+  relation: "current_index"
+---
+
 # Game Zones - Field
 
 #### General Rules:

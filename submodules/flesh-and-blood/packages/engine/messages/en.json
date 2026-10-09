@@ -148,6 +148,7 @@
   "flesh-and-blood.turn.started": "Turn {turnNumber} has begun.",
   "flesh-and-blood.game.ended": "{playerId} lost the game ({reason}).",
   "flesh-and-blood.decision.awaiting": "A decision awaits {actorId}.",
+  "flesh-and-blood.undo": "{actorId} used Undo.",
   "flesh-and-blood.decision.chosen": "{actorId} chose {choice}.",
   "flesh-and-blood.decision.private": "{label}",
   "flesh-and-blood.phase.start": "{turnPlayerId} began the {phase} phase."

@@ -19,6 +19,8 @@ export interface AuthoredBotLabDeckSpec {
   readonly mainDeck: Readonly<Record<string, number>>;
 }
 
+export type AuthoredBotLabDeckId = (typeof authoredBotLabDeckSpecs)[number]["id"];
+
 export const authoredBotLabDeckSpecs = [
   {
     id: "authored-overwatch-recharge-control",
@@ -324,4 +326,92 @@ export const authoredBotLabDeckSpecs = [
       "Trust No One": 3,
     },
   },
+  {
+    id: "authored-rry-llorona-steel-dragon",
+    title: "RRY — Steel Dragon on curve",
+    legends: ["V: Streetkid", "Dexter DeShawn: Off the Grid", "Muamar Reyes: El Capitán"],
+    mainDeck: {
+      "Dexter DeShawn: One Last Chance": 2,
+      "La Llorona: Ghost of the Past": 2,
+      "6th Street Recruits": 3,
+      "Meredith Stout: Stone Cold Corpo": 3,
+      "Trauma Team Operatives": 3,
+      "Yorinobu Arasaka: Steel Dragon": 3,
+      "Mantis Blades": 3,
+      "Satori: Sword of Saburo": 2,
+      "Zetatech Faceplate": 3,
+      "All is Lost": 3,
+      "Industrial Assembly": 3,
+      "The Heist": 3,
+      "Bonnie and Clyde": 3,
+      "Over the Edge": 2,
+      "Carnage at the Colosseum": 2,
+    },
+  },
+  {
+    id: "authored-bbg-towerfall-control",
+    title: "BBG — Towerfall control",
+    legends: [
+      "Alt Cunningham: Soulkiller Architect",
+      "Hanako Arasaka: Daughter of the Emperor",
+      "Jackie Welles: Pour One Out For Me",
+    ],
+    mainDeck: {
+      "Jacked-In Voodoo Boy": 3,
+      "Pepe Najarro: Working Doubles": 3,
+      "Psycho Squad": 1,
+      "Lizzy Wizzy: Delicate Weapon": 3,
+      "Maman Brigitte: Spirit of Death": 2,
+      "Placide: Voodoo Sentinel": 2,
+      "Floor It": 2,
+      "Peace Offering": 3,
+      "Trust No One": 3,
+      "Three Mouths, One Desire": 3,
+      "Chrome Reverie": 3,
+      "Nocturne OP55 N1": 3,
+      "Pyramid Song": 3,
+      "Les Élémens": 3,
+      Towerfall: 3,
+    },
+  },
+  {
+    id: "authored-rry-detonate-gear-curve",
+    title: "RRY — Detonate gear curve",
+    legends: ["V: Streetkid", "Dexter DeShawn: Off the Grid", "Muamar Reyes: El Capitán"],
+    mainDeck: {
+      "Dexter DeShawn: One Last Chance": 2,
+      "La Llorona: Ghost of the Past": 2,
+      "6th Street Recruits": 3,
+      "Meredith Stout: Stone Cold Corpo": 3,
+      "Trauma Team Operatives": 3,
+      "Yorinobu Arasaka: Steel Dragon": 3,
+      "Mantis Blades": 3,
+      "Satori: Sword of Saburo": 2,
+      "Zetatech Faceplate": 3,
+      "All is Lost": 2,
+      Detonate: 2,
+      "Industrial Assembly": 3,
+      "The Heist": 2,
+      "Bonnie and Clyde": 3,
+      "Over the Edge": 2,
+      "Carnage at the Colosseum": 2,
+    },
+  },
 ] as const satisfies readonly AuthoredBotLabDeckSpec[];
+
+/**
+ * Bot-lab ranking of the strongest authored decks, strongest first: the
+ * practice catalog publishes it as the "Recommended" opponent decks and the
+ * web practice tab preselects the leader. The lab owns this order — re-derive
+ * it from `tools/ai-runner/src/deck-round-robin.ts` standings and the campaign
+ * records under `reports/heuristics-ab` and `reports/self-improve` whenever
+ * the pool or the bots change. The current order carries the deck-strategy
+ * profiling result (Yorinobu's two-units-for-one pool ranked strongest) plus
+ * the 2026-09 curve tuning of the Towerfall control and Detonate gear curve
+ * decks; no round-robin leaderboard has superseded it yet.
+ */
+export const recommendedBotLabDeckIds = [
+  "authored-yorinobu-two-units-for-one",
+  "authored-bbg-towerfall-control",
+  "authored-rry-detonate-gear-curve",
+] as const satisfies readonly [AuthoredBotLabDeckId, AuthoredBotLabDeckId, AuthoredBotLabDeckId];

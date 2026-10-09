@@ -8,6 +8,14 @@ import {
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
+function chooseFirstGarpReaction(engine: OnePieceTestEngine) {
+  const order = engine.pendingDecision("readyEffectOrder", "south").steps[0];
+  if (order?.kind !== "chooseOption") throw new Error("Expected Garp reaction order.");
+  expect(order.options).toHaveLength(2);
+  expect(order.options.every((option) => option.label.includes("Garp"))).toBe(true);
+  engine.resolveDecision("readyEffectOrder", { optionId: order.options[0]!.id }, "south");
+}
+
 describe("EB02-049 Monkey.D.Garp", () => {
   test("gives two rested DON!! to its Leader, then rests to K.O. only a cost-1 Character", () => {
     const engine = OnePieceTestEngine.create(
@@ -32,6 +40,11 @@ describe("EB02-049 Monkey.D.Garp", () => {
     engine.resolveDecision("effectGiveDonCount", { optionId: "2" }, "south");
     expect(engine.getView("south").players.south.leader.attachedDon).toBe(2);
 
+    chooseFirstGarpReaction(engine);
+    // Each given DON!! triggers the Leader. Decline both cost reductions to
+    // preserve the Character's printed cost-1 K.O. boundary below.
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
     engine.activateEffect(garpId, "activateMain", "south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
     const ko = engine.pendingDecision("effectTargetSelection", "south").steps[0];
@@ -63,6 +76,11 @@ describe("EB02-049 Monkey.D.Garp", () => {
     engine.playCard(eb02MonkeyDGarp049, "south");
     const garpId = engine.findCardInZone("south", "character", eb02MonkeyDGarp049);
     engine.resolveDecision("effectGiveDonCount", { optionId: "2" }, "south");
+    chooseFirstGarpReaction(engine);
+    // Each given DON!! triggers the Leader. Decline both cost reductions to
+    // preserve the Character's printed cost-1 K.O. boundary below.
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
     engine.activateEffect(garpId, "activateMain", "south");
     const before = engine.getView("south").players.south;
     const donPoolBefore = before.activeDon + before.restedDon;
@@ -80,5 +98,19 @@ describe("EB02-049 Monkey.D.Garp", () => {
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("may rest to pay with the wrong Leader but cannot KO the eligible Character", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST01-001", character: [eb02MonkeyDGarp049] },
+      { character: [eb01Doma005] },
+    );
+    const garp = e.findCardInZone("south", "character", eb02MonkeyDGarp049);
+    const target = e.findCardInZone("north", "character", eb01Doma005);
+    e.activateEffect(garp, "activateMain", "south");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    expect(e.getView("south").players.south.characters[0]?.rested).toBe(true);
+    expect(e.getView("south").players.north.characters[0]?.instanceId).toBe(target);
+    expect(e.getView("south").players.north.trash).toHaveLength(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

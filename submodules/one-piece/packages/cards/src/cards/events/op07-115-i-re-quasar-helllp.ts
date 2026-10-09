@@ -21,7 +21,7 @@ export const op07IReQuasarHelllp115: EventCard = {
   rarity: "C",
   setId: "OP07",
   cost: 1,
-  traits: ["Scientist Egghead"],
+  traits: ["Scientist", "Egghead"],
   effect:
     "[Counter] If you have 2 or less Life cards, up to 1 of your Leader or Character cards gains +3000 power during this battle. [Trigger] Play up to 1 of your [Egghead] type Character cards with a cost of 5 or less from your trash.",
   effects: {
@@ -74,7 +74,7 @@ export const op07IReQuasarHelllp115: EventCard = {
               {
                 filter: "trait",
                 value: "Egghead",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

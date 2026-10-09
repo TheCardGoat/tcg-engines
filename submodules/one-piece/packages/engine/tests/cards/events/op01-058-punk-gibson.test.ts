@@ -60,41 +60,53 @@ describe("OP01-058 Punk Gibson", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
-  test("lets the Life Trigger rest an opposing Character without a cost limit", () => {
-    const engine = OnePieceTestEngine.create(
-      {
-        character: [{ card: eb01MountainGod018, playedOnTurn: 0 }, eb01Doma005, eb02Enel052],
-      },
-      {
-        life: [op01PunkGibson058],
-      },
-      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
-    );
-    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
-    const otherId = engine.findCardInZone("south", "character", eb01Doma005);
-    const selectedHighCostId = engine.findCardInZone("south", "character", eb02Enel052);
+  test.each([false, true])(
+    "lets the Life Trigger rest an opposing Character without a cost limit (already rested: %s)",
+    (chooseRested) => {
+      const engine = OnePieceTestEngine.create(
+        {
+          character: [{ card: eb01MountainGod018, playedOnTurn: 0 }, eb01Doma005, eb02Enel052],
+        },
+        {
+          life: [op01PunkGibson058],
+        },
+        SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+      );
+      const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+      const otherId = engine.findCardInZone("south", "character", eb01Doma005);
+      const selectedHighCostId = engine.findCardInZone("south", "character", eb02Enel052);
 
-    engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+      engine.declareAttack(attackerId, engine.leader("north"), "south");
+      engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
 
-    const targetDecision = engine.pendingDecision("effectTargetSelection", "north");
-    const targetStep = targetDecision.steps[0];
-    expect(targetStep?.kind).toBe("selectEntity");
-    if (targetStep?.kind !== "selectEntity") {
-      throw new Error("Expected the damaged player to receive the unrestricted rest choice.");
-    }
-    expect(targetStep.candidates.map((candidate) => candidate.ref.id)).toEqual([
-      otherId,
-      selectedHighCostId,
-    ]);
-    expect(targetStep.candidates.map((candidate) => candidate.ref.id)).not.toContain(attackerId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [selectedHighCostId] }, "north");
+      const targetDecision = engine.pendingDecision("effectTargetSelection", "north");
+      const targetStep = targetDecision.steps[0];
+      expect(targetStep?.kind).toBe("selectEntity");
+      if (targetStep?.kind !== "selectEntity") {
+        throw new Error("Expected the damaged player to receive the unrestricted rest choice.");
+      }
+      expect(targetStep.candidates.map((candidate) => candidate.ref.id)).toEqual([
+        attackerId,
+        otherId,
+        selectedHighCostId,
+      ]);
+      expect(targetStep.candidates.map((candidate) => candidate.ref.id)).toContain(attackerId);
+      engine.resolveDecision(
+        "effectTargetSelection",
+        { selectedIds: [chooseRested ? attackerId : selectedHighCostId] },
+        "north",
+      );
 
-    const view = engine.getView("north");
-    expect(
-      view.players.south.characters.find((card) => card?.instanceId === selectedHighCostId)?.rested,
-    ).toBe(true);
-    expect(view.prompts).toHaveLength(0);
-    expect(engine.getState().capabilityHistory).toHaveLength(0);
-  });
+      const view = engine.getView("north");
+      expect(
+        view.players.south.characters.find((card) => card?.instanceId === attackerId)?.rested,
+      ).toBe(true);
+      expect(
+        view.players.south.characters.find((card) => card?.instanceId === selectedHighCostId)
+          ?.rested,
+      ).toBe(!chooseRested);
+      expect(view.prompts).toHaveLength(0);
+      expect(engine.getState().capabilityHistory).toHaveLength(0);
+    },
+  );
 });

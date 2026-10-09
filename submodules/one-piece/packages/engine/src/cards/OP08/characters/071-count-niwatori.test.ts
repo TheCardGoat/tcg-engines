@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op08CountNiwatori071 } from "../../../../../cards/src/cards/characters/op08-071-count-niwatori.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP08-071 Count Niwatori", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op08CountNiwatori071);
-  });
-});

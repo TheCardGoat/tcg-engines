@@ -23,7 +23,7 @@ export const op08BasilHawkins089: CharacterCard = {
   cost: 7,
   power: 9000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates Hawkins Pirates"],
+  traits: ["Animal Kingdom Pirates", "Hawkins Pirates"],
   attribute: "slash",
   effect: "NULL",
   i18n: op08BasilHawkins089I18n,

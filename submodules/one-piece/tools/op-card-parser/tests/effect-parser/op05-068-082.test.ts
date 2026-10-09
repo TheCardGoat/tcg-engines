@@ -3,13 +3,13 @@ import { describe, expect, test } from "vite-plus/test";
 import { buildCardEffects } from "../../src/effect-parser/build-effects.ts";
 
 describe("OP05-068 through OP05-082 Character parser regressions", () => {
-  test("preserves inclusive trait matching on Chopa-Emon, Law, and Mr.1", () => {
+  test("preserves exact trait matching on Chopa-Emon, Law, and Mr.1", () => {
     for (const text of [
       "[On Play] If you have 8 or more DON!! cards on your field, set up to 1 of your purple [Straw Hat Crew] type Characters with 6000 power or less as active.",
       "[When Attacking] If your opponent has more DON!! cards on their field than you, look at 5 cards from the top of your deck; reveal up to 1 [Heart Pirates] type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
       "[On Your Opponent's Attack][Once Per Turn] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Play up to 1 [Baroque Works] type Character card with a cost of 3 or less from your hand.",
     ]) {
-      expect(JSON.stringify(buildCardEffects(text))).toContain('"match":"includes"');
+      expect(JSON.stringify(buildCardEffects(text))).toContain('"match":"exact"');
     }
   });
 

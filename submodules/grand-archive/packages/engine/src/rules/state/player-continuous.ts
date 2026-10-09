@@ -9,7 +9,11 @@ import {
   grandArchiveAbilityIsFunctional,
   grandArchiveObjectFace,
 } from "../../game/card-runtime.ts";
-import { grandArchiveContinuousEffectIsActive, grandArchiveObjectTimestamp } from "./continuous.ts";
+import {
+  grandArchiveContinuousStaticSources,
+  grandArchiveContinuousEffectIsActive,
+  grandArchiveObjectTimestamp,
+} from "./continuous.ts";
 import {
   evaluateGrandArchiveAmount,
   evaluateGrandArchiveCondition,
@@ -97,7 +101,7 @@ function playerEffects(
     order: number;
   }[] = [];
   let order = 0;
-  for (const source of Object.values(state.objects)) {
+  for (const source of grandArchiveContinuousStaticSources({ program, state })) {
     const face = grandArchiveObjectFace(program, source);
     for (const ability of grandArchiveObjectActiveAbilities(
       program,

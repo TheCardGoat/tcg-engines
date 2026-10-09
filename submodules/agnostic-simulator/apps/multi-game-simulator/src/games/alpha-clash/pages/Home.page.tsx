@@ -23,6 +23,9 @@ export function AlphaClashHomePage() {
             </Button>
           </Group>
         </Paper>
+        <Button component="a" variant="light" href="/alpha-clash/simulator/tests">
+          Open TestEngine board fixtures
+        </Button>
         <Text size="sm" c="dimmed">
           Card catalog: 747 authored official cards (295 awaiting behavior authoring). Practice
           Contenders use fully-authored fixture cards while official Contender behavior lands.

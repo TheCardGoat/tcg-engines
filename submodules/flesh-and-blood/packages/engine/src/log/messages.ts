@@ -178,6 +178,7 @@ export const FAB_LOG_KEYS = [
   "flesh-and-blood.turn.started",
   "flesh-and-blood.game.ended",
   "flesh-and-blood.decision.awaiting",
+  "flesh-and-blood.undo",
   "flesh-and-blood.decision.chosen",
   "flesh-and-blood.decision.private",
   "flesh-and-blood.phase.start",
@@ -630,6 +631,7 @@ export interface FabLogMessageValuesByName {
   };
   readonly "flesh-and-blood.game.ended": { readonly playerId: string; readonly reason: string };
   readonly "flesh-and-blood.decision.awaiting": { readonly actorId: string };
+  readonly "flesh-and-blood.undo": { readonly actorId: string };
   readonly "flesh-and-blood.decision.chosen": {
     readonly actorId: string;
     readonly choice: string;
@@ -795,6 +797,7 @@ export const FAB_LOG_KEY_CATEGORIES = {
   "flesh-and-blood.turn.started": "system",
   "flesh-and-blood.game.ended": "system",
   "flesh-and-blood.decision.awaiting": "system",
+  "flesh-and-blood.undo": "action",
   "flesh-and-blood.decision.chosen": "action",
   "flesh-and-blood.decision.private": "system",
   "flesh-and-blood.phase.start": "system",
@@ -944,6 +947,7 @@ export const FAB_LOG_KEY_NARRATIVE_ROLES: Readonly<Record<FabLogKey, FabLogNarra
   "flesh-and-blood.turn.started": "activity",
   "flesh-and-blood.game.ended": "outcome",
   "flesh-and-blood.decision.awaiting": "diagnostic",
+  "flesh-and-blood.undo": "activity",
   "flesh-and-blood.decision.chosen": "activity",
   "flesh-and-blood.decision.private": "diagnostic",
   "flesh-and-blood.phase.start": "diagnostic",
@@ -952,7 +956,7 @@ export const FAB_LOG_KEY_NARRATIVE_ROLES: Readonly<Record<FabLogKey, FabLogNarra
 // Deliberate compile-time tripwire. When FAB_LOG_KEYS grows, this fails until
 // the author reviews the narrative classifier above and acknowledges the new
 // key by updating the audited count.
-const FAB_LOG_NARRATIVE_KEY_COUNT: 142 = FAB_LOG_KEYS.length;
+const FAB_LOG_NARRATIVE_KEY_COUNT: 143 = FAB_LOG_KEYS.length;
 void FAB_LOG_NARRATIVE_KEY_COUNT;
 
 /**

@@ -47,7 +47,7 @@ export const op06Wyper114: CharacterCard = {
   setId: "OP06",
   cost: 5,
   power: 7000,
-  traits: ["Sky Island Shandian Warrior"],
+  traits: ["Sky Island", "Shandian Warrior"],
   attribute: "ranged",
   effect:
     "[On Play] You may place 1 Stage with a cost of 1 at the bottom of the owner's deck: Look at 5 cards from the top of your deck; reveal up to 1 [Upper Yard] or [Shandian Warrior] type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
@@ -88,7 +88,7 @@ export const op06Wyper114: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Shandian Warrior",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

@@ -30,7 +30,7 @@ export const op10Usopp042: LeaderCard = {
   setId: "OP10",
   power: 5000,
   life: 4,
-  traits: ["Straw Hat Crew Dressrosa"],
+  traits: ["Dressrosa", "Straw Hat Crew"],
   attribute: "ranged",
   effect:
     'All of your "Dressrosa" type Characters with a cost of 2 or more gain +1 cost.[Opponent\'s Turn] [Once Per Turn] This effect can be activated when your "Dressrosa" type Character is removed from the field by your opponent\'s effect or K.O.\'d. If you have 5 or less cards in your hand, draw 1 card.',
@@ -45,7 +45,7 @@ export const op10Usopp042: LeaderCard = {
             {
               filter: "trait",
               value: "Dressrosa",
-              match: "includes",
+              match: "exact",
             },
           ],
         },
@@ -54,16 +54,11 @@ export const op10Usopp042: LeaderCard = {
             condition: "turn",
             value: "opponent",
           },
-          {
-            condition: "handCount",
-            player: "self",
-            comparison: "lte",
-            value: 5,
-          },
         ],
         actions: [
           {
             action: "draw",
+            condition: { condition: "handCount", player: "self", comparison: "lte", value: 5 },
             player: "self",
             amount: 1,
           },
@@ -87,7 +82,7 @@ export const op10Usopp042: LeaderCard = {
                 {
                   filter: "trait",
                   value: "Dressrosa",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cost",

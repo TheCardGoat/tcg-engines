@@ -25,7 +25,7 @@ export const theQueenConceitedRulerEpic: CharacterCard = {
   franchise: "Snow White",
   set: "009",
   cardNumber: 205,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 2,

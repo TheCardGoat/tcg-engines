@@ -46,7 +46,7 @@ export const op05RikuDoldoIii090: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Dressrosa",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -71,7 +71,7 @@ export const op05RikuDoldoIii090: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Dressrosa",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

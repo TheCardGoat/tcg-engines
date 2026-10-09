@@ -28,7 +28,7 @@ export const st01ThousandSunny017: StageCard = {
               player: "self",
               zones: ["leader", "character"],
               count: { amount: 1, upTo: true },
-              filters: [{ filter: "trait", value: "Straw Hat Crew", match: "includes" }],
+              filters: [{ filter: "trait", value: "Straw Hat Crew", match: "exact" }],
             },
             value: 1000,
             duration: "thisTurn",

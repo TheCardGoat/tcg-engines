@@ -261,7 +261,9 @@ export class CyberpunkTestEngine {
     const stateWithActiveEffects = create(state, (draft) => {
       recomputeActiveEffects(draft);
     });
-    this.engine = new LocalEngine(stateWithActiveEffects);
+    this.engine = new LocalEngine(stateWithActiveEffects, {
+      combatProgression: opts?.combatProgression ?? "manual",
+    });
     registerMoves({ ...allMoves, ...judgeAllMoves });
     this.autoGainGig = opts?.autoGainGig ?? true;
     this.autoChooseFirstPlayer = opts?.autoChooseFirstPlayer ?? true;
@@ -496,7 +498,15 @@ export class CyberpunkTestEngine {
     const cardId = resolveCardRef(this.getState(), card, undefined, playerId);
     return this.exec(
       "activateAbility",
-      { args: { cardId: cardId as string, abilityIndex } },
+      {
+        args: {
+          cardId: cardId as string,
+          abilityIndex,
+          ...(opts && "paymentSourceIds" in opts && opts.paymentSourceIds !== undefined
+            ? { paymentSourceIds: opts.paymentSourceIds }
+            : {}),
+        },
+      },
       playerId,
     );
   }
@@ -657,7 +667,18 @@ export class CyberpunkTestEngine {
       throw new Error("No redirectDefeat pending choice to resolve");
     }
     const playerId = opts?.as ?? choice.chooserId;
-    return this.exec("resolveRedirectDefeat", { args: { pass: false } }, playerId);
+    return this.exec(
+      "resolveRedirectDefeat",
+      {
+        args: {
+          pass: false,
+          ...(opts?.paymentSourceIds === undefined
+            ? {}
+            : { paymentSourceIds: opts.paymentSourceIds }),
+        },
+      },
+      playerId,
+    );
   }
 
   /** Decline the optional defeat replacement so the original Unit is defeated. */
@@ -1026,6 +1047,10 @@ export class CyberpunkTestEngine {
    * asserting success. Use this when you need to inspect failure details
    * without `expectFailure()`.
    */
+  setCombatProgression(mode: "automatic" | "manual"): void {
+    this.engine.setCombatProgression(mode);
+  }
+
   executeMove(move: string, input?: MoveInput, playerId?: PlayerId): CommandResult {
     return this.execRaw(move, input ?? { args: {} }, playerId ?? this.getActivePlayerId());
   }
@@ -1242,14 +1267,21 @@ export class CyberpunkTestEngine {
 
   /**
    * Resolve all steps of a unit-vs-unit fight:
-   *   attack → react → fight.
+   *   attack → react → fight → fight result. Pending fight triggers may
+   *   suspend this sequence before the result is applied.
    */
   resolveFullFight(opts?: { as?: PlayerId }): void {
     const attacker = opts?.as ?? this.getActivePlayerId();
     const defender = this.getOpponentOf(attacker);
-    this.resolveAttack({ as: attacker }); // attack → react
-    this.resolveAttack({ as: defender, pass: true }); // react → fight
-    this.resolveAttack({ as: attacker }); // fight → cleared
+    if (this.getAttackState()?.step === "attack") this.resolveAttack({ as: attacker }); // attack → react
+    if (this.getAttackState()?.step === "react") this.resolveAttack({ as: defender, pass: true }); // react → fight
+    if (this.getAttackState()?.step === "fight") this.resolveAttack({ as: attacker }); // fight → fightResult
+    if (
+      this.getAttackState()?.step === "fightResult" &&
+      !this.getState().G.turnMetadata.pendingChoice
+    ) {
+      this.resolveAttack({ as: attacker }); // fightResult → cleared or defeat replacement
+    }
   }
 
   /**
@@ -1259,9 +1291,9 @@ export class CyberpunkTestEngine {
   resolveFullSteal(opts?: { as?: PlayerId }): void {
     const attacker = opts?.as ?? this.getActivePlayerId();
     const defender = this.getOpponentOf(attacker);
-    this.resolveAttack({ as: attacker }); // attack → react
-    this.resolveAttack({ as: defender, pass: true }); // react → steal
-    this.resolveAttack({ as: attacker }); // steal → cleared
+    if (this.getAttackState()?.step === "attack") this.resolveAttack({ as: attacker }); // attack → react
+    if (this.getAttackState()?.step === "react") this.resolveAttack({ as: defender, pass: true }); // react → steal
+    if (this.getAttackState()?.step === "steal") this.resolveAttack({ as: attacker }); // steal → cleared
   }
 
   /**
@@ -1399,6 +1431,7 @@ export class CyberpunkTestEngine {
 
 interface MoveOpts {
   as?: PlayerId;
+  paymentSourceIds?: string[];
 }
 
 interface ResolveAttackOpts extends MoveOpts {

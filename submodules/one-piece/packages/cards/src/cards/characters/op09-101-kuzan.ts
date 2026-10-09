@@ -31,26 +31,17 @@ export const op09Kuzan101: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        actions: [
+        costs: [
           {
-            action: "addToLife",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 3,
-                },
-              ],
-            },
+            cost: "addCharacterToLife",
+            player: "opponent",
+            amount: 1,
+            filters: [{ filter: "cost", comparison: "lte", value: 3 }],
             position: "choice",
             faceUp: true,
           },
+        ],
+        actions: [
           {
             action: "trashFromHand",
             player: "opponent",

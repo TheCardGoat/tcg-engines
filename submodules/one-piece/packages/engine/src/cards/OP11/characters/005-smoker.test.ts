@@ -38,10 +38,12 @@ describe("OP11-005 Smoker", () => {
       .steps[0];
     if (protectedTarget?.kind !== "selectEntity")
       throw new Error("Expected X.Drake's K.O. target.");
-    expect(protectedTarget.candidates.map((candidate) => candidate.ref.id)).not.toContain(
-      protectedId,
+    expect(protectedTarget.candidates.map((candidate) => candidate.ref.id)).toContain(protectedId);
+    protectedEngine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [protectedId] },
+      "north",
     );
-    protectedEngine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "north");
     expect(
       protectedEngine
         .getView("south")
@@ -71,5 +73,16 @@ describe("OP11-005 Smoker", () => {
     expect(
       vulnerableEngine.getView("south").players.south.trash.map((card) => card.instanceId),
     ).toContain(vulnerableId);
+  });
+  test("DON protection does not stop an Event effect KO", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP06-019"], activeDon: 3 },
+      { character: [{ cardId: "OP11-005", attachedDon: 1 }] },
+    );
+    const target = e.findCardInZone("north", "character", "OP11-005");
+    e.asSouth().play("OP06-019");
+    e.asSouth().chooseTargets(target);
+    expect(e.getView("north").players.north.trash.map((c) => c.instanceId)).toContain(target);
+    expect(e.getView("north").players.north.restedDon).toBe(1);
   });
 });

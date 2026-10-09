@@ -73,7 +73,7 @@ export const babyGraySlime: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                       },
                       candidates: {
                         kind: "card",
-                        zones: ["hand"],
+                        zones: ["hand", "memory"],
                         relationship: "zone-of",
                         player: "controller",
                         filter: {

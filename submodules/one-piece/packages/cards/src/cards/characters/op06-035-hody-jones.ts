@@ -47,7 +47,7 @@ export const op06HodyJones035: CharacterCard = {
   setId: "OP06",
   cost: 7,
   power: 8000,
-  traits: ["Fish-Man New Fish-Man Pirates"],
+  traits: ["Fish-Man", "New Fish-Man Pirates"],
   attribute: "strike",
 
   effect:

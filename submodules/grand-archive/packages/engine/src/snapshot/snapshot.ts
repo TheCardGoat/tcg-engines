@@ -74,17 +74,28 @@ export interface GrandArchiveMatchSnapshotV1 {
   readonly nextDelayedTriggerOrdinal: GrandArchiveMatchState["nextDelayedTriggerOrdinal"];
 }
 
-type GrandArchiveSerializedProposedEvent =
+type WithSerializedObjectSnapshot<Event> = Event extends unknown
+  ? Omit<Event, "objectSnapshot"> & { readonly objectSnapshot?: GrandArchiveSerializedObject }
+  : never;
+
+type GrandArchiveSerializedProposedEvent = WithSerializedObjectSnapshot<
   | Exclude<
       GrandArchiveProposedEvent,
       {
         readonly type:
+          | "damage-marked"
           | "object-created"
           | "object-removed-from-game"
           | "object-moved"
           | "tokens-summoned";
       }
     >
+  | (Omit<
+      Extract<GrandArchiveProposedEvent, { readonly type: "damage-marked" }>,
+      "sourceSnapshot"
+    > & {
+      readonly sourceSnapshot?: GrandArchiveSerializedObject;
+    })
   | (Omit<Extract<GrandArchiveProposedEvent, { readonly type: "object-created" }>, "object"> & {
       readonly object: GrandArchiveSerializedObject;
     })
@@ -102,7 +113,8 @@ type GrandArchiveSerializedProposedEvent =
     })
   | (Omit<Extract<GrandArchiveProposedEvent, { readonly type: "tokens-summoned" }>, "objects"> & {
       readonly objects: readonly [GrandArchiveSerializedObject, ...GrandArchiveSerializedObject[]];
-    });
+    })
+>;
 
 type GrandArchiveReplacementDecision = Extract<
   GrandArchiveDecision,
@@ -133,11 +145,12 @@ type GrandArchiveSerializedDecision =
       readonly continuation: GrandArchiveSerializedReplacementContinuation;
     });
 
-export type GrandArchiveSerializedEvent =
+export type GrandArchiveSerializedEvent = WithSerializedObjectSnapshot<
   | Exclude<
       GrandArchiveCommittedEvent,
       {
         readonly type:
+          | "damage-marked"
           | "object-created"
           | "object-removed-from-game"
           | "object-moved"
@@ -145,6 +158,12 @@ export type GrandArchiveSerializedEvent =
           | "decision-created";
       }
     >
+  | (Omit<
+      Extract<GrandArchiveCommittedEvent, { readonly type: "damage-marked" }>,
+      "sourceSnapshot"
+    > & {
+      readonly sourceSnapshot?: GrandArchiveSerializedObject;
+    })
   | (Omit<Extract<GrandArchiveCommittedEvent, { readonly type: "object-created" }>, "object"> & {
       readonly object: GrandArchiveSerializedObject;
     })
@@ -168,7 +187,8 @@ export type GrandArchiveSerializedEvent =
     })
   | (Omit<Extract<GrandArchiveCommittedEvent, { readonly type: "tokens-summoned" }>, "objects"> & {
       readonly objects: readonly [GrandArchiveSerializedObject, ...GrandArchiveSerializedObject[]];
-    });
+    })
+>;
 
 function serializeObject(object: GrandArchiveCardInstance): GrandArchiveSerializedObject {
   return {
@@ -197,8 +217,20 @@ function mapNonEmpty<T, U>(
 }
 
 function serializeProposedEvent(
-  event: GrandArchiveProposedEvent,
+  original: GrandArchiveProposedEvent,
 ): GrandArchiveSerializedProposedEvent {
+  const { objectSnapshot, ...payload } = original;
+  const event = {
+    ...payload,
+    ...(objectSnapshot ? { objectSnapshot: serializeObject(objectSnapshot) } : {}),
+  };
+  if (event.type === "damage-marked") {
+    const { sourceSnapshot, ...body } = event;
+    return {
+      ...body,
+      ...(sourceSnapshot ? { sourceSnapshot: serializeObject(sourceSnapshot) } : {}),
+    };
+  }
   if (event.type === "object-created") return { ...event, object: serializeObject(event.object) };
   if (event.type === "object-removed-from-game") {
     return { ...event, object: serializeObject(event.object) };
@@ -220,8 +252,20 @@ function serializeProposedEvent(
 }
 
 function restoreProposedEvent(
-  event: GrandArchiveSerializedProposedEvent,
+  original: GrandArchiveSerializedProposedEvent,
 ): GrandArchiveProposedEvent {
+  const { objectSnapshot, ...payload } = original;
+  const event = {
+    ...payload,
+    ...(objectSnapshot ? { objectSnapshot: restoreObject(objectSnapshot) } : {}),
+  };
+  if (event.type === "damage-marked") {
+    const { sourceSnapshot, ...body } = event;
+    return {
+      ...body,
+      ...(sourceSnapshot ? { sourceSnapshot: restoreObject(sourceSnapshot) } : {}),
+    };
+  }
   if (event.type === "object-created") return { ...event, object: restoreObject(event.object) };
   if (event.type === "object-removed-from-game") {
     return { ...event, object: restoreObject(event.object) };
@@ -340,7 +384,19 @@ export function serializeGrandArchiveMatchSnapshot(
   for (const object of Object.values(stateObjects)) {
     objects[object.id] = serializeObject(object);
   }
-  const eventHistory: GrandArchiveSerializedEvent[] = stateEventHistory.map((event) => {
+  const eventHistory: GrandArchiveSerializedEvent[] = stateEventHistory.map((original) => {
+    const { objectSnapshot, ...payload } = original;
+    const event = {
+      ...payload,
+      ...(objectSnapshot ? { objectSnapshot: serializeObject(objectSnapshot) } : {}),
+    };
+    if (event.type === "damage-marked") {
+      const { sourceSnapshot, ...body } = event;
+      return {
+        ...body,
+        ...(sourceSnapshot ? { sourceSnapshot: serializeObject(sourceSnapshot) } : {}),
+      };
+    }
     if (event.type === "object-created") return { ...event, object: serializeObject(event.object) };
     if (event.type === "object-removed-from-game") {
       return { ...event, object: serializeObject(event.object) };
@@ -452,7 +508,19 @@ export function restoreGrandArchiveMatchSnapshot(
     }
     objects[object.id] = restoreObject(object);
   }
-  const eventHistory: GrandArchiveCommittedEvent[] = snapshotEventHistory.map((event) => {
+  const eventHistory: GrandArchiveCommittedEvent[] = snapshotEventHistory.map((original) => {
+    const { objectSnapshot, ...payload } = original;
+    const event = {
+      ...payload,
+      ...(objectSnapshot ? { objectSnapshot: restoreObject(objectSnapshot) } : {}),
+    };
+    if (event.type === "damage-marked") {
+      const { sourceSnapshot, ...body } = event;
+      return {
+        ...body,
+        ...(sourceSnapshot ? { sourceSnapshot: restoreObject(sourceSnapshot) } : {}),
+      };
+    }
     if (event.type === "object-created") return { ...event, object: restoreObject(event.object) };
     if (event.type === "object-removed-from-game") {
       return { ...event, object: restoreObject(event.object) };

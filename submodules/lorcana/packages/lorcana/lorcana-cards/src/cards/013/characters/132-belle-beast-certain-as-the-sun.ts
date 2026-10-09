@@ -13,7 +13,7 @@ export const belleBeastCertainAsTheSun: CharacterCard = {
       artId: "set13-132",
       setCode: "set13",
       collectorNumber: "132",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -25,7 +25,7 @@ export const belleBeastCertainAsTheSun: CharacterCard = {
   franchise: "Beauty and the Beast",
   set: "013",
   cardNumber: 132,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 8,
   strength: 6,
   willpower: 7,
@@ -33,6 +33,7 @@ export const belleBeastCertainAsTheSun: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_063394f93893493ab04808e6d7247926",
+    tcgPlayer: "702661",
   },
   text: [
     {

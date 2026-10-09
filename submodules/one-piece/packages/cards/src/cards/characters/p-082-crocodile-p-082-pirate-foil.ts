@@ -32,7 +32,7 @@ export const prb02CrocodileP082PirateFoil082: CharacterCard = {
   setId: "P",
   cost: 5,
   power: 7000,
-  traits: ["Former Baroque Works Cross Guild"],
+  traits: ["Cross Guild", "Former Baroque Works"],
   attribute: "special",
   effect:
     "[Your Turn] [On Play] If your Leader has the {Cross Guild} type or a type including \"Baroque Works\", place up to 1 of your opponent's Characters with 2000 power or less at the bottom of the owner's deck.",
@@ -52,7 +52,7 @@ export const prb02CrocodileP082PirateFoil082: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Cross Guild",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "leaderTrait",

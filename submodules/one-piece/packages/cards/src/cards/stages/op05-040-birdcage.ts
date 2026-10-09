@@ -21,7 +21,7 @@ export const op05Birdcage040: StageCard = {
   rarity: "C",
   setId: "OP05",
   cost: 5,
-  traits: ["NULL"],
+  traits: ["Donquixote Pirates"],
   effect:
     "If your Leader is [Donquixote Doflamingo], all Characters with a cost of 5 or less do not become active in your and your opponent's Refresh Phases. [End of Your Turn] If you have 10 DON!! cards on your field, K.O. all rested Characters with a cost of 5 or less. Then, trash this Stage.",
   effects: {

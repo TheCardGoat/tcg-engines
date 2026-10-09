@@ -88,4 +88,36 @@ describe("OP12-081 Koala", () => {
     ).toBe(true);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("does not draw when attacking a Character even with two cost-eight allies", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op12Koala081,
+        character: [op12Issho082, op12Issho082],
+        deck: [eb01Doma005, eb01Doma005],
+      },
+      { character: [{ card: eb01Doma005, rested: true }] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    engine.declareAttack(
+      engine.leader("south"),
+      engine.findCardInZone("north", "character", eb01Doma005),
+      "south",
+    );
+    expect(engine.getView("south").players.south.hand).toHaveLength(0);
+    expect(engine.getView("south").players.south.deckCount).toBe(2);
+  });
+  test("does not treat a low-cost Character's Life Trigger as a Character effect play", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op12Koala081 },
+      { life: ["ST07-007", eb01Doma005] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    expect(
+      engine.getView("north").players.north.characters.some((card) => card?.cardId === "ST07-007"),
+    ).toBe(true);
+    expect(engine.getView("north").players.north.lifeCount).toBe(1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

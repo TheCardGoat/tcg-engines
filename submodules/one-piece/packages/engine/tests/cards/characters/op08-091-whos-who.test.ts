@@ -86,4 +86,20 @@ describe("OP08-091 Whos.Who", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("official name excludes this printing from another Who's.Who search", () => {
+    const e = OnePieceTestEngine.create({
+      hand: ["OP04-051"],
+      activeDon: 1,
+      deck: ["OP08-091", "OP08-078", "P-012", "P-015", "P-016", "P-041"],
+    });
+    e.asSouth().play("OP04-051");
+    const p = e.pendingDecision("effectSearchSelection", "south").steps[0];
+    if (p?.kind !== "selectEntity") throw Error("search");
+    expect(
+      p.candidates.find((c) => c.ref.id === e.findCardInZone("south", "deck", "OP08-091"))?.legal,
+    ).toBe(false);
+    expect(
+      p.candidates.find((c) => c.ref.id === e.findCardInZone("south", "deck", "OP08-078"))?.legal,
+    ).toBe(true);
+  });
 });

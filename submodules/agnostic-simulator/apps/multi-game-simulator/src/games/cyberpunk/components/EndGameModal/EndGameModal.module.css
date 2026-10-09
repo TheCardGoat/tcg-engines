@@ -34,17 +34,74 @@
 
 .participant {
   display: grid;
-  gap: 6px;
-  justify-items: start;
-  border: 1px solid rgb(255 255 255 / 10%);
-  border-radius: 8px;
-  padding: 12px 14px;
-  background: rgb(255 255 255 / 4%);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--simulator-surface-inset, 0.625rem);
+  min-width: 0;
 }
 
-.participant[data-winner] {
-  border-color: rgb(245 230 66 / 46%);
-  background: linear-gradient(135deg, rgb(245 230 66 / 12%), rgb(255 255 255 / 4%));
+.participantInfo {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.participant[data-position="left"] .legendPortraits {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.participant[data-position="left"] .participantInfo {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.legendPortraits {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  margin: 0;
+  width: 100%;
+  max-width: 225px;
+  justify-self: center;
+}
+
+.legendPortrait {
+  aspect-ratio: 5 / 7;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(255 255 255 / 4%);
+  color: var(--cp-fg-secondary, #b0b6bf);
+}
+
+.legendPortrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.legendPortrait span {
+  font-size: 11px;
+  text-align: center;
+  padding: 3px;
+  overflow-wrap: anywhere;
+}
+
+.participantTiming {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin: 0;
+  font-size: 12px;
+  color: var(--cp-fg-secondary, #b0b6bf);
+  font-variant-numeric: tabular-nums;
+}
+
+.participantTiming strong {
+  color: var(--cp-fg, #f1f1f1);
+  font-weight: 600;
 }
 
 .participantHeader {
@@ -62,11 +119,10 @@
 .participantName {
   margin: 0;
   max-width: 100%;
-  overflow: hidden;
+  overflow-wrap: anywhere;
   color: var(--cp-fg, #f1f1f1);
   font-size: 15px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.3;
 }
 
 .participantScore {
@@ -82,6 +138,14 @@
 .participantScore strong {
   color: var(--cp-fg, #f1f1f1);
   font-size: 16px;
+}
+
+.participantScore > span {
+  white-space: nowrap;
+}
+
+.participantScore > span + span {
+  margin-inline-start: 5px;
 }
 
 /* --- Head-to-head comparison rows --- */
@@ -604,28 +668,10 @@
   gap: 5px;
 }
 
-.colorSymbols i {
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-  border: 1px solid rgb(255 255 255 / 30%);
-  background: #aeb4be;
-}
-
-.colorSymbols i[data-color="blue"] {
-  background: #47a3ff;
-}
-
-.colorSymbols i[data-color="green"] {
-  background: #56d26b;
-}
-
-.colorSymbols i[data-color="red"] {
-  background: #ff5f5f;
-}
-
-.colorSymbols i[data-color="yellow"] {
-  background: #f5e642;
+.colorSymbol {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
 }
 
 .legendList {
@@ -726,6 +772,19 @@
 
 /* --- Actions and support dialog --- */
 
+.footerActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  width: 100%;
+}
+
+.footerActions > .actions {
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
 .replayActions,
 .supportActions,
 .actions {
@@ -743,8 +802,8 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 38px;
-  border-radius: 6px;
+  min-height: 42px;
+  border-radius: 2px;
   font-size: 13px;
   font-weight: 850;
   cursor: pointer;
@@ -769,22 +828,36 @@
 }
 
 .supportButton {
-  border: 1px solid rgb(255 255 255 / 12%);
+  border: 1px solid transparent;
   padding: 8px 11px;
-  background: rgb(255 255 255 / 5%);
+  background: transparent;
   color: var(--cp-fg-secondary, #b0b6bf);
 }
 
 .replayButton {
-  border: 1px solid rgb(245 230 66 / 26%);
+  border: 1px solid transparent;
   padding: 8px 11px;
-  background: rgb(245 230 66 / 8%);
-  color: rgb(255 245 128);
+  background: transparent;
+  color: var(--cp-fg-secondary, #b0b6bf);
 }
 
 .replayButton:disabled {
   cursor: not-allowed;
   opacity: 0.62;
+}
+
+.replayMenu {
+  border: 1px solid rgb(245 230 66 / 26%);
+  background: var(--cp-bg, #0a0e15);
+  color: var(--cp-fg, #f1f1f1);
+}
+
+.replayMenu [data-menu-item] {
+  color: inherit;
+}
+
+.replayMenu [data-menu-item]:hover:not([data-disabled]) {
+  background: rgb(245 230 66 / 12%);
 }
 
 .replayStatus {
@@ -833,7 +906,10 @@
 
 @media (width <= 720px) {
   .participant {
+    min-width: 0;
     width: 100%;
+    box-sizing: border-box;
+    padding: 0;
   }
 
   .deckMatchupGrid,
@@ -880,12 +956,139 @@
   .btn,
   .supportButton,
   .replayButton {
-    flex: 1;
+    width: 100%;
+    min-height: 44px;
   }
 
   .actions,
-  .supportActions,
-  .replayActions {
+  .supportActions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .replayActions,
+  .replayStatus {
     width: 100%;
   }
+}
+
+@media (width <= 720px) {
+  .footerActions > .actions {
+    order: -1;
+    width: 100%;
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .footerActions > .actions .btnPrimary {
+    order: -1;
+  }
+  .footerActions .btn,
+  .supportButton,
+  .replayButton {
+    min-height: 44px;
+  }
+  .footerActions {
+    gap: 4px 8px;
+  }
+  .supportActions {
+    flex: 1;
+    justify-content: flex-end;
+  }
+  .supportButton,
+  .replayButton {
+    padding-inline: 4px;
+    font-size: 12px;
+    gap: 4px;
+  }
+  .participantScore {
+    gap: 3px;
+    font-size: 11px;
+  }
+  .participantScore strong {
+    font-size: 16px;
+  }
+}
+
+.thinkingTimeHeading {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.thinkingTimeHeading h4 {
+  margin: 0;
+}
+
+.thinkingTimeHelp {
+  flex-shrink: 0;
+}
+
+@media (pointer: coarse) {
+  .thinkingTimeHelp {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+@media (width <= 720px) {
+  .participant {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .participant .legendPortraits,
+  .participant[data-position="left"] .legendPortraits {
+    grid-column: 1;
+    grid-row: 1;
+    max-width: 180px;
+  }
+
+  .participant .participantInfo,
+  .participant[data-position="left"] .participantInfo {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
+/* Mirrored runner panels keep their Legends facing the center. */
+.participant {
+  --runner-accent: 102 232 255;
+  padding: 4px var(--simulator-surface-inset, 0.625rem);
+  border: 1px solid rgb(var(--runner-accent) / 22%);
+  border-top: 2px solid rgb(var(--runner-accent) / 65%);
+  background: linear-gradient(120deg, rgb(var(--runner-accent) / 8%), transparent 65%);
+  box-shadow: inset 0 1px 18px rgb(var(--runner-accent) / 3%);
+}
+
+.participant[data-position="left"] {
+  --runner-accent: 245 190 48;
+  background: linear-gradient(240deg, rgb(var(--runner-accent) / 8%), transparent 65%);
+}
+
+.participantHeader {
+  color: rgb(var(--runner-accent));
+}
+
+.participantName {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.participantScore {
+  padding-block: 2px;
+  border-block: 1px solid rgb(var(--runner-accent) / 16%);
+}
+
+.participantScore strong {
+  color: rgb(var(--runner-accent));
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+.legendPortrait {
+  box-shadow: 0 4px 12px rgb(0 0 0 / 45%);
+  outline: 1px solid rgb(var(--runner-accent) / 20%);
 }

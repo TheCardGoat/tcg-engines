@@ -22,7 +22,7 @@ export const op07Coribou025: CharacterCard = {
   setId: "OP07",
   cost: 3,
   power: 3000,
-  traits: ["Caribou Pirates Supernovas"],
+  traits: ["Supernovas", "Caribou Pirates"],
   attribute: "strike",
   effect: "[On Play] Play up to 1 [Caribou] with a cost of 4 or less from your hand rested.",
   effects: {

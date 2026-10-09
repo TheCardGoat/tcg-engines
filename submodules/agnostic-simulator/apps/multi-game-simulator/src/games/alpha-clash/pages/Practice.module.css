@@ -84,3 +84,30 @@
     width: 100%;
   }
 }
+
+/* The Arena occupies the viewport; decisions and logs live in its action drawer. */
+.arenaPage {
+  display: block;
+  padding: 0;
+  gap: 0;
+  height: 100svh;
+  min-height: 0;
+  overflow: hidden;
+}
+.arenaPage .tableArea {
+  display: block;
+  height: 100%;
+}
+.arenaPage .resultBanner,
+.arenaPage .errorBanner {
+  position: absolute;
+  top: 52px;
+  left: 25%;
+  right: 25%;
+  z-index: 10;
+}
+.arenaControls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

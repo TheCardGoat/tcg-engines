@@ -23,7 +23,7 @@ export const op10Cub044: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Dressrosa The Tontattas"],
+  traits: ["The Tontattas", "Dressrosa"],
   attribute: "slash",
   effect:
     "[On Play] You may rest 1 of your \"Dressrosa\" type Leader or Stage cards: Return up to 1 of your opponent's Characters with a cost of 1 or less to the owner's hand.",
@@ -39,7 +39,7 @@ export const op10Cub044: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "anyOf",

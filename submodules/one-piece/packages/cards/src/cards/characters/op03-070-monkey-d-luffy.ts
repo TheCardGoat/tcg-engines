@@ -31,7 +31,7 @@ export const op03MonkeyDLuffy070: CharacterCard = {
   setId: "OP03",
   cost: 6,
   power: 7000,
-  traits: ["Straw Hat Crew Water Seven"],
+  traits: ["Water Seven", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[On Play] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.) You may trash 1 Character card with a cost of 5 from your hand: This Character gains [Rush] during this turn. (This card can attack on the turn in which it is played.)",

@@ -29,10 +29,14 @@ export const abuWiseSultan: CharacterCard = {
   willpower: 2,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_ab6b3726917241048c6298ce25f15473",
+    tcgPlayer: "704567",
+  },
   text: [
     {
-      title: "Ruler for a Day",
-      description: "When this character quests, banish him.",
+      title: "RULER FOR",
+      description: "A DAY When this character quests, banish him.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

@@ -23,7 +23,7 @@ export const op11FisherTiger035: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Fish-Man The Sun Pirates Fish-Man Island"],
+  traits: ["Fish-Man", "Fish-Man Island", "The Sun Pirates"],
   attribute: "strike",
   effect:
     'When this Character is K.O.\'d by your opponent\'s effect, you may rest 1 of your DON!! cards. If you do, play up to 1 "Fish-Man" or "Merfolk" type Character card with a cost of 4 or less from your hand.\n[On Play] Rest up to 1 of your opponent\'s Characters.',
@@ -43,8 +43,8 @@ export const op11FisherTiger035: CharacterCard = {
               {
                 filter: "anyOf",
                 filters: [
-                  { filter: "trait", value: "Fish-Man", match: "includes" },
-                  { filter: "trait", value: "Merfolk", match: "includes" },
+                  { filter: "trait", value: "Fish-Man", match: "exact" },
+                  { filter: "trait", value: "Merfolk", match: "exact" },
                 ],
               },
               { filter: "cardCategory", value: "character" },

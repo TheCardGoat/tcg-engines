@@ -47,7 +47,7 @@ export const op15Heso117: EventCard = {
                 {
                   filter: "trait",
                   value: "Sky Island",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -65,7 +65,7 @@ export const op15Heso117: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Sky Island",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

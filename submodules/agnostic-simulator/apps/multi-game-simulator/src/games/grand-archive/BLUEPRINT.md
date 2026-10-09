@@ -1,6 +1,12 @@
 # Grand Archive simulator connections
 
-Updated 8 September 2026. This inventory describes the local implementation; it is not a claim that every card, hosted infrastructure path, or future simulator feature has been certified.
+Updated 7 October 2026. This inventory describes the local implementation; it is not a claim that every card, hosted infrastructure path, or future simulator feature has been certified.
+
+## Active board
+
+`GrandArchiveTabletop` mounts one `GrandArchiveBoard` for fixtures, practice, and hosted play. The board uses `board-renderer` (React Three Fiber) and the shared `@tcg/simulator-presentation/three` card, selection, and movement components. The Cambria themes supply illustrated table borders, resource rails, and corner environments; physical card frames and motion are rendered in the R3F scene. There is no alternate DOM board or renderer switch.
+
+DOM overlays retain accessible card selection, counters, zone inspection, combat context, and the shared interaction prompt. Cards outside the scene's visible capacity remain available through each seat's zones menu. `grand-archive-theme.css` owns theme and overlay placement; scene composition owns camera and card geometry. See [board-renderer/README.md](./board-renderer/README.md).
 
 ## Action flow
 
@@ -16,13 +22,13 @@ Concede remains confirmed at the tabletop boundary. Read-only fixtures disable m
 | Deck setup, first/second, sideboarding                        | `GrandArchivePreparation`, `GrandArchivePreparation.page`, practice setup/preparation | `preparation.test`, `practice-setup.test`                                  |
 | Pregame progression and optional choices                      | `GrandArchiveInteractionLayer`                                                        | `GrandArchiveHands.test`, `GrandArchiveConnectivity.test`, `Practice.test` |
 | All structured action inputs                                  | Shared draft and prompt; `GrandArchiveHands`, sidebar action menu                     | Hand/field/material/sidebar parity cases in `GrandArchiveHands.test`       |
-| Field and Memory                                              | `GrandArchivePlayerTable`                                                             | Direct selection, hidden-memory and zone tests                             |
+| Field and Memory                                              | `GrandArchiveBoard` and card browser                                                  | Direct selection, hidden-memory and zone tests                             |
 | Material/Main decks, Graveyard, Banishment                    | Shared `DeckStackZone`, `DiscardPileZone`, `CardFace`                                 | Authorized inspection and concealed-count tests                            |
 | Revealed Main Deck information                                | Viewer-authorized entities in pile inspection                                         | `GrandArchiveConnectivity.test`; `zone-inspection` fixture                 |
 | Pantheon                                                      | Populated seat-zone row; viewer-safe faces/counts                                     | Private Pantheon test in `GrandArchiveConnectivity.test`                   |
 | Inner Lineage and Loaded                                      | Populated seat-zone rows; projected host labels                                       | `zone-inspection` fixture and `fixtures.test`                              |
-| Intent and combat roles                                       | Intent zone plus `GrandArchiveCombatWorkspace`                                        | Combat and zone fixtures                                                   |
-| Effects Stack                                                 | `GrandArchiveEffectsStack` plus shared response prompt                                | Stack inspection/order/target tests                                        |
+| Intent and combat roles                                       | Intent row and projected card combat roles                                            | Combat and zone fixtures                                                   |
+| Effects Stack                                                 | Central stack row plus shared response prompt                                         | Stack inspection/order/target tests                                        |
 | History and printed card preview                              | `GrandArchiveSidebarActivity`, `GrandArchiveCardPreview`                              | `GrandArchiveTabletop.test`                                                |
 | Bot pause/step/strategy/takeover                              | `Practice.page` and engine automation                                                 | `Practice.test`                                                            |
 | Undo and session persistence                                  | Replay journal reconstruction                                                         | `practice-session.test`, `Practice.test`                                   |
@@ -43,3 +49,5 @@ Rules mirror: “Game Zones — Public vs Private Information,” rules 3, 5, 6;
 These are absent capabilities, not unconnected buttons: a standalone replay viewer/fork route, spectator sessions, semantic game-outcome animation plans, and detailed post-game analytics. Replay journals already support restore and Undo. Adding the absent products requires their own contracts and implementation; this connectivity work does not imply that they now exist.
 
 Real hosted multiplayer, network loss under production conditions, every card interaction, and exhaustive engine-rule correctness require further validation beyond simulator component tests and local browser proof.
+
+The game-owned `stackView` supplies effect items in resolution order, an authoritative active item and next item, authored effect text, declared viewer-visible targets, and the current decision’s optionality. A top item awaiting Opportunity is not resolving. Optionality belongs to the active decision, not the entire card. Hidden target identities, private candidates, payment bindings, and tentative answers are excluded. `effectText: null` and `optionality: unavailable` represent missing authored text or unsupported decision metadata explicitly; the UI must not guess from printed card text.

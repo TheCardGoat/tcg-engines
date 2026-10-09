@@ -5,6 +5,24 @@ import { prb02JewelryBonneyP085PirateFoil085 } from "../../../../../cards/src/ca
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("P-085 Jewelry Bonney - P-085 (Pirate Foil)", () => {
+  test("at equal Life the chosen opposing Character can become the public top Life card", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP01-002", hand: ["P-085"], activeDon: 5, life: 3 },
+      { life: 3, character: ["EB01-005"] },
+    );
+    const target = e.findCardInZone("north", "character", "EB01-005");
+    e.playCard("P-085");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    e.resolveDecision("effectLifePosition", { optionId: "top" }, "south");
+    expect(e.getView("south").players.north.life[0]).toMatchObject({
+      instanceId: target,
+      cardId: "EB01-005",
+      hidden: false,
+    });
+    expect(e.getView("south").players.north.lifeCount).toBe(4);
+    expect(e.getView("south").players.north.characters.filter(Boolean)).toHaveLength(0);
+  });
+
   test("with an included Supernovas Leader and no more Life may put an opposing low-cost Character face-up at either Life position", () => {
     const engine = OnePieceTestEngine.create(
       {

@@ -17,7 +17,15 @@ export const flotsamUrsulasSpyI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Abschaum",
     version: "Ursulas Spion",
-    text: "<Rasant> \\Flink und Hinterhältig\\ Deine Meerschaum-Charaktere erhalten Rasant.",
+    text: [
+      {
+        title: "<Rasant>",
+      },
+      {
+        title: "Flink und Hinterhältig",
+        description: "Deine Meerschaum-Charaktere erhalten Rasant.",
+      },
+    ],
   },
   fr: {
     name: "FLOTSAM",

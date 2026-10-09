@@ -1,0 +1,87 @@
+{
+  "generatedAt": "2026-10-07T05:12:09.358Z",
+  "note": "Structural checks and replay equality are not a semantic rules audit. See the companion review.",
+  "games": [
+    {
+      "game": "game-1",
+      "blockId": "rules-audit",
+      "legId": "game-1",
+      "seed": "alpha-clash-rules-audit-2026-10-07-1",
+      "candidateSeat": "p1",
+      "candidateDeckId": "clarity-hyper-aggro",
+      "baselineDeckId": "absence-makati",
+      "winner": "baseline",
+      "termination": "rules-win",
+      "turnCount": 10,
+      "actionCount": 236,
+      "finalStateHash": "fnv1a32:bc594939",
+      "diagnostics": {
+        "illegalProposals": 0
+      },
+      "p1Deck": "clarity-hyper-aggro",
+      "p2Deck": "absence-makati",
+      "traceHash": "fnv1a32:780f2277",
+      "replayMatches": true,
+      "structuralFailures": [],
+      "commandCoverage": {
+        "Restoration": ["deployResource"],
+        "Marcus, Ghost of the Gambit": ["playCard"],
+        "Breach the Void": ["deployResource"],
+        "Morac, the Devourer": ["setCard"],
+        "Gur, Savage Aggressor": ["playCard"],
+        "Clarity's 1911": ["deployResource"],
+        "Haven, the Resourceful Helper": ["playCard"],
+        "Webber's Binoculars": ["playCard"],
+        "From Life to Death": ["deployResource"],
+        "Death, the Dreadful": ["playCard"],
+        "Bombardment": ["deployResource"],
+        "Denver": ["playCard"],
+        "Undiscovered Passageway": ["deployResource"],
+        "Rizlac, Ferocious Threat": ["playCard"],
+        "Zhao Li, Reconaissance Agent": ["deployResource", "playCard"],
+        "The Absence, New Host": ["playCard"],
+        "Amazon Rainforest": ["deployResource"]
+      }
+    },
+    {
+      "game": "game-2",
+      "blockId": "rules-audit",
+      "legId": "game-2",
+      "seed": "alpha-clash-rules-audit-2026-10-07-2",
+      "candidateSeat": "p2",
+      "candidateDeckId": "clarity-hyper-aggro",
+      "baselineDeckId": "absence-makati",
+      "winner": "baseline",
+      "termination": "rules-win",
+      "turnCount": 9,
+      "actionCount": 215,
+      "finalStateHash": "fnv1a32:4cfec821",
+      "diagnostics": {
+        "illegalProposals": 0
+      },
+      "p1Deck": "absence-makati",
+      "p2Deck": "clarity-hyper-aggro",
+      "traceHash": "fnv1a32:e8bb520a",
+      "replayMatches": true,
+      "structuralFailures": [],
+      "commandCoverage": {
+        "Undiscovered Passageway": ["deployResource"],
+        "Restoration": ["deployResource"],
+        "Marcus, Ghost of the Gambit": ["playCard"],
+        "Sacrificial Strength": ["setCard"],
+        "Low Earth Orbit": ["deployResource"],
+        "Lord Krung, Ruthless Warlord": ["playCard"],
+        "Bombardment": ["deployResource", "playCard"],
+        "Webber's Binoculars": ["playCard"],
+        "Denver": ["playCard"],
+        "Cataclysmic Surge": ["deployResource"],
+        "Rizlac, Ferocious Threat": ["playCard"],
+        "Colonel Edwards, Mastermind": ["playCard"],
+        "Trugg, Unruly Scavenger": ["playCard"],
+        "Clarity's 1911": ["deployResource"],
+        "Zhao Li, Reconaissance Agent": ["playCard"],
+        "The Absence, Shadow Incarnate": ["deployResource", "playCard"]
+      }
+    }
+  ]
+}

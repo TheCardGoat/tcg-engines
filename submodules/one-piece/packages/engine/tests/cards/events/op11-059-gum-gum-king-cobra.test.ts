@@ -25,6 +25,7 @@ describe("OP11-059 Gum-Gum King Cobra", () => {
       { selectedIds: [engine.leader("north")] },
       "north",
     );
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.lifeCount).toBe(lifeBefore);

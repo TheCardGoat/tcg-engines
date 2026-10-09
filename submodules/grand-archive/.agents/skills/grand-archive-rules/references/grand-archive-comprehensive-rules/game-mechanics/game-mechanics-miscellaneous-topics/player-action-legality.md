@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-miscellaneous-topics/player-action-legality"
+  relation: "current_index"
+---
+
 # Player Action Legality
 
 #### General Rules:

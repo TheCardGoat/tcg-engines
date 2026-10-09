@@ -41,7 +41,7 @@ export function grandArchivePlayerEnabledElements(
     const lineage = Object.values(state.objects).filter(
       (card) => card.hostId === champion.id && card.zone === "inner-lineage",
     );
-    if (lineage.length > 0) {
+    if (lineage.length > 0 && !champion.baseLineageCardId) {
       const base = grandArchiveObjectFace(program, { ...champion, activeDefinitionId: undefined });
       if (base.typeLine.types.includes("CHAMPION")) {
         for (const element of base.elements) addChampionEnabledElement(elements, element);

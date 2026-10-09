@@ -23,7 +23,7 @@ export const op11Franky012: CharacterCard = {
   cost: 4,
   power: 4000,
   counter: 2000,
-  traits: ["Navy SWORD"],
+  traits: ["Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[Your Turn] [Once Per Turn] When your opponent activates an Event, all of your Characters gain +2000 power during this turn.",

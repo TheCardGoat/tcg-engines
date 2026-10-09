@@ -21,7 +21,7 @@ export const op13ButAceHereSaidYouDeservedIt019: EventCard = {
   rarity: "R",
   setId: "OP13",
   cost: 1,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   effect:
     "[Main] You may rest 4 of your DON!! cards: Give up to 1 of your opponent's Characters −3000 power during this turn. Then, K.O. up to 1 of your opponent's Characters with 3000 power or less.\n[Counter] Your Leader gains +3000 power during this battle.",
   effects: {

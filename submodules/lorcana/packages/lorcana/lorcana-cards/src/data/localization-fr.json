@@ -255,6 +255,2032 @@
     "flavorText": "",
     "searchableKeywords": ["Lion King", "Le Roi Lion"]
   },
+  "957": {
+    "name": "Don Carnage",
+    "version": "Pirate sophistiqué",
+    "rulesText": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Don Carnage.)%\\Impression durable\\ Lorsque vous jouez ce personnage, infligez 1 dommage à chaque personnage adverse. Ces dommages ne sont pas réduits par <Résistance>.%\\Atout charme\\ Tant que ce personnage est épuisé, chaque personnage adverse ayant au moins un dommage subit -1 {L}.",
+    "text": [
+      {
+        "title": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Don Carnage.)"
+      },
+      {
+        "title": "Impression durable",
+        "description": "Lorsque vous jouez ce personnage, infligez 1 dommage à chaque personnage adverse. Ces dommages ne sont pas réduits par <Résistance>."
+      },
+      {
+        "title": "Atout charme",
+        "description": "Tant que ce personnage est épuisé, chaque personnage adverse ayant au moins un dommage subit -1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "CJC": {
+    "name": "Fru Fru",
+    "version": "Invitée VIP",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "La voix puissante et les performances épiques de Gazelle ont donné l'impression à Fru Fru de mesurer dix pattes de haut.",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "Qe1": {
+    "name": "Abuelita",
+    "version": "Grand-mère aimante",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "Les chaussures ont maintenu la famille unie et la musique lui apportera désormais la joie.",
+    "searchableKeywords": ["Coco"]
+  },
+  "kSA": {
+    "name": "Max Dingo",
+    "version": "Adore la musique",
+    "rulesText": "<Mélomane> 5 (Ce personnage est considéré comme ayant un coût de 5 pour chanter des chansons.)%\\La meilleure soirée de sa vie\\ Tant que vous avez un autre personnage avec <Mélomane> en jeu, ce personnage-ci gagne +1 {L}.",
+    "text": [
+      {
+        "title": "<Mélomane> 5 (Ce personnage est considéré comme ayant un coût de 5 pour chanter des chansons.)"
+      },
+      {
+        "title": "La meilleure soirée de sa vie",
+        "description": "Tant que vous avez un autre personnage avec <Mélomane> en jeu, ce personnage-ci gagne +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "eeA": {
+    "name": "Gazelle",
+    "version": "Diva de la Pop",
+    "rulesText": "<Mélomane> 4 (Ce personnage est considéré comme ayant un coût de 4 pour chanter des chansons.)",
+    "text": "<Mélomane> 4 (Ce personnage est considéré comme ayant un coût de 4 pour chanter des chansons.)",
+    "flavorText": "“Et un merci tout particulier à Martin l’Illumineur, à la guitare rythmique !”",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "C4O": {
+    "name": "Pat",
+    "version": "Crâneur suave",
+    "rulesText": "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
+    "text": "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
+    "flavorText": "“Powerline voudra faire une photo avec moi.”",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "gjQ": {
+    "name": "Miriam Mendelsohn",
+    "version": "Fan au premier rang",
+    "rulesText": "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
+    "text": "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
+    "flavorText": "“Il m'a regardée ! Il m'a regardée moi !”",
+    "searchableKeywords": ["Turning Red", "Alerte rouge"]
+  },
+  "5Wa": {
+    "name": "Priya Mangal",
+    "version": "Fan inamovible",
+    "rulesText": "\\Pousse-toi de là!\\ Lorsque vous jouez ce personnage, vous pouvez choisir un personnage qui subit -2 {S} jusqu'au début de votre prochain tour.",
+    "text": [
+      {
+        "title": "Pousse-toi de là!",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage qui subit -2 {S} jusqu'au début de votre prochain tour."
+      }
+    ],
+    "flavorText": "“Le premier rang, c’est le meilleur !”",
+    "searchableKeywords": ["Turning Red", "Alerte rouge"]
+  },
+  "cuZ": {
+    "name": "Yax",
+    "version": "Habitué des concerts",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Oh, waouh. La scène est aussi illuminée que le Grand Illuminarium. Attendez… 'Illuminarium'… Alors c'est pour ça qu'on l'appelle comme ça ? Waouh…”",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "SRT": {
+    "name": "Judy Hopps",
+    "version": "Policière serviable",
+    "rulesText": "\\À la rescousse\\ Lorsque vous jouez ce personnage, choisissez un personnage et retirez-lui jusqu'à 2 dommages.",
+    "text": [
+      {
+        "title": "À la rescousse",
+        "description": "Lorsque vous jouez ce personnage, choisissez un personnage et retirez-lui jusqu'à 2 dommages."
+      }
+    ],
+    "flavorText": "“C’est la chaleur ou la star qui vous fait tourner la tête ?”",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "Xnj": {
+    "name": "Miguel Rivera",
+    "version": "Musicien prometteur",
+    "rulesText": "\\Succès garanti\\ Chaque fois que ce personnage chante une chanson, gagnez 1 éclat de Lore.",
+    "text": [
+      {
+        "title": "Succès garanti",
+        "description": "Chaque fois que ce personnage chante une chanson, gagnez 1 éclat de Lore."
+      }
+    ],
+    "flavorText": "“Moi, je serai musicien !”",
+    "searchableKeywords": ["Coco"]
+  },
+  "gFZ": {
+    "name": "Nick Wilde",
+    "version": "Garde-côte inquisitif",
+    "rulesText": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Nick Wilde.)%\\Itinéraire restreint\\ Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un personnage et lui donner <Appel de l'aventure> jusqu'au début de votre prochain tour. (Il ne peut pas défier et doit être envoyé à l'aventure s'il le peut.)",
+    "text": [
+      {
+        "title": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Nick Wilde.)"
+      },
+      {
+        "title": "Itinéraire restreint",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un personnage et lui donner <Appel de l'aventure> jusqu'au début de votre prochain tour. (Il ne peut pas défier et doit être envoyé à l'aventure s'il le peut.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "KR4": {
+    "name": "Pat Junior",
+    "version": "Fan dévoué",
+    "rulesText": "\\Connaît toutes les paroles\\ Tant que vous avez un personnage avec <Mélomane> en jeu, ce personnage-ci gagne +1 {L}.",
+    "text": [
+      {
+        "title": "Connaît toutes les paroles",
+        "description": "Tant que vous avez un personnage avec <Mélomane> en jeu, ce personnage-ci gagne +1 {L}."
+      }
+    ],
+    "flavorText": "“Powerline est vraiment le meilleur !”",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "gFC": {
+    "name": "Monsieur Manchas",
+    "version": "Service avec le sourire",
+    "rulesText": "\\Toujours à l'heure\\ Chaque fois que ce personnage est envoyé à l'aventure, le prochain personnage que vous jouez ce tour-ci vous coûte 1 {I} de moins.",
+    "text": [
+      {
+        "title": "Toujours à l'heure",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, le prochain personnage que vous jouez ce tour-ci vous coûte 1 {I} de moins."
+      }
+    ],
+    "flavorText": "“Votre concert improvisé sur les toits était incroyable !”",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "IsT": {
+    "name": "Nick Wilde",
+    "version": "Chargé de la collecte de jouets",
+    "rulesText": "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)%\\Mission sociale\\ À la fin de votre tour, si vous avez joué 2 personnages ou plus ce tour-ci, piochez une carte.",
+    "text": [
+      {
+        "title": "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)"
+      },
+      {
+        "title": "Mission sociale",
+        "description": "À la fin de votre tour, si vous avez joué 2 personnages ou plus ce tour-ci, piochez une carte."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "Hfj": {
+    "name": "Clawhauser",
+    "version": "Officier de sécurité",
+    "rulesText": "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)%\\Copain de tout le monde\\ Vous ne pouvez pas jouer ce personnage, sauf si vous avez déjà joué un autre personnage ce tour-ci.",
+    "text": [
+      {
+        "title": "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)"
+      },
+      {
+        "title": "Copain de tout le monde",
+        "description": "Vous ne pouvez pas jouer ce personnage, sauf si vous avez déjà joué un autre personnage ce tour-ci."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "itE": {
+    "name": "Elisa Maza",
+    "version": "Détective acharnée",
+    "rulesText": "\\Suivre la piste\\ Lorsque vous jouez ce personnage, si vous avez un autre personnage Détective en jeu, choisissez un adversaire qui révèle sa main et défausse une carte non-Personnage de votre choix.",
+    "text": [
+      {
+        "title": "Suivre la piste",
+        "description": "Lorsque vous jouez ce personnage, si vous avez un autre personnage Détective en jeu, choisissez un adversaire qui révèle sa main et défausse une carte non-Personnage de votre choix."
+      }
+    ],
+    "flavorText": "“D'où viennent ces géodes ?”",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "Vq1": {
+    "name": "Powerline",
+    "version": "Méga Star",
+    "rulesText": "<Mélomane> 9%\\Choristes\\ Une fois durant votre tour, lorsque vous jouez une chanson, renvoyez dans votre main une carte Personnage avec <Mélomane> de votre défausse.%\\Harmonie parfaite\\ Ce personnage gagne +1 {L} pour chaque autre personnage avec <Mélomane> que vous avez en jeu.",
+    "text": [
+      {
+        "title": "<Mélomane> 9"
+      },
+      {
+        "title": "Choristes",
+        "description": "Une fois durant votre tour, lorsque vous jouez une chanson, renvoyez dans votre main une carte Personnage avec <Mélomane> de votre défausse."
+      },
+      {
+        "title": "Harmonie parfaite",
+        "description": "Ce personnage gagne +1 {L} pour chaque autre personnage avec <Mélomane> que vous avez en jeu."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "eff": {
+    "name": "Lionheart",
+    "version": "Maire en exercice",
+    "rulesText": "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)%\\Cote de popularité\\ Lorsque vous jouez ce personnage, choisissez jusqu'à 2 personnages qui gagnent +1 {L} pour le reste de ce tour.",
+    "text": [
+      {
+        "title": "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)"
+      },
+      {
+        "title": "Cote de popularité",
+        "description": "Lorsque vous jouez ce personnage, choisissez jusqu'à 2 personnages qui gagnent +1 {L} pour le reste de ce tour."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "EoX": {
+    "name": "Aurore",
+    "version": "Charmante musicienne",
+    "rulesText": "\\Refrain mélodique\\ Lorsque vous jouez ce personnage, renvoyez dans votre main une carte Chanson coûtant 3 ou moins de votre défausse que vous avez jouée ce tour-ci.%\\Accueil chaleureux\\ À la fin de votre tour, si vous avez joué une chanson ce tour-ci, gagnez 1 éclat de Lore.",
+    "text": [
+      {
+        "title": "Refrain mélodique",
+        "description": "Lorsque vous jouez ce personnage, renvoyez dans votre main une carte Chanson coûtant 3 ou moins de votre défausse que vous avez jouée ce tour-ci."
+      },
+      {
+        "title": "Accueil chaleureux",
+        "description": "À la fin de votre tour, si vous avez joué une chanson ce tour-ci, gagnez 1 éclat de Lore."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["La Belle au bois dormant", "Sleeping Beauty"]
+  },
+  "V8L": {
+    "name": "Russell",
+    "version": "Trouve l'aventure",
+    "rulesText": "\\Cache-cache\\ {E} — Révélez les 2 cartes du dessus de votre pioche. Ajoutez les cartes Personnage ainsi révélées à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+    "text": [
+      {
+        "title": "Cache-cache",
+        "description": "{E} — Révélez les 2 cartes du dessus de votre pioche. Ajoutez les cartes Personnage ainsi révélées à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Là-haut", "Up"]
+  },
+  "vuy": {
+    "name": "Miguel Rivera",
+    "version": "Musicien de rue",
+    "rulesText": "\\Partager la musique\\ Tant qu'il y a une carte Chanson dans votre défausse, ce personnage gagne +1 {L} et <Mélomane> 3. (Ce personnage est considéré comme ayant un coût de 3 pour chanter des chansons.)",
+    "text": [
+      {
+        "title": "Partager la musique",
+        "description": "Tant qu'il y a une carte Chanson dans votre défausse, ce personnage gagne +1 {L} et <Mélomane> 3. (Ce personnage est considéré comme ayant un coût de 3 pour chanter des chansons.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "zex": {
+    "name": "Dingo",
+    "version": "Connaît le Groupe",
+    "rulesText": "\\Accès VIP\\ Lorsque vous jouez ce personnage, si vous avez un personnage avec <Mélomane> en jeu, piochez une carte.",
+    "text": [
+      {
+        "title": "Accès VIP",
+        "description": "Lorsque vous jouez ce personnage, si vous avez un personnage avec <Mélomane> en jeu, piochez une carte."
+      }
+    ],
+    "flavorText": "“Je suis avec ces gars !”",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "vC5": {
+    "name": "Mickey Mouse",
+    "version": "Le meilleur de la ville",
+    "rulesText": "<Appel de l'aventure> (Ce personnage ne peut pas défier et doit être envoyé à l'aventure à chaque tour s'il le peut.)%\\Hot Dog!\\ À la fin de votre tour, si ce personnage est épuisé, chaque joueur gagne 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "<Appel de l'aventure> (Ce personnage ne peut pas défier et doit être envoyé à l'aventure à chaque tour s'il le peut.)"
+      },
+      {
+        "title": "Hot Dog!",
+        "description": "À la fin de votre tour, si ce personnage est épuisé, chaque joueur gagne 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": []
+  },
+  "eUU": {
+    "name": "Judy Hopps",
+    "version": "Toujours vigilante",
+    "rulesText": "<Alter> 2 {I} (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages nommé Judy Hopps.)%\\Je te tiens!\\ Lorsque vous jouez ce personnage, si vous avez joué un autre personnage ce tour-ci, vous pouvez choisir un personnage ayant 5 {S} ou plus et le bannir.",
+    "text": [
+      {
+        "title": "<Alter> 2 {I} (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages nommé Judy Hopps.)"
+      },
+      {
+        "title": "Je te tiens!",
+        "description": "Lorsque vous jouez ce personnage, si vous avez joué un autre personnage ce tour-ci, vous pouvez choisir un personnage ayant 5 {S} ou plus et le bannir."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "6lX": {
+    "name": "Nick Wilde",
+    "version": "Apporte du renfort",
+    "rulesText": "\\Je m'en charge\\ Tant que vous avez un autre personnage Détective en jeu, ce personnage-ci gagne <Soutien>. (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
+    "text": [
+      {
+        "title": "Je m'en charge",
+        "description": "Tant que vous avez un autre personnage Détective en jeu, ce personnage-ci gagne <Soutien>. (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "47o": {
+    "name": "Miguel Rivera",
+    "version": "Musicien accompli",
+    "rulesText": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Miguel Rivera.)%\\Représentation transcendante\\ Lorsque vous jouez ce personnage, renvoyez dans votre main une carte Personnage de votre défausse.",
+    "text": [
+      {
+        "title": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Miguel Rivera.)"
+      },
+      {
+        "title": "Représentation transcendante",
+        "description": "Lorsque vous jouez ce personnage, renvoyez dans votre main une carte Personnage de votre défausse."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "Ae0": {
+    "name": "Owen Burnett",
+    "version": "Assistant de Xanatos",
+    "rulesText": "\\Arrêter les frais\\ Lorsque vous jouez ce personnage, vous pouvez choisir un personnage, un objet ou un lieu coûtant 2 ou moins et le renvoyer dans la main de son propriétaire.",
+    "text": [
+      {
+        "title": "Arrêter les frais",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage, un objet ou un lieu coûtant 2 ou moins et le renvoyer dans la main de son propriétaire."
+      }
+    ],
+    "flavorText": "“M. Xanatos se moque des coûts. Éliminez ce problème sur le champ.”",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "amS": {
+    "name": "Eurêka",
+    "version": "Gère le trafic",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Lorsqu'il me montra ce sifflet, je me dis : 'Ça va. Quel est le pire qui puisse arriver ?' Grossière erreur.”%—Cordelia, une Illumineuse",
+    "searchableKeywords": ["Little Mermaid", "La Petite Sirène"]
+  },
+  "ljM": {
+    "name": "David Xanatos",
+    "version": "Industriel occulte",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Il semblerait que notre belle ville cache quelques secrets finalement.”",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "wsg": {
+    "name": "Lexington",
+    "version": "Vole sans peur",
+    "rulesText": "<Insaisissable> %\\Statue le jour\\ Ce personnage ne peut pas se redresser si vous avez 3 cartes ou plus en main.",
+    "text": [
+      {
+        "title": "<Insaisissable>"
+      },
+      {
+        "title": "Statue le jour",
+        "description": "Ce personnage ne peut pas se redresser si vous avez 3 cartes ou plus en main."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "l5w": {
+    "name": "Merlin",
+    "version": "Expert en babioles",
+    "rulesText": "\\Matériau brut\\ Lorsque vous jouez ce personnage, si vous avez un personnage nommé Arthur en jeu, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Matériau brut",
+        "description": "Lorsque vous jouez ce personnage, si vous avez un personnage nommé Arthur en jeu, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Ah, dis-moi, tu les as enfin trouvées ?”",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "j6r": {
+    "name": "Pepita",
+    "version": "Alebrije vigilante",
+    "rulesText": "<Offensif> +2",
+    "text": "<Offensif> +2",
+    "flavorText": "Tío Oscar : “De vrais alebrijes. Des créatures spirituelles.” %Tía Rosita : “Ils guident les âmes dans leur voyage.”",
+    "searchableKeywords": ["Coco"]
+  },
+  "gzW": {
+    "name": "Archimède",
+    "version": "En a ras-le-bol",
+    "rulesText": "<Insaisissable>",
+    "text": "<Insaisissable>",
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "q7N": {
+    "name": "Tía Victoria",
+    "version": "Ancêtre désapprobatrice",
+    "rulesText": "\\Regard accusateur\\ Lorsque vous jouez ce personnage, choisissez un personnage adverse qui ne se redresse pas au début de son prochain tour.",
+    "text": [
+      {
+        "title": "Regard accusateur",
+        "description": "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui ne se redresse pas au début de son prochain tour."
+      }
+    ],
+    "flavorText": "“Assieds-toi et écoute tes aînés avant de provoquer davantage de problèmes !”",
+    "searchableKeywords": ["Coco"]
+  },
+  "3tB": {
+    "name": "Dante",
+    "version": "Chien errant enthousiaste",
+    "rulesText": "\\Tout pour toi\\ Lorsque vous jouez ce personnage, choisissez un personnage qui gagne <Offensif> +2 pour le reste de ce tour. (Lorsqu'il défie, ce personnage-là gagne +2 {S}.)",
+    "text": [
+      {
+        "title": "Tout pour toi",
+        "description": "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne <Offensif> +2 pour le reste de ce tour. (Lorsqu'il défie, ce personnage-là gagne +2 {S}.)"
+      }
+    ],
+    "flavorText": "“T’es un bon chien, Dante !”%—Miguel Rivera",
+    "searchableKeywords": ["Coco"]
+  },
+  "Nxf": {
+    "name": "Mamá Coco",
+    "version": "Visite le parc",
+    "rulesText": "\\Souvenir lointain\\ Chaque fois que vous placez dans votre défausse 1 carte ou plus depuis votre pioche, ce personnage gagne +1 {L} pour le reste de ce tour.",
+    "text": [
+      {
+        "title": "Souvenir lointain",
+        "description": "Chaque fois que vous placez dans votre défausse 1 carte ou plus depuis votre pioche, ce personnage gagne +1 {L} pour le reste de ce tour."
+      }
+    ],
+    "flavorText": "“Je me souviens des lettres que mon papá m'envoyait. Elles étaient remplies de poèmes qu'il m'avait écrits... je les ai toutes gardées !”",
+    "searchableKeywords": ["Coco"]
+  },
+  "jhs": {
+    "name": "La Fée Clochette",
+    "version": "Fée curieuse",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Clochette trouve toujours les choses les plus insolites. Cela transforme nos voyages ensemble en véritables aventures !”%—Cordelia, une Illumineuse",
+    "searchableKeywords": ["Peter Pan"]
+  },
+  "SDE": {
+    "name": "Madame Mime",
+    "version": "Chasseuse de babioles",
+    "rulesText": "\\Difficile à gérer\\ Tant que vous avez une goutte d'encre, ce personnage gagne <Insaisissable>.",
+    "text": [
+      {
+        "title": "Difficile à gérer",
+        "description": "Tant que vous avez une goutte d'encre, ce personnage gagne <Insaisissable>."
+      }
+    ],
+    "flavorText": "“Ha Ha ! Une jolie petite goutte de pouvoir pour faire le plein de malveillance !”",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "kjn": {
+    "name": "Ombre de Peter Pan",
+    "version": "Farceur insaisissable",
+    "rulesText": "<Insaisissable> %\\Son tour préféré\\ Lorsque vous jouez ce personnage, vous pouvez choisir un personnage adverse et l'épuiser.",
+    "text": [
+      {
+        "title": "<Insaisissable>"
+      },
+      {
+        "title": "Son tour préféré",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage adverse et l'épuiser."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Peter Pan"]
+  },
+  "PJW": {
+    "name": "Dante",
+    "version": "Étrange et attachant",
+    "rulesText": "<Insaisissable> %\\Fouiller les poubelles\\ Tant que vous avez 10 cartes ou plus dans votre défausse, ce personnage gagne +1 {L}.",
+    "text": [
+      {
+        "title": "<Insaisissable>"
+      },
+      {
+        "title": "Fouiller les poubelles",
+        "description": "Tant que vous avez 10 cartes ou plus dans votre défausse, ce personnage gagne +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "j86": {
+    "name": "Fox Xanatos",
+    "version": "Hors-la-loi charismatique",
+    "rulesText": "<Charge>",
+    "text": "<Charge>",
+    "flavorText": "“Regarde bien, Cordelia, je vais te montrer comment les stars règlent leurs problèmes.”",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "PkS": {
+    "name": "Brooklyn",
+    "version": "Plein gaz",
+    "rulesText": "\\Folle virée\\ 6 {I} — Gagnez 1 éclat de Lore.%\\Statue le jour\\ Ce personnage ne peut pas se redresser si vous avez 3 cartes ou plus en main.",
+    "text": [
+      {
+        "title": "Folle virée",
+        "description": "6 {I} — Gagnez 1 éclat de Lore."
+      },
+      {
+        "title": "Statue le jour",
+        "description": "Ce personnage ne peut pas se redresser si vous avez 3 cartes ou plus en main."
+      }
+    ],
+    "flavorText": "“Quel pied cette bécane !”",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "S0B": {
+    "name": "Mamá Imelda",
+    "version": "Ancêtre terre-à-terre",
+    "rulesText": "\\Laissez-moi passer\\ Lorsque vous jouez ce personnage, placez 3 cartes de votre défausse sous votre pioche dans l'ordre de votre choix, ou bannissez-le.",
+    "text": [
+      {
+        "title": "Laissez-moi passer",
+        "description": "Lorsque vous jouez ce personnage, placez 3 cartes de votre défausse sous votre pioche dans l'ordre de votre choix, ou bannissez-le."
+      }
+    ],
+    "flavorText": "“Vous voyez bien qu'il y a un os là !”%—Mamá Imelda",
+    "searchableKeywords": ["Coco"]
+  },
+  "AtI": {
+    "name": "Merlin",
+    "version": "Bidouilleur de gouttes d'encre",
+    "rulesText": "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages nommé Merlin.)%\\Quelle découverte!\\ Lorsque vous jouez ce personnage, gagnez 1 goutte d'encre. Si vous l'avez joué via sa capacité <Alter>, gagnez 2 gouttes d'encre à la place. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages nommé Merlin.)"
+      },
+      {
+        "title": "Quelle découverte!",
+        "description": "Lorsque vous jouez ce personnage, gagnez 1 goutte d'encre. Si vous l'avez joué via sa capacité <Alter>, gagnez 2 gouttes d'encre à la place. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "vb5": {
+    "name": "Goliath",
+    "version": "Guerrier transformé",
+    "rulesText": "\\Lorsque tombe la nuit\\ Une fois durant votre tour, vous pouvez défausser une carte. Si vous le faites, déplacez jusqu'à 2 dommages de ce personnage sur un personnage adverse de votre choix.%\\Statue le jour\\ Ce personnage ne peut pas se redresser si vous avez 3 cartes ou plus en main.",
+    "text": [
+      {
+        "title": "Lorsque tombe la nuit",
+        "description": "Une fois durant votre tour, vous pouvez défausser une carte. Si vous le faites, déplacez jusqu'à 2 dommages de ce personnage sur un personnage adverse de votre choix."
+      },
+      {
+        "title": "Statue le jour",
+        "description": "Ce personnage ne peut pas se redresser si vous avez 3 cartes ou plus en main."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "C4J": {
+    "name": "Dante",
+    "version": "Alebrije loyal",
+    "rulesText": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Dante.)%<Insaisissable> %\\De rebut à trésor\\ Tant que vous avez 10 cartes ou plus dans votre défausse, ce personnage gagne +2 {L}.",
+    "text": [
+      {
+        "title": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Dante.)"
+      },
+      {
+        "title": "<Insaisissable>"
+      },
+      {
+        "title": "De rebut à trésor",
+        "description": "Tant que vous avez 10 cartes ou plus dans votre défausse, ce personnage gagne +2 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "SHv": {
+    "name": "Raiponce",
+    "version": "Artiste extravertie",
+    "rulesText": "\\Ressemblance parfaite\\ Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un autre personnage et révéler une carte Personnage de votre main. Si ces cartes portent le même nom, piochez une carte.",
+    "text": [
+      {
+        "title": "Ressemblance parfaite",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un autre personnage et révéler une carte Personnage de votre main. Si ces cartes portent le même nom, piochez une carte."
+      }
+    ],
+    "flavorText": "“Ne bouge plus, Eugène, je dois réussir ton nez.”",
+    "searchableKeywords": ["Tangled", "Raiponce"]
+  },
+  "GzL": {
+    "name": "Démona",
+    "version": "Ensorceleuse impérieuse",
+    "rulesText": "\\Impetus Improvisus\\ Défaussez une carte — Choisissez un personnage Gargouille qui gagne <Charge> et <Insaisissable> jusqu'au début de votre prochain tour. (Ce personnage-là peut défier le tour où il est joué. Seuls les personnages avec Insaisissable peuvent défier ce personnage-là.)%\\Statue le jour\\ Ce personnage ne peut pas se redresser si vous avez 3 cartes ou plus en main.",
+    "text": [
+      {
+        "title": "Impetus Improvisus",
+        "description": "Défaussez une carte — Choisissez un personnage Gargouille qui gagne <Charge> et <Insaisissable> jusqu'au début de votre prochain tour. (Ce personnage-là peut défier le tour où il est joué. Seuls les personnages avec Insaisissable peuvent défier ce personnage-là.)"
+      },
+      {
+        "title": "Statue le jour",
+        "description": "Ce personnage ne peut pas se redresser si vous avez 3 cartes ou plus en main."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "CTD": {
+    "name": "Merlin",
+    "version": "Profondément curieux",
+    "rulesText": "\\Potentiel inexploité\\ Lorsque vous jouez ce personnage, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)%\\Découverte palpitante\\ Chaque fois que ce personnage est envoyé à l'aventure, piochez une carte.",
+    "text": [
+      {
+        "title": "Potentiel inexploité",
+        "description": "Lorsque vous jouez ce personnage, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      },
+      {
+        "title": "Découverte palpitante",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, piochez une carte."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "ONu": {
+    "name": "Archimède",
+    "version": "Hibou messager",
+    "rulesText": "<Charge> %\\Quelle indignité!\\ Lorsque ce personnage est banni via un défi, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "<Charge>"
+      },
+      {
+        "title": "Quelle indignité!",
+        "description": "Lorsque ce personnage est banni via un défi, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "n2V": {
+    "name": "Madame Mime",
+    "version": "Roublarde pleine de ressources",
+    "rulesText": "\\Prendre la main\\ Lorsque vous jouez ce personnage, si vous avez retiré une goutte d'encre pour le jouer, piochez 2 cartes.%\\Jeu de babioles\\ Une fois durant votre tour, lorsque vous retirez une goutte d'encre, piochez une carte.",
+    "text": [
+      {
+        "title": "Prendre la main",
+        "description": "Lorsque vous jouez ce personnage, si vous avez retiré une goutte d'encre pour le jouer, piochez 2 cartes."
+      },
+      {
+        "title": "Jeu de babioles",
+        "description": "Une fois durant votre tour, lorsque vous retirez une goutte d'encre, piochez une carte."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "gha": {
+    "name": "César",
+    "version": "En route pour la balade",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Tu m'as l'air bien excité, Jock. Que se passe-t-il donc dehors ?”%—César",
+    "searchableKeywords": ["Lady and the Tramp", "La Belle et le Clochard"]
+  },
+  "gNn": {
+    "name": "Don Carnage",
+    "version": "Coursier de Khan",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Moi, Don Carnage, pilleur de trésorages et voleur exceptionnelge, je ne pourrai jamais être capturage par vous autres sauvages !”",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "mgU": {
+    "name": "Hiro Hamada",
+    "version": "Inventeur versatile",
+    "rulesText": "<Insaisissable> %\\Propulseurs turbo\\ Lorsque vous jouez ce personnage, vous pouvez payer 1 {I} pour choisir l'un de vos personnages et lui donner <Insaisissable> jusqu'au début de votre prochain tour.",
+    "text": [
+      {
+        "title": "<Insaisissable>"
+      },
+      {
+        "title": "Propulseurs turbo",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez payer 1 {I} pour choisir l'un de vos personnages et lui donner <Insaisissable> jusqu'au début de votre prochain tour."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "BTW": {
+    "name": "Go Go Tomago",
+    "version": "Testeuse extrême",
+    "rulesText": "\\Collecter des données\\ Chaque fois que ce personnage est défié, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Collecter des données",
+        "description": "Chaque fois que ce personnage est défié, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Si je gagne 6#% de vitesse avec une goutte d'encre, quel sera le résultat avec deux ?”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "gvL": {
+    "name": "Molly Cunningham",
+    "version": "N'oublie pas de partager",
+    "rulesText": "\\Tellement amusant!\\ Lorsque vous jouez ce personnage, vous et un autre joueur de votre choix gagnez chacun 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Tellement amusant!",
+        "description": "Lorsque vous jouez ce personnage, vous et un autre joueur de votre choix gagnez chacun 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Maman, maman ! Regarde toutes ces choses brillantes !”",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "bVP": {
+    "name": "Kit",
+    "version": "Ours irrépressible",
+    "rulesText": "\\Jour de chance\\ Lorsque vous jouez ce personnage, vous et un autre joueur de votre choix gagnez chacun 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Jour de chance",
+        "description": "Lorsque vous jouez ce personnage, vous et un autre joueur de votre choix gagnez chacun 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Louie a des gouttes d'encre ? Tu crois qu'il accepterait de nous en donner quelques-unes ?”",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "cSM": {
+    "name": "Belle",
+    "version": "Écrivaine songeuse",
+    "rulesText": "\\Aventures en ville\\ Lorsque vous jouez ce personnage, révélez la carte du dessus de votre pioche. S'il s'agit d'une carte Objet nommée Guide touristique de Belle ou d'une carte Action, vous pouvez l'ajouter à votre main. Sinon, placez-la sous votre pioche.",
+    "text": [
+      {
+        "title": "Aventures en ville",
+        "description": "Lorsque vous jouez ce personnage, révélez la carte du dessus de votre pioche. S'il s'agit d'une carte Objet nommée Guide touristique de Belle ou d'une carte Action, vous pouvez l'ajouter à votre main. Sinon, placez-la sous votre pioche."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["La Belle et la Bête", "Beauty and the Beast"]
+  },
+  "FRw": {
+    "name": "Fred",
+    "version": "Rassemble l'équipe",
+    "rulesText": "\\Groupe d'experts\\ Lorsque vous jouez ce personnage, regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler une carte Personnage Super ou une carte Objet parmi elles et l'ajouter à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+    "text": [
+      {
+        "title": "Groupe d'experts",
+        "description": "Lorsque vous jouez ce personnage, regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler une carte Personnage Super ou une carte Objet parmi elles et l'ajouter à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "GBD": {
+    "name": "Capitaine Crochet",
+    "version": "Capitaine préoccupé",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Aucune fée, ni enfant, ni crocodile n'est autorisé à bord du Jolly Roger.”",
+    "searchableKeywords": ["Peter Pan"]
+  },
+  "m0i": {
+    "name": "Jock",
+    "version": "Profite de la vue",
+    "rulesText": "<Insaisissable>",
+    "text": "<Insaisissable>",
+    "flavorText": "“Oh, la ville grouille de monde ! Regardez-moi ça, une foule de nouveaux Illumineurs vient d'arriver à l'Autorité portuaire !”",
+    "searchableKeywords": ["Lady and the Tramp", "La Belle et le Clochard"]
+  },
+  "4Ao": {
+    "name": "Lady",
+    "version": "Détendue et reposée",
+    "rulesText": "<Hors d'atteinte>",
+    "text": "<Hors d'atteinte>",
+    "flavorText": "“Ce Glimmer me rassure tellement. Quand je l’invoque, je sais que tout ira bien.”%—Cordelia, une Illumineuse",
+    "searchableKeywords": ["Lady and the Tramp", "La Belle et le Clochard"]
+  },
+  "d5C": {
+    "name": "Rebecca Cunningham",
+    "version": "Gestionnaire avisée",
+    "rulesText": "\\Examen de conformité\\ Lorsque vous jouez ce personnage, vous pouvez piocher une carte puis défausser une carte.",
+    "text": [
+      {
+        "title": "Examen de conformité",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez piocher une carte puis défausser une carte."
+      }
+    ],
+    "flavorText": "Elle a la fierté de diriger Loopilote d'une main de fer.",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "WJo": {
+    "name": "Shere Khan",
+    "version": "Magnat opportuniste",
+    "rulesText": "\\Accord unilatéral\\ Lorsque vous jouez ce personnage, chaque adversaire peut défausser une carte. Pour chaque adversaire qui ne le fait pas, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Accord unilatéral",
+        "description": "Lorsque vous jouez ce personnage, chaque adversaire peut défausser une carte. Pour chaque adversaire qui ne le fait pas, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "lBa": {
+    "name": "Horace",
+    "version": "Espèce de cornichon",
+    "rulesText": "\\Mince, raté\\ Lorsque vous jouez ce personnage, choisissez un personnage adverse ayant au moins un dommage et infligez-lui 1 dommage.",
+    "text": [
+      {
+        "title": "Mince, raté",
+        "description": "Lorsque vous jouez ce personnage, choisissez un personnage adverse ayant au moins un dommage et infligez-lui 1 dommage."
+      }
+    ],
+    "flavorText": "“Fais gaffe, Jasper, t'as cogné ma planche avec ta tête !”",
+    "searchableKeywords": ["101 Dalmatians", "Les 101 Dalmatiens"]
+  },
+  "kg0": {
+    "name": "Shere Khan",
+    "version": "Entrepreneur impitoyable",
+    "rulesText": "\\Écarté en silence\\ Lorsque vous jouez ce personnage, choisissez un personnage adverse ayant 3 {S} ou moins et placez-le sous la pioche de son propriétaire.",
+    "text": [
+      {
+        "title": "Écarté en silence",
+        "description": "Lorsque vous jouez ce personnage, choisissez un personnage adverse ayant 3 {S} ou moins et placez-le sous la pioche de son propriétaire."
+      }
+    ],
+    "flavorText": "“Malheureusement, votre utilité touche à sa fin.”",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "SMo": {
+    "name": "Bobby Zimmeruski",
+    "version": "Prodige de la sono",
+    "rulesText": "<Hors d'atteinte> %\\Ça colle au palais!\\ Vos objets nommés Tour de Pise gagnent « {E}, 1 {I} — Gagnez 1 goutte d'encre. » (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "<Hors d'atteinte>"
+      },
+      {
+        "title": "Ça colle au palais!",
+        "description": "Vos objets nommés Tour de Pise gagnent « {E}, 1 {I} — Gagnez 1 goutte d'encre. » (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "Mq1": {
+    "name": "Baymax",
+    "version": "Assistant de laboratoire",
+    "rulesText": "\\Réapprovisionnement\\ Lorsque vous jouez ce personnage, si vous avez 2 objets ou plus en jeu, gagnez 2 gouttes d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Réapprovisionnement",
+        "description": "Lorsque vous jouez ce personnage, si vous avez 2 objets ou plus en jeu, gagnez 2 gouttes d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Mon analyse montre que les gouttes d'encre peuvent améliorer les résultats opératoires de 80#%.”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "B6x": {
+    "name": "Fred",
+    "version": "Boss génial",
+    "rulesText": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Fred.)%\\Des ressources qui déchirent\\ Chaque fois que vous jouez ce personnage ou un autre personnage Super, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Fred.)"
+      },
+      {
+        "title": "Des ressources qui déchirent",
+        "description": "Chaque fois que vous jouez ce personnage ou un autre personnage Super, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "B2t": {
+    "name": "Lester l’opossum",
+    "version": "Mascotte du Parc",
+    "rulesText": "\\Barre-toi, j't'ai dit!\\ Lorsque ce personnage est défié et banni, chaque adversaire perd 2 éclats de Lore.%\\Malaise maximal\\ 6 {I} — Choisissez un personnage adverse qui gagne <Combattant> jusqu'au début de votre prochain tour. (Ce personnage-là ne peut pas être envoyé à l'aventure et doit défier s'il le peut.)",
+    "text": [
+      {
+        "title": "Barre-toi, j't'ai dit!",
+        "description": "Lorsque ce personnage est défié et banni, chaque adversaire perd 2 éclats de Lore."
+      },
+      {
+        "title": "Malaise maximal",
+        "description": "6 {I} — Choisissez un personnage adverse qui gagne <Combattant> jusqu'au début de votre prochain tour. (Ce personnage-là ne peut pas être envoyé à l'aventure et doit défier s'il le peut.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "9qv": {
+    "name": "Max Dingo",
+    "version": "Star du karaoké",
+    "rulesText": "\\Remix trop cool\\ Lorsque vous jouez ce personnage, vous pouvez défausser une carte Chanson. Si vous le faites, piochez deux cartes.%\\Toute nouvelle playlist\\ Tant que vous avez 5 cartes Chanson ou plus dans votre défausse, ce personnage gagne +3 {L}.",
+    "text": [
+      {
+        "title": "Remix trop cool",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez défausser une carte Chanson. Si vous le faites, piochez deux cartes."
+      },
+      {
+        "title": "Toute nouvelle playlist",
+        "description": "Tant que vous avez 5 cartes Chanson ou plus dans votre défausse, ce personnage gagne +3 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "jz8": {
+    "name": "Belle",
+    "version": "Écrivaine exceptionnelle",
+    "rulesText": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Belle.)%\\Bons plans d'Hyperia City\\ Durant votre tour, chaque fois que ce personnage est épuisé, la prochaine action que vous jouez ce tour-ci vous coûte 2 {I} de moins.%\\Secrets d'Hyperia City\\ Durant votre tour, chaque fois que vous jouez votre troisième action, gagnez 3 éclats de Lore.",
+    "text": [
+      {
+        "title": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Belle.)"
+      },
+      {
+        "title": "Bons plans d'Hyperia City",
+        "description": "Durant votre tour, chaque fois que ce personnage est épuisé, la prochaine action que vous jouez ce tour-ci vous coûte 2 {I} de moins."
+      },
+      {
+        "title": "Secrets d'Hyperia City",
+        "description": "Durant votre tour, chaque fois que vous jouez votre troisième action, gagnez 3 éclats de Lore."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["La Belle et la Bête", "Beauty and the Beast"]
+  },
+  "4EQ": {
+    "name": "Fred",
+    "version": "Grand piétineur",
+    "rulesText": "\\Kaiju Crush\\ Lorsque vous jouez ce personnage, vous pouvez choisir un lieu et le bannir.",
+    "text": [
+      {
+        "title": "Kaiju Crush",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez choisir un lieu et le bannir."
+      }
+    ],
+    "flavorText": "“Je commence à comprendre comment ça marche.”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "vFk": {
+    "name": "Minnie",
+    "version": "Fonceuse occupée",
+    "rulesText": "\\Belle trouvaille\\ Durant le tour de chaque adversaire, ce personnage gagne <Résistance> +2.",
+    "text": [
+      {
+        "title": "Belle trouvaille",
+        "description": "Durant le tour de chaque adversaire, ce personnage gagne <Résistance> +2."
+      }
+    ],
+    "flavorText": "Vous pouvez la voir filer à toute allure dans les canaux d'Hyperia City.",
+    "searchableKeywords": []
+  },
+  "K86": {
+    "name": "Honey Lemon",
+    "version": "Teste les limites",
+    "rulesText": "\\Chimie de pointe\\ Lorsque vous jouez ce personnage et chaque fois qu'il est envoyé à l'aventure, vous pouvez choisir l'un de vos objets et le bannir. Si vous le faites, piochez une carte et gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Chimie de pointe",
+        "description": "Lorsque vous jouez ce personnage et chaque fois qu'il est envoyé à l'aventure, vous pouvez choisir l'un de vos objets et le bannir. Si vous le faites, piochez une carte et gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "cPq": {
+    "name": "Heihei",
+    "version": "Traverse la route",
+    "rulesText": "\\Errance sans but\\ Une fois durant votre tour, si ce personnage est sur un lieu, vous pouvez le déplacer gratuitement sur un autre lieu. Si vous le faites, gagnez 1 éclat de Lore.",
+    "text": [
+      {
+        "title": "Errance sans but",
+        "description": "Une fois durant votre tour, si ce personnage est sur un lieu, vous pouvez le déplacer gratuitement sur un autre lieu. Si vous le faites, gagnez 1 éclat de Lore."
+      }
+    ],
+    "flavorText": "Ça explique le comment, mais pas le pourquoi.",
+    "searchableKeywords": ["Moana", "Vaiana"]
+  },
+  "2oR": {
+    "name": "Abby Park",
+    "version": "Fan intense",
+    "rulesText": "\\Rêve devenu réalité\\ Lorsque vous jouez ce personnage, révélez la carte du dessus de votre pioche. S'il s'agit d'une carte Personnage avec <Mélomane> ou d'une carte Chanson, vous pouvez l'ajouter à votre main. Sinon, placez-la sous votre pioche.",
+    "text": [
+      {
+        "title": "Rêve devenu réalité",
+        "description": "Lorsque vous jouez ce personnage, révélez la carte du dessus de votre pioche. S'il s'agit d'une carte Personnage avec <Mélomane> ou d'une carte Chanson, vous pouvez l'ajouter à votre main. Sinon, placez-la sous votre pioche."
+      }
+    ],
+    "flavorText": "“Meilleur. Concert. De tous les temps !”",
+    "searchableKeywords": ["Turning Red", "Alerte rouge"]
+  },
+  "Yuz": {
+    "name": "Dingo",
+    "version": "Superstar de la danse",
+    "rulesText": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Dingo.)%<Mélomane> 6 (Ce personnage est considéré comme ayant un coût de 6 pour chanter des chansons.)%\\Dans le groove\\ Chaque fois que ce personnage est envoyé à l'aventure, vos autres personnages avec <Mélomane> gagnent +1 {L} pour le reste de ce tour.",
+    "text": [
+      {
+        "title": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Dingo.)"
+      },
+      {
+        "title": "<Mélomane> 6 (Ce personnage est considéré comme ayant un coût de 6 pour chanter des chansons.)"
+      },
+      {
+        "title": "Dans le groove",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, vos autres personnages avec <Mélomane> gagnent +1 {L} pour le reste de ce tour."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "etZ": {
+    "name": "Héctor Rivera",
+    "version": "Phénomène mondial",
+    "rulesText": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Héctor Rivera.)%\\Succès phare\\ Chaque fois que ce personnage est envoyé à l'aventure et chaque fois qu'il chante une chanson pour la première fois chaque tour, regardez les 3 cartes du dessus de votre pioche. Vous pouvez révéler une carte Chanson parmi elles et l'ajouter à votre main. Placez les autres cartes dans votre défausse.",
+    "text": [
+      {
+        "title": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Héctor Rivera.)"
+      },
+      {
+        "title": "Succès phare",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure et chaque fois qu'il chante une chanson pour la première fois chaque tour, regardez les 3 cartes du dessus de votre pioche. Vous pouvez révéler une carte Chanson parmi elles et l'ajouter à votre main. Placez les autres cartes dans votre défausse."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "CaX": {
+    "name": "Yama",
+    "version": "Criminel notoire",
+    "rulesText": "\\Continuez d'en envoyer\\ 6 {I} — Chaque fois que l'un de vos personnages en défie un autre ce tour-ci, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Continuez d'en envoyer",
+        "description": "6 {I} — Chaque fois que l'un de vos personnages en défie un autre ce tour-ci, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "“On n’arnaque pas Yama !”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "RwK": {
+    "name": "Abigail Callaghan",
+    "version": "Pilote d'essai chevronnée",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“T'es-tu déjà demandé ce qu'il y avait dans les Terres d'Encres ? Tu aurais du mal à croire tout ce que j’ai vu avec mon Illumineuse.”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "6CV": {
+    "name": "Pepita",
+    "version": "Gentille minette",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "La minette se laissa guider par les pétales de marigolds, comme elle allait guider les autres un jour.",
+    "searchableKeywords": ["Coco"]
+  },
+  "1O3": {
+    "name": "Donald",
+    "version": "Chauffeur de taxi",
+    "rulesText": "\\L'heure la plus chargée\\ Lorsque vous jouez ce personnage, choisissez un personnage qui gagne <Charge> pour le reste de ce tour. (Ce personnage-là peut défier le tour où il est joué.)",
+    "text": [
+      {
+        "title": "L'heure la plus chargée",
+        "description": "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne <Charge> pour le reste de ce tour. (Ce personnage-là peut défier le tour où il est joué.)"
+      }
+    ],
+    "flavorText": "“Magne-toi, nom d'un canard ! On m'attend quelque part !”",
+    "searchableKeywords": []
+  },
+  "Wi0": {
+    "name": "Dingo",
+    "version": "Touriste enthousiaste",
+    "rulesText": "\\Capturer l'instant\\ Tant que vous avez un personnage avec <Mélomane> en jeu, ce personnage-ci gagne +3 {S}.",
+    "text": [
+      {
+        "title": "Capturer l'instant",
+        "description": "Tant que vous avez un personnage avec <Mélomane> en jeu, ce personnage-ci gagne +3 {S}."
+      }
+    ],
+    "flavorText": "“Hyuck, Max, tu les connais ? Parce que moi non. Mais j'adore leur musique !”",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "Qbi": {
+    "name": "Tadashi Hamada",
+    "version": "Fait des vagues",
+    "rulesText": "\\Livraison urgente\\ Lorsque ce personnage est banni, gagnez 2 gouttes d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Livraison urgente",
+        "description": "Lorsque ce personnage est banni, gagnez 2 gouttes d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Je dois apporter ces gouttes d'encre à Hiro et Honey Lemon avant la fermeture du labo !”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "xel": {
+    "name": "Cruella d'Enfer",
+    "version": "Se faufile dans le trafic",
+    "rulesText": "<Charge>",
+    "text": "<Charge>",
+    "flavorText": "“Dégagez le passage, imbéciles ! J'ai des affaires importantes à régler !”",
+    "searchableKeywords": ["101 Dalmatians", "Les 101 Dalmatiens"]
+  },
+  "gR3": {
+    "name": "Jasper",
+    "version": "Canotier douteux",
+    "rulesText": "<Insaisissable>",
+    "text": "<Insaisissable>",
+    "flavorText": "“Tu pourras conduire le gros bateau quand tu l'auras mérité.”%—Cruella d'Enfer",
+    "searchableKeywords": ["101 Dalmatians", "Les 101 Dalmatiens"]
+  },
+  "QLT": {
+    "name": "Peg",
+    "version": "Vocaliste nocturne",
+    "rulesText": "<Mélomane> 4 (Ce personnage est considéré comme ayant un coût de 4 pour chanter des chansons.)",
+    "text": "<Mélomane> 4 (Ce personnage est considéré comme ayant un coût de 4 pour chanter des chansons.)",
+    "flavorText": "Hyperia City propose toujours les meilleurs spectacles.",
+    "searchableKeywords": ["Lady and the Tramp", "La Belle et le Clochard"]
+  },
+  "bUg": {
+    "name": "Stacey",
+    "version": "Superfan de Powerline",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Regardez ça, ils avaient la bougie parfumée Powerline en édition limitée ! Je la cherchais depuis toujours !”",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "sWk": {
+    "name": "Héctor Rivera",
+    "version": "Musicien de rue",
+    "rulesText": "<Mélomane> 2 (Ce personnage est considéré comme ayant un coût de 2 pour chanter des chansons.)%\\Jouer sur la corde sensible\\ Lorsque vous jouez ce personnage, vous pouvez placer la carte du dessus de votre pioche dans votre défausse.",
+    "text": [
+      {
+        "title": "<Mélomane> 2 (Ce personnage est considéré comme ayant un coût de 2 pour chanter des chansons.)"
+      },
+      {
+        "title": "Jouer sur la corde sensible",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez placer la carte du dessus de votre pioche dans votre défausse."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "RzE": {
+    "name": "Ernesto de la Cruz",
+    "version": "Idole de millions de fans",
+    "rulesText": "<Mélomane> 5 (Ce personnage est considéré comme ayant un coût de 5 pour chanter des chansons.)%\\En haut du podium\\ Tant qu'un adversaire a une carte Chanson dans sa défausse, ce personnage gagne +1 {L}.",
+    "text": [
+      {
+        "title": "<Mélomane> 5 (Ce personnage est considéré comme ayant un coût de 5 pour chanter des chansons.)"
+      },
+      {
+        "title": "En haut du podium",
+        "description": "Tant qu'un adversaire a une carte Chanson dans sa défausse, ce personnage gagne +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "6oW": {
+    "name": "Pepita",
+    "version": "Bras droit d’Imelda",
+    "rulesText": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Pepita.)%\\Sagesse ancestrale\\ Tant que vous avez 10 cartes ou plus dans votre défausse, ce personnage gagne +2 {S} et +2 {L}.",
+    "text": [
+      {
+        "title": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Pepita.)"
+      },
+      {
+        "title": "Sagesse ancestrale",
+        "description": "Tant que vous avez 10 cartes ou plus dans votre défausse, ce personnage gagne +2 {S} et +2 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "OkB": {
+    "name": "Ernesto de la Cruz",
+    "version": "Musicien sans scrupules",
+    "rulesText": "<Mélomane> 8 (Ce personnage est considéré comme ayant un coût de 8 pour chanter des chansons.)%\\Tous les sacrifices\\ Lorsque vous jouez ce personnage, vous pouvez choisir un personnage avec <Mélomane> et le bannir.",
+    "text": [
+      {
+        "title": "<Mélomane> 8 (Ce personnage est considéré comme ayant un coût de 8 pour chanter des chansons.)"
+      },
+      {
+        "title": "Tous les sacrifices",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage avec <Mélomane> et le bannir."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "72S": {
+    "name": "Héctor Rivera",
+    "version": "Gone to Pieces",
+    "rulesText": "<Singer> 6 (This character counts as cost 6 to sing songs.)\n\n\\Feel the Music\\ While you have a song card in your discard, this character gets +1 {L} and gains <Evasive>. (Only characters with Evasive can challenge them.)",
+    "text": [
+      {
+        "title": "<Singer> 6 (This character counts as cost 6 to sing songs.)"
+      },
+      {
+        "title": "Feel the Music",
+        "description": "While you have a song card in your discard, this character gets +1 {L} and gains <Evasive>. (Only characters with Evasive can challenge them.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["D23", "Coco"]
+  },
+  "wf5": {
+    "name": "Clochard",
+    "version": "Prompt à réagir",
+    "rulesText": "\\Prendre en chasse\\ Lorsque vous jouez ce personnage, choisissez entre:%• Choisissez un personnage ayant 1 {S} ou moins et épuisez-le.%• Ce personnage gagne <Charge> pour le reste de ce tour.",
+    "text": [
+      {
+        "title": "Prendre en chasse",
+        "description": "Lorsque vous jouez ce personnage, choisissez entre:"
+      },
+      {
+        "title": "• Choisissez un personnage ayant 1 {S} ou moins et épuisez-le."
+      },
+      {
+        "title": "• Ce personnage gagne <Charge> pour le reste de ce tour."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lady and the Tramp", "La Belle et le Clochard"]
+  },
+  "qWA": {
+    "name": "Meilin Lee",
+    "version": "Fan extatique",
+    "rulesText": "<Mélomane> 5 (Ce personnage est considéré comme ayant un coût de 5 pour chanter des chansons.)%\\Surexcitée\\ Une fois durant votre tour, lorsque vous jouez une chanson, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "<Mélomane> 5 (Ce personnage est considéré comme ayant un coût de 5 pour chanter des chansons.)"
+      },
+      {
+        "title": "Surexcitée",
+        "description": "Une fois durant votre tour, lorsque vous jouez une chanson, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Turning Red", "Alerte rouge"]
+  },
+  "H1h": {
+    "name": "Roxane",
+    "version": "Amatrice de concerts",
+    "rulesText": "\\C'est aujourd'hui!\\ Lorsque vous jouez ce personnage, vous pouvez le déplacer ainsi qu'un autre de vos personnages sur le même lieu gratuitement. Si vous le faites, l'autre personnage gagne +1 {L} pour le reste de ce tour.",
+    "text": [
+      {
+        "title": "C'est aujourd'hui!",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez le déplacer ainsi qu'un autre de vos personnages sur le même lieu gratuitement. Si vous le faites, l'autre personnage gagne +1 {L} pour le reste de ce tour."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "j34": {
+    "name": "Wasabi",
+    "version": "Appelé au combat",
+    "rulesText": "\\Double lames\\ Durant votre tour, chaque fois que ce personnage inflige au moins un dommage à un autre personnage via un défi, choisissez un autre personnage et infligez-lui autant de dommages que la {S} de ce personnage-ci.%\\Ça va chauffer\\ Tant que vous avez une goutte d'encre, ce personnage gagne +2 {S}.",
+    "text": [
+      {
+        "title": "Double lames",
+        "description": "Durant votre tour, chaque fois que ce personnage inflige au moins un dommage à un autre personnage via un défi, choisissez un autre personnage et infligez-lui autant de dommages que la {S} de ce personnage-ci."
+      },
+      {
+        "title": "Ça va chauffer",
+        "description": "Tant que vous avez une goutte d'encre, ce personnage gagne +2 {S}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "DKz": {
+    "name": "Madame de Trémaine",
+    "version": "Snob méprisante",
+    "rulesText": "\\Intolérance sonore\\ Une fois durant votre tour, lorsque vous jouez une chanson, vous pouvez infliger 1 dommage à ce personnage. Si vous le faites, piochez une carte.%\\Critique acerbe\\ Les personnages adverses avec <Mélomane> entrent en jeu avec 1 dommage.",
+    "text": [
+      {
+        "title": "Intolérance sonore",
+        "description": "Une fois durant votre tour, lorsque vous jouez une chanson, vous pouvez infliger 1 dommage à ce personnage. Si vous le faites, piochez une carte."
+      },
+      {
+        "title": "Critique acerbe",
+        "description": "Les personnages adverses avec <Mélomane> entrent en jeu avec 1 dommage."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Cendrillon", "Cinderella"]
+  },
+  "BqG": {
+    "name": "Mulan",
+    "version": "Maîtresse en arts martiaux",
+    "rulesText": "\\La voie de l'héroïne\\ Lorsque vous jouez ce personnage, choisissez un personnage qui gagne +2 {S} et « Chaque fois que ce personnage en défie un autre, piochez une carte. » pour le reste de ce tour.%\\Esprit guerrrier\\ Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage qui gagne <Charge> pour le reste de ce tour. (Ce personnage-là peut défier le tour où il est joué.)",
+    "text": [
+      {
+        "title": "La voie de l'héroïne",
+        "description": "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne +2 {S} et « Chaque fois que ce personnage en défie un autre, piochez une carte. » pour le reste de ce tour."
+      },
+      {
+        "title": "Esprit guerrrier",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage qui gagne <Charge> pour le reste de ce tour. (Ce personnage-là peut défier le tour où il est joué.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Mulan"]
+  },
+  "n4y": {
+    "name": "Carl Fredricksen",
+    "version": "Guide en milieu sauvage",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Est-ce qu'ils nous donnent des badges de mangeur de glaces ? Parce qu'ils devraient !”%—Carl Fredricksen",
+    "searchableKeywords": ["Là-haut", "Up"]
+  },
+  "WDr": {
+    "name": "Cendrillon",
+    "version": "Couturière artisanale",
+    "rulesText": "\\Un œil exercé\\ Lorsque vous jouez ce personnage, regardez la carte du dessus de votre pioche. Placez-la sur ou sous votre pioche.",
+    "text": [
+      {
+        "title": "Un œil exercé",
+        "description": "Lorsque vous jouez ce personnage, regardez la carte du dessus de votre pioche. Placez-la sur ou sous votre pioche."
+      }
+    ],
+    "flavorText": "“C'est vrai qu’elle est un peu démodée, mais je vais arranger ça.”",
+    "searchableKeywords": ["Cendrillon", "Cinderella"]
+  },
+  "bzr": {
+    "name": "Wasabi",
+    "version": "Pense le futur",
+    "rulesText": "\\La sécurité avant tout\\ Lorsque vous jouez ce personnage, si vous avez retiré une goutte d'encre pour le jouer, vos autres personnages gagnent <Résistance> +1 et <Hors d'atteinte> jusqu'au début de votre prochain tour. (Les dommages qui leur sont infligés sont réduits de 1. Les adversaires ne peuvent pas choisir ces personnages, hormis pour un défi.)",
+    "text": [
+      {
+        "title": "La sécurité avant tout",
+        "description": "Lorsque vous jouez ce personnage, si vous avez retiré une goutte d'encre pour le jouer, vos autres personnages gagnent <Résistance> +1 et <Hors d'atteinte> jusqu'au début de votre prochain tour. (Les dommages qui leur sont infligés sont réduits de 1. Les adversaires ne peuvent pas choisir ces personnages, hormis pour un défi.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "y2o": {
+    "name": "Baymax",
+    "version": "Médecin qualifié",
+    "rulesText": "\\Assistance médicale\\ Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage et retirez-lui jusqu'à 2 dommages.",
+    "text": [
+      {
+        "title": "Assistance médicale",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage et retirez-lui jusqu'à 2 dommages."
+      }
+    ],
+    "flavorText": "“Sur une échelle de 1 à 10, quel est votre degré de souffrance ?”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "1Eu": {
+    "name": "Roi Louie",
+    "version": "Virtuose de la crème glacée",
+    "rulesText": "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
+    "text": "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
+    "flavorText": "“Petit, j'ai des parfums comme tu n'en as jamais rêvé !”",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "xtK": {
+    "name": "Lafayette",
+    "version": "Tout ouïe",
+    "rulesText": "<Agilité> (Ce personnage peut défier comme s'il était Insaisissable.)",
+    "text": "<Agilité> (Ce personnage peut défier comme s'il était Insaisissable.)",
+    "flavorText": "“Je ne sais pas ce que je garde ni contre quoi je le garde, mais une chose est sûre, je vais très bien le garder.”",
+    "searchableKeywords": ["Aristocats", "Les Aristochats"]
+  },
+  "DRn": {
+    "name": "Amélie & Amélia",
+    "version": "Oies cancanières",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Oh dites, avez-vous vu cet invocateur d’encre, Amélie ?”%“Il est tout simplement merveilleux, Amélia. J'adore la façon dont chacun d'entre eux reflète les goûts de son Illumineur.”",
+    "searchableKeywords": ["Aristocats", "Les Aristochats"]
+  },
+  "ATK": {
+    "name": "Honey Lemon",
+    "version": "Chercheuse ingénieuse",
+    "rulesText": "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages nommé Honey Lemon.)%\\Synthétiser\\ Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez renvoyer dans votre main une carte Objet de votre défausse. Si vous le faites, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages nommé Honey Lemon.)"
+      },
+      {
+        "title": "Synthétiser",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez renvoyer dans votre main une carte Objet de votre défausse. Si vous le faites, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "4C8": {
+    "name": "Go Go Tomago",
+    "version": "Travaille tard",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Les résultats de ces gouttes d'encre sont irréels. Je me demande s'il y a un moyen de les utiliser pour booster un invocateur d'encre.”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "vTV": {
+    "name": "Madame Mime",
+    "version": "Voisine fouineuse",
+    "rulesText": "\\On ne se cache pas\\ Lorsque vous jouez ce personnage, choisissez un adversaire et regardez sa main.",
+    "text": [
+      {
+        "title": "On ne se cache pas",
+        "description": "Lorsque vous jouez ce personnage, choisissez un adversaire et regardez sa main."
+      }
+    ],
+    "flavorText": "“Youhou ! Merlin ! Avec quoi joues-tu ? Sais-tu que c'est gentil de partager ses jouets ?”",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "FYs": {
+    "name": "Lionheart",
+    "version": "Nettoie la ville",
+    "rulesText": "<Agilité> (Ce personnage peut défier comme s'il était Insaisissable.)%\\Devoir civique\\ 6 {I} — Choisissez un personnage ou un lieu et retirez-lui tous ses dommages.",
+    "text": [
+      {
+        "title": "<Agilité> (Ce personnage peut défier comme s'il était Insaisissable.)"
+      },
+      {
+        "title": "Devoir civique",
+        "description": "6 {I} — Choisissez un personnage ou un lieu et retirez-lui tous ses dommages."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "3j6": {
+    "name": "Priscilla",
+    "version": "Employée efficace",
+    "rulesText": "\\Béguin pas si secret\\ Ce personnage entre en jeu épuisé.%\\Système de classement\\ Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez regarder les 2 cartes du dessus de votre pioche. Ajoutez-en une à votre main et placez l'autre dans votre réserve d'encre, face cachée et épuisée.",
+    "text": [
+      {
+        "title": "Béguin pas si secret",
+        "description": "Ce personnage entre en jeu épuisé."
+      },
+      {
+        "title": "Système de classement",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez regarder les 2 cartes du dessus de votre pioche. Ajoutez-en une à votre main et placez l'autre dans votre réserve d'encre, face cachée et épuisée."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "kE4": {
+    "name": "Daisy",
+    "version": "Investisseuse avisée",
+    "rulesText": "\\Économiser pour l'avenir\\ Lorsque vous jouez ce personnage, vous pouvez placer une carte de votre main dans votre réserve d'encre, face cachée et épuisée.",
+    "text": [
+      {
+        "title": "Économiser pour l'avenir",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez placer une carte de votre main dans votre réserve d'encre, face cachée et épuisée."
+      }
+    ],
+    "flavorText": "La vie à Hyperia City n'avait jamais été aussi belle.",
+    "searchableKeywords": []
+  },
+  "EvA": {
+    "name": "Hiro Hamada",
+    "version": "Inventeur avant-gardiste",
+    "rulesText": "\\Astuce technologique\\ Tant que vous avez un objet en jeu, ce personnage gagne +1 {L}.",
+    "text": [
+      {
+        "title": "Astuce technologique",
+        "description": "Tant que vous avez un objet en jeu, ce personnage gagne +1 {L}."
+      }
+    ],
+    "flavorText": "“Ce que Tadashi a fait avec Baymax est incroyable. Mais mon frère n'a jamais eu accès aux gouttes d'encre.”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "sMn": {
+    "name": "Honey Lemon",
+    "version": "Infiniment curieuse",
+    "rulesText": "\\Découverte époustouflante\\ Chaque fois que ce personnage est envoyé à l'aventure, le prochain objet que vous jouez ce tour-ci vous coûte 1 {I} de moins.",
+    "text": [
+      {
+        "title": "Découverte époustouflante",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, le prochain objet que vous jouez ce tour-ci vous coûte 1 {I} de moins."
+      }
+    ],
+    "flavorText": "“Ces géodes ont vraiment fait exploser mes recherches !”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "oBC": {
+    "name": "Thomas O’Malley",
+    "version": "Vagabond avisé",
+    "rulesText": "\\Coup de veine\\ Chaque fois que ce personnage est envoyé à l'aventure, chaque joueur révèle la carte du dessus de sa pioche. Ajoutez la carte ayant le coût le plus élevé ainsi révélée, ou chaque carte à égalité pour le coût le plus élevé, à la main de son propriétaire. Placez les autres sous la pioche de leur propriétaire.",
+    "text": [
+      {
+        "title": "Coup de veine",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, chaque joueur révèle la carte du dessus de sa pioche. Ajoutez la carte ayant le coût le plus élevé ainsi révélée, ou chaque carte à égalité pour le coût le plus élevé, à la main de son propriétaire. Placez les autres sous la pioche de leur propriétaire."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Aristocats", "Les Aristochats"]
+  },
+  "o4Z": {
+    "name": "Duchesse",
+    "version": "Chatte mondaine",
+    "rulesText": "\\Haute société\\ Tant que vous avez un personnage ayant le coût le plus élevé en jeu, ou à égalité pour le coût le plus élevé, ce personnage-ci gagne +1 {L}.%\\Respecter l'étiquette\\ Chaque fois que ce personnage est envoyé à l'aventure, regardez la carte du dessus de votre pioche. Placez-la sur ou sous votre pioche.",
+    "text": [
+      {
+        "title": "Haute société",
+        "description": "Tant que vous avez un personnage ayant le coût le plus élevé en jeu, ou à égalité pour le coût le plus élevé, ce personnage-ci gagne +1 {L}."
+      },
+      {
+        "title": "Respecter l'étiquette",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, regardez la carte du dessus de votre pioche. Placez-la sur ou sous votre pioche."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Aristocats", "Les Aristochats"]
+  },
+  "dyQ": {
+    "name": "Judy Hopps",
+    "version": "Instructrice en centre de loisirs",
+    "rulesText": "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)%\\Filer un coup de patte\\ Lorsque vous jouez ce personnage, si vous avez joué un autre personnage ce tour-ci, vous pouvez placer la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
+    "text": [
+      {
+        "title": "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)"
+      },
+      {
+        "title": "Filer un coup de patte",
+        "description": "Lorsque vous jouez ce personnage, si vous avez joué un autre personnage ce tour-ci, vous pouvez placer la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "n5b": {
+    "name": "Minnie",
+    "version": "Visionnaire urbaniste",
+    "rulesText": "<Hors d'atteinte> %\\Tout est planifié\\ À la fin de votre tour, si ce personnage est épuisé, vous pouvez regarder les cartes de votre réserve d'encre, puis vous pouvez renvoyer l'une d'elles dans votre main. Si vous faites l'un ou l'autre, épuisez toutes les cartes de votre réserve d'encre.",
+    "text": [
+      {
+        "title": "<Hors d'atteinte>"
+      },
+      {
+        "title": "Tout est planifié",
+        "description": "À la fin de votre tour, si ce personnage est épuisé, vous pouvez regarder les cartes de votre réserve d'encre, puis vous pouvez renvoyer l'une d'elles dans votre main. Si vous faites l'un ou l'autre, épuisez toutes les cartes de votre réserve d'encre."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": []
+  },
+  "1wB": {
+    "name": "Ariel",
+    "version": "Collectionneuse de curiosités",
+    "rulesText": "\\Unique\\ Chaque fois que vous jouez un objet, si l'objet que vous avez joué porte un nom différent de tous les objets que vous avez en jeu, piochez une carte.%\\Collection personnelle\\ Ce personnage gagne +1 {L} pour chaque objet portant un nom différent que vous avez en jeu.",
+    "text": [
+      {
+        "title": "Unique",
+        "description": "Chaque fois que vous jouez un objet, si l'objet que vous avez joué porte un nom différent de tous les objets que vous avez en jeu, piochez une carte."
+      },
+      {
+        "title": "Collection personnelle",
+        "description": "Ce personnage gagne +1 {L} pour chaque objet portant un nom différent que vous avez en jeu."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Little Mermaid", "La Petite Sirène"]
+  },
+  "aqW": {
+    "name": "Cendrillon",
+    "version": "Icône involontaire",
+    "rulesText": "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages nommé Cendrillon.)%\\Création sur mesure\\ À la fin de votre tour, vous pouvez regarder les 2 cartes du dessus de votre pioche. Placez-en une sur ou sous votre pioche, et l'autre dans votre réserve d'encre, face cachée et épuisée.",
+    "text": [
+      {
+        "title": "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages nommé Cendrillon.)"
+      },
+      {
+        "title": "Création sur mesure",
+        "description": "À la fin de votre tour, vous pouvez regarder les 2 cartes du dessus de votre pioche. Placez-en une sur ou sous votre pioche, et l'autre dans votre réserve d'encre, face cachée et épuisée."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Cendrillon", "Cinderella"]
+  },
+  "07k": {
+    "name": "Baymax",
+    "version": "Gonflé à bloc",
+    "rulesText": "<Alter> Retirez 2 gouttes d'encre (Vous pouvez retirer 2 gouttes d'encre pour jouer ce personnage sur l'un de vos personnages nommé Baymax.)%\\Supercharge\\ Si vous devez gagner une goutte d'encre, vous pouvez placer la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée, à la place.",
+    "text": [
+      {
+        "title": "<Alter> Retirez 2 gouttes d'encre (Vous pouvez retirer 2 gouttes d'encre pour jouer ce personnage sur l'un de vos personnages nommé Baymax.)"
+      },
+      {
+        "title": "Supercharge",
+        "description": "Si vous devez gagner une goutte d'encre, vous pouvez placer la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée, à la place."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "TcQ": {
+    "name": "Bellwether",
+    "version": "Hautement qualifiée",
+    "rulesText": "\\Un plan brillant\\ Lorsque vous jouez ce personnage, vous pouvez choisir un personnage adverse coûtant 2 ou moins et le placer dans la réserve d'encre de son propriétaire, face cachée et épuisé.",
+    "text": [
+      {
+        "title": "Un plan brillant",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage adverse coûtant 2 ou moins et le placer dans la réserve d'encre de son propriétaire, face cachée et épuisé."
+      }
+    ],
+    "flavorText": "Tout se déroulait à merveille.",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "OBX": {
+    "name": "Clarabelle",
+    "version": "Partie se promener",
+    "rulesText": "\\Embellir la vue\\ Lorsque vous jouez ce personnage, vous pouvez choisir un objet et le bannir. Si vous le faites, son propriétaire place la carte du dessus de sa pioche dans sa réserve d'encre, face cachée et épuisée.",
+    "text": [
+      {
+        "title": "Embellir la vue",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez choisir un objet et le bannir. Si vous le faites, son propriétaire place la carte du dessus de sa pioche dans sa réserve d'encre, face cachée et épuisée."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": []
+  },
+  "gXx": {
+    "name": "Doug Ramses",
+    "version": "À l'affût",
+    "rulesText": "<Hors d'atteinte>",
+    "text": "<Hors d'atteinte>",
+    "flavorText": "“Doug, c’est le contraire d’un type sympa. C’est un type pas sympa.”%—Duke Weaselton",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "Kk7": {
+    "name": "Flash",
+    "version": "Employé efficace",
+    "rulesText": "<Résistance> +1 %\\Prenez... votre... temps\\ Tous les personnages perdent <Charge> et ne peuvent pas gagner <Charge>.",
+    "text": [
+      {
+        "title": "<Résistance> +1"
+      },
+      {
+        "title": "Prenez... votre... temps",
+        "description": "Tous les personnages perdent <Charge> et ne peuvent pas gagner <Charge>."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "DrF": {
+    "name": "Arthur",
+    "version": "Assistant de Merlin",
+    "rulesText": "\\Voyage magique\\ Lorsque vous jouez ce personnage, vous pouvez le déplacer gratuitement sur un lieu.%\\Livraisons arcaniques\\ Une fois durant votre tour, lorsque ce personnage est déplacé sur un lieu, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Voyage magique",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez le déplacer gratuitement sur un lieu."
+      },
+      {
+        "title": "Livraisons arcaniques",
+        "description": "Une fois durant votre tour, lorsque ce personnage est déplacé sur un lieu, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "S04": {
+    "name": "Edgar Balthazar",
+    "version": "Majordome éprouvé",
+    "rulesText": "\\Fidèle parapluie\\ Tant que ce personnage n'a aucun dommage, il gagne <Résistance> +2.",
+    "text": [
+      {
+        "title": "Fidèle parapluie",
+        "description": "Tant que ce personnage n'a aucun dommage, il gagne <Résistance> +2."
+      }
+    ],
+    "flavorText": "“Je n'ai rien contre un brin de malveillance, mais il y a des limites à la grossièreté !”",
+    "searchableKeywords": ["Aristocats", "Les Aristochats"]
+  },
+  "7EL": {
+    "name": "Kit",
+    "version": "Coursier imprévisible",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Désolé ! J'ai une livraison à l'autre bout de la ville et elle ne peut pas attendre !”",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "ruw": {
+    "name": "Tic-Tac",
+    "version": "Croco du canal",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "Il n'y a aucun alligator dans les canaux d'Hyperia City. Par contre, il y a un crocodile.",
+    "searchableKeywords": ["Peter Pan"]
+  },
+  "Imr": {
+    "name": "Tiana",
+    "version": "Restauratrice",
+    "rulesText": "\\Trié sur le volet\\ Lorsque vous jouez ce personnage, vous pouvez piocher une carte puis défausser une carte.",
+    "text": [
+      {
+        "title": "Trié sur le volet",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez piocher une carte puis défausser une carte."
+      }
+    ],
+    "flavorText": "“Il y a un petit quelque chose pour tous ici.”",
+    "searchableKeywords": ["Princess and the Frog", "La Princesse et la Grenouille"]
+  },
+  "VHh": {
+    "name": "Raya",
+    "version": "Exploratrice déterminée",
+    "rulesText": "\\Aux confins du royaume\\ Ce personnage gagne +1 {L} pour chaque lieu que vous avez en jeu.",
+    "text": [
+      {
+        "title": "Aux confins du royaume",
+        "description": "Ce personnage gagne +1 {L} pour chaque lieu que vous avez en jeu."
+      }
+    ],
+    "flavorText": "\"Il reste tant de choses à explorer dans le royaume de Lorcana.\"",
+    "searchableKeywords": ["Raya et le Dernier Dragon", "Raya and the Last Dragon"]
+  },
+  "iOz": {
+    "name": "Woolter le bélier & Jessie le bélier",
+    "version": "Hommes de main de Bellwether",
+    "rulesText": "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)%<Offensif> +2",
+    "text": [
+      {
+        "title": "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)"
+      },
+      {
+        "title": "<Offensif> +2"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "t66": {
+    "name": "Napoléon",
+    "version": "Chien de garde patient",
+    "rulesText": "<Agilité> (Ce personnage peut défier comme s'il était Insaisissable.)",
+    "text": "<Agilité> (Ce personnage peut défier comme s'il était Insaisissable.)",
+    "flavorText": "“Fiston, mon Illumineur m'a demandé de garder cette porte, et c'est bien ce que je compte faire.”",
+    "searchableKeywords": ["Aristocats", "Les Aristochats"]
+  },
+  "nR2": {
+    "name": "Turbo",
+    "version": "Mécanicien peu conventionnel",
+    "rulesText": "\\Bon, ben c'est cassé\\ Lorsque vous jouez ce personnage, vous pouvez choisir un objet et le bannir.",
+    "text": [
+      {
+        "title": "Bon, ben c'est cassé",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez choisir un objet et le bannir."
+      }
+    ],
+    "flavorText": "“Ouh là, je vais avoir besoin d'une bobine de fil, d'une spatule et d'au moins sept glaçons pour remettre ça en état de marche.”",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "omF": {
+    "name": "Seigneur Kay",
+    "version": "Déterminé à gagner",
+    "rulesText": "\\Avantage compétitif\\ Tant que vous avez une goutte d'encre, ce personnage gagne <Offensif> +3.",
+    "text": [
+      {
+        "title": "Avantage compétitif",
+        "description": "Tant que vous avez une goutte d'encre, ce personnage gagne <Offensif> +3."
+      }
+    ],
+    "flavorText": "“Pfff. C'est pas comme si j'avais besoin d'une goutte d'encre pour gagner, mais je vais pas dire non.”",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "yL5": {
+    "name": "Toulouse",
+    "version": "Chahuteur et turbulent",
+    "rulesText": "\\Comportement malpoli\\ Lorsque vous jouez ce personnage, les adversaires ne peuvent pas jouer d'actions jusqu'au début de votre prochain tour.",
+    "text": [
+      {
+        "title": "Comportement malpoli",
+        "description": "Lorsque vous jouez ce personnage, les adversaires ne peuvent pas jouer d'actions jusqu'au début de votre prochain tour."
+      }
+    ],
+    "flavorText": "La taille d'une pantoufle avec le cœur d'un tigre.",
+    "searchableKeywords": ["Aristocats", "Les Aristochats"]
+  },
+  "SUz": {
+    "name": "Chef Bogo",
+    "version": "Commissaire de police",
+    "rulesText": "\\Je connais ces rues\\ Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez le déplacer gratuitement sur un lieu Hyperia City.%\\Arrêtez-vous!\\ 6 {I} — Choisissez un personnage adverse qui ne peut pas défier jusqu'au début de votre prochain tour.",
+    "text": [
+      {
+        "title": "Je connais ces rues",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez le déplacer gratuitement sur un lieu Hyperia City."
+      },
+      {
+        "title": "Arrêtez-vous!",
+        "description": "6 {I} — Choisissez un personnage adverse qui ne peut pas défier jusqu'au début de votre prochain tour."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "JzV": {
+    "name": "Seigneur Pélinore",
+    "version": "Plus coriace qu'il n'y paraît",
+    "rulesText": "<Offensif> +2 %\\Butin de la victoire\\ Durant votre tour, chaque fois que ce personnage en bannit un autre via un défi, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "<Offensif> +2"
+      },
+      {
+        "title": "Butin de la victoire",
+        "description": "Durant votre tour, chaque fois que ce personnage en bannit un autre via un défi, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "ctj": {
+    "name": "Arthur",
+    "version": "Apprenti forgeron",
+    "rulesText": "\\Artisanat soigné\\ Lorsque vous jouez ce personnage, vous pouvez payer 1 {I} pour gagner 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Artisanat soigné",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez payer 1 {I} pour gagner 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Il faut de la force et un mental d’acier pour façonner ces gouttes d'encre.”%—Merlin",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "4NQ": {
+    "name": "Berlioz",
+    "version": "Petit chenapan",
+    "rulesText": "\\Petites griffes acérées\\ Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et lui infliger 1 dommage.",
+    "text": [
+      {
+        "title": "Petites griffes acérées",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et lui infliger 1 dommage."
+      }
+    ],
+    "flavorText": "“Ça lui apprendra, à ce vieux majordome méchant.”",
+    "searchableKeywords": ["Aristocats", "Les Aristochats"]
+  },
+  "B3j": {
+    "name": "Marie",
+    "version": "Prise sur le fait",
+    "rulesText": "\\Une petite friandise\\ Chaque fois que ce personnage est envoyé à l'aventure, si un personnage adverse a subi au moins un dommage ce tour-ci, gagnez 1 goutte d'encre (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Une petite friandise",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, si un personnage adverse a subi au moins un dommage ce tour-ci, gagnez 1 goutte d'encre (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Le danger n'est pas une excuse pour oublier ses bonnes manières.”",
+    "searchableKeywords": ["Aristocats", "Les Aristochats"]
+  },
+  "EmK": {
+    "name": "Baloo",
+    "version": "Pilote de livraison",
+    "rulesText": "\\Paiement comptant\\ Ce personnage ne peut ni être envoyé à l'aventure ni défier sauf si vous avez gagné une goutte d'encre ce tour-ci.",
+    "text": [
+      {
+        "title": "Paiement comptant",
+        "description": "Ce personnage ne peut ni être envoyé à l'aventure ni défier sauf si vous avez gagné une goutte d'encre ce tour-ci."
+      }
+    ],
+    "flavorText": "“Je pense que c'est le bon moment pour vous préciser que le pourboire n'est pas inclus dans les frais d’expédition...”",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "pP7": {
+    "name": "Koslov",
+    "version": "Gros bras",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Les temps étaient durs à cette époque. Koslov et moi-même n'étions que deux jeunes mammifères essayant de se faire une place dans ce monde. Je l'ai aidé, il m'a aidé.”%—Mister Big",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "LCo": {
+    "name": "Seigneur Hector",
+    "version": "Chevalier impétueux",
+    "rulesText": "\\Bien mérité\\ Durant votre tour, chaque fois que ce personnage en bannit un autre via un défi, piochez une carte.",
+    "text": [
+      {
+        "title": "Bien mérité",
+        "description": "Durant votre tour, chaque fois que ce personnage en bannit un autre via un défi, piochez une carte."
+      }
+    ],
+    "flavorText": "“Je te préviens, je ne tolérerai aucune des absurdités de ce Marvin à propos des gouttes d'encre, point final !”",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "mVf": {
+    "name": "Baloo",
+    "version": "Pilote de fret",
+    "rulesText": "<Résistance> +1",
+    "text": "<Résistance> +1",
+    "flavorText": "“Hé, c'est pas du jeu ! Vous êtes des pirates de l’air, vous n'êtes pas censés m'attaquer au sol !”",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "zac": {
+    "name": "Kit",
+    "version": "Tireur de précision",
+    "rulesText": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Kit.)%\\Acrobaties aériennes\\ Chaque fois que ce personnage est envoyé à l'aventure, choisissez entre:%• Gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)%• Choisissez un personnage et infligez-lui 1 dommage.",
+    "text": [
+      {
+        "title": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Kit.)"
+      },
+      {
+        "title": "Acrobaties aériennes",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, choisissez entre:"
+      },
+      {
+        "title": "• Gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      },
+      {
+        "title": "• Choisissez un personnage et infligez-lui 1 dommage."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "GHQ": {
+    "name": "Arthur",
+    "version": "Chevalier jouteur",
+    "rulesText": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Arthur.)%<Offensif> +2 %\\Bourse de la victoire\\ Durant votre tour, chaque fois que ce personnage en bannit un autre via un défi, piochez une carte et gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Arthur.)"
+      },
+      {
+        "title": "<Offensif> +2"
+      },
+      {
+        "title": "Bourse de la victoire",
+        "description": "Durant votre tour, chaque fois que ce personnage en bannit un autre via un défi, piochez une carte et gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "PXK": {
+    "name": "Mister Big",
+    "version": "Magnat de la distribution",
+    "rulesText": "\\Mettre au frigo\\ À la fin de votre tour, si toutes les cartes de votre réserve d'encre sont épuisées, choisissez un personnage adverse qui ne peut pas défier jusqu'au début de votre prochain tour.",
+    "text": [
+      {
+        "title": "Mettre au frigo",
+        "description": "À la fin de votre tour, si toutes les cartes de votre réserve d'encre sont épuisées, choisissez un personnage adverse qui ne peut pas défier jusqu'au début de votre prochain tour."
+      }
+    ],
+    "flavorText": "“Cela reste entre nous.”",
+    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+  },
+  "lux": {
+    "name": "Shere Khan",
+    "version": "PDG des Industries Khan",
+    "rulesText": "\\Nouvelle prime\\ Lorsque vous jouez ce personnage, choisissez un personnage qui peut défier les personnages redressés pour le reste de ce tour.%\\Dominer le marché\\ Une fois durant votre tour, lorsque l'un de vos autres personnages en bannit un autre via un défi, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Nouvelle prime",
+        "description": "Lorsque vous jouez ce personnage, choisissez un personnage qui peut défier les personnages redressés pour le reste de ce tour."
+      },
+      {
+        "title": "Dominer le marché",
+        "description": "Une fois durant votre tour, lorsque l'un de vos autres personnages en bannit un autre via un défi, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "j6f": {
+    "name": "Tiana",
+    "version": "Organisatrice de la soirée",
+    "rulesText": "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages nommé Tiana.)%\\Cadre idéal\\ Lorsque vous jouez ce personnage, vous pouvez piocher 2 cartes puis défausser une carte. Si vous avez ainsi défaussé une carte Lieu, vous pouvez la jouer gratuitement depuis votre défausse.",
+    "text": [
+      {
+        "title": "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages nommé Tiana.)"
+      },
+      {
+        "title": "Cadre idéal",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez piocher 2 cartes puis défausser une carte. Si vous avez ainsi défaussé une carte Lieu, vous pouvez la jouer gratuitement depuis votre défausse."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Princess and the Frog", "La Princesse et la Grenouille"]
+  },
   "oR5": {
     "name": "Woody",
     "version": "Aide une amie",
@@ -693,11 +2719,11 @@
     "searchableKeywords": ["Taram et le Chaudron magique", "Black Cauldron"]
   },
   "cU7": {
-    "name": "Maléfique",
-    "version": "Lanceuse de sorts exultante",
+    "name": "Maleficent",
+    "version": "Exultant Spellcaster",
     "rulesText": "",
     "text": "",
-    "flavorText": "“Quelle désolation ! Regardez autour : des plantes à perte de vue. Et nous siégeons là, au cœur de celles-ci.”",
+    "flavorText": "\"Such destruction! Look around—vines as far as the eye can see. And here we sit, at the heart of it.\"",
     "searchableKeywords": ["La Belle au bois dormant", "Sleeping Beauty"]
   },
   "FIF": {
@@ -1323,19 +3349,19 @@
   },
   "Bqs": {
     "name": "Mushu",
-    "version": "Dragon furtif",
-    "rulesText": "<Insaisissable> %\\Faire pencher la balance\\ Chaque fois que ce personnage est envoyé à l'aventure, si un adversaire a plus de cartes en main que vous, vous pouvez piocher une carte.",
+    "version": "Stealthy Dragon",
+    "rulesText": "<Evasive> (Only characters with Evasive can challenge this character.)\n\n\\Tip the Scales\\ Whenever this character quests, if an opponent has more cards in their hand than you, you may draw a card.",
     "text": [
       {
-        "title": "<Insaisissable>"
+        "title": "<Evasive> (Only characters with Evasive can challenge this character.)"
       },
       {
-        "title": "Faire pencher la balance",
-        "description": "Chaque fois que ce personnage est envoyé à l'aventure, si un adversaire a plus de cartes en main que vous, vous pouvez piocher une carte."
+        "title": "Tip the Scales",
+        "description": "Whenever this character quests, if an opponent has more cards in their hand than you, you may draw a card."
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Mulan"]
+    "searchableKeywords": ["Mulan", "D23"]
   },
   "QUJ": {
     "name": "Carl Fredricksen & Russell",
@@ -1758,7 +3784,7 @@
         "description": "Chaque adversaire joue avec la carte du dessus de sa pioche face visible."
       }
     ],
-    "flavorText": "“Je suppose que vous avez brillamment fait vos rapports, pour une fois.”",
+    "flavorText": "“Je suppose que vous avez brillamment fait  vos rapports, pour une fois.”",
     "searchableKeywords": ["Monsters, Inc.", "Monstres et Cie"]
   },
   "ZPO": {
@@ -2569,16 +4595,16 @@
   },
   "sCi": {
     "name": "Woody",
-    "version": "Meneur des Jouets",
-    "rulesText": "\\Rentrons à la maison\\ Lorsque vous jouez ce personnage, regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler une carte Personnage Jouet ou une carte Lieu nommée Chambre d'Andy parmi elles et l'ajouter à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+    "version": "Leader of the Toys",
+    "rulesText": "\\Let's Go Home\\ When you play this character, look at the top 4 cards of your deck. You may reveal a Toy character card or a location card named Andy's Room and put it into your hand. Put the rest on the bottom of your deck in any order.",
     "text": [
       {
-        "title": "Rentrons à la maison",
-        "description": "Lorsque vous jouez ce personnage, regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler une carte Personnage Jouet ou une carte Lieu nommée Chambre d'Andy parmi elles et l'ajouter à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix."
+        "title": "Let's Go Home",
+        "description": "When you play this character, look at the top 4 cards of your deck. You may reveal a Toy character card or a location card named Andy's Room and put it into your hand. Put the rest on the bottom of your deck in any order."
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Toy Story"]
+    "searchableKeywords": ["D23", "Toy Story"]
   },
   "vS7": {
     "name": "Tac",
@@ -3228,17 +5254,17 @@
     "searchableKeywords": []
   },
   "xen": {
-    "name": "Buzz l'Éclair",
-    "version": "J'arrive",
-    "rulesText": "\\Mission secrète\\ Chaque fois que vous payez 2 {I} ou moins pour jouer une carte non-Personnage, piochez une carte puis défaussez une carte.%\\Super jouet universel\\ Chaque fois que vous payez 2 {I} ou moins pour jouer un personnage, choisissez un personnage adverse ayant au moins un dommage et infligez-lui 1 dommage.",
+    "name": "Buzz Lightyear",
+    "version": "On the Way",
+    "rulesText": "\\Secret Mission\\ Whenever you pay 2 {I} or less to play a non-character, draw a card, then choose and discard a card.\n\n\\World's Greatest Toy\\ Whenever you pay 2 {I} or less to play a character, deal 1 damage to chosen opposing damaged character.",
     "text": [
       {
-        "title": "Mission secrète",
-        "description": "Chaque fois que vous payez 2 {I} ou moins pour jouer une carte non-Personnage, piochez une carte puis défaussez une carte."
+        "title": "Secret Mission",
+        "description": "Whenever you pay 2 {I} or less to play a non-character, draw a card, then choose and discard a card."
       },
       {
-        "title": "Super jouet universel",
-        "description": "Chaque fois que vous payez 2 {I} ou moins pour jouer un personnage, choisissez un personnage adverse ayant au moins un dommage et infligez-lui 1 dommage."
+        "title": "World's Greatest Toy",
+        "description": "Whenever you pay 2 {I} or less to play a character, deal 1 damage to chosen opposing damaged character."
       }
     ],
     "flavorText": "",
@@ -3411,7 +5437,7 @@
     "version": "Cherche entre ciel et terre",
     "rulesText": "<Insaisissable>",
     "text": "<Insaisissable>",
-    "flavorText": "Le royaume de Lorcana avait changé et semblait curieusement plus grand. Mais aussi grand que cela soit devenu, il était déterminé à retrouver son ami.",
+    "flavorText": "“Ce Pégase peut transporter presque tout sur son dos, même un archiviste terrifié.”\n—Rayyan, un Illumineur",
     "searchableKeywords": ["Hercules", "Hercule"]
   },
   "XG0": {
@@ -4173,17 +6199,17 @@
     "searchableKeywords": ["Les Indestructibles", "Incredibles"]
   },
   "Y1z": {
-    "name": "M. Indestructible",
-    "version": "Élimine les déchets",
-    "rulesText": "\\Bam!\\ Lorsque vous jouez ce personnage, vous pouvez choisir un personnage Robot ou Méchant adverse et lui infliger 2 dommages.",
+    "name": "Mr. Incredible",
+    "version": "Taking Out the Trash",
+    "rulesText": "\\Ka-Pow!\\ When you play this character, you may deal 2 damage to chosen opposing Robot or Villain character.",
     "text": [
       {
-        "title": "Bam!",
-        "description": "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage Robot ou Méchant adverse et lui infliger 2 dommages."
+        "title": "Ka-Pow!",
+        "description": "When you play this character, you may deal 2 damage to chosen opposing Robot or Villain character."
       }
     ],
-    "flavorText": "“La fin justifie les moyens. Gros problèmes, gros moyens.”%—M. Indestructible",
-    "searchableKeywords": ["Les Indestructibles", "Incredibles"]
+    "flavorText": "“Heavyweight problems need heavyweight solutions.”\n—Mr. Incredible",
+    "searchableKeywords": ["D23", "Les Indestructibles", "Incredibles"]
   },
   "NF5": {
     "name": "Seigneur Dingwall",
@@ -4644,19 +6670,19 @@
   },
   "FwE": {
     "name": "Angel",
-    "version": "Chanteuse sirène",
-    "rulesText": "\\Outsider\\ Jouer ce personnage vous coûte 1 {I} de moins si c'est votre premier tour et que vous n'êtes pas le premier joueur.%<Mélomane> 3 (Ce personnage est considéré comme ayant un coût de 3 pour chanter des chansons.)",
+    "version": "Siren Singer",
+    "rulesText": "\\Underdog\\ If this is your first turn and you're not the first player, you pay 1 {I} less to play this character.\n\n<Singer> 3 (This character counts as cost 3 to sing songs.)",
     "text": [
       {
-        "title": "Outsider",
-        "description": "Jouer ce personnage vous coûte 1 {I} de moins si c'est votre premier tour et que vous n'êtes pas le premier joueur."
+        "title": "Underdog",
+        "description": "If this is your first turn and you're not the first player, you pay 1 {I} less to play this character."
       },
       {
-        "title": "<Mélomane> 3 (Ce personnage est considéré comme ayant un coût de 3 pour chanter des chansons.)"
+        "title": "<Singer> 3 (This character counts as cost 3 to sing songs.)"
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Lilo et Stitch", "Lilo and Stitch"]
+    "searchableKeywords": ["D23", "Lilo et Stitch", "Lilo and Stitch"]
   },
   "EI1": {
     "name": "Veuve Tartine",
@@ -4770,16 +6796,16 @@
   },
   "o0i": {
     "name": "Pocahontas",
-    "version": "Suit le vent",
-    "rulesText": "\\Quel est le droit chemin?\\ Chaque fois que ce personnage est envoyé à l'aventure, choisissez un autre personnage épuisé et gagnez autant d'éclats de Lore que son {L}.",
+    "version": "Following the Wind",
+    "rulesText": "\\What Is My Path?\\ Whenever this character quests, gain lore equal to another chosen exerted character's {L}.",
     "text": [
       {
-        "title": "Quel est le droit chemin?",
-        "description": "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un autre personnage épuisé et gagnez autant d'éclats de Lore que son {L}."
+        "title": "What Is My Path?",
+        "description": "Whenever this character quests, gain lore equal to another chosen exerted character's {L}."
       }
     ],
-    "flavorText": "“Elle a l’esprit de sa mère. Elle va partout où le vent l’emporte.”%—Kekata",
-    "searchableKeywords": ["Pocahontas"]
+    "flavorText": "“She has her mother’s spirit. She goes wherever the wind takes her.”\n—Kekata",
+    "searchableKeywords": ["D23", "Pocahontas"]
   },
   "l2V": {
     "name": "Myster Mask",
@@ -5982,7 +8008,7 @@
   "Dfc": {
     "name": "Mickey Mouse",
     "version": "Bob Cratchit",
-    "rulesText": "\\Dur labeur\\ Chaque fois que ce personnage est envoyé à l'aventure, placez la carte du dessus de votre pioche, face cachée, sous lui.%\\Un cœur généreux\\ Lorsque ce personnage est banni via un défi, vous pouvez placer toutes les cartes qui étaient sous lui, sous l'un de vos autres personnages ou de vos lieux.",
+    "rulesText": "\\Dur labeur\\ Chaque fois que ce personnage est envoyé à l'aventure, placez la carte du dessus de votre pioche, face cachée, sous lui.%\\Un cœur généreux\\ Lorsque ce personnage est banni via un défi, vous pouvez placer sous l'un de vos autres personnages ou de vos lieux toutes les cartes qui étaient sous ce personnage-ci, face cachée.",
     "text": [
       {
         "title": "Dur labeur",
@@ -5990,7 +8016,7 @@
       },
       {
         "title": "Un cœur généreux",
-        "description": "Lorsque ce personnage est banni via un défi, vous pouvez placer toutes les cartes qui étaient sous lui, sous l'un de vos autres personnages ou de vos lieux."
+        "description": "Lorsque ce personnage est banni via un défi, vous pouvez placer sous l'un de vos autres personnages ou de vos lieux toutes les cartes qui étaient sous ce personnage-ci, face cachée."
       }
     ],
     "flavorText": "",
@@ -6795,7 +8821,7 @@
       }
     ],
     "flavorText": "“Ce monde a encore bien des secrets à révéler.”",
-    "searchableKeywords": ["La Reine des Neiges", "Frozen"]
+    "searchableKeywords": ["La Reine des Neiges", "Clio Schaffner", "Frozen"]
   },
   "7CA": {
     "name": "Mushu",
@@ -7905,16 +9931,16 @@
   },
   "Imt": {
     "name": "Judy Hopps",
-    "version": "Découvrant des indices",
-    "rulesText": "\\Enquête approfondie\\ Lorsque vous jouez ce personnage et chaque fois qu'il est envoyé à l'aventure, regardez les 3 cartes du dessus de votre pioche. Vous pouvez révéler une carte Détective parmi elles et la placer dans votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+    "version": "Uncovering Clues",
+    "rulesText": "\\Thorough Investigation\\ When you play this character and whenever she quests, look at the top 3 cards of your deck. You may reveal a Detective character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
     "text": [
       {
-        "title": "Enquête approfondie",
-        "description": "Lorsque vous jouez ce personnage et chaque fois qu'il est envoyé à l'aventure, regardez les 3 cartes du dessus de votre pioche. Vous pouvez révéler une carte Détective parmi elles et la placer dans votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix."
+        "title": "Thorough Investigation",
+        "description": "When you play this character and whenever she quests, look at the top 3 cards of your deck. You may reveal a Detective character card and put it into your hand. Put the rest on the bottom of your deck in any order."
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Zootropolis", "Zootopie", "Zootopia"]
+    "searchableKeywords": ["Zootropolis", "D23", "Zootopie", "Zootopia"]
   },
   "6GN": {
     "name": "Pluto",
@@ -9516,7 +11542,7 @@
       }
     ],
     "flavorText": "\"Qui êtes-vous et comment êtes-vous arrivé jusqu'à moi ?\"",
-    "searchableKeywords": ["Tangled", "Raiponce"]
+    "searchableKeywords": ["Tangled", "Clio Schaffner", "Raiponce"]
   },
   "8DB": {
     "name": "Mulan",
@@ -9801,7 +11827,7 @@
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["La Belle au bois dormant", "Sleeping Beauty"]
+    "searchableKeywords": ["Clio Schaffner", "La Belle au bois dormant", "Sleeping Beauty"]
   },
   "z67": {
     "name": "Aurore",
@@ -12000,12 +14026,12 @@
   },
   "wSF": {
     "name": "Anna",
-    "version": "Sœur confiante",
-    "rulesText": "\\Ensemble, nous pouvons y parvenir\\ Lorsque vous jouez ce personnage, si vous avez un personnage nommé Elsa en jeu, vous pouvez placer la première carte de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
+    "version": "Trusting Sister",
+    "rulesText": "\\We Can Do This Together\\ When you play this character, if you have a character named Elsa in play, you may put the top card of your deck into your inkwell facedown and exerted.",
     "text": [
       {
-        "title": "Ensemble, nous pouvons y parvenir",
-        "description": "Lorsque vous jouez ce personnage, si vous avez un personnage nommé Elsa en jeu, vous pouvez placer la première carte de votre pioche dans votre réserve d'encre, face cachée et épuisée."
+        "title": "We Can Do This Together",
+        "description": "When you play this character, if you have a character named Elsa in play, you may put the top card of your deck into your inkwell facedown and exerted."
       }
     ],
     "flavorText": "",
@@ -13088,15 +15114,15 @@
   },
   "DdM": {
     "name": "Elsa",
-    "version": "Sœur de confiance",
-    "rulesText": "\\Que fait-on maintenant?\\ Chaque fois que ce personnage est envoyé à l'aventure, si vous avez un personnage Anna en jeu, gagnez 1 éclat de Lore.",
+    "version": "Trusted Sister",
+    "rulesText": "\\What Do We Do Now?\\ Whenever this character quests, if you have a character named Anna in play, gain 1 lore.",
     "text": [
       {
-        "title": "Que fait-on maintenant?",
-        "description": "Chaque fois que ce personnage est envoyé à l'aventure, si vous avez un personnage Anna en jeu, gagnez 1 éclat de Lore."
+        "title": "What Do We Do Now?",
+        "description": "Whenever this character quests, if you have a character named Anna in play, gain 1 lore."
       }
     ],
-    "flavorText": "“C’est de nos peurs qu’il faut se méfier.”",
+    "flavorText": "\"Fear is what can't be trusted.\"",
     "searchableKeywords": ["La Reine des Neiges", "Frozen"]
   },
   "UyZ": {
@@ -15435,18 +17461,18 @@
   },
   "Iyt": {
     "name": "Jasmine",
-    "version": "Navigatrice royale",
-    "rulesText": "\\Par ordre de la Princesse\\ Lorsque vous jouez ce personnage, choisissez entre:%• Choisissez un personnage ayant au moins 1 dommage et épuisez-le.%• Choisissez un personnage adverse qui gagne <Combattant> durant son prochain tour. (Ce personnage ne peut pas être envoyé à l'aventure et doit défier s'il le peut.)",
+    "version": "Royal Seafarer",
+    "rulesText": "\\By Order of the Princess\\ When you play this character, choose one:\n• Exert chosen damaged character.\n• Chosen opposing character gains <Reckless> during their next turn. (They can't quest and must challenge if able.)",
     "text": [
       {
-        "title": "Par ordre de la Princesse",
-        "description": "Lorsque vous jouez ce personnage, choisissez entre:"
+        "title": "By Order of the Princess",
+        "description": "When you play this character, choose one:"
       },
       {
-        "title": "• Choisissez un personnage ayant au moins 1 dommage et épuisez-le."
+        "title": "• Exert chosen damaged character."
       },
       {
-        "title": "• Choisissez un personnage adverse qui gagne <Combattant> durant son prochain tour. (Ce personnage ne peut pas être envoyé à l'aventure et doit défier s'il le peut.)"
+        "title": "• Chosen opposing character gains <Reckless> during their next turn. (They can't quest and must challenge if able.)"
       }
     ],
     "flavorText": "",
@@ -17631,20 +19657,20 @@
     "searchableKeywords": ["Wreck It Ralph", "Les Mondes de Ralph"]
   },
   "ZiJ": {
-    "name": "Donald",
-    "version": "Lanceur de tartes",
-    "rulesText": "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Donald.)%\\Une simple tarte\\ Si vous jouez ce personnage en utilisant sa capacité <Alter>, chaque adversaire perd 2 éclats de Lore.%\\Canard enragé\\ Tant qu'un adversaire a 10 éclats de Lore ou plus, ce personnage gagne +6 {S}.",
+    "name": "Donald Duck",
+    "version": "Pie Slinger",
+    "rulesText": "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Donald Duck.)\n\n\\Humble Pie\\ When you play this character, if you used <Shift> to play him, each opponent loses 2 lore.\n\n\\Raging Duck\\ While an opponent has 10 or more lore, this character gets +6 {S}.",
     "text": [
       {
-        "title": "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Donald.)"
+        "title": "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Donald Duck.)"
       },
       {
-        "title": "Une simple tarte",
-        "description": "Si vous jouez ce personnage en utilisant sa capacité <Alter>, chaque adversaire perd 2 éclats de Lore."
+        "title": "Humble Pie",
+        "description": "When you play this character, if you used <Shift> to play him, each opponent loses 2 lore."
       },
       {
-        "title": "Canard enragé",
-        "description": "Tant qu'un adversaire a 10 éclats de Lore ou plus, ce personnage gagne +6 {S}."
+        "title": "Raging Duck",
+        "description": "While an opponent has 10 or more lore, this character gets +6 {S}."
       }
     ],
     "flavorText": "",
@@ -19614,16 +21640,16 @@
     "searchableKeywords": ["La Belle au bois dormant", "Sleeping Beauty"]
   },
   "Mbz": {
-    "name": "Raiponce",
-    "version": "Artiste sensible",
-    "rulesText": "\\Partenaire perspicace\\ Tant que vous avez un personnage Pascal en jeu, ce personnage-ci gagne <Hors d'atteinte>.",
+    "name": "Rapunzel",
+    "version": "Appreciative Artist",
+    "rulesText": "\\Perceptive Partner\\ While you have a character named Pascal in play, this character gains <Ward>. (Opponents can't choose them except to challenge.)",
     "text": [
       {
-        "title": "Partenaire perspicace",
-        "description": "Tant que vous avez un personnage Pascal en jeu, ce personnage-ci gagne <Hors d'atteinte>."
+        "title": "Perceptive Partner",
+        "description": "While you have a character named Pascal in play, this character gains <Ward>. (Opponents can't choose them except to challenge.)"
       }
     ],
-    "flavorText": "\"Pascal ! Une nouvelle fleur pour le mur !\"",
+    "flavorText": "“Pascal! A new flower for the wall!”",
     "searchableKeywords": ["Tangled", "Raiponce"]
   },
   "IaS": {
@@ -19872,7 +21898,7 @@
   "QEb": {
     "name": "Mickey Mouse",
     "version": "Playful Sorcerer",
-    "rulesText": "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)\n<Resist> +1 (Damage dealt to this character is reduced by 1.)\n\\Sweep Away\\ When you play this character, deal damage to chosen character equal to the number of Broom characters you have in play.",
+    "rulesText": "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)\n\n<Resist> +1 (Damage dealt to this character is reduced by 1.)\n\n\\Sweep Away\\ When you play this character, deal damage to chosen character equal to the number of Broom characters you have in play.",
     "text": [
       {
         "title": "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)"
@@ -22944,16 +24970,16 @@
     "searchableKeywords": ["Little Mermaid", "La Petite Sirène"]
   },
   "Z4N": {
-    "name": "ARIEL",
-    "version": "Chanteuse exceptionnelle",
-    "rulesText": "<Mélomane> 5 (Ce personnage est considéré comme ayant un coût de 5 pour chanter des chansons.)\n\\DÉBUTS MUSICAUX\\ Lorsque vous jouez ce personnage, regardez les 4 premières cartes de votre pioche. Vous pouvez révéler une carte chanson parmi elles et l'ajouter à votre main. Remettez les autres sous votre pioche, dans l'ordre de votre choix.",
+    "name": "Ariel",
+    "version": "Spectacular Singer",
+    "rulesText": "<Singer> 5 (This character counts as cost 5 to sing songs.)\n\\Musical Debut\\ When you play this character, look at the top 4 cards of your deck. You may reveal a song card and put it into your hand. Put the rest on the bottom of your deck in any order.",
     "text": [
       {
-        "title": "<Mélomane> 5 (Ce personnage est considéré comme ayant un coût de 5 pour chanter des chansons.)"
+        "title": "<Singer> 5 (This character counts as cost 5 to sing songs.)"
       },
       {
-        "title": "DÉBUTS MUSICAUX",
-        "description": "Lorsque vous jouez ce personnage, regardez les 4 premières cartes de votre pioche. Vous pouvez révéler une carte chanson parmi elles et l'ajouter à votre main. Remettez les autres sous votre pioche, dans l'ordre de votre choix."
+        "title": "Musical Debut",
+        "description": "When you play this character, look at the top 4 cards of your deck. You may reveal a song card and put it into your hand. Put the rest on the bottom of your deck in any order."
       }
     ],
     "flavorText": "",
@@ -24231,6 +26257,110 @@
     "flavorText": "Maui : \"T'as déjà vaincu un monstre de lave, toi ?\"\nVaiana : \"Non, et toi ?\"",
     "searchableKeywords": ["Moana", "Vaiana"]
   },
+  "iKo": {
+    "name": "Autorité portuaire",
+    "version": "Hub central",
+    "rulesText": "\\Bienvenue en ville\\ Une fois durant votre tour, lorsqu'un personnage est déplacé sur ce lieu, chaque joueur gagne 1 goutte d'encre et 1 éclat de Lore. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Bienvenue en ville",
+        "description": "Une fois durant votre tour, lorsqu'un personnage est déplacé sur ce lieu, chaque joueur gagne 1 goutte d'encre et 1 éclat de Lore. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "12o": {
+    "name": "Chez Merlin, boutique et forge",
+    "version": "Marché enchanteur",
+    "rulesText": "\\La boutique est ouverte\\ Une fois durant votre tour, lorsqu'un personnage est déplacé sur ce lieu, piochez 1 carte et gagnez 1 éclat de Lore.",
+    "text": [
+      {
+        "title": "La boutique est ouverte",
+        "description": "Une fois durant votre tour, lorsqu'un personnage est déplacé sur ce lieu, piochez 1 carte et gagnez 1 éclat de Lore."
+      }
+    ],
+    "flavorText": "“Si nous ne l’avons pas, on vous le créera !”%—Slogan de la boutique",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "JEn": {
+    "name": "Le Haricot magique",
+    "version": "Plus loin et plus haut",
+    "rulesText": "\\Les confins lointains\\ Les personnages sur ce lieu gagnent +1 {S} et <Insaisissable>. (Seuls les personnages avec Insaisissable peuvent défier ces personnages.)",
+    "text": [
+      {
+        "title": "Les confins lointains",
+        "description": "Les personnages sur ce lieu gagnent +1 {S} et <Insaisissable>. (Seuls les personnages avec Insaisissable peuvent défier ces personnages.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": []
+  },
+  "6s8": {
+    "name": "Royaume des ancêtres",
+    "version": "Pont Marigold",
+    "rulesText": "\\Offrandes révérées\\ Tant que vous avez 10 cartes ou plus dans votre défausse, ce lieu gagne +2 {L}.",
+    "text": [
+      {
+        "title": "Offrandes révérées",
+        "description": "Tant que vous avez 10 cartes ou plus dans votre défausse, ce lieu gagne +2 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "mjT": {
+    "name": "Khan Stadium",
+    "version": "Ultramoderne",
+    "rulesText": "\\Grand spectacle\\ Les personnages sur ce lieu gagnent +2 {S}.",
+    "text": [
+      {
+        "title": "Grand spectacle",
+        "description": "Les personnages sur ce lieu gagnent +2 {S}."
+      }
+    ],
+    "flavorText": "Les vivats s'entendent à des kilomètres à la ronde.",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "HMj": {
+    "name": "Institut de Technologie",
+    "version": "Laboratoire d’Honey Lemon",
+    "rulesText": "\\Fracturer le temps\\ Une fois durant votre tour, lorsqu'un personnage Super sur ce lieu est envoyé à l'aventure, renvoyez dans votre main une carte Objet de votre défausse.",
+    "text": [
+      {
+        "title": "Fracturer le temps",
+        "description": "Une fois durant votre tour, lorsqu'un personnage Super sur ce lieu est envoyé à l'aventure, renvoyez dans votre main une carte Objet de votre défausse."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "AUI": {
+    "name": "Gare centrale",
+    "version": "Hub de transport",
+    "rulesText": "\\Souvenir gratuit\\ Une fois durant votre tour, lorsqu'un personnage est déplacé sur ce lieu, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Souvenir gratuit",
+        "description": "Une fois durant votre tour, lorsqu'un personnage est déplacé sur ce lieu, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "RAI": {
+    "name": "Industries Khan",
+    "version": "Site de Greenway",
+    "rulesText": "\\Haute sécurité\\ Les personnages sur ce lieu ne peuvent pas être défiés.",
+    "text": [
+      {
+        "title": "Haute sécurité",
+        "description": "Les personnages sur ce lieu ne peuvent pas être défiés."
+      }
+    ],
+    "flavorText": "Le siège social de Shere Khan, berceau d'un empire fait de gouttes d'encre.",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
   "gWy": {
     "name": "Tour de Raiponce",
     "version": "Prise par la Plante",
@@ -25340,6 +27470,248 @@
     ],
     "flavorText": "Un endroit où tu trouveras ce dont tu as besoin, pas seulement ce que tu désires.",
     "searchableKeywords": ["Princess and the Frog", "La Princesse et la Grenouille"]
+  },
+  "6Lu": {
+    "name": "Guitare ancestrale",
+    "version": "",
+    "rulesText": "\\Héritage musical\\ Lorsque vous jouez cet objet, piochez une carte.%\\Avec le cœur\\ {E}, 1 {I} — Choisissez un personnage qui gagne <Mélomane> et est considéré comme ayant un coût de +2 pour chanter des chansons pour le reste de ce tour.",
+    "text": [
+      {
+        "title": "Héritage musical",
+        "description": "Lorsque vous jouez cet objet, piochez une carte."
+      },
+      {
+        "title": "Avec le cœur",
+        "description": "{E}, 1 {I} — Choisissez un personnage qui gagne <Mélomane> et est considéré comme ayant un coût de +2 pour chanter des chansons pour le reste de ce tour."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "UTF": {
+    "name": "Pile d’enceintes",
+    "version": "",
+    "rulesText": "\\Monter le son\\ Vos personnages avec <Mélomane> gagnent +1 {S} et +1 {W}.",
+    "text": [
+      {
+        "title": "Monter le son",
+        "description": "Vos personnages avec <Mélomane> gagnent +1 {S} et +1 {W}."
+      }
+    ],
+    "flavorText": "“Ton son va tout déchirer, crois-moi ! Le fromage ajoute, euh, de la fromagification.”%—Bobby Zimmeruski",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "wya": {
+    "name": "Bénédiction de Mamá Imelda",
+    "version": "",
+    "rulesText": "\\Devoir familial\\ {E}, 1 {I} — Choisissez un personnage qui subit -1 {S} et qui ne peut pas être {E} pour chanter des chansons jusqu'au début de votre prochain tour.",
+    "text": [
+      {
+        "title": "Devoir familial",
+        "description": "{E}, 1 {I} — Choisissez un personnage qui subit -1 {S} et qui ne peut pas être {E} pour chanter des chansons jusqu'au début de votre prochain tour."
+      }
+    ],
+    "flavorText": "“Eh bien, en théorie, elle peut ajouter toutes les conditions qu’elle souhaite.”%—Employé du Bureau des Plaintes Familiales",
+    "searchableKeywords": ["Coco"]
+  },
+  "DCF": {
+    "name": "Baguette de Merlin",
+    "version": "",
+    "rulesText": "\\Touche de magie\\ {E}, Révélez 2 cartes portant le même nom de votre main — La prochaine carte portant ce nom que vous jouez ce tour-ci vous coûte 1 {I} de moins.",
+    "text": [
+      {
+        "title": "Touche de magie",
+        "description": "{E}, Révélez 2 cartes portant le même nom de votre main — La prochaine carte portant ce nom que vous jouez ce tour-ci vous coûte 1 {I} de moins."
+      }
+    ],
+    "flavorText": "“Juste un petit raccourci pour que ça déménage.”%—Merlin",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "XgC": {
+    "name": "Roller Invocateur d’Encre",
+    "version": "",
+    "rulesText": "\\Dernier cri\\ {E} — Si un personnage a été envoyé à l'aventure ce tour-ci, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Dernier cri",
+        "description": "{E} — Si un personnage a été envoyé à l'aventure ce tour-ci, gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Moitié invocateur, moitié roller. Totalement génial.”%—Cordelia, une Illumineuse",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "h3H": {
+    "name": "Guide touristique de Belle",
+    "version": "",
+    "rulesText": "\\Info d'une connaisseuse\\ {E} — Si vous avez joué une action ce tour-ci, gagnez 1 éclat de Lore.",
+    "text": [
+      {
+        "title": "Info d'une connaisseuse",
+        "description": "{E} — Si vous avez joué une action ce tour-ci, gagnez 1 éclat de Lore."
+      }
+    ],
+    "flavorText": "“Il contient également des recommandations de livres et une certaine recette de cuisine au beurre ?”%—Cordelia, une Illumineuse",
+    "searchableKeywords": ["La Belle et la Bête", "Beauty and the Beast"]
+  },
+  "LdD": {
+    "name": "Tour de Pise",
+    "version": "",
+    "rulesText": "\\Commerce équitable\\ Lorsque vous jouez cet objet, vous pouvez piocher une carte puis défausser une carte.%\\Supplément fromage\\ Tant que vous avez 4 objets nommés Tour de Pise en jeu, vos objets gagnent <Hors d'atteinte>. (Les adversaires ne peuvent pas les choisir.)",
+    "text": [
+      {
+        "title": "Commerce équitable",
+        "description": "Lorsque vous jouez cet objet, vous pouvez piocher une carte puis défausser une carte."
+      },
+      {
+        "title": "Supplément fromage",
+        "description": "Tant que vous avez 4 objets nommés Tour de Pise en jeu, vos objets gagnent <Hors d'atteinte>. (Les adversaires ne peuvent pas les choisir.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "aWq": {
+    "name": "Photo de la famille Rivera",
+    "version": "",
+    "rulesText": "\\Honorer le passé\\ {E}, 1 {I} — Choisissez entre:%• Placez les 2 cartes du dessus de votre pioche dans votre défausse.%• Si vous avez 10 cartes ou plus dans votre défausse, gagnez 1 éclat de Lore.",
+    "text": [
+      {
+        "title": "Honorer le passé",
+        "description": "{E}, 1 {I} — Choisissez entre:"
+      },
+      {
+        "title": "• Placez les 2 cartes du dessus de votre pioche dans votre défausse."
+      },
+      {
+        "title": "• Si vous avez 10 cartes ou plus dans votre défausse, gagnez 1 éclat de Lore."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "6g2": {
+    "name": "Le coin déchiré",
+    "version": "",
+    "rulesText": "\\Souvenirs précieux\\ {E}, 1 {I} — Si vous avez 10 cartes ou plus dans votre défausse, piochez une carte.%\\Restaurer la photo\\ Lorsque cette carte est placée dans votre défausse depuis votre pioche, si vous avez un objet nommé Photo de la famille Rivera en jeu, vous pouvez jouer gratuitement cette carte-ci depuis votre défausse.",
+    "text": [
+      {
+        "title": "Souvenirs précieux",
+        "description": "{E}, 1 {I} — Si vous avez 10 cartes ou plus dans votre défausse, piochez une carte."
+      },
+      {
+        "title": "Restaurer la photo",
+        "description": "Lorsque cette carte est placée dans votre défausse depuis votre pioche, si vous avez un objet nommé Photo de la famille Rivera en jeu, vous pouvez jouer gratuitement cette carte-ci depuis votre défausse."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "uvh": {
+    "name": "Jukebox",
+    "version": "",
+    "rulesText": "\\En boucle\\ Une fois durant votre tour, lorsque vous jouez une chanson, si cette carte-là porte le même nom qu'une autre carte de votre défausse, vous pouvez choisir un personnage et le redresser. Si vous le faites, ce personnage ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
+    "text": [
+      {
+        "title": "En boucle",
+        "description": "Une fois durant votre tour, lorsque vous jouez une chanson, si cette carte-là porte le même nom qu'une autre carte de votre défausse, vous pouvez choisir un personnage et le redresser. Si vous le faites, ce personnage ne peut pas être envoyé à l'aventure pour le reste de ce tour."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "FkS": {
+    "name": "Boule chimique aveuglante",
+    "version": "",
+    "rulesText": "\\Déstabilisation\\ {E}, 2 {I} — Bannissez cet objet.%\\Explosion éblouissante\\ Durant votre tour, lorsque cet objet est banni, vous pouvez gagner 1 goutte d'encre. Si vous le faites, choisissez un personnage qui subit -2 {S} pour le reste de ce tour. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Déstabilisation",
+        "description": "{E}, 2 {I} — Bannissez cet objet."
+      },
+      {
+        "title": "Explosion éblouissante",
+        "description": "Durant votre tour, lorsque cet objet est banni, vous pouvez gagner 1 goutte d'encre. Si vous le faites, choisissez un personnage qui subit -2 {S} pour le reste de ce tour. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "oxw": {
+    "name": "Prototype de boule chimique",
+    "version": "",
+    "rulesText": "\\Déstabilisation\\ {E}, 2 {I} — Bannissez cet objet.%\\Explosion énigmatique\\ Durant votre tour, lorsque cet objet est banni, vous pouvez gagner 1 goutte d'encre. Si vous le faites, choisissez l'un de vos personnages qui gagne <Résistance> +1 jusqu'au début de votre prochain tour. (Les dommages qui lui sont infligés sont réduits de 1. Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Déstabilisation",
+        "description": "{E}, 2 {I} — Bannissez cet objet."
+      },
+      {
+        "title": "Explosion énigmatique",
+        "description": "Durant votre tour, lorsque cet objet est banni, vous pouvez gagner 1 goutte d'encre. Si vous le faites, choisissez l'un de vos personnages qui gagne <Résistance> +1 jusqu'au début de votre prochain tour. (Les dommages qui lui sont infligés sont réduits de 1. Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "PsC": {
+    "name": "Heaume à longue-vue",
+    "version": "",
+    "rulesText": "\\Heaume couture\\ Chaque fois que vous jouez cet objet ou un autre objet, si l'objet que vous avez joué porte un nom différent de tous les objets que vous avez en jeu, vous pouvez placer une carte de votre main dans votre réserve d'encre, face cachée et épuisée.",
+    "text": [
+      {
+        "title": "Heaume couture",
+        "description": "Chaque fois que vous jouez cet objet ou un autre objet, si l'objet que vous avez joué porte un nom différent de tous les objets que vous avez en jeu, vous pouvez placer une carte de votre main dans votre réserve d'encre, face cachée et épuisée."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Little Mermaid", "La Petite Sirène"]
+  },
+  "E31": {
+    "name": "Nano-Sac amélioré",
+    "version": "",
+    "rulesText": "\\Il a des pochettes!\\ {E}, 1 {I}, Bannissez l'un de vos autres objets — Regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler une carte Objet parmi elles et l'ajouter à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+    "text": [
+      {
+        "title": "Il a des pochettes!",
+        "description": "{E}, 1 {I}, Bannissez l'un de vos autres objets — Regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler une carte Objet parmi elles et l'ajouter à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "lTH": {
+    "name": "Express d’Hyperia City",
+    "version": "",
+    "rulesText": "\\Trajet facile\\ {E} — Déplacez gratuitement l'un de vos personnages sur un lieu.%\\Pratique et stylé\\ Vos lieux Hyperia City gagnent +2 {W}.",
+    "text": [
+      {
+        "title": "Trajet facile",
+        "description": "{E} — Déplacez gratuitement l'un de vos personnages sur un lieu."
+      },
+      {
+        "title": "Pratique et stylé",
+        "description": "Vos lieux Hyperia City gagnent +2 {W}."
+      }
+    ],
+    "flavorText": "Arrivez à temps, tout le temps.",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "osH": {
+    "name": "Avion pirate",
+    "version": "",
+    "rulesText": "\\Esquive celle-là!\\ Lorsque vous jouez cet objet, vous pouvez choisir un personnage et lui infliger 1 dommage.%\\Faire un tonneau\\ {E}, 1 {I} — Choisissez un personnage qui gagne <Agilité> pour le reste de ce tour. (Il peut défier comme s'il avait Insaisissable.)",
+    "text": [
+      {
+        "title": "Esquive celle-là!",
+        "description": "Lorsque vous jouez cet objet, vous pouvez choisir un personnage et lui infliger 1 dommage."
+      },
+      {
+        "title": "Faire un tonneau",
+        "description": "{E}, 1 {I} — Choisissez un personnage qui gagne <Agilité> pour le reste de ce tour. (Il peut défier comme s'il avait Insaisissable.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
   },
   "0mK": {
     "name": "Bâton de Powhatan",
@@ -27222,7 +29594,7 @@
       }
     ],
     "flavorText": "Cette couronne brisée renferme de sombres et mystérieux pouvoirs.",
-    "searchableKeywords": []
+    "searchableKeywords": ["Lorcana"]
   },
   "12k": {
     "name": "Chromicône d'Améthyste",
@@ -28251,6 +30623,338 @@
     ],
     "flavorText": "\"Tu n'as pas besoin de dire 'pew pew' quand tu l'utilises, mais ça ne fait pas de mal.\" \n— Lilo, Héroïne galactique",
     "searchableKeywords": ["Lilo et Stitch", "Lilo and Stitch"]
+  },
+  "uqv": {
+    "name": "Prends la route et oublie tes soucis",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 5 ou plus pour chanter cette chanson gratuitement.)%Choisissez un adversaire qui révèle sa main et défausse chaque carte non-Personnage ainsi révélée.",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 5 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Choisissez un adversaire qui révèle sa main et défausse chaque carte non-Personnage ainsi révélée."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "x16": {
+    "name": "Never Too Far Apart",
+    "version": "",
+    "rulesText": "<À l'unisson> 9 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 9 ou plus pour chanter cette chanson gratuitement.)%Regardez les 9 cartes du dessus de votre pioche. Révélez jusqu'à 3 cartes Personnage avec <Mélomane> parmi elles et ajoutez-les à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+    "text": [
+      {
+        "title": "<À l'unisson> 9 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 9 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Regardez les 9 cartes du dessus de votre pioche. Révélez jusqu'à 3 cartes Personnage avec <Mélomane> parmi elles et ajoutez-les à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "v5B": {
+    "name": "Ne m’oublie pas",
+    "version": "",
+    "rulesText": "<À l'unisson> 6 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 6 ou plus pour chanter cette chanson gratuitement.)%Vous pouvez jouer des personnages de votre défausse pour le reste de ce tour. Si vous le faites, ces personnages entrent en jeu épuisés et vous ne pouvez pas jouer un personnage portant le même nom qu'un personnage ainsi joué pour le reste de ce tour.",
+    "text": [
+      {
+        "title": "<À l'unisson> 6 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 6 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Vous pouvez jouer des personnages de votre défausse pour le reste de ce tour. Si vous le faites, ces personnages entrent en jeu épuisés et vous ne pouvez pas jouer un personnage portant le même nom qu'un personnage ainsi joué pour le reste de ce tour."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "WDL": {
+    "name": "Never Gonna Let You Cry",
+    "version": "",
+    "rulesText": "<À l'unisson> 5 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 5 ou plus pour chanter cette chanson gratuitement.)%Renvoyez dans votre main jusqu'à 2 cartes Personnage coûtant chacune 2 ou moins de votre défausse.",
+    "text": [
+      {
+        "title": "<À l'unisson> 5 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 5 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Renvoyez dans votre main jusqu'à 2 cartes Personnage coûtant chacune 2 ou moins de votre défausse."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Turning Red", "Alerte rouge"]
+  },
+  "nOm": {
+    "name": "Tout le monde connaît Juanita",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 5 ou plus pour chanter cette chanson gratuitement.)%Piochez 2 cartes. Si vous avez 10 cartes ou plus dans votre défausse, piochez 3 cartes à la place.",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 5 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Piochez 2 cartes. Si vous avez 10 cartes ou plus dans votre défausse, piochez 3 cartes à la place."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "rWy": {
+    "name": "Malice de Mime",
+    "version": "",
+    "rulesText": "Choisissez un personnage et déplacez jusqu'à 3 de ses dommages sur un personnage adverse de votre choix.",
+    "text": "Choisissez un personnage et déplacez jusqu'à 3 de ses dommages sur un personnage adverse de votre choix.",
+    "flavorText": "“Ce chef-d'œuvre de malveillance est ma meilleure malédiction à ce jour !”",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "o6L": {
+    "name": "Higitus Figitus",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 6 ou plus pour chanter cette chanson gratuitement.)%Gagnez 3 gouttes d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 6 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Gagnez 3 gouttes d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "7PJ": {
+    "name": "Un Poco Loco",
+    "version": "",
+    "rulesText": "<À l'unisson> 3 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 3 ou plus pour chanter cette chanson gratuitement.)%Choisissez 2 de vos personnages. Si l'un d'eux coûte 3 ou moins, renvoyez les deux dans votre main.",
+    "text": [
+      {
+        "title": "<À l'unisson> 3 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 3 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Choisissez 2 de vos personnages. Si l'un d'eux coûte 3 ou moins, renvoyez les deux dans votre main."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "ShR": {
+    "name": "Magnifique, merveilleuse",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 4 ou plus pour chanter cette chanson gratuitement.)%Gagnez 2 éclats de lore. Piochez une carte.",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 4 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Gagnez 2 éclats de lore. Piochez une carte."
+      }
+    ],
+    "flavorText": "… MA Ma Ma Madame Mime",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "mqz": {
+    "name": "Inspiration créative",
+    "version": "",
+    "rulesText": "Piochez 4 cartes.",
+    "text": "Piochez 4 cartes.",
+    "flavorText": "“J’adore cette ville. Juste moi, mon invocateur d’encre et quelques murs à peindre.”%—Cordelia, une Illumineuse",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "s22": {
+    "name": "Largage aérien",
+    "version": "",
+    "rulesText": "Choisissez un personnage et infligez-lui 3 dommages. Si ce personnage a au moins un dommage, infligez-lui 5 dommages à la place.",
+    "text": "Choisissez un personnage et infligez-lui 3 dommages. Si ce personnage a au moins un dommage, infligez-lui 5 dommages à la place.",
+    "flavorText": "“Pas besoin de voler la cargaison, chef. Elle vient droit sur nous !”%—Nazo",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "ojw": {
+    "name": "Above the Crowd",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 5 ou plus pour chanter cette chanson gratuitement.)%Choisissez un personnage adverse ayant 3 {S} ou moins et placez-le sous la pioche de son propriétaire.",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 5 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Choisissez un personnage adverse ayant 3 {S} ou moins et placez-le sous la pioche de son propriétaire."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "Dingo et Max (Complètement Dingo)"]
+  },
+  "FIu": {
+    "name": "Voilà Super Baloo",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)%Piochez une carte. Vous et un autre joueur de votre choix gagnez chacun 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Piochez une carte. Vous et un autre joueur de votre choix gagnez chacun 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "5lt": {
+    "name": "Ce sont les affaires",
+    "version": "",
+    "rulesText": "Choisissez un adversaire qui choisit entre:%• Il révèle sa main et défausse une carte de votre choix. Il gagne 2 gouttes d'encre.%• Vous piochez une carte et gagnez 2 gouttes d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": [
+      {
+        "title": "Choisissez un adversaire qui choisit entre:"
+      },
+      {
+        "title": "• Il révèle sa main et défausse une carte de votre choix. Il gagne 2 gouttes d'encre."
+      },
+      {
+        "title": "• Vous piochez une carte et gagnez 2 gouttes d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "IpT": {
+    "name": "Provocation désinvolte",
+    "version": "",
+    "rulesText": "Choisissez un personnage adverse qui gagne <Combattant> jusqu'au début de votre prochain tour. Si vous avez 2 adversaires ou plus, ce personnage ne peut pas défier vos personnages ou vos lieux.",
+    "text": "Choisissez un personnage adverse qui gagne <Combattant> jusqu'au début de votre prochain tour. Si vous avez 2 adversaires ou plus, ce personnage ne peut pas défier vos personnages ou vos lieux.",
+    "flavorText": "",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "M4n": {
+    "name": "Réaction chimique",
+    "version": "",
+    "rulesText": "Piochez une carte. Vous pouvez choisir l'un de vos objets et le bannir. Si vous le faites, choisissez un adversaire qui défausse une carte.",
+    "text": "Piochez une carte. Vous pouvez choisir l'un de vos objets et le bannir. Si vous le faites, choisissez un adversaire qui défausse une carte.",
+    "flavorText": "“C'est sûrement sans danger.”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "zN3": {
+    "name": "Tactiques d'intimidation",
+    "version": "",
+    "rulesText": "Choisissez un personnage ayant 2 {S} ou moins et bannissez-le.",
+    "text": "Choisissez un personnage ayant 2 {S} ou moins et bannissez-le.",
+    "flavorText": "“Pourquoi y avait-il des gouttes d'encre au Khan Stadium ? On veut des réponses et vous allez nous les donner.”",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "Tuy": {
+    "name": "Repousser les limites",
+    "version": "",
+    "rulesText": "Choisissez l'un de vos personnages qui ne subit aucun dommage lorsqu'il défie pour le reste de ce tour. Gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": "Choisissez l'un de vos personnages qui ne subit aucun dommage lorsqu'il défie pour le reste de ce tour. Gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "flavorText": "“Tes boules chimiques ne peuvent pas rivaliser avec mes lames plasma améliorées !”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "dTt": {
+    "name": "Elle jette tant de sorts",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 4 ou plus pour chanter cette chanson gratuitement.)%Choisissez l'un de vos personnages et bannissez-le pour choisir un personnage et le bannir.",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 4 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Choisissez l'un de vos personnages et bannissez-le pour choisir un personnage et le bannir."
+      }
+    ],
+    "flavorText": "… à toute la ville",
+    "searchableKeywords": ["101 Dalmatians", "Les 101 Dalmatiens"]
+  },
+  "XHF": {
+    "name": "Je vais devoir m’en aller",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)%Placez les 3 cartes du dessus de votre pioche dans votre défausse. Choisissez un personnage qui gagne +1 {S} pour chaque carte Chanson dans votre défausse pour le reste de ce tour.",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Placez les 3 cartes du dessus de votre pioche dans votre défausse. Choisissez un personnage qui gagne +1 {S} pour chaque carte Chanson dans votre défausse pour le reste de ce tour."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "DSF": {
+    "name": "La fin de l’obscurantisme",
+    "version": "",
+    "rulesText": "Placez la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée. Gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": "Placez la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée. Gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "flavorText": "“Quelles drôles de pierres ! Je ferais mieux d'en apporter une à Merlin.”",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "UNK": {
+    "name": "Tout semble auprès de lui très démodé",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)%Regardez les 3 cartes du dessus de votre pioche. Placez-en une dans votre réserve d'encre, face cachée et épuisée, une sur votre pioche, et une sous votre pioche.",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Regardez les 3 cartes du dessus de votre pioche. Placez-en une dans votre réserve d'encre, face cachée et épuisée, une sur votre pioche, et une sous votre pioche."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Aristocats", "Les Aristochats"]
+  },
+  "7qV": {
+    "name": "Recherche intensive",
+    "version": "",
+    "rulesText": "Regardez les 2 cartes du dessus de votre pioche. Si vous avez retiré une goutte d'encre pour jouer cette action, regardez les 5 cartes du dessus de votre pioche à la place. Puis ajoutez-en une à votre main et placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+    "text": "Regardez les 2 cartes du dessus de votre pioche. Si vous avez retiré une goutte d'encre pour jouer cette action, regardez les 5 cartes du dessus de votre pioche à la place. Puis ajoutez-en une à votre main et placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "PdU": {
+    "name": "Du balai !",
+    "version": "",
+    "rulesText": "Choisissez un personnage adverse coûtant 2 ou moins et placez-le dans la réserve d'encre de son propriétaire, face cachée et épuisé.",
+    "text": "Choisissez un personnage adverse coûtant 2 ou moins et placez-le dans la réserve d'encre de son propriétaire, face cachée et épuisé.",
+    "flavorText": "“Pour la dernière fois, je ne prends pas d'apprentis !”",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "iRc": {
+    "name": "Joute équestre",
+    "version": "",
+    "rulesText": "Choisissez un personnage et infligez-lui 2 dommages. Si vous avez retiré une goutte d'encre pour jouer cette action, infligez 5 dommages à la place.",
+    "text": "Choisissez un personnage et infligez-lui 2 dommages. Si vous avez retiré une goutte d'encre pour jouer cette action, infligez 5 dommages à la place.",
+    "flavorText": "“La joute nécessite de l’habileté et de l’intelligence. C’est vraiment un art.”%—Seigneur Pélinore",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "Ati": {
+    "name": "Explosion d’encre",
+    "version": "",
+    "rulesText": "Choisissez un personnage et infligez-lui 4 dommages. Gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": "Choisissez un personnage et infligez-lui 4 dommages. Gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "flavorText": "“Je préfère dire ‘déconstruction rapide et inattendue’.”%—Honey Lemon",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "PuN": {
+    "name": "Livraison Khan Transport",
+    "version": "",
+    "rulesText": "Piochez une carte. Gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "text": "Piochez une carte. Gagnez 1 goutte d'encre. (Vous pouvez retirer l'une de vos gouttes d'encre pour payer 1 {I}.)",
+    "flavorText": "“Ce que nous vendons, c'est du pouvoir. Le pouvoir du confort.”%—Shere Khan",
+    "searchableKeywords": ["Talespin", "Super Baloo"]
+  },
+  "cie": {
+    "name": "Je travaillerai sans trêve",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 7 ou plus pour chanter cette chanson gratuitement.)%Jouez gratuitement un lieu de votre main ou de votre défausse. Si un personnage a chanté cette chanson, vous pouvez le déplacer gratuitement sur ce lieu.",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 7 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Jouez gratuitement un lieu de votre main ou de votre défausse. Si un personnage a chanté cette chanson, vous pouvez le déplacer gratuitement sur ce lieu."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Princess and the Frog", "La Princesse et la Grenouille"]
   },
   "3Jh": {
     "name": "Si je ne t'avais pas",

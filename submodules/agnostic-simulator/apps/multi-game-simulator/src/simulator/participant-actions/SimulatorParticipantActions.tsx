@@ -111,6 +111,8 @@ export interface SimulatorGameConfigurationAction {
   readonly requiresConfirmation?: boolean;
   /** Match-scoped settings rendered inside the unified Game tab. */
   readonly settings?: ReactNode;
+  /** Game audio controls shown inside the shared sound settings group. */
+  readonly audioSettings?: ReactNode;
   readonly onSelect: () => void;
 }
 
@@ -310,6 +312,7 @@ function DialogShell({
 
 function ParticipantMenu({
   label,
+  triggerLabel,
   title,
   subtitle,
   children,
@@ -319,6 +322,7 @@ function ParticipantMenu({
   readonly label: string;
   readonly title: string;
   readonly subtitle: string;
+  readonly triggerLabel?: string;
   readonly children: (close: () => void) => ReactNode;
   readonly message?: string | null;
   readonly messageTone?: "error";
@@ -397,6 +401,7 @@ function ParticipantMenu({
     <>
       <SimulatorParticipantActionButton
         ref={triggerRef}
+        className={triggerLabel ? classes.labeledTrigger : undefined}
         type="button"
         aria-label={label}
         aria-haspopup="menu"
@@ -404,6 +409,7 @@ function ParticipantMenu({
         tooltip={label}
         onClick={() => setOpen((value) => !value)}
       >
+        {triggerLabel ? <span>{triggerLabel}</span> : null}
         <MoreHorizontal aria-hidden="true" size={18} />
       </SimulatorParticipantActionButton>
       {menu}
@@ -617,6 +623,34 @@ const SETTINGS_TABS = [
 
 // SETTINGS PARITY: keep in sync with the platform web app's PlayerSettingsDialog.svelte.
 // Keep persistent controls/options in sync; see docs/implementation/settings-inventory-and-plan.md.
+export function SimulatorVolumeControl({
+  label,
+  value,
+  onChange,
+}: {
+  readonly label: string;
+  readonly value: number;
+  readonly onChange: (value: number) => void;
+}) {
+  return (
+    <label className={classes.field}>
+      <span>{label}</span>
+      <div className={classes.rangeRow}>
+        <input
+          type="range"
+          min={0}
+          max={100}
+          step={1}
+          value={value}
+          aria-label={label}
+          onChange={(event) => onChange(event.currentTarget.valueAsNumber)}
+        />
+        <output>{value}%</output>
+      </div>
+    </label>
+  );
+}
+
 export function SimulatorSettingsDialog({
   gameConfiguration,
   accountSettingsHref,
@@ -696,21 +730,15 @@ export function SimulatorSettingsDialog({
         hidden={activeTab !== "simulator"}
       >
         <div className={classes.dialogBody}>
-          <label className={classes.field}>
-            <span>Sound volume</span>
-            <div className={classes.rangeRow}>
-              <input
-                type="range"
-                min={0}
-                max={100}
-                step={1}
-                value={settings.soundVolume}
-                aria-label="Sound volume"
-                onChange={(event) => setSoundVolume(event.currentTarget.valueAsNumber)}
-              />
-              <output>{settings.soundVolume}%</output>
-            </div>
-          </label>
+          <fieldset className={classes.soundSettings}>
+            <legend>Sound</legend>
+            <SimulatorVolumeControl
+              label="Sound effects volume"
+              value={settings.soundVolume}
+              onChange={setSoundVolume}
+            />
+            {gameConfiguration.audioSettings}
+          </fieldset>
           <AnimationSpeedControl />
           {showCardInteraction ? (
             <fieldset className={classes.field}>
@@ -968,6 +996,7 @@ export function SimulatorOpponentParticipantActions({
 }
 
 export function SimulatorSelfParticipantActions({
+  triggerLabel,
   gameConfiguration,
   support,
   accountSettingsHref = "/dashboard/settings",
@@ -976,6 +1005,7 @@ export function SimulatorSelfParticipantActions({
   viewportLayout,
 }: {
   readonly gameConfiguration: SimulatorGameConfigurationAction;
+  readonly triggerLabel?: string;
   readonly support: SimulatorSupportContext;
   readonly accountSettingsHref?: string;
   /** Match-owned quick actions rendered before the shared settings/support items. */
@@ -994,6 +1024,7 @@ export function SimulatorSelfParticipantActions({
   const menu = (
     <ParticipantMenu
       label="Open your player actions"
+      triggerLabel={triggerLabel}
       title="You"
       subtitle="Player, match, and support"
       message={message}

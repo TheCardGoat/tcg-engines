@@ -51,6 +51,7 @@ export interface ProposalPayload {
   actionType: string;
   senderPlayerId: string;
   deadline: number;
+  undoScope?: "last_move" | "turn_start";
 }
 
 export interface ProposalResolvedPayload {
@@ -286,6 +287,9 @@ export function createMessageRouter(
         actionType: String(msg.actionType ?? ""),
         senderPlayerId: String(msg.senderPlayerId ?? ""),
         deadline: typeof msg.deadline === "number" ? msg.deadline : 0,
+        ...(msg.actionType === "undo"
+          ? { undoScope: msg.undoScope === "turn_start" ? "turn_start" as const : "last_move" as const }
+          : {}),
       });
       return;
     }

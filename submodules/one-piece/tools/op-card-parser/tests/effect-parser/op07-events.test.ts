@@ -19,7 +19,7 @@ describe("OP07 Event regressions", () => {
                 player: "self",
                 zones: ["character"],
                 count: { amount: 1, upTo: true },
-                filters: [{ filter: "trait", value: "Revolutionary Army", match: "includes" }],
+                filters: [{ filter: "trait", value: "Revolutionary Army", match: "exact" }],
               },
               value: 2000,
               duration: "thisTurn",
@@ -44,7 +44,7 @@ describe("OP07 Event regressions", () => {
     });
   });
 
-  test("OP07-017 keeps independent Character and Stage K.O. choices", () => {
+  test("OP07-017 keeps Character and Stage target groups in one K.O.", () => {
     expect(
       buildCardEffects(
         "[Main] K.O. up to 1 of your opponent's Characters with 3000 power or less and up to 1 of your opponent's Stages with a cost of 1 or less. [Trigger] Activate this card's [Main] effect.",
@@ -57,20 +57,24 @@ describe("OP07 Event regressions", () => {
             {
               action: "ko",
               target: {
-                player: "opponent",
-                zones: ["character"],
-                count: { amount: 1, upTo: true },
-                filters: [{ filter: "power", comparison: "lte", value: 3000 }],
+                player: "any",
+                zones: ["character", "stage"],
+                count: { amount: 2, upTo: true },
               },
-            },
-            {
-              action: "ko",
-              target: {
-                player: "opponent",
-                zones: ["stage"],
-                count: { amount: 1, upTo: true },
-                filters: [{ filter: "cost", comparison: "lte", value: 1 }],
-              },
+              targetGroups: [
+                {
+                  player: "opponent",
+                  zones: ["character"],
+                  count: { amount: 1, upTo: true },
+                  filters: [{ filter: "power", comparison: "lte", value: 3000 }],
+                },
+                {
+                  player: "opponent",
+                  zones: ["stage"],
+                  count: { amount: 1, upTo: true },
+                  filters: [{ filter: "cost", comparison: "lte", value: 1 }],
+                },
+              ],
             },
           ],
         },
@@ -98,7 +102,7 @@ describe("OP07 Event regressions", () => {
                 player: "self",
                 zones: ["character"],
                 count: { amount: 1, upTo: true },
-                filters: [{ filter: "trait", value: "Revolutionary Army", match: "includes" }],
+                filters: [{ filter: "trait", value: "Revolutionary Army", match: "exact" }],
               },
               value: 2000,
               duration: "untilEndOfYourNextTurn",
@@ -248,7 +252,7 @@ describe("OP07 Event regressions", () => {
                   {
                     filter: "trait",
                     value: "The Seven Warlords of the Sea",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },
@@ -297,8 +301,8 @@ describe("OP07 Event regressions", () => {
                   {
                     filter: "anyOf",
                     filters: [
-                      { filter: "trait", value: "Amazon Lily", match: "includes" },
-                      { filter: "trait", value: "Kuja Pirates", match: "includes" },
+                      { filter: "trait", value: "Amazon Lily", match: "exact" },
+                      { filter: "trait", value: "Kuja Pirates", match: "exact" },
                     ],
                   },
                 ],
@@ -306,7 +310,7 @@ describe("OP07 Event regressions", () => {
               condition: {
                 condition: "leaderTrait",
                 trait: "Kuja Pirates",
-                match: "includes",
+                match: "exact",
               },
             },
           ],
@@ -325,6 +329,7 @@ describe("OP07 Event regressions", () => {
       effects: [
         {
           trigger: "counter",
+          optional: true,
           costs: [{ cost: "returnDon", amount: 1 }],
           actions: [
             {

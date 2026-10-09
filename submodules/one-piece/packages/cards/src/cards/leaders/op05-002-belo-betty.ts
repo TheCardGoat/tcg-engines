@@ -56,7 +56,7 @@ export const op05BeloBetty002: LeaderCard = {
               {
                 filter: "trait",
                 value: "Revolutionary Army",
-                match: "includes",
+                match: "exact",
               },
             ],
           },
@@ -79,7 +79,7 @@ export const op05BeloBetty002: LeaderCard = {
                       {
                         filter: "trait",
                         value: "Revolutionary Army",
-                        match: "includes",
+                        match: "exact",
                       },
                     ],
                     [{ filter: "hasTrigger", value: true }],

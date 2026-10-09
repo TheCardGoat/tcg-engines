@@ -22,7 +22,7 @@ export const op03Zambai063: CharacterCard = {
   setId: "OP03",
   cost: 3,
   power: 2000,
-  traits: ["Water Seven The Franky Family"],
+  traits: ["Water Seven", "The Franky Family"],
   attribute: "slash",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your Leader has the [Water Seven] type, draw 1 card.",
@@ -45,7 +45,7 @@ export const op03Zambai063: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Water Seven",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

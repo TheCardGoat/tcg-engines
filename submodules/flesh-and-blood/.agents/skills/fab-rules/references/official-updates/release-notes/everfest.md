@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/everfest/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Everfest"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/everfest/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: b8f62d112045e2e7603dc57b905a1afbbc1a62bd351bbd776f7df21dc49dfc00
 ---

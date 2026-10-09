@@ -9,6 +9,7 @@ import type {
   ServerGameEngine,
 } from "@tcg/shared/game-engine";
 import { OnePieceServerEngine } from "./one-piece-server-engine";
+import { readOnePieceUndoState } from "./undo";
 
 const SEAT_ORDER: MatchSeat[] = ["south", "north"];
 const ONE_PIECE_KNOWN_SECTIONS: ReadonlySet<string> = new Set(["leader", "main", "don"]);
@@ -160,6 +161,11 @@ export function onePieceSerializeEngine(
     },
     historyLength: 0,
     cardsMaps,
+    metadata: {
+      undoCheckpoints: onePiece.getUndoState().checkpoints,
+      turnStartCheckpoint: onePiece.getUndoState().turnStart,
+      turnStartStateID: onePiece.getUndoState().turnStartStateID,
+    },
   };
 }
 
@@ -181,7 +187,7 @@ export async function onePieceRestoreEngine(
       playerIdToSeat[player.playerName] = seat;
     }
   }
-  return new OnePieceServerEngine(state, playerIdToSeat);
+  return new OnePieceServerEngine(state, playerIdToSeat, readOnePieceUndoState(snapshot.metadata));
 }
 
 export function onePieceExtractCardsMapsFromSnapshot(snapshot: EngineSnapshot): CardsMaps {

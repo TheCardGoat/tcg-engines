@@ -25,6 +25,10 @@ export const cowerBeforeMe: ActionCard = {
   rarity: "common",
   cost: 2,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_9506be08655a4ca7b17045714301b396",
+    tcgPlayer: "704692",
+  },
   text: "Up to 2 chosen opposing characters can't challenge during their next turn.",
   abilities: [
     {
@@ -36,7 +40,9 @@ export const cowerBeforeMe: ActionCard = {
         duration: "their-next-turn",
         target: {
           selector: "chosen",
-          count: { upTo: 2 },
+          count: {
+            upTo: 2,
+          },
           owner: "opponent",
           zones: ["play"],
           cardTypes: ["character"],

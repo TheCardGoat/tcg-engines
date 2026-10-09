@@ -23,7 +23,7 @@ export const goofySetForAdventureEpic: CharacterCard = {
   franchise: "Goofy Movie",
   set: "009",
   cardNumber: 211,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 2,
   strength: 2,

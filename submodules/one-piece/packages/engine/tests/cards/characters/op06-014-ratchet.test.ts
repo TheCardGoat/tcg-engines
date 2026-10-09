@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import {
+  eb01Doma005,
   op06Arlong023,
   op06LilyCarnation015,
   op06RaiseMax016,
@@ -12,7 +13,7 @@ describe("OP06-014 Ratchet", () => {
   test("on an opponent's attack trashes any chosen FILM cards to scale one battle target", () => {
     const engine = OnePieceTestEngine.create(
       {
-        hand: [op06LilyCarnation015, op06RaiseMax016, op06Arlong023],
+        hand: [op06LilyCarnation015, op06RaiseMax016, eb01Doma005],
         character: [op06Ratchet014],
         life: [op06Ratchet014],
       },
@@ -22,7 +23,7 @@ describe("OP06-014 Ratchet", () => {
     const attackerId = engine.findCardInZone("north", "character", op06Arlong023);
     const firstFilmId = engine.findCardInZone("south", "hand", op06LilyCarnation015);
     const secondFilmId = engine.findCardInZone("south", "hand", op06RaiseMax016);
-    const excludedId = engine.findCardInZone("south", "hand", op06Arlong023);
+    const excludedId = engine.findCardInZone("south", "hand", eb01Doma005);
     const lifeBefore = engine.getView("south").players.south.lifeCount;
 
     engine.declareAttack(attackerId, engine.leader("south"), "north");

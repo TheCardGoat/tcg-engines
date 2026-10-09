@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb01Doma005, eb01Fourtricks025, op06Perona021 } from "@tcg/op-cards";
+import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018, op06Perona021 } from "@tcg/op-cards";
 
 import { getLegalCommands, OnePieceTestEngine } from "../../../src/index.ts";
 
@@ -28,5 +28,29 @@ describe("OP06-021 Perona", () => {
       ),
     ).toBe(false);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+  test("the rest branch excludes cost six and uses the once-per-turn activation", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op06Perona021 },
+      { character: [eb01Fourtricks025, eb01MountainGod018] },
+    );
+    const south = engine.asSouth();
+    south.activateMain(op06Perona021);
+    south.chooseOption("effectActionChoice", "0");
+    const target = south.pendingDecision("effectTargetSelection").steps[0];
+    if (target.kind !== "selectEntity") throw new Error("Expected Perona's rest target.");
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toEqual([
+      engine.findCardInZone("north", "character", eb01Fourtricks025),
+    ]);
+    south.chooseTargets(eb01Fourtricks025);
+    expect(south.view().players.north.characters[0]?.rested).toBe(true);
+    expect(south.view().players.north.characters[1]?.rested).toBe(false);
+    engine.expectFailure({
+      type: "activateEffect",
+      seat: "south",
+      sourceInstanceId: engine.leader("south"),
+      trigger: "activateMain",
+    });
+    expect(south.view().prompts).toHaveLength(0);
   });
 });

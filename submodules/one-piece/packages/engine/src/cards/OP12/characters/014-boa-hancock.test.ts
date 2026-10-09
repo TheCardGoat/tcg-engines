@@ -98,4 +98,16 @@ describe("OP12-014 Boa Hancock", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("can give the DON!! returned by trashing itself as its activation cost", () => {
+    const engine = OnePieceTestEngine.create({ character: [op12BoaHancock014], activeDon: 2 });
+    const boa = engine.findCardInZone("south", "character", op12BoaHancock014);
+    engine.asSouth().attachDon(boa, 2);
+    expect(engine.getView("south").players.south.restedDon).toBe(0);
+    engine.asSouth().activateMain(boa);
+    engine.asSouth().acceptOptional();
+    engine.resolveDecision("effectGiveDonCount", { optionId: "2" }, "south");
+    expect(engine.getView("south").players.south.leader.attachedDon).toBe(2);
+    expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(boa);
+    expect(engine.getView("south").players.south.restedDon).toBe(0);
+  });
 });

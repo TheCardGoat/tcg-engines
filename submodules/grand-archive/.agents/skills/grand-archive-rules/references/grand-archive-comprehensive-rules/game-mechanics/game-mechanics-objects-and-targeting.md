@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-objects-and-targeting"
+  relation: "current_index"
+---
+
 # Game Mechanics - Objects and Targeting
 
 #### Objects

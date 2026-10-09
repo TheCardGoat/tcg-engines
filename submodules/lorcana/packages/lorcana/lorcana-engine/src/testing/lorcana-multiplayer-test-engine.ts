@@ -1,3 +1,4 @@
+import { createInitialLorcanaG } from "../types/runtime-state";
 import { configureLogtape } from "../config/logtape/configure";
 
 import { getLogger, type Logger, type LogLevel } from "@logtape/logtape";
@@ -48,7 +49,7 @@ import {
   createInitialCardMeta,
   detectWinnerByLore,
   isTestInitialState,
-  normalizePlayerId,
+  normalizePlayerId as normalizeCanonicalPlayerId,
   type FixtureSeedBundle,
 } from "./lorcana-multiplayer-test-engine-helpers";
 
@@ -94,6 +95,7 @@ export interface LorcanaTestMoves extends Record<string, unknown> {
   manualDryCard: LorcanaRuntimeMoveParams["manualDryCard"];
   manualSetDamage: LorcanaRuntimeMoveParams["manualSetDamage"];
   manualSetLore: LorcanaRuntimeMoveParams["manualSetLore"];
+  manualSetInkDrops: LorcanaRuntimeMoveParams["manualSetInkDrops"];
   manualShuffleDeck: LorcanaRuntimeMoveParams["manualShuffleDeck"];
   manualPassTurn: LorcanaRuntimeMoveParams["manualPassTurn"];
 }
@@ -115,6 +117,8 @@ export interface LorcanaTestEngineConfig {
 }
 
 export interface LorcanaFixtureInitOptions extends LorcanaTestEngineConfig {
+  /** Extra opponents, each with a real client and separate fixture zones. */
+  additionalPlayers?: Readonly<Record<string, TestInitialState>>;
   skipPreGame?: boolean;
   validateSync?: boolean;
   debugServerCommunication?: boolean;
@@ -135,6 +139,7 @@ export class LorcanaMultiplayerTestEngine {
   private playerEngines = new Map<GameTestView, LorcanaClient>();
   private transportPairs: Map<string, { client: InMemoryTransport; server: InMemoryTransport }> =
     new Map();
+  private additionalPlayerEngines = new Map<string, LorcanaClient>();
   private initialized = false;
   private fixtureOptions: LorcanaFixtureInitOptions;
   /** Instance ID -> definition ID for simulator/tooling (card definitions live in staticResources) */
@@ -154,7 +159,22 @@ export class LorcanaMultiplayerTestEngine {
 
     const staticResources: MatchStaticResources =
       config.staticResources ?? createEmptyLorcanaStaticResources();
-    const players = [...TEST_PLAYERS];
+    const additionalPlayerIds = Object.keys(fixtureOptions.additionalPlayers ?? {});
+    if (
+      additionalPlayerIds.some(
+        (id) =>
+          normalizeCanonicalPlayerId(id) ||
+          id === SPECTATOR_PLAYER_ID ||
+          id === "spectator" ||
+          id === "authoritative" ||
+          id === "playerOne" ||
+          id === "playerTwo" ||
+          !id,
+      )
+    ) {
+      throw new Error("Additional fixture players must have distinct nonreserved IDs");
+    }
+    const players = [...TEST_PLAYERS, ...additionalPlayerIds.map((id) => ({ id, name: id }))];
     const includeSpectator = config.includeSpectator ?? true;
     const debugMode = fixtureOptions.debugServerCommunication ?? false;
     const seed = config.seed ?? "lorcana-multiplayer-test-engine";
@@ -162,7 +182,14 @@ export class LorcanaMultiplayerTestEngine {
     const cardsMaps = createCardsMapsFromStaticResources(staticResources);
     this._cardsMaps = cardsMaps;
 
+    const fixtureSetup = ({ players: fixturePlayers }: { players: { id: string }[] }) =>
+      createInitialLorcanaG(
+        fixturePlayers[0]!.id as PlayerId,
+        fixturePlayers[1]!.id as PlayerId,
+        ...fixturePlayers.slice(2).map((player) => player.id as PlayerId),
+      );
     const serverInitParams = {
+      _fixtureSetup: fixtureSetup,
       players,
       seed,
       staticResources,
@@ -182,6 +209,7 @@ export class LorcanaMultiplayerTestEngine {
       this.serverEngine.acceptConnection(player.id, transportPair.server);
 
       const clientEngine = new LorcanaClient({
+        _fixtureSetup: fixtureSetup,
         players,
         seed,
         staticResources,
@@ -195,8 +223,12 @@ export class LorcanaMultiplayerTestEngine {
         debugMode,
         skipOptimisticState: browserTransport.mode === "sync",
       });
-      const view = player.id === players[0].id ? "playerOne" : "playerTwo";
-      this.playerEngines.set(view, clientEngine);
+      if (player.id === CANONICAL_PLAYER_ONE || player.id === CANONICAL_PLAYER_TWO) {
+        const view = player.id === CANONICAL_PLAYER_ONE ? "playerOne" : "playerTwo";
+        this.playerEngines.set(view, clientEngine);
+      } else {
+        this.additionalPlayerEngines.set(player.id, clientEngine);
+      }
       this.debug = debugMode;
     }
 
@@ -207,6 +239,7 @@ export class LorcanaMultiplayerTestEngine {
       this.serverEngine.acceptConnection(SPECTATOR_PLAYER_ID, spectatorTransport.server);
 
       const spectatorEngine = new LorcanaClient({
+        _fixtureSetup: fixtureSetup,
         players,
         seed,
         staticResources,
@@ -278,15 +311,31 @@ export class LorcanaMultiplayerTestEngine {
       configureLogtape(options?.logLevel);
     }
 
-    const playerTwoState = isTestInitialState(playerTwoStateOrOptions)
-      ? playerTwoStateOrOptions
-      : {};
-    const resolvedOptions = isTestInitialState(playerTwoStateOrOptions)
-      ? options
-      : playerTwoStateOrOptions;
+    let playerTwoState: TestInitialState;
+    let inputOptions: LorcanaFixtureInitOptions;
+    if (isTestInitialState(playerTwoStateOrOptions)) {
+      playerTwoState = playerTwoStateOrOptions;
+      inputOptions = options;
+    } else {
+      playerTwoState = {};
+      inputOptions = Object.keys(options).length > 0 ? options : playerTwoStateOrOptions;
+    }
+    const resolvedOptions = {
+      ...inputOptions,
+      additionalPlayers: Object.fromEntries(
+        Object.entries(inputOptions.additionalPlayers ?? {}).map(([id, state]) => [
+          id,
+          withDefaultDeck(state),
+        ]),
+      ),
+    };
     const normalizedPlayerOneState = withDefaultDeck(playerOneState);
     const normalizedPlayerTwoState = withDefaultDeck(playerTwoState);
-    const bundle = buildFixtureSeedBundle(normalizedPlayerOneState, normalizedPlayerTwoState);
+    const bundle = buildFixtureSeedBundle(
+      normalizedPlayerOneState,
+      normalizedPlayerTwoState,
+      resolvedOptions.additionalPlayers,
+    );
 
     const config: LorcanaTestEngineConfig = {
       browserTransport: resolvedOptions.browserTransport,
@@ -323,7 +372,10 @@ export class LorcanaMultiplayerTestEngine {
     if (this.initialized) {
       return;
     }
-    for (const engine of this.playerEngines.values()) {
+    for (const engine of [
+      ...this.playerEngines.values(),
+      ...this.additionalPlayerEngines.values(),
+    ]) {
       engine.connectSync();
     }
     this.initialized = true;
@@ -433,11 +485,15 @@ export class LorcanaMultiplayerTestEngine {
   async dispose(): Promise<void> {
     await this.serverEngine.dispose();
 
-    for (const engine of this.playerEngines.values()) {
+    for (const engine of [
+      ...this.playerEngines.values(),
+      ...this.additionalPlayerEngines.values(),
+    ]) {
       await engine.dispose();
     }
 
     this.playerEngines.clear();
+    this.additionalPlayerEngines.clear();
     this.transportPairs.clear();
     this.initialized = false;
   }
@@ -460,7 +516,11 @@ export class LorcanaMultiplayerTestEngine {
     playerOneState: TestInitialState,
     playerTwoState: TestInitialState,
     options: LorcanaFixtureInitOptions,
-    bundle: FixtureSeedBundle = buildFixtureSeedBundle(playerOneState, playerTwoState),
+    bundle: FixtureSeedBundle = buildFixtureSeedBundle(
+      playerOneState,
+      playerTwoState,
+      options.additionalPlayers,
+    ),
   ): void {
     const state = structuredClone(this.getAuthoritativeState()) as LorcanaMatchState;
 
@@ -505,6 +565,14 @@ export class LorcanaMultiplayerTestEngine {
     state.G.lore[CANONICAL_PLAYER_TWO as PlayerId] =
       options.startingLore?.[CANONICAL_PLAYER_TWO] ?? playerTwoState.lore ?? 0;
 
+    // Hyperia City ink drops
+    state.G.inkDrops[CANONICAL_PLAYER_ONE as PlayerId] = playerOneState.inkDrops ?? 0;
+    state.G.inkDrops[CANONICAL_PLAYER_TWO as PlayerId] = playerTwoState.inkDrops ?? 0;
+
+    for (const [playerId, fixture] of Object.entries(options.additionalPlayers ?? {})) {
+      state.G.lore[playerId as PlayerId] = options.startingLore?.[playerId] ?? fixture.lore ?? 0;
+      state.G.inkDrops[playerId as PlayerId] = fixture.inkDrops ?? 0;
+    }
     // Ink is derived from zones + cardMeta (Option B); no G.ink to set.
     // Initialize baseline state
     this.initializeBaselineState(state, this.fixtureOptions);
@@ -655,6 +723,7 @@ export class LorcanaMultiplayerTestEngine {
   }
 
   private syncLoadedStateToViews(state: MatchState): void {
+    for (const client of this.additionalPlayerEngines.values()) client.loadState(state);
     for (const view of ["playerOne", "playerTwo", "spectator"] as const) {
       this.resolveOptionalClient(view)?.loadState(state);
     }
@@ -665,7 +734,10 @@ export class LorcanaMultiplayerTestEngine {
    */
   private initializeOwnerScopedZoneKeys(state: LorcanaMatchState): void {
     const baseZoneIds: FixtureZoneName[] = ["deck", "hand", "play", "inkwell", "discard", "limbo"];
-    for (const player of TEST_PLAYERS) {
+    for (const player of [
+      ...TEST_PLAYERS,
+      ...[...this.additionalPlayerEngines.keys()].map((id) => ({ id })),
+    ]) {
       for (const baseZoneId of baseZoneIds) {
         const zoneKey = `${baseZoneId}:${player.id}`;
         state.ctx.zones.public.zoneSummaries[zoneKey] = {
@@ -783,7 +855,9 @@ export class LorcanaMultiplayerTestEngine {
    * to use the same API that real clients will use.
    */
   asLorcanaPlayer(playerId: string | PlayerId): LorcanaClient {
-    const normalized = normalizePlayerId(String(playerId));
+    const additional = this.additionalPlayerEngines.get(String(playerId));
+    if (additional) return additional;
+    const normalized = this.normalizePlayerId(String(playerId));
     if (!normalized) {
       throw new Error(`Unknown player '${String(playerId)}'`);
     }
@@ -843,6 +917,18 @@ export class LorcanaMultiplayerTestEngine {
    */
   getLore(playerId: string | PlayerId): number {
     return this.asServer().getLore(playerId) || 0;
+  }
+
+  /**
+   * Get the ink drops (Hyperia City) a player currently holds.
+   * Canonical replacement for the per-file helpers previously copy-pasted
+   * across set-014 card tests.
+   */
+  getInkDrops(playerId: string | PlayerId): number {
+    const state = this.asServer().getState() as {
+      G?: { inkDrops?: Record<string, number> };
+    };
+    return state.G?.inkDrops?.[playerId] ?? 0;
   }
 
   getCardsUnder(card: CardRef): CardInstanceId[] {
@@ -1006,7 +1092,7 @@ export class LorcanaMultiplayerTestEngine {
   }
 
   getCardInstanceIdsInZone(zone: string, playerId: string | PlayerId): CardInstanceId[] {
-    const normalized = normalizePlayerId(String(playerId));
+    const normalized = this.normalizePlayerId(String(playerId));
     if (!normalized) {
       return [];
     }
@@ -1071,7 +1157,7 @@ export class LorcanaMultiplayerTestEngine {
     zone: string,
     playerId: string | PlayerId = CANONICAL_PLAYER_ONE,
   ): CardInstanceId {
-    const normalizedPlayerId = normalizePlayerId(String(playerId));
+    const normalizedPlayerId = this.normalizePlayerId(String(playerId));
     if (!normalizedPlayerId) {
       throw new Error(`Unknown player id: ${String(playerId)}`);
     }
@@ -1151,6 +1237,11 @@ export class LorcanaMultiplayerTestEngine {
       return false;
     }
 
+    const addedClient = this.additionalPlayerEngines.get(viewOrPlayerId);
+    if (addedClient) {
+      const projectedCard = addedClient.getBoard().cards[cardInstanceId];
+      return projectedCard !== undefined && projectedCard.hidden !== true;
+    }
     const view =
       typeof viewOrPlayerId === "string"
         ? this.resolveViewForPlayerId(viewOrPlayerId)
@@ -1163,7 +1254,8 @@ export class LorcanaMultiplayerTestEngine {
       return true;
     }
 
-    return this.getBoard(view).cards[cardInstanceId]?.hidden !== true;
+    const projectedCard = this.getBoard(view).cards[cardInstanceId];
+    return projectedCard !== undefined && projectedCard.hidden !== true;
   }
 
   protected resolveViewForPlayerId(playerId: string): GameTestView | undefined {
@@ -1176,7 +1268,7 @@ export class LorcanaMultiplayerTestEngine {
       return playerId;
     }
 
-    const normalized = normalizePlayerId(playerId);
+    const normalized = this.normalizePlayerId(playerId);
     if (normalized === CANONICAL_PLAYER_ONE) {
       return "playerOne";
     }
@@ -1196,9 +1288,18 @@ export class LorcanaMultiplayerTestEngine {
     return undefined;
   }
 
+  private normalizePlayerId(playerId: string): string | undefined {
+    return (
+      normalizeCanonicalPlayerId(playerId) ??
+      (this.additionalPlayerEngines.has(playerId) ? playerId : undefined)
+    );
+  }
+
   private resolveOptionalClient(
     viewOrPlayerId: GameTestView | string | undefined,
   ): LorcanaClient | undefined {
+    const additional = viewOrPlayerId && this.additionalPlayerEngines.get(viewOrPlayerId);
+    if (additional) return additional;
     const view =
       typeof viewOrPlayerId === "string"
         ? this.resolveViewForPlayerId(viewOrPlayerId)

@@ -23,7 +23,7 @@ export const op13KouzukiOden063: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Land of Wano Kouzuki Clan Roger Pirates"],
+  traits: ["Land of Wano", "Kouzuki Clan", "Roger Pirates"],
   attribute: "slash",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] If you have any DON!! cards given, add up to 1 DON!! card from your DON!! deck and rest it.",

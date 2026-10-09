@@ -39,7 +39,7 @@ export const op06Zeo028: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "New Fish-Man Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

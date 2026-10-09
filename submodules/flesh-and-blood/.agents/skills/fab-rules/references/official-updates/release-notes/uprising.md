@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/uprising/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Uprising"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/uprising/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: 670bf313080b33ead5b575dea9f7aa002fa800826a00f3e1572507b7499e0b56
 ---

@@ -31,7 +31,7 @@ export const op01Nekomamushi048: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Land of Wano Minks The Akazaya Nine"],
+  traits: ["Minks", "Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[On Play] Rest up to 1 of your opponent's Characters with a cost of 3 or less.  This card has been officially errata'd.",

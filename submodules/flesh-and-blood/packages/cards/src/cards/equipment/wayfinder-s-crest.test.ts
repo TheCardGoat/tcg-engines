@@ -37,7 +37,7 @@ describe("Wayfinder's Crest AAA", () => {
     game.as(bravo).playAttack(snatchRed);
     Dash.defendWith(wayfinderSCrest);
     game.untilIdle({ entityTargets: "pause" });
-    Dash.target(Dash.cardIn("deck", snatchRed));
+    Dash.targetRequired(Dash);
     game.untilIdle();
 
     expect(game.lastLookedCanonicalId()).toBe(snatchRed.canonicalId);

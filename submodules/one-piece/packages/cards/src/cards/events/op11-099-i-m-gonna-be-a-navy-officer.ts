@@ -22,7 +22,7 @@ export const op11IMGonnaBeANavyOfficer099: EventCard = {
   setId: "OP11",
   cost: 1,
   trigger: "Activate this card's [Main] effect.",
-  traits: ["Navy East Blue"],
+  traits: ["East Blue", "Navy"],
   effect:
     '[Main] Look at 3 cards from the top of your deck; reveal up to 1 "Navy" type card other than [I\'m Gonna Be a Navy Officer!!!] and add it to your hand. Then, trash the rest.',
   effects: {
@@ -49,7 +49,7 @@ export const op11IMGonnaBeANavyOfficer099: EventCard = {
               {
                 filter: "trait",
                 value: "Navy",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

@@ -128,7 +128,7 @@ export function GrandArchiveFixturesPage() {
 }
 
 /** Playable decision fixture using the same server submission path as practice. */
-function GrandArchivePlayableFixture({
+export function GrandArchivePlayableFixture({
   kind,
 }: {
   kind: "materialization-hand" | "attack-targeting";
@@ -141,7 +141,8 @@ function GrandArchivePlayableFixture({
   const [resetVersion, reset] = useReducer((version: number) => version + 1, 0);
   const [, refresh] = useReducer((version: number) => version + 1, 0);
   const [error, setError] = useState<string>();
-  const viewer = grandArchivePlayerId("p1");
+  const [viewerId, setViewerId] = useState("p1");
+  const viewer = grandArchivePlayerId(viewerId);
   const fixture = grandArchiveHarnessFixture(
     kind,
     kind === "attack-targeting" ? "Choose an attack target" : "Material deck in hand",
@@ -156,17 +157,28 @@ function GrandArchivePlayableFixture({
       fixture={fixture}
       errorMessage={error}
       historyAccessory={
-        <Button
-          size="compact-sm"
-          variant="default"
-          onClick={() => {
-            setServer(createServer());
-            setError(undefined);
-            reset();
-          }}
-        >
-          {kind === "attack-targeting" ? "Reset attack" : "Reset materialization"}
-        </Button>
+        <>
+          {kind === "attack-targeting" ? (
+            <Button
+              size="compact-sm"
+              variant="subtle"
+              onClick={() => setViewerId((id) => (id === "p1" ? "p2" : "p1"))}
+            >
+              Switch viewer ({viewerId === "p1" ? "opponent" : "you"})
+            </Button>
+          ) : null}
+          <Button
+            size="compact-sm"
+            variant="default"
+            onClick={() => {
+              setServer(createServer());
+              setError(undefined);
+              reset();
+            }}
+          >
+            {kind === "attack-targeting" ? "Reset attack" : "Reset materialization"}
+          </Button>
+        </>
       }
       onSubmitProtocolInteraction={(submission) => {
         const result = server.submitInteraction(viewer, submission, {

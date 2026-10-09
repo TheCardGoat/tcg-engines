@@ -85,6 +85,14 @@
     "./cards/013": {
       "types": "./src/cards/013/index.ts",
       "default": "./src/cards/013/index.ts"
+    },
+    "./cards/013/actions": {
+      "types": "./src/cards/013/actions/index.ts",
+      "default": "./src/cards/013/actions/index.ts"
+    },
+    "./cards/014": {
+      "types": "./src/cards/014/index.ts",
+      "default": "./src/cards/014/index.ts"
     }
   },
   "scripts": {

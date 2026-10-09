@@ -36,4 +36,20 @@ describe("OP15-021 Just Watch Me, Ace!!", () => {
     expect(() => engine.playCard("OP15-021")).toThrow();
     expect(engine.getView("south").players.south.hand).toHaveLength(1);
   });
+  test("discounted Counter reduces the attacker for the rest of its turn", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP15-021", "ST02-002"], trash: Array(4).fill("OP15-019"), activeDon: 1 },
+      { character: ["EB01-018"] },
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    const attacker = e.findCardInZone("north", "character", "EB01-018");
+    e.asNorth().attack(attacker, e.leader("south"));
+    e.asSouth().chooseCounter("OP15-021");
+    e.asSouth().chooseTargets(attacker);
+    expect(e.getView("south").players.north.characters[0]?.power).toBe(4000);
+    e.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    expect(e.getView("south").players.north.characters[0]?.power).toBe(4000);
+    e.endTurn("north");
+    expect(e.getView("south").players.north.characters[0]?.power).toBe(7000);
+  });
 });

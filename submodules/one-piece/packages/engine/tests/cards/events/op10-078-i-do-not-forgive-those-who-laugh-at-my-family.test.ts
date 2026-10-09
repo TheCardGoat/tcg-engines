@@ -81,6 +81,7 @@ describe("OP10-078 I Do Not Forgive Those Who Laugh at My Family!!!", () => {
       { selectedIds: revealedIds.filter((instanceId) => instanceId !== selectedId).reverse() },
       "north",
     );
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     expect(engine.getView("north").players.north.hand.map((card) => card.instanceId)).toContain(
       selectedId,

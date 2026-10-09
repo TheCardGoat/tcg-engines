@@ -21,7 +21,7 @@ export const op14eb04PentaChromaticString077: EventCard = {
   rarity: "UC",
   setId: "OP14",
   cost: 2,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, if your opponent has a Character with 6000 power or more, add up to 1 DON!! card from your DON!! deck and rest it.",
   effects: {

@@ -31,6 +31,7 @@ export const kevinFlightlessBird: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_68cc92f879004461b4d059ae003c6112",
+    tcgPlayer: "704602",
   },
   text: [
     {

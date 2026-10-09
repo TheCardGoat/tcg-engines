@@ -30,7 +30,7 @@ export const op09MonkeyDLuffy061: LeaderCard = {
   setId: "OP09",
   power: 5000,
   life: 4,
-  traits: ["Straw Hat Crew The Four Emperors"],
+  traits: ["The Four Emperors", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[DON!! x1] All of your Characters gain +1 cost.\n[Your Turn] [Once Per Turn] When 2 or more DON!! cards on your field are returned to your DON!! deck, add up to 1 DON!! card from your DON!! deck and set it as active, and add up to 1 additional DON!! card and rest it.",

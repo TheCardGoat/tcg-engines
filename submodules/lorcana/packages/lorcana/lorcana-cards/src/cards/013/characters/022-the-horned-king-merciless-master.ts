@@ -31,6 +31,7 @@ export const theHornedKingMercilessMaster: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_979b5517872f41dd902e486a8d50435f",
+    tcgPlayer: "704555",
   },
   text: [
     {

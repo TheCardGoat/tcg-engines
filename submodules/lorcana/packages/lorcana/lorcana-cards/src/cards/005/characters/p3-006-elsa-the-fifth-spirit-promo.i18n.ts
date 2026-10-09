@@ -19,18 +19,17 @@ export const elsaTheFifthSpiritP3PromoI18n: Record<Languages, I18nProperties> = 
   },
   de: {
     name: "Elsa",
-    version: "Der fünfte Geist",
+    version: "The Fifth Spirit",
     text: [
       {
-        title: "<Rasant>",
+        title: "<Rush> (This character can challenge the turn they're played.)",
       },
       {
-        title: "<Wendig>",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "Kristallisieren",
-        description:
-          "Wenn du diesen Charakter ausspielst, erschöpfe einen gegnerischen Charakter deiner Wahl.",
+        title: "Crystallize",
+        description: "When you play this character, exert chosen opposing character.",
       },
     ],
   },
@@ -53,18 +52,17 @@ export const elsaTheFifthSpiritP3PromoI18n: Record<Languages, I18nProperties> = 
   },
   it: {
     name: "Elsa",
-    version: "Il Quinto Spirito",
+    version: "The Fifth Spirit",
     text: [
       {
-        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
+        title: "<Rush> (This character can challenge the turn they're played.)",
       },
       {
-        title: "<Sfuggente>",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "Cristallizzare",
-        description:
-          "Quando giochi questo personaggio, impegna un personaggio avversario a tua scelta.",
+        title: "Crystallize",
+        description: "When you play this character, exert chosen opposing character.",
       },
     ],
   },

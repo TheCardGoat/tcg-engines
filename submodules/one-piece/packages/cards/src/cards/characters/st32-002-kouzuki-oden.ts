@@ -24,7 +24,7 @@ export const st32KouzukiOden002: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "slash",
   effect:
     "[On Play] Draw 1 card and up to 1 of your opponent's Characters with a base cost of 6 or less cannot be rested until the end of your opponent's next End Phase.",
@@ -43,6 +43,7 @@ export const st32KouzukiOden002: CharacterCard = {
             target: {
               player: "opponent",
               zones: ["character"],
+              filters: [{ filter: "baseCost", comparison: "lte", value: 6 }],
               count: {
                 amount: 1,
                 upTo: true,

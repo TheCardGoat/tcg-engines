@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/mastery-pack-guardian-smash-palace/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Mastery Pack: Guardian + Smash Palace"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/mastery-pack-guardian-smash-palace/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: 5e19304b95e8bb12c3a9131e85bd18e3004af8b52db546b334bbfa4834748f78
 ---

@@ -1,4 +1,10 @@
-<!-- Source: https://rules.fabtcg.com/en/cr/ (Legend Story Studios, official Flesh and Blood Comprehensive Rules). Retrieved 2026-07-29. Do not edit by hand; re-scrape from source. -->
+---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://rules.fabtcg.com/en/cr/02-object-properties/"
+  relation: "current_index"
+  retrieved_at: "2026-07-29"
+---
 
 # 2 Object Properties
 

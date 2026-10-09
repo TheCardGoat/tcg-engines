@@ -30,7 +30,7 @@ export const op01Kaido061: LeaderCard = {
   setId: "OP01",
   power: 5000,
   life: 4,
-  traits: ["Animal Kingdom Pirates The Four Emperors"],
+  traits: ["The Four Emperors", "Animal Kingdom Pirates"],
   attribute: "strike",
   effect:
     "[DON!! x1] [Your Turn] [Once Per Turn] When your opponent's Character is K.O.'d, add up to 1 DON!! card from your DON!! deck and set it as active.  This card has been officially errata'd.",
@@ -38,6 +38,7 @@ export const op01Kaido061: LeaderCard = {
     effects: [
       {
         trigger: "whenCharacterKod",
+        eventFilter: { player: "opponent" },
         conditions: [
           {
             condition: "donAttached",

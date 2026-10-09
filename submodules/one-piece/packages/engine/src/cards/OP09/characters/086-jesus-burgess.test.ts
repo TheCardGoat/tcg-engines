@@ -48,13 +48,15 @@ describe("OP09-086 Jesus Burgess", () => {
     expect(selection?.kind).toBe("selectEntity");
     if (selection?.kind !== "selectEntity") throw new Error("Expected a K.O. target choice.");
     expect(selection.candidates.map((candidate) => candidate.ref.id)).toContain(vulnerableId);
-    expect(selection.candidates.map((candidate) => candidate.ref.id)).not.toContain(burgessId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [vulnerableId] }, "north");
+    expect(selection.candidates.map((candidate) => candidate.ref.id)).toContain(burgessId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [burgessId] }, "north");
 
     const view = engine.getView("south");
     expect(view.players.south.characters.some((card) => card?.instanceId === burgessId)).toBe(true);
     expect(view.players.south.trash.map((card) => card.instanceId)).not.toContain(burgessId);
-    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(vulnerableId);
+    expect(view.players.south.characters.some((card) => card?.instanceId === vulnerableId)).toBe(
+      true,
+    );
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(discardId);
     expect(view.prompts).toHaveLength(0);
   });
@@ -73,5 +75,26 @@ describe("OP09-086 Jesus Burgess", () => {
     expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
       burgessId,
     );
+  });
+  test("recalculates trash power immediately when a Counter becomes the eighth trash card", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op09MarshallDTeach081,
+        character: [{ card: op09JesusBurgess086, rested: true }],
+        trash: Array.from({ length: 7 }, () => eb01Doma005),
+        hand: [eb01Doma005],
+      },
+      { activeDon: 2 },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const burgess = engine.findCardInZone("south", "character", op09JesusBurgess086);
+    engine.asNorth().attachDon(engine.leader("north"), 2);
+    engine.asNorth().attack(engine.leader("north"), burgess);
+    engine.asSouth().chooseCounter(eb01Doma005);
+    expect(
+      engine.getView("south").players.south.characters.find((c) => c?.instanceId === burgess)
+        ?.power,
+    ).toBe(7000);
+    expect(engine.getView("south").players.south.trash).toHaveLength(8);
   });
 });

@@ -44,7 +44,7 @@ import { getFilteredView, type QueryContext } from "./match-runtime.queries";
 import { validateCommand as validateRuntimeCommand } from "./match-runtime.validation";
 import { isMoveAllowedByFlow } from "./match-runtime.flow";
 import { canPlayerTakeActions } from "./match-runtime.apis";
-import { projectGameLog } from "./match-runtime.logs";
+import { projectGameLog, appendStartOfTurnReadyMessages } from "./match-runtime.logs";
 import { getLogger } from "@logtape/logtape";
 import {
   clearStateScopedValueCache,
@@ -263,6 +263,12 @@ export class MatchRuntime {
 
     this.publishedGameEvents.push(...publishedGameEvents);
     this.moveLogHistory.push(...projectedLogResult.moveLogs);
+    if (projectedLogResult.startOfTurnReadiedCards) {
+      appendStartOfTurnReadyMessages(
+        this.moveLogHistory,
+        projectedLogResult.startOfTurnReadiedCards,
+      );
+    }
     if (projectedLogResult.mandatoryDraws) {
       injectMandatoryDraws(this.moveLogHistory, projectedLogResult.mandatoryDraws);
     }
@@ -514,6 +520,12 @@ export class MatchRuntime {
 
     this.publishedGameEvents.push(...gameEvents);
     this.moveLogHistory.push(...projectedLogResult.moveLogs);
+    if (projectedLogResult.startOfTurnReadiedCards) {
+      appendStartOfTurnReadyMessages(
+        this.moveLogHistory,
+        projectedLogResult.startOfTurnReadiedCards,
+      );
+    }
     if (projectedLogResult.mandatoryDraws) {
       injectMandatoryDraws(this.moveLogHistory, projectedLogResult.mandatoryDraws);
     }

@@ -62,7 +62,7 @@ export const prb02JinbePrb02007007: CharacterCard = {
               {
                 filter: "trait",
                 value: "The Seven Warlords of the Sea",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

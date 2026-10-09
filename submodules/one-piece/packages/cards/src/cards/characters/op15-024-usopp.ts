@@ -87,6 +87,7 @@ export const op15Usopp024: CharacterCard = {
             },
             duration: "permanent",
             byPlayer: "opponent",
+            byCardTypes: ["leader", "character"],
           },
         ],
       },

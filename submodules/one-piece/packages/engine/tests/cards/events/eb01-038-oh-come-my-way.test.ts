@@ -37,8 +37,9 @@ describe("EB01-038 Oh Come My Way", () => {
     const lifeBeforeAttack = beforeCounter.lifeCount;
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    engine.asNorth().acceptOptional();
 
-    // Counter Event is already committed (rest cost + trash); returnDon is not optional.
+    // Accept the optional activation cost after committing the Counter Event.
     const returnDonDecision = engine.pendingDecision("effectCostReturnDon", "north");
     const returnDonStep = returnDonDecision.steps[0];
     expect(returnDonStep?.kind).toBe("payCost");
@@ -100,6 +101,7 @@ describe("EB01-038 Oh Come My Way", () => {
     const beforeCounter = engine.getView("north").players.north;
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    engine.asNorth().acceptOptional();
 
     const returnDonDecision = engine.pendingDecision("effectCostReturnDon", "north");
     expect(returnDonDecision.steps[0]?.kind).toBe("payCost");
@@ -125,7 +127,7 @@ describe("EB01-038 Oh Come My Way", () => {
       },
       {
         hand: [eb01Doma005],
-        deck: [op13Otama043, op13Higuma013, op13York094],
+        deck: [op13Otama043, op13Higuma013, op13York094, eb01Doma005],
         life: [eb01OhComeMyWay038],
         activeDon: 1,
       },
@@ -202,5 +204,48 @@ describe("EB01-038 Oh Come My Way", () => {
       expect.arrayContaining([firstDrawId, secondDrawId]),
     );
     expect(view.prompts).toHaveLength(0);
+  });
+
+  test("declines the Counter DON return after paying the Event play cost", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["EB01-038"], activeDon: 4, life: 3 },
+      { character: [{ cardId: "ST05-011", playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const event = e.findCardInZone("south", "hand", "EB01-038");
+    const before = e.getView("south").players.south;
+    e.asNorth().attack(e.findCardInZone("north", "character", "ST05-011"), e.leader("south"));
+    e.asSouth().chooseCounter("EB01-038");
+    e.asSouth().declineOptional();
+    const after = e.getView("south").players.south;
+    expect(after.activeDon).toBe(3);
+    expect(after.restedDon).toBe(1);
+    expect(after.donDeckCount).toBe(before.donDeckCount);
+    expect(after.deckCount).toBe(before.deckCount);
+    expect(after.lifeCount).toBe(before.lifeCount - 1);
+    expect(after.trash.map((c) => c.instanceId)).toContain(event);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+  test("redirecting to an active Blocker during Counter does not reopen the Block Step", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP14-079",
+        hand: ["EB01-038"],
+        character: ["ST01-006", "EB01-005"],
+        activeDon: 1,
+      },
+      {},
+      { activeSeat: "north", firstPlayer: "south" },
+    );
+    const blocker = e.findCardInZone("south", "character", "ST01-006");
+    const life = e.getView("south").players.south.lifeCount;
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().chooseBlocker();
+    e.asSouth().chooseCounter("EB01-038");
+    e.asSouth().acceptOptional();
+    e.asSouth().chooseTargets(blocker);
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(blocker);
+    expect(e.getView("south").players.south.lifeCount).toBe(life);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

@@ -1,0 +1,19 @@
+{
+  "aOff": [],
+  "bOff": [
+    "safe-steal"
+  ],
+  "games": 360,
+  "aWins": 189,
+  "aLosses": 171,
+  "draws": 0,
+  "aWinRate": 0.525,
+  "pairs": 180,
+  "aSweeps": 62,
+  "bSweeps": 53,
+  "splits": 65,
+  "pairedImprovement": 0.05,
+  "failures": [],
+  "avgSteps": 96.2,
+  "elapsedMs": 399174
+}

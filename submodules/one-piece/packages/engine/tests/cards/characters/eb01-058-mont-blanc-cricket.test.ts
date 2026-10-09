@@ -31,4 +31,11 @@ describe("EB01-058 Mont Blanc Cricket", () => {
     expect(opponentTurnCard?.power).toBe(3000);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("three Life cards do not grant the conditional bonus after attaching DON", () => {
+    const e = OnePieceTestEngine.create({ character: ["EB01-058"], life: 3, activeDon: 1 });
+    const id = e.findCardInZone("south", "character", "EB01-058");
+    e.attachDon(id, 1, "south");
+    expect(e.getView("south").players.south.characters[0]?.power).toBe(4000);
+    expect(e.getView("south").players.south.characters[0]?.attachedDon).toBe(1);
+  });
 });

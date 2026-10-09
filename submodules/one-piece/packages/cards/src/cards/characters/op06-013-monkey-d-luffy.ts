@@ -56,7 +56,7 @@ export const op06MonkeyDLuffy013: CharacterCard = {
               {
                 filter: "trait",
                 value: "FILM",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

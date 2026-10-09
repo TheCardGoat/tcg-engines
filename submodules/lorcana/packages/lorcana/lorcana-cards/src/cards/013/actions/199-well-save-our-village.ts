@@ -27,6 +27,7 @@ export const wellSaveOurVillage: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9e9490d267af46ea9959b45ea5eeaee8",
+    tcgPlayer: "704693",
   },
   text: "Your characters and locations gain Resist +1 until the start of your next turn.",
   actionSubtype: "song",

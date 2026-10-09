@@ -45,6 +45,7 @@ interface Props {
 	aiBot?: false | { initialPlayMode?: AiPlayMode; strategyId?: string };
 	visualSetup?: false | ((harness: LorcanaBrowserHarness) => Promise<void> | void);
 	commandStatusOverride?: AuthoritativeCommandStatus | null;
+	supportReminderOverride?: boolean | null;
 	staleRecoveryCompletionCountOverride?: number | null;
 	enableMatchChat?: boolean;
 }
@@ -67,6 +68,7 @@ let {
 	aiBot = {},
 	visualSetup = false,
 	commandStatusOverride = null,
+	supportReminderOverride = null,
 	staleRecoveryCompletionCountOverride = null,
 	enableMatchChat = false,
 }: Props = $props();
@@ -137,17 +139,7 @@ const adapter = $derived.by(
 		}),
 );
 
-const engine = $derived.by(() => {
-	if (currentView === "spectator" || currentView === "authoritative") {
-		return testEngine.asServer();
-	}
-
-	if (currentView === "playerTwo") {
-		return testEngine.asPlayerTwo();
-	}
-
-	return testEngine.asPlayerOne();
-});
+const engine = $derived(testEngine.getEngineForView(currentView));
 
 const readModel = $derived.by(() => ({
 	getMoveLog: (limit?: number, viewOverride?: LorcanaSimulatorView) =>
@@ -519,6 +511,7 @@ $effect(() => {
     bind:gameContext={gameContextRef}
     bind:interactionView={interactionViewRef}
     {commandStatusOverride}
+    {supportReminderOverride}
     staleRecoveryCompletionCountOverride={recoveredFeedbackOverride}
     matchChatController={enableMatchChat ? harnessChatController : null}
   />

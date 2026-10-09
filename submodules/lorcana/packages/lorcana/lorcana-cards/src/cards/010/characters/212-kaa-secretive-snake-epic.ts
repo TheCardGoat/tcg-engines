@@ -25,7 +25,7 @@ export const kaaSecretiveSnakeEpic: CharacterCard = {
   franchise: "Jungle Book",
   set: "010",
   cardNumber: 212,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 7,
   strength: 6,

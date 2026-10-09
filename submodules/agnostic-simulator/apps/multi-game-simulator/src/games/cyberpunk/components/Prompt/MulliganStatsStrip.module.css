@@ -1,83 +1,248 @@
-.strip {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px;
+.stripWrap {
+  position: relative;
+  min-width: 0;
   margin-top: 3px;
 }
 
-.chip {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 4px;
-  padding: 2px 6px;
-  border: 1px solid rgb(74 217 255 / 30%);
-  border-radius: 3px;
-  background: rgb(74 217 255 / 7%);
-  font-size: 10px;
-  line-height: 1.2;
+.strip {
+  --summary-ink: #d8e9e9;
+  --summary-muted: #9bb1b8;
+  --summary-line: #6f8c9180;
+  display: grid;
+  gap: 3px;
+  width: 100%;
+  min-width: 0;
+  padding: 4px 7px 5px;
+  border: 1px solid var(--summary-line);
+  clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
+  background: linear-gradient(145deg, #18262aeb, #0b1418ef 45%, #111b20ed);
+  box-shadow:
+    inset 0 1px #b7e1e41c,
+    0 3px 8px #0008;
+  color: var(--summary-ink);
+  font-family: "Cyberpunk Blender Pro", "Arial Narrow", sans-serif;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+.row {
+  gap: 6px;
+  min-height: 22px;
+}
+.row + .row {
+  border-top: 1px solid #70868a45;
+  padding-top: 3px;
+}
+.tipRow {
+  cursor: help;
+}
+.tipRow:hover .rowLabel {
+  color: var(--summary-ink);
+}
+.rowLabel {
+  flex: 0 0 76px;
+  color: var(--summary-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
   white-space: nowrap;
 }
-
-.chipLabel {
-  color: rgb(207 232 246 / 64%);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-}
-
-.chipValue {
-  color: rgb(230 244 251 / 92%);
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-}
-
-.chipGood {
-  border-color: rgb(57 255 136 / 46%);
-  background: rgb(57 255 136 / 9%);
-}
-
-.chipGood .chipValue {
-  color: rgb(57 255 136 / 92%);
-}
-
-.chipGood .chipLabel {
-  color: rgb(57 255 136 / 62%);
-}
-
-.chipWarn {
-  border-color: rgb(255 61 138 / 52%);
-  background: rgb(255 61 138 / 10%);
-}
-
-.chipWarn .chipValue {
-  color: rgb(255 143 187 / 95%);
-}
-
-.chipWarn .chipLabel {
-  color: rgb(255 143 187 / 66%);
-}
-
-.compact .chip {
+.costContent {
+  display: grid;
   gap: 3px;
-  padding: 1px 4px;
-  font-size: 9px;
+  min-width: 0;
+  flex: 1;
 }
-
-.compact .chipLabel {
-  font-size: 8px;
+.costBar {
+  display: flex;
+  gap: 2px;
+  align-self: center;
+  width: 100%;
+  height: 13px;
 }
-
-.mobile .strip {
-  gap: 4px;
+.costBar > span {
+  flex: 1;
+  min-width: 0;
+  transform: skewX(-12deg);
+  box-shadow: inset 0 1px #fff7;
 }
-
-.mobile .chip {
-  padding: 3px 7px;
+.costBar .low {
+  background: linear-gradient(#86e5eb, #238d9b);
+}
+.costBar .mid {
+  background: linear-gradient(#f9da83, #b98c2e);
+}
+.costBar .high {
+  background: linear-gradient(#efaa8d, #a44f42);
+}
+.costBar .uncosted {
+  background: #66767b;
+}
+.costLegend {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  min-width: 0;
+}
+.costLegend > span,
+.tipLegend > span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  white-space: nowrap;
+}
+.costLegend span span,
+.tipLegend span span {
+  color: #aac9d1;
   font-size: 11px;
 }
-
-.mobile .chipLabel {
+.costLegend .low,
+.tipLegend .low {
+  color: #86e5eb;
+}
+.costLegend .mid,
+.tipLegend .mid {
+  color: #f9da83;
+}
+.costLegend .high,
+.tipLegend .high {
+  color: #efaa8d;
+}
+.costLegend b,
+.typeList b,
+.tipLegend b {
+  color: #f0f4f0;
+  font-size: 13px;
+}
+.mixContent {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
+}
+.typeList {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  flex: 1;
+  min-width: 0;
+}
+.typeList > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+.typeList > span > span {
+  color: #a9c4ca;
+  font-size: 11px;
+}
+.typeList > span:first-child > span {
+  color: #80dce4;
+}
+.typeList > span:nth-child(2) > span {
+  color: #f2cd79;
+}
+.typeList > span:nth-child(3) > span {
+  color: #c9b5df;
+}
+.iconUnit {
+  color: #80dce4;
+}
+.iconGear {
+  color: #f2cd79;
+}
+.iconProgram {
+  color: #c9b5df;
+}
+.iconSell {
+  color: #e3c68d;
+}
+.sellCount {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex: none;
+  padding-left: 6px;
+  border-left: 1px solid #ad995f91;
+  white-space: nowrap;
+  color: #ffe08a;
+}
+.sellCount b {
+  font-size: 14px;
+}
+.sellCount > span {
+  color: #d4bd7f;
+  font-size: 11px;
+}
+/* Hover legend: portals to document.body as a fixed panel floating above the
+   strip — the prompt housing clips absolutely-positioned children. */
+.tip {
+  position: fixed;
+  z-index: 40;
+  padding: 6px 8px 7px;
+  border: 1px solid var(--summary-line);
+  clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
+  background: linear-gradient(145deg, #1b2b30f5, #0b1418f8 45%, #121d23f7);
+  box-shadow:
+    inset 0 1px #b7e1e41c,
+    0 5px 12px #000b;
+  color: var(--summary-ink);
+  font-family: "Cyberpunk Blender Pro", "Arial Narrow", sans-serif;
+  font-size: 11px;
+  line-height: 1.35;
+  pointer-events: none;
+}
+.tipBody {
+  display: grid;
+  gap: 3px;
+}
+.tipLegend {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  min-width: 0;
+}
+.tipEntry {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #c3d6d8;
+  white-space: nowrap;
+}
+.tipNote {
+  margin: 0;
+  color: var(--summary-muted);
   font-size: 10px;
+  letter-spacing: 0.02em;
+}
+.compact {
+  padding: 3px 6px 4px;
+  gap: 2px;
+}
+.compact .row {
+  min-height: 19px;
+}
+.compact .rowLabel {
+  flex-basis: 68px;
+}
+.mobile {
+  font-size: 11px;
+}
+.mobile .rowLabel {
+  font-size: 11px;
+}
+.mobile .row {
+  flex-wrap: wrap;
+}
+.mobile .costBar {
+  height: 9px;
 }

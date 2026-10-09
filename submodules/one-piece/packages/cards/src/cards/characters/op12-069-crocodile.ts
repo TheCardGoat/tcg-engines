@@ -22,7 +22,7 @@ export const op12Crocodile069: CharacterCard = {
   setId: "OP12",
   cost: 6,
   power: 8000,
-  traits: ["Baroque Works The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
   attribute: "special",
   effect:
     "[On Your Opponent's Attack] [Once Per Turn] DON!! -1: If your Leader's type includes \"Baroque Works\", up to 1 of your Leader or Character cards gains +2000 power during this battle.",

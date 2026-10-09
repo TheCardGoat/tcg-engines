@@ -77,4 +77,25 @@ describe("OP09-068 Tony Tony.Chopper", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("keeps the granted Blocker when Teach negates the Character's printed effects", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: "OP09-081", character: ["OP09-068"], activeDon: 1 },
+      { leaderCardId: "OP09-081", hand: ["OP09-093"], activeDon: 10 },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const source = engine.findCardInZone("south", "character", "OP09-068");
+    engine.asSouth().endTurn();
+    engine.asSouth().acceptOptional();
+
+    engine.asNorth().play("OP09-093");
+    engine.asNorth().activateMain(engine.findCardInZone("north", "character", "OP09-093"));
+    engine.asNorth().chooseNoTargets();
+    engine.asNorth().chooseTargets(source);
+    engine.asNorth().attack(engine.leader("north"), engine.leader("south"));
+    const block = engine.pendingDecision("battleBlocker", "south").steps[0];
+    if (block?.kind !== "selectEntity") throw new Error("Expected granted Blocker");
+    expect(block.candidates.map((c) => c.ref.id)).toContain(source);
+    engine.asSouth().chooseBlocker(source);
+    expect(engine.getView("south").players.south.lifeCount).toBe(5);
+  });
 });

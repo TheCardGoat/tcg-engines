@@ -1,69 +1,81 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-// Auto-verified: Charlotte Cracker (OP17-104) cost=3 power=4000 counter=1000
 describe("OP17-104 Charlotte Cracker", () => {
-  test("[On Play] resolves its play effects", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-104"], activeDon: 5 },
-      { character: ["OP13-013"], activeDon: 5 },
+  test("FAQ: opponent-turn Life Trigger plays this card without its Your Turn On Play", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST07-001", life: ["OP17-104", "EB01-025"], deck: 5, activeDon: 2 },
+      { hand: ["EB01-005"] },
+      { activeSeat: "north" },
     );
-
-    engine.playCard("OP17-104");
-    engine.acceptLeadingOptional("south");
-
-    // Resolve any remaining prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-104",
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.resolveDecision("lifeTrigger", { optionId: "activate" }, "south");
+    const view = e.getView("south");
+    expect(view.players.south.characters.map((c) => c?.cardId)).toContain("OP17-104");
+    expect(view.players.south.deckCount).toBe(5);
+    expect(view.players.south.lifeCount).toBe(1);
+    expect(view.players.south.activeDon).toBe(2);
+    expect(view.players.north.handCount).toBe(1);
+    expect(view.prompts).toHaveLength(0);
+  });
+  test("pays two active DON on its own turn to add the top deck card to Life", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "ST07-001",
+        hand: ["OP17-104"],
+        activeDon: 5,
+        deck: ["ST02-002", "ST02-006"],
+      },
+      {},
     );
+    const life = e.getView("south").players.south.lifeCount;
+    e.asSouth().play("OP17-104");
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectAddToLifeFromDeck", { optionId: "1" }, "south");
+    expect(e.getView("south").players.south.lifeCount).toBe(life + 1);
+    expect(e.getView("south").players.south.deckCount).toBe(1);
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+    expect(e.getView("south").players.south.restedDon).toBe(5);
+  });
+  test("declining a payable On Play cost preserves the two remaining DON and Life", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "ST07-001",
+        hand: ["OP17-104"],
+        activeDon: 5,
+        deck: ["ST07-003", "ST07-004"],
+      },
+      {},
+    );
+    e.asSouth().play("OP17-104");
+    const before = e.getView("south").players.south;
+    e.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const view = e.getView("south");
+    expect(view.players.south.lifeCount).toBe(before.lifeCount);
+    expect(view.players.south.deckCount).toBe(2);
+    expect(view.players.south.activeDon).toBe(2);
+    expect(view.players.south.restedDon).toBe(3);
+    expect(view.prompts).toHaveLength(0);
   });
 
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-104", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
+  test("a non-Big-Mom Leader still pays the accepted cost before failing the Life condition", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "ST13-003",
+        hand: ["OP17-104"],
+        activeDon: 5,
+        deck: ["ST13-012", "ST13-013"],
+      },
+      {},
     );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-104",
-    );
-    expect(engine.getView("south").prompts).toHaveLength(0);
+    const life = e.getView("south").players.south.lifeCount;
+    e.asSouth().play("OP17-104");
+    e.asSouth().acceptOptional();
+    const view = e.getView("south");
+    expect(view.players.south.activeDon).toBe(0);
+    expect(view.players.south.restedDon).toBe(5);
+    expect(view.players.south.lifeCount).toBe(life);
+    expect(view.players.south.deckCount).toBe(2);
+    expect(view.prompts).toHaveLength(0);
   });
 });

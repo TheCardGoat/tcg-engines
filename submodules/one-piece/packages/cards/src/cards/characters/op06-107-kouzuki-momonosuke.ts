@@ -38,7 +38,7 @@ export const op06KouzukiMomonosuke107: CharacterCard = {
   setId: "OP06",
   cost: 5,
   power: 6000,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "wisdom",
 
   effect:
@@ -62,7 +62,7 @@ export const op06KouzukiMomonosuke107: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "excludeName",

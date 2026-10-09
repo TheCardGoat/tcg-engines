@@ -593,6 +593,15 @@ function committedObservationId(
   if (!("eventId" in observed.committedEvent)) {
     throw new Error("Trigger collection requires a committed event observation");
   }
+  if (
+    !groupGameEvent &&
+    observed.committedEvent.type === "tokens-summoned" &&
+    observed.name === "object-entered-field" &&
+    observed.subjectId
+  ) {
+    // Each token enters separately even though one transaction records the summon batch.
+    return `${observed.committedEvent.eventId}:token:${observed.subjectId}`;
+  }
   return groupGameEvent
     ? (observed.committedEvent.gameEventId ?? observed.committedEvent.eventId)
     : observed.committedEvent.eventId;
@@ -725,6 +734,7 @@ function observedBindings(
     (observed.name === "damage-dealt" || observed.name === "attack-hit")
       ? { [grandArchiveModifiedResultBinding("damage-dealt")]: observed.amount }
       : {}),
+    ...(observed.from ? { eventOrigin: observed.from } : {}),
     ...(observed.state ? { eventState: observed.state } : {}),
     ...(observed.stackItemId ? { eventStackItem: [observed.stackItemId] } : {}),
     ...(eventSubjectControllerIds.length > 0
@@ -759,6 +769,9 @@ export function grandArchiveEventPatternBindings(
       pattern.subject,
       observed.subjectIds ?? (observed.subjectId ? [observed.subjectId] : []),
     ),
+    ...("host" in pattern
+      ? subjectBinding(pattern.host, observed.hostId ? [observed.hostId] : [])
+      : {}),
     ...("recipient" in pattern
       ? subjectBinding(pattern.recipient, grandArchiveEventRecipientBinding(observed))
       : {}),
@@ -1257,7 +1270,13 @@ export function collectGrandArchiveTriggeredAbilityEvents(
         }
       }
       for (const source of candidateSources(state, committedEvents)) {
-        const fieldDeparture = [...committedEvents]
+        // A returned object is a new field instance. Its earlier departure cannot
+        // supply last-known information for this entry's own triggered abilities.
+        const sourceEvents =
+          observed.name === "object-entered-field" && observed.subjectId === source.id
+            ? committedEvents.filter((event) => event.stateVersion >= committedEvent.stateVersion)
+            : committedEvents;
+        const fieldDeparture = [...sourceEvents]
           .reverse()
           .find(
             (
@@ -1272,6 +1291,8 @@ export function collectGrandArchiveTriggeredAbilityEvents(
                 event.to !== "field") ||
               (event.type === "object-removed-from-game" && event.object.id === source.id),
           );
+        // A level-up removes the previous face's active abilities. Discover that transition
+        // from the previous face; the separate On Enter observation uses the new face.
         const sourceForDiscovery = fieldDeparture
           ? fieldDeparture.type === "object-removed-from-game"
             ? fieldDeparture.object
@@ -1293,7 +1314,11 @@ export function collectGrandArchiveTriggeredAbilityEvents(
                 activationVariables:
                   fieldDeparture.previousActivationVariables ?? source.activationVariables,
               })
-          : source;
+          : observed.name === "champion-leveled-up" &&
+              committedEvent.type === "champion-leveled-up" &&
+              committedEvent.championId === source.id
+            ? { ...source, activeDefinitionId: committedEvent.previousActiveDefinitionId }
+            : source;
         const face = grandArchiveObjectFace(program, sourceForDiscovery);
         for (const [abilityOccurrenceIndex, ability] of executableTriggeredAbilitiesForObject(
           program,
@@ -1309,7 +1334,7 @@ export function collectGrandArchiveTriggeredAbilityEvents(
               ),
         ).entries()) {
           const functionalZones = grandArchiveAbilityFunctionalZones(face, ability);
-          const sourceDeparture = [...committedEvents]
+          const sourceDeparture = [...sourceEvents]
             .reverse()
             .find(
               (

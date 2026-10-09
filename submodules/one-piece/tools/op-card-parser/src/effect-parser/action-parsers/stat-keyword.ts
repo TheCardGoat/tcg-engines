@@ -9,6 +9,27 @@ import { parseConditionText } from "../condition-parser/index.ts";
 
 type ModifyPowerAction = Extract<Action, { action: "modifyPower" }>;
 
+export function parseGroupedPowerAndCostActions(text: string): Action[] | null {
+  const match =
+    /^(.+?)\s+gains?\s+([+-]?\d+)\s+power\s+and\s+([+-]?\d+)\s+cost\s+for\s+every\s+(\d+)\s+cards?\s+in\s+your\s+(trash|hand)\.?$/i.exec(
+      text.trim(),
+    );
+  if (!match) return null;
+  const target = parseModifyPowerTarget(match[1]!);
+  if (!target) return null;
+  const zone = match[5]!.toLowerCase() === "trash" ? "trash" : "hand";
+  return (["modifyPower", "modifyCost"] as const).map((action, index) => ({
+    action,
+    target,
+    value: Number(match[index + 2]),
+    duration: "permanent",
+    valuePerCardGroup: {
+      size: Number(match[4]),
+      target: { player: "self", zones: [zone], count: { amount: "all" } },
+    },
+  }));
+}
+
 export function parseEachModifyPowerActions(text: string): ModifyPowerAction[] | null {
   const trimmed = text
     .trim()
@@ -46,7 +67,7 @@ export function parseModifyPowerAction(text: string): ModifyPowerAction | null {
   // "This Character gains +1000 power for every 3 of your rested DON!! cards"
   // "This Character gains +1000 power for every card in your hand"
   const forEveryMatch =
-    /^(.+?)\s+gains?\s+([+-]?\d+)\s+power\s+for\s+every\s+(?:(\d+)\s+(?:of\s+)?)?(.+?)(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(
+    /^(.+?)\s+gains?\s+([+-]?\d+)\s+power\s+for\s+(?:every|each)\s+(?:(\d+)\s+(?:of\s+)?)?(.+?)(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(
       trimmed,
     );
   if (forEveryMatch) {
@@ -56,6 +77,17 @@ export function parseModifyPowerAction(text: string): ModifyPowerAction | null {
       const per = forEveryMatch[3] ? parseInt(forEveryMatch[3]!, 10) : 1;
       const sourceText = forEveryMatch[4]!.trim();
       const duration = forEveryMatch[5] ? parseFullDuration(forEveryMatch[5]) : "permanent";
+      if (/^(?:of\s+)?your\s+Characters$/i.test(sourceText))
+        return {
+          action: "modifyPower",
+          target,
+          value,
+          valuePerCardGroup: {
+            size: per,
+            target: { player: "self", zones: ["character"], count: { amount: "all" } },
+          },
+          duration,
+        };
       const cardZoneMatch =
         /^(?:(Character|Event|Stage)s?|cards?)\s+in\s+your\s+(hand|trash)$/i.exec(sourceText);
       if (cardZoneMatch) {
@@ -142,13 +174,50 @@ export function parseModifyPowerAction(text: string): ModifyPowerAction | null {
 
 // ── SetPower action parsing ──
 
-type SetPowerAction = Extract<Action, { action: "setPower" | "setBasePowerFrom" | "copyPower" }>;
+type SetPowerAction = Extract<
+  Action,
+  { action: "setPower" | "setBasePower" | "setBasePowerFrom" | "copyPower" }
+>;
 
 /**
  * Parse "set this Character's/Leader's power to N" action.
  */
 export function parseSetPowerAction(text: string): SetPowerAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+  const setBase =
+    /^set the base power of (.+?) to (\d+)(?: (during this (?:turn|battle)|until .+))?$/i.exec(
+      trimmed,
+    );
+  if (setBase) {
+    const target = parseModifyPowerTarget(setBase[1]!) ?? parseTarget(setBase[1]!);
+    if (target)
+      return {
+        action: "setBasePower",
+        target,
+        value: Number(setBase[2]),
+        duration: setBase[3] ? parseFullDuration(setBase[3]) : "permanent",
+      };
+  }
+  const numericBase =
+    /^(.+?)(?:['’]s|s['’]) base power becomes (\d+) (during this (?:turn|battle)|until .+)$/i.exec(
+      trimmed,
+    );
+  if (numericBase) {
+    // Remove only the possessive; a plural Characters' already includes its s.
+    let targetText = numericBase[1]!;
+    if (/Characters['’] base/.test(trimmed) && !targetText.endsWith("s")) targetText += "s";
+    const target =
+      parseModifyPowerTarget(targetText) ??
+      parseTarget(targetText) ??
+      parseTargetWithoutPlayer(targetText);
+    if (target)
+      return {
+        action: "setBasePower",
+        target,
+        value: Number(numericBase[2]),
+        duration: parseFullDuration(numericBase[3]!),
+      };
+  }
 
   // "set this Character's power to N (duration)"
   const selfMatch =
@@ -203,6 +272,19 @@ export function parseSetPowerAction(text: string): SetPowerAction | null {
       copiedSource,
     );
     if (!sourceMatch) return null;
+    // The recipient's base power can copy the source's current power. Only an
+    // explicit source "base power" clause reads the source's base value.
+    if (!/base power$/i.test(copiedSource)) {
+      return {
+        action: "copyPower",
+        target: {
+          player: /^your opponent/i.test(sourceMatch[1]!) ? "opponent" : "self",
+          zones: ["leader"],
+          count: { amount: 1 },
+        },
+        duration,
+      };
+    }
     return {
       action: "setBasePowerFrom",
       target: { player: "self", zones: ["character"], count: { amount: 1 }, self: true },
@@ -322,7 +404,7 @@ export function parseCostReductionAction(text: string): ModifyCostAction | null 
     const trait = playingMatch[1]!;
     const reduction = -parseInt(playingMatch[4]!, 10);
     const filters: TargetFilter[] = [
-      { filter: "trait", value: trait, match: "includes" },
+      { filter: "trait", value: trait, match: "exact" },
       { filter: "cardCategory", value: "character" as any },
     ];
     if (playingMatch[2]) {
@@ -334,6 +416,7 @@ export function parseCostReductionAction(text: string): ModifyCostAction | null 
     }
     return {
       action: "modifyCost",
+      paymentOnly: true,
       target: { player: "self", zones: ["hand"], count: { amount: "all" }, filters },
       value: reduction,
     };
@@ -437,6 +520,20 @@ export function parseGrantKeywordChoiceAction(text: string): KeywordChoiceAction
 export function parseGrantKeywordAction(text: string): GrantKeywordAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
+  if (
+    /^your opponent cannot activate \[Blocker\] when the card given these DON!! cards attacks during this turn$/i.test(
+      trimmed,
+    )
+  ) {
+    return {
+      action: "grantKeyword",
+      target: { player: "self", zones: ["leader", "character"], count: { amount: 1 } },
+      keyword: "unblockable",
+      duration: "thisTurn",
+      previousActionTargets: true,
+    };
+  }
+
   const selectedTraitRushCharacterMatch =
     /^up\s+to\s+(\d+)\s+of\s+your\s+(?:\[([^\]]+)\]|\{([^}]+)\}|["\u201c]([^"\u201d]+)["\u201d])\s+or\s+(?:\[([^\]]+)\]|\{([^}]+)\}|["\u201c]([^"\u201d]+)["\u201d])\s+type\s+Characters\s+can\s+attack\s+Characters\s+on\s+the\s+turn\s+in\s+which\s+(?:it|they)\s+(?:is|are)\s+played$/i.exec(
       trimmed,
@@ -463,8 +560,8 @@ export function parseGrantKeywordAction(text: string): GrantKeywordAction | null
           {
             filter: "anyOf",
             filters: [
-              { filter: "trait", value: firstTrait, match: "includes" },
-              { filter: "trait", value: secondTrait, match: "includes" },
+              { filter: "trait", value: firstTrait, match: "exact" },
+              { filter: "trait", value: secondTrait, match: "exact" },
             ],
           },
         ],
@@ -473,6 +570,23 @@ export function parseGrantKeywordAction(text: string): GrantKeywordAction | null
       duration: "permanent",
     };
   }
+
+  const selectedSingleTraitRush =
+    /^Up to (\d+) of your [[{]([^\]}]+)[\]}] type Characters can attack Characters on the turn in which (?:it is|they are) played$/i.exec(
+      trimmed,
+    );
+  if (selectedSingleTraitRush)
+    return {
+      action: "grantKeyword",
+      target: {
+        player: "self",
+        zones: ["character"],
+        count: { amount: Number(selectedSingleTraitRush[1]), upTo: true },
+        filters: [{ filter: "trait", value: selectedSingleTraitRush[2]!, match: "exact" }],
+      },
+      keyword: "rushCharacter",
+      duration: "thisTurn",
+    };
 
   const typedRushCharacterMatch =
     /^your\s+(?:\[([^\]]+)\]|\{([^}]+)\}|["\u201c]([^"\u201d]+)["\u201d])\s+type\s+Characters\s+can\s+attack\s+Characters\s+on\s+the\s+turn\s+in\s+which\s+they\s+are\s+played$/i.exec(
@@ -487,7 +601,7 @@ export function parseGrantKeywordAction(text: string): GrantKeywordAction | null
         player: "self",
         zones: ["character"],
         count: { amount: "all" },
-        filters: [{ filter: "trait", value: trait, match: "includes" }],
+        filters: [{ filter: "trait", value: trait, match: "exact" }],
       },
       keyword: "rushCharacter",
       duration: "permanent",
@@ -495,7 +609,7 @@ export function parseGrantKeywordAction(text: string): GrantKeywordAction | null
   }
 
   if (
-    /^(?:this\s+Character\s+can\s+attack\s+Characters|this\s+Character\s+cannot\s+attack\s+a\s+Leader)\s+on\s+the\s+turn\s+in\s+which\s+it\s+is\s+played$/i.test(
+    /^this\s+Character\s+can\s+attack\s+Characters\s+on\s+the\s+turn\s+in\s+which\s+it\s+is\s+played$/i.test(
       trimmed,
     )
   ) {
@@ -619,7 +733,7 @@ export function parseCompoundNamedTraitPower(text: string): Action[] | null {
         zones: ["character"],
         count: { amount: "all" },
         filters: [
-          { filter: "trait", value: trait, match: "includes" },
+          { filter: "trait", value: trait, match: establishedMatch ? "includes" : "exact" },
           { filter: "excludeName", value: name },
         ],
       },
@@ -662,6 +776,32 @@ export function parseCompoundKeywordPower(text: string): Action[] | null {
  */
 export function parseCompoundKeywordCost(text: string): Action[] | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+  const grouped =
+    /^(.+?)\s+gains?\s+\[([^\]]+)\]\s+and\s+([+-]?\d+)\s+cost\s+for\s+every\s+(\d+)\s+cards?\s+in\s+your\s+(trash|hand)$/i.exec(
+      trimmed,
+    );
+  if (grouped) {
+    const keyword = KEYWORD_BRACKET_TO_TYPE[grouped[2]!.toLowerCase()];
+    const target = parseModifyPowerTarget(grouped[1]!);
+    if (!keyword || !target) return null;
+    return [
+      { action: "grantKeyword", target, keyword, duration: "permanent" },
+      {
+        action: "modifyCost",
+        target: { ...target },
+        value: Number(grouped[3]),
+        duration: "permanent",
+        valuePerCardGroup: {
+          size: Number(grouped[4]),
+          target: {
+            player: "self",
+            zones: [grouped[5]!.toLowerCase() === "trash" ? "trash" : "hand"],
+            count: { amount: "all" },
+          },
+        },
+      },
+    ];
+  }
   const match =
     /^(.+?)\s+gains?\s+\[([^\]]+)\]\s+and\s+([+-]?\d+)\s+cost(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(
       trimmed,

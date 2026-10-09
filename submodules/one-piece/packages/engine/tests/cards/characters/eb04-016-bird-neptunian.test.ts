@@ -61,3 +61,24 @@ describe("EB04-016 Bird Neptunian", () => {
     ).toBe(true);
   });
 });
+
+test("FAQ: Bird Neptunian prevents Urouge's End of Turn DON activation, then expires", () => {
+  const e = OnePieceTestEngine.create({
+    character: ["EB04-016", "OP07-021"],
+    restedDon: 2,
+    hand: ["EB01-005"],
+  });
+  const bird = e.findCardInZone("south", "character", "EB04-016");
+  e.activateEffect(bird, "activateMain", "south");
+  e.resolveDecision("effectSetActiveDon", { optionId: "1" }, "south");
+  e.asSouth().endTurn();
+  expect(e.getView("south").players.south.activeDon).toBe(1);
+  expect(e.getView("south").players.south.restedDon).toBe(1);
+  expect(e.getView("south").prompts).toHaveLength(0);
+  e.asNorth().endTurn();
+  e.asSouth().play("EB01-005");
+  const before = e.getView("south").players.south.activeDon;
+  e.activateEffect(bird, "activateMain", "south");
+  e.resolveDecision("effectSetActiveDon", { optionId: "1" }, "south");
+  expect(e.getView("south").players.south.activeDon).toBe(before + 1);
+});

@@ -38,11 +38,11 @@ export const op17Sasaki068: CharacterCard = {
             amount: 2,
           },
         ],
-        conditions: [
+        postCostConditions: [
           {
             condition: "leaderTrait",
             trait: "Animal Kingdom Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

@@ -502,6 +502,37 @@ describe("FAB persisted decision interaction projection", () => {
     expect(JSON.stringify(observer)).not.toContain(definitionId);
   });
 
+  it("omits card identity for hidden face-down candidates (CR 1.8.6b)", () => {
+    const runtime = runtimeWithDecision({
+      ...base("entity-target"),
+      kind: "entity-target",
+      min: 1,
+      max: 1,
+      candidates: [],
+    });
+    const state = runtime.getState();
+    const instanceId = state.containers.zonesByPlayerId[ACTOR]!.deck[0]!;
+    const definitionId = state.objects[instanceId]!.canonicalId;
+    state.decision = {
+      ...base("entity-target"),
+      kind: "entity-target",
+      min: 1,
+      max: 1,
+      candidates: [
+        { instanceId, label: "Face-down card", hidden: true },
+        { instanceId: "public-target", label: "Public target" },
+      ],
+    };
+
+    const actor = projectFabInteraction(runtime, ACTOR).view;
+    const input = actor.actions[0]!.inputs[0]!;
+    if (input.kind !== "entity-selection") throw new Error("Expected entity selection");
+
+    const hidden = input.candidates.find((candidate) => candidate.entity.instanceId === instanceId);
+    expect(hidden?.entity).toEqual({ kind: "card", instanceId });
+    expect(JSON.stringify(input)).not.toContain(definitionId);
+  });
+
   it("projects private candidates only to the actor and safe concession to observers", () => {
     const runtime = runtimeWithDecision({
       ...base("entity-target"),

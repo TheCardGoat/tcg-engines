@@ -1,4 +1,4 @@
-import type { RiftboundClientCardDefinitionV1 } from "../state";
+import type { RiftboundClientCardDefinitionV1 } from "@tcg/riftbound-tabletop";
 
 interface OfficialRiftboundFixtureCard {
   readonly id: string;

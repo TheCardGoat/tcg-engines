@@ -42,6 +42,7 @@ function createResolverTestContext(args?: {
   state: {
     cardMeta: Record<string, Record<string, unknown>>;
     drawCalls: DrawCall[];
+    logEntries: unknown[];
     revealCalls: CardInstanceId[][];
     moveCalls: Array<{ cardId: CardInstanceId; zone: string; playerId: PlayerId }>;
   };
@@ -60,6 +61,7 @@ function createResolverTestContext(args?: {
   }
 
   const drawCalls: DrawCall[] = [];
+  const logEntries: unknown[] = [];
   const revealCalls: CardInstanceId[][] = [];
   const moveCalls: Array<{ cardId: CardInstanceId; zone: string; playerId: PlayerId }> = [];
 
@@ -78,6 +80,15 @@ function createResolverTestContext(args?: {
     },
   };
   const zonesApi = {
+    mill: (
+      from: { zone: string; playerId: PlayerId },
+      to: { zone: string; playerId: PlayerId },
+      count: number,
+    ): CardInstanceId[] => {
+      const cards = getCards(from).reverse().slice(0, Math.max(0, count));
+      for (const cardId of cards) zonesApi.moveCard(cardId, to);
+      return cards;
+    },
     drawCards: (payload: DrawCall) => {
       drawCalls.push(payload);
     },
@@ -177,6 +188,7 @@ function createResolverTestContext(args?: {
         getRemainingTime: () => 0,
       },
       zones: zonesApi as never,
+      log: (entry: unknown) => logEntries.push(entry),
     },
     events: {},
   } as unknown as PlayCardExecutionContext;
@@ -186,6 +198,7 @@ function createResolverTestContext(args?: {
     state: {
       cardMeta,
       drawCalls,
+      logEntries,
       revealCalls,
       moveCalls,
     },
@@ -2348,5 +2361,124 @@ describe("resolveActionEffect", () => {
     expect(state.cardMeta[donor]?.damage).toBe(0);
     expect(state.cardMeta[dest]?.damage).toBe(2);
     expect(state.cardMeta[dest]?.state).toBe("exerted");
+  });
+});
+
+describe("selected-card reveal continuation", () => {
+  it("reveals only the last selected hand card after an earlier board target", () => {
+    const board = "reveal-board" as CardInstanceId;
+    const hand = "reveal-hand" as CardInstanceId;
+    const { ctx, state } = createResolverTestContext();
+    resolveActionEffect(
+      ctx,
+      createCardPlayedPayload(board, PLAYER_ONE),
+      { type: "reveal", target: "previous-target", amount: 1 },
+      { contextTargets: [board, hand], currentTargets: [], eventSnapshot: {} },
+    );
+    expect(state.revealCalls).toEqual([[hand]]);
+    expect(state.logEntries).toHaveLength(1);
+    expect(state.logEntries[0]).toMatchObject({
+      visibility: { mode: "PUBLIC" },
+      typedEntry: {
+        type: "lorcana.outcome.revealedCard",
+        values: { playerId: PLAYER_ONE, revealedCardId: hand },
+      },
+    });
+  });
+
+  it("keeps ordinary reveals scoped to the current selection", () => {
+    const prior = "reveal-prior" as CardInstanceId;
+    const current = "reveal-current" as CardInstanceId;
+    const { ctx, state } = createResolverTestContext();
+    resolveActionEffect(
+      ctx,
+      createCardPlayedPayload(prior, PLAYER_ONE),
+      { type: "reveal" },
+      { contextTargets: [prior], currentTargets: [current], eventSnapshot: {} },
+    );
+    expect(state.revealCalls).toEqual([[current]]);
+  });
+});
+
+describe("keyword grant outcome logs", () => {
+  it("logs each selected keyword with its source and target", () => {
+    const source = "grant-source" as CardInstanceId;
+    const target = "grant-target" as CardInstanceId;
+    const { ctx, state } = createResolverTestContext({
+      definitions: {
+        [source]: { id: "source", cardType: "character" },
+        [target]: { id: "target", cardType: "character" },
+      },
+      zoneCards: { [`play:${PLAYER_ONE}`]: [source, target] },
+    });
+    const result = resolveActionEffect(
+      ctx,
+      createCardPlayedPayload(source, PLAYER_ONE),
+      {
+        type: "sequence",
+        steps: [
+          {
+            type: "gain-keyword",
+            keyword: "Rush",
+            duration: "until-start-of-next-turn",
+            target: { selector: "chosen", count: 1, cardTypes: ["character"], zones: ["play"] },
+          },
+          {
+            type: "gain-keyword",
+            keyword: "Evasive",
+            duration: "until-start-of-next-turn",
+            target: { ref: "previous-target" },
+          },
+        ],
+      },
+      { targets: [target] },
+    );
+    expect(result.status).toBe("resolved");
+    expect(state.logEntries).toHaveLength(2);
+    for (const [index, keyword] of ["Rush", "Evasive"].entries()) {
+      expect(state.logEntries[index]).toMatchObject({
+        visibility: { mode: "PUBLIC" },
+        typedEntry: {
+          type: "lorcana.outcome.keywordGranted",
+          values: { sourceId: source, targetId: target, keyword },
+        },
+      });
+    }
+  });
+
+  it("includes a keyword's numeric value and emits no grant when there are no targets", () => {
+    const source = "valued-grant" as CardInstanceId;
+    const { ctx, state } = createResolverTestContext({
+      definitions: { [source]: { id: "source", cardType: "character" } },
+      zoneCards: { [`play:${PLAYER_ONE}`]: [source] },
+    });
+    resolveActionEffect(
+      ctx,
+      createCardPlayedPayload(source, PLAYER_ONE),
+      { type: "gain-keyword", keyword: "Singer", value: 5, target: "SELF", duration: "turn" },
+      {},
+    );
+    expect(state.logEntries).toHaveLength(1);
+    expect(state.logEntries[0]).toMatchObject({
+      typedEntry: { values: { sourceId: source, targetId: source, keyword: "Singer 5" } },
+    });
+    resolveActionEffect(
+      ctx,
+      createCardPlayedPayload(source, PLAYER_ONE),
+      {
+        type: "gain-keyword",
+        keyword: "Rush",
+        target: {
+          selector: "chosen",
+          count: 1,
+          cardTypes: ["character"],
+          zones: ["play"],
+          owner: "opponent",
+        },
+        duration: "turn",
+      },
+      {},
+    );
+    expect(state.logEntries).toHaveLength(1);
   });
 });

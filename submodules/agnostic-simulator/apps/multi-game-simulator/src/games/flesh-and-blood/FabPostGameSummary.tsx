@@ -3,8 +3,17 @@ import * as HoverCard from "@radix-ui/react-hover-card";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
 import { FabCardPreviewSurface } from "./FabCardPreview";
 import { useFabCardArt } from "./FabPresentationCatalog";
-import { Tooltip } from "@mantine/core";
-import { BarChart3, ChevronRight, Eye, Home, Info, Sparkles, Swords } from "lucide-react";
+import { Menu, Tooltip } from "@mantine/core";
+import {
+  BarChart3,
+  ChevronDown,
+  ChevronRight,
+  Eye,
+  Home,
+  Info,
+  Sparkles,
+  Swords,
+} from "lucide-react";
 import { motion } from "motion/react";
 import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
@@ -15,6 +24,7 @@ import type {
   FabHandActionSummary,
   FabLifeByTurn,
   FabMatchSummary,
+  FabPostGameResultModel,
   FabPostGameSummaryModel,
   FabSummaryComparison,
   FabSummaryParticipant,
@@ -28,17 +38,18 @@ type GameTab = "overview" | "turns" | "hands" | "cards";
 type MatchTab = "overview" | "games" | "cards";
 
 interface FabPostGameSummaryProps {
-  readonly summary: FabPostGameSummaryModel;
+  readonly summary: FabPostGameSummaryModel | FabPostGameResultModel;
   readonly initialScope?: SummaryScope;
   readonly initialGameTab?: GameTab;
   readonly initialMatchTab?: MatchTab;
   readonly onInspectBoard: () => void;
   readonly onMainMenu: () => void;
-  readonly onPlayAgain: () => void;
+  readonly onPlayAgain?: () => void;
   readonly onWatchReplay?: () => void;
   readonly onSaveReplay?: () => void;
   readonly onDownloadReplay?: () => void;
   readonly replayStatus?: string | null;
+  readonly replayBusy?: boolean;
 }
 
 function formatDuration(seconds: number): string {
@@ -768,7 +779,9 @@ export function FabPostGameSummary({
   onSaveReplay,
   onDownloadReplay,
   replayStatus,
+  replayBusy = false,
 }: FabPostGameSummaryProps) {
+  const analytics = summary.kind === "analytics" ? summary : null;
   const [scope, setScope] = useState<SummaryScope>(initialScope);
   const [gameTab, setGameTab] = useState<GameTab>(initialGameTab);
   const [matchTab, setMatchTab] = useState<MatchTab>(initialMatchTab);
@@ -780,19 +793,19 @@ export function FabPostGameSummary({
       : (["overview", "games", "cards"] as const);
   const activeTab = scope === "game" ? gameTab : matchTab;
   const hasMockGameData =
-    summary.durationSeconds.source === "mock" ||
-    summary.comparison.some((row) => row.source === "mock") ||
-    summary.lifeByTurn.source === "mock" ||
-    summary.turns.some((turn) => turn.source === "mock") ||
-    summary.cards.some((card) => card.source === "mock");
+    analytics?.durationSeconds.source === "mock" ||
+    analytics?.comparison.some((row) => row.source === "mock") ||
+    analytics?.lifeByTurn.source === "mock" ||
+    analytics?.turns.some((turn) => turn.source === "mock") ||
+    analytics?.cards.some((card) => card.source === "mock");
   const outcomeMeta = useMemo(
     () => [
       summary.reason.value,
       `Turn ${summary.turnNumber.value}`,
-      formatDuration(summary.durationSeconds.value),
+      ...(analytics ? [formatDuration(analytics.durationSeconds.value)] : []),
       summary.formatLabel.value,
     ],
-    [summary],
+    [summary, analytics],
   );
 
   useEffect(() => {
@@ -814,6 +827,7 @@ export function FabPostGameSummary({
       aria-modal="true"
       aria-labelledby="fab-summary-outcome"
       data-testid="fab-post-game-summary"
+      data-view={analytics ? "analytics" : "result"}
       data-outcome={summary.outcome}
       data-reduced-motion={reduceMotion ? "true" : undefined}
       tabIndex={-1}
@@ -835,14 +849,20 @@ export function FabPostGameSummary({
           />
           <strong aria-hidden="true">The Card Goat</strong>
         </a>
-        <div className="fab-summary-scope-switch" aria-label="Summary scope">
-          <button type="button" aria-pressed={scope === "game"} onClick={() => setScope("game")}>
-            Post-game
-          </button>
-          <button type="button" aria-pressed={scope === "match"} onClick={() => setScope("match")}>
-            Post-match
-          </button>
-        </div>
+        {analytics ? (
+          <div className="fab-summary-scope-switch" aria-label="Summary scope">
+            <button type="button" aria-pressed={scope === "game"} onClick={() => setScope("game")}>
+              Post-game
+            </button>
+            <button
+              type="button"
+              aria-pressed={scope === "match"}
+              onClick={() => setScope("match")}
+            >
+              Post-match
+            </button>
+          </div>
+        ) : null}
         <button type="button" className="fab-summary-header-action" onClick={onInspectBoard}>
           <Eye aria-hidden="true" size={17} />
           Inspect board
@@ -850,7 +870,7 @@ export function FabPostGameSummary({
       </header>
 
       <div className="fab-summary-scroll-region">
-        {summary.hasMockData ? (
+        {analytics?.hasMockData ? (
           <aside className="fab-summary-disclosure" data-testid="fab-summary-mock-disclosure">
             <Sparkles aria-hidden="true" size={15} />
             {hasMockGameData
@@ -861,19 +881,22 @@ export function FabPostGameSummary({
 
         <main>
           <section className="fab-summary-outcome">
-            <Participant participant={summary.viewer} side="You" />
+            <Participant
+              participant={summary.viewer}
+              side={summary.kind === "result" && summary.spectator ? "Player" : "You"}
+            />
             <div className="fab-summary-outcome-copy">
-              <span>{scope === "game" ? "Game complete" : "Match summary"}</span>
+              <span>{!analytics || scope === "game" ? "Game complete" : "Match summary"}</span>
               <h1 id="fab-summary-outcome">
-                {scope === "game"
+                {!analytics || scope === "game"
                   ? summary.outcomeTitle
-                  : `${summary.match.viewerWins}–${summary.match.opponentWins}`}
+                  : `${analytics.match.viewerWins}–${analytics.match.opponentWins}`}
               </h1>
               <p>
-                {scope === "game"
+                {!analytics || scope === "game"
                   ? summary.outcomeDetail
-                  : summary.match.source === "backend"
-                    ? `${summary.match.games.length} completed ${summary.match.games.length === 1 ? "game" : "games"}`
+                  : analytics.match.source === "backend"
+                    ? `${analytics.match.games.length} completed ${analytics.match.games.length === 1 ? "game" : "games"}`
                     : "Illustrative best-of-three summary"}
               </p>
               <ul>
@@ -885,70 +908,84 @@ export function FabPostGameSummary({
             <Participant participant={summary.opponent} side="Opponent" />
           </section>
 
-          <nav
-            className="fab-summary-tabs"
-            aria-label={`${scope === "game" ? "Game" : "Match"} summary sections`}
-          >
-            {tabs.map((tab) => (
-              <button
-                type="button"
-                key={tab}
-                aria-pressed={activeTab === tab}
-                onClick={() =>
-                  scope === "game" ? setGameTab(tab as GameTab) : setMatchTab(tab as MatchTab)
-                }
-              >
-                {tab === "overview"
-                  ? scope === "game"
-                    ? "Overview"
-                    : "Match"
-                  : tab[0].toUpperCase() + tab.slice(1)}
-              </button>
-            ))}
-          </nav>
+          {analytics ? (
+            <nav
+              className="fab-summary-tabs"
+              aria-label={`${scope === "game" ? "Game" : "Match"} summary sections`}
+            >
+              {tabs.map((tab) => (
+                <button
+                  type="button"
+                  key={tab}
+                  aria-pressed={activeTab === tab}
+                  onClick={() =>
+                    scope === "game" ? setGameTab(tab as GameTab) : setMatchTab(tab as MatchTab)
+                  }
+                >
+                  {tab === "overview"
+                    ? scope === "game"
+                      ? "Overview"
+                      : "Match"
+                    : tab[0].toUpperCase() + tab.slice(1)}
+                </button>
+              ))}
+            </nav>
+          ) : null}
 
-          <div className="fab-summary-content">
-            {scope === "game" && gameTab === "overview" ? <GameOverview summary={summary} /> : null}
-            {scope === "game" && gameTab === "turns" ? <TurnBreakdown summary={summary} /> : null}
-            {scope === "game" && gameTab === "hands" ? <HandBreakdown summary={summary} /> : null}
-            {scope === "game" && gameTab === "cards" ? (
-              <CardBreakdown summary={summary} matchMode={false} />
-            ) : null}
-            {scope === "match" && matchTab === "overview" ? (
-              <MatchOverview match={summary.match} />
-            ) : null}
-            {scope === "match" && matchTab === "games" ? (
-              <MatchGames match={summary.match} />
-            ) : null}
-            {scope === "match" && matchTab === "cards" ? (
-              <CardBreakdown
-                summary={{
-                  ...summary,
-                  cards: summary.match.cards ?? summary.cards,
-                  opponentCards: summary.match.opponentCards ?? summary.opponentCards,
-                }}
-                matchMode
-              />
-            ) : null}
-          </div>
+          {analytics ? (
+            <div className="fab-summary-content">
+              {scope === "game" && gameTab === "overview" ? (
+                <GameOverview summary={analytics} />
+              ) : null}
+              {scope === "game" && gameTab === "turns" ? (
+                <TurnBreakdown summary={analytics} />
+              ) : null}
+              {scope === "game" && gameTab === "hands" ? (
+                <HandBreakdown summary={analytics} />
+              ) : null}
+              {scope === "game" && gameTab === "cards" ? (
+                <CardBreakdown summary={analytics} matchMode={false} />
+              ) : null}
+              {scope === "match" && matchTab === "overview" ? (
+                <MatchOverview match={analytics.match} />
+              ) : null}
+              {scope === "match" && matchTab === "games" ? (
+                <MatchGames match={analytics.match} />
+              ) : null}
+              {scope === "match" && matchTab === "cards" ? (
+                <CardBreakdown
+                  summary={{
+                    ...analytics,
+                    cards: analytics.match.cards ?? analytics.cards,
+                    opponentCards: analytics.match.opponentCards ?? analytics.opponentCards,
+                  }}
+                  matchMode
+                />
+              ) : null}
+            </div>
+          ) : null}
         </main>
       </div>
 
       <footer className="fab-summary-actions">
-        {onWatchReplay ? (
-          <button type="button" onClick={onWatchReplay}>
-            Watch replay
-          </button>
-        ) : null}
-        {onSaveReplay ? (
-          <button type="button" onClick={onSaveReplay}>
-            Save on this device
-          </button>
-        ) : null}
-        {onDownloadReplay ? (
-          <button type="button" onClick={onDownloadReplay}>
-            Download replay
-          </button>
+        {onWatchReplay || onSaveReplay || onDownloadReplay ? (
+          <Menu position="top-start" withinPortal={false} transitionProps={{ duration: 0 }}>
+            <Menu.Target>
+              <button type="button" disabled={replayBusy}>
+                {replayBusy ? "Preparing replay" : "Replay"}
+                <ChevronDown aria-hidden="true" size={16} />
+              </button>
+            </Menu.Target>
+            <Menu.Dropdown>
+              {onWatchReplay ? <Menu.Item onClick={onWatchReplay}>Watch replay</Menu.Item> : null}
+              {onSaveReplay ? (
+                <Menu.Item onClick={onSaveReplay}>Save on this device</Menu.Item>
+              ) : null}
+              {onDownloadReplay ? (
+                <Menu.Item onClick={onDownloadReplay}>Download replay</Menu.Item>
+              ) : null}
+            </Menu.Dropdown>
+          </Menu>
         ) : null}
         {replayStatus ? <span role="status">{replayStatus}</span> : null}
         <button type="button" onClick={onMainMenu}>
@@ -959,15 +996,17 @@ export function FabPostGameSummary({
           <Eye aria-hidden="true" size={17} />
           Inspect board
         </button>
-        <button
-          type="button"
-          className="fab-summary-primary-action"
-          data-testid="fab-practice-new-game"
-          onClick={onPlayAgain}
-        >
-          Play again
-          <ChevronRight aria-hidden="true" size={17} />
-        </button>
+        {onPlayAgain ? (
+          <button
+            type="button"
+            className="fab-summary-primary-action"
+            data-testid="fab-practice-new-game"
+            onClick={onPlayAgain}
+          >
+            Play again
+            <ChevronRight aria-hidden="true" size={17} />
+          </button>
+        ) : null}
       </footer>
     </motion.section>
   );

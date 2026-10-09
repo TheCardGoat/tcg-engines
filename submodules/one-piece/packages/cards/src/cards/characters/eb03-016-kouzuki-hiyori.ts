@@ -22,7 +22,7 @@ export const eb03KouzukiHiyori016: CharacterCard = {
   setId: "EB03",
   cost: 1,
   power: 0,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "wisdom",
   effect:
     "[On Play] If your Leader is [Kouzuki Oden], draw 1 card.\n[Activate: Main] You may trash this Character: Give up to 1 rested DON!! card to your {Land of Wano} type Leader.",
@@ -64,7 +64,7 @@ export const eb03KouzukiHiyori016: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Land of Wano",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

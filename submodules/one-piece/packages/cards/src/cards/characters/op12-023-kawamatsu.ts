@@ -23,7 +23,7 @@ export const op12Kawamatsu023: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 2000,
-  traits: ["Fish-Man Land of Wano The Akazaya Nine"],
+  traits: ["Fish-Man", "Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   i18n: op12Kawamatsu023I18n,
 };

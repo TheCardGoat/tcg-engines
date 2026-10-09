@@ -22,7 +22,7 @@ export const op17Jack069: CharacterCard = {
   setId: "OP17",
   cost: 9,
   power: 10000,
-  traits: ["Fish-Man Animal Kingdom Pirates"],
+  traits: ["Fish-Man", "Animal Kingdom Pirates"],
   attribute: "strike",
   effect:
     "[Rush: Character] (This card can attack Characters on the turn in which it is played.)\n[On Play] DON!! -1: If your Leader has the {Animal Kingdom Pirates} type, give up to 1 of your opponent's Characters -2000 power during this turn.",
@@ -53,7 +53,7 @@ export const op17Jack069: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Animal Kingdom Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

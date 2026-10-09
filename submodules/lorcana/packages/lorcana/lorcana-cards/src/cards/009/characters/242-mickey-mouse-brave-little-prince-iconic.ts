@@ -25,7 +25,7 @@ export const mickeyMouseBraveLittlePrinceIconic: CharacterCard = {
   inkType: ["ruby"],
   set: "009",
   cardNumber: 242,
-  rarity: "common",
+  rarity: "iconic",
   specialRarity: "iconic",
   cost: 3,
   strength: 2,

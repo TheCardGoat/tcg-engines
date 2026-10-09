@@ -6,6 +6,22 @@ import { op15Krieg001 } from "../../../../../cards/src/cards/leaders/op15-001-kr
 import { getLegalCommands, OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP15-001 Krieg", () => {
+  test("does not reduce opposing power when its Character field is empty (Q1170)", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op15Krieg001, activeDon: 1 },
+      { character: [eb01Doma005, eb01Fourtricks025] },
+    );
+
+    engine.asSouth().attachDon(engine.leader("south"), 1);
+    engine.asSouth().endTurn();
+
+    expect(
+      engine
+        .getView("south")
+        .players.north.characters.flatMap((card) => (card ? [card.power] : [])),
+    ).toEqual([3000, 5000]);
+  });
+
   test("[Activate: Main] rests an opposing Character with 2 or more DON!! once per turn", () => {
     const engine = OnePieceTestEngine.create(
       { leaderCardId: op15Krieg001, activeDon: 2 },
@@ -84,5 +100,24 @@ describe("OP15-001 Krieg", () => {
       .getView("south")
       .players.north.characters.flatMap((card) => (card ? [card.power] : []));
     expect(powers).toEqual([5000]);
+  });
+  test("choosing zero rest targets consumes the Main effect even with an eligible Character", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op15Krieg001 },
+      { character: [{ card: eb01Doma005, attachedDon: 2 }] },
+    );
+    engine.asSouth().activateMain(engine.leader("south"));
+    const step = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (step.kind !== "selectEntity") throw new Error("Expected rest choice");
+    expect(step.candidates).toHaveLength(1);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    expect(engine.getView("south").players.north.characters[0]?.rested).toBe(false);
+    const result = engine.expectFailure({
+      type: "activateEffect",
+      seat: "south",
+      sourceInstanceId: engine.leader("south"),
+      trigger: "activateMain",
+    });
+    expect(result.reason).toMatch(/already|once/i);
   });
 });

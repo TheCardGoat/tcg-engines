@@ -84,7 +84,6 @@ describe("OP03-098 Enies Lobby", () => {
     engine.endTurn("north");
     engine.attachDon(attackerId, 3, "south");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const triggerDecision = engine.pendingDecision("lifeTrigger", "north");
     expect(triggerDecision).toMatchObject({ actorId: "north", kind: "confirm" });

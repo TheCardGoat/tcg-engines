@@ -30,7 +30,7 @@ export const op01TrafalgarLaw002: LeaderCard = {
   setId: "OP01",
   power: 5000,
   life: 4,
-  traits: ["Heart Pirates Supernovas"],
+  traits: ["Supernovas", "Heart Pirates"],
   attribute: "slash",
   effect:
     "[Activate:Main] [Once Per Turn] (2) (You may rest the specified number of DON!! cards in your cost area.): If you have 5 Characters, return 1 of your Characters to your hand. Then, play up to 1 Character with a cost of 5 or less from your hand that is a different color than the returned Character.  This card has been officially errata'd.",

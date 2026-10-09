@@ -22,7 +22,7 @@ export const op06RaiseMax016: CharacterCard = {
   setId: "OP06",
   cost: 1,
   power: 2000,
-  traits: ["FILM Revolutionary Army"],
+  traits: ["FILM", "Revolutionary Army"],
   attribute: "wisdom",
   effect:
     "[Activate:Main] You may place this Character at the bottom of the owner's deck: Give up to 1 of your opponent's Characters -3000 power during this turn.",

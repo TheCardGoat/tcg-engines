@@ -6,9 +6,7 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const legendViktorOpponentPrivateSearchBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendViktorOpponentPrivateSearch",
   label: "Viktor Vektor - opponent private search",
-  references: [
-    "packages/engine/src/cards/theheistretailstarterdeck/legends/viktor-vektor-sit-down-and-relax.test.ts",
-  ],
+  references: ["packages/engine/src/cards/legends/viktor-vektor-sit-down-and-relax.test.ts"],
   async run(pom) {
     expectEqual(
       "P1 prompt status during opponent search",

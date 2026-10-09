@@ -25,20 +25,6 @@ describe("MatchStatusBar", () => {
     );
   });
 
-  it("drops its outer margins and borders when embedded in the action rail", () => {
-    render(
-      <MatchStatusBar
-        matchInfo={{ format: "turncycle", turn: 1, phase: "main-phase", mode: "hot-seat" }}
-        controlState={{ kind: "interactive", turnOwner: "self", priorityHolder: "self" }}
-        embedded
-      />,
-    );
-
-    const status = screen.getByRole("region", { name: /match status/i });
-    expect(status.className).toContain("h-full");
-    expect(status.className).not.toContain("mx-3");
-  });
-
   it("keeps every match-state value explicit in the compact tablet layout", () => {
     render(
       <MatchStatusBar

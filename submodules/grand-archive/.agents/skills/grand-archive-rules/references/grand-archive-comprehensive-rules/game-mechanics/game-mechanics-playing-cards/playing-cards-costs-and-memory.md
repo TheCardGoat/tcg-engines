@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-playing-cards/playing-cards-costs-and-memory"
+  relation: "current_index"
+---
+
 # Playing Cards - Costs and Memory
 
 #### General Rules:

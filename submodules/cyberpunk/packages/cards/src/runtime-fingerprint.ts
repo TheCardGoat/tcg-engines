@@ -1,19 +1,7 @@
 import { DSL_VERSION } from "@tcg/cyberpunk-types";
-import { prm01Cards } from "./PRM01/index.ts";
-import { boxToppersRetailCards } from "./boxtoppersretail/index.ts";
-import { embracingPowerRetailStarterDeckCards } from "./embracingpowerretailstarterdeck/index.ts";
-import { promoCards } from "./promo/index.ts";
-import { theHeistRetailStarterDeckCards } from "./theheistretailstarterdeck/index.ts";
-import { welcomeToNightCityRetailCards } from "./welcometonightcityretail/index.ts";
+import { structuredCards } from "./cards/index.ts";
 
-const runtimeCards = [
-  ...promoCards,
-  ...prm01Cards,
-  ...boxToppersRetailCards,
-  ...theHeistRetailStarterDeckCards,
-  ...embracingPowerRetailStarterDeckCards,
-  ...welcomeToNightCityRetailCards,
-];
+const runtimeCards = structuredCards;
 
 export interface CyberpunkCardsRuntimeFingerprint {
   packageName: "@tcg/cyberpunk-cards";

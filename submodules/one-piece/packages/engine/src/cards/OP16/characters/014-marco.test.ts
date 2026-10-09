@@ -57,52 +57,45 @@ describe("OP16-014 Marco", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
-  expect(() => {
-    throw new Error("test");
-  }).toThrow();
-  test("[Continuous] survives the turn handoff", () => {
+  test("On K.O. trashes an exactly-8000 Character to replay the same Marco", () => {
     const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP16-014", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
+      { character: [{ cardId: "OP16-014", rested: true }], hand: ["OP16-004"] },
+      { character: [{ cardId: "OP16-003", playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
     );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP16-014",
+    const marcoId = engine.findCardInZone("south", "character", "OP16-014");
+    const costId = engine.findCardInZone("south", "hand", "OP16-004");
+    const attackerId = engine.findCardInZone("north", "character", "OP16-003");
+    engine.declareAttack(attackerId, marcoId, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
+      costId,
     );
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === marcoId)
+        ?.rested,
+    ).toBe(false);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
-  test("[On Play] decline path (subject-bound)", () => {
-    const marco = "OP16-014";
+
+  test("may decline payable On K.O. revival and retain the 8000-power hand card", () => {
     const engine = OnePieceTestEngine.create(
-      { hand: [marco], activeDon: 8 },
-      { character: ["OP13-013"], activeDon: 5 },
+      { character: [{ cardId: "OP16-014", rested: true }], hand: ["OP16-004"] },
+      { character: [{ cardId: "OP16-003", playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
     );
-    const before = engine.getView("south").players.south;
-
-    engine.playCard("OP16-014");
-    const gate = engine.getView("south").decisions?.[0] as
-      | { extensions?: { resolutionIntent?: string } }
-      | undefined;
-    const gateIntent = gate?.extensions?.resolutionIntent;
-    if (gateIntent === "effectOptional") {
-      engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
-    } else if (gateIntent) {
-      const gateStep = engine.pendingDecision(gateIntent as never, "south").steps[0];
-      if (gateStep?.kind === "selectEntity" || gateStep?.kind === "orderItems") {
-        engine.resolveDecision(gateIntent as never, { selectedIds: [] }, "south");
-      } else if (gateStep?.kind === "chooseOption") {
-        engine.resolveDecision(gateIntent as never, { optionId: "0" }, "south");
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(marco);
-    expect(engine.getView("south").players.south.handCount).toBe(Math.max(before.handCount - 1, 0));
+    const marcoId = engine.findCardInZone("south", "character", "OP16-014");
+    const costId = engine.findCardInZone("south", "hand", "OP16-004");
+    engine.declareAttack(engine.findCardInZone("north", "character", "OP16-003"), marcoId, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
+      marcoId,
+    );
+    expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).toContain(
+      costId,
+    );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

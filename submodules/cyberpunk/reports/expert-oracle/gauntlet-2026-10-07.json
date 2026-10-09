@@ -1,0 +1,2072 @@
+{
+  "schemaVersion": 1,
+  "seedBase": "cyberpunk-gauntlet-2026-10-07-v1",
+  "provenance": "fnv1a32:15257d12",
+  "decks": [
+    "authored-rry-llorona-steel-dragon",
+    "authored-rry-detonate-gear-curve",
+    "authored-ryb-low-cost-tempo"
+  ],
+  "selection": [
+    {
+      "id": "authored-rry-llorona-steel-dragon",
+      "games": 56,
+      "validGames": 56,
+      "wins": 46,
+      "losses": 10,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.8214285714285714,
+      "eligible": true
+    },
+    {
+      "id": "authored-rry-detonate-gear-curve",
+      "games": 56,
+      "validGames": 56,
+      "wins": 44,
+      "losses": 12,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.7857142857142857,
+      "eligible": true
+    },
+    {
+      "id": "authored-ryb-low-cost-tempo",
+      "games": 56,
+      "validGames": 56,
+      "wins": 44,
+      "losses": 12,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.7857142857142857,
+      "eligible": true
+    },
+    {
+      "id": "authored-cyberpsychosis-deadman-burst-insurance",
+      "games": 56,
+      "validGames": 56,
+      "wins": 41,
+      "losses": 15,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.7321428571428571,
+      "eligible": true
+    },
+    {
+      "id": "authored-yorinobu-two-units-for-one",
+      "games": 56,
+      "validGames": 56,
+      "wins": 41,
+      "losses": 15,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.7321428571428571,
+      "eligible": true
+    },
+    {
+      "id": "authored-ryg-low-cost-value",
+      "games": 56,
+      "validGames": 56,
+      "wins": 34,
+      "losses": 22,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.6071428571428571,
+      "eligible": true
+    },
+    {
+      "id": "authored-johnny-fight-ready-steal",
+      "games": 56,
+      "validGames": 56,
+      "wins": 31,
+      "losses": 25,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.5535714285714286,
+      "eligible": true
+    },
+    {
+      "id": "authored-oda-industrial-assembly-pairs-plateaus",
+      "games": 56,
+      "validGames": 56,
+      "wins": 28,
+      "losses": 28,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.5,
+      "eligible": true
+    },
+    {
+      "id": "authored-bbg-towerfall-control",
+      "games": 56,
+      "validGames": 56,
+      "wins": 27,
+      "losses": 29,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.48214285714285715,
+      "eligible": true
+    },
+    {
+      "id": "authored-alt-gears-multiplied-economy",
+      "games": 56,
+      "validGames": 56,
+      "wins": 19,
+      "losses": 37,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.3392857142857143,
+      "eligible": true
+    },
+    {
+      "id": "authored-relic-placide-surgical-reanimation",
+      "games": 56,
+      "validGames": 56,
+      "wins": 18,
+      "losses": 38,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.32142857142857145,
+      "eligible": true
+    },
+    {
+      "id": "authored-relic-smasher-total-sweep",
+      "games": 56,
+      "validGames": 56,
+      "wins": 18,
+      "losses": 38,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.32142857142857145,
+      "eligible": true
+    },
+    {
+      "id": "authored-overwatch-recharge-control",
+      "games": 56,
+      "validGames": 56,
+      "wins": 12,
+      "losses": 44,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.21428571428571427,
+      "eligible": true
+    },
+    {
+      "id": "authored-judy-top-deck-discount",
+      "games": 56,
+      "validGames": 56,
+      "wins": 9,
+      "losses": 47,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.16071428571428573,
+      "eligible": true
+    },
+    {
+      "id": "authored-hanako-netdriver-gigs-draw-engine",
+      "games": 56,
+      "validGames": 56,
+      "wins": 8,
+      "losses": 48,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.14285714285714285,
+      "eligible": true
+    }
+  ],
+  "screen": [
+    {
+      "id": "expert-oracle",
+      "games": 84,
+      "validGames": 82,
+      "wins": 67,
+      "losses": 15,
+      "draws": 0,
+      "failures": 2,
+      "ownFailures": 0,
+      "score": 0.8170731707317073,
+      "eligible": true
+    },
+    {
+      "id": "tactical-ability-aware",
+      "games": 84,
+      "validGames": 83,
+      "wins": 66,
+      "losses": 17,
+      "draws": 0,
+      "failures": 1,
+      "ownFailures": 0,
+      "score": 0.7951807228915663,
+      "eligible": true
+    },
+    {
+      "id": "tactical",
+      "games": 84,
+      "validGames": 83,
+      "wins": 65,
+      "losses": 18,
+      "draws": 0,
+      "failures": 1,
+      "ownFailures": 0,
+      "score": 0.7831325301204819,
+      "eligible": true
+    },
+    {
+      "id": "monte-carlo-greedy",
+      "games": 84,
+      "validGames": 79,
+      "wins": 45,
+      "losses": 34,
+      "draws": 0,
+      "failures": 5,
+      "ownFailures": 0,
+      "score": 0.569620253164557,
+      "eligible": true
+    },
+    {
+      "id": "greedy",
+      "games": 84,
+      "validGames": 79,
+      "wins": 41,
+      "losses": 38,
+      "draws": 0,
+      "failures": 5,
+      "ownFailures": 0,
+      "score": 0.5189873417721519,
+      "eligible": true
+    },
+    {
+      "id": "monte-carlo",
+      "games": 84,
+      "validGames": 79,
+      "wins": 15,
+      "losses": 64,
+      "draws": 0,
+      "failures": 5,
+      "ownFailures": 0,
+      "score": 0.189873417721519,
+      "eligible": true
+    },
+    {
+      "id": "mcts",
+      "games": 84,
+      "validGames": 66,
+      "wins": 5,
+      "losses": 61,
+      "draws": 0,
+      "failures": 18,
+      "ownFailures": 16,
+      "score": 0.07575757575757576,
+      "eligible": false
+    },
+    {
+      "id": "mcts-greedy",
+      "games": 84,
+      "validGames": 63,
+      "wins": 3,
+      "losses": 60,
+      "draws": 0,
+      "failures": 21,
+      "ownFailures": 13,
+      "score": 0.047619047619047616,
+      "eligible": false
+    }
+  ],
+  "finalists": [
+    {
+      "id": "tactical-ability-aware",
+      "games": 60,
+      "validGames": 60,
+      "wins": 35,
+      "losses": 25,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.5833333333333334,
+      "eligible": true
+    },
+    {
+      "id": "tactical",
+      "games": 60,
+      "validGames": 60,
+      "wins": 30,
+      "losses": 30,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.5,
+      "eligible": true
+    },
+    {
+      "id": "expert-oracle",
+      "games": 60,
+      "validGames": 60,
+      "wins": 25,
+      "losses": 35,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.4166666666666667,
+      "eligible": true
+    }
+  ],
+  "reference": [
+    {
+      "id": "choombattler-expert",
+      "games": 12,
+      "validGames": 12,
+      "wins": 10,
+      "losses": 2,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.8333333333333334,
+      "eligible": true
+    },
+    {
+      "id": "expert-oracle",
+      "games": 12,
+      "validGames": 12,
+      "wins": 2,
+      "losses": 10,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.16666666666666666,
+      "eligible": true
+    }
+  ],
+  "invalidGames": 40,
+  "totalGames": 1614,
+  "promotionEligible": false,
+  "boundaries": [
+    "Top decks are local Sharp-vs-Sharp benchmark winners, not a tournament meta ranking.",
+    "Strategies retain their declared public/oracle information policies; this is not an equal-information promotion gate.",
+    "Default is an Expert alias. Controls are included in the screen but excluded from finalist selection.",
+    "Choombattler runs on its native engine with our adapted Expert chooser; scores cannot be merged with native-engine standings."
+  ],
+  "analysis": {
+    "deck-selection": {
+      "totalGames": 420,
+      "invalidGames": 0,
+      "provenance": "fnv1a32:15257d12",
+      "scheduleHash": "fnv1a32:406a3929",
+      "standings": [
+        {
+          "id": "authored-rry-llorona-steel-dragon",
+          "games": 56,
+          "validGames": 56,
+          "wins": 46,
+          "losses": 10,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.8214285714285714,
+          "eligible": true
+        },
+        {
+          "id": "authored-rry-detonate-gear-curve",
+          "games": 56,
+          "validGames": 56,
+          "wins": 44,
+          "losses": 12,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.7857142857142857,
+          "eligible": true
+        },
+        {
+          "id": "authored-ryb-low-cost-tempo",
+          "games": 56,
+          "validGames": 56,
+          "wins": 44,
+          "losses": 12,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.7857142857142857,
+          "eligible": true
+        },
+        {
+          "id": "authored-cyberpsychosis-deadman-burst-insurance",
+          "games": 56,
+          "validGames": 56,
+          "wins": 41,
+          "losses": 15,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.7321428571428571,
+          "eligible": true
+        },
+        {
+          "id": "authored-yorinobu-two-units-for-one",
+          "games": 56,
+          "validGames": 56,
+          "wins": 41,
+          "losses": 15,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.7321428571428571,
+          "eligible": true
+        },
+        {
+          "id": "authored-ryg-low-cost-value",
+          "games": 56,
+          "validGames": 56,
+          "wins": 34,
+          "losses": 22,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.6071428571428571,
+          "eligible": true
+        },
+        {
+          "id": "authored-johnny-fight-ready-steal",
+          "games": 56,
+          "validGames": 56,
+          "wins": 31,
+          "losses": 25,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.5535714285714286,
+          "eligible": true
+        },
+        {
+          "id": "authored-oda-industrial-assembly-pairs-plateaus",
+          "games": 56,
+          "validGames": 56,
+          "wins": 28,
+          "losses": 28,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.5,
+          "eligible": true
+        },
+        {
+          "id": "authored-bbg-towerfall-control",
+          "games": 56,
+          "validGames": 56,
+          "wins": 27,
+          "losses": 29,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.48214285714285715,
+          "eligible": true
+        },
+        {
+          "id": "authored-alt-gears-multiplied-economy",
+          "games": 56,
+          "validGames": 56,
+          "wins": 19,
+          "losses": 37,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.3392857142857143,
+          "eligible": true
+        },
+        {
+          "id": "authored-relic-placide-surgical-reanimation",
+          "games": 56,
+          "validGames": 56,
+          "wins": 18,
+          "losses": 38,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.32142857142857145,
+          "eligible": true
+        },
+        {
+          "id": "authored-relic-smasher-total-sweep",
+          "games": 56,
+          "validGames": 56,
+          "wins": 18,
+          "losses": 38,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.32142857142857145,
+          "eligible": true
+        },
+        {
+          "id": "authored-overwatch-recharge-control",
+          "games": 56,
+          "validGames": 56,
+          "wins": 12,
+          "losses": 44,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.21428571428571427,
+          "eligible": true
+        },
+        {
+          "id": "authored-judy-top-deck-discount",
+          "games": 56,
+          "validGames": 56,
+          "wins": 9,
+          "losses": 47,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.16071428571428573,
+          "eligible": true
+        },
+        {
+          "id": "authored-hanako-netdriver-gigs-draw-engine",
+          "games": 56,
+          "validGames": 56,
+          "wins": 8,
+          "losses": 48,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.14285714285714285,
+          "eligible": true
+        }
+      ],
+      "competitiveStandings": [
+        {
+          "id": "authored-rry-llorona-steel-dragon",
+          "games": 56,
+          "validGames": 56,
+          "wins": 46,
+          "losses": 10,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.8214285714285714,
+          "eligible": true
+        },
+        {
+          "id": "authored-rry-detonate-gear-curve",
+          "games": 56,
+          "validGames": 56,
+          "wins": 44,
+          "losses": 12,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.7857142857142857,
+          "eligible": true
+        },
+        {
+          "id": "authored-ryb-low-cost-tempo",
+          "games": 56,
+          "validGames": 56,
+          "wins": 44,
+          "losses": 12,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.7857142857142857,
+          "eligible": true
+        },
+        {
+          "id": "authored-cyberpsychosis-deadman-burst-insurance",
+          "games": 56,
+          "validGames": 56,
+          "wins": 41,
+          "losses": 15,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.7321428571428571,
+          "eligible": true
+        },
+        {
+          "id": "authored-yorinobu-two-units-for-one",
+          "games": 56,
+          "validGames": 56,
+          "wins": 41,
+          "losses": 15,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.7321428571428571,
+          "eligible": true
+        },
+        {
+          "id": "authored-ryg-low-cost-value",
+          "games": 56,
+          "validGames": 56,
+          "wins": 34,
+          "losses": 22,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.6071428571428571,
+          "eligible": true
+        },
+        {
+          "id": "authored-johnny-fight-ready-steal",
+          "games": 56,
+          "validGames": 56,
+          "wins": 31,
+          "losses": 25,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.5535714285714286,
+          "eligible": true
+        },
+        {
+          "id": "authored-oda-industrial-assembly-pairs-plateaus",
+          "games": 56,
+          "validGames": 56,
+          "wins": 28,
+          "losses": 28,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.5,
+          "eligible": true
+        },
+        {
+          "id": "authored-bbg-towerfall-control",
+          "games": 56,
+          "validGames": 56,
+          "wins": 27,
+          "losses": 29,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.48214285714285715,
+          "eligible": true
+        },
+        {
+          "id": "authored-alt-gears-multiplied-economy",
+          "games": 56,
+          "validGames": 56,
+          "wins": 19,
+          "losses": 37,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.3392857142857143,
+          "eligible": true
+        },
+        {
+          "id": "authored-relic-placide-surgical-reanimation",
+          "games": 56,
+          "validGames": 56,
+          "wins": 18,
+          "losses": 38,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.32142857142857145,
+          "eligible": true
+        },
+        {
+          "id": "authored-relic-smasher-total-sweep",
+          "games": 56,
+          "validGames": 56,
+          "wins": 18,
+          "losses": 38,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.32142857142857145,
+          "eligible": true
+        },
+        {
+          "id": "authored-overwatch-recharge-control",
+          "games": 56,
+          "validGames": 56,
+          "wins": 12,
+          "losses": 44,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.21428571428571427,
+          "eligible": true
+        },
+        {
+          "id": "authored-judy-top-deck-discount",
+          "games": 56,
+          "validGames": 56,
+          "wins": 9,
+          "losses": 47,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.16071428571428573,
+          "eligible": true
+        },
+        {
+          "id": "authored-hanako-netdriver-gigs-draw-engine",
+          "games": 56,
+          "validGames": 56,
+          "wins": 8,
+          "losses": 48,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.14285714285714285,
+          "eligible": true
+        }
+      ],
+      "terminationCounts": {
+        "winCondition": 420
+      },
+      "ownFailures": {},
+      "summedGameSeconds": 1903.3507927010003
+    },
+    "strategy-screen": {
+      "totalGames": 1092,
+      "invalidGames": 40,
+      "provenance": "fnv1a32:15257d12",
+      "scheduleHash": "fnv1a32:8b65665d",
+      "standings": [
+        {
+          "id": "expert-oracle",
+          "games": 156,
+          "validGames": 154,
+          "wins": 139,
+          "losses": 15,
+          "draws": 0,
+          "failures": 2,
+          "ownFailures": 0,
+          "score": 0.9025974025974026,
+          "eligible": true
+        },
+        {
+          "id": "tactical-ability-aware",
+          "games": 156,
+          "validGames": 155,
+          "wins": 138,
+          "losses": 17,
+          "draws": 0,
+          "failures": 1,
+          "ownFailures": 0,
+          "score": 0.8903225806451613,
+          "eligible": true
+        },
+        {
+          "id": "tactical",
+          "games": 156,
+          "validGames": 155,
+          "wins": 137,
+          "losses": 18,
+          "draws": 0,
+          "failures": 1,
+          "ownFailures": 0,
+          "score": 0.8838709677419355,
+          "eligible": true
+        },
+        {
+          "id": "monte-carlo-greedy",
+          "games": 156,
+          "validGames": 151,
+          "wins": 115,
+          "losses": 36,
+          "draws": 0,
+          "failures": 5,
+          "ownFailures": 0,
+          "score": 0.7615894039735099,
+          "eligible": true
+        },
+        {
+          "id": "greedy",
+          "games": 156,
+          "validGames": 151,
+          "wins": 112,
+          "losses": 39,
+          "draws": 0,
+          "failures": 5,
+          "ownFailures": 0,
+          "score": 0.7417218543046358,
+          "eligible": true
+        },
+        {
+          "id": "first-legal",
+          "games": 156,
+          "validGames": 152,
+          "wins": 91,
+          "losses": 61,
+          "draws": 0,
+          "failures": 4,
+          "ownFailures": 0,
+          "score": 0.5986842105263158,
+          "eligible": true
+        },
+        {
+          "id": "monte-carlo",
+          "games": 156,
+          "validGames": 151,
+          "wins": 68,
+          "losses": 83,
+          "draws": 0,
+          "failures": 5,
+          "ownFailures": 0,
+          "score": 0.4503311258278146,
+          "eligible": true
+        },
+        {
+          "id": "random",
+          "games": 156,
+          "validGames": 149,
+          "wins": 67,
+          "losses": 82,
+          "draws": 0,
+          "failures": 7,
+          "ownFailures": 0,
+          "score": 0.44966442953020136,
+          "eligible": true
+        },
+        {
+          "id": "attack-rival-only",
+          "games": 156,
+          "validGames": 156,
+          "wins": 23,
+          "losses": 133,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.14743589743589744,
+          "eligible": true
+        },
+        {
+          "id": "attack-unit-only",
+          "games": 156,
+          "validGames": 156,
+          "wins": 23,
+          "losses": 133,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.14743589743589744,
+          "eligible": true
+        },
+        {
+          "id": "pass-only",
+          "games": 156,
+          "validGames": 156,
+          "wins": 23,
+          "losses": 133,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.14743589743589744,
+          "eligible": true
+        },
+        {
+          "id": "call-legend-only",
+          "games": 156,
+          "validGames": 156,
+          "wins": 3,
+          "losses": 153,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.019230769230769232,
+          "eligible": true
+        },
+        {
+          "id": "mcts-greedy",
+          "games": 156,
+          "validGames": 135,
+          "wins": 59,
+          "losses": 76,
+          "draws": 0,
+          "failures": 21,
+          "ownFailures": 13,
+          "score": 0.43703703703703706,
+          "eligible": false
+        },
+        {
+          "id": "mcts",
+          "games": 156,
+          "validGames": 127,
+          "wins": 54,
+          "losses": 73,
+          "draws": 0,
+          "failures": 29,
+          "ownFailures": 27,
+          "score": 0.4251968503937008,
+          "eligible": false
+        }
+      ],
+      "competitiveStandings": [
+        {
+          "id": "expert-oracle",
+          "games": 84,
+          "validGames": 82,
+          "wins": 67,
+          "losses": 15,
+          "draws": 0,
+          "failures": 2,
+          "ownFailures": 0,
+          "score": 0.8170731707317073,
+          "eligible": true
+        },
+        {
+          "id": "tactical-ability-aware",
+          "games": 84,
+          "validGames": 83,
+          "wins": 66,
+          "losses": 17,
+          "draws": 0,
+          "failures": 1,
+          "ownFailures": 0,
+          "score": 0.7951807228915663,
+          "eligible": true
+        },
+        {
+          "id": "tactical",
+          "games": 84,
+          "validGames": 83,
+          "wins": 65,
+          "losses": 18,
+          "draws": 0,
+          "failures": 1,
+          "ownFailures": 0,
+          "score": 0.7831325301204819,
+          "eligible": true
+        },
+        {
+          "id": "monte-carlo-greedy",
+          "games": 84,
+          "validGames": 79,
+          "wins": 45,
+          "losses": 34,
+          "draws": 0,
+          "failures": 5,
+          "ownFailures": 0,
+          "score": 0.569620253164557,
+          "eligible": true
+        },
+        {
+          "id": "greedy",
+          "games": 84,
+          "validGames": 79,
+          "wins": 41,
+          "losses": 38,
+          "draws": 0,
+          "failures": 5,
+          "ownFailures": 0,
+          "score": 0.5189873417721519,
+          "eligible": true
+        },
+        {
+          "id": "monte-carlo",
+          "games": 84,
+          "validGames": 79,
+          "wins": 15,
+          "losses": 64,
+          "draws": 0,
+          "failures": 5,
+          "ownFailures": 0,
+          "score": 0.189873417721519,
+          "eligible": true
+        },
+        {
+          "id": "mcts",
+          "games": 84,
+          "validGames": 66,
+          "wins": 5,
+          "losses": 61,
+          "draws": 0,
+          "failures": 18,
+          "ownFailures": 16,
+          "score": 0.07575757575757576,
+          "eligible": false
+        },
+        {
+          "id": "mcts-greedy",
+          "games": 84,
+          "validGames": 63,
+          "wins": 3,
+          "losses": 60,
+          "draws": 0,
+          "failures": 21,
+          "ownFailures": 13,
+          "score": 0.047619047619047616,
+          "eligible": false
+        }
+      ],
+      "terminationCounts": {
+        "winCondition": 984,
+        "illegal": 40,
+        "concede": 68
+      },
+      "ownFailures": {
+        "mcts": 27,
+        "mcts-greedy": 13
+      },
+      "summedGameSeconds": 13423.178514990006,
+      "byDeck": {
+        "authored-rry-llorona-steel-dragon": [
+          {
+            "id": "greedy",
+            "games": 28,
+            "validGames": 24,
+            "wins": 12,
+            "losses": 12,
+            "draws": 0,
+            "failures": 4
+          },
+          {
+            "id": "tactical",
+            "games": 28,
+            "validGames": 28,
+            "wins": 23,
+            "losses": 5,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical-ability-aware",
+            "games": 28,
+            "validGames": 28,
+            "wins": 24,
+            "losses": 4,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "expert-oracle",
+            "games": 28,
+            "validGames": 28,
+            "wins": 21,
+            "losses": 7,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "monte-carlo",
+            "games": 28,
+            "validGames": 27,
+            "wins": 5,
+            "losses": 22,
+            "draws": 0,
+            "failures": 1
+          },
+          {
+            "id": "monte-carlo-greedy",
+            "games": 28,
+            "validGames": 26,
+            "wins": 14,
+            "losses": 12,
+            "draws": 0,
+            "failures": 2
+          },
+          {
+            "id": "mcts",
+            "games": 28,
+            "validGames": 21,
+            "wins": 2,
+            "losses": 19,
+            "draws": 0,
+            "failures": 7
+          },
+          {
+            "id": "mcts-greedy",
+            "games": 28,
+            "validGames": 20,
+            "wins": 0,
+            "losses": 20,
+            "draws": 0,
+            "failures": 8
+          }
+        ],
+        "authored-rry-detonate-gear-curve": [
+          {
+            "id": "greedy",
+            "games": 28,
+            "validGames": 27,
+            "wins": 15,
+            "losses": 12,
+            "draws": 0,
+            "failures": 1
+          },
+          {
+            "id": "tactical",
+            "games": 28,
+            "validGames": 28,
+            "wins": 21,
+            "losses": 7,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical-ability-aware",
+            "games": 28,
+            "validGames": 28,
+            "wins": 21,
+            "losses": 7,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "expert-oracle",
+            "games": 28,
+            "validGames": 28,
+            "wins": 23,
+            "losses": 5,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "monte-carlo",
+            "games": 28,
+            "validGames": 27,
+            "wins": 7,
+            "losses": 20,
+            "draws": 0,
+            "failures": 1
+          },
+          {
+            "id": "monte-carlo-greedy",
+            "games": 28,
+            "validGames": 26,
+            "wins": 16,
+            "losses": 10,
+            "draws": 0,
+            "failures": 2
+          },
+          {
+            "id": "mcts",
+            "games": 28,
+            "validGames": 22,
+            "wins": 1,
+            "losses": 21,
+            "draws": 0,
+            "failures": 6
+          },
+          {
+            "id": "mcts-greedy",
+            "games": 28,
+            "validGames": 22,
+            "wins": 0,
+            "losses": 22,
+            "draws": 0,
+            "failures": 6
+          }
+        ],
+        "authored-ryb-low-cost-tempo": [
+          {
+            "id": "greedy",
+            "games": 28,
+            "validGames": 28,
+            "wins": 14,
+            "losses": 14,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical",
+            "games": 28,
+            "validGames": 27,
+            "wins": 21,
+            "losses": 6,
+            "draws": 0,
+            "failures": 1
+          },
+          {
+            "id": "tactical-ability-aware",
+            "games": 28,
+            "validGames": 27,
+            "wins": 21,
+            "losses": 6,
+            "draws": 0,
+            "failures": 1
+          },
+          {
+            "id": "expert-oracle",
+            "games": 28,
+            "validGames": 26,
+            "wins": 23,
+            "losses": 3,
+            "draws": 0,
+            "failures": 2
+          },
+          {
+            "id": "monte-carlo",
+            "games": 28,
+            "validGames": 25,
+            "wins": 3,
+            "losses": 22,
+            "draws": 0,
+            "failures": 3
+          },
+          {
+            "id": "monte-carlo-greedy",
+            "games": 28,
+            "validGames": 27,
+            "wins": 15,
+            "losses": 12,
+            "draws": 0,
+            "failures": 1
+          },
+          {
+            "id": "mcts",
+            "games": 28,
+            "validGames": 23,
+            "wins": 2,
+            "losses": 21,
+            "draws": 0,
+            "failures": 5
+          },
+          {
+            "id": "mcts-greedy",
+            "games": 28,
+            "validGames": 21,
+            "wins": 3,
+            "losses": 18,
+            "draws": 0,
+            "failures": 7
+          }
+        ]
+      },
+      "headToHead": [
+        {
+          "a": "greedy",
+          "b": "tactical",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 1,
+          "winsB": 11,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0,
+            "upper": 0.25
+          }
+        },
+        {
+          "a": "greedy",
+          "b": "tactical-ability-aware",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 1,
+          "winsB": 11,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0,
+            "upper": 0.25
+          }
+        },
+        {
+          "a": "greedy",
+          "b": "expert-oracle",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 2,
+          "winsB": 10,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0,
+            "upper": 0.33333333333333337
+          }
+        },
+        {
+          "a": "greedy",
+          "b": "monte-carlo",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 12,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "greedy",
+          "b": "monte-carlo-greedy",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 7,
+          "winsB": 5,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.5,
+            "upper": 0.75
+          }
+        },
+        {
+          "a": "greedy",
+          "b": "mcts",
+          "games": 12,
+          "validGames": 10,
+          "winsA": 9,
+          "winsB": 1,
+          "draws": 0,
+          "completePairedBlocks": 4,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.625,
+            "upper": 1
+          }
+        },
+        {
+          "a": "greedy",
+          "b": "mcts-greedy",
+          "games": 12,
+          "validGames": 9,
+          "winsA": 9,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 3,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "tactical",
+          "b": "tactical-ability-aware",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 6,
+          "winsB": 6,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.5,
+            "upper": 0.5
+          }
+        },
+        {
+          "a": "tactical",
+          "b": "expert-oracle",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 5,
+          "winsB": 7,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.25,
+            "upper": 0.5
+          }
+        },
+        {
+          "a": "tactical",
+          "b": "monte-carlo",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 12,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "tactical",
+          "b": "monte-carlo-greedy",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 8,
+          "winsB": 4,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.5,
+            "upper": 0.8333333333333333
+          }
+        },
+        {
+          "a": "tactical",
+          "b": "mcts",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 12,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "tactical",
+          "b": "mcts-greedy",
+          "games": 12,
+          "validGames": 11,
+          "winsA": 11,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 5,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "tactical-ability-aware",
+          "b": "expert-oracle",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 6,
+          "winsB": 6,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.25,
+            "upper": 0.75
+          }
+        },
+        {
+          "a": "tactical-ability-aware",
+          "b": "monte-carlo",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 12,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "tactical-ability-aware",
+          "b": "monte-carlo-greedy",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 8,
+          "winsB": 4,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.5,
+            "upper": 0.8333333333333333
+          }
+        },
+        {
+          "a": "tactical-ability-aware",
+          "b": "mcts",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 12,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "tactical-ability-aware",
+          "b": "mcts-greedy",
+          "games": 12,
+          "validGames": 11,
+          "winsA": 11,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 5,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "expert-oracle",
+          "b": "monte-carlo",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 12,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "expert-oracle",
+          "b": "monte-carlo-greedy",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 10,
+          "winsB": 2,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.6666666666666666,
+            "upper": 1
+          }
+        },
+        {
+          "a": "expert-oracle",
+          "b": "mcts",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 12,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "expert-oracle",
+          "b": "mcts-greedy",
+          "games": 12,
+          "validGames": 10,
+          "winsA": 10,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 4,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "monte-carlo",
+          "b": "monte-carlo-greedy",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 1,
+          "winsB": 11,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0,
+            "upper": 0.25
+          }
+        },
+        {
+          "a": "monte-carlo",
+          "b": "mcts",
+          "games": 12,
+          "validGames": 9,
+          "winsA": 6,
+          "winsB": 3,
+          "draws": 0,
+          "completePairedBlocks": 4,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.25,
+            "upper": 1
+          }
+        },
+        {
+          "a": "monte-carlo",
+          "b": "mcts-greedy",
+          "games": 12,
+          "validGames": 10,
+          "winsA": 8,
+          "winsB": 2,
+          "draws": 0,
+          "completePairedBlocks": 4,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.625,
+            "upper": 1
+          }
+        },
+        {
+          "a": "monte-carlo-greedy",
+          "b": "mcts",
+          "games": 12,
+          "validGames": 9,
+          "winsA": 9,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 3,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "monte-carlo-greedy",
+          "b": "mcts-greedy",
+          "games": 12,
+          "validGames": 10,
+          "winsA": 10,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 4,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "mcts",
+          "b": "mcts-greedy",
+          "games": 12,
+          "validGames": 2,
+          "winsA": 1,
+          "winsB": 1,
+          "draws": 0,
+          "completePairedBlocks": 0,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.5,
+            "upper": 0.5
+          }
+        }
+      ]
+    },
+    "finalists": {
+      "totalGames": 90,
+      "invalidGames": 0,
+      "provenance": "fnv1a32:15257d12",
+      "scheduleHash": "fnv1a32:9fc35a99",
+      "standings": [
+        {
+          "id": "tactical-ability-aware",
+          "games": 60,
+          "validGames": 60,
+          "wins": 35,
+          "losses": 25,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.5833333333333334,
+          "eligible": true
+        },
+        {
+          "id": "tactical",
+          "games": 60,
+          "validGames": 60,
+          "wins": 30,
+          "losses": 30,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.5,
+          "eligible": true
+        },
+        {
+          "id": "expert-oracle",
+          "games": 60,
+          "validGames": 60,
+          "wins": 25,
+          "losses": 35,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.4166666666666667,
+          "eligible": true
+        }
+      ],
+      "competitiveStandings": [
+        {
+          "id": "tactical-ability-aware",
+          "games": 60,
+          "validGames": 60,
+          "wins": 35,
+          "losses": 25,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.5833333333333334,
+          "eligible": true
+        },
+        {
+          "id": "tactical",
+          "games": 60,
+          "validGames": 60,
+          "wins": 30,
+          "losses": 30,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.5,
+          "eligible": true
+        },
+        {
+          "id": "expert-oracle",
+          "games": 60,
+          "validGames": 60,
+          "wins": 25,
+          "losses": 35,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.4166666666666667,
+          "eligible": true
+        }
+      ],
+      "terminationCounts": {
+        "winCondition": 90
+      },
+      "ownFailures": {},
+      "summedGameSeconds": 1797.3361570830007,
+      "byDeck": {
+        "authored-rry-llorona-steel-dragon": [
+          {
+            "id": "expert-oracle",
+            "games": 20,
+            "validGames": 20,
+            "wins": 10,
+            "losses": 10,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical-ability-aware",
+            "games": 20,
+            "validGames": 20,
+            "wins": 11,
+            "losses": 9,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical",
+            "games": 20,
+            "validGames": 20,
+            "wins": 9,
+            "losses": 11,
+            "draws": 0,
+            "failures": 0
+          }
+        ],
+        "authored-rry-detonate-gear-curve": [
+          {
+            "id": "expert-oracle",
+            "games": 20,
+            "validGames": 20,
+            "wins": 8,
+            "losses": 12,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical-ability-aware",
+            "games": 20,
+            "validGames": 20,
+            "wins": 12,
+            "losses": 8,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical",
+            "games": 20,
+            "validGames": 20,
+            "wins": 10,
+            "losses": 10,
+            "draws": 0,
+            "failures": 0
+          }
+        ],
+        "authored-ryb-low-cost-tempo": [
+          {
+            "id": "expert-oracle",
+            "games": 20,
+            "validGames": 20,
+            "wins": 7,
+            "losses": 13,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical-ability-aware",
+            "games": 20,
+            "validGames": 20,
+            "wins": 12,
+            "losses": 8,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical",
+            "games": 20,
+            "validGames": 20,
+            "wins": 11,
+            "losses": 9,
+            "draws": 0,
+            "failures": 0
+          }
+        ]
+      },
+      "headToHead": [
+        {
+          "a": "expert-oracle",
+          "b": "tactical-ability-aware",
+          "games": 30,
+          "validGames": 30,
+          "winsA": 12,
+          "winsB": 18,
+          "draws": 0,
+          "completePairedBlocks": 15,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.3,
+            "upper": 0.5
+          }
+        },
+        {
+          "a": "expert-oracle",
+          "b": "tactical",
+          "games": 30,
+          "validGames": 30,
+          "winsA": 13,
+          "winsB": 17,
+          "draws": 0,
+          "completePairedBlocks": 15,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.3,
+            "upper": 0.5666666666666667
+          }
+        },
+        {
+          "a": "tactical-ability-aware",
+          "b": "tactical",
+          "games": 30,
+          "validGames": 30,
+          "winsA": 17,
+          "winsB": 13,
+          "draws": 0,
+          "completePairedBlocks": 15,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.5,
+            "upper": 0.6666666666666666
+          }
+        }
+      ]
+    },
+    "choombattler-reference": {
+      "totalGames": 12,
+      "invalidGames": 0,
+      "provenance": "fnv1a32:0592c6aa",
+      "scheduleHash": "fnv1a32:8541de2b",
+      "standings": [
+        {
+          "id": "choombattler-expert",
+          "games": 12,
+          "validGames": 12,
+          "wins": 10,
+          "losses": 2,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.8333333333333334,
+          "eligible": true
+        },
+        {
+          "id": "expert-oracle",
+          "games": 12,
+          "validGames": 12,
+          "wins": 2,
+          "losses": 10,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.16666666666666666,
+          "eligible": true
+        }
+      ],
+      "competitiveStandings": [
+        {
+          "id": "choombattler-expert",
+          "games": 12,
+          "validGames": 12,
+          "wins": 10,
+          "losses": 2,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.8333333333333334,
+          "eligible": true
+        },
+        {
+          "id": "expert-oracle",
+          "games": 12,
+          "validGames": 12,
+          "wins": 2,
+          "losses": 10,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.16666666666666666,
+          "eligible": true
+        }
+      ],
+      "terminationCounts": {
+        "rules-win": 12
+      },
+      "ownFailures": {},
+      "summedGameSeconds": 866.1719641249999,
+      "byDeck": {
+        "authored-rry-llorona-steel-dragon": [
+          {
+            "id": "expert-oracle",
+            "games": 4,
+            "validGames": 4,
+            "wins": 2,
+            "losses": 2,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "choombattler-expert",
+            "games": 4,
+            "validGames": 4,
+            "wins": 2,
+            "losses": 2,
+            "draws": 0,
+            "failures": 0
+          }
+        ],
+        "authored-rry-detonate-gear-curve": [
+          {
+            "id": "expert-oracle",
+            "games": 4,
+            "validGames": 4,
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "choombattler-expert",
+            "games": 4,
+            "validGames": 4,
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "failures": 0
+          }
+        ],
+        "authored-ryb-low-cost-tempo": [
+          {
+            "id": "expert-oracle",
+            "games": 4,
+            "validGames": 4,
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "choombattler-expert",
+            "games": 4,
+            "validGames": 4,
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "failures": 0
+          }
+        ]
+      },
+      "headToHead": [
+        {
+          "a": "expert-oracle",
+          "b": "choombattler-expert",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 2,
+          "winsB": 10,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0,
+            "upper": 0.33333333333333337
+          }
+        }
+      ]
+    }
+  },
+  "replays": [
+    {
+      "record": "strategy-screen/1",
+      "verified": true,
+      "reason": "winCondition",
+      "finalHash": "fnv1a32:00a50b7c",
+      "traceHash": "fnv1a32:46c07302"
+    },
+    {
+      "record": "strategy-screen/44",
+      "verified": true,
+      "reason": "illegal",
+      "finalHash": "fnv1a32:bb0f41cf",
+      "traceHash": "fnv1a32:0d98017b"
+    },
+    {
+      "record": "finalists/0",
+      "verified": true,
+      "reason": "winCondition",
+      "finalHash": "fnv1a32:e19fa890",
+      "traceHash": "fnv1a32:73157310"
+    },
+    {
+      "record": "finalists/1",
+      "verified": true,
+      "reason": "winCondition",
+      "finalHash": "fnv1a32:e0145afb",
+      "traceHash": "fnv1a32:d59dd3ed"
+    },
+    {
+      "record": "choombattler-reference/0",
+      "verified": true,
+      "reason": "rules-win",
+      "finalHash": "fnv1a32:39163f40",
+      "traceHash": "fnv1a32:55870442"
+    }
+  ]
+}

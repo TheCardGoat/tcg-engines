@@ -20,7 +20,7 @@ export const op17Fugar026: CharacterCard = {
   color: ["green"],
   rarity: "UC",
   setId: "OP17",
-  cost: 5,
+  cost: 1,
   power: 2000,
   counter: 2000,
   traits: ["Red-Haired Pirates Allies"],
@@ -35,7 +35,7 @@ export const op17Fugar026: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Red-Haired Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

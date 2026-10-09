@@ -23,7 +23,7 @@ export const op12Gyukimaru024: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Animal Land of Wano"],
+  traits: ["Animal", "Land of Wano"],
   attribute: "slash",
   effect:
     "If this Character is active, this Character cannot be K.O.'d by your opponent's effects.\n[When Attacking] If you have a total of 3 or more given DON!! cards, rest up to 1 of your opponent's Characters with a base cost of 6 or less.",

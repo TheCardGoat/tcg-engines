@@ -6,7 +6,7 @@ import {
   createRiftboundClientMatchStateV1,
   reduceRiftboundClientMatchStateV1,
   type RiftboundClientMatchStateV1,
-} from "./state";
+} from "@tcg/riftbound-tabletop";
 
 export function RiftboundFixturesPage() {
   const [isClientReady, setIsClientReady] = useState(false);
@@ -102,7 +102,7 @@ export function RiftboundFixturesPage() {
   );
 }
 
-function createFixtureState(
+export function createFixtureState(
   cards: typeof officialRiftboundFixtureCards,
 ): RiftboundClientMatchStateV1 {
   const cardInstances = Object.fromEntries(

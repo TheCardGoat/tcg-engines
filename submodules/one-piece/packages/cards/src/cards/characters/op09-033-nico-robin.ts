@@ -31,7 +31,7 @@ export const op09NicoRobin033: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Straw Hat Crew ODYSSEY"],
+  traits: ["ODYSSEY", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[On Play] If you have 2 or more rested Characters, none of your {ODYSSEY} or {Straw Hat Crew} type Characters can be K.O.'d by effects until the end of your opponent's next turn.",
@@ -70,12 +70,12 @@ export const op09NicoRobin033: CharacterCard = {
                     {
                       filter: "trait",
                       value: "ODYSSEY",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "trait",
                       value: "Straw Hat Crew",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                 },

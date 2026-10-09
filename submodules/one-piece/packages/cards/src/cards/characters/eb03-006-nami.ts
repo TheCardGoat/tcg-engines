@@ -22,7 +22,7 @@ export const eb03Nami006: CharacterCard = {
   setId: "EB03",
   cost: 5,
   power: 7000,
-  traits: ["Alabasta Straw Hat Crew"],
+  traits: ["Alabasta", "Straw Hat Crew"],
   attribute: "wisdom",
   effect:
     "[On Play] You may give your active Leader -5000 power during this turn: Draw 1 card.\n[Activate: Main] [Once Per Turn] If your Leader has the {Alabasta} type, give up to 1 of your opponent's Characters -1000 power during this turn.",
@@ -53,7 +53,7 @@ export const eb03Nami006: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Alabasta",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

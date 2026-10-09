@@ -21,7 +21,7 @@ export const op02Seaquake021: EventCard = {
   rarity: "R",
   setId: "OP02",
   cost: 1,
-  traits: ["The Four Emperors Whitebeard Pirates"],
+  traits: ["The Four Emperors", "Whitebeard Pirates"],
   effect:
     "[Main] If your Leader's type includes \"Whitebeard Pirates\", K.O. up to 1 of your opponent's Characters with 3000 power or less. [Trigger] Give up to 1 of your opponent's Leader or Character cards -3000 power during this turn.",
   effects: {

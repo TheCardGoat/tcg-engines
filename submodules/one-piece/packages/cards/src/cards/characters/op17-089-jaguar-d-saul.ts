@@ -22,7 +22,7 @@ export const op17JaguarDSaul089: CharacterCard = {
   setId: "OP17",
   cost: 4,
   power: 6000,
-  traits: ["Giant Former Navy Elbaph"],
+  traits: ["Giant", "Elbaph", "Former Navy"],
   attribute: "strike",
   effect:
     "This Character gains +12 cost.\n[On Play] Look at 3 cards from the top of your deck; reveal up to 1 {Elbaph} type card and add it to your hand. Then, trash the rest.",
@@ -46,7 +46,7 @@ export const op17JaguarDSaul089: CharacterCard = {
               {
                 filter: "trait",
                 value: "Elbaph",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

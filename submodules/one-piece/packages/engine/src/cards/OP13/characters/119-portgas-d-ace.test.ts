@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb01Doma005, eb01Fourtricks025 } from "@tcg/op-cards";
+import { eb01Doma005, eb01Fourtricks025, getCard } from "@tcg/op-cards";
 import { op13JewelryBonney108 } from "../../../../../cards/src/cards/characters/op13-108-jewelry-bonney.ts";
 import { op13JewelryBonney109 } from "../../../../../cards/src/cards/characters/op13-109-jewelry-bonney.ts";
 import { op13PortgasDAce119 } from "../../../../../cards/src/cards/characters/op13-119-portgas-d-ace.ts";
@@ -122,6 +122,66 @@ describe("OP13-119 Portgas.D.Ace", () => {
     const view = engine.getView("north");
     expect(view.players.north.hand.map((card) => card.instanceId)).toEqual(
       expect.arrayContaining([returnedId, retainedId]),
+    );
+    expect(view.prompts).toHaveLength(0);
+  });
+  test("a replaced return does not let the opponent play from hand", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: [op13PortgasDAce119], activeDon: op13PortgasDAce119.cost },
+      { character: [op13JewelryBonney109], life: [eb01Fourtricks025], hand: [eb01Doma005] },
+    );
+    const targetId = engine.findCardInZone("north", "character", op13JewelryBonney109);
+    const retainedId = engine.findCardInZone("north", "hand", eb01Doma005);
+    engine.playCard(op13PortgasDAce119);
+    engine.resolveDecision("effectGiveDonCount", { optionId: "0" }, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [targetId] }, "south");
+    engine.resolveDecision("effectRemovalReplacement", { optionId: "yes" }, "north");
+    expect(
+      engine.getView("north").players.north.characters.map((card) => card?.instanceId),
+    ).toContain(targetId);
+    expect(engine.getView("north").players.north.hand.map((card) => card.instanceId)).toEqual([
+      retainedId,
+    ]);
+    expect(engine.getView("north").players.north.life[0]?.hidden).toBe(false);
+    expect(engine.getView("north").prompts).toHaveLength(0);
+  });
+  test("the opponent can play a discounted Character despite the Ace player's base-cost restriction", () => {
+    const mihawk = getCard("OP12-030");
+    const sobaMask = getCard("ST26-001");
+    const sanGorou = getCard("OP05-065");
+    const dobon = getCard("OP02-080");
+    let engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: getCard("OP02-026"),
+        hand: [mihawk, op13PortgasDAce119],
+        activeDon: 10,
+      },
+      {
+        leaderCardId: getCard("ST04-001"),
+        character: [sanGorou, dobon],
+        hand: [sobaMask],
+      },
+    );
+    const dobonId = engine.findCardInZone("north", "character", dobon);
+    const sanGorouId = engine.findCardInZone("north", "character", sanGorou);
+    const sobaMaskId = engine.findCardInZone("north", "hand", sobaMask);
+
+    engine.playCard(mihawk, "south");
+    engine.resolveDecision("effectSetActiveDon", { optionId: "4" }, "south");
+    engine.playCard(op13PortgasDAce119, "south");
+    engine.resolveDecision("effectGiveDonCount", { optionId: "0" }, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [dobonId] }, "south");
+    engine = OnePieceTestEngine.fromState(JSON.parse(JSON.stringify(engine.getState())));
+
+    const play = engine.pendingDecision("effectPlaySelection", "north").steps[0];
+    if (play?.kind !== "selectEntity") throw new Error("Expected the opponent's hand-play choice.");
+    expect(play.candidates.map((candidate) => candidate.ref.id)).toContain(sobaMaskId);
+    engine.resolveDecision("effectPlaySelection", { selectedIds: [sobaMaskId] }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(sobaMaskId);
+    expect(view.players.north.hand.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining([dobonId, sanGorouId]),
     );
     expect(view.prompts).toHaveLength(0);
   });

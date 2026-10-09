@@ -250,7 +250,7 @@ describe("parseActions — cannotBeKod", () => {
             zones: ["character"],
             count: { amount: "all" },
             filters: [
-              { filter: "trait", value: "Kurozumi Clan", match: "includes" },
+              { filter: "trait", value: "Kurozumi Clan", match: "exact" },
               { filter: "excludeName", value: "Kurozumi Semimaru" },
             ],
           },
@@ -276,7 +276,7 @@ describe("parseActions — cannotBeKod", () => {
             zones: ["character"],
             count: { amount: "all" },
             filters: [
-              { filter: "trait", value: "Foxy Pirates", match: "includes" },
+              { filter: "trait", value: "Foxy Pirates", match: "exact" },
               { filter: "excludeName", value: "Pickles" },
             ],
           },
@@ -327,7 +327,7 @@ describe("parseActions — cannotBeKod", () => {
     const result = parseActions("This card in your hand cannot be played by effects.");
 
     expect(result).toEqual({
-      parsed: [{ action: "cannotBePlayedByEffects" }],
+      parsed: [{ action: "cannotBePlayedByEffects", sourceZones: ["hand"] }],
       unparsed: "",
     });
   });
@@ -425,7 +425,7 @@ describe("parseActions — cannotBeKod", () => {
     });
   });
 
-  test("protects either inclusive trait through the opponent's next turn", () => {
+  test("protects either exact trait through the opponent's next turn", () => {
     expect(
       parseActions(
         'none of your "ODYSSEY" or "Straw Hat Crew" type Characters can be K.O.\'d by effects until the end of your opponent\'s next turn',
@@ -442,8 +442,8 @@ describe("parseActions — cannotBeKod", () => {
               {
                 filter: "anyOf",
                 filters: [
-                  { filter: "trait", value: "ODYSSEY", match: "includes" },
-                  { filter: "trait", value: "Straw Hat Crew", match: "includes" },
+                  { filter: "trait", value: "ODYSSEY", match: "exact" },
+                  { filter: "trait", value: "Straw Hat Crew", match: "exact" },
                 ],
               },
             ],
@@ -480,4 +480,27 @@ describe("cannotBeRemoved action", () => {
       duration: "permanent",
     });
   });
+});
+
+describe("mass protection preserves effect controller", () => {
+  test.each(["None of your Characters", "None of your [Minks] type Characters"])(
+    "%s only excludes opponent effects",
+    (prefix) => {
+      const result = parseActions(
+        `${prefix} can be K.O.'d by your opponent's effects until the end of your opponent's next turn`,
+      );
+      expect(result.unparsed).toBe("");
+      expect(result.parsed).toMatchObject([
+        {
+          action: "cannotBeKod",
+          restriction: "byEffect",
+          byPlayer: "opponent",
+          duration: "untilEndOfOpponentNextTurn",
+        },
+      ]);
+      const unrestricted = parseActions(`${prefix} can be K.O.'d by effects during this turn`);
+      expect(unrestricted.unparsed).toBe("");
+      expect(unrestricted.parsed[0]).not.toHaveProperty("byPlayer");
+    },
+  );
 });

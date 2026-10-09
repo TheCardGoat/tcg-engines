@@ -56,29 +56,6 @@ export const windspireCrest: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
               },
             ],
           },
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              unique: true,
-              candidates: {
-                kind: "object",
-                zones: ["field"],
-                relationship: "controlled-by",
-                player: "controller",
-                filter: {
-                  kind: "type",
-                  oneOf: ["ALLY"],
-                },
-              },
-            },
-          ],
           restrictions: [
             {
               kind: "static",
@@ -90,13 +67,36 @@ export const windspireCrest: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
             },
           ],
           effect: {
-            kind: "add-counter",
-            subject: {
-              kind: "bound",
-              binding: "target-1",
+            kind: "choose",
+            selection: {
+              id: "chosen-counter-object",
+              kind: "choice",
+              declared: "resolution",
+              chooser: "controller",
+              count: {
+                kind: "exactly",
+                amount: 1,
+              },
+              candidates: {
+                kind: "object",
+                zones: ["field"],
+                relationship: "controlled-by",
+                player: "controller",
+                filter: {
+                  kind: "type",
+                  oneOf: ["ALLY"],
+                },
+              },
             },
-            counter: "buff",
-            amount: 1,
+            effect: {
+              kind: "add-counter",
+              subject: {
+                kind: "bound",
+                binding: "chosen-counter-object",
+              },
+              counter: "buff",
+              amount: 1,
+            },
           },
         },
         {

@@ -66,7 +66,7 @@ export const op09MyEraBegins096: EventCard = {
               {
                 filter: "trait",
                 value: "Blackbeard Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

@@ -64,7 +64,7 @@ export const op01Shanks120: CharacterCard = {
   setId: "OP01",
   cost: 9,
   power: 10000,
-  traits: ["The Four Emperors Red-Haired Pirates"],
+  traits: ["The Four Emperors", "Red-Haired Pirates"],
   attribute: "slash",
 
   effect:

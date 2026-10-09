@@ -23,7 +23,7 @@ export const op06Genbo105: CharacterCard = {
   cost: 3,
   power: 5000,
   counter: 1000,
-  traits: ["Sky Island Shandian Warrior"],
+  traits: ["Sky Island", "Shandian Warrior"],
   attribute: "ranged",
   i18n: op06Genbo105I18n,
 };

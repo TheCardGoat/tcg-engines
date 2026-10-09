@@ -60,6 +60,7 @@ export interface PendingEffectPayloadMeta {
 }
 
 export interface BagEffectPayloadMeta {
+  abilityName?: string;
   kind?: string;
   sourceId?: string;
   sourceCardId?: string;
@@ -185,6 +186,7 @@ export function getBagEffectPayloadMeta(payload: unknown): BagEffectPayloadMeta 
     sourceCardId: getRecordString(payloadRecord, "sourceCardId"),
     chooserId: getRecordString(payloadRecord, "chooserId"),
     controllerId: getRecordString(payloadRecord, "controllerId"),
+    abilityName: getRecordString(payloadRecord, "abilityName"),
     abilityIndex: getRecordNumber(payloadRecord, "abilityIndex"),
     effectType: getRecordString(effectRecord, "type"),
   };

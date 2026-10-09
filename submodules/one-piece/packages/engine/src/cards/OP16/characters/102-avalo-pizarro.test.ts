@@ -12,7 +12,7 @@ describe("OP16-102 Avalo Pizarro", () => {
 
     engine.endTurn("south");
     engine.asNorth().attack("OP16-003", "OP16-102");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
     const play = engine.pendingDecision("effectPlaySelection", "south").steps[0];
     if (play?.kind !== "selectEntity") throw new Error("Expected the play choice.");
     engine.resolveDecision(
@@ -35,9 +35,40 @@ describe("OP16-102 Avalo Pizarro", () => {
 
     engine.endTurn("south");
     engine.asNorth().attack("OP16-003", "OP16-102");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
 
     expect(engine.getView("south").players.south.hand).toHaveLength(2);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("Life Trigger activates On K.O., draws and plays Fullalead from trash", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP01-001",
+        life: ["OP16-102"],
+        trash: ["OP17-057"],
+        deck: ["EB01-005", "EB01-018"],
+      },
+      { leaderCardId: "OP01-001", activeDon: 2 },
+      { activeSeat: "north" },
+    );
+    const stage = engine.asSouth().findInZone("trash", "OP17-057");
+    engine.asNorth().attachDon(engine.asNorth().leader(), 2);
+    engine.asNorth().attack(engine.asNorth().leader(), engine.asSouth().leader());
+    engine.asSouth().activateLifeTrigger();
+    engine.asSouth().choosePlay("OP17-057");
+    expect(engine.asSouth().findInZone("stage", "OP17-057")).toBe(stage);
+    expect(
+      engine
+        .asSouth()
+        .view()
+        .players.south.hand.map((card) => card.cardId),
+    ).toEqual(["EB01-005"]);
+    expect(
+      engine
+        .asSouth()
+        .view()
+        .players.south.trash.map((card) => card.cardId),
+    ).toContain("OP16-102");
   });
 });

@@ -36,7 +36,7 @@ export const op16Sengoku066: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Navy",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

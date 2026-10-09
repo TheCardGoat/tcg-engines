@@ -87,20 +87,17 @@ describe("Panam Palmer - Nomad Cavalry (Retail) jsdom happy path", () => {
       const promptTitle = await waitFor(() =>
         requiredElement<HTMLElement>(view.container, '[data-testid="prompt-banner-title"]'),
       );
+      // The reskinned prompt titles the banner with the source card name.
       expectEqual(
         "Panam target prompt title",
         promptTitle.textContent?.trim(),
-        "Choose a target for Panam Palmer — Nomad Cavalry",
+        "Panam Palmer: Nomad Cavalry",
       );
 
+      // The attached-gear chip is the selectable target (data-instance-id).
       const gearTarget = requiredElement<HTMLButtonElement>(
         view.container,
-        `[data-card-id="${overwatch.instanceId}"][data-choice-eligible="true"]`,
-      );
-      expectEqual(
-        "Panam gear target aria",
-        gearTarget.getAttribute("aria-label"),
-        "Select Overwatch — Panam's Gift",
+        `[data-instance-id="${overwatch.instanceId}"][data-choice-label="Select"]`,
       );
       expectEqual(
         "Panam gear target visual label",

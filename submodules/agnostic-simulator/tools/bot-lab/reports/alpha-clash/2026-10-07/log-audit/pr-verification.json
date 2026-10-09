@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-07",
+  "baseCommit": "2e0e59a681",
+  "engineRevision": "fnv1a32:7af967a0",
+  "cardCatalogHash": "fnv1a32:de23a4df",
+  "passedTests": {
+    "engine": 1568,
+    "adapter": 19,
+    "botLab": 16,
+    "importer": 21,
+    "botCore": 11
+  },
+  "typeAndLintChecks": "Engine, cards, importer, adapter and bot-core TypeScript; bot-lab vp check src/scripts passed",
+  "cardManifestAndAuthoringHygiene": "passed",
+  "savedAuditTraces": [
+    {
+      "game": 1,
+      "fullSavedTraceMatches": true,
+      "frames": 237
+    },
+    {
+      "game": 2,
+      "fullSavedTraceMatches": true,
+      "frames": 216
+    }
+  ],
+  "fullRulesReady": false,
+  "openIssues": [
+    "General triggered-effect response priority and player-selected ordering of same-player trigger batches are not fully modeled (603.3, 605.1)."
+  ]
+}

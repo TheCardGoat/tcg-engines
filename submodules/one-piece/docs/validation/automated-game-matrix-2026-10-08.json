@@ -1,0 +1,4482 @@
+{
+  "status": "completed",
+  "engineCommit": "d042545b0242eaead4f73bbfddd92f125a85e438",
+  "seedBase": 6000,
+  "nextSeed": 8880,
+  "maxCommands": 500,
+  "results": [
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "red-aggro",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 60.5
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "red-aggro",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 68.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "red-aggro",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 65.6
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "red-aggro",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 62.9
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "blue-control",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 98.8
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "blue-control",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 91
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "blue-control",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 80.6
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "blue-control",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 82.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "green-midrange",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 86.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "green-midrange",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 83.9
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "green-midrange",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 82.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "green-midrange",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 80
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "purple-ramp",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 88.1
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "purple-ramp",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 85.4
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "purple-ramp",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 84.4
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "purple-ramp",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 7,
+        "north": 3
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 84.9
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "black-removal",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 74.5
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "black-removal",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 80.4
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "black-removal",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 79.6
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "black-removal",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 78.5
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "yellow-trigger",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 76.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "yellow-trigger",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 65.8
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "yellow-trigger",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 80.8
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "southDeck": "yellow-trigger",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 71.9
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "red-aggro",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 64.9
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "red-aggro",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 71.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "red-aggro",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 69.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "red-aggro",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 64.9
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "blue-control",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 91.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "blue-control",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 95.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "blue-control",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 88.6
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "blue-control",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 82.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "green-midrange",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 85.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "green-midrange",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 92.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "green-midrange",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 86.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "green-midrange",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 80.4
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "purple-ramp",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 84.6
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "purple-ramp",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 86.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "purple-ramp",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 5,
+        "north": 5
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 84.1
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "purple-ramp",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 6,
+        "north": 4
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 84.4
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "black-removal",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 72.4
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "black-removal",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 84.6
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "black-removal",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 74.1
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "black-removal",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 90.4
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "yellow-trigger",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 73.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "yellow-trigger",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 71.8
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "yellow-trigger",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 76.8
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "southDeck": "yellow-trigger",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 72.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "red-aggro",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 66.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "red-aggro",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 69.4
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "red-aggro",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 70.6
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "red-aggro",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 65.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "blue-control",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 101.8
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "blue-control",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 86.6
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "blue-control",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 80.8
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "blue-control",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 92.5
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "green-midrange",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 93.8
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "green-midrange",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 86.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "green-midrange",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 84.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "green-midrange",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 81.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "purple-ramp",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 90.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "purple-ramp",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 89.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "purple-ramp",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 90.8
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "purple-ramp",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 6,
+        "north": 4
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 92.1
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "black-removal",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 71.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "black-removal",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 85.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "black-removal",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 7,
+        "north": 3
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 79.4
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "black-removal",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 87.4
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "yellow-trigger",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 80.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "yellow-trigger",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 72
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "yellow-trigger",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 80
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "southDeck": "yellow-trigger",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 76.1
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "red-aggro",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 45.8
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "red-aggro",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 51.1
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "red-aggro",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 46.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "red-aggro",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 55
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "blue-control",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 66.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "blue-control",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 68.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "blue-control",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 65.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "blue-control",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 66.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "green-midrange",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 63.6
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "green-midrange",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 61.6
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "green-midrange",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 58
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "green-midrange",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 70.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "purple-ramp",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 70.9
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "purple-ramp",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 65.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "purple-ramp",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 60.8
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "purple-ramp",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 59.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "black-removal",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 60.9
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "black-removal",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 61.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "black-removal",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 66.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "black-removal",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 71.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "yellow-trigger",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 60.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "yellow-trigger",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 62.5
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "yellow-trigger",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 69
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "southDeck": "yellow-trigger",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 66.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "red-aggro",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 6,
+        "north": 4
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 69.7
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "red-aggro",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 6,
+        "north": 4
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 91.4
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "red-aggro",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 7,
+        "north": 3
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 75.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "red-aggro",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 84.5
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "blue-control",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 126.1
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "blue-control",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 7,
+        "north": 3
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 103.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "blue-control",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 113.4
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "blue-control",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 5,
+        "north": 5
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 110.5
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "green-midrange",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 3,
+        "north": 7
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 91.1
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "green-midrange",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 99
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "green-midrange",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 2,
+        "north": 8
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 88.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "green-midrange",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 3,
+        "north": 7
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 83
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "purple-ramp",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 101.8
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "purple-ramp",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 95.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "purple-ramp",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 3,
+        "north": 7
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 104.1
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "purple-ramp",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 90.9
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "black-removal",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 97.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "black-removal",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 6,
+        "north": 4
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 93.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "black-removal",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 3,
+        "north": 7
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 80.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "black-removal",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 6,
+        "north": 4
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 105
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "yellow-trigger",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 90.5
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "yellow-trigger",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 2,
+        "north": 8
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 78
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "yellow-trigger",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 6,
+        "north": 4
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 101.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "southDeck": "yellow-trigger",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 88
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "red-aggro",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 69
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "red-aggro",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 90.8
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "red-aggro",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 79.1
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "red-aggro",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 86.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "blue-control",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 122.1
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "blue-control",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 2,
+        "north": 8
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 105.6
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "blue-control",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 0,
+        "north": 10
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 122.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "blue-control",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 3,
+        "north": 7
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 106.9
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "green-midrange",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 3,
+        "north": 7
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 87.1
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "green-midrange",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 96.5
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "green-midrange",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 1,
+        "north": 9
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 91.4
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "green-midrange",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 85
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "purple-ramp",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 6,
+        "north": 4
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 102.5
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "purple-ramp",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 99.4
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "purple-ramp",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 7,
+        "north": 3
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 96.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "purple-ramp",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 0,
+        "north": 10
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 84.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "black-removal",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 1,
+        "north": 9
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 91.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "black-removal",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 2,
+        "north": 8
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 87.3
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "black-removal",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 1,
+        "north": 9
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 79.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "black-removal",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 5,
+        "north": 5
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 105.5
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "yellow-trigger",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 6,
+        "north": 4
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 85.8
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "yellow-trigger",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 5,
+        "north": 5
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 80.2
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "yellow-trigger",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 5,
+        "north": 5
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 95.6
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "southDeck": "yellow-trigger",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 91.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "red-aggro",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 59.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "red-aggro",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 68.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "red-aggro",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 65.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "red-aggro",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 62.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "blue-control",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 77.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "blue-control",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 79.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "blue-control",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 77.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "blue-control",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 72.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "green-midrange",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 72.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "green-midrange",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 77.4
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "green-midrange",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 70.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "green-midrange",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 71.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "purple-ramp",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 79.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "purple-ramp",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 83.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "purple-ramp",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 82.4
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "purple-ramp",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 81.7
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "black-removal",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 74
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "black-removal",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 72.7
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "black-removal",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 69.4
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "black-removal",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 76.7
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "yellow-trigger",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 74.4
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "yellow-trigger",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 7,
+        "north": 3
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 66.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "yellow-trigger",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 78.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "southDeck": "yellow-trigger",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 66.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "red-aggro",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 60
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "red-aggro",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 69.7
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "red-aggro",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 67.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "red-aggro",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 66.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "blue-control",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 86.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "blue-control",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 78
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "blue-control",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 72
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "blue-control",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 76.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "green-midrange",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 72.4
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "green-midrange",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 74.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "green-midrange",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 71.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "green-midrange",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 73.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "purple-ramp",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 83
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "purple-ramp",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 86.4
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "purple-ramp",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 79.7
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "purple-ramp",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 81.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "black-removal",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 70.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "black-removal",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 71.9
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "black-removal",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 73.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "black-removal",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 76
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "yellow-trigger",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 70.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "yellow-trigger",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 68.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "yellow-trigger",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 74
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "southDeck": "yellow-trigger",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 69.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "red-aggro",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 62.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "red-aggro",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 68.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "red-aggro",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 69.4
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "red-aggro",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 63.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "blue-control",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 83.7
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "blue-control",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 79.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "blue-control",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 73.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "blue-control",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 76
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "green-midrange",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 77.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "green-midrange",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 76.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "green-midrange",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 72.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "green-midrange",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 83
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "purple-ramp",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 90.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "purple-ramp",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 91
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "purple-ramp",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 90.7
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "purple-ramp",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 7,
+        "north": 3
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 86.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "black-removal",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 71.9
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "black-removal",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 76.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "black-removal",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 75.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "black-removal",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 79.7
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "yellow-trigger",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 65.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "yellow-trigger",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 69.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "yellow-trigger",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 72.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "southDeck": "yellow-trigger",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 75.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "red-aggro",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 50.7
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "red-aggro",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 52.7
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "red-aggro",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 48.9
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "red-aggro",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 47.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "blue-control",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 64.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "blue-control",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 68.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "blue-control",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 71.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "blue-control",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 67.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "green-midrange",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 63.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "green-midrange",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 57.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "green-midrange",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 56.4
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "green-midrange",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 59.4
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "purple-ramp",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 60.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "purple-ramp",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 59.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "purple-ramp",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 72
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "purple-ramp",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 62.9
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "black-removal",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 56
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "black-removal",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 66.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "black-removal",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 58.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "black-removal",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 67.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "yellow-trigger",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 61.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "yellow-trigger",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 57.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "yellow-trigger",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 61.9
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "southDeck": "yellow-trigger",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 59.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "red-aggro",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 71.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "red-aggro",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 94.4
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "red-aggro",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 10,
+        "north": 0
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 74
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "red-aggro",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 86.9
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "blue-control",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 5,
+        "north": 5
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 117.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "blue-control",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 100.7
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "blue-control",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 6,
+        "north": 4
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 114.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "blue-control",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 104.4
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "green-midrange",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 80.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "green-midrange",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 5,
+        "north": 5
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 91.9
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "green-midrange",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 2,
+        "north": 8
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 90.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "green-midrange",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 3,
+        "north": 7
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 86.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "purple-ramp",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 6,
+        "north": 4
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 101.7
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "purple-ramp",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 5,
+        "north": 5
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 96.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "purple-ramp",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 92
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "purple-ramp",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 83.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "black-removal",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 5,
+        "north": 5
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 92.7
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "black-removal",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 6,
+        "north": 4
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 83.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "black-removal",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 82.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "black-removal",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 7,
+        "north": 3
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 104.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "yellow-trigger",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 82.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "yellow-trigger",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 6,
+        "north": 4
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 83.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "yellow-trigger",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 7,
+        "north": 3
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 93.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "southDeck": "yellow-trigger",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 5,
+        "north": 5
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 87.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "red-aggro",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 65.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "red-aggro",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 9,
+        "north": 1
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 88
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "red-aggro",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 71.4
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "red-aggro",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 8,
+        "north": 2
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 79.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "blue-control",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 121.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "blue-control",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 104.4
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "blue-control",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 2,
+        "north": 8
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 118.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "blue-control",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 2,
+        "north": 8
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 108.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "green-midrange",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 83.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "green-midrange",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 6,
+        "north": 4
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 91.4
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "green-midrange",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 2,
+        "north": 8
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 85.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "green-midrange",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 78
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "purple-ramp",
+      "northDeck": "purple-ramp",
+      "games": 10,
+      "wins": {
+        "south": 7,
+        "north": 3
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 103.8
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "purple-ramp",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 3,
+        "north": 7
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 94.9
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "purple-ramp",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 91.6
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "purple-ramp",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 2,
+        "north": 8
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 82.5
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "black-removal",
+      "northDeck": "black-removal",
+      "games": 10,
+      "wins": {
+        "south": 1,
+        "north": 9
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 96.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "black-removal",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 5,
+        "north": 5
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 82.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "black-removal",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 3,
+        "north": 7
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 79.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "black-removal",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 102.3
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "yellow-trigger",
+      "northDeck": "yellow-trigger",
+      "games": 10,
+      "wins": {
+        "south": 5,
+        "north": 5
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 79
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "yellow-trigger",
+      "northDeck": "red-aggro",
+      "games": 10,
+      "wins": {
+        "south": 2,
+        "north": 8
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 78.1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "yellow-trigger",
+      "northDeck": "blue-control",
+      "games": 10,
+      "wins": {
+        "south": 7,
+        "north": 3
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 96.2
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "southDeck": "yellow-trigger",
+      "northDeck": "green-midrange",
+      "games": 10,
+      "wins": {
+        "south": 4,
+        "north": 6
+      },
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 84.1
+    }
+  ],
+  "totals": [
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "greedy",
+      "games": 240,
+      "southWins": 232,
+      "northWins": 8,
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 78.9,
+      "southWinRate": 0.967
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "valueRanked",
+      "games": 240,
+      "southWins": 217,
+      "northWins": 23,
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 80.3,
+      "southWinRate": 0.904
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "firstLegal",
+      "games": 240,
+      "southWins": 231,
+      "northWins": 9,
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 82.3,
+      "southWinRate": 0.963
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "random",
+      "games": 240,
+      "southWins": 239,
+      "northWins": 1,
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 62.3,
+      "southWinRate": 0.996
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "heuristic",
+      "games": 240,
+      "southWins": 113,
+      "northWins": 127,
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 94.2,
+      "southWinRate": 0.471
+    },
+    {
+      "southStrategy": "heuristic",
+      "northStrategy": "aggressive",
+      "games": 240,
+      "southWins": 102,
+      "northWins": 138,
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 93.4,
+      "southWinRate": 0.425
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "greedy",
+      "games": 240,
+      "southWins": 235,
+      "northWins": 5,
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 73.4,
+      "southWinRate": 0.979
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "valueRanked",
+      "games": 240,
+      "southWins": 234,
+      "northWins": 6,
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 73.9,
+      "southWinRate": 0.975
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "firstLegal",
+      "games": 240,
+      "southWins": 233,
+      "northWins": 7,
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 76.3,
+      "southWinRate": 0.971
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "random",
+      "games": 240,
+      "southWins": 240,
+      "northWins": 0,
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 60.4,
+      "southWinRate": 1
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "heuristic",
+      "games": 240,
+      "southWins": 149,
+      "northWins": 91,
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 91.5,
+      "southWinRate": 0.621
+    },
+    {
+      "southStrategy": "aggressive",
+      "northStrategy": "aggressive",
+      "games": 240,
+      "southWins": 108,
+      "northWins": 132,
+      "draws": 0,
+      "stuck": 0,
+      "illegalCommands": 0,
+      "avgCommands": 90.2,
+      "southWinRate": 0.45
+    }
+  ],
+  "runnerOutcome": {
+    "exitCode": 1,
+    "reason": "test timeout",
+    "timeoutMs": 1500000,
+    "testDurationMs": 1545356,
+    "note": "All game groups completed and the report was written before the runner reported its timeout. This is completed game evidence, not a passing test-runner result."
+  }
+}

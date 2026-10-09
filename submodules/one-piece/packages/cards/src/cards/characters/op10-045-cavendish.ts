@@ -30,7 +30,7 @@ export const op10Cavendish045: CharacterCard = {
   setId: "OP10",
   cost: 4,
   power: 6000,
-  traits: ["Beautiful Pirates Dressrosa"],
+  traits: ["Dressrosa", "Beautiful Pirates"],
   attribute: "slash",
   effect: "[When Attacking] [Once Per Turn] Draw 2 cards and trash 1 card from your hand.",
   effects: {

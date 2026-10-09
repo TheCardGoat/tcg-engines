@@ -24,7 +24,7 @@ export const op06Braham111: CharacterCard = {
   power: 4000,
   counter: 1000,
   trigger: "If you have 2 or less Life cards, play this card.",
-  traits: ["Sky Island Shandian Warrior"],
+  traits: ["Sky Island", "Shandian Warrior"],
   attribute: "ranged",
   effect:
     "[Activate:Main][Once Per Turn] You may place 1 Stage with a cost of 1 at the bottom of the owner's deck: Rest up to 1 of your opponent's Characters with a cost of 4 or less.",

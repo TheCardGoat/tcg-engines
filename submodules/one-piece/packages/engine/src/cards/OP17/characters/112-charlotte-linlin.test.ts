@@ -64,4 +64,49 @@ describe("OP17-112 Charlotte Linlin", () => {
     expect(engine.getView("south").players.south.hand).toHaveLength(1);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("playing Linlin sets only own 4000-base-power Trigger Characters to 8000 during your turn", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP01-001",
+        hand: [op17CharlotteLinlin112],
+        character: ["OP03-033", "OP01-012", "OP16-107"],
+        activeDon: 11,
+        deck: ["EB01-005", "EB01-025", "EB01-018"],
+      },
+      { leaderCardId: "OP01-001", character: ["OP03-033"] },
+    );
+    const south = engine.asSouth();
+    const hatchan = south.findOnField("OP03-033");
+    south.play(op17CharlotteLinlin112);
+    south.chooseOption("effectActionChoice", "0");
+    south.chooseAmount(0, "effectAddToLifeFromDeck");
+
+    expect(
+      south.view().players.south.characters.flatMap((card) => (card ? [card.power] : [])),
+    ).toEqual([8000, 4000, 5000, 12000]);
+    expect(south.view().players.north.characters[0]?.power).toBe(4000);
+    south.attachDon(hatchan, 1);
+    expect(south.view().players.south.characters[0]?.power).toBe(9000);
+
+    south.endTurn();
+    expect(south.view().players.south.characters[0]?.power).toBe(4000);
+    expect(south.view().players.south.characters[1]?.power).toBe(4000);
+    expect(south.view().players.south.characters[2]?.power).toBe(5000);
+  });
+
+  test("a qualifying Character played after Linlin also receives the continuous power", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: "OP01-001",
+      character: [op17CharlotteLinlin112],
+      hand: ["OP03-033"],
+      activeDon: 4,
+    });
+    engine.asSouth().play("OP03-033");
+    expect(
+      engine
+        .asSouth()
+        .view()
+        .players.south.characters.find((card) => card?.cardId === "OP03-033")?.power,
+    ).toBe(8000);
+  });
 });

@@ -21,7 +21,7 @@ export const op02ParadiseTotsuka047: EventCard = {
   rarity: "R",
   setId: "OP02",
   cost: 1,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   effect:
     "[Main] Rest up to 1 of your opponent's Characters with a cost of 4 or less. [Trigger] K.O. up to 1 of your opponent's rested Characters with a cost of 3 or less.",
   effects: {

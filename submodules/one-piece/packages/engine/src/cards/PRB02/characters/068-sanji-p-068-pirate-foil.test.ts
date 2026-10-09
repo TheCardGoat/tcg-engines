@@ -5,6 +5,30 @@ import { prb02SanjiP068PirateFoil068 } from "../../../../../cards/src/cards/char
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("P-068 Sanji", () => {
+  test("places the whole looked group at the top in its selected physical order", () => {
+    const engine = OnePieceTestEngine.create({
+      character: ["P-068"],
+      deck: [
+        eb01Doma005,
+        eb01Fourtricks025,
+        eb01MountainGod018,
+        eb01Doma005,
+        eb01Fourtricks025,
+        eb01MountainGod018,
+      ],
+    });
+    const source = engine.findCardInZone("south", "character", "P-068");
+    const deck = [...engine.getState().players.south.deck];
+    engine.asSouth().activateMain(source);
+    engine.asSouth().acceptOptional();
+    const order = [deck[2]!, deck[4]!, deck[0]!, deck[3]!, deck[1]!];
+    engine.resolveDecision("effectRearrangeDeckOrder", { selectedIds: order }, "south");
+    engine.resolveDecision("effectRearrangeDeckPosition", { optionId: "top" }, "south");
+    expect(engine.getState().players.south.deck).toEqual([...order, deck[5]!]);
+    expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(source);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("may trash itself to reorder the exact top five at the chosen end of the deck", () => {
     const engine = OnePieceTestEngine.create({
       character: [prb02SanjiP068PirateFoil068],

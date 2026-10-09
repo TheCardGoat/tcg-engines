@@ -42,7 +42,7 @@ import {
   type InteractionSubmission,
 } from "@tcg/protocol";
 import type { CardsMaps } from "@tcg/shared/game-adapter";
-import { createCanonicalEngineMoveLog, createEngineLogMessage } from "@tcg/shared/game-engine";
+import { capUndoCheckpoints, createCanonicalEngineMoveLog, createEngineLogMessage } from "@tcg/shared/game-engine";
 import type {
   BotActionOptions,
   BotActionResult,
@@ -70,21 +70,35 @@ import {
   NARUTO_RUNTIME_FINGERPRINT,
 } from "./runtime-fingerprint";
 import { projectNarutoViewerState, type NarutoViewer } from "./viewer-state";
+import {
+  emptyNarutoUndoState,
+  hasNarutoUndoBarrier,
+  isMainTurn,
+  readNarutoUndoState,
+  type NarutoUndoCheckpoint,
+  type NarutoUndoState,
+} from "./undo";
 
 export class NarutoServerEngine implements ServerGameEngine {
   #state: GameState;
   #stateVersion: number;
+  #undoState: NarutoUndoState;
   readonly seats: NarutoSeatMap;
 
-  constructor(args: { state: GameState; seats: NarutoSeatMap; stateVersion?: number }) {
+  constructor(args: { state: GameState; seats: NarutoSeatMap; stateVersion?: number; undoState?: NarutoUndoState }) {
     this.#state = args.state;
     this.seats = { ...args.seats };
     this.#stateVersion = args.stateVersion ?? 0;
+    this.#undoState = args.undoState ?? emptyNarutoUndoState(args.state, this.#stateVersion);
   }
 
   /** Raw engine state (serializable). Exposed for serializeEngine/tests. */
   getRawState(): GameState {
     return this.#state;
+  }
+
+  getUndoState(): NarutoUndoState {
+    return structuredClone(this.#undoState);
   }
 
   dispatch(
@@ -93,6 +107,8 @@ export class NarutoServerEngine implements ServerGameEngine {
     payload: Record<string, unknown>,
     context: DispatchContext,
   ): DispatchResult {
+    if (moveType === "undo") return this.#restoreUndo(actorId, context, "last_move");
+    if (moveType === "undoToTurnStart") return this.#restoreUndo(actorId, context, "turn_start");
     const player = playerIdForActor(this.seats, actorId);
     if (!player) {
       return {
@@ -119,6 +135,85 @@ export class NarutoServerEngine implements ServerGameEngine {
 
   getStateID(): number {
     return this.#stateVersion;
+  }
+
+  canUndo(actorId: string): boolean {
+    const checkpoint = this.#undoState.checkpoints.at(-1);
+    return Boolean(
+      checkpoint && checkpoint.actorId === actorId && isMainTurn(this.#state) &&
+      checkpoint.state.turn === this.#state.turn &&
+      actorIdForPlayer(this.seats, this.#state.activePlayer) === actorId,
+    );
+  }
+
+  canUndoToTurnStart(actorId: string): boolean {
+    return this.canUndo(actorId) && this.#undoState.turnStart?.actorId === actorId &&
+      this.#undoState.turnStart.state.turn === this.#state.turn;
+  }
+
+  #restoreUndo(actorId: string, context: DispatchContext, scope: "last_move" | "turn_start"): DispatchResult {
+    const checkpoint = scope === "last_move"
+      ? this.#undoState.checkpoints.at(-1) : this.#undoState.turnStart;
+    const allowed = scope === "last_move" ? this.canUndo(actorId) : this.canUndoToTurnStart(actorId);
+    if (!allowed || !checkpoint) {
+      return { success: false, error: "No action is available to undo.", errorCode: "undo_unavailable", stateID: this.#stateVersion };
+    }
+    const previousStateID = this.#stateVersion;
+    const restoredTurnStart = checkpoint.stateVersion === this.#undoState.turnStart?.stateVersion;
+    this.#state = structuredClone(checkpoint.state);
+    this.#stateVersion += 1;
+    if (scope === "turn_start") {
+      this.#undoState = emptyNarutoUndoState(this.#state, this.#stateVersion);
+    } else {
+      this.#undoState.checkpoints.pop();
+      if (this.#undoState.checkpoints.length === 0) {
+        this.#undoState.turnStart = null;
+        this.#undoState.turnStartStateVersion = restoredTurnStart ? this.#stateVersion : null;
+      }
+    }
+    const timestamp = Date.now();
+    const moveId = scope === "turn_start" ? "undoToTurnStart" : "undo";
+    return {
+      success: true,
+      stateID: this.#stateVersion,
+      state: this.#state,
+      patches: [],
+      animations: [],
+      transition: "move",
+      undoable: this.canUndo(actorId),
+      acceptedMoveRecord: {
+        gameId: context.gameId,
+        stateVersion: this.#stateVersion,
+        turnNumber: this.#state.turn,
+        actorId,
+        moveId,
+        input: { args: {} },
+        processedCommand: { move: moveId },
+        timestamp,
+        sourceAuthority: context.sourceAuthority,
+        transitionType: "undo",
+        newStateID: this.#stateVersion,
+        undoneStateID: previousStateID,
+        restoredCheckpointStateID: checkpoint.stateVersion,
+        ...(scope === "last_move" ? { undoneMoveId: checkpoint.moveId } : {}),
+      },
+      engineLogRecords: [{
+        gameId: context.gameId,
+        stateVersion: this.#stateVersion,
+        timestamp,
+        sourceAuthority: context.sourceAuthority,
+        log: createCanonicalEngineMoveLog({
+          moveType: moveId,
+          playerId: actorId,
+          timestamp,
+          turnNumber: this.#state.turn,
+          messages: [createEngineLogMessage({
+            key: "naruto.undo",
+            defaultMessage: scope === "turn_start" ? "Undid the turn." : "Undid the last action.",
+          })],
+        }),
+      }],
+    };
   }
 
   getState(): unknown {
@@ -274,6 +369,21 @@ export class NarutoServerEngine implements ServerGameEngine {
     this.#state = next;
     this.#stateVersion += 1;
     const stateVersion = this.#stateVersion;
+    if (hasNarutoUndoBarrier(previous, next, action) || !isMainTurn(next)) {
+      this.#undoState = emptyNarutoUndoState(next, stateVersion,
+        previous.turn !== next.turn || previous.awaitingMulligan !== null);
+    } else {
+      const checkpoint: NarutoUndoCheckpoint = {
+        actorId, moveId: moveType, stateVersion: stateVersion - 1, state: structuredClone(previous),
+      };
+      if (this.#undoState.turnStartStateVersion === stateVersion - 1 && !this.#undoState.turnStart) {
+        this.#undoState.turnStart = checkpoint;
+      }
+      this.#undoState.checkpoints = capUndoCheckpoints([
+        ...this.#undoState.checkpoints,
+        checkpoint,
+      ]);
+    }
     const timestamp = Date.now();
     const newLogEntries = next.log.slice(previous.log.length);
 
@@ -315,7 +425,7 @@ export class NarutoServerEngine implements ServerGameEngine {
         newStateID: stateVersion,
       },
       engineLogRecords,
-      undoable: false,
+      undoable: this.canUndo(actorId),
       processedCommand: action,
     };
   }
@@ -608,6 +718,9 @@ export function narutoSerializeEngine(
     cardsMaps,
     metadata: {
       runtimeFingerprint: NARUTO_RUNTIME_FINGERPRINT,
+      undoCheckpoints: naruto.getUndoState().checkpoints,
+      turnStartCheckpoint: naruto.getUndoState().turnStart,
+      turnStartStateVersion: naruto.getUndoState().turnStartStateVersion,
       rulesProfile: {
         id: naruto.getRawState().rulesProfile.id,
         version: naruto.getRawState().rulesProfile.version,
@@ -635,6 +748,7 @@ export async function narutoRestoreEngine(
     state: parsed.state,
     seats: parsed.seats,
     stateVersion: parsed.stateVersion,
+    undoState: readNarutoUndoState(snapshot.metadata, parsed.state, parsed.stateVersion),
   });
 }
 

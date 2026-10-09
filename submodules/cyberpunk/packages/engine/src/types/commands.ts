@@ -53,8 +53,8 @@ export interface CommandSuccess {
    */
   moveLogs: MoveLog[];
   /**
-   * Pre-computed animation timeline for this command's gameEvents. Pure
-   * derivation of `gameEvents` — deterministic, JSON-safe, replay-friendly.
+   * Pre-computed animation timeline for this command's game events and the
+   * actor's choice when it has no event. Deterministic, JSON-safe, replay-friendly.
    * UI clients consume this directly; no client-side diffing required.
    */
   animationScript: AnimationScript;

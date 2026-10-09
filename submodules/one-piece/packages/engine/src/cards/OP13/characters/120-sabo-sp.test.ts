@@ -101,4 +101,16 @@ describe("OP13-120 Sabo (SP)", () => {
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(saboId);
     expect(view.prompts).toHaveLength(0);
   });
+  test("the cost increase can raise a Character above ten cost", () => {
+    const engine = OnePieceTestEngine.create({ character: [op13SaboSp120, "OP01-094"] });
+    const source = engine.findCardInZone("south", "character", op13SaboSp120);
+    const target = engine.findCardInZone("south", "character", "OP01-094");
+    engine.activateEffect(source, "activateMain");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === target)
+        ?.cost,
+    ).toBe(12);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

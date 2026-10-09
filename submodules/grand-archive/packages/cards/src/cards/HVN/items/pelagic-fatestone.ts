@@ -58,6 +58,9 @@ export const pelagicFatestone: GrandArchiveCard<GrandArchiveAbilityDefinition, "
                 kind: "source",
               },
               from: "graveyard",
+              payment: {
+                costKind: "memory",
+              },
             },
           },
           restrictions: [
@@ -81,6 +84,7 @@ export const pelagicFatestone: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               face: "transformed",
             },
           },
+          functionalZones: ["graveyard"],
         },
         {
           id: "tqkkyf4ktr-a3",

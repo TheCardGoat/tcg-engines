@@ -43,8 +43,6 @@ describe("sourceCardEffectTiming", () => {
       impactAtMs: 620,
       arrowStartMs: 310,
       arrowDurationMs: 484,
-      targetStartMs: 496,
-      targetDurationMs: 471,
     });
   });
 
@@ -53,8 +51,6 @@ describe("sourceCardEffectTiming", () => {
       impactAtMs: 0,
       arrowStartMs: 0,
       arrowDurationMs: 0,
-      targetStartMs: 0,
-      targetDurationMs: 0,
     });
   });
 });
@@ -74,8 +70,6 @@ describe("sourceCardEffectTiming", () => {
       impactAtMs: 620,
       arrowStartMs: 310,
       arrowDurationMs: 484,
-      targetStartMs: 496,
-      targetDurationMs: 471,
     });
   });
 
@@ -84,8 +78,6 @@ describe("sourceCardEffectTiming", () => {
       impactAtMs: 0,
       arrowStartMs: 0,
       arrowDurationMs: 0,
-      targetStartMs: 0,
-      targetDurationMs: 0,
     });
   });
 });

@@ -11,7 +11,7 @@ export const charlesMuntzObsessiveExplorer: CharacterCard = {
       artId: "set13-162",
       setCode: "set13",
       collectorNumber: "162",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -23,7 +23,7 @@ export const charlesMuntzObsessiveExplorer: CharacterCard = {
   franchise: "Up",
   set: "013",
   cardNumber: 162,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 4,
   strength: 3,
   willpower: 4,
@@ -31,6 +31,7 @@ export const charlesMuntzObsessiveExplorer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1d8f273d61c54f8e9fb5a188994bdff0",
+    tcgPlayer: "704660",
   },
   text: [
     {
@@ -107,8 +108,6 @@ export const charlesMuntzObsessiveExplorer: CharacterCard = {
             ],
           },
         ],
-        // Printed: "Otherwise, put it on either the top or the bottom of your deck."
-        // Multi-destination fallback suspends for player choice (top or bottom).
         fallback: {
           destinations: [
             {

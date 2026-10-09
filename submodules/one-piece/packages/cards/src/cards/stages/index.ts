@@ -42,3 +42,8 @@ export { op15DressrosaKingdom057 } from "./op15-057-dressrosa-kingdom.ts";
 export { op16Marineford078 } from "./op16-078-marineford.ts";
 export { op16MobyDick021 } from "./op16-021-moby-dick.ts";
 export { op17Fullalead057 } from "./op17-057-fullalead.ts";
+export { st04OnigashimaIsland017 } from "./st04-017-onigashima-island.ts";
+export { st06NavyHq017 } from "./st06-017-navy-hq.ts";
+export { st07QueenMamaChanter017 } from "./st07-017-queen-mama-chanter.ts";
+export { st31ThousandSunny005 } from "./st31-005-thousand-sunny.ts";
+export { pMerryGo142 } from "./p-142-merry-go.ts";

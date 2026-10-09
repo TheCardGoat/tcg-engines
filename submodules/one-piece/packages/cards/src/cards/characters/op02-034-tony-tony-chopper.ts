@@ -23,7 +23,7 @@ export const op02TonyTonyChopper034: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 2000,
-  traits: ["Animal Film Straw Hat Crew"],
+  traits: ["FILM", "Animal", "Straw Hat Crew"],
   attribute: "wisdom",
   effect:
     "[DON!! x1] [When Attacking] Rest up to 1 of your opponent's Characters with a cost of 2 or less.",

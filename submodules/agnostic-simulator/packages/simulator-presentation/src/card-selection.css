@@ -1,0 +1,47 @@
+/* Semantic hit targets supply the state; the game supplies projected card bounds. */
+.tcg-card-choice {
+  --card-choice-color: #86e8ed;
+  --card-choice-glow: #54d9e34d;
+  border-radius: 11px;
+}
+.tcg-card-choice::before,
+.tcg-card-choice::after {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease, transform 220ms cubic-bezier(.2,.8,.2,1);
+}
+.tcg-card-choice::before {
+  content: "";
+  inset: 0;
+  border: 1px solid var(--card-choice-color);
+  border-radius: inherit;
+  background: linear-gradient(145deg, #86e8ed12, transparent 45%, #86e8ed08);
+  box-shadow: 0 0 0 1px #071c25a6, 0 0 16px var(--card-choice-glow), inset 0 0 12px #86e8ed12;
+  transform: scale(.98);
+}
+.tcg-card-choice::after {
+  content: "✓";
+  top: -9px;
+  right: -9px;
+  display: grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  border: 1px solid var(--card-choice-color);
+  border-radius: 50%;
+  background: #102b35;
+  box-shadow: 0 2px 6px #000b, 0 0 10px var(--card-choice-glow);
+  color: #d9fdff;
+  font: 600 14px/1 system-ui;
+  transform: scale(.65);
+}
+.tcg-card-choice[aria-pressed="true"]::before,
+.tcg-card-choice[aria-pressed="true"]::after {
+  opacity: 1;
+  transform: scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tcg-card-choice::before,
+  .tcg-card-choice::after { transition: none; }
+}

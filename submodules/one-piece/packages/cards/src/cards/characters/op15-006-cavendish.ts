@@ -23,7 +23,7 @@ export const op15Cavendish006: CharacterCard = {
   cost: 4,
   power: 4000,
   counter: 2000,
-  traits: ["Beautiful Pirates Dressrosa"],
+  traits: ["Dressrosa", "Beautiful Pirates"],
   attribute: "slash",
   effect: "If you have 4 or more Events in your trash, this Character gains +2000 power.",
   effects: {

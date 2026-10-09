@@ -57,7 +57,7 @@ describe("parseActions — ModifyPowerAction", () => {
         target: {
           zones: ["character"],
           filters: [
-            { filter: "trait", value: "Heart Pirates", match: "includes" },
+            { filter: "trait", value: "Heart Pirates", match: "exact" },
             { filter: "excludeName", value: "Donquixote Rosinante" },
           ],
         },
@@ -511,7 +511,7 @@ describe("parseActions — grantKeyword", () => {
     ]);
   });
 
-  test("a typed Character grant uses inclusive trait matching", () => {
+  test("a typed Character grant uses exact trait matching", () => {
     const result = parseActions(
       "up to 1 of your {Sky Island} type Characters gains [Double Attack] during this turn",
     );
@@ -523,7 +523,7 @@ describe("parseActions — grantKeyword", () => {
           player: "self",
           zones: ["character"],
           count: { amount: 1, upTo: true },
-          filters: [{ filter: "trait", value: "Sky Island", match: "includes" }],
+          filters: [{ filter: "trait", value: "Sky Island", match: "exact" }],
         },
         keyword: "doubleAttack",
         duration: "thisTurn",
@@ -570,20 +570,21 @@ describe("parseActions — grantKeyword", () => {
     });
   });
 
-  test("natural Rush: Character restriction wording", () => {
+  test("played-turn Leader restriction does not grant Rush", () => {
     expect(
       parseActions("this Character cannot attack a Leader on the turn in which it is played"),
     ).toEqual({
       parsed: [
         {
-          action: "grantKeyword",
-          target: {
+          action: "cannotAttackTargets",
+          attacker: {
             player: "self",
             zones: ["character"],
             count: { amount: 1 },
             self: true,
           },
-          keyword: "rushCharacter",
+          filters: [{ filter: "cardCategory", value: "leader" }],
+          condition: { condition: "playedThisTurn" },
           duration: "permanent",
         },
       ],
@@ -721,7 +722,7 @@ describe("trait-qualified Leader target", () => {
             player: "self",
             zones: ["leader"],
             count: { amount: 1 },
-            filters: [{ filter: "trait", value: "Supernovas", match: "includes" }],
+            filters: [{ filter: "trait", value: "Supernovas", match: "exact" }],
           },
           value: 1000,
           duration: "untilEndOfOpponentNextTurn",
@@ -752,5 +753,59 @@ describe("setPower action", () => {
       value: 5000,
       duration: "thisTurn",
     });
+  });
+});
+
+test("EB04-048 preserves both scaled permanent stats and its paid On Play draw", () => {
+  const effects = buildCardEffects(
+    'If your Leader\'s type includes "CP", this Character gains +1000 power and +2 cost for every 5 cards in your trash.\n[On Play] You may trash 1 of your Characters: Draw 1 card.',
+  );
+  expect(effects?.permanentEffects?.[0]?.actions).toEqual([
+    expect.objectContaining({
+      action: "modifyPower",
+      value: 1000,
+      valuePerCardGroup: expect.objectContaining({ size: 5 }),
+    }),
+    expect.objectContaining({
+      action: "modifyCost",
+      value: 2,
+      valuePerCardGroup: expect.objectContaining({ size: 5 }),
+    }),
+  ]);
+  expect(effects?.effects?.[0]).toMatchObject({
+    trigger: "onPlay",
+    costs: [{ cost: "trashCharacter", amount: 1 }],
+    actions: [{ action: "draw", player: "self", amount: 1 }],
+  });
+});
+
+describe("copying Leader power", () => {
+  test("copies current power when the source text does not say base power", () => {
+    const result = parseActions(
+      "This Character's base power becomes the same as your opponent's Leader during this turn.",
+    );
+    expect(result.parsed).toEqual([
+      {
+        action: "copyPower",
+        target: { player: "opponent", zones: ["leader"], count: { amount: 1 } },
+        duration: "thisTurn",
+      },
+    ]);
+    expect(result.unparsed).toBe("");
+  });
+
+  test("preserves explicit source base power", () => {
+    const result = parseActions(
+      "This Character's base power becomes the same as your Leader's base power.",
+    );
+    expect(result.parsed).toEqual([
+      {
+        action: "setBasePowerFrom",
+        target: { player: "self", zones: ["character"], count: { amount: 1 }, self: true },
+        source: { player: "self", zones: ["leader"], count: { amount: 1 } },
+        duration: "permanent",
+      },
+    ]);
+    expect(result.unparsed).toBe("");
   });
 });

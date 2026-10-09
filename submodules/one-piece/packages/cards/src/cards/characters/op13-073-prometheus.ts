@@ -23,7 +23,7 @@ export const op13Prometheus073: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 2000,
-  traits: ["Big Mom Pirates Homies"],
+  traits: ["Homies", "Big Mom Pirates"],
   attribute: "special",
   i18n: op13Prometheus073I18n,
 };

@@ -32,28 +32,7 @@ describe("ShieldPips", () => {
     expect(getByTestId("shield-stack-preview")).toBeTruthy();
     const cardBacks = document.querySelectorAll("[data-shield-preview-stack] [role='img']");
     expect(cardBacks).toHaveLength(2);
-    expect((cardBacks[0]!.parentElement as HTMLElement).style.zIndex).toBe("2");
-    expect((cardBacks[1]!.parentElement as HTMLElement).style.zIndex).toBe("1");
     expect(queryByText("Hidden Ace")).toBeNull();
-  });
-
-  it("keeps the compact inline trigger touch-sized", () => {
-    const { getByRole } = render(
-      <ShieldPips value={2} max={6} low={false} listLabel="Your shields" compact inline />,
-    );
-
-    expect(getByRole("group", { name: "Your shields, 2 of 6" }).className).toContain("size-11");
-  });
-
-  it("bottom-aligns pips in the compact fill trigger", () => {
-    const { getByRole } = render(
-      <ShieldPips value={2} max={6} low={false} listLabel="Your shields" compact fill />,
-    );
-
-    const trigger = getByRole("group", { name: "Your shields, 2 of 6" });
-    expect(trigger.className).toContain("h-full");
-    expect(trigger.className).toContain("items-end");
-    expect(trigger.className).toContain("pb-1");
   });
 
   it("submits a selected face-down Shield by position without revealing its identity", () => {

@@ -1,0 +1,14 @@
+{
+  "candidateId": "meta-v3",
+  "parentStrategyId": "meta-v1",
+  "changes": {},
+  "hypothesis": "Play and attach before attacks for Contenders with a Void replay ability; retain attack-first order for the other Contenders.",
+  "evaluation": {
+    "suiteId": "meta",
+    "seedBase": "alpha-clash-meta-holdout-v2",
+    "minimumBlocks": 12,
+    "maximumBlocks": 12,
+    "batchSize": 3,
+    "maximumCellRegression": 0
+  }
+}

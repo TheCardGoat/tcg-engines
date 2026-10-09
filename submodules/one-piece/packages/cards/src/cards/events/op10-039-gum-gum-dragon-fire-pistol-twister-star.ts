@@ -22,7 +22,7 @@ export const op10GumGumDragonFirePistolTwisterStar039: EventCard = {
   setId: "OP10",
   cost: 3,
   trigger: "Rest up to 1 of your opponent's Characters with a cost of 5 or less.",
-  traits: ["Straw Hat Crew Supernovas ODYSSEY"],
+  traits: ["ODYSSEY", "Supernovas", "Straw Hat Crew"],
   effect:
     '[Main] If your Leader has the "ODYSSEY" type, look at 5 cards from the top of your deck; reveal up to 2 "ODYSSEY" type Character cards and add them to your hand. Then, place the rest at the bottom of your deck in any order.',
   effects: {
@@ -33,7 +33,7 @@ export const op10GumGumDragonFirePistolTwisterStar039: EventCard = {
           {
             condition: "leaderTrait",
             trait: "ODYSSEY",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -52,7 +52,7 @@ export const op10GumGumDragonFirePistolTwisterStar039: EventCard = {
               {
                 filter: "trait",
                 value: "ODYSSEY",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

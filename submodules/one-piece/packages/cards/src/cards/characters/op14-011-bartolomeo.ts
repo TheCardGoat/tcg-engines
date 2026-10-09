@@ -23,7 +23,7 @@ export const op14eb04Bartolomeo011: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 2000,
-  traits: ["Supernovas Dressrosa Barto Club"],
+  traits: ["Dressrosa", "Supernovas", "Barto Club"],
   attribute: "special",
   effect:
     "[DON!! x2] This Character gains [Blocker].\n(After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

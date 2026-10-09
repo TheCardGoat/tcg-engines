@@ -23,7 +23,7 @@ export const op10Urouge101: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["Fallen Monk Pirates Supernovas"],
+  traits: ["Supernovas", "Fallen Monk Pirates"],
   attribute: "strike",
   i18n: op10Urouge101I18n,
 };

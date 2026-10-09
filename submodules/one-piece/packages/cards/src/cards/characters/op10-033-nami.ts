@@ -23,7 +23,7 @@ export const op10Nami033: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 2000,
-  traits: ["Straw Hat Crew ODYSSEY"],
+  traits: ["ODYSSEY", "Straw Hat Crew"],
   attribute: "special",
   effect:
     "[On Play] If you have 2 or more rested \"ODYSSEY\" type Characters, up to 1 of your opponent's rested DON!! cards will not become active in your opponent's next Refresh Phase.",
@@ -46,7 +46,7 @@ export const op10Nami033: CharacterCard = {
               {
                 filter: "trait",
                 value: "ODYSSEY",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

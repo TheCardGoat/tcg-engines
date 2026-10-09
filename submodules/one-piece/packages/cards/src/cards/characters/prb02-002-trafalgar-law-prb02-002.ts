@@ -33,7 +33,7 @@ export const prb02TrafalgarLawPrb02002002: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Heart Pirates The Seven Warlords of the Sea Punk Hazard"],
+  traits: ["Punk Hazard", "The Seven Warlords of the Sea", "Heart Pirates"],
   attribute: "slash",
   effect:
     "[Once Per Turn] If this Character would be removed from the field by your opponent's effect, you may give this Character -2000 power during this turn instead.[When Attacking] Give up to 1 of your opponent's Characters -2000 power during this turn.",

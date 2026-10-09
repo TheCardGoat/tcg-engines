@@ -28,29 +28,10 @@ export const scorchingTrap: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
       abilities: [
         {
           id: "wjbqjdmthh-a1",
-          kind: "card-resolution",
+          kind: "static",
+          staticKind: "effects",
           text: "[Class Bonus] If it’s not your turn, you may remove a preparation counter from your champion to activate this card from your memory without paying its reserve cost.",
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              unique: true,
-              candidates: {
-                kind: "object",
-                zones: ["field"],
-                filter: {
-                  kind: "type",
-                  oneOf: ["CHAMPION"],
-                },
-              },
-            },
-          ],
+          functionalZones: ["memory"],
           restrictions: [
             {
               kind: "static",
@@ -61,28 +42,56 @@ export const scorchingTrap: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               },
             },
           ],
-          effect: {
-            kind: "conditional",
-            condition: {
-              kind: "turn-player",
-              player: "opponent",
+          effects: [
+            {
+              kind: "rule-modification",
+              mode: "allow",
+              action: "activate",
+              subject: {
+                kind: "source",
+              },
+              fromZone: "memory",
+              condition: {
+                kind: "not",
+                condition: {
+                  kind: "turn-player",
+                  player: "controller",
+                },
+              },
+              duration: {
+                kind: "while-source-in-functional-zone",
+              },
             },
-            then: {
-              kind: "optional",
-              player: "controller",
-              allOrNothing: true,
-              effect: {
+            {
+              kind: "rule-modification",
+              mode: "replace-cost",
+              action: "activate",
+              subject: {
+                kind: "source",
+              },
+              fromZone: "memory",
+              costKind: "reserve",
+              cost: {
                 kind: "remove-counter",
                 subject: {
-                  kind: "bound",
-                  binding: "target-1",
+                  kind: "champion",
+                  player: "controller",
                 },
                 counter: "preparation",
                 amount: 1,
-                bindResultAs: "removed-counters",
+              },
+              condition: {
+                kind: "not",
+                condition: {
+                  kind: "turn-player",
+                  player: "controller",
+                },
+              },
+              duration: {
+                kind: "while-source-in-functional-zone",
               },
             },
-          },
+          ],
         },
         {
           id: "wjbqjdmthh-a2",
@@ -90,7 +99,7 @@ export const scorchingTrap: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
           text: "Deal 2 damage to target attacking unit.",
           targets: [
             {
-              id: "wjbqjdmthh-a2:target-1",
+              id: "target-1",
               kind: "target",
               declared: "announcement",
               chooser: "controller",
@@ -125,7 +134,7 @@ export const scorchingTrap: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
             },
             recipient: {
               kind: "bound",
-              binding: "wjbqjdmthh-a2:target-1",
+              binding: "target-1",
             },
             amount: 2,
           },

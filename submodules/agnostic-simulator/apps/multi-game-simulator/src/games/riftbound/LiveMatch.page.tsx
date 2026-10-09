@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { ChatMessage as ProtocolChatMessage, ChatPresetKey } from "@tcg/protocol";
-import type { CardsMaps } from "@tcg/shared/game-adapter";
+import type { ChatMessage as ProtocolChatMessage, ChatPresetKey, PendingProposal } from "@tcg/protocol";
 import { CHAT_PRESET_KEYS, CHAT_PRESETS } from "@tcg/simulator-runtime/chat";
 import {
   ChatPanel,
@@ -9,17 +8,16 @@ import {
 } from "@tcg/simulator-ui";
 import { acquireRootGatewayHandle } from "../../lib/gateway/root-socket";
 import { useSimulatorRoute } from "../../simulator/providers";
-import { fetchRiftboundCardDefinitions } from "./catalog";
+import { useLiveMatchDocumentTitle } from "../../simulator/attention/useLiveMatchDocumentTitle";
 import { RiftboundTabletop } from "./RiftboundTabletop";
 import { nextRiftboundGameHref } from "./navigation";
 import { downloadHostedReplay, saveHostedReplayOnDevice } from "../../runtime/replayActions";
 import {
-  createRiftboundClientMatchStateV1,
   parseRiftboundClientSnapshotV1,
   reduceRiftboundClientMatchStateV1,
   type RiftboundClientMatchActionV1,
   type RiftboundClientMatchStateV1,
-} from "./state";
+} from "@tcg/riftbound-tabletop";
 
 export function RiftboundLiveMatchPage() {
   const route = useSimulatorRoute();
@@ -29,24 +27,36 @@ export function RiftboundLiveMatchPage() {
   const viewerId = useMemo(() => {
     return page?.viewer.role === "player" ? page.viewer.actorId : null;
   }, [page]);
-  const players = useMemo(
-    () =>
-      page?.match.participants
-        .toSorted((a, b) => a.seat - b.seat)
-        .map((participant) => participant.id) ?? [],
-    [page],
-  );
   const initialState = parseRiftboundClientSnapshotV1(snapshot?.view)?.state ?? null;
   const [authoritative, setAuthoritative] = useState<RiftboundClientMatchStateV1 | null>(
     initialState,
   );
   const [display, setDisplay] = useState<RiftboundClientMatchStateV1 | null>(initialState);
+  useLiveMatchDocumentTitle({
+    game: "Riftbound",
+    turn: null,
+    priority: null,
+    finished: Boolean(display?.terminal),
+  });
   const [version, setVersion] = useState<number | null>(
     initialState ? (snapshot?.stateVersion ?? 0) : null,
   );
   const [pending, setPending] = useState(false);
   const [conflict, setConflict] = useState<string | null>(null);
-  const [initializationError, setInitializationError] = useState<string | null>(null);
+  const [canUndo, setCanUndo] = useState(snapshot?.undoable === true);
+  const [canUndoTurn, setCanUndoTurn] = useState(snapshot?.undoTurnAvailable === true);
+  const [undoProposal, setUndoProposal] = useState<PendingProposal | null>(null);
+  useEffect(() => {
+    if (!undoProposal) return;
+    const deadline = undoProposal.deadline;
+    const timeout = window.setTimeout(
+      () => {
+        setUndoProposal((current) => (current?.deadline === deadline ? null : current));
+      },
+      Math.max(0, deadline - Date.now()),
+    );
+    return () => window.clearTimeout(timeout);
+  }, [undoProposal]);
   // Seed chat from the HTTP bootstrap (player sessions only) so a refresh
   // shows history immediately; the gateway `game_chat_history` reply remains
   // the authoritative hydration for spectators and reconnects.
@@ -78,68 +88,66 @@ export function RiftboundLiveMatchPage() {
 
   useEffect(() => {
     if (!snapshot?.gameId || !viewerId || !matchId) return;
-    let active = true;
     const handle = acquireRootGatewayHandle("riftbound");
     const unsubscribers = [
-      handle.on("game_joined", async (payload) => {
+      handle.on("game_joined", (payload) => {
         if (payload.gameId !== snapshot.gameId) return;
-        const restored = parseRiftboundClientSnapshotV1(payload.state);
-        if (restored?.state) {
-          acceptSnapshot(restored.state, payload.stateVersion);
-          return;
-        }
-        const bootstrapCardsMaps = restored?.cardsMaps ?? payload.cardsMaps;
-        if (players.length === 2 && bootstrapCardsMaps) {
-          try {
-            const cardsMaps = bootstrapCardsMaps as CardsMaps;
-            const cardDefinitions = await fetchRiftboundCardDefinitions(
-              Object.values(cardsMaps.cardInstances),
-            );
-            if (!active || authoritativeRef.current) return;
-            const created = createRiftboundClientMatchStateV1(
-              players as [string, string],
-              cardsMaps,
-              cardDefinitions,
-            );
-            handle.emit(
-              "push_state",
-              pushPayload(
-                snapshot.gameId,
-                created,
-                null,
-                viewerId,
-                { type: "initialize", actionId: crypto.randomUUID() },
-                cardsMaps,
-              ),
-            );
-            setDisplay(created);
-            setPending(true);
-          } catch (error) {
-            setInitializationError(
-              error instanceof Error ? error.message : "The Riftbound catalog could not be loaded.",
-            );
-          }
-        }
+        acceptSnapshot(payload.state, payload.stateVersion);
+        setCanUndo(payload.undoable === true);
+        setCanUndoTurn(payload.undoTurnAvailable === true);
+        if (payload.pendingProposal?.actionType === "undo") setUndoProposal(payload.pendingProposal);
       }),
       handle.on(
         "state_update",
-        (payload) =>
-          payload.gameId === snapshot.gameId && acceptSnapshot(payload.state, payload.stateVersion),
+        (payload) => {
+          if (payload.gameId !== snapshot.gameId) return;
+          acceptSnapshot(payload.state, payload.stateVersion);
+          setCanUndo(payload.undoable === true);
+          setCanUndoTurn(payload.undoTurnAvailable === true);
+        },
       ),
       handle.on(
         "state_sync",
-        (payload) =>
-          payload.gameId === snapshot.gameId && acceptSnapshot(payload.state, payload.stateVersion),
+        (payload) => {
+          if (payload.gameId !== snapshot.gameId) return;
+          acceptSnapshot(payload.state, payload.stateVersion);
+          setCanUndo(payload.undoable === true);
+          setCanUndoTurn(payload.undoTurnAvailable === true);
+        },
       ),
       handle.on("move_rejected", (payload) => {
-        if (payload.gameId !== snapshot.gameId || payload.code !== "rejected_stale") return;
+        if (payload.gameId !== snapshot.gameId) return;
         setDisplay(authoritativeRef.current);
         setPending(false);
-        setConflict("Another update won. Reloaded the latest table; retry your action.");
+        setConflict(payload.reason ?? "The server rejected that action. Reloaded the table.");
         handle.emit("request_game_state_sync", {
           gameId: snapshot.gameId,
           stateVersion: versionRef.current ?? undefined,
         });
+      }),
+      handle.on("proposal_received", (payload) => {
+        if (payload.gameId === snapshot.gameId && payload.actionType === "undo")
+          setUndoProposal({ ...payload, actionType: "undo" });
+      }),
+      handle.on("proposal_resolved", (payload) => {
+        if (payload.gameId === snapshot.gameId && payload.actionType === "undo") setUndoProposal(null);
+      }),
+      handle.on("proposal_expired", (payload) => {
+        if (payload.gameId === snapshot.gameId && payload.actionType === "undo") setUndoProposal(null);
+      }),
+      handle.on("proposal_send:response", (response) => {
+        if (response.status === "err") setConflict(response.data.message);
+        else if ("resolution" in response.data) setUndoProposal(null);
+        else if (response.data.actionType === "undo")
+          setUndoProposal({ ...response.data, actionType: "undo" });
+      }),
+      handle.on("proposal_accept:response", (response) => {
+        if (response.status === "err") setConflict(response.data.message);
+        setUndoProposal(null);
+      }),
+      handle.on("proposal_decline:response", (response) => {
+        if (response.status === "err") setConflict(response.data.message);
+        setUndoProposal(null);
       }),
       handle.on("game_ended", (payload) => {
         if (payload.gameId !== snapshot.gameId || payload.matchCompleted || !payload.nextGameId)
@@ -183,12 +191,11 @@ export function RiftboundLiveMatchPage() {
     ];
     handle.join({ gameId: snapshot.gameId });
     return () => {
-      active = false;
       unsubscribers.forEach((unsubscribe) => unsubscribe());
       handle.leave();
       handle.release();
     };
-  }, [acceptSnapshot, matchId, players, snapshot?.gameId, viewerId]);
+  }, [acceptSnapshot, matchId, snapshot?.gameId, viewerId]);
 
   const dispatch = useCallback(
     (action: RiftboundClientMatchActionV1) => {
@@ -201,14 +208,25 @@ export function RiftboundLiveMatchPage() {
       setDisplay(next);
       setPending(true);
       setConflict(null);
-      handle.emit(
-        "push_state",
-        pushPayload(snapshot.gameId, next, expectedVersion, viewerId, action),
-      );
+      handle.emit("execute_move", {
+        gameId: snapshot.gameId,
+        expectedVersion: expectedVersion ?? 0,
+        moveType: action.type,
+        payload: { ...action },
+        correlationId: action.actionId,
+      });
       handle.release();
     },
     [pending, snapshot?.gameId, viewerId],
   );
+  const sendUndo = (event: "proposal_send" | "proposal_accept" | "proposal_decline",
+    undoScope: "last_move" | "turn_start" = "last_move") => {
+    if (!snapshot?.gameId || !viewerId) return;
+    const handle = acquireRootGatewayHandle("riftbound");
+    handle.emit(event, { gameId: snapshot.gameId, actionType: "undo",
+      ...(event === "proposal_send" ? { undoScope } : {}) });
+    handle.release();
+  };
 
   if (route.error) return <SimulatorRouteStatus title="Match unavailable" message={route.error} />;
   if (!page || !snapshot)
@@ -225,22 +243,18 @@ export function RiftboundLiveMatchPage() {
         message="Riftbound live matches are limited to the two seated players."
       />
     );
-  if (snapshot.authority !== "client")
+  if (snapshot.authority !== "server")
     return (
       <SimulatorRouteStatus
         title="Invalid match authority"
-        message="Riftbound matches must be client authoritative."
+        message="Riftbound matches must use the hosted tabletop."
       />
-    );
-  if (initializationError)
-    return (
-      <SimulatorRouteStatus title="Table initialization failed" message={initializationError} />
     );
   if (!display)
     return (
       <SimulatorRouteStatus
         title="Initializing table"
-        message="Either seated player may create the first snapshot."
+        message="Waiting for the hosted table."
       />
     );
   const sendPreset = (presetKey: string) => {
@@ -265,6 +279,27 @@ export function RiftboundLiveMatchPage() {
       conflict={conflict}
       onAction={dispatch}
       sidebarExtra={
+        <>
+        <div className="riftbound-match-actions">
+          <button type="button" disabled={pending || Boolean(display.terminal)}
+            onClick={() => dispatch({ type: "start_turn", actorId: viewerId,
+              actionId: crypto.randomUUID(), at: Date.now() })}>Start turn</button>
+          <button type="button" disabled={pending || !canUndo || Boolean(undoProposal)}
+            onClick={() => sendUndo("proposal_send")}>Undo</button>
+          <button type="button" disabled={pending || !canUndoTurn || Boolean(undoProposal)}
+            onClick={() => sendUndo("proposal_send", "turn_start")}>Undo turn</button>
+        </div>
+        {undoProposal ? (
+          <div className="riftbound-match-actions" role="status">
+            <span>{undoProposal.senderPlayerId === viewerId
+              ? "Waiting for opponent approval."
+              : undoProposal.undoScope === "turn_start" ? "Opponent requests Undo turn." : "Opponent requests Undo."}</span>
+            {undoProposal.senderPlayerId !== viewerId ? (
+              <><button type="button" onClick={() => sendUndo("proposal_accept")}>Approve</button>
+                <button type="button" onClick={() => sendUndo("proposal_decline")}>Decline</button></>
+            ) : null}
+          </div>
+        ) : null}
         <ChatPanel
           messages={chatMessages.map((message) => toUiChatMessage(message, viewerId))}
           presets={CHAT_PRESET_KEYS.map((id) => ({ id, label: CHAT_PRESETS[id] }))}
@@ -273,6 +308,7 @@ export function RiftboundLiveMatchPage() {
           onSendText={sendText}
           compact
         />
+        </>
       }
       replayControls={
         display.terminal ? (
@@ -352,50 +388,5 @@ function toUiChatMessage(message: ProtocolChatMessage, viewerId: string): UiChat
     senderLabel: senderSide === "system" ? "System" : senderSide === "player" ? "You" : "Rival",
     text,
     timestamp: message.createdAt,
-  };
-}
-
-function pushPayload(
-  gameId: string,
-  state: RiftboundClientMatchStateV1,
-  expectedVersion: number | null,
-  actorId: string,
-  action: { type: string; actionId: string },
-  cardsMaps?: CardsMaps,
-) {
-  const nextVersion = expectedVersion === null ? 0 : expectedVersion + 1;
-  return {
-    gameId,
-    state,
-    ...(cardsMaps ? { cardsMaps } : {}),
-    expectedVersion,
-    version: nextVersion,
-    moveType: action.type,
-    actorId,
-    ...(state.terminal
-      ? { gameEnd: { winnerId: state.terminal.winnerId, reason: state.terminal.reason } }
-      : {}),
-    acceptedMove: {
-      gameId,
-      stateVersion: nextVersion,
-      turnNumber: state.activity.length,
-      actorId,
-      moveId: action.actionId,
-      input: action,
-      processedCommand: action,
-      timestamp: Date.now(),
-      sourceAuthority: "client" as const,
-      transitionType: "move" as const,
-      newStateID: nextVersion,
-    },
-    engineLogs: [
-      {
-        gameId,
-        stateVersion: nextVersion,
-        timestamp: Date.now(),
-        sourceAuthority: "client" as const,
-        log: { action: action.type },
-      },
-    ],
   };
 }

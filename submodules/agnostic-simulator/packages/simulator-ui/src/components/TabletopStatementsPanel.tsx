@@ -2,7 +2,7 @@ import type {
   SimulatorStatementActionInput,
   SimulatorStatementsState,
 } from "@tcg/simulator-contract";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { cx } from "../class-names";
 import classes from "./TabletopStatementsPanel.module.css";
@@ -30,6 +30,7 @@ export function TabletopStatementsPanel({
 }: TabletopStatementsPanelProps) {
   const [replyToId, setReplyToId] = useState<string>();
   const editorRef = useRef<HTMLTextAreaElement>(null);
+  const editorId = useId();
   const canEdit = !readOnly && !disabled;
   const actorLabel = (actorId: string) =>
     actorId === viewerId ? "You" : (resolveActorLabel?.(actorId) ?? actorId);
@@ -72,12 +73,12 @@ export function TabletopStatementsPanel({
               </button>
             </div>
           ) : null}
-          <label className={classes.srOnly} htmlFor="simulator-statement-composer">
+          <label className={classes.srOnly} htmlFor={editorId}>
             {replyToId ? "Write a reply" : "Write an announcement"}
           </label>
           <textarea
             ref={editorRef}
-            id="simulator-statement-composer"
+            id={editorId}
             name="statement"
             maxLength={500}
             placeholder={replyToId ? "Write a reply" : "Declare intent, trigger, or resolution"}

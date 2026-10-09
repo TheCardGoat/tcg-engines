@@ -40,7 +40,7 @@ export const op10TonyTonyChopper011: CharacterCard = {
   cost: 4,
   power: 4000,
   counter: 2000,
-  traits: ["Straw Hat Crew Punk Hazard"],
+  traits: ["Punk Hazard", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[Opponent's Turn] This Character gains +2000 power.",

@@ -51,15 +51,9 @@ export const oneiricKey: GrandArchiveCard<GrandArchiveAbilityDefinition, "card">
           effect: {
             kind: "add-counter",
             subject: {
-              kind: "each",
-              collection: {
-                zones: ["field"],
-                player: "controller",
-                filter: {
-                  kind: "name",
-                  value: "Phantasmagoria",
-                },
-              },
+              kind: "mastery",
+              player: "controller",
+              name: "Phantasmagoria",
             },
             counter: {
               named: "haunt",

@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://rules.fabtcg.com/en/cr/glossary/"
+  relation: "current_index"
+---
+
 # Flesh and Blood Glossary
 
 Load this file before rules-facing Flesh and Blood work. Use these terms in

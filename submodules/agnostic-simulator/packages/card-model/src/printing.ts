@@ -26,5 +26,5 @@ export interface Printing {
    */
   label?: string;
   /** Provider-native identities for this exact physical printing. */
-  externalIds?: Partial<Record<import("./external-source").ExternalSource, string>>;
+  externalIds?: Partial<Record<import("./external-source.js").ExternalSource, string>>;
 }

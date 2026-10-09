@@ -30,7 +30,7 @@ export const op11HonestyImpact018: EventCard = {
   setId: "OP11",
   cost: 6,
   trigger: "K.O. up to 1 of your opponent's Characters with 6000 power or less.",
-  traits: ["Navy SWORD"],
+  traits: ["Navy", "SWORD"],
   effect:
     "[Main] Give up to 1 of your opponent's Characters −4000 power during this turn. Then, K.O. up to 1 of your opponent's Characters with 6000 power or less.",
   effects: {

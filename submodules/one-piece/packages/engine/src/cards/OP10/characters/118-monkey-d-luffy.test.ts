@@ -108,4 +108,28 @@ describe("OP10-118 Monkey.D.Luffy", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("may pay the ordered trash cost when the opponent has fewer than five hand cards", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        character: [{ cardId: "OP10-118", playedOnTurn: 0 }],
+        trash: ["EB01-005", "EB01-025", "EB01-018"],
+      },
+      {},
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const ids = e
+      .getView("south")
+      .players.south.trash.map((c) => c.instanceId)
+      .filter((id): id is string => Boolean(id))
+      .reverse();
+    const count = e.getView("south").players.south.deckCount;
+    e.asSouth().attack(e.findCardInZone("south", "character", "OP10-118"), e.leader("north"));
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectCostReturnTrashToDeck", { selectedIds: ids }, "south");
+    expect(e.getView("south").players.south.deckCount).toBe(count + 3);
+    expect(e.getView("south").players.south.trash).toHaveLength(0);
+    // Public order is selected, but hidden deck identity needs the state assertion.
+    expect(e.getState().players.south.deck.slice(-3)).toEqual(ids);
+    expect(e.getView("north").players.north.trash).toHaveLength(0);
+  });
 });

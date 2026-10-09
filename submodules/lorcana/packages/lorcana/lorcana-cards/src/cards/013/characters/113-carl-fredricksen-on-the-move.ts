@@ -11,7 +11,7 @@ export const carlFredricksenOnTheMove: CharacterCard = {
       artId: "set13-113",
       setCode: "set13",
       collectorNumber: "113",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -23,7 +23,7 @@ export const carlFredricksenOnTheMove: CharacterCard = {
   franchise: "Up",
   set: "013",
   cardNumber: 113,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 4,
   strength: 3,
   willpower: 3,
@@ -31,6 +31,7 @@ export const carlFredricksenOnTheMove: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a395fdf1aee940cab396c90eacfba65d",
+    tcgPlayer: "702657",
   },
   text: [
     {

@@ -1,6 +1,12 @@
 import { describe, expect, test } from "vite-plus/test";
 import type { EventCard } from "@tcg/op-types";
-import { eb01Doma005, eb01MountainGod018, eb01OffWhite019, op07Bartolomeo031 } from "@tcg/op-cards";
+import {
+  eb01Doma005,
+  eb01MountainGod018,
+  eb01OffWhite019,
+  op07Bartolomeo031,
+  op05Stainless045,
+} from "@tcg/op-cards";
 
 import { registerCards } from "../../../../cards/src/runtime-catalog.ts";
 import { OnePieceTestEngine } from "../../../src/index.ts";
@@ -96,5 +102,32 @@ describe("OP07-031 Bartolomeo", () => {
       afterSecond.players.north.characters.find((card) => card?.instanceId === targets[1])?.rested,
     ).toBe(true);
     expect(afterSecond.prompts).toHaveLength(0);
+  });
+  test("resting Stainless to pay its effect cost triggers the draw and trash", () => {
+    const engine = OnePieceTestEngine.create({
+      character: [op07Bartolomeo031, op05Stainless045],
+      hand: [eb01Doma005, eb01MountainGod018],
+      deck: [eb01Doma005, eb01Doma005, eb01Doma005],
+    });
+    const stainlessId = engine.findCardInZone("south", "character", op05Stainless045);
+    const costId = engine.findCardInZone("south", "hand", eb01Doma005);
+    const discardId = engine.findCardInZone("south", "hand", eb01MountainGod018);
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    engine.activateEffect(stainlessId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectCostTrashFromHand", { selectedIds: [costId] }, "south");
+    expect(
+      engine
+        .getView("south")
+        .players.south.characters.find((card) => card?.instanceId === stainlessId)?.rested,
+    ).toBe(true);
+    engine.resolveDecision("effectTrashFromHandSelection", { selectedIds: [discardId] }, "south");
+    const view = engine.getView("south");
+    expect(view.players.south.deckCount).toBe(deckBefore - 1);
+    expect(view.players.south.handCount).toBe(1);
+    expect(view.players.south.trash.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining([costId, discardId]),
+    );
+    expect(view.prompts).toHaveLength(0);
   });
 });

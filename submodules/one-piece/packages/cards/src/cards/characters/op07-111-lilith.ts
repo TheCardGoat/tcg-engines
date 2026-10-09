@@ -38,7 +38,7 @@ export const op07Lilith111: CharacterCard = {
   setId: "OP07",
   cost: 3,
   power: 5000,
-  traits: ["Scientist Egghead"],
+  traits: ["Scientist", "Egghead"],
   attribute: "wisdom",
 
   effect:
@@ -67,7 +67,7 @@ export const op07Lilith111: CharacterCard = {
               {
                 filter: "trait",
                 value: "Egghead",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

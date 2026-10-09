@@ -23,7 +23,7 @@ export const op09Usopp024: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Straw Hat Crew ODYSSEY"],
+  traits: ["ODYSSEY", "Straw Hat Crew"],
   attribute: "ranged",
   effect:
     "[On Play] If you have 2 or more rested Characters, draw 2 cards and trash 2 cards from your hand.",

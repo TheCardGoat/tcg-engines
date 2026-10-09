@@ -30,18 +30,20 @@ describe("OP08-029 Pekoms", () => {
     const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     expect(target).toMatchObject({ kind: "selectEntity", min: 0, max: 1 });
     if (target?.kind !== "selectEntity") throw new Error("Expected X.Drake's K.O. target.");
-    expect(target.candidates.map((candidate) => candidate.ref.id)).toEqual([eligibleId]);
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(protectedId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [eligibleId] }, "south");
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toEqual(
+      expect.arrayContaining([eligibleId, protectedId]),
+    );
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(protectedId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [protectedId] }, "south");
     expect(
       engine.getView("north").players.north.characters.map((card) => card?.instanceId),
     ).toContain(protectedId);
     expect(
       engine.getView("north").players.north.characters.map((card) => card?.instanceId),
     ).toContain(pekomsId);
-    expect(engine.getView("north").players.north.trash.map((card) => card.instanceId)).toContain(
-      eligibleId,
-    );
+    expect(
+      engine.getView("north").players.north.characters.map((card) => card?.instanceId),
+    ).toContain(eligibleId);
   });
 
   test("does not protect Pekoms itself while active", () => {

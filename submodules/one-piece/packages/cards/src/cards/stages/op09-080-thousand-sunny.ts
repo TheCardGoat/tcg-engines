@@ -35,7 +35,7 @@ export const op09ThousandSunny080: StageCard = {
             {
               filter: "trait",
               value: "Straw Hat Crew",
-              match: "includes",
+              match: "exact",
             },
           ],
         },

@@ -1,0 +1,138 @@
+/* Skinning is shared by all native prompt types, including portaled dialogs. */
+
+.surface :global([data-state="mulligan"] [data-testid="prompt-mulligan-stats"]) {
+  gap: 0.2cqw;
+  margin-top: 0.55cqw;
+}
+
+.surface :global([data-state="mulligan"] [data-testid="prompt-mulligan-stats"] > span) {
+  gap: 0.25cqw;
+  padding: 0.12cqw 0.6cqw;
+  border: 0;
+  border-left: 1px solid #728087;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #b8c9cd;
+  font-family: "Cyberpunk Blender Pro", "Arial Narrow", sans-serif;
+  font-size: clamp(12px, 1.12cqw, 20px);
+  line-height: 1.2;
+}
+
+.surface :global([data-state="mulligan"] [data-testid="prompt-mulligan-stats"] > span:first-child) {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.surface
+  :global([data-state="mulligan"] [data-testid="prompt-mulligan-stats"] > span > span:first-child) {
+  color: inherit;
+  font-size: inherit;
+}
+
+.surface
+  :global([data-state="mulligan"] [data-testid="prompt-mulligan-stats"] > span > span:last-child) {
+  color: #e5eff0;
+  font-size: inherit;
+}
+
+.surface
+  :global(
+    [data-state="mulligan"]
+      [data-testid="prompt-mulligan-stats"]
+      > [class*="chipGood"]
+      > span:last-child
+  ) {
+  color: #a8d5b8;
+}
+
+.surface
+  :global(
+    [data-state="mulligan"]
+      [data-testid="prompt-mulligan-stats"]
+      > [class*="chipWarn"]
+      > span:last-child
+  ) {
+  color: #e0b294;
+}
+
+/* Let the mulligan summary wrap inside narrow V2 rails. The parent rail scrolls. */
+.surface
+  :global([data-state="mulligan"] [data-testid="prompt-mulligan-stats"] [class*="costLegend"]),
+.surface
+  :global([data-state="mulligan"] [data-testid="prompt-mulligan-stats"] [class*="typeList"]) {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  row-gap: 4px;
+}
+
+.surface
+  :global([data-state="mulligan"] [data-testid="prompt-mulligan-stats"] [class*="mixContent"]) {
+  flex-wrap: wrap;
+}
+
+/* Observer narration comes from the shared, game-agnostic prompt rail. */
+.surface :global([data-testid="interaction-resolution-prompt"]) {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  min-width: 0;
+  transform: none;
+  border: 1px solid #63777c;
+  border-radius: 2px;
+  background: linear-gradient(145deg, #29363bef, #111a1eee);
+  box-shadow: 0 5px 18px #0006;
+  color: #c8d6d8;
+  font-family: "Cyberpunk Blender Pro", "Arial Narrow", sans-serif;
+}
+.surface :global([data-slot="interaction-source"]) {
+  color: #dce6e3;
+  font-family: "Cyberpunk Refinery 25", "Arial Narrow", sans-serif;
+}
+
+/* Spatial choices need a housing even without a button. Waiting states are
+   exempt: they render as a quiet status chip (PromptBanner.bannerWaiting),
+   and wrapping a whole rival turn in the decision plate is exactly the
+   intrusion we don't want. V2's micro Gain Gig caption styles itself and
+   skips the frame for the same reason. */
+.surface.surface
+  > div:has(
+    [data-testid="prompt-banner"]:not(
+      [data-state="waiting-opponent"],
+      [data-state="waiting-mulligan"],
+      [data-prompt-skin="v2"][data-state="gain-gig"]
+    ),
+    [aria-label="Choose payment"]
+  ) {
+  /* Nine-slice the frame so its bolts and corners retain their proportions. */
+  border: 14px solid transparent;
+  border-image: url("https://cdn.tcg.online/public/cyberpunk/simulator/ui/industrial/v1/components/overlay-panel.webp")
+    72 / 14px stretch;
+  background: linear-gradient(145deg, #2a353a, #111a1e 65%);
+  background-clip: padding-box;
+  padding: 4px;
+  min-width: 0;
+  max-height: none;
+  overflow: visible;
+}
+
+@media (width <= 1000px) {
+  .surface.surface {
+    left: 50%;
+    right: auto;
+    margin-inline: 0;
+    width: min(72%, 440px);
+    transform: translateX(-50%);
+  }
+}
+
+/* Touch boards in phone landscape: the desktop rail geometry (38% wide,
+   capped at 45% tall) leaves a plate that towers over the field rows with
+   24px verb bars nobody can tap. Widen the plate and cap it above the hand
+   fan so the field stays visible while choosing. */
+@media (pointer: coarse) and (height <= 600px) {
+  .surface.surface {
+    width: min(88%, 500px);
+    max-height: min(56%, 300px);
+  }
+}

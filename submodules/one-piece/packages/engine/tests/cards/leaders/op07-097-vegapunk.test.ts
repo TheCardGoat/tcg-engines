@@ -57,4 +57,32 @@ describe("OP07-097 Vegapunk", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test.each(["OP07-098", "OP07-117"])(
+    "plays %s but excludes Egghead Events from the play branch",
+    (cardId) => {
+      const engine = OnePieceTestEngine.create({
+        leaderCardId: op07Vegapunk097,
+        hand: [cardId, op07HePossessesTheWorldSMostBrilliantMind114],
+        activeDon: 1,
+      });
+      const selected = engine.findCardInZone("south", "hand", cardId);
+      const event = engine.findCardInZone(
+        "south",
+        "hand",
+        op07HePossessesTheWorldSMostBrilliantMind114,
+      );
+      engine.activateEffect(engine.leader("south"), "activateMain", "south");
+      engine.resolveDecision("effectActionChoice", { optionId: "0" }, "south");
+      const choice = engine.pendingDecision("effectPlaySelection", "south").steps[0];
+      if (choice?.kind !== "selectEntity") throw new Error("Expected the Egghead play selection.");
+      expect(choice.candidates.map((candidate) => candidate.ref.id)).toEqual([selected]);
+      engine.resolveDecision("effectPlaySelection", { selectedIds: [selected] }, "south");
+      expect(engine.getState().cards[selected]?.zone).toBe(
+        cardId === "OP07-117" ? "stage" : "character",
+      );
+      expect(engine.getState().cards[event]?.zone).toBe("hand");
+      expect(engine.getView("south").players.south.activeDon).toBe(0);
+      expect(engine.getView("south").prompts).toHaveLength(0);
+    },
+  );
 });

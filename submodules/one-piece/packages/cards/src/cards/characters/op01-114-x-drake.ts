@@ -23,7 +23,7 @@ export const op01XDrake114: CharacterCard = {
   cost: 5,
   power: 5000,
   counter: 2000,
-  traits: ["Animal Kingdom Pirates Drake Pirates Navy"],
+  traits: ["Navy", "Drake Pirates", "Animal Kingdom Pirates"],
   attribute: "slash",
   effect:
     "[On Play] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Your opponent trashes 1 card from their hand.",

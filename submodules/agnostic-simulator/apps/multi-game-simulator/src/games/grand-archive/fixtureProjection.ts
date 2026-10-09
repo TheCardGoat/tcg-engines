@@ -9,6 +9,7 @@ import { grandArchiveCardPresentation } from "@tcg/grand-archive-server-adapter"
 
 export interface GrandArchiveHarnessFixture extends HarnessFixture {
   readonly interactionView?: EngineInteractionView;
+  readonly stackView: GrandArchiveViewerSimulatorProjection["stackView"];
   readonly combatView: GrandArchiveViewerSimulatorProjection["combatView"];
   readonly turnPlayerId: string;
   readonly waitState: GrandArchiveSimulatorWaitState;
@@ -68,6 +69,7 @@ export function grandArchiveHarnessFixture(
       "Incarnation attached to visible objects",
     ],
     coreComponents: [],
+    stackView: projection.stackView,
     combatView: projection.combatView,
     turnPlayerId: projection.turnPlayerId,
     waitState: projection.waitState,

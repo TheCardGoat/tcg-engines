@@ -2,7 +2,7 @@ import { describe, expect, it } from "bun:test";
 import type { CardInstanceId, LogMessage, PlayerId } from "#core";
 import type { MatchState, PublishedGameEvent } from "./types";
 import type { ProjectedLogEntry } from "./match-runtime.types";
-import { projectGameLog } from "./match-runtime.logs";
+import { projectGameLog, appendStartOfTurnReadyMessages } from "./match-runtime.logs";
 import { createLorcanaGameLogEntry } from "../../types/log-messages";
 
 const state = {} as MatchState;
@@ -41,6 +41,100 @@ function resolveBagLogEntry(): ProjectedLogEntry {
 }
 
 describe("projectGameLog", () => {
+  it("shows the actual opposing discarded cards publicly under the causing move", () => {
+    const result = projectGameLog({
+      state,
+      moveLogEntries: [resolveBagLogEntry()],
+      publishedGameEvents: [
+        publishedGameEvent(1, {
+          kind: "MOVE_EXECUTED",
+          commandId: "command-1",
+          move: "resolveBag",
+          playerId: playerOneId,
+          inputRedacted: false,
+          input: {},
+        }),
+        publishedGameEvent(2, {
+          kind: "CUSTOM",
+          customType: "cardsDiscarded",
+          data: { playerId: playerTwoId, amount: 2, cardIds: [cardAId, cardBId] },
+        }),
+      ],
+    });
+    expect(result.moveLogs[0]?.public).toContainEqual({
+      key: "lorcana.outcome.cardsDiscarded.detail",
+      values: { playerId: playerTwoId, amount: 2, cardIds: [cardAId, cardBId] },
+    });
+  });
+  it("attaches a delayed ready step to the prior turn-start entry", () => {
+    const history = projectGameLog({
+      state,
+      publishedGameEvents: [
+        publishedGameEvent(1, {
+          kind: "TURN_STARTED",
+          playerId: playerTwoId,
+          turn: 2,
+          phase: "beginning",
+        }),
+      ],
+    }).moveLogs;
+    const delayed = projectGameLog({
+      state,
+      moveLogEntries: [resolveBagLogEntry()],
+      publishedGameEvents: [
+        publishedGameEvent(2, {
+          kind: "MOVE_EXECUTED",
+          commandId: "command-1",
+          move: "resolveBag",
+          playerId: playerOneId,
+          inputRedacted: false,
+          input: {},
+        }),
+        publishedGameEvent(3, {
+          kind: "CUSTOM",
+          customType: "cardReadied",
+          data: { cardId: characterId, source: "start-of-turn", zone: "play" },
+        }),
+      ],
+    });
+    expect(delayed.startOfTurnReadiedCards).toEqual([characterId]);
+    history.push(...delayed.moveLogs);
+    expect(appendStartOfTurnReadyMessages(history, delayed.startOfTurnReadiedCards!)).toBe(true);
+    expect(history[0]?.public).toContainEqual({
+      key: "lorcana.outcome.cardReadied",
+      values: { playerId: playerTwoId, cardId: characterId },
+    });
+    expect(
+      history[1]?.public.some((message) => message.key === "lorcana.outcome.cardReadied"),
+    ).toBe(false);
+  });
+
+  it("keeps an ability's own ready effect on its resolution", () => {
+    const result = projectGameLog({
+      state,
+      moveLogEntries: [resolveBagLogEntry()],
+      publishedGameEvents: [
+        publishedGameEvent(1, {
+          kind: "MOVE_EXECUTED",
+          commandId: "command-1",
+          move: "resolveBag",
+          playerId: playerOneId,
+          inputRedacted: false,
+          input: {},
+        }),
+        publishedGameEvent(2, {
+          kind: "CUSTOM",
+          customType: "cardReadied",
+          data: { cardId: characterId, zone: "play" },
+        }),
+      ],
+    });
+    expect(result.startOfTurnReadiedCards).toBeUndefined();
+    expect(result.moveLogs[0]?.public).toContainEqual({
+      key: "lorcana.outcome.cardReadied",
+      values: { playerId: playerOneId, cardId: characterId },
+    });
+  });
   it("adds Lorcana effect damage domain events to move outcomes", () => {
     const moveLogEntries: ProjectedLogEntry[] = [
       {
@@ -314,7 +408,10 @@ describe("projectGameLog", () => {
 
     expect(moveLogs[0]).toMatchObject({
       moveType: "resolveBag",
-      public: [{ key: "lorcana.bag.resolve.completed" }],
+      public: [
+        { key: "lorcana.bag.resolve.completed" },
+        { key: "lorcana.outcome.privateCardInkedExerted", values: { playerId: playerOneId } },
+      ],
       privateByPlayerId: {
         [playerOneId]: [
           {
@@ -333,7 +430,7 @@ describe("projectGameLog", () => {
     ).toBe(false);
   });
 
-  it("keeps start-of-turn ready outcomes for cards in play", () => {
+  it("keeps start-of-turn ready outcomes on the new turn rather than the resolving ability", () => {
     const { moveLogs } = projectGameLog({
       state,
       moveLogEntries: [resolveBagLogEntry()],
@@ -347,6 +444,12 @@ describe("projectGameLog", () => {
           input: {},
         }),
         publishedGameEvent(2, {
+          kind: "TURN_STARTED",
+          playerId: playerTwoId,
+          turn: 2,
+          phase: "beginning",
+        }),
+        publishedGameEvent(3, {
           kind: "CUSTOM",
           customType: "cardReadied",
           data: { cardId: characterId, source: "start-of-turn", zone: "play" },
@@ -358,16 +461,22 @@ describe("projectGameLog", () => {
     if (resolveBagLog?.moveType !== "resolveBag") {
       throw new Error("Expected a resolveBag log");
     }
-    expect(resolveBagLog.public).toContainEqual({
+    expect(
+      resolveBagLog.public.some((message) => message.key === "lorcana.outcome.cardReadied"),
+    ).toBe(false);
+    expect(moveLogs[1]?.moveType).toBe("turnStart");
+    expect(moveLogs[1]?.public).toContainEqual({
       key: "lorcana.outcome.cardReadied",
-      values: { playerId: playerOneId, cardId: characterId },
+      values: { playerId: playerTwoId, cardId: characterId },
     });
   });
 
-  it("keeps scry detail private while leaving revealed destinations public", () => {
+  it("keeps private scry destinations hidden and public reveal, discard and play destinations visible", () => {
     const destinations = [
       { zone: "deck-top", cardIds: [cardAId] },
       { zone: "hand", cardIds: [cardBId], revealed: true },
+      { zone: "discard", cardIds: [hiddenInkId] },
+      { zone: "play", cardIds: [characterId] },
     ];
     const privateScryMessage = {
       key: "lorcana.effect.resolve.scrySelection.detail",
@@ -422,7 +531,11 @@ describe("projectGameLog", () => {
             playerId: playerOneId,
             sourceCardId: threeArrowsId,
             selection: [],
-            destinations: [{ zone: "hand", cardIds: [cardBId], revealed: true }],
+            destinations: [
+              { zone: "hand", cardIds: [cardBId], revealed: true },
+              { zone: "discard", cardIds: [hiddenInkId] },
+              { zone: "play", cardIds: [characterId] },
+            ],
           },
         },
       ],
@@ -441,4 +554,49 @@ describe("projectGameLog", () => {
       },
     });
   });
+});
+
+it("projects actual healing for each target publicly and ignores zero removal", () => {
+  const { moveLogs } = projectGameLog({
+    state,
+    moveLogEntries: [resolveBagLogEntry()],
+    publishedGameEvents: [
+      publishedGameEvent(1, {
+        kind: "MOVE_EXECUTED",
+        commandId: "heal",
+        move: "resolveBag",
+        playerId: playerOneId,
+        inputRedacted: false,
+        input: {},
+      }),
+      publishedGameEvent(2, {
+        kind: "CUSTOM",
+        customType: "damageRemoved",
+        data: { targetId: cardAId, amount: 1 },
+      }),
+      publishedGameEvent(3, {
+        kind: "CUSTOM",
+        customType: "damageRemoved",
+        data: { targetId: cardBId, amount: 3 },
+      }),
+      publishedGameEvent(4, {
+        kind: "CUSTOM",
+        customType: "damageRemoved",
+        data: { targetId: characterId, amount: 0 },
+      }),
+    ],
+  });
+  expect(
+    moveLogs[0]?.public.filter((message) => message.key === "lorcana.outcome.damageRemoved"),
+  ).toEqual([
+    {
+      key: "lorcana.outcome.damageRemoved",
+      values: { playerId: playerOneId, targetId: cardAId, amount: 1 },
+    },
+    {
+      key: "lorcana.outcome.damageRemoved",
+      values: { playerId: playerOneId, targetId: cardBId, amount: 3 },
+    },
+  ]);
+  expect(moveLogs[0]?.privateByPlayerId).toBeUndefined();
 });

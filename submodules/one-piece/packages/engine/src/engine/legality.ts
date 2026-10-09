@@ -1,11 +1,11 @@
 import { attackHandTrashCost, canAttackWith, legalAttackTargets } from "../battle.ts";
-import { canPayCosts } from "../effects/actions.ts";
+import { canPayEffectBlockCosts } from "../effects/actions.ts";
 import { evaluateConditions } from "../effects/conditions.ts";
 import { isCardPlayRestricted } from "../effects/permanent.ts";
 import {
   effectBlocksFor,
   effectBlocksForInstance,
-  getCardCost,
+  getPaidPlayCost,
   getCardForInstance,
   getInstance,
   getPlayer,
@@ -35,7 +35,12 @@ function deny(reason: string): LegalityResult {
 }
 
 function isMainPhaseTurnOf(state: MatchState, seat: MatchSeat): boolean {
-  return state.status === "active" && state.activeSeat === seat && state.phase === "main";
+  return (
+    state.status === "active" &&
+    state.activeSeat === seat &&
+    state.phase === "main" &&
+    !hasPendingNonJudgePrompt(state)
+  );
 }
 
 // 1-2-3: a player may concede at any point — during setup or while the game
@@ -72,6 +77,9 @@ function canDecideOpeningHand(
   if (!state.setup.joKenPo.firstPlayerDecided) {
     return deny("Resolve Jo Ken Po and choose the first player before mulligan.");
   }
+  if (!state.setup.openingHandsDrawn || hasPendingNonJudgePrompt(state)) {
+    return deny("Resolve start-of-game effects before mulligan.");
+  }
   if (state.setup.mulliganDecided[seat]) {
     return deny("This player already made a mulligan choice.");
   }
@@ -92,6 +100,9 @@ export function canStartGame(state: MatchState, seat: MatchSeat): LegalityResult
   }
   if (seat !== state.config.firstPlayer) {
     return deny("Only the first player can start the match in this draft.");
+  }
+  if (!state.setup.openingHandsDrawn || hasPendingNonJudgePrompt(state)) {
+    return deny("Resolve start-of-game effects before starting.");
   }
   if (!state.setup.mulliganDecided.north || !state.setup.mulliganDecided.south) {
     return deny("Both players must choose whether to take a mulligan before starting.");
@@ -126,7 +137,7 @@ export function canPlayCard(
     return deny("A card effect prevents this card from being played.");
   }
   const card = getCardForInstance(state, instanceId);
-  const cardCost = card.cardType === "leader" ? 0 : getCardCost(state, instanceId);
+  const cardCost = card.cardType === "leader" ? 0 : getPaidPlayCost(state, instanceId);
   if (getPlayer(state, seat).activeDon < cardCost) {
     return deny("Not enough active DON!! to pay the cost.");
   }
@@ -228,7 +239,7 @@ export function canActivateEffect(
   }
   if (
     !conditionEligibleActivationBlocks.some((block) =>
-      canPayCosts(state, seat, sourceInstanceId, block.costs, trashHandIds),
+      canPayEffectBlockCosts(state, seat, sourceInstanceId, block, trashHandIds),
     )
   ) {
     return deny("The activation costs cannot be paid.");

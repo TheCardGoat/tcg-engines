@@ -66,33 +66,29 @@ export const op06Sanji119: CharacterCard = {
         trigger: "onPlay",
         actions: [
           {
-            action: "search",
-            lookCount: 1,
-            source: {
-              player: "self",
-              zone: "deck",
+            action: "revealTopDeckCard",
+            player: "self",
+            finalPosition: "bottom",
+            conditional: {
+              filters: [
+                { filter: "excludeName", value: "Sanji" },
+                { filter: "cost", comparison: "lte", value: 9 },
+                { filter: "cardCategory", value: "character" },
+              ],
+              actions: [
+                {
+                  action: "play",
+                  source: { player: "self", zone: "deck" },
+                  count: { amount: 1, upTo: true },
+                  topOnly: true,
+                  filters: [
+                    { filter: "excludeName", value: "Sanji" },
+                    { filter: "cost", comparison: "lte", value: 9 },
+                    { filter: "cardCategory", value: "character" },
+                  ],
+                },
+              ],
             },
-            revealCount: {
-              amount: 1,
-              upTo: true,
-            },
-            revealFilters: [
-              {
-                filter: "excludeName",
-                value: "Sanji",
-              },
-              {
-                filter: "cost",
-                comparison: "lte",
-                value: 9,
-              },
-              {
-                filter: "cardCategory",
-                value: "character",
-              },
-            ],
-            revealDestination: "character",
-            remainderPosition: "bottom",
           },
         ],
       },

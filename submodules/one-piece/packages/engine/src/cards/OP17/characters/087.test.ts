@@ -62,4 +62,16 @@ describe("OP17-087", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test.each(["self", "opponent", "absent"])(
+    "cost-twelve Character on %s field determines the continuous power",
+    (owner) => {
+      const e = OnePieceTestEngine.create(
+        { character: owner === "self" ? ["OP17-087", "OP17-089"] : ["OP17-087"] },
+        { character: owner === "opponent" ? ["OP17-089"] : [] },
+      );
+      expect(e.getView("south").players.south.characters[0]?.power).toBe(
+        owner === "absent" ? 2000 : 5000,
+      );
+    },
+  );
 });

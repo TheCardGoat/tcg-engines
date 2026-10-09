@@ -21,7 +21,7 @@ export const op04FlappingThread037: EventCard = {
   rarity: "UC",
   setId: "OP04",
   cost: 2,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   effect:
     "[Counter] If your Leader has the [Donquixote Pirates] type, up to 1 of your Leader or Character cards gains +2000 power during this turn. [Trigger] K.O. up to 1 of your opponent's rested Characters with a cost of 4 or less.",
   effects: {
@@ -32,7 +32,7 @@ export const op04FlappingThread037: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Donquixote Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

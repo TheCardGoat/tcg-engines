@@ -23,7 +23,7 @@ export const op08Robson013: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Animal Drum Kingdom"],
+  traits: ["Animal", "Drum Kingdom"],
   attribute: "wisdom",
   effect:
     "[DON!! x2] This Character gains [Rush]. (This card can attack on the turn in which it is played.)",

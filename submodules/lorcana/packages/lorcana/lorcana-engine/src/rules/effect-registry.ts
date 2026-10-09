@@ -34,6 +34,7 @@ export function resolveEffectWindow(
   options?: {
     currentPlayerId?: PlayerId;
     targetOwnerId?: PlayerId;
+    playerIds?: readonly PlayerId[];
   },
 ): { startsAtTurn: number; expiresAtTurn: number } {
   const turn = getDefaultCurrentTurn(currentTurn);
@@ -70,7 +71,7 @@ export function resolveEffectWindow(
       case "until-start-of-next-turn":
         return {
           startsAtTurn: turn,
-          expiresAtTurn: turn + 1,
+          expiresAtTurn: turn + Math.max(2, options?.playerIds?.length ?? 2) - 1,
         };
       case "permanent":
       case "while-in-play":

@@ -9,14 +9,14 @@ import {
   type SimulatorMatchParticipant,
 } from "@tcg/simulator-ui";
 import { Button, Tooltip } from "@mantine/core";
-import { Flag, History, Menu, RotateCcw, StepForward } from "lucide-react";
+import { Flag, History, Menu } from "lucide-react";
 import { useState, useEffect, useRef, type ReactNode } from "react";
 
 import "./grand-archive.css";
 import type { GrandArchiveHarnessFixture } from "./fixtureProjection";
 import { createGrandArchiveSidebarActivity } from "./GrandArchiveSidebarActivity";
 import { useGrandArchiveDialogFocus } from "./dialog-focus";
-import { GrandArchiveHands } from "./GrandArchiveHands";
+import { GrandArchiveBoard } from "./GrandArchiveBoard";
 import {
   GrandArchiveInteractionLayer,
   useGrandArchiveInteractionWorkspace,
@@ -32,26 +32,29 @@ interface GrandArchiveTabletopProps {
   readonly historyAccessory?: ReactNode;
   readonly errorMessage?: string;
   readonly canUndo?: boolean;
+  readonly canUndoTurn?: boolean;
   readonly canConcede?: boolean;
   readonly onUndo?: () => void;
+  readonly onUndoTurn?: () => void;
   readonly confirmConcede?: boolean;
+  readonly feedbackResetKey?: string | number;
 }
 
 function GrandArchiveSidebar({
   fixture,
   activity,
   automation,
-  canUndo,
+  canUndoTurn,
   canConcede = true,
-  onUndo,
+  onUndoTurn,
   onBeginAction,
 }: {
   readonly fixture: GrandArchiveHarnessFixture;
   readonly activity: SimulatorMatchActivity;
   readonly automation?: SimulatorMatchAutomation;
-  readonly canUndo?: boolean;
+  readonly canUndoTurn?: boolean;
   readonly canConcede?: boolean;
-  readonly onUndo?: () => void;
+  readonly onUndoTurn?: () => void;
   readonly onBeginAction?: (actionId: string) => void;
 }) {
   const workspace = useGrandArchiveInteractionWorkspace();
@@ -61,36 +64,11 @@ function GrandArchiveSidebar({
     throw new Error("Grand Archive sidebar requires opposed player seats.");
   }
 
-  const passInteraction = fixture.interactions.find(
-    (interaction) =>
-      interaction.input.kind === "action" &&
-      (interaction.movePreview.command === "pass" ||
-        interaction.movePreview.command === "skip-materialization") &&
-      fixture.interactionView?.actions.some(
-        (action) => action.id === interaction.id && action.enabled,
-      ),
-  );
   const concedeInteraction = fixture.interactions.find(
     (interaction) =>
       interaction.input.kind === "action" && interaction.movePreview.command === "concede",
   );
 
-  const undoReason = workspace.active
-    ? "Finish or cancel the current action before undoing."
-    : !onUndo
-      ? "Undo is available only in practice matches."
-      : !canUndo
-        ? "No undoable move available"
-        : undefined;
-  const passLabel =
-    passInteraction?.movePreview.command === "skip-materialization"
-      ? "Skip materialization"
-      : "Pass Opportunity";
-  const passReason = workspace.active
-    ? "Finish or cancel the current action before passing."
-    : !onBeginAction || !passInteraction
-      ? "There is no legal pass available right now."
-      : undefined;
   const concedeReason = workspace.active
     ? "Finish or cancel the current action before conceding."
     : !onBeginAction || !canConcede || !concedeInteraction
@@ -110,34 +88,21 @@ function GrandArchiveSidebar({
         className: "ga-match-action-dock",
         controls: (
           <div className="ga-match-dock-controls">
-            <GrandArchiveActionSlot label={"Undo"} reason={undoReason}>
-              <Button
-                variant="default"
-                disabled={Boolean(undoReason)}
-                aria-label={
-                  undoReason ? `Undo unavailable. ${undoReason}` : "Undo last accepted move"
-                }
-                leftSection={<RotateCcw size={16} aria-hidden="true" />}
-                onClick={onUndo}
+            {onUndoTurn ? (
+              <GrandArchiveActionSlot
+                label="Undo turn"
+                reason={canUndoTurn ? undefined : "No turn to undo"}
               >
-                Undo
-              </Button>
-            </GrandArchiveActionSlot>
-            <GrandArchiveActionSlot label={passLabel} reason={passReason}>
-              <Button
-                className="ga-match-pass"
-                styles={{
-                  label: { whiteSpace: "normal", lineHeight: 1.2 },
-                  section: { marginInlineEnd: 6 },
-                }}
-                disabled={Boolean(passReason)}
-                aria-label={passLabel}
-                leftSection={<StepForward size={16} aria-hidden="true" />}
-                onClick={() => passInteraction && onBeginAction?.(passInteraction.id)}
-              >
-                {passLabel}
-              </Button>
-            </GrandArchiveActionSlot>
+                <Button
+                  variant="default"
+                  disabled={Boolean(workspace.active) || !canUndoTurn}
+                  aria-label="Undo turn"
+                  onClick={onUndoTurn}
+                >
+                  Undo turn
+                </Button>
+              </GrandArchiveActionSlot>
+            ) : null}
           </div>
         ),
         danger: (
@@ -290,25 +255,26 @@ function GrandArchiveTabletopContent(props: GrandArchiveTabletopProps) {
       fixture={fixture}
       activity={activity}
       automation={props.automation}
-      canUndo={props.canUndo}
+      canUndoTurn={props.canUndoTurn}
       canConcede={props.canConcede}
-      onUndo={props.onUndo}
+      onUndoTurn={props.onUndoTurn}
       onBeginAction={beginAction}
     />
   );
   const board = (
-    <div className="ga-tabletop" data-testid="grand-archive-tabletop">
+    <div
+      className="ga-tabletop"
+      data-testid="grand-archive-tabletop"
+      data-action-attention-target
+      tabIndex={-1}
+    >
       <div className="ga-board">
-        {!props.onSubmitProtocolInteraction ? (
-          <span className="ga-read-only" role="status">
-            Read-only fixture · Inspect cards and zones
-          </span>
-        ) : null}
-        <GrandArchiveHands
-          onSubmitProtocolInteraction={props.onSubmitProtocolInteraction}
+        <GrandArchiveBoard
           fixture={fixture}
+          canAct={Boolean(props.onSubmitProtocolInteraction)}
           canUndo={props.canUndo}
           onUndo={props.onUndo}
+          feedbackResetKey={props.feedbackResetKey}
         />
       </div>
     </div>
@@ -317,9 +283,11 @@ function GrandArchiveTabletopContent(props: GrandArchiveTabletopProps) {
   return (
     <>
       <SimulatorViewportShell
+        className="ga-viewport-shell"
         data-game="grand-archive"
         data-theme="dark"
         sidebar={sidebar}
+        defaultSidebarOpen
         mobilePanel={sidebar}
         sidebarLabel="Grand Archive match activity"
         mobilePanelLabel="Grand Archive match activity"
@@ -327,7 +295,9 @@ function GrandArchiveTabletopContent(props: GrandArchiveTabletopProps) {
           <div className="ga-mobile-rail ga-mobile-rail-top">
             <GrandArchiveMobileActionFocus serial={actionSerial} closeSidebar={closeSidebar} />
             <div>
-              <strong>{fixture.table.status.phase}</strong>
+              <strong>
+                {fixture.combatView?.active ? "Combat" : fixture.table.status.phase.split(" · ")[0]}
+              </strong>
               <span>Turn {fixture.table.status.turn}</span>
             </div>
             <button type="button" onClick={openSidebar} aria-label="Open match activity">

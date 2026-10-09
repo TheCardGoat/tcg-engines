@@ -5,7 +5,7 @@ import { prb01BartolomeoP029JollyRogerFoil029 } from "../../../../../cards/src/c
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("P-029 Bartolomeo", () => {
-  test("at end of turn may rest itself to set an included FILM Character other than Bartolomeo active", () => {
+  test("at end of turn may rest itself to set an FILM Character other than Bartolomeo active", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [

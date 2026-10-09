@@ -55,7 +55,7 @@ export const op14eb04Dellinger067: CharacterCard = {
               {
                 filter: "trait",
                 value: "Donquixote Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

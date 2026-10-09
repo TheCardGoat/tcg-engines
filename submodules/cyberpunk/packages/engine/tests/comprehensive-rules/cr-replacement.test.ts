@@ -78,7 +78,7 @@ describe("CR real-card: replacement effects", () => {
 
     const choice = engine.getState().G.turnMetadata.pendingChoice;
     expect(choice?.type).toBe("redirectDefeat");
-    engine.applyRedirectDefeat({ as: P1 });
+    const resolution = engine.applyRedirectDefeat({ as: P1 });
 
     expect(definitionIds(engine, "field", P1)).toContain(welcomeToNightCityRetailFieldOperator.id);
     expect(definitionIds(engine, "legendArea", P1)).not.toContain(
@@ -88,6 +88,17 @@ describe("CR real-card: replacement effects", () => {
       welcomeToNightCityRetailJackieWellesMamaSFavorite.id,
     );
     expect(engine.getEddies(P1)).toBe(0);
+    expect(resolution.moveLogs).toContainEqual(
+      expect.objectContaining({
+        type: "action",
+        messageKey: "move.resolveRedirectDefeat",
+        params: {
+          replacementCardName: "Jackie Welles: Mama's Favorite",
+          protectedCardName: "Field Operator",
+          cost: 1,
+        },
+      }),
+    );
   });
 
   it("lets Jackie decline the optional replacement so the Unit is defeated", () => {
@@ -451,5 +462,13 @@ describe("CR real-card: replacement effects", () => {
       welcomeToNightCityRetailJackieWellesMamaSFavorite.id,
     );
     expect(engine.getActivePlayerId()).toBe(P2);
+    expect(engine.getCard(welcomeToNightCityRetailRidingNomad, "field", P1).meta.spent).toBe(true);
+
+    engine.completeTurn({ as: P2 });
+
+    // The replacement means Riding Nomad never leaves the field. It must
+    // therefore ready normally at the start of its controller's next turn.
+    expect(engine.getActivePlayerId()).toBe(P1);
+    expect(engine.getCard(welcomeToNightCityRetailRidingNomad, "field", P1).meta.spent).toBe(false);
   });
 });

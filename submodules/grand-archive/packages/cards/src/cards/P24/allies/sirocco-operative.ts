@@ -78,6 +78,7 @@ export const siroccoOperative: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               collection: {
                 zones: ["field"],
                 player: "controller",
+                excludingSource: true,
                 filter: {
                   kind: "all",
                   filters: [

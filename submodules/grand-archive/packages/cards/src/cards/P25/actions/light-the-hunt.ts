@@ -96,17 +96,35 @@ export const lightTheHunt: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
               },
             },
           },
-          targets: [
+          restrictions: [
             {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
+              kind: "static",
+              name: "class-bonus",
+              condition: {
+                kind: "champion-matches-source",
+                characteristic: "class",
+              },
+            },
+            {
+              kind: "static",
+              name: "element-bonus",
+              condition: {
+                kind: "champion-matches-source",
+                characteristic: "element",
+              },
+            },
+          ],
+          effect: {
+            kind: "choose",
+            selection: {
+              id: "chosen-counter-object",
+              kind: "choice",
+              declared: "resolution",
               chooser: "controller",
               count: {
                 kind: "exactly",
                 amount: 1,
               },
-              unique: true,
               candidates: {
                 kind: "object",
                 zones: ["field"],
@@ -136,33 +154,15 @@ export const lightTheHunt: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
                 },
               },
             },
-          ],
-          restrictions: [
-            {
-              kind: "static",
-              name: "class-bonus",
-              condition: {
-                kind: "champion-matches-source",
-                characteristic: "class",
+            effect: {
+              kind: "add-counter",
+              subject: {
+                kind: "bound",
+                binding: "chosen-counter-object",
               },
+              counter: "buff",
+              amount: 1,
             },
-            {
-              kind: "static",
-              name: "element-bonus",
-              condition: {
-                kind: "champion-matches-source",
-                characteristic: "element",
-              },
-            },
-          ],
-          effect: {
-            kind: "add-counter",
-            subject: {
-              kind: "bound",
-              binding: "target-1",
-            },
-            counter: "buff",
-            amount: 1,
           },
           functionalZones: ["memory"],
         },

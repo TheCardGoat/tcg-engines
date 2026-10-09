@@ -85,7 +85,7 @@ describe("OP06-043 through OP06-064 corrected definition parser regressions", ()
     });
   });
 
-  test("OP06-050 keeps inclusive Navy matching while excluding Tashigi", () => {
+  test("OP06-050 keeps exact Navy matching while excluding Tashigi", () => {
     expect(
       buildCardEffects(
         '[On Play] Look at 5 cards from the top of your deck; reveal up to 1 "Navy" type card other than [Tashigi] and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
@@ -102,7 +102,7 @@ describe("OP06-043 through OP06-064 corrected definition parser regressions", ()
               revealCount: { amount: 1, upTo: true },
               revealFilters: [
                 { filter: "excludeName", value: "Tashigi" },
-                { filter: "trait", value: "Navy", match: "includes" },
+                { filter: "trait", value: "Navy", match: "exact" },
               ],
               revealDestination: "hand",
               remainderPosition: "bottom",
@@ -160,7 +160,7 @@ describe("OP06-043 through OP06-064 corrected definition parser regressions", ()
     });
   });
 
-  test("OP06-060 keeps both costs and the post-cost inclusive GERMA 66 condition", () => {
+  test("OP06-060 keeps both costs and the post-cost exact GERMA 66 condition", () => {
     expect(
       buildCardEffects(
         "[Activate:Main] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.)You may trash this Character: If your Leader has the [GERMA 66] type, play up to 1 [Vinsmoke Ichiji] with a cost of 7 from your hand or trash.",
@@ -179,7 +179,7 @@ describe("OP06-043 through OP06-064 corrected definition parser regressions", ()
                 { filter: "cost", comparison: "eq", value: 7 },
                 { filter: "name", value: "Vinsmoke Ichiji" },
               ],
-              condition: { condition: "leaderTrait", trait: "GERMA 66", match: "includes" },
+              condition: { condition: "leaderTrait", trait: "GERMA 66", match: "exact" },
             },
           ],
           optional: true,
@@ -188,7 +188,7 @@ describe("OP06-043 through OP06-064 corrected definition parser regressions", ()
     });
   });
 
-  test("OP06-063 keeps its discard cost, DON comparison, and inclusive family filter", () => {
+  test("OP06-063 keeps its discard cost, DON comparison, and exact family filter", () => {
     expect(
       buildCardEffects(
         "[On Play] You may trash 1 card from your hand: If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, add up to 1 [The Vinsmoke Family] type Character card with 4000 power or less from your trash to your hand.",
@@ -206,7 +206,7 @@ describe("OP06-043 through OP06-064 corrected definition parser regressions", ()
                 zones: ["trash"],
                 count: { amount: 1, upTo: true },
                 filters: [
-                  { filter: "trait", value: "The Vinsmoke Family", match: "includes" },
+                  { filter: "trait", value: "The Vinsmoke Family", match: "exact" },
                   { filter: "cardCategory", value: "character" },
                   { filter: "power", comparison: "lte", value: 4000 },
                 ],
@@ -220,7 +220,7 @@ describe("OP06-043 through OP06-064 corrected definition parser regressions", ()
     });
   });
 
-  test("OP06-064 keeps both costs and the post-cost inclusive GERMA 66 condition", () => {
+  test("OP06-064 keeps both costs and the post-cost exact GERMA 66 condition", () => {
     expect(
       buildCardEffects(
         "[Activate:Main] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.)You may trash this Character: If your Leader has the [GERMA 66] type, play up to 1 [Vinsmoke Niji] with a cost of 5 from your hand or trash.",
@@ -238,7 +238,7 @@ describe("OP06-043 through OP06-064 corrected definition parser regressions", ()
                 { filter: "cost", comparison: "eq", value: 5 },
                 { filter: "name", value: "Vinsmoke Niji" },
               ],
-              condition: { condition: "leaderTrait", trait: "GERMA 66", match: "includes" },
+              condition: { condition: "leaderTrait", trait: "GERMA 66", match: "exact" },
             },
           ],
           optional: true,

@@ -35,7 +35,7 @@ export const op06Inuppe082: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Thriller Bark Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -57,7 +57,7 @@ export const op06Inuppe082: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Thriller Bark Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

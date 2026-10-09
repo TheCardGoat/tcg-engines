@@ -43,6 +43,20 @@ export function parseCannotSetDonActiveAction(text: string): CannotSetDonActiveA
 
 export function parseCannotAttackTargetsAction(text: string): CannotAttackTargetsAction | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+  if (
+    /^this\s+Character\s+cannot\s+attack\s+a\s+Leader\s+on\s+the\s+turn\s+in\s+which\s+it\s+is\s+played$/i.test(
+      trimmed,
+    )
+  ) {
+    return {
+      action: "cannotAttackTargets",
+      attacker: { player: "self", zones: ["character"], count: { amount: 1 }, self: true },
+      filters: [{ filter: "cardCategory", value: "leader" }],
+      condition: { condition: "playedThisTurn" },
+      duration: "permanent",
+    };
+  }
+
   const match =
     /^you\s+cannot\s+attack\s+(?:a|an)\s+(Leader|Character)\s+(during\s+this\s+(?:turn|battle)|until\s+.+)$/i.exec(
       trimmed,
@@ -120,7 +134,9 @@ type CannotActivateAction = Extract<Action, { action: "cannotActivate" }>;
 /**
  * Parse "Your opponent cannot activate [Blocker] during this battle/turn" variants.
  */
-export function parseCannotActivateAction(text: string): CannotActivateAction | null {
+export function parseCannotActivateAction(
+  text: string,
+): CannotActivateAction | Extract<Action, { action: "grantKeyword" }> | null {
   const trimmed = text.trim().replace(/\.+$/, "");
 
   // "Your opponent cannot activate [Keyword] during this battle/turn"
@@ -144,12 +160,11 @@ export function parseCannotActivateAction(text: string): CannotActivateAction | 
       trimmed,
     );
   if (wheneverMatch) {
-    const keyword = KEYWORD_BRACKET_TO_TYPE[wheneverMatch[1]!.toLowerCase()];
-    if (!keyword) return null;
+    if (wheneverMatch[1]!.toLowerCase() !== "blocker") return null;
     return {
-      action: "cannotActivate",
-      target: { player: "opponent", zones: ["character"], count: { amount: "all" } },
-      keyword,
+      action: "grantKeyword",
+      target: { player: "self", zones: ["leader"], count: { amount: 1 } },
+      keyword: "unblockable",
       duration: wheneverMatch[2]!.toLowerCase() === "battle" ? "thisBattle" : "thisTurn",
     };
   }
@@ -272,7 +287,7 @@ export function parseCannotBePlayedByEffectsAction(
   return /^(?:This|this)\s+card\s+in\s+your\s+hand\s+cannot\s+be\s+played\s+by\s+effects$/i.test(
     trimmed,
   )
-    ? { action: "cannotBePlayedByEffects" }
+    ? { action: "cannotBePlayedByEffects", sourceZones: ["hand"] }
     : null;
 }
 
@@ -286,6 +301,18 @@ export function parseCannotBeKodAction(text: string): CannotBeKodAction | null {
     .trim()
     .replace(/\.+$/, "")
     .replace(/<([^>]+)>\s+attribute/gi, "($1) attribute");
+
+  if (
+    /^none\s+of\s+your\s+Characters\s+can\s+be\s+K\.O\.['’]?d\s+during\s+this\s+turn$/i.test(
+      trimmed,
+    )
+  ) {
+    return {
+      action: "cannotBeKod",
+      target: { player: "self", zones: ["character"], count: { amount: "all" } },
+      duration: "thisTurn",
+    };
+  }
 
   const battleByCategoryMatch =
     /^(?:This|this)\s+(Character|Leader)\s+cannot\s+be\s+K\.O\.\u2019?'?d\s+in\s+battle\s+by\s+(Leaders?|Characters?)$/i.exec(
@@ -335,9 +362,40 @@ export function parseCannotBeKodAction(text: string): CannotBeKodAction | null {
     };
   }
 
+  const withoutAttribute =
+    /^This (Character|Leader) cannot be K\.O\.['’]?d in battle by Characters without the \((Slash|Strike|Ranged|Special|Wisdom)\) attribute$/i.exec(
+      trimmed,
+    );
+  if (withoutAttribute) {
+    const attribute = withoutAttribute[2]!.toLowerCase();
+    if (
+      attribute !== "slash" &&
+      attribute !== "strike" &&
+      attribute !== "ranged" &&
+      attribute !== "special" &&
+      attribute !== "wisdom"
+    )
+      return null;
+    return {
+      action: "cannotBeKod",
+      target: {
+        player: "self",
+        zones: [withoutAttribute[1]!.toLowerCase() === "leader" ? "leader" : "character"],
+        count: { amount: 1 },
+        self: true,
+      },
+      duration: "permanent",
+      restriction: "inBattle",
+      byFilter: [
+        { filter: "cardCategory", value: "character" },
+        { filter: "attribute", value: attribute, negate: true },
+      ],
+    };
+  }
+
   // Match with or without "This Character/Leader" prefix
   const match =
-    /^(?:(?:This|this)\s+(Character|Leader)\s+)?cannot\s+be\s+K\.O\.\u2019?'?d\s+(?:(in\s+battle|by\s+(?:your\s+opponent[''\u2019]s\s+)?effects?))\s*(?:by\s+(?:[""\u201c]([^""\u201d]+)[""\u201d]\s+|\(([^)]+)\)\s+)?attribute\s+(?:cards|Characters?))?(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(
+    /^(?:(?:This|this)\s+(Character|Leader)\s+)?cannot\s+be\s+K\.O\.\u2019?'?d\s+(?:(in\s+battle|by\s+(?:your\s+opponent[''\u2019]s\s+)?effects?))\s*(?:by\s+(?:[""\u201c]([^""\u201d]+)[""\u201d]\s+|\(([^)]+)\)\s+)?attribute\s+(?:cards|Leaders?\s+or\s+Characters?|Characters?))?(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(
       trimmed,
     );
   if (match) {
@@ -373,12 +431,23 @@ export function parseCannotBeKodAction(text: string): CannotBeKodAction | null {
   if (byEffectsOfMatch) {
     const zone: Zone = byEffectsOfMatch[1]?.toLowerCase() === "leader" ? "leader" : "character";
     const attr = (byEffectsOfMatch[2] ?? byEffectsOfMatch[3])!.toLowerCase();
+    if (
+      attr !== "slash" &&
+      attr !== "strike" &&
+      attr !== "ranged" &&
+      attr !== "special" &&
+      attr !== "wisdom"
+    )
+      return null;
     return {
       action: "cannotBeKod",
       target: { player: "self", zones: [zone], count: { amount: 1 }, self: true },
       duration: "permanent",
       restriction: "byEffect",
-      byFilter: [{ filter: "attribute", value: attr as any, negate: true }],
+      byFilter: [
+        { filter: "cardCategory", value: "character" },
+        { filter: "attribute", value: attr, negate: true },
+      ],
     };
   }
 
@@ -391,7 +460,7 @@ export function parseCannotBeKodAction(text: string): CannotBeKodAction | null {
     const traits = [
       ...traitNoneMatch[1]!.matchAll(/[[{""\u201c]([^\]}""\u201d]+)[\]}""\u201d]/g),
     ].map((match) => match[1]!);
-    const traitFilter = traitAlternativesFilter(traits, "includes");
+    const traitFilter = traitAlternativesFilter(traits, "ordinary");
     if (!traitFilter) return null;
     return {
       action: "cannotBeKod",
@@ -403,6 +472,7 @@ export function parseCannotBeKodAction(text: string): CannotBeKodAction | null {
       },
       duration: traitNoneMatch[3] ? parseFullDuration(traitNoneMatch[3]) : "permanent",
       restriction: "byEffect",
+      ...(/your\s+opponent['’]s/i.test(traitNoneMatch[2]!) && { byPlayer: "opponent" as const }),
     };
   }
 
@@ -421,6 +491,7 @@ export function parseCannotBeKodAction(text: string): CannotBeKodAction | null {
       target: { player: "self", zones: ["character"], count: { amount: "all" } },
       duration,
       restriction,
+      ...(/your\s+opponent['’]s/i.test(noneMatch[1]!) && { byPlayer: "opponent" as const }),
     };
   }
 
@@ -442,7 +513,7 @@ export function parseCannotBeKodAction(text: string): CannotBeKodAction | null {
             value: namedTraitProtectionMatch[1]!
               .replace(/^[""\u201c[{]/, "")
               .replace(/[""\u201d\]}]$/, ""),
-            match: "includes",
+            match: "exact",
           },
           { filter: "excludeName", value: namedTraitProtectionMatch[2]! },
         ],
@@ -592,6 +663,7 @@ export function parsePlayRestrictionAction(text: string): PlayRestrictionAction 
       restriction: "cannotPlay",
       filters: [],
       sourceZones: ["hand"],
+      origin: "command",
       duration,
     };
   }
@@ -610,6 +682,17 @@ export function parseNegateEffectsAction(
   text: string,
 ): NegateEffectsAction | NegateEffectsAction[] | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+
+  const opposingLeaderAndAllCharacters =
+    /^Negate the effects of your opponent['’]s Leader and all of their Characters (during this (?:turn|battle))$/i.exec(
+      trimmed,
+    );
+  if (opposingLeaderAndAllCharacters)
+    return {
+      action: "negateEffects",
+      target: { player: "opponent", zones: ["leader", "character"], count: { amount: "all" } },
+      duration: parseFullDuration(opposingLeaderAndAllCharacters[1]!),
+    };
 
   const ownLeaderAndNonTraitCharacters =
     /^Your\s+Leader\s+and\s+all\s+of\s+your\s+Characters\s+that\s+do\s+not\s+have\s+a\s+type\s+including\s+["\u201c]([^"\u201d]+)["\u201d]\s+have\s+their\s+effects\s+negated$/i.exec(

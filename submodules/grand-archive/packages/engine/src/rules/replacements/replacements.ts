@@ -10,6 +10,7 @@ import {
   flattenGrandArchiveAbilities,
   grandArchiveAbilityExecutionObject,
   grandArchiveAbilityFunctionalZones,
+  grandArchiveAbilityIsFunctional,
   grandArchiveCardIsObject,
   grandArchiveObjectFace,
   grandArchiveObjectHasConcealedCharacteristics,
@@ -357,10 +358,25 @@ function replacementLimitUsageKey(
   }
 }
 
+/** A shared marker lets later recipients reuse the same limited damage application. */
+function replacementLimitGroupKey(
+  effect: GrandArchiveReplacementEffect,
+  event: GrandArchiveProposedEvent,
+  usageKey: string | undefined,
+): string | undefined {
+  return usageKey &&
+    effect.consumptionScope === "source-game-event" &&
+    event.type === "damage-marked" &&
+    event.gameEventId
+    ? `${usageKey}:event:${JSON.stringify([event.gameEventId, event.sourceId ?? null])}`
+    : undefined;
+}
+
 function trackReplacementLimit(
   result: GrandArchiveReplacementResult,
   original: GrandArchiveProposedEvent,
   usageKey: string | undefined,
+  groupUsageKey?: string,
 ): GrandArchiveReplacementResult {
   if (!usageKey) return result;
   const usage: GrandArchiveProposedEvent = {
@@ -368,12 +384,16 @@ function trackReplacementLimit(
     usageKey,
     cause: { kind: "rule", rule: "limited-replacement-applied" },
   };
-  if (result.kind === "prevented") return { kind: "replaced", events: [usage] };
-  if (result.kind === "unchanged") return { kind: "replaced", events: [original, usage] };
+  const usages: [GrandArchiveProposedEvent, ...GrandArchiveProposedEvent[]] = [
+    usage,
+    ...(groupUsageKey ? [{ ...usage, usageKey: groupUsageKey }] : []),
+  ];
+  if (result.kind === "prevented") return { kind: "replaced", events: usages };
+  if (result.kind === "unchanged") return { kind: "replaced", events: [original, ...usages] };
   if (result.kind === "resolve-before-commit") {
     throw new GrandArchiveUnsupportedRuleError("limited event-processing replacement");
   }
-  return { kind: "replaced", events: [...result.events, usage] };
+  return { kind: "replaced", events: [...result.events, ...usages] };
 }
 
 function modifiedCharacteristicResult(
@@ -594,7 +614,8 @@ function applyOperation(
         for (const entry of operation.counters) {
           const key = grandArchiveCounterKey(entry.counter);
           initialCounters[key] =
-            (initialCounters[key] ?? 0) + evaluateGrandArchiveAmount(entry.amount, evaluation);
+            (initialCounters[key] ?? 0) +
+            Math.max(0, evaluateGrandArchiveAmount(entry.amount, evaluation));
         }
         return { kind: "replaced", events: [{ ...event, initialCounters }] };
       }
@@ -603,7 +624,8 @@ function applyOperation(
         for (const entry of operation.counters) {
           const key = grandArchiveCounterKey(entry.counter);
           counters[key] =
-            (counters[key] ?? 0) + evaluateGrandArchiveAmount(entry.amount, evaluation);
+            (counters[key] ?? 0) +
+            Math.max(0, evaluateGrandArchiveAmount(entry.amount, evaluation));
         }
         return { kind: "replaced", events: [{ ...event, object: { ...event.object, counters } }] };
       }
@@ -618,7 +640,8 @@ function applyOperation(
                 for (const entry of operation.counters) {
                   const key = grandArchiveCounterKey(entry.counter);
                   counters[key] =
-                    (counters[key] ?? 0) + evaluateGrandArchiveAmount(entry.amount, evaluation);
+                    (counters[key] ?? 0) +
+                    Math.max(0, evaluateGrandArchiveAmount(entry.amount, evaluation));
                 }
                 return { ...object, counters };
               }),
@@ -863,10 +886,20 @@ function applyInstancedReplacement(
       });
     }
   }
-  if (instance.effect.duration.kind === "for-next-event") {
+  if (instance.effect.duration.kind === "for-next-event" && !instance.consumedBy) {
     trailingEvents.push({
       type: "replacement-effect-consumed",
       replacementId: instance.id,
+      ...(instance.effect.consumptionScope === "source-game-event" &&
+      event.type === "damage-marked" &&
+      event.gameEventId
+        ? {
+            retainFor: {
+              gameEventId: event.gameEventId,
+              ...(event.sourceId ? { sourceId: event.sourceId } : {}),
+            },
+          }
+        : {}),
       cause: { kind: "rule", rule: "next-event-replacement-consumed" },
     });
   }
@@ -889,11 +922,13 @@ function replacementMatches(
   source: GrandArchiveCardInstance,
   evaluation: GrandArchiveEvaluationContext,
 ): boolean {
-  if (replacement.condition && !evaluateGrandArchiveCondition(replacement.condition, evaluation))
+  if (
+    !observeGrandArchiveProposedEvent(event).some((observed) =>
+      matchesGrandArchiveEventPattern(replacement.event, observed, source, evaluation),
+    )
+  )
     return false;
-  return observeGrandArchiveProposedEvent(event).some((observed) =>
-    matchesGrandArchiveEventPattern(replacement.event, observed, source, evaluation),
-  );
+  return !replacement.condition || evaluateGrandArchiveCondition(replacement.condition, evaluation);
 }
 
 function staticRestrictionsAreSatisfied(
@@ -1561,6 +1596,13 @@ export function collectGrandArchiveReplacementCandidates(
     }
   }
   for (const instance of state.replacementEffects) {
+    if (
+      instance.consumedBy &&
+      (event.type !== "damage-marked" ||
+        event.gameEventId !== instance.consumedBy.gameEventId ||
+        event.sourceId !== instance.consumedBy.sourceId)
+    )
+      continue;
     const source = instance.sourceId ? state.objects[instance.sourceId] : undefined;
     if (!source) continue;
     const evaluation = replacementInstanceEvaluation(program, state, instance, event);
@@ -1582,9 +1624,16 @@ export function collectGrandArchiveReplacementCandidates(
     if (remainingReplacementCapacity(instance, event, evaluation) === 0) continue;
     const candidateId = `instance:${instance.id}`;
     const usageKey = replacementLimitUsageKey(instance.effect, candidateId, event, state);
+    const groupUsageKey = replacementLimitGroupKey(instance.effect, event, usageKey);
+    const alreadyAppliedToGroup =
+      groupUsageKey !== undefined && (state.replacementLimitUsages[groupUsageKey] ?? 0) > 0;
     if (instance.effect.limit) {
       if (!usageKey) throw new Error("Limited replacement has no usage key");
-      if ((state.replacementLimitUsages[usageKey] ?? 0) >= instance.effect.limit.count) continue;
+      if (
+        !alreadyAppliedToGroup &&
+        (state.replacementLimitUsages[usageKey] ?? 0) >= instance.effect.limit.count
+      )
+        continue;
     }
     candidates.push({
       id: candidateId,
@@ -1594,7 +1643,8 @@ export function collectGrandArchiveReplacementCandidates(
         trackReplacementLimit(
           applyInstancedReplacement(instance, proposed, evaluation),
           proposed,
-          usageKey,
+          alreadyAppliedToGroup ? undefined : usageKey,
+          groupUsageKey,
         ),
     });
   }
@@ -1628,7 +1678,18 @@ export function collectGrandArchiveReplacementCandidates(
         event.type === "object-moved" &&
         event.objectId === source.id &&
         functionalZones.includes(event.to);
-      if (!functionalZones.includes(source.zone) && !sourceIsEnteringFunctionalZone) continue;
+      if (
+        !grandArchiveAbilityIsFunctional(face, ability, source) &&
+        !(
+          sourceIsEnteringFunctionalZone &&
+          grandArchiveAbilityIsFunctional(face, ability, {
+            ...source,
+            zone: event.to,
+            facing: event.entryFacing ?? source.facing,
+          })
+        )
+      )
+        continue;
       const executionObject = grandArchiveAbilityExecutionObject(evaluationState, source, ability);
       if (!executionObject) continue;
       const baseEvaluation = withGrandArchiveDerivedVariables(ability.variables, {
@@ -1674,11 +1735,18 @@ export function collectGrandArchiveReplacementCandidates(
             "optional replacement controlled by multiple players",
           );
         }
-        const candidateId = `${source.id}:${ability.id}:${effectIndex}`;
+        const candidateId = `${source.id}:${source.incarnation}:${ability.id}:${effectIndex}`;
         const usageKey = replacementLimitUsageKey(effect, candidateId, event, state);
+        const groupUsageKey = replacementLimitGroupKey(effect, event, usageKey);
+        const alreadyAppliedToGroup =
+          groupUsageKey !== undefined && (state.replacementLimitUsages[groupUsageKey] ?? 0) > 0;
         if (effect.limit) {
           if (!usageKey) throw new Error("Limited replacement has no usage key");
-          if ((state.replacementLimitUsages[usageKey] ?? 0) >= effect.limit.count) continue;
+          if (
+            !alreadyAppliedToGroup &&
+            (state.replacementLimitUsages[usageKey] ?? 0) >= effect.limit.count
+          )
+            continue;
         }
         candidates.push({
           id: candidateId,
@@ -1693,7 +1761,8 @@ export function collectGrandArchiveReplacementCandidates(
                 evaluation,
               ),
               proposed,
-              usageKey,
+              alreadyAppliedToGroup ? undefined : usageKey,
+              groupUsageKey,
             ),
         });
       }

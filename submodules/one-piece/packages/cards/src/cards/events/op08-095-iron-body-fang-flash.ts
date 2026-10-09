@@ -21,7 +21,7 @@ export const op08IronBodyFangFlash095: EventCard = {
   rarity: "UC",
   setId: "OP08",
   cost: 2,
-  traits: ["Animal Kingdom Pirates Former CP9"],
+  traits: ["Animal Kingdom Pirates", "Former CP9"],
   effect:
     "[Main] If you have 10 or more cards in your trash, up to 1 of your Characters gains +2000 power until the end of your opponent's next turn. [Trigger] Up to 1 of your Leader or Character cards gains +2000 power during this turn.",
   effects: {

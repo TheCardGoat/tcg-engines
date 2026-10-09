@@ -54,7 +54,7 @@ export const op14eb04MonkeyDLuffyOp1434034: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "baseCost",
@@ -82,7 +82,7 @@ export const op14eb04MonkeyDLuffyOp1434034: CharacterCard = {
             {
               filter: "trait",
               value: "Straw Hat Crew",
-              match: "includes",
+              match: "exact",
             },
           ],
         },

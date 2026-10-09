@@ -72,6 +72,35 @@ describe("OP07-029 Basil Hawkins", () => {
     ).toBe(false);
   });
 
+  test("Hawkins's replacement can be replaced by the opposing Zoro during a Counter", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: op07BasilHawkins029, playedOnTurn: 0 }] },
+      { hand: ["OP10-040"], activeDon: 5, character: ["PRB02-006", eb01Doma005] },
+    );
+    const hawkins = engine.findCardInZone("south", "character", op07BasilHawkins029);
+    const zoro = engine.findCardInZone("north", "character", "PRB02-006");
+    const doma = engine.findCardInZone("north", "character", eb01Doma005);
+    engine.declareAttack(hawkins, engine.leader("north"), "south");
+    engine.resolveDecision("battleBlocker", { selectedIds: [] }, "north");
+    engine.asNorth().chooseCounter("OP10-040");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [hawkins] }, "north");
+    engine.resolveDecision("effectKoReplacement", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [zoro] }, "south");
+    // It is north's opponent's turn. Hawkins is an opposing Character effect,
+    // so Zoro may replace that rest with a rest of another north Character.
+    engine.resolveDecision("effectRestReplacement", { optionId: "yes" }, "north");
+    const view = engine.getView("south");
+    expect(view.players.south.characters.some((card) => card?.instanceId === hawkins)).toBe(true);
+    expect(view.players.north.characters.find((card) => card?.instanceId === zoro)?.rested).toBe(
+      false,
+    );
+    expect(view.players.north.characters.find((card) => card?.instanceId === doma)?.rested).toBe(
+      true,
+    );
+    expect(view.players.south.trash).toHaveLength(0);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("once per turn may rest an opposing Character instead of its own opponent-effect removal", () => {
     const engine = OnePieceTestEngine.create(
       { character: [op07BasilHawkins029] },

@@ -11,7 +11,7 @@ export const theHeadlessHorsemanCursedRider: CharacterCard = {
       artId: "set10-174",
       setCode: "set10",
       collectorNumber: "174",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -23,7 +23,7 @@ export const theHeadlessHorsemanCursedRider: CharacterCard = {
   franchise: "Sleepy Hollow",
   set: "010",
   cardNumber: 174,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 8,
   strength: 5,
   willpower: 7,
@@ -31,6 +31,7 @@ export const theHeadlessHorsemanCursedRider: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f64c2b670af947f8bca5f1ce7a5a88d9",
+    tcgPlayer: "660020",
   },
   text: [
     {

@@ -52,7 +52,7 @@ export const op06Uta001: LeaderCard = {
           {
             cost: "trashFromHand",
             amount: 1,
-            filters: [{ filter: "trait", value: "FILM", match: "includes" }],
+            filters: [{ filter: "trait", value: "FILM", match: "exact" }],
           },
         ],
         actions: [

@@ -30,10 +30,11 @@ export const op03Curiel004: CharacterCard = {
   effects: {
     permanentEffects: [
       {
+        conditions: [{ condition: "playedThisTurn" }],
         actions: [
           {
-            action: "grantKeyword",
-            target: {
+            action: "cannotAttackTargets",
+            attacker: {
               player: "self",
               zones: ["character"],
               count: {
@@ -41,7 +42,7 @@ export const op03Curiel004: CharacterCard = {
               },
               self: true,
             },
-            keyword: "rushCharacter",
+            filters: [{ filter: "cardCategory", value: "leader" }],
             duration: "permanent",
           },
         ],

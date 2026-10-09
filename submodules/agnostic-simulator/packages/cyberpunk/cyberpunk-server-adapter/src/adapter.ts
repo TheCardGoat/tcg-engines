@@ -1,22 +1,30 @@
+import { hostedUndoProposalPolicy } from "@tcg/shared/game-adapter";
 import {
+  cards as generatedCyberpunkCards,
   getCyberpunkCanonicalForCardId,
   getMergedCyberpunkCards,
   structuredCards as cyberpunkStructuredCards,
 } from "@tcg/cyberpunk-cards";
 import {
+  toCyberpunkValidationCard,
   validateCyberpunkDeck,
   type CyberpunkDeckValidationEntry,
+  type CyberpunkValidationCatalogCard,
 } from "@tcg/shared/cyberpunk/deck-validation";
+import {
+  cyberpunkFormatFamily,
+  validateCyberpunkSixPackDeck,
+} from "@tcg/shared/cyberpunk/six-pack-deck-validation";
 import type {
   CardSummary,
-  CardsMaps,
-  DeckBuildInput,
   DeckCard,
   DeckFormatResult,
+  DeckValidationContext,
   GameAdapter,
 } from "@tcg/shared/game-adapter";
 import {
   buildColorMetadataFacets,
+  materializeDeckInstances,
   normalizeMetadataColors,
   sortMetadataFacets,
 } from "@tcg/shared/game-adapter";
@@ -28,7 +36,24 @@ import {
   cyberpunkSerializeEngine,
 } from "./cyberpunk-engine-lifecycle";
 import { cyberpunkDeckInterchangeAdapter } from "./deck-interchange";
+import {
+  createCyberpunkPreboardPool,
+  CYBERPUNK_PREBOARD_DEADLINE_MS,
+  cyberpunkPreboardApplies,
+  cyberpunkPreboardToJson,
+  defaultCyberpunkPreboardSelection,
+  materializeCyberpunkPreboard,
+  nextCyberpunkPreboardPool,
+  parseCyberpunkPreboardPool,
+  parseCyberpunkPreboardSelection,
+  projectCyberpunkPreboardPool,
+  projectCyberpunkPreboardSelection,
+  projectCyberpunkRivalLegends,
+  reconcileCyberpunkPreboard,
+  validateCyberpunkPreboard,
+} from "./preboard";
 import { CYBERPUNK_RUNTIME_FINGERPRINT } from "./runtime-fingerprint";
+import { projectRamDistribution } from "./ram-distribution";
 
 const cyberpunkCardsByPublicId = new Map(cyberpunkStructuredCards.map((card) => [card.id, card]));
 for (const card of getMergedCyberpunkCards()) {
@@ -68,18 +93,117 @@ function resolveCyberpunkCard(publicId: string) {
   return cyberpunkCardsByPublicId.get(publicId) ?? cyberpunkCardsByDerivedSlug.get(publicId);
 }
 
+// Alpha Kit rows live in the generated catalog but are excluded from the
+// merged runtime pool. Register them here so constructed legality can identify
+// the printing instead of treating it as an unknown card. Never overwrite a
+// runtime id: retail and promo definitions stay authoritative.
+const alphaKitCardsById = new Map<string, (typeof generatedCyberpunkCards)[number]>();
+for (const card of generatedCyberpunkCards) {
+  if (card.set.code !== "alpha") continue;
+  if (!alphaKitCardsById.has(card.id)) alphaKitCardsById.set(card.id, card);
+  for (const printing of card.printings) {
+    if (!alphaKitCardsById.has(printing.id)) alphaKitCardsById.set(printing.id, card);
+  }
+}
+
+function resolveCyberpunkValidationCard(publicId: string, printingId?: string) {
+  const card = resolveCyberpunkCard(publicId) ?? alphaKitCardsById.get(publicId);
+  return card ? catalogCardForValidation(card, printingId) : undefined;
+}
+
+function catalogCardForValidation(
+  card: CyberpunkValidationCatalogCard & { canonicalId: string },
+  printingId: string | undefined,
+): CyberpunkValidationCatalogCard & { canonicalId: string } {
+  if (!printingId || card.printings?.some((printing) => printing.id === printingId)) return card;
+  const alphaCard = alphaKitCardsById.get(printingId);
+  const alphaPrinting = alphaCard?.printings.find((printing) => printing.id === printingId);
+  if (!alphaPrinting || alphaPrinting.setCode !== "alpha") return card;
+  return {
+    ...card,
+    printings: [
+      ...(card.printings ?? []),
+      {
+        id: alphaPrinting.id,
+        setCode: alphaPrinting.setCode,
+        rarity: alphaPrinting.rarity ?? null,
+      },
+    ],
+  };
+}
+
 /**
  * Server-side {@link GameAdapter} for Cyberpunk. Implements the same
  * contract as the Lorcana adapter so the play module never needs to know
  * which engine it's hosting.
  *
- * Format validation is intentionally minimal — Cyberpunk only ships an
- * "alpha" format today; bring real format checks online when the card pool
- * stabilises.
+ * Constructed accepts a quick list with no sideboard, or a sideboard of up to
+ * 7 cards: 40–50 main cards, exactly 3 uniquely named Legends, copy and RAM
+ * limits, and Appendix B. More than 7 sideboard cards is illegal.
+ * Queue policy requires preparation for competitive BO1 and every BO3.
+ * Those registrations must contain exactly 7 non-Legend sideboard cards.
  */
 export const cyberpunkServerAdapter: GameAdapter = {
   slug: "cyberpunk",
+  botTurnScheduling: { kind: "continuation", minimumVisibleMs: 800 },
+  // Current series convention: the previous game's loser chooses. The
+  // comprehensive rules only specify random choice for an individual game.
+  seriesFirstPlayerPolicy: "loser-chooses",
   deckInterchange: cyberpunkDeckInterchangeAdapter,
+  pregame: {
+    kind: "cyberpunk",
+    deadlineMs: CYBERPUNK_PREBOARD_DEADLINE_MS,
+    deadlineMsForFormat: (format) =>
+      format === "best_of_3" ? 2 * 60 * 1000 : CYBERPUNK_PREBOARD_DEADLINE_MS,
+    defaultFormatId: "constructed",
+    // Game 1 draws a random chooser. The previous game's loser chooses in later games.
+    turnOrderPolicy: "random-then-loser-choice",
+    chooseAfterSelection: true,
+    firstPlayerChoiceMs: 30_000,
+    selectionMode: (pool) =>
+      parseCyberpunkPreboardPool(pool).stage === "game-one" ? "fixed" : "editable",
+    appliesTo: (input) => input.queueFormatId !== "six-pack" && cyberpunkPreboardApplies(input),
+    createPool: (input, context) =>
+      cyberpunkPreboardToJson(
+        createCyberpunkPreboardPool(input, resolveCyberpunkValidationCard, context?.matchFormat),
+      ),
+    nextGamePool: (pool, selection) =>
+      cyberpunkPreboardToJson(
+        nextCyberpunkPreboardPool(
+          parseCyberpunkPreboardPool(pool),
+          parseCyberpunkPreboardSelection(selection),
+        ),
+      ),
+    parsePool: (value) => cyberpunkPreboardToJson(parseCyberpunkPreboardPool(value)),
+    parseSelection: (value) => cyberpunkPreboardToJson(parseCyberpunkPreboardSelection(value)),
+    projectPoolForPlayer: (pool, viewer) =>
+      projectCyberpunkPreboardPool(parseCyberpunkPreboardPool(pool), viewer),
+    projectPublicSeat: (pool) =>
+      cyberpunkPreboardToJson(projectCyberpunkRivalLegends(parseCyberpunkPreboardPool(pool))),
+    projectSelectionForPlayer: (selection, viewer) =>
+      projectCyberpunkPreboardSelection(parseCyberpunkPreboardSelection(selection), viewer),
+    createDefaultSelection: (pool) =>
+      cyberpunkPreboardToJson(defaultCyberpunkPreboardSelection(parseCyberpunkPreboardPool(pool))),
+    validateSelection: (pool, selection, viewer) =>
+      validateCyberpunkPreboard(
+        parseCyberpunkPreboardPool(pool),
+        parseCyberpunkPreboardSelection(selection),
+        viewer,
+      ),
+    reconcileSelection: (pool, selection) => {
+      const result = reconcileCyberpunkPreboard(
+        parseCyberpunkPreboardPool(pool),
+        parseCyberpunkPreboardSelection(selection),
+      );
+      return { ...result, selection: cyberpunkPreboardToJson(result.selection) };
+    },
+    materializeDeck: (pool, selection) =>
+      materializeCyberpunkPreboard(
+        parseCyberpunkPreboardPool(pool),
+        parseCyberpunkPreboardSelection(selection),
+      ),
+  },
+  proposalPolicy: hostedUndoProposalPolicy,
 
   createGameId(): string {
     return `cyberpunk-game-${crypto.randomUUID()}`;
@@ -90,31 +214,13 @@ export const cyberpunkServerAdapter: GameAdapter = {
     return `cyber-${gameProfileId.slice(0, 6)}`;
   },
 
-  buildCardInstances(decks: ReadonlyArray<DeckBuildInput>): CardsMaps {
-    const cardInstances: Record<string, string> = {};
-    const owners: Record<string, string[]> = {};
-    const instanceSections: Record<string, string> = {};
-    let hasSections = false;
-    for (const { owner, deck } of decks) {
-      const ownerInstances: string[] = [];
-      // Use a per-owner monotonic counter so duplicate cardId rows in the
-      // same DeckBuildInput don't collide on `${owner}-${cardId}-${i}` and
-      // overwrite earlier instances in `cardInstances`.
-      let counter = 0;
-      for (const entry of deck) {
-        for (let i = 0; i < entry.qty; i++) {
-          const instanceId = `${owner}-${entry.cardId}-${counter++}`;
-          cardInstances[instanceId] = entry.cardId;
-          ownerInstances.push(instanceId);
-          if (entry.sectionId) {
-            instanceSections[instanceId] = entry.sectionId;
-            hasSections = true;
-          }
-        }
-      }
-      owners[owner] = ownerInstances;
-    }
-    return hasSections ? { cardInstances, owners, instanceSections } : { cardInstances, owners };
+  buildCardInstances(decks) {
+    return materializeDeckInstances(
+      decks.map(({ owner, deck }) => ({
+        owner,
+        deck: deck.filter((entry) => entry.sectionId !== "side" && entry.sectionId !== "sideboard"),
+      })),
+    );
   },
 
   getCardById(publicId: string): CardSummary | null {
@@ -144,9 +250,32 @@ export const cyberpunkServerAdapter: GameAdapter = {
     return CYBERPUNK_RUNTIME_FINGERPRINT;
   },
 
-  validateDeckForFormat(formatId: string, deck: ReadonlyArray<DeckCard>): DeckFormatResult {
-    if (formatId !== "alpha") {
+  validateDeckForFormat(
+    formatId: string,
+    deck: ReadonlyArray<DeckCard>,
+    context?: DeckValidationContext,
+  ): DeckFormatResult {
+    const formatLabel =
+      formatId === "constructed" ? "Constructed" : formatId === "six-pack" ? "6-Pack" : null;
+    if (!formatLabel) {
       throw new Error(`Unknown Cyberpunk format: ${formatId}`);
+    }
+    if (
+      context?.documentFormatId &&
+      cyberpunkFormatFamily(context.documentFormatId) !== cyberpunkFormatFamily(formatId)
+    ) {
+      return {
+        formatId,
+        label: formatLabel,
+        valid: false,
+        rules: [
+          {
+            kind: "format",
+            passed: false,
+            message: "This deck is registered for a different Cyberpunk format.",
+          },
+        ],
+      };
     }
 
     // Deck identity v2+ projects Cyberpunk cards to their stable canonical
@@ -154,40 +283,86 @@ export const cyberpunkServerAdapter: GameAdapter = {
     // validate against both shapes. The merged view supplies the authoritative
     // card data for canonical ids, while the raw view keeps legacy UUID decks
     // playable during the migration.
-    const unknownEntries = deck.filter((entry) => !resolveCyberpunkCard(entry.cardId));
+    const unknownEntries = deck.filter((entry) => !resolveCyberpunkValidationCard(entry.cardId));
     const totalCount = deck.reduce((sum, entry) => sum + entry.quantity, 0);
     const legends: CyberpunkDeckValidationEntry[] = [];
     const mainDeck: CyberpunkDeckValidationEntry[] = [];
+    const sideboard: CyberpunkDeckValidationEntry[] = [];
 
     for (const entry of deck) {
-      const card = resolveCyberpunkCard(entry.cardId);
+      const card = resolveCyberpunkValidationCard(entry.cardId);
       if (!card) continue;
-      const validationEntry = {
+      const validationEntry: CyberpunkDeckValidationEntry = {
         card: {
+          ...toCyberpunkValidationCard(
+            catalogCardForValidation(card, entry.printingId),
+            entry.printingId,
+          ),
           id: entry.cardId,
-          name: card.name,
-          displayName: card.displayName,
-          type: card.type,
-          color: card.color,
-          ram: card.ram,
         },
         quantity: entry.quantity,
       };
-      if (card.type === "legend") {
+      const section = entry.sectionId;
+      const legend = card.type.trim().toLowerCase() === "legend";
+      if (section === "side" || section === "sideboard") {
+        sideboard.push(validationEntry);
+      } else if (legend && section !== "main") {
         legends.push(validationEntry);
       } else {
         mainDeck.push(validationEntry);
       }
     }
 
-    const deckValidation = validateCyberpunkDeck({ legends, mainDeck });
+    if (formatId === "six-pack") {
+      const colors = Array.isArray(context?.declarations?.colors)
+        ? context.declarations.colors.filter((color): color is string => typeof color === "string")
+        : [];
+      const asOpenedCard = (entries: CyberpunkDeckValidationEntry[]) =>
+        entries.map((entry) => {
+          const resolved = resolveCyberpunkValidationCard(entry.card.id);
+          return {
+            ...entry,
+            card: { ...entry.card, id: resolved?.canonicalId ?? entry.card.id },
+          };
+        });
+      const sixPack = validateCyberpunkSixPackDeck({
+        legends: asOpenedCard(legends),
+        mainDeck: asOpenedCard(mainDeck),
+        sideboard: asOpenedCard(sideboard),
+        colors,
+        ...(context?.cardPool ? { pool: context.cardPool } : {}),
+      });
+      const rules = [
+        {
+          kind: "card-pool",
+          passed: unknownEntries.length === 0,
+          message:
+            unknownEntries.length === 0
+              ? "All cards are part of the Cyberpunk card pool"
+              : `Unknown cards: ${unknownEntries.map((entry) => entry.cardId).join(", ")}`,
+        },
+        ...sixPack.issues.map((issue) => ({
+          kind: issue.code,
+          passed: false,
+          message: issue.message,
+        })),
+      ];
+      return {
+        formatId,
+        label: formatLabel,
+        valid: unknownEntries.length === 0 && sixPack.isValid,
+        rules,
+      };
+    }
+
+    const deckValidation = validateCyberpunkDeck({ legends, mainDeck, sideboard });
     const rules = [
       {
         kind: "card-pool",
         passed: unknownEntries.length === 0,
         message:
           unknownEntries.length === 0
-            ? "All cards are part of the Cyberpunk Alpha pool"
+            ? `All cards are part of the Cyberpunk ${formatLabel} pool`
             : `Unknown cards: ${unknownEntries.map((e) => e.cardId).join(", ")}`,
         details:
           unknownEntries.length === 0
@@ -214,16 +389,24 @@ export const cyberpunkServerAdapter: GameAdapter = {
 
     return {
       formatId,
-      label: "Alpha",
+      label: formatLabel,
       valid: unknownEntries.length === 0 && totalCount > 0 && deckValidation.isValid,
       rules,
     };
   },
 
   metadata: {
-    projectionVersion: 1,
+    projectionVersion: 2,
     capabilities: { colors: true, deckLists: true, archetypes: true },
     facets: [
+      {
+        type: "ram-coalition",
+        label: "RAM distribution",
+        pluralLabel: "RAM distributions",
+        kind: "combination",
+        order: 35,
+        ranking: { specialistSkill: false, mastery: false },
+      },
       {
         type: "legend-lineup",
         label: "Legend lineup",
@@ -258,6 +441,17 @@ export const cyberpunkServerAdapter: GameAdapter = {
       },
     ],
     projectDeck(deck) {
+      const legendRam = deck.flatMap((entry) => {
+        const card = cyberpunkCardsByPublicId.get(entry.cardId);
+        if (!card || card.type !== "legend") return [];
+        return Array.from({ length: Math.max(0, Math.floor(entry.quantity)) }, () => ({
+          color: card.color,
+          ram: card.ram,
+        }));
+      });
+      const ramDistribution = deck.some((entry) => !cyberpunkCardsByPublicId.has(entry.cardId))
+        ? null
+        : projectRamDistribution(legendRam);
       const members = deck
         .flatMap((entry) => {
           const card = cyberpunkCardsByPublicId.get(entry.cardId);
@@ -268,7 +462,7 @@ export const cyberpunkServerAdapter: GameAdapter = {
             label: card.displayName,
             colors: card.color ? [card.color] : [],
             imageUrl: card.imageUrl,
-            attributes: { ram: card.ram ?? 0 },
+            attributes: card.ram === null ? undefined : { ram: card.ram },
           }));
         })
         .sort((left, right) => left.cardId.localeCompare(right.cardId));
@@ -290,11 +484,12 @@ export const cyberpunkServerAdapter: GameAdapter = {
             ];
       return {
         schemaVersion: 1,
-        projectionVersion: 1,
+        projectionVersion: 2,
         game: "cyberpunk",
         cardCount: deck.reduce((sum, entry) => sum + Math.max(0, Math.floor(entry.quantity)), 0),
         colors,
         facets: sortMetadataFacets([
+          ...(ramDistribution ? [ramDistribution] : []),
           ...lineup,
           ...individualLegends.map((member) => ({
             type: "legend",

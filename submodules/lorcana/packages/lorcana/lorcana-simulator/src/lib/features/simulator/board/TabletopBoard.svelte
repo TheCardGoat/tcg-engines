@@ -173,6 +173,8 @@ interface PendingEffectsPopoverItem {
 	matchContext?: MatchNavigationContext | null;
 	onNextGame?: (() => void) | null;
 	onReturnToMatchmaking?: (() => void | Promise<void>) | null;
+	onUndoTurn?: (() => void) | null;
+	canUndoTurn?: boolean;
 	/** Optional overlay rendered between the two player lanes (e.g. replay controls). */
 	boardOverlay?: Snippet;
 	interactionLocked?: boolean;
@@ -214,6 +216,8 @@ let {
 	matchContext = null,
 	onNextGame = null,
 	onReturnToMatchmaking = null,
+	onUndoTurn = null,
+	canUndoTurn = false,
 	boardOverlay,
 	interactionLocked = false,
 }: TabletopBoardProps = $props();
@@ -483,7 +487,7 @@ const effectiveMoveCategorySummaries = $derived.by(() => {
 
 	if (
 		!moveCategorySummaries.some((summary) => summary.categoryId === "pass-turn") &&
-		(sidebar.expandCategoryMoves("pass-turn").length > 0 || bottomHasPriority)
+		sidebar.expandCategoryMoves("pass-turn").length > 0
 	) {
 		missingDirectSummaries.push({
 			categoryId: "pass-turn",
@@ -1647,6 +1651,7 @@ $effect(() => {
     <ChoiceResolutionOverlay
       view={interactionView}
       sourceCard={choiceSourceCard}
+      abilityIndex={choiceSelectionState.abilityIndex}
       targetCard={choiceFocusCard}
       selectedChoiceIndex={selectedChoiceIndex}
       onSelectChoice={handleChoiceInteraction}
@@ -1970,6 +1975,8 @@ $effect(() => {
           ownerSide={board.ownerSide}
           onNextGame={onNextGame ?? undefined}
           onReturnToMatchmaking={onReturnToMatchmaking ?? undefined}
+          {onUndoTurn}
+          {canUndoTurn}
         />
       </div>
     {/if}

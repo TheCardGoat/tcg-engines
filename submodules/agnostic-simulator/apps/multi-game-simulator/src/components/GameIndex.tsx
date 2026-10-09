@@ -1,9 +1,8 @@
-import { IconSparkles } from "@tabler/icons-react";
 import { useEffect, type CSSProperties } from "react";
 import { getGameDefaultIndexPath, listIndexGames } from "../simulator/games";
 import { buildMountedHref } from "../routes/router-paths.ts";
 import classes from "./GameIndex.module.css";
-import { SHARED_SIMULATOR_UI_FIXTURE_COUNT } from "./simulator-ui-fixture-manifest";
+import FixtureDirectory from "./FixtureDirectory";
 
 export interface GameIndexProps {
   onNavigate: (path: string) => void;
@@ -15,17 +14,17 @@ export default function GameIndex({ onNavigate }: GameIndexProps) {
   }, []);
 
   const games = listIndexGames();
-  const hubCount = games.length + 2;
-  const routeCount = games.length + 3;
+  const hubCount = games.length + 5;
+  const routeCount = games.length + 14;
 
   return (
     <main className={classes.page}>
       <div className={classes.shell}>
         <aside className={classes.masthead} aria-label="Harness summary">
           <p className={classes.eyebrow}>Back office</p>
-          <h1 className={classes.title}>Simulator fixture router</h1>
+          <h1 className={classes.title}>Simulator fixture index</h1>
           <p className={classes.lead}>
-            Internal routes for renderer checks, board fixtures, and adapter validation.
+            Opening scenes, card motions, shared UI, components, and game engine fixtures.
           </p>
 
           <div className={classes.metaGrid} aria-label="Harness status">
@@ -51,7 +50,7 @@ export default function GameIndex({ onNavigate }: GameIndexProps) {
             <p className={classes.railLabel}>Quick routes</p>
             <ul className={classes.railList}>
               <li>
-                <a className={classes.railLink} href="/animation-fixtures">
+                <a className={classes.railLink} href={buildMountedHref("/animation-fixtures")}>
                   <span>Animation</span>
                   <span>/animation-fixtures</span>
                 </a>
@@ -84,63 +83,9 @@ export default function GameIndex({ onNavigate }: GameIndexProps) {
               Open a hub, choose a state, inspect the board
             </span>
           </div>
+          <FixtureDirectory />
+          <h2 className={classes.toolbarTitle}>Game engine fixtures</h2>
           <ul className={classes.hubList}>
-            <li className={classes.hubItem}>
-              <a
-                href={buildMountedHref("/animation-fixtures")}
-                className={classes.hubLink}
-                style={
-                  {
-                    "--row-accent": "oklch(0.48 0.095 180)",
-                    "--row-accent-soft": "oklch(0.95 0.038 177)",
-                  } as CSSProperties
-                }
-                onClick={(event) => {
-                  event.preventDefault();
-                  onNavigate(buildMountedHref("/animation-fixtures"));
-                }}
-              >
-                <span className={classes.hubIcon}>
-                  <IconSparkles size={19} />
-                </span>
-                <span className={classes.hubText}>
-                  <span className={classes.hubName}>Animation fixtures</span>
-                  <span className={classes.hubDescription}>
-                    Launch real game fixtures for every shared animation step.
-                  </span>
-                </span>
-                <span className={classes.hubBadge}>7 step types · 4 games</span>
-              </a>
-            </li>
-            <li className={classes.hubItem}>
-              <a
-                href={buildMountedHref("/simulator-ui-fixtures")}
-                className={classes.hubLink}
-                style={
-                  {
-                    "--row-accent": "oklch(0.68 0.12 225)",
-                    "--row-accent-soft": "oklch(0.94 0.028 225)",
-                  } as CSSProperties
-                }
-                onClick={(event) => {
-                  event.preventDefault();
-                  onNavigate(buildMountedHref("/simulator-ui-fixtures"));
-                }}
-              >
-                <span className={classes.hubIcon} aria-hidden="true">
-                  ◫
-                </span>
-                <span className={classes.hubText}>
-                  <span className={classes.hubName}>Shared UI fixtures</span>
-                  <span className={classes.hubDescription}>
-                    Connection, clock, and interactive-prompt states across shared simulator UI.
-                  </span>
-                </span>
-                <span className={classes.hubBadge}>
-                  {SHARED_SIMULATOR_UI_FIXTURE_COUNT} UI states
-                </span>
-              </a>
-            </li>
             {games.map((game) => {
               const href = getGameDefaultIndexPath(game.slug) ?? `/${game.slug}`;
               return (

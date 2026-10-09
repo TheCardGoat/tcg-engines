@@ -33,6 +33,10 @@
   box-shadow: 0 0 14px rgb(74 217 255 / 18%);
 }
 
+.firstPlayerChoice:not(.mobile) {
+  transform: translateY(calc(-1 * var(--self-hand-zone-h, 112px) - 16px));
+}
+
 .bannerReaction {
   --banner-accent: rgb(245 230 66 / 68%);
 
@@ -86,6 +90,60 @@
   text-overflow: ellipsis;
   text-transform: none;
   white-space: nowrap;
+}
+
+/* Multi-ability "choose the order" prompts: stack one compact row per
+   ability instead of wrapping headline+detail buttons. */
+.verbs.triggerQueue {
+  flex: 1 1 100%;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  margin-left: 0;
+  padding-right: 4px;
+}
+
+.verbs.triggerQueue .verb {
+  width: 100%;
+}
+
+.triggerQueueRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+  text-align: left;
+}
+
+.triggerQueueArt {
+  width: 30px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 22%);
+  border-radius: 3px;
+  background: rgb(0 0 0 / 45%);
+}
+
+/* Card name first, then the ability text, clamped to two lines. */
+.triggerQueueBody {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  min-width: 0;
+  color: rgb(230 244 251 / 86%);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  text-transform: none;
+}
+
+.triggerQueueName {
+  color: #f5e642;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: none;
 }
 
 .bannerTarget {
@@ -230,11 +288,52 @@
   outline-offset: 2px;
 }
 
+.targetRequirementTooltip {
+  max-width: min(28rem, calc(100vw - 2rem));
+  padding: 0.5rem 0.625rem;
+  color: #e6f4fb;
+  background: #111d2e;
+  border: 1px solid #38506e;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1.4rem rgb(2 6 23 / 38%);
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1.4;
+  white-space: normal;
+}
+
 .message {
   margin: 0;
   flex: 1 1 260px;
   min-width: 0;
   font-size: 12px;
+}
+
+.switchSeatButton {
+  min-height: 32px;
+  padding: 4px 8px;
+  border: 1px solid rgb(74 217 255 / 48%);
+  border-radius: 3px;
+  background: rgb(74 217 255 / 8%);
+  color: #b9efff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.switchSeatButton:hover {
+  background: rgb(74 217 255 / 16%);
+  border-color: rgb(74 217 255 / 78%);
+}
+
+@media (pointer: coarse) {
+  .switchSeatButton {
+    min-height: 44px;
+    padding-inline: 10px;
+  }
 }
 
 .promptCopy {
@@ -315,6 +414,34 @@
   color: rgb(230 244 251 / 90%);
 }
 
+/* The V2 housing stretches the banner full-width, floats the verbs below and
+   overlays the header buttons — restore the slim single-row grid: title and
+   rules copy on the left, verbs on the right, room for the header buttons. */
+.bannerTargetSlim[data-prompt-skin="v2"] {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  padding-right: 88px;
+}
+
+.bannerTargetSlim[data-prompt-skin="v2"] .title {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+}
+
+.bannerTargetSlim[data-prompt-skin="v2"] .cardRulesCopy {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.bannerTargetSlim[data-prompt-skin="v2"] .verbs {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: auto;
+  max-width: none;
+  align-self: center;
+}
+
 .sourceCardName {
   position: relative;
   font-weight: 800;
@@ -322,6 +449,15 @@
   letter-spacing: 0.02em;
   white-space: nowrap;
   pointer-events: auto;
+}
+
+.cardPosition {
+  color: rgb(230 244 251 / 78%);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  white-space: nowrap;
 }
 
 .bannerTarget .sourceCardName {
@@ -470,6 +606,41 @@
   display: none;
 }
 
+/* V2 board-resolved Gain Gig: the swelled fixer dice are the controls, so the
+   banner collapses to a micro caption chip instead of a framed plate. The
+   prompt housing skips its nine-slice frame for this state. Kept after the
+   .banner.compact block so these overrides win the tie. */
+.banner.bannerMicro {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 7px;
+  width: fit-content;
+  min-height: 0;
+  margin-inline: auto;
+  padding: 4px 12px;
+  border: 1px solid rgb(245 230 66 / 38%);
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgb(245 230 66 / 8%), transparent 60%), rgb(7 9 12 / 88%);
+  box-shadow: 0 6px 18px #0009;
+  backdrop-filter: none;
+}
+
+.banner.bannerMicro .title {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.banner.bannerMicro .actionMessage {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  color: rgb(230 244 251 / 72%);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .compact.selectedPlayPrompt {
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto auto;
@@ -517,6 +688,108 @@
   font-size: 10px;
   line-height: 1;
   white-space: nowrap;
+}
+
+.bannerAction.compact[data-state="redirect-defeat"] .verbs {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  overflow: visible;
+  padding-right: 30px;
+}
+
+.bannerAction.compact[data-state="redirect-defeat"] .verb {
+  flex: 0 1 auto;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 36px;
+  line-height: 1.2;
+  text-align: left;
+  white-space: normal;
+}
+
+/* Direct setup and Gig decisions keep every action visible on a phone. Place the
+   prompt control beside the title so it cannot cover the last action. */
+.bannerAction.mobile.compact:is(
+    [data-state="choose-first-player"],
+    [data-state="gain-gig"],
+    [data-state="reroll-gig"]
+  ) {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: start;
+}
+
+.bannerAction.mobile.compact:is(
+    [data-state="choose-first-player"],
+    [data-state="gain-gig"],
+    [data-state="reroll-gig"]
+  )
+  .title {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.bannerAction.mobile.compact[data-state="reroll-gig"] .actionSummary {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+}
+
+.bannerAction.mobile.compact[data-state="reroll-gig"] .title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bannerAction.mobile.compact[data-state="reroll-gig"] .actionMessage {
+  display: block;
+  overflow: hidden;
+  font-size: 10px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bannerAction.mobile.compact:is(
+    [data-state="choose-first-player"],
+    [data-state="gain-gig"],
+    [data-state="reroll-gig"]
+  )
+  .verbs {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  width: 100%;
+  margin-left: 0;
+  overflow: visible;
+  padding: 0;
+}
+
+.bannerAction.mobile.compact:is(
+    [data-state="choose-first-player"],
+    [data-state="gain-gig"],
+    [data-state="reroll-gig"]
+  )
+  .verb {
+  min-width: 0;
+  min-height: 44px;
+  white-space: normal;
+}
+
+.bannerAction.mobile.compact:is(
+    [data-state="choose-first-player"],
+    [data-state="gain-gig"],
+    [data-state="reroll-gig"]
+  )
+  .headerActions {
+  position: static;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  justify-self: end;
+  transform: none;
 }
 
 .bannerTarget.compact {
@@ -646,6 +919,59 @@
   border-radius: 6px;
 }
 
+/* Keep the gig choice compact in the mobile prompt rail. */
+.bannerAction.mobile.compact[data-state="gain-gig"] {
+  grid-template-rows: 28px 44px;
+  gap: 4px;
+  min-height: 0;
+  padding: 4px 8px;
+}
+
+.bannerAction.mobile.compact[data-state="gain-gig"] .title {
+  align-self: center;
+}
+
+.bannerAction.mobile.compact[data-state="gain-gig"] .verbs {
+  grid-template-columns: repeat(auto-fit, 62px);
+  gap: 4px;
+  justify-content: center;
+  align-self: start;
+}
+
+.bannerAction.mobile.compact[data-state="gain-gig"] .verb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+
+.gigDieIcon {
+  display: none;
+}
+
+.bannerAction.mobile.compact[data-state="gain-gig"] .gigDieIcon {
+  display: block;
+  line-height: 0;
+}
+
+.bannerAction.mobile.compact[data-state="gain-gig"] .gigDieIcon + .gigDieLabel {
+  display: none;
+}
+
+.bannerAction.mobile.compact[data-state="gain-gig"] .iconButton {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+}
+
+.bannerAction.mobile.compact[data-state="gain-gig"] .iconButton::before {
+  position: absolute;
+  inset: -8px;
+  content: "";
+}
+
 .mobile .targetListButton {
   background:
     linear-gradient(180deg, rgb(245 230 66 / 22%), rgb(245 230 66 / 8%)), rgb(7 9 12 / 88%);
@@ -678,6 +1004,16 @@
   padding: 0 12px;
   pointer-events: auto;
   white-space: nowrap;
+}
+
+/* Thumb-sized verbs: the compact desktop rails sit at 30px, which is under
+   every touch guideline. State-specific mobile rules above keep their own
+   paddings; this raises only the floor. */
+.banner.mobile .verb {
+  min-height: 44px;
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 1.1;
 }
 
 .compact.selectedPlayPrompt .cancel,
@@ -877,6 +1213,32 @@
   color: #f5e642;
 }
 
+.bannerTarget .verb[data-testid="prompt-target-pass"] {
+  background: rgb(74 217 255 / 9%);
+  border-color: rgb(74 217 255 / 52%);
+  color: rgb(230 244 251 / 94%);
+  font-weight: 700;
+}
+
+.bannerTarget .verb[data-testid="prompt-target-pass"]:hover:not(:disabled) {
+  background: rgb(74 217 255 / 17%);
+  border-color: rgb(74 217 255 / 82%);
+  color: #fff;
+}
+
+.bannerTarget .verb[data-testid="prompt-target-pass"]:focus-visible {
+  outline: 2px solid rgb(74 217 255 / 88%);
+  outline-offset: 2px;
+}
+
+.bannerTarget .verb[data-testid="prompt-target-confirm"]:not(:disabled) {
+  background: #f5e642;
+  border-color: #f5e642;
+  color: #07090c;
+  font-weight: 800;
+  box-shadow: 0 0 12px rgb(245 230 66 / 22%);
+}
+
 .cancel {
   appearance: none;
   background: transparent;
@@ -1035,13 +1397,20 @@
     "meta meta"
     "copy copy"
     "verbs verbs";
-  align-content: stretch;
   align-items: start;
   gap: 6px 8px;
   width: 100%;
   height: 100%;
   min-height: 100%;
   padding: 7px 8px;
+}
+
+.bannerReaction.mobile.compact {
+  align-content: stretch;
+}
+
+.bannerTarget.mobile.compact:not(.selectedPlayPrompt) {
+  align-content: start;
 }
 
 .bannerTarget.mobile.compact.mobileCardPrompt:not(.selectedPlayPrompt) {
@@ -1249,4 +1618,299 @@
   .bannerTarget.readyLegendsPrompt .verb {
     min-height: 44px;
   }
+}
+
+/* V2 is a skin of this same prompt, never a second decision implementation. */
+.banner[data-prompt-skin="v2"] {
+  --banner-accent: #b9d4d6;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(5px, 0.45cqw, 8px);
+  gap: 4px;
+  transform: none;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  color: #dce6e5;
+  font-family: "Cyberpunk Blender Pro", "Arial Narrow", sans-serif;
+}
+
+.banner[data-prompt-skin="v2"] .title {
+  color: #d5e2e1;
+  font-family: "Cyberpunk Refinery 25", "Arial Narrow", sans-serif;
+  font-size: clamp(14px, 1.1cqw, 18px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: 0.08em;
+  text-shadow: 0 2px 3px #000;
+}
+
+.banner[data-prompt-skin="v2"]
+  :is(.message, .actionMessage, .reactionMessage, .effectText, .sequenceHint, .titleMeta) {
+  color: #c0cccf;
+  font-family: "Cyberpunk Blender Pro", "Arial Narrow", sans-serif;
+  font-size: clamp(12px, 0.82cqw, 14px);
+  line-height: 1.2;
+  text-shadow: 0 1px 2px #000;
+}
+
+.banner[data-prompt-skin="v2"] .actionSummary {
+  flex: 1 1 100%;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.banner[data-prompt-skin="v2"] .verbs {
+  display: flex;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: flex-end;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  gap: 5px;
+  overflow: visible;
+  padding: 2px;
+}
+
+.banner[data-prompt-skin="v2"] .verb {
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: 2px;
+  background: transparent;
+  border: 6px solid transparent;
+  border-image: url("../BoardV2/assets/prompt-control-v2.svg") 12 fill / 6px stretch;
+  box-shadow: 0 3px 9px #0006;
+  color: #e2edeb;
+  font-family: "Cyberpunk Blender Pro", "Arial Narrow", sans-serif;
+  font-size: clamp(14px, 1.15cqw, 19px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  white-space: normal;
+  text-shadow: 0 2px 3px #000;
+}
+
+.banner[data-prompt-skin="v2"] .spatialReminder {
+  margin: 0;
+  color: #8ea5aa;
+  font-size: 11px;
+  line-height: 1.15;
+  letter-spacing: 0.035em;
+}
+
+.banner[data-prompt-skin="v2"] .verb:hover:not(:disabled) {
+  border-color: #bfdbd9;
+  filter: brightness(1.18);
+}
+
+.banner[data-prompt-skin="v2"] .verb:is([aria-pressed="true"], [data-selected="true"]) {
+  border-color: #d6b66e;
+  color: #f3deb0;
+  box-shadow:
+    inset 0 -2px #d6b66e,
+    0 3px 9px #0006;
+}
+
+.banner[data-prompt-skin="v2"] .verb:disabled {
+  filter: saturate(0.35);
+  color: #829196;
+  border-color: #455155;
+  opacity: 0.6;
+}
+
+.banner[data-prompt-skin="v2"] :is(button, [role="button"]):focus-visible {
+  outline: 2px solid #f1d58f;
+  outline-offset: 3px;
+}
+
+.banner[data-prompt-skin="v2"][data-state="gain-gig"] {
+  grid-template-rows: auto auto;
+}
+
+.banner[data-prompt-skin="v2"][data-state="gain-gig"] .verbs {
+  justify-content: center;
+  gap: clamp(3px, 0.35cqw, 6px);
+}
+
+.banner[data-prompt-skin="v2"][data-state="gain-gig"] .verb {
+  display: flex;
+  flex: 1 1 54px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  max-width: 92px;
+  min-height: 54px;
+  padding: 4px;
+  font-size: clamp(11px, 0.9cqw, 14px);
+  background: linear-gradient(145deg, #354348b8, #111c21e8 62%);
+  box-shadow:
+    inset 0 1px #c0ced035,
+    inset 0 -2px #050a0c,
+    0 4px 12px #0006;
+}
+
+.banner[data-prompt-skin="v2"][data-state="gain-gig"] .verb:hover {
+  background: linear-gradient(145deg, #486369c0, #152c32e8 62%);
+}
+
+/* Mulligan keeps its decision verbs in a narrow column beside the summary so
+   the whole prompt reads as one strip instead of a strip plus a button row. */
+.banner[data-prompt-skin="v2"][data-state="mulligan"] {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto;
+}
+
+.banner[data-prompt-skin="v2"][data-state="mulligan"] .actionSummary {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.banner[data-prompt-skin="v2"][data-state="mulligan"] .verbs {
+  grid-column: 2;
+  grid-row: 1;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: center;
+  width: auto;
+  gap: 4px;
+}
+
+.banner[data-prompt-skin="v2"] .gigDieIcon {
+  display: block;
+  line-height: 0;
+  filter: drop-shadow(0 3px 4px #0007);
+}
+
+.banner[data-prompt-skin="v2"] .gigDieLabel {
+  display: block;
+}
+.banner[data-prompt-skin="v2"] .triggerOptionDetail {
+  color: #bdcdcf;
+}
+.banner[data-prompt-skin="v2"] .verbs.triggerQueue {
+  justify-content: flex-start;
+  gap: 4px;
+  padding: 2px;
+}
+.banner[data-prompt-skin="v2"] .triggerQueueBody {
+  color: #dce7e7;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+.banner[data-prompt-skin="v2"] .triggerQueueArt {
+  border-color: #667b80;
+}
+.banner[data-prompt-skin="v2"] .triggerQueueName {
+  color: #dfd5b9;
+}
+.banner[data-prompt-skin="v2"] .count {
+  color: #e3c68d;
+}
+.banner[data-prompt-skin="v2"] .iconButton {
+  color: #bcd0d2;
+  border-color: #607377;
+}
+
+@media (width <= 600px) {
+  .banner[data-prompt-skin="v2"] {
+    padding: 6px;
+    gap: 5px;
+  }
+  .banner[data-prompt-skin="v2"] .verb {
+    min-height: 44px;
+    padding: 8px 10px;
+  }
+  .banner[data-prompt-skin="v2"][data-state="gain-gig"] .verb {
+    flex-basis: 42px;
+    min-height: 44px;
+    padding: 3px 2px;
+    font-size: 11px;
+  }
+  .banner[data-prompt-skin="v2"] .title {
+    font-size: 17px;
+  }
+}
+
+/* Reuse the user's selected die renderer, with the table's steel palette. */
+.banner[data-prompt-skin="v2"] .gigDieIcon > div {
+  --die-rgb: 115 143 152;
+  --die-fill-alpha: 96%;
+  --die-ink: #edf4f2;
+  color: #e3eeed;
+  text-shadow: 0 1px 2px #000;
+}
+.banner[data-prompt-skin="v2"][data-state="gain-gig"] .verb {
+  border-image: none;
+  border-width: 1px;
+}
+.banner[data-prompt-skin="v2"] .title {
+  border-color: #89999a55;
+}
+.banner[data-prompt-skin="v2"] .titleMeta {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Waiting states (rival acting, rival mulliganing) are status, not decisions:
+   render a slim, dim pill instead of a full decision plate so a whole rival
+   turn doesn't dominate the prompt rail. The V2 nine-slice housing stays off
+   for these (see PromptHousing.module.css); the docked pass control keeps
+   carrying the loud WAITING state at the board edge. */
+.banner.bannerWaiting {
+  --banner-accent: rgb(255 61 138 / 34%);
+
+  flex-wrap: nowrap;
+  gap: 8px;
+  align-items: baseline;
+  width: fit-content;
+  min-height: 0;
+  margin-inline: auto;
+  padding: 5px 12px;
+  border-color: rgb(255 61 138 / 20%);
+  background: rgb(8 11 15 / 78%);
+  color: rgb(207 232 246 / 78%);
+  font-style: italic;
+  box-shadow: none;
+}
+
+.banner.bannerWaiting.compact {
+  width: fit-content;
+  min-height: 0;
+  padding: 4px 10px;
+}
+
+.banner.bannerWaiting .title {
+  flex: 0 0 auto;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: rgb(255 61 138 / 80%);
+}
+
+.banner.bannerWaiting .message {
+  flex: 0 1 auto;
+  margin: 0;
+  font-size: 11px;
+  font-style: italic;
+  line-height: 1.35;
+  color: rgb(207 232 246 / 78%);
+}
+
+.banner.bannerWaiting .switchSeatButton {
+  min-height: 0;
+  padding: 3px 8px;
 }

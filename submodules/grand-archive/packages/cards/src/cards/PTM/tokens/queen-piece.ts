@@ -66,6 +66,10 @@ export const queenPiece: GrandArchiveCard<GrandArchiveAbilityDefinition, "token-
                       },
                       {
                         kind: "subtype",
+                        oneOf: ["CHESSMAN"],
+                      },
+                      {
+                        kind: "subtype",
                         oneOf: ["PAWN"],
                       },
                     ],

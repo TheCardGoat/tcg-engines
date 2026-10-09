@@ -23,7 +23,7 @@ export const op02Solitaire077: CharacterCard = {
   cost: 3,
   power: 5000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   attribute: "slash",
   i18n: op02Solitaire077I18n,
 };

@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-miscellaneous-topics/state-based-checks-and-effects"
+  relation: "current_index"
+---
+
 # State-based Checks and Effects
 
 State-based effects occur as a result of conditions in the state of the game being met and often do not require any additional input from the player to be completed.

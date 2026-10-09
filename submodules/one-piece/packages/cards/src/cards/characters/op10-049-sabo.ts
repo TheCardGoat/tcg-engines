@@ -23,7 +23,7 @@ export const op10Sabo049: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 2000,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "special",
   effect:
     "If your Character with a base cost of 7 or less other than [Sabo] would be removed from the field by your opponent's effect, you may return this Character to the owner's hand instead.",

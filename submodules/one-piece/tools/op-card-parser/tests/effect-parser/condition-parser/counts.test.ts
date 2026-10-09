@@ -130,7 +130,7 @@ describe("parseInlineCondition", () => {
       });
     });
 
-    test("you have N or more included-type Characters", () => {
+    test("you have N or more named-type Characters", () => {
       const result = parseInlineCondition(
         "If you have 3 or more {Neptunian} type Characters, draw 1 card.",
       );
@@ -141,11 +141,11 @@ describe("parseInlineCondition", () => {
         zone: "character",
         comparison: "gte",
         value: 3,
-        filters: [{ filter: "trait", value: "Neptunian", match: "includes" }],
+        filters: [{ filter: "trait", value: "Neptunian", match: "exact" }],
       });
     });
 
-    test("you have N or more colored included-type Characters", () => {
+    test("you have N or more colored named-type Characters", () => {
       const result = parseInlineCondition(
         'If you have 3 or more blue "Cross Guild" type Characters, draw 1 card.',
       );
@@ -157,7 +157,7 @@ describe("parseInlineCondition", () => {
         value: 3,
         filters: [
           { filter: "color", value: "blue" },
-          { filter: "trait", value: "Cross Guild", match: "includes" },
+          { filter: "trait", value: "Cross Guild", match: "exact" },
         ],
       });
     });

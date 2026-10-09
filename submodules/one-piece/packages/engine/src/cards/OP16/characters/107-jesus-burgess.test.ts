@@ -40,4 +40,74 @@ describe("OP16-107 Jesus Burgess", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+
+  test("Life Trigger pays a hand trash and plays the same physical Burgess", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: "OP01-001", life: ["OP16-107"], hand: ["OP15-097", "OP16-039"] },
+      { leaderCardId: "OP01-001", activeDon: 2 },
+      { activeSeat: "north" },
+    );
+    engine.asNorth().attachDon(engine.asNorth().leader(), 2);
+    const burgessId = engine.asSouth().findInZone("life", "OP16-107");
+    engine.asNorth().attack(engine.asNorth().leader(), engine.asSouth().leader());
+    engine.asSouth().activateLifeTrigger();
+    engine.asSouth().acceptOptional();
+    engine
+      .asSouth()
+      .choose("effectCostTrashFromHand", [engine.asSouth().findInZone("hand", "OP15-097")]);
+    const burgess = engine
+      .asSouth()
+      .view()
+      .players.south.characters.find((card) => card?.cardId === "OP16-107");
+    expect(burgess?.instanceId).toBe(burgessId);
+    expect(
+      engine
+        .asSouth()
+        .view()
+        .players.south.hand.map((card) => card.cardId),
+    ).toEqual(["OP16-039"]);
+    expect(
+      engine
+        .asSouth()
+        .view()
+        .players.south.trash.map((card) => card.cardId),
+    ).toContain("OP15-097");
+    expect(
+      engine
+        .asSouth()
+        .view()
+        .players.south.trash.map((card) => card.cardId),
+    ).not.toContain("OP16-107");
+  });
+
+  test("declining the Trigger payment keeps the hand card and trashes Burgess", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: "OP01-001", life: ["OP16-107"], hand: ["OP15-097"] },
+      { leaderCardId: "OP01-001", activeDon: 2 },
+      { activeSeat: "north" },
+    );
+    engine.asNorth().attachDon(engine.asNorth().leader(), 2);
+    engine.asNorth().attack(engine.asNorth().leader(), engine.asSouth().leader());
+    // No usable Counter remains, so the Counter Step ends automatically.
+    engine.asSouth().activateLifeTrigger();
+    engine.asSouth().declineOptional();
+    expect(
+      engine
+        .asSouth()
+        .view()
+        .players.south.hand.map((card) => card.cardId),
+    ).toEqual(["OP15-097"]);
+    expect(
+      engine
+        .asSouth()
+        .view()
+        .players.south.characters.some((card) => card?.cardId === "OP16-107"),
+    ).toBe(false);
+    expect(
+      engine
+        .asSouth()
+        .view()
+        .players.south.trash.map((card) => card.cardId),
+    ).toContain("OP16-107");
+  });
 });

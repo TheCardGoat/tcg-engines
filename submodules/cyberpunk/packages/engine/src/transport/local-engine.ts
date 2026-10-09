@@ -5,7 +5,7 @@ import type { CommandEnvelope, CommandResult } from "../types/commands.ts";
 import type { FilteredMatchView } from "../view/filter.ts";
 import { processCommand, registerMoves } from "../command/index.ts";
 import { allMoves, manualMoves } from "../moves/index.ts";
-import { filterMatchView } from "../view/filter.ts";
+import { filterMatchView, oracleMatchView } from "../view/filter.ts";
 import { buildPlayerPrompt, type PlayerPrompt } from "../view/player-prompt.ts";
 import { getEffectiveActivePlayerId } from "../state/turn-info.ts";
 
@@ -29,6 +29,7 @@ export interface LocalEngineContinuationSnapshot {
 }
 
 interface LocalEngineConstructionOptions {
+  combatProgression?: "automatic" | "manual";
   continuation?: LocalEngineContinuationSnapshot;
   /** Fresh games/fixtures begin at a legitimate checkpoint; restored legacy snapshots do not. */
   initializeTurnStartCheckpoint?: boolean;
@@ -36,11 +37,13 @@ interface LocalEngineConstructionOptions {
 
 export class LocalEngine {
   private _state: MatchState;
+  private combatProgression: "automatic" | "manual";
   private undoStack: LocalEngineUndoEntry[] = [];
   private turnStartCheckpoint: TurnStartCheckpoint | null = null;
 
   constructor(initialState: MatchState, options: LocalEngineConstructionOptions = {}) {
     this._state = initialState;
+    this.combatProgression = options.combatProgression ?? "automatic";
     registerMoves({ ...allMoves, ...manualMoves });
     if (options.continuation) {
       this.undoStack = structuredClone(options.continuation.undoStack);
@@ -84,6 +87,11 @@ export class LocalEngine {
     return filterMatchView(this._state, playerId);
   }
 
+  /** Explicit opt-in for full-information practice AI; not a client view. */
+  getOracleView(playerId: PlayerId): FilteredMatchView {
+    return oracleMatchView(this._state, playerId);
+  }
+
   /**
    * Returns the engine's player-facing prompt: which moves are available right
    * now, what inputs they take, and any pending choice the engine is waiting
@@ -96,10 +104,12 @@ export class LocalEngine {
 
   processCommand(command: CommandEnvelope, playerId: PlayerId): CommandResult {
     const previousState = this._state;
-    const result = processCommand(this._state, command, playerId);
+    const result = processCommand(this._state, command, playerId, this.combatProgression);
 
     if (result.success) {
-      if (result.undoable) {
+      if (command.move === "setCombatPriority") {
+        // Private preferences neither create nor erase gameplay undo history.
+      } else if (result.undoable) {
         this.undoStack.push({
           state: this._state,
           inversePatches: result.inversePatches,
@@ -135,7 +145,7 @@ export class LocalEngine {
     if (!this.canUndo()) return false;
     const entry = this.undoStack.pop();
     if (!entry) return false;
-    this._state = entry.state;
+    this._state = this.withCurrentPreferences(entry.state);
     return true;
   }
 
@@ -148,7 +158,7 @@ export class LocalEngine {
   undoToTurnStart(): boolean {
     const checkpoint = this.currentTurnStartCheckpoint();
     if (!checkpoint || this.undoStack.length <= checkpoint.stackDepth) return false;
-    this._state = checkpoint.state;
+    this._state = this.withCurrentPreferences(checkpoint.state);
     this.undoStack = this.undoStack.slice(0, checkpoint.stackDepth);
     return true;
   }
@@ -182,7 +192,7 @@ export class LocalEngine {
         errorCode: "NO_TURN_START_CHECKPOINT",
       };
     }
-    const restored: MatchState = structuredClone(checkpoint.state);
+    const restored: MatchState = this.withCurrentPreferences(checkpoint.state);
     restored.ctx.stateID = this._state.ctx.stateID + 1;
     this._state = restored;
     this.undoStack = this.undoStack.slice(0, checkpoint.stackDepth);
@@ -200,7 +210,9 @@ export class LocalEngine {
    * functions, no DOM nodes, no class instances we own).
    */
   fork(): LocalEngine {
-    const clone = new LocalEngine(structuredClone(this._state));
+    const clone = new LocalEngine(structuredClone(this._state), {
+      combatProgression: this.combatProgression,
+    });
     // Copy the undo stack too so a forked engine's undo behaves the same as
     // the original would have. Inverse patches are also plain data.
     clone.undoStack = this.undoStack.map((entry) => ({
@@ -217,6 +229,17 @@ export class LocalEngine {
         }
       : null;
     return clone;
+  }
+
+  setCombatProgression(mode: "automatic" | "manual"): void {
+    this.combatProgression = mode;
+  }
+
+  private withCurrentPreferences(state: MatchState): MatchState {
+    const restored = structuredClone(state);
+    for (const id of this._state.ctx.playerIds)
+      restored.G.players[id]!.combatPriority = this._state.G.players[id]!.combatPriority;
+    return restored;
   }
 
   private currentTurnStartCheckpoint(): TurnStartCheckpoint | null {
@@ -269,7 +292,11 @@ function detectTurnStartCheckpoint(
   const newTurnStarted =
     previousTurn.turnNumber !== nextTurn.turnNumber ||
     previousTurn.activePlayerId !== nextTurn.activePlayerId;
-  const readyPhaseCompleted = previousState.G.gamePhase === "start";
+  // Resolving the Gig choice enters Main Phase, but the choice itself is the
+  // checkpoint. Keep it so a turn rewind can choose and roll the Gig again.
+  const readyPhaseCompleted =
+    previousState.G.gamePhase === "start" &&
+    previousState.G.turnMetadata.pendingChoice?.type !== "gainGig";
   const setupCompleted = previousState.G.gamePhase === "setup";
 
   if (!newTurnStarted && !readyPhaseCompleted && !setupCompleted) {

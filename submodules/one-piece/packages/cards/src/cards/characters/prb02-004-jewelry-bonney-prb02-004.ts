@@ -31,7 +31,7 @@ export const prb02JewelryBonneyPrb02004004: CharacterCard = {
   cost: 3,
   power: 3000,
   counter: 1000,
-  traits: ["Bonney Pirates Supernovas"],
+  traits: ["Supernovas", "Bonney Pirates"],
   attribute: "special",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)[On Your Opponent's Attack] [Once Per Turn] Set up to 1 of your DON!! cards as active.",

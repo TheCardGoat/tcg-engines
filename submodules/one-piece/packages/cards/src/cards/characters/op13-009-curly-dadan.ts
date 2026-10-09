@@ -23,7 +23,7 @@ export const op13CurlyDadan009: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Mountain Bandits Mountain Bandits"],
+  traits: ["Mountain Bandits"],
   attribute: "slash",
   effect:
     'If you have a "Mountain Bandits" type Character other than this card, this Character gains [Double Attack].',
@@ -39,7 +39,7 @@ export const op13CurlyDadan009: CharacterCard = {
               {
                 filter: "trait",
                 value: "Mountain Bandits",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "excludeSelf",

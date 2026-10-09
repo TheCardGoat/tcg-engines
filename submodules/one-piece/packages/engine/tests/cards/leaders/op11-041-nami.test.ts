@@ -57,4 +57,24 @@ describe("OP11-041 Nami", () => {
     );
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("FAQ: Hiyori's own Life exchange triggers the draw although Life count is restored", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP11-041",
+      hand: ["OP06-106", "EB01-005"],
+      life: ["EB01-018", "EB01-022"],
+      activeDon: 2,
+      deck: ["OP11-016", "EB01-005"],
+    });
+    const add = e.findCardInZone("south", "hand", "EB01-005");
+    e.asSouth().play("OP06-106");
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectCostAddLifeToHand", { optionId: "top" }, "south");
+    e.asSouth().chooseTargets(add);
+    expect(e.getView("south").players.south.lifeCount).toBe(2);
+    expect(e.getView("south").players.south.hand).toHaveLength(1);
+    e.asSouth().acceptOptional();
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toContain("OP11-016");
+    expect(e.getView("south").players.south.hand).toHaveLength(2);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

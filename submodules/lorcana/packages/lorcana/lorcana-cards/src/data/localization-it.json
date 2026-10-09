@@ -255,6 +255,2032 @@
     "flavorText": "",
     "searchableKeywords": ["Lion King", "Il re leone"]
   },
+  "957": {
+    "name": "Don Massacre",
+    "version": "Affabile Pirata",
+    "rulesText": "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Don Massacre.)%\\Memorabile\\ Quando giochi questo personaggio, infliggi 1 danno a ogni personaggio avversario. Questo danno non può essere ridotto da <Resistere>.%\\Così Affascinante\\ Mentre questo personaggio è impegnato, ogni personaggio danneggiato avversario riceve -1 {L}.",
+    "text": [
+      {
+        "title": "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Don Massacre.)"
+      },
+      {
+        "title": "Memorabile",
+        "description": "Quando giochi questo personaggio, infliggi 1 danno a ogni personaggio avversario. Questo danno non può essere ridotto da <Resistere>."
+      },
+      {
+        "title": "Così Affascinante",
+        "description": "Mentre questo personaggio è impegnato, ogni personaggio danneggiato avversario riceve -1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Talespin"]
+  },
+  "CJC": {
+    "name": "Fru Fru",
+    "version": "Ospite VIP",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "Con la voce incredibile di Gazelle e i suoi spettacoli epici, Fru Fru si sentiva alta tre metri.",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "Qe1": {
+    "name": "Abuelita",
+    "version": "Nonna Amorevole",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "Le scarpe hanno unito la famiglia, ma ora la musica le porterà gioia.",
+    "searchableKeywords": ["Coco"]
+  },
+  "kSA": {
+    "name": "Max Pippo",
+    "version": "Amante della Musica",
+    "rulesText": "<Melodioso> 5 %\\La Miglior Serata di Sempre\\ Mentre hai in gioco un altro personaggio con <Melodioso>, questo personaggio riceve +1 {L}.",
+    "text": [
+      {
+        "title": "<Melodioso> 5"
+      },
+      {
+        "title": "La Miglior Serata di Sempre",
+        "description": "Mentre hai in gioco un altro personaggio con <Melodioso>, questo personaggio riceve +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "eeA": {
+    "name": "Gazelle",
+    "version": "Diva del Pop",
+    "rulesText": "<Melodioso> 4",
+    "text": "<Melodioso> 4",
+    "flavorText": "“Un applauso speciale a Martin, l'Illuminatore alla chitarra ritmica!”",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "C4O": {
+    "name": "Gambadilegno",
+    "version": "Affascinante Esibizionista",
+    "rulesText": "<Guardiano>",
+    "text": "<Guardiano>",
+    "flavorText": "“Sarà Powerline a volersi fare una foto con <me>.”",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "gjQ": {
+    "name": "Miriam Mendelsohn",
+    "version": "Fan in Prima Fila",
+    "rulesText": "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
+    "text": "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
+    "flavorText": "“Mi ha guardata! Ha guardato proprio <me>!”",
+    "searchableKeywords": ["Red", "Turning Red"]
+  },
+  "5Wa": {
+    "name": "Priya Mangal",
+    "version": "Fan Inamovibile",
+    "rulesText": "\\Spostati!\\ Quando giochi questo personaggio, puoi dare -2 {S} a un personaggio a tua scelta fino all'inizio del tuo prossimo turno.",
+    "text": [
+      {
+        "title": "Spostati!",
+        "description": "Quando giochi questo personaggio, puoi dare -2 {S} a un personaggio a tua scelta fino all'inizio del tuo prossimo turno."
+      }
+    ],
+    "flavorText": "“La prima fila è la fila migliore!”",
+    "searchableKeywords": ["Red", "Turning Red"]
+  },
+  "cuZ": {
+    "name": "Yax",
+    "version": "Appassionato di Concerti",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Oh, wow, amico. Il palco è illuminato come il Grande Illuminarium. Aspetta... 'Illuminarium'... È per <questo> che lo chiamano così? Whoa...”",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "SRT": {
+    "name": "Judy Hopps",
+    "version": "Agente Amichevole",
+    "rulesText": "\\Essere d'Aiuto\\ Quando giochi questo personaggio, rimuovi fino a 2 danni da un personaggio a tua scelta.",
+    "text": [
+      {
+        "title": "Essere d'Aiuto",
+        "description": "Quando giochi questo personaggio, rimuovi fino a 2 danni da un personaggio a tua scelta."
+      }
+    ],
+    "flavorText": "“È il caldo? O è semplicemente la troppa emozione?”",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "Xnj": {
+    "name": "Miguel Rivera",
+    "version": "Musicista Promettente",
+    "rulesText": "\\Preferito del Pubblico\\ Ogni volta che questo personaggio canta una canzone, ottieni 1 leggenda.",
+    "text": [
+      {
+        "title": "Preferito del Pubblico",
+        "description": "Ogni volta che questo personaggio canta una canzone, ottieni 1 leggenda."
+      }
+    ],
+    "flavorText": "“Diventerò un musicista!”",
+    "searchableKeywords": ["Coco"]
+  },
+  "gFZ": {
+    "name": "Nick Wilde",
+    "version": "Capitano di Porto Ficcanaso",
+    "rulesText": "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Nick Wilde.)%\\Percorso Vietato\\ Ogni volta che questo personaggio va all'avventura, puoi dare <Avventuroso> a un personaggio a tua scelta fino all'inizio del tuo prossimo turno. (Non può sfidare e deve andare all'avventura, se possibile.)",
+    "text": [
+      {
+        "title": "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Nick Wilde.)"
+      },
+      {
+        "title": "Percorso Vietato",
+        "description": "Ogni volta che questo personaggio va all'avventura, puoi dare <Avventuroso> a un personaggio a tua scelta fino all'inizio del tuo prossimo turno. (Non può sfidare e deve andare all'avventura, se possibile.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "KR4": {
+    "name": "P.J. Gambadilegno",
+    "version": "Fan Devoto",
+    "rulesText": "\\Conosce Tutte le Parole\\ Mentre hai in gioco un personaggio con <Melodioso>, questo personaggio riceve +1 {L}.",
+    "text": [
+      {
+        "title": "Conosce Tutte le Parole",
+        "description": "Mentre hai in gioco un personaggio con <Melodioso>, questo personaggio riceve +1 {L}."
+      }
+    ],
+    "flavorText": "“Powerline è <davvero> il migliore!”",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "gFC": {
+    "name": "Signor Manchas",
+    "version": "In Servizio col Sorriso",
+    "rulesText": "\\Sempre in Orario\\ Ogni volta che questo personaggio va all'avventura, paga 1 {I} in meno per giocare il tuo prossimo personaggio per questo turno.",
+    "text": [
+      {
+        "title": "Sempre in Orario",
+        "description": "Ogni volta che questo personaggio va all'avventura, paga 1 {I} in meno per giocare il tuo prossimo personaggio per questo turno."
+      }
+    ],
+    "flavorText": "“Il suo show Nonstop Rooftop Pop-Up è stato incredibile!”",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "IsT": {
+    "name": "Nick Wilde",
+    "version": "Agente delle Macchinine",
+    "rulesText": "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)%\\Coinvolgere la Comunità\\ Alla fine del tuo turno, se hai giocato 2 o più personaggi in questo turno, pesca una carta.",
+    "text": [
+      {
+        "title": "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)"
+      },
+      {
+        "title": "Coinvolgere la Comunità",
+        "description": "Alla fine del tuo turno, se hai giocato 2 o più personaggi in questo turno, pesca una carta."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "Hfj": {
+    "name": "Clawhauser",
+    "version": "Agente di Sicurezza",
+    "rulesText": "<Guardiano> %\\Amico di Tutti\\ Non puoi giocare questo personaggio a meno che tu non abbia giocato un altro personaggio in questo turno.",
+    "text": [
+      {
+        "title": "<Guardiano>"
+      },
+      {
+        "title": "Amico di Tutti",
+        "description": "Non puoi giocare questo personaggio a meno che tu non abbia giocato un altro personaggio in questo turno."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "itE": {
+    "name": "Elisa Maza",
+    "version": "Detective Instancabile",
+    "rulesText": "\\Seguire la Pista\\ Quando giochi questo personaggio, se hai in gioco un altro personaggio Detective, un avversario a tua scelta rivela la sua mano e scarta una carta non personaggio a tua scelta.",
+    "text": [
+      {
+        "title": "Seguire la Pista",
+        "description": "Quando giochi questo personaggio, se hai in gioco un altro personaggio Detective, un avversario a tua scelta rivela la sua mano e scarta una carta non personaggio a tua scelta."
+      }
+    ],
+    "flavorText": "“Da dove arrivano questi geodi?”",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "Vq1": {
+    "name": "Powerline",
+    "version": "Megastar",
+    "rulesText": "<Melodioso> 9%\\Coristi\\ Una volta durante il tuo turno, ogni volta che giochi una canzone, riprendi in mano una carta personaggio con <Melodioso> dai tuoi scarti.%\\Armonia Perfetta\\ Questo personaggio riceve +1 {L} per ogni altro personaggio con <Melodioso> che hai in gioco.",
+    "text": [
+      {
+        "title": "<Melodioso> 9"
+      },
+      {
+        "title": "Coristi",
+        "description": "Una volta durante il tuo turno, ogni volta che giochi una canzone, riprendi in mano una carta personaggio con <Melodioso> dai tuoi scarti."
+      },
+      {
+        "title": "Armonia Perfetta",
+        "description": "Questo personaggio riceve +1 {L} per ogni altro personaggio con <Melodioso> che hai in gioco."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "eff": {
+    "name": "Lionheart",
+    "version": "Sindaco in Carica",
+    "rulesText": "<Guardiano> %\\Indice di Approvazione\\ Quando giochi questo personaggio, fino a 2 personaggi a tua scelta ricevono +1 {L} per questo turno.",
+    "text": [
+      {
+        "title": "<Guardiano>"
+      },
+      {
+        "title": "Indice di Approvazione",
+        "description": "Quando giochi questo personaggio, fino a 2 personaggi a tua scelta ricevono +1 {L} per questo turno."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "EoX": {
+    "name": "Aurora",
+    "version": "Musicista Incantevole",
+    "rulesText": "\\Ritornello Melodico\\ Quando giochi questo personaggio, riprendi in mano una carta canzone che hai giocato in questo turno con costo 3 o inferiore dai tuoi scarti.%\\Accoglienza Gioiosa\\ Alla fine del tuo turno, se hai giocato una canzone in questo turno, ottieni 1 leggenda.",
+    "text": [
+      {
+        "title": "Ritornello Melodico",
+        "description": "Quando giochi questo personaggio, riprendi in mano una carta canzone che hai giocato in questo turno con costo 3 o inferiore dai tuoi scarti."
+      },
+      {
+        "title": "Accoglienza Gioiosa",
+        "description": "Alla fine del tuo turno, se hai giocato una canzone in questo turno, ottieni 1 leggenda."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sleeping Beauty", "La bella addormentata nel bosco"]
+  },
+  "V8L": {
+    "name": "Russell",
+    "version": "In Cerca di Avventura",
+    "rulesText": "\\Nascondino\\ {E} — Rivela le prime 2 carte del tuo mazzo. Aggiungi le carte personaggio rivelate alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+    "text": [
+      {
+        "title": "Nascondino",
+        "description": "{E} — Rivela le prime 2 carte del tuo mazzo. Aggiungi le carte personaggio rivelate alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Up"]
+  },
+  "vuy": {
+    "name": "Miguel Rivera",
+    "version": "Musicista di Strada",
+    "rulesText": "\\Condividere la Musica\\ Mentre hai una carta canzone nei tuoi scarti, questo personaggio riceve +1 {L} e ottiene <Melodioso> 3. (Conta come di costo 3 per cantare le canzoni.)",
+    "text": [
+      {
+        "title": "Condividere la Musica",
+        "description": "Mentre hai una carta canzone nei tuoi scarti, questo personaggio riceve +1 {L} e ottiene <Melodioso> 3. (Conta come di costo 3 per cantare le canzoni.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "zex": {
+    "name": "Pippo",
+    "version": "Che Conosce la Band",
+    "rulesText": "\\Accesso VIP\\ Quando giochi questo personaggio, se hai in gioco un personaggio con <Melodioso>, pesca una carta.",
+    "text": [
+      {
+        "title": "Accesso VIP",
+        "description": "Quando giochi questo personaggio, se hai in gioco un personaggio con <Melodioso>, pesca una carta."
+      }
+    ],
+    "flavorText": "“Sono con loro!”",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "vC5": {
+    "name": "Topolino",
+    "version": "Il Migliore in Città",
+    "rulesText": "<Avventuroso> (Questo personaggio non può sfidare e deve andare all'avventura ogni turno, se possibile.)%\\Hot Dog!\\ Alla fine del tuo turno, se questo personaggio è impegnato, ogni giocatore riceve 1 goccia d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "<Avventuroso> (Questo personaggio non può sfidare e deve andare all'avventura ogni turno, se possibile.)"
+      },
+      {
+        "title": "Hot Dog!",
+        "description": "Alla fine del tuo turno, se questo personaggio è impegnato, ogni giocatore riceve 1 goccia d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": []
+  },
+  "eUU": {
+    "name": "Judy Hopps",
+    "version": "Sempre Vigile",
+    "rulesText": "<Trasformazione> 2 {I} (Puoi pagare 2 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Judy Hopps.)%\\Ti Ho in Pugno Ora\\ Quando giochi questo personaggio, se hai giocato un altro personaggio in questo turno, puoi esiliare un personaggio a tua scelta con 5 {S} o superiore.",
+    "text": [
+      {
+        "title": "<Trasformazione> 2 {I} (Puoi pagare 2 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Judy Hopps.)"
+      },
+      {
+        "title": "Ti Ho in Pugno Ora",
+        "description": "Quando giochi questo personaggio, se hai giocato un altro personaggio in questo turno, puoi esiliare un personaggio a tua scelta con 5 {S} o superiore."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "6lX": {
+    "name": "Nick Wilde",
+    "version": "Di Supporto",
+    "rulesText": "\\Ci Penso Io\\ Mentre hai in gioco un altro personaggio Detective, questo personaggio ottiene <Aiutante>. (Ogni volta che va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
+    "text": [
+      {
+        "title": "Ci Penso Io",
+        "description": "Mentre hai in gioco un altro personaggio Detective, questo personaggio ottiene <Aiutante>. (Ogni volta che va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "47o": {
+    "name": "Miguel Rivera",
+    "version": "Musicista Affermato",
+    "rulesText": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Miguel Rivera.)%\\Performance Trascendente\\ Quando giochi questo personaggio, riprendi in mano una carta personaggio dai tuoi scarti.",
+    "text": [
+      {
+        "title": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Miguel Rivera.)"
+      },
+      {
+        "title": "Performance Trascendente",
+        "description": "Quando giochi questo personaggio, riprendi in mano una carta personaggio dai tuoi scarti."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "Ae0": {
+    "name": "Owen Burnett",
+    "version": "Assistente di Xanatos",
+    "rulesText": "\\Limitare i Danni\\ Quando giochi questo personaggio, puoi far riprendere in mano al suo giocatore un personaggio, un oggetto o un luogo a tua scelta con costo 2 o inferiore.",
+    "text": [
+      {
+        "title": "Limitare i Danni",
+        "description": "Quando giochi questo personaggio, puoi far riprendere in mano al suo giocatore un personaggio, un oggetto o un luogo a tua scelta con costo 2 o inferiore."
+      }
+    ],
+    "flavorText": "“Al signor Xanatos non interessa quanto verrà a costare. Rimuova subito l'ostacolo.”",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "amS": {
+    "name": "Scuttle",
+    "version": "Che Dirige il Traffico",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Quando mi ha mostrato quel fischietto, ho pensato: 'Ok. Cosa potrebbe mai andare storto?' Grosso errore.”%—Cordelia, un'Illuminatrice",
+    "searchableKeywords": ["Little Mermaid", "La Sirenetta"]
+  },
+  "ljM": {
+    "name": "David Xanatos",
+    "version": "Industriale Arcano",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Sembra che la nostra bella città nasconda qualche segreto, dopotutto.”",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "wsg": {
+    "name": "Lexington",
+    "version": "Alato e Impavido",
+    "rulesText": "<Sfuggente> %\\Statue di Giorno\\ Se hai 3 o più carte in mano, questo personaggio non si può preparare.",
+    "text": [
+      {
+        "title": "<Sfuggente>"
+      },
+      {
+        "title": "Statue di Giorno",
+        "description": "Se hai 3 o più carte in mano, questo personaggio non si può preparare."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "l5w": {
+    "name": "Merlino",
+    "version": "Esperto di Ninnoli",
+    "rulesText": "\\Materiale Grezzo\\ Quando giochi questo personaggio, se hai in gioco un personaggio chiamato Artù, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Materiale Grezzo",
+        "description": "Quando giochi questo personaggio, se hai in gioco un personaggio chiamato Artù, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Ah, li hai trovati finalmente, non è così?”",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "j6r": {
+    "name": "Pepita",
+    "version": "Alebrije Vigile",
+    "rulesText": "<Sfidante> +2",
+    "text": "<Sfidante> +2",
+    "flavorText": "Tío Oscar: “<Veri> alebrijes. Spiriti erranti.”%Tía Rosita: “Guidano le anime nel loro viaggio.”",
+    "searchableKeywords": ["Coco"]
+  },
+  "gzW": {
+    "name": "Anacleto",
+    "version": "Che Ne Ha Avuto Abbastanza",
+    "rulesText": "<Sfuggente>",
+    "text": "<Sfuggente>",
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "q7N": {
+    "name": "Tía Victoria",
+    "version": "Antenata Critica",
+    "rulesText": "\\Occhiata Fulminante\\ Quando giochi questo personaggio, un personaggio avversario a tua scelta non si può preparare all'inizio del suo prossimo turno.",
+    "text": [
+      {
+        "title": "Occhiata Fulminante",
+        "description": "Quando giochi questo personaggio, un personaggio avversario a tua scelta non si può preparare all'inizio del suo prossimo turno."
+      }
+    ],
+    "flavorText": "“Siediti e dai retta agli anziani prima di combinare altri guai!”",
+    "searchableKeywords": ["Coco"]
+  },
+  "3tB": {
+    "name": "Dante",
+    "version": "Randagio Entusiasta",
+    "rulesText": "\\Qualsiasi Cosa Per Te\\ Quando giochi questo personaggio, un personaggio a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)",
+    "text": [
+      {
+        "title": "Qualsiasi Cosa Per Te",
+        "description": "Quando giochi questo personaggio, un personaggio a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)"
+      }
+    ],
+    "flavorText": "“Bravo, Dante!”%—Miguel",
+    "searchableKeywords": ["Coco"]
+  },
+  "Nxf": {
+    "name": "Mamá Coco",
+    "version": "In Visita al Parco",
+    "rulesText": "\\Ricordo Lontano\\ Ogni volta che metti 1 o più carte nei tuoi scarti dal tuo mazzo, questo personaggio riceve +1 {L} per questo turno.",
+    "text": [
+      {
+        "title": "Ricordo Lontano",
+        "description": "Ogni volta che metti 1 o più carte nei tuoi scarti dal tuo mazzo, questo personaggio riceve +1 {L} per questo turno."
+      }
+    ],
+    "flavorText": "“Mi ricordo le lettere che il mio papà mi mandava. Erano piene di poesie dedicate a me... le ho conservate tutte!”",
+    "searchableKeywords": ["Coco"]
+  },
+  "jhs": {
+    "name": "Trilli",
+    "version": "Fata Curiosa",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Trilli riesce a scovare le cose più strane. Viaggiare con lei è un'avventura!”%—Cordelia, un'Illuminatrice",
+    "searchableKeywords": ["Peter Pan", "Le avventure di Peter Pan"]
+  },
+  "SDE": {
+    "name": "Maga Magò",
+    "version": "Cacciatrice di Ninnoli",
+    "rulesText": "\\Difficile da Gestire\\ Mentre hai una goccia d'inchiostro, questo personaggio ottiene <Sfuggente>. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
+    "text": [
+      {
+        "title": "Difficile da Gestire",
+        "description": "Mentre hai una goccia d'inchiostro, questo personaggio ottiene <Sfuggente>. (Solo altri personaggi con Sfuggente possono sfidarlo.)"
+      }
+    ],
+    "flavorText": "“Aha! Una deliziosa goccetta di potere per alimentare la mia malvagità.”",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "kjn": {
+    "name": "Ombra di Peter Pan",
+    "version": "Inafferrabile Burlona",
+    "rulesText": "<Sfuggente> %\\Scherzetto Preferito\\ Quando giochi questo personaggio, puoi impegnare un personaggio avversario a tua scelta.",
+    "text": [
+      {
+        "title": "<Sfuggente>"
+      },
+      {
+        "title": "Scherzetto Preferito",
+        "description": "Quando giochi questo personaggio, puoi impegnare un personaggio avversario a tua scelta."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Peter Pan", "Le avventure di Peter Pan"]
+  },
+  "PJW": {
+    "name": "Dante",
+    "version": "Strano e Adorabile",
+    "rulesText": "<Sfuggente> %\\Rovistare nella Spazzatura\\ Mentre hai 10 o più carte nei tuoi scarti, questo personaggio riceve +1 {L}.",
+    "text": [
+      {
+        "title": "<Sfuggente>"
+      },
+      {
+        "title": "Rovistare nella Spazzatura",
+        "description": "Mentre hai 10 o più carte nei tuoi scarti, questo personaggio riceve +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "j86": {
+    "name": "Volpe Xanatos",
+    "version": "Fuorilegge Carismatica",
+    "rulesText": "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
+    "text": "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
+    "flavorText": "“Guarda attentamente, Cordelia, e ti mostrerò come una star gestisce le cose.”",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "PkS": {
+    "name": "Brooklyn",
+    "version": "A Tutto Gas",
+    "rulesText": "\\Corsa Sfrenata\\ 6 {I} — Ottieni 1 leggenda.%\\Statue di Giorno\\ Se hai 3 o più carte in mano, questo personaggio non si può preparare.",
+    "text": [
+      {
+        "title": "Corsa Sfrenata",
+        "description": "6 {I} — Ottieni 1 leggenda."
+      },
+      {
+        "title": "Statue di Giorno",
+        "description": "Se hai 3 o più carte in mano, questo personaggio non si può preparare."
+      }
+    ],
+    "flavorText": "“Non immaginavo che fosse così divertente!”",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "S0B": {
+    "name": "Mamá Imelda",
+    "version": "Antenata Pragmatica",
+    "rulesText": "\\Fammi Passare\\ Quando giochi questo personaggio, metti 3 carte dai tuoi scarti in fondo al tuo mazzo in qualsiasi ordine, oppure esilia questo personaggio.",
+    "text": [
+      {
+        "title": "Fammi Passare",
+        "description": "Quando giochi questo personaggio, metti 3 carte dai tuoi scarti in fondo al tuo mazzo in qualsiasi ordine, oppure esilia questo personaggio."
+      }
+    ],
+    "flavorText": "“Ho diverse questioni da discutere con te!”%—Mamá Imelda",
+    "searchableKeywords": ["Coco"]
+  },
+  "AtI": {
+    "name": "Merlino",
+    "version": "Artigiano delle Gocce d'Inchiostro",
+    "rulesText": "<Trasformazione> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Merlino.)%\\Che Scoperta!\\ Quando giochi questo personaggio, ricevi 1 goccia d'inchiostro. Se hai usato <Trasformazione> per giocarlo, ricevi invece 2 gocce d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "<Trasformazione> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Merlino.)"
+      },
+      {
+        "title": "Che Scoperta!",
+        "description": "Quando giochi questo personaggio, ricevi 1 goccia d'inchiostro. Se hai usato <Trasformazione> per giocarlo, ricevi invece 2 gocce d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "vb5": {
+    "name": "Golia",
+    "version": "Guerriero Trasformato",
+    "rulesText": "\\Quando Cala la Notte\\ Una volta durante il tuo turno, puoi scegliere e scartare una carta. Se lo fai, sposta fino a 2 danni da questo personaggio a un personaggio avversario a tua scelta.%\\Statue di Giorno\\ Se hai 3 o più carte in mano, questo personaggio non si può preparare.",
+    "text": [
+      {
+        "title": "Quando Cala la Notte",
+        "description": "Una volta durante il tuo turno, puoi scegliere e scartare una carta. Se lo fai, sposta fino a 2 danni da questo personaggio a un personaggio avversario a tua scelta."
+      },
+      {
+        "title": "Statue di Giorno",
+        "description": "Se hai 3 o più carte in mano, questo personaggio non si può preparare."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "C4J": {
+    "name": "Dante",
+    "version": "Alebrije Leale",
+    "rulesText": "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Dante.)%<Sfuggente> %\\Da Rifiuti a Tesori\\ Mentre hai 10 o più carte nei tuoi scarti, questo personaggio riceve +2 {L}.",
+    "text": [
+      {
+        "title": "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Dante.)"
+      },
+      {
+        "title": "<Sfuggente>"
+      },
+      {
+        "title": "Da Rifiuti a Tesori",
+        "description": "Mentre hai 10 o più carte nei tuoi scarti, questo personaggio riceve +2 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "SHv": {
+    "name": "Rapunzel",
+    "version": "Artista Estroversa",
+    "rulesText": "\\Impeccabile\\ Ogni volta che questo personaggio va all'avventura, puoi scegliere un altro personaggio e rivelare una carta personaggio nella tua mano. Se hanno lo stesso nome, pesca una carta.",
+    "text": [
+      {
+        "title": "Impeccabile",
+        "description": "Ogni volta che questo personaggio va all'avventura, puoi scegliere un altro personaggio e rivelare una carta personaggio nella tua mano. Se hanno lo stesso nome, pesca una carta."
+      }
+    ],
+    "flavorText": "“Resta fermo, Eugene... devo farti il naso giusto.”",
+    "searchableKeywords": ["Tangled", "Rapunzel - L'intreccio della torre"]
+  },
+  "GzL": {
+    "name": "Demona",
+    "version": "Incantatrice Imperiosa",
+    "rulesText": "\\Impetus Improvisus\\ Scegli e scarta una carta — Un personaggio Gargoyle a tua scelta ottiene <Lesto> e <Sfuggente> fino all'inizio del tuo prossimo turno. (Può sfidare nel turno in cui viene giocato. Solo altri personaggi con Sfuggente possono sfidarlo.)%\\Statue di Giorno\\ Se hai 3 o più carte in mano, questo personaggio non si può preparare.",
+    "text": [
+      {
+        "title": "Impetus Improvisus",
+        "description": "Scegli e scarta una carta — Un personaggio Gargoyle a tua scelta ottiene <Lesto> e <Sfuggente> fino all'inizio del tuo prossimo turno. (Può sfidare nel turno in cui viene giocato. Solo altri personaggi con Sfuggente possono sfidarlo.)"
+      },
+      {
+        "title": "Statue di Giorno",
+        "description": "Se hai 3 o più carte in mano, questo personaggio non si può preparare."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "CTD": {
+    "name": "Merlino",
+    "version": "Profondamente Curioso",
+    "rulesText": "\\Potenziale Inespresso\\ Quando giochi questo personaggio, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)%\\Scoperta Entusiasmante\\ Ogni volta che questo personaggio va all'avventura, pesca una carta.",
+    "text": [
+      {
+        "title": "Potenziale Inespresso",
+        "description": "Quando giochi questo personaggio, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      },
+      {
+        "title": "Scoperta Entusiasmante",
+        "description": "Ogni volta che questo personaggio va all'avventura, pesca una carta."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "ONu": {
+    "name": "Anacleto",
+    "version": "Gufo Messaggero",
+    "rulesText": "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)%\\Che Oltraggio!\\ Quando questo personaggio viene esiliato in una sfida, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)"
+      },
+      {
+        "title": "Che Oltraggio!",
+        "description": "Quando questo personaggio viene esiliato in una sfida, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "n2V": {
+    "name": "Maga Magò",
+    "version": "Imbrogliona Piena di Risorse",
+    "rulesText": "\\Vantaggio\\ Quando giochi questo personaggio, se hai rimosso una goccia d'inchiostro per giocarlo, pesca 2 carte.%\\Gioco di Ninnoli\\ Una volta durante il tuo turno, ogni volta che rimuovi una goccia d'inchiostro, pesca una carta.",
+    "text": [
+      {
+        "title": "Vantaggio",
+        "description": "Quando giochi questo personaggio, se hai rimosso una goccia d'inchiostro per giocarlo, pesca 2 carte."
+      },
+      {
+        "title": "Gioco di Ninnoli",
+        "description": "Una volta durante il tuo turno, ogni volta che rimuovi una goccia d'inchiostro, pesca una carta."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "gha": {
+    "name": "Fido",
+    "version": "Compagno di Viaggio",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Sei terribilmente elettrizzato, Whisky. Che succede là fuori?”%—Fido",
+    "searchableKeywords": ["Lilli e il vagabondo", "Lady and the Tramp"]
+  },
+  "gNn": {
+    "name": "Don Massacre",
+    "version": "Corriere di Khan",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Io, Don Massacre, saccheggiatore di tesori e ladro straordinario, non potrò mai essere catturato da gente come voi!”",
+    "searchableKeywords": ["Talespin"]
+  },
+  "mgU": {
+    "name": "Hiro Hamada",
+    "version": "Inventore Versatile",
+    "rulesText": "<Sfuggente> %\\Turbo Propulsori\\ Quando giochi questo personaggio, puoi pagare 1 {I} per dare a un tuo personaggio a tua scelta <Sfuggente> fino all'inizio del tuo prossimo turno.",
+    "text": [
+      {
+        "title": "<Sfuggente>"
+      },
+      {
+        "title": "Turbo Propulsori",
+        "description": "Quando giochi questo personaggio, puoi pagare 1 {I} per dare a un tuo personaggio a tua scelta <Sfuggente> fino all'inizio del tuo prossimo turno."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "BTW": {
+    "name": "Go Go Tomago",
+    "version": "Tester Estrema",
+    "rulesText": "\\Raccolta Dati\\ Ogni volta che questo personaggio viene sfidato, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Raccolta Dati",
+        "description": "Ogni volta che questo personaggio viene sfidato, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Se vado il 6#% più veloce con <una> goccia d'inchiostro, chissà cosa succederà quando ne avrò <due>?”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "gvL": {
+    "name": "Molly Cunningham",
+    "version": "Che Si Ricorda di Condividere",
+    "rulesText": "\\Che Divertente!\\ Quando giochi questo personaggio, tu e un altro giocatore a tua scelta ricevete ciascuno 1 goccia d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Che Divertente!",
+        "description": "Quando giochi questo personaggio, tu e un altro giocatore a tua scelta ricevete ciascuno 1 goccia d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Mamma, mamma! Guarda quanti sbrilluccichini!”",
+    "searchableKeywords": ["Talespin"]
+  },
+  "bVP": {
+    "name": "Kit Nuvoletta",
+    "version": "Orso Irrefrenabile",
+    "rulesText": "\\Giorno Fortunato\\ Quando giochi questo personaggio, tu e un altro giocatore a tua scelta ricevete ciascuno 1 goccia d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Giorno Fortunato",
+        "description": "Quando giochi questo personaggio, tu e un altro giocatore a tua scelta ricevete ciascuno 1 goccia d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Luigi ha delle gocce d'inchiostro? Pensi che accetterà di condividerne qualcuna con noi?”",
+    "searchableKeywords": ["Talespin"]
+  },
+  "cSM": {
+    "name": "Belle",
+    "version": "Scrittrice Riflessiva",
+    "rulesText": "\\Avventure in Città\\ Quando giochi questo personaggio, rivela la prima carta del tuo mazzo. Se è una carta oggetto chiamata Guida Turistica di Belle o una carta azione, puoi aggiungerla alla tua mano. Altrimenti, mettila in fondo al tuo mazzo.",
+    "text": [
+      {
+        "title": "Avventure in Città",
+        "description": "Quando giochi questo personaggio, rivela la prima carta del tuo mazzo. Se è una carta oggetto chiamata Guida Turistica di Belle o una carta azione, puoi aggiungerla alla tua mano. Altrimenti, mettila in fondo al tuo mazzo."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["La bella e la bestia", "Beauty and the Beast"]
+  },
+  "FRw": {
+    "name": "Fred",
+    "version": "Che Riunisce il Team",
+    "rulesText": "\\Squadra di Geni\\ Quando giochi questo personaggio, guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta personaggio Super o una carta oggetto e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+    "text": [
+      {
+        "title": "Squadra di Geni",
+        "description": "Quando giochi questo personaggio, guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta personaggio Super o una carta oggetto e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "GBD": {
+    "name": "Capitan Uncino",
+    "version": "Capitano Preoccupato",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“A bordo della Jolly Roger non sono assolutamente ammesse fate, bambini o coccodrilli.”",
+    "searchableKeywords": ["Peter Pan", "Le avventure di Peter Pan"]
+  },
+  "m0i": {
+    "name": "Whisky",
+    "version": "Che Si Gode la Vista",
+    "rulesText": "<Sfuggente>",
+    "text": "<Sfuggente>",
+    "flavorText": "“Wow, la città è così frenetica! Guarda, un intero gruppo di nuovi Illuminatori è appena arrivato all'Autorità Portuale!”",
+    "searchableKeywords": ["Lilli e il vagabondo", "Lady and the Tramp"]
+  },
+  "4Ao": {
+    "name": "Lilli",
+    "version": "Rilassata e Riposata",
+    "rulesText": "<Protetto>",
+    "text": "<Protetto>",
+    "flavorText": "“Questo glimmer mi fa sentire così al sicuro. Ogni volta che lo inchiostro, so che andrà tutto bene.”%—Cordelia, un'Illuminatrice",
+    "searchableKeywords": ["Lilli e il vagabondo", "Lady and the Tramp"]
+  },
+  "d5C": {
+    "name": "Rebecca Cunningham",
+    "version": "Manager Esperta",
+    "rulesText": "\\Adeguata Verifica\\ Quando giochi questo personaggio, puoi pescare una carta, poi scegli e scarta una carta.",
+    "text": [
+      {
+        "title": "Adeguata Verifica",
+        "description": "Quando giochi questo personaggio, puoi pescare una carta, poi scegli e scarta una carta."
+      }
+    ],
+    "flavorText": "In quanto proprietaria della Volo a Nolo, è fiera di gestire l'azienda con mano ferma.",
+    "searchableKeywords": ["Talespin"]
+  },
+  "WJo": {
+    "name": "Shere Khan",
+    "version": "Magnate Opportunista",
+    "rulesText": "\\Accordo Unilaterale\\ Quando giochi questo personaggio, ogni avversario può scegliere e scartare una carta. Per ogni avversario che non lo fa, ricevi 1 goccia d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Accordo Unilaterale",
+        "description": "Quando giochi questo personaggio, ogni avversario può scegliere e scartare una carta. Per ogni avversario che non lo fa, ricevi 1 goccia d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Talespin"]
+  },
+  "lBa": {
+    "name": "Orazio",
+    "version": "Sbadato",
+    "rulesText": "\\Fare un Pasticcio\\ Quando giochi questo personaggio, infliggi 1 danno a un personaggio avversario danneggiato a tua scelta.",
+    "text": [
+      {
+        "title": "Fare un Pasticcio",
+        "description": "Quando giochi questo personaggio, infliggi 1 danno a un personaggio avversario danneggiato a tua scelta."
+      }
+    ],
+    "flavorText": "“Attento, Gaspare... hai colpito la mia tavola con la faccia!”",
+    "searchableKeywords": ["101 Dalmatians", "La carica dei 101"]
+  },
+  "kg0": {
+    "name": "Shere Khan",
+    "version": "Imprenditore Senza Scrupoli",
+    "rulesText": "\\Lasciato Tranquillamente\\ Quando giochi questo personaggio, metti un personaggio avversario a tua scelta con 3 {S} o inferiore in fondo al mazzo del suo giocatore.",
+    "text": [
+      {
+        "title": "Lasciato Tranquillamente",
+        "description": "Quando giochi questo personaggio, metti un personaggio avversario a tua scelta con 3 {S} o inferiore in fondo al mazzo del suo giocatore."
+      }
+    ],
+    "flavorText": "“Sfortunatamente, la tua utilità è giunta al termine.”",
+    "searchableKeywords": ["Talespin"]
+  },
+  "SMo": {
+    "name": "Bobby Zimuruski",
+    "version": "Mago del Mixer",
+    "rulesText": "<Protetto> %\\Sballoso!\\ I tuoi oggetti chiamati Gorgonzola Pendente di Pisa ottengono \"{E}, 1 {I} — Ricevi 1 goccia d'inchiostro.\" (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "<Protetto>"
+      },
+      {
+        "title": "Sballoso!",
+        "description": "I tuoi oggetti chiamati Gorgonzola Pendente di Pisa ottengono \"{E}, 1 {I} — Ricevi 1 goccia d'inchiostro.\" (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "Mq1": {
+    "name": "Baymax",
+    "version": "Assistente di Laboratorio",
+    "rulesText": "\\Rifornimento\\ Quando giochi questo personaggio, se hai in gioco 2 o più oggetti, ricevi 2 gocce d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Rifornimento",
+        "description": "Quando giochi questo personaggio, se hai in gioco 2 o più oggetti, ricevi 2 gocce d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "“La mia analisi conclude che le gocce d'inchiostro possono migliorare i risultati operativi dell'80#%.”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "B6x": {
+    "name": "Fred",
+    "version": "Capo Incredibile",
+    "rulesText": "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Fred.)%\\Risorse Radicali\\ Ogni volta che giochi questo personaggio o un altro personaggio Super, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Fred.)"
+      },
+      {
+        "title": "Risorse Radicali",
+        "description": "Ogni volta che giochi questo personaggio o un altro personaggio Super, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "B2t": {
+    "name": "Lester l'Opossum",
+    "version": "Mascotte del Parco",
+    "rulesText": "\\Squagliati, Bifolco!\\ Quando questo personaggio viene sfidato ed esiliato, ogni avversario perde 2 leggenda.%\\Massimo Imbarazzo\\ 6 {I} — Un personaggio avversario a tua scelta ottiene <Attaccabrighe> fino all'inizio del tuo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
+    "text": [
+      {
+        "title": "Squagliati, Bifolco!",
+        "description": "Quando questo personaggio viene sfidato ed esiliato, ogni avversario perde 2 leggenda."
+      },
+      {
+        "title": "Massimo Imbarazzo",
+        "description": "6 {I} — Un personaggio avversario a tua scelta ottiene <Attaccabrighe> fino all'inizio del tuo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "9qv": {
+    "name": "Max Pippo",
+    "version": "Star del Karaoke",
+    "rulesText": "\\Remix Fantastico\\ Quando giochi questo personaggio, puoi scegliere e scartare una carta canzone. Se lo fai, pesca 2 carte.%\\Playlist Nuova di Pacca\\ Mentre hai 5 o più carte canzone nei tuoi scarti, questo personaggio riceve +3 {L}.",
+    "text": [
+      {
+        "title": "Remix Fantastico",
+        "description": "Quando giochi questo personaggio, puoi scegliere e scartare una carta canzone. Se lo fai, pesca 2 carte."
+      },
+      {
+        "title": "Playlist Nuova di Pacca",
+        "description": "Mentre hai 5 o più carte canzone nei tuoi scarti, questo personaggio riceve +3 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "jz8": {
+    "name": "Belle",
+    "version": "Scrittrice Eccezionale",
+    "rulesText": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Belle.)%\\Consigli sulla Città di Hyperia\\ Durante il tuo turno, ogni volta che questo personaggio viene impegnato, paga 2 {I} in meno per giocare la tua prossima azione per questo turno.%\\Segreti della Città di Hyperia\\ Durante il tuo turno, ogni volta che giochi una terza azione, ottieni 3 leggenda.",
+    "text": [
+      {
+        "title": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Belle.)"
+      },
+      {
+        "title": "Consigli sulla Città di Hyperia",
+        "description": "Durante il tuo turno, ogni volta che questo personaggio viene impegnato, paga 2 {I} in meno per giocare la tua prossima azione per questo turno."
+      },
+      {
+        "title": "Segreti della Città di Hyperia",
+        "description": "Durante il tuo turno, ogni volta che giochi una terza azione, ottieni 3 leggenda."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["La bella e la bestia", "Beauty and the Beast"]
+  },
+  "4EQ": {
+    "name": "Fred",
+    "version": "Gran Calpestatore",
+    "rulesText": "\\Impatto Kaiju\\ Quando giochi questo personaggio, puoi esiliare un luogo a tua scelta.",
+    "text": [
+      {
+        "title": "Impatto Kaiju",
+        "description": "Quando giochi questo personaggio, puoi esiliare un luogo a tua scelta."
+      }
+    ],
+    "flavorText": "“Credo di iniziare a capire come funziona.”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "vFk": {
+    "name": "Minni",
+    "version": "Intraprendente e Impegnata",
+    "rulesText": "\\Grande Ritrovamento\\ Durante il turno di ogni avversario, questo personaggio ottiene <Resistere> +2.",
+    "text": [
+      {
+        "title": "Grande Ritrovamento",
+        "description": "Durante il turno di ogni avversario, questo personaggio ottiene <Resistere> +2."
+      }
+    ],
+    "flavorText": "La puoi sempre vedere sfrecciare tra i canali della Città di Hyperia.",
+    "searchableKeywords": []
+  },
+  "K86": {
+    "name": "Honey Lemon",
+    "version": "Che Testa i Limiti",
+    "rulesText": "\\Chimica Avanzata\\ Quando giochi questo personaggio e ogni volta che va all'avventura, puoi esiliare un tuo oggetto a tua scelta. Se lo fai, pesca una carta e ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Chimica Avanzata",
+        "description": "Quando giochi questo personaggio e ogni volta che va all'avventura, puoi esiliare un tuo oggetto a tua scelta. Se lo fai, pesca una carta e ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "cPq": {
+    "name": "Heihei",
+    "version": "Sulle Strisce Pedonali",
+    "rulesText": "\\Vagare Senza Meta\\ Una volta durante il tuo turno, se questo personaggio si trova in un luogo, puoi spostarlo in un altro luogo gratis. Se lo fai, ottieni 1 leggenda.",
+    "text": [
+      {
+        "title": "Vagare Senza Meta",
+        "description": "Una volta durante il tuo turno, se questo personaggio si trova in un luogo, puoi spostarlo in un altro luogo gratis. Se lo fai, ottieni 1 leggenda."
+      }
+    ],
+    "flavorText": "Questo spiega il <come> ma non il <perché>.",
+    "searchableKeywords": ["Moana", "Vaiana", "Oceania"]
+  },
+  "2oR": {
+    "name": "Abby Park",
+    "version": "Fan Estrema",
+    "rulesText": "\\Sogno Diventato Realtà\\ Quando giochi questo personaggio, rivela la prima carta del tuo mazzo. Se è una carta personaggio con <Melodioso> o una carta canzone, puoi aggiungerla alla tua mano. Altrimenti, mettila in fondo al tuo mazzo.",
+    "text": [
+      {
+        "title": "Sogno Diventato Realtà",
+        "description": "Quando giochi questo personaggio, rivela la prima carta del tuo mazzo. Se è una carta personaggio con <Melodioso> o una carta canzone, puoi aggiungerla alla tua mano. Altrimenti, mettila in fondo al tuo mazzo."
+      }
+    ],
+    "flavorText": "“Miglior. Concerto. DI SEMPRE!”",
+    "searchableKeywords": ["Red", "Turning Red"]
+  },
+  "Yuz": {
+    "name": "Pippo",
+    "version": "Superstar del Ballo",
+    "rulesText": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Pippo.)%<Melodioso> 6 %\\Perso nel Ritmo\\ Ogni volta che questo personaggio va all'avventura, i tuoi altri personaggi con <Melodioso> ricevono +1 {L} per questo turno.",
+    "text": [
+      {
+        "title": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Pippo.)"
+      },
+      {
+        "title": "<Melodioso> 6"
+      },
+      {
+        "title": "Perso nel Ritmo",
+        "description": "Ogni volta che questo personaggio va all'avventura, i tuoi altri personaggi con <Melodioso> ricevono +1 {L} per questo turno."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "etZ": {
+    "name": "Héctor Rivera",
+    "version": "Fenomeno Mondiale",
+    "rulesText": "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Héctor Rivera.)%\\Canzone di Successo\\ Ogni volta che questo personaggio va all'avventura e ogni volta che canta una canzone per la prima volta in ogni turno, guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta canzone e aggiungerla alla tua mano. Metti il resto nei tuoi scarti.",
+    "text": [
+      {
+        "title": "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Héctor Rivera.)"
+      },
+      {
+        "title": "Canzone di Successo",
+        "description": "Ogni volta che questo personaggio va all'avventura e ogni volta che canta una canzone per la prima volta in ogni turno, guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta canzone e aggiungerla alla tua mano. Metti il resto nei tuoi scarti."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "CaX": {
+    "name": "Yama",
+    "version": "Noto Criminale",
+    "rulesText": "\\Portamene Ancora\\ 6 {I} — Ogni volta che uno dei tuoi personaggi sfida un altro personaggio per questo turno, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Portamene Ancora",
+        "description": "6 {I} — Ogni volta che uno dei tuoi personaggi sfida un altro personaggio per questo turno, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Nessuno può fregare Yama!”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "RwK": {
+    "name": "Abigail Callaghan",
+    "version": "Pilota Collaudatrice Veterana",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Ti sei mai chiesto cosa ci sia lì fuori nelle Terre d'Inchiostro? Il mio Illuminatore e io abbiamo visto così tante cose che non potresti immaginare.”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "6CV": {
+    "name": "Pepita",
+    "version": "Dolce Gattina",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "La gattina si lasciava guidare dai petali, così come sarebbe stata lei un giorno a guidare altri.",
+    "searchableKeywords": ["Coco"]
+  },
+  "1O3": {
+    "name": "Paperino",
+    "version": "Tassista",
+    "rulesText": "\\Ora di Punta\\ Quando giochi questo personaggio, un personaggio a tua scelta ottiene <Lesto> per questo turno. (Può sfidare nel turno in cui viene giocato.)",
+    "text": [
+      {
+        "title": "Ora di Punta",
+        "description": "Quando giochi questo personaggio, un personaggio a tua scelta ottiene <Lesto> per questo turno. (Può sfidare nel turno in cui viene giocato.)"
+      }
+    ],
+    "flavorText": "“Spostati, bellimbusto! Ho da fare!”",
+    "searchableKeywords": []
+  },
+  "Wi0": {
+    "name": "Pippo",
+    "version": "Turista Entusiasta",
+    "rulesText": "\\Immortalare il Momento\\ Mentre hai in gioco un personaggio con <Melodioso>, questo personaggio riceve +3 {S}.",
+    "text": [
+      {
+        "title": "Immortalare il Momento",
+        "description": "Mentre hai in gioco un personaggio con <Melodioso>, questo personaggio riceve +3 {S}."
+      }
+    ],
+    "flavorText": "“Yuk, Max, ma lo sai chi è che canta? Perché io no. Ma spacca!”",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "Qbi": {
+    "name": "Tadashi Hamada",
+    "version": "Che Smuove le Acque",
+    "rulesText": "\\Consegna Urgente\\ Quando questo personaggio viene esiliato, ricevi 2 gocce d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Consegna Urgente",
+        "description": "Quando questo personaggio viene esiliato, ricevi 2 gocce d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Devo portare queste gocce d'inchiostro a Hiro e Honey Lemon prima che il laboratorio chiuda!”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "xel": {
+    "name": "Crudelia De Mon",
+    "version": "Che Evita il Traffico",
+    "rulesText": "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
+    "text": "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
+    "flavorText": "“Toglietevi di mezzo, sciocchi! Ho affari importanti da sbrigare!”",
+    "searchableKeywords": ["101 Dalmatians", "La carica dei 101"]
+  },
+  "gR3": {
+    "name": "Gaspare",
+    "version": "Losco Barcaiolo",
+    "rulesText": "<Sfuggente>",
+    "text": "<Sfuggente>",
+    "flavorText": "“Potrai usare la barca più grande quando te la sarai <meritata>.”%—Crudelia",
+    "searchableKeywords": ["101 Dalmatians", "La carica dei 101"]
+  },
+  "QLT": {
+    "name": "Gilda",
+    "version": "Cantante Notturna",
+    "rulesText": "<Melodioso> 4",
+    "text": "<Melodioso> 4",
+    "flavorText": "La Città di Hyperia ha sempre gli show più belli.",
+    "searchableKeywords": ["Lilli e il vagabondo", "Lady and the Tramp"]
+  },
+  "bUg": {
+    "name": "Stacey",
+    "version": "Super Fan di Powerline",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Guarda! Avevano la candela profumata di Powerline in edizione limitata! La stavo cercando <da una vita>!”",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "sWk": {
+    "name": "Héctor Rivera",
+    "version": "Musicista di Strada",
+    "rulesText": "<Melodioso> 2 %\\Toccare le Corde Giuste\\ Quando giochi questo personaggio, puoi mettere la prima carta del tuo mazzo nei tuoi scarti.",
+    "text": [
+      {
+        "title": "<Melodioso> 2"
+      },
+      {
+        "title": "Toccare le Corde Giuste",
+        "description": "Quando giochi questo personaggio, puoi mettere la prima carta del tuo mazzo nei tuoi scarti."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "RzE": {
+    "name": "Ernesto de la Cruz",
+    "version": "Idolo di Milioni",
+    "rulesText": "<Melodioso> 5 %\\In Cima alle Classifiche\\ Mentre un avversario ha una carta canzone nei suoi scarti, questo personaggio riceve +1 {L}.",
+    "text": [
+      {
+        "title": "<Melodioso> 5"
+      },
+      {
+        "title": "In Cima alle Classifiche",
+        "description": "Mentre un avversario ha una carta canzone nei suoi scarti, questo personaggio riceve +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "6oW": {
+    "name": "Pepita",
+    "version": "Braccio Destro di Imelda",
+    "rulesText": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Pepita.)%\\Saggezza Ancestrale\\ Mentre hai 10 o più carte nei tuoi scarti, questo personaggio riceve +2 {S} e +2 {L}.",
+    "text": [
+      {
+        "title": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Pepita.)"
+      },
+      {
+        "title": "Saggezza Ancestrale",
+        "description": "Mentre hai 10 o più carte nei tuoi scarti, questo personaggio riceve +2 {S} e +2 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "OkB": {
+    "name": "Ernesto de la Cruz",
+    "version": "Musicista Spietato",
+    "rulesText": "<Melodioso> 8 %\\Fare Tutto il Necessario\\ Quando giochi questo personaggio, puoi esiliare un personaggio a tua scelta con <Melodioso>.",
+    "text": [
+      {
+        "title": "<Melodioso> 8"
+      },
+      {
+        "title": "Fare Tutto il Necessario",
+        "description": "Quando giochi questo personaggio, puoi esiliare un personaggio a tua scelta con <Melodioso>."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "72S": {
+    "name": "Héctor Rivera",
+    "version": "Gone to Pieces",
+    "rulesText": "<Singer> 6 (This character counts as cost 6 to sing songs.)\n\n\\Feel the Music\\ While you have a song card in your discard, this character gets +1 {L} and gains <Evasive>. (Only characters with Evasive can challenge them.)",
+    "text": [
+      {
+        "title": "<Singer> 6 (This character counts as cost 6 to sing songs.)"
+      },
+      {
+        "title": "Feel the Music",
+        "description": "While you have a song card in your discard, this character gets +1 {L} and gains <Evasive>. (Only characters with Evasive can challenge them.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["D23", "Coco"]
+  },
+  "wf5": {
+    "name": "Biagio",
+    "version": "Pronto e Agile",
+    "rulesText": "\\Inseguire\\ Quando giochi questo personaggio, scegli uno:%• Impegna un personaggio a tua scelta con 1 {S} o inferiore.%• Questo personaggio ottiene <Lesto> per questo turno. (Può sfidare nel turno in cui viene giocato.)",
+    "text": [
+      {
+        "title": "Inseguire",
+        "description": "Quando giochi questo personaggio, scegli uno:"
+      },
+      {
+        "title": "• Impegna un personaggio a tua scelta con 1 {S} o inferiore."
+      },
+      {
+        "title": "• Questo personaggio ottiene <Lesto> per questo turno. (Può sfidare nel turno in cui viene giocato.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lilli e il vagabondo", "Lady and the Tramp"]
+  },
+  "qWA": {
+    "name": "Meilin Lee",
+    "version": "Fan Estasiata",
+    "rulesText": "<Melodioso> 5 %\\Super Emozionata\\ Una volta durante il tuo turno, ogni volta che giochi una canzone, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "<Melodioso> 5"
+      },
+      {
+        "title": "Super Emozionata",
+        "description": "Una volta durante il tuo turno, ogni volta che giochi una canzone, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Red", "Turning Red"]
+  },
+  "H1h": {
+    "name": "Roxanne",
+    "version": "Amante dei Concerti",
+    "rulesText": "\\Oggi è il Grande Giorno\\ Quando giochi questo personaggio, puoi spostare questo personaggio e uno dei tuoi altri personaggi nello stesso luogo, gratis. Se lo fai, l'altro personaggio riceve +1 {L} per questo turno.",
+    "text": [
+      {
+        "title": "Oggi è il Grande Giorno",
+        "description": "Quando giochi questo personaggio, puoi spostare questo personaggio e uno dei tuoi altri personaggi nello stesso luogo, gratis. Se lo fai, l'altro personaggio riceve +1 {L} per questo turno."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "j34": {
+    "name": "Wasabi",
+    "version": "Chiamato a Combattere",
+    "rulesText": "\\Lame Gemelle\\ Durante il tuo turno, ogni volta che questo personaggio infligge danno a un altro personaggio in una sfida, infliggi danno pari alla {S} di questo personaggio a un altro personaggio a tua scelta.%\\Darci Dentro\\ Mentre hai una goccia d'inchiostro, questo personaggio riceve +2 {S}.",
+    "text": [
+      {
+        "title": "Lame Gemelle",
+        "description": "Durante il tuo turno, ogni volta che questo personaggio infligge danno a un altro personaggio in una sfida, infliggi danno pari alla {S} di questo personaggio a un altro personaggio a tua scelta."
+      },
+      {
+        "title": "Darci Dentro",
+        "description": "Mentre hai una goccia d'inchiostro, questo personaggio riceve +2 {S}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "DKz": {
+    "name": "La Matrigna",
+    "version": "Snob Sprezzante",
+    "rulesText": "\\Delicata Sensibilità\\ Una volta durante il tuo turno, ogni volta che giochi una canzone, puoi infliggere 1 danno a questo personaggio. Se lo fai, pesca una carta.%\\Aspra Critica\\ I personaggi avversari con <Melodioso> entrano in gioco con 1 danno.",
+    "text": [
+      {
+        "title": "Delicata Sensibilità",
+        "description": "Una volta durante il tuo turno, ogni volta che giochi una canzone, puoi infliggere 1 danno a questo personaggio. Se lo fai, pesca una carta."
+      },
+      {
+        "title": "Aspra Critica",
+        "description": "I personaggi avversari con <Melodioso> entrano in gioco con 1 danno."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Cenerentola", "Cinderella"]
+  },
+  "BqG": {
+    "name": "Mulan",
+    "version": "Maestra di Arti Marziali",
+    "rulesText": "\\La Via dell'Eroe\\ Quando giochi questo personaggio, un personaggio a tua scelta riceve +2 {S} e ottiene \"Ogni volta che questo personaggio sfida un altro personaggio, pesca una carta\" per questo turno.%\\Spirito Guerriero\\ Ogni volta che questo personaggio va all'avventura, un personaggio a tua scelta ottiene <Lesto> per questo turno. (Può sfidare nel turno in cui viene giocato.)",
+    "text": [
+      {
+        "title": "La Via dell'Eroe",
+        "description": "Quando giochi questo personaggio, un personaggio a tua scelta riceve +2 {S} e ottiene \"Ogni volta che questo personaggio sfida un altro personaggio, pesca una carta\" per questo turno."
+      },
+      {
+        "title": "Spirito Guerriero",
+        "description": "Ogni volta che questo personaggio va all'avventura, un personaggio a tua scelta ottiene <Lesto> per questo turno. (Può sfidare nel turno in cui viene giocato.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Mulan"]
+  },
+  "n4y": {
+    "name": "Carl Fredricksen",
+    "version": "Guida della Natura Selvaggia",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Danno distintivi per aver mangiato il gelato? Perché secondo me dovrebbero!”%—Carl",
+    "searchableKeywords": ["Up"]
+  },
+  "WDr": {
+    "name": "Cenerentola",
+    "version": "Sarta Rustica",
+    "rulesText": "\\Occhio Acuto\\ Quando giochi questo personaggio, guarda la prima carta del tuo mazzo. Mettila in cima o in fondo al tuo mazzo.",
+    "text": [
+      {
+        "title": "Occhio Acuto",
+        "description": "Quando giochi questo personaggio, guarda la prima carta del tuo mazzo. Mettila in cima o in fondo al tuo mazzo."
+      }
+    ],
+    "flavorText": "“Forse è un po' fuori moda, ma ci farò qualcosa.”",
+    "searchableKeywords": ["Cenerentola", "Cinderella"]
+  },
+  "bzr": {
+    "name": "Wasabi",
+    "version": "Pensatore del Futuro",
+    "rulesText": "\\La Sicurezza Prima di Tutto\\ Quando giochi questo personaggio, se hai rimosso una goccia d'inchiostro per giocarlo, i tuoi altri personaggi ottengono <Resistere> +1 e <Protetto> fino all'inizio del tuo prossimo turno. (Il danno che gli viene inflitto è ridotto di 1. Gli avversari non possono sceglierli se non per sfidarli.)",
+    "text": [
+      {
+        "title": "La Sicurezza Prima di Tutto",
+        "description": "Quando giochi questo personaggio, se hai rimosso una goccia d'inchiostro per giocarlo, i tuoi altri personaggi ottengono <Resistere> +1 e <Protetto> fino all'inizio del tuo prossimo turno. (Il danno che gli viene inflitto è ridotto di 1. Gli avversari non possono sceglierli se non per sfidarli.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "y2o": {
+    "name": "Baymax",
+    "version": "Medico Qualificato",
+    "rulesText": "\\Assistenza Medica\\ Ogni volta che questo personaggio va all'avventura, rimuovi fino a 2 danni da un personaggio a tua scelta.",
+    "text": [
+      {
+        "title": "Assistenza Medica",
+        "description": "Ogni volta che questo personaggio va all'avventura, rimuovi fino a 2 danni da un personaggio a tua scelta."
+      }
+    ],
+    "flavorText": "“In una scala da 1 a 10, come valuti il tuo dolore?”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "1Eu": {
+    "name": "Re Luigi",
+    "version": "Virtuoso del Gelato",
+    "rulesText": "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
+    "text": "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
+    "flavorText": "“Ragazzo, ho gusti che non puoi neanche immaginarti!”",
+    "searchableKeywords": ["Talespin"]
+  },
+  "xtK": {
+    "name": "Lafayette",
+    "version": "Tutt'Orecchi",
+    "rulesText": "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
+    "text": "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
+    "flavorText": "“Non so <cosa> sto proteggendo o <da cosa> lo sto proteggendo, ma perbacco, lo proteggerò <bene>.”",
+    "searchableKeywords": ["Aristocats", "Gli Aristogatti"]
+  },
+  "DRn": {
+    "name": "Guendalina e Adelina",
+    "version": "Oche Pettegole",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Cielo, hai visto quell'inchiostratore, Guendalina?”%“Semplicemente stupendo, Adelina. Adoro come ciascuno rispecchi le passioni del suo Illuminatore.”",
+    "searchableKeywords": ["Aristocats", "Gli Aristogatti"]
+  },
+  "ATK": {
+    "name": "Honey Lemon",
+    "version": "Ricercatrice Ingegnosa",
+    "rulesText": "<Trasformazione> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Honey Lemon.)%\\Sintetizzare\\ Ogni volta che questo personaggio va all'avventura, puoi riprendere in mano una carta oggetto dai tuoi scarti. Se lo fai, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "<Trasformazione> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Honey Lemon.)"
+      },
+      {
+        "title": "Sintetizzare",
+        "description": "Ogni volta che questo personaggio va all'avventura, puoi riprendere in mano una carta oggetto dai tuoi scarti. Se lo fai, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "4C8": {
+    "name": "Go Go Tomago",
+    "version": "Al Lavoro Fino a Tardi",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“I dati su queste gocce d'inchiostro sono incredibili. Mi chiedo se ci sia modo di usarle per potenziare un inchiostratore.”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "vTV": {
+    "name": "Maga Magò",
+    "version": "Vicina Ficcanaso",
+    "rulesText": "\\Non Ci Si Nasconde\\ Quando giochi questo personaggio, guarda la mano di un avversario a tua scelta.",
+    "text": [
+      {
+        "title": "Non Ci Si Nasconde",
+        "description": "Quando giochi questo personaggio, guarda la mano di un avversario a tua scelta."
+      }
+    ],
+    "flavorText": "“Yuu-huu! Merlino! Con cosa stai giocando? Non lo sai che è buona cosa condividere i giocattoli con gli altri?”",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "FYs": {
+    "name": "Lionheart",
+    "version": "Che Ripulisce la Città",
+    "rulesText": "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)%\\Dovere Civico\\ 6 {I} — Rimuovi tutto il danno da un personaggio o da un luogo a tua scelta.",
+    "text": [
+      {
+        "title": "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)"
+      },
+      {
+        "title": "Dovere Civico",
+        "description": "6 {I} — Rimuovi tutto il danno da un personaggio o da un luogo a tua scelta."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "3j6": {
+    "name": "Priscilla",
+    "version": "Impiegata Efficiente",
+    "rulesText": "\\Cotta Non Così Segreta\\ Questo personaggio entra in gioco impegnato.%\\Sistema di Archiviazione\\ Ogni volta che questo personaggio va all'avventura, puoi guardare le prime 2 carte del tuo mazzo. Aggiungine una alla tua mano e l'altra al tuo calamaio, a faccia in giù e impegnata.",
+    "text": [
+      {
+        "title": "Cotta Non Così Segreta",
+        "description": "Questo personaggio entra in gioco impegnato."
+      },
+      {
+        "title": "Sistema di Archiviazione",
+        "description": "Ogni volta che questo personaggio va all'avventura, puoi guardare le prime 2 carte del tuo mazzo. Aggiungine una alla tua mano e l'altra al tuo calamaio, a faccia in giù e impegnata."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "kE4": {
+    "name": "Paperina",
+    "version": "Investitrice Esperta",
+    "rulesText": "\\Risparmiare Per il Futuro\\ Quando giochi questo personaggio, puoi aggiungere una carta dalla tua mano al tuo calamaio, a faccia in giù e impegnata.",
+    "text": [
+      {
+        "title": "Risparmiare Per il Futuro",
+        "description": "Quando giochi questo personaggio, puoi aggiungere una carta dalla tua mano al tuo calamaio, a faccia in giù e impegnata."
+      }
+    ],
+    "flavorText": "La vita nella Città di Hyperia non era mai stata migliore.",
+    "searchableKeywords": []
+  },
+  "EvA": {
+    "name": "Hiro Hamada",
+    "version": "Inventore Pionieristico",
+    "rulesText": "\\Tecnologia Ingegnosa\\ Mentre hai in gioco un oggetto, questo personaggio riceve +1 {L}.",
+    "text": [
+      {
+        "title": "Tecnologia Ingegnosa",
+        "description": "Mentre hai in gioco un oggetto, questo personaggio riceve +1 {L}."
+      }
+    ],
+    "flavorText": "“Quello che Tadashi ha fatto con Baymax è incredibile. Ma mio fratello non ha mai avuto accesso alle gocce d'inchiostro.”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "sMn": {
+    "name": "Honey Lemon",
+    "version": "Infinitamente Curiosa",
+    "rulesText": "\\Scioccante Scoperta\\ Ogni volta che questo personaggio va all'avventura, paga 1 {I} in meno per giocare il tuo prossimo oggetto per questo turno.",
+    "text": [
+      {
+        "title": "Scioccante Scoperta",
+        "description": "Ogni volta che questo personaggio va all'avventura, paga 1 {I} in meno per giocare il tuo prossimo oggetto per questo turno."
+      }
+    ],
+    "flavorText": "“Questi geodi hanno davvero accelerato la mia ricerca!”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "oBC": {
+    "name": "Romeo",
+    "version": "Esperto Vagabondo",
+    "rulesText": "\\Colpo di Fortuna\\ Ogni volta che questo personaggio va all'avventura, ogni giocatore rivela la prima carta del suo mazzo. Aggiungi la carta con il costo più alto tra quelle rivelate in questo modo, o ogni carta in parità per il costo più alto, alla mano del suo giocatore. Metti il resto in fondo al mazzo del suo giocatore.",
+    "text": [
+      {
+        "title": "Colpo di Fortuna",
+        "description": "Ogni volta che questo personaggio va all'avventura, ogni giocatore rivela la prima carta del suo mazzo. Aggiungi la carta con il costo più alto tra quelle rivelate in questo modo, o ogni carta in parità per il costo più alto, alla mano del suo giocatore. Metti il resto in fondo al mazzo del suo giocatore."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Aristocats", "Gli Aristogatti"]
+  },
+  "o4Z": {
+    "name": "Duchessa",
+    "version": "Gatta Cosmopolita",
+    "rulesText": "\\Alta Società\\ Mentre hai in gioco un personaggio con il costo più alto, o in parità per il costo più alto, questo personaggio riceve +1 {L}.%\\Buone Maniere\\ Ogni volta che questo personaggio va all'avventura, guarda la prima carta del tuo mazzo. Metti quella carta in cima o in fondo al tuo mazzo.",
+    "text": [
+      {
+        "title": "Alta Società",
+        "description": "Mentre hai in gioco un personaggio con il costo più alto, o in parità per il costo più alto, questo personaggio riceve +1 {L}."
+      },
+      {
+        "title": "Buone Maniere",
+        "description": "Ogni volta che questo personaggio va all'avventura, guarda la prima carta del tuo mazzo. Metti quella carta in cima o in fondo al tuo mazzo."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Aristocats", "Gli Aristogatti"]
+  },
+  "dyQ": {
+    "name": "Judy Hopps",
+    "version": "Istruttrice del Centro Estivo",
+    "rulesText": "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)%\\Dare una Zampa\\ Quando giochi questo personaggio, se hai giocato un altro personaggio in questo turno, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
+    "text": [
+      {
+        "title": "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)"
+      },
+      {
+        "title": "Dare una Zampa",
+        "description": "Quando giochi questo personaggio, se hai giocato un altro personaggio in questo turno, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "n5b": {
+    "name": "Minni",
+    "version": "Visionaria Urbana",
+    "rulesText": "<Protetto> %\\Come da Progetto\\ Alla fine del tuo turno, se questo personaggio è impegnato, puoi guardare le carte nel tuo calamaio e poi puoi riprenderne una in mano. Se fai almeno una delle due, impegna tutte le carte nel tuo calamaio.",
+    "text": [
+      {
+        "title": "<Protetto>"
+      },
+      {
+        "title": "Come da Progetto",
+        "description": "Alla fine del tuo turno, se questo personaggio è impegnato, puoi guardare le carte nel tuo calamaio e poi puoi riprenderne una in mano. Se fai almeno una delle due, impegna tutte le carte nel tuo calamaio."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": []
+  },
+  "1wB": {
+    "name": "Ariel",
+    "version": "Collezionista di Stranezze",
+    "rulesText": "\\Unico al Mondo\\ Ogni volta che giochi un oggetto, se l'oggetto che hai giocato ha un nome diverso da ogni altro oggetto che hai in gioco, pesca una carta.%\\Collezione Personale\\ Per ogni oggetto con un nome diverso che hai in gioco, questo personaggio riceve +1 {L}.",
+    "text": [
+      {
+        "title": "Unico al Mondo",
+        "description": "Ogni volta che giochi un oggetto, se l'oggetto che hai giocato ha un nome diverso da ogni altro oggetto che hai in gioco, pesca una carta."
+      },
+      {
+        "title": "Collezione Personale",
+        "description": "Per ogni oggetto con un nome diverso che hai in gioco, questo personaggio riceve +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Little Mermaid", "La Sirenetta"]
+  },
+  "aqW": {
+    "name": "Cenerentola",
+    "version": "Icona Involontaria",
+    "rulesText": "<Trasformazione> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Cenerentola.)%\\Design su Misura\\ Alla fine del tuo turno, puoi guardare le prime 2 carte del tuo mazzo. Mettine una in cima o in fondo al tuo mazzo e aggiungi l'altra al tuo calamaio, a faccia in giù e impegnata.",
+    "text": [
+      {
+        "title": "<Trasformazione> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Cenerentola.)"
+      },
+      {
+        "title": "Design su Misura",
+        "description": "Alla fine del tuo turno, puoi guardare le prime 2 carte del tuo mazzo. Mettine una in cima o in fondo al tuo mazzo e aggiungi l'altra al tuo calamaio, a faccia in giù e impegnata."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Cenerentola", "Cinderella"]
+  },
+  "07k": {
+    "name": "Baymax",
+    "version": "Potenziato",
+    "rulesText": "<Trasformazione> Rimuovi 2 gocce d'inchiostro (Puoi rimuovere 2 gocce d'inchiostro per giocare questa carta sopra a uno dei tuoi personaggi chiamato Baymax.)%\\Supercarica\\ Se staresti per ricevere una goccia d'inchiostro, puoi invece aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
+    "text": [
+      {
+        "title": "<Trasformazione> Rimuovi 2 gocce d'inchiostro (Puoi rimuovere 2 gocce d'inchiostro per giocare questa carta sopra a uno dei tuoi personaggi chiamato Baymax.)"
+      },
+      {
+        "title": "Supercarica",
+        "description": "Se staresti per ricevere una goccia d'inchiostro, puoi invece aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "TcQ": {
+    "name": "Bellwether",
+    "version": "Altamente Qualificata",
+    "rulesText": "\\Piano Arguto\\ Quando giochi questo personaggio, puoi aggiungere un personaggio avversario a tua scelta con costo 2 o inferiore al calamaio del suo giocatore, a faccia in giù e impegnato.",
+    "text": [
+      {
+        "title": "Piano Arguto",
+        "description": "Quando giochi questo personaggio, puoi aggiungere un personaggio avversario a tua scelta con costo 2 o inferiore al calamaio del suo giocatore, a faccia in giù e impegnato."
+      }
+    ],
+    "flavorText": "Tutto stava andando per il verso giusto.",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "OBX": {
+    "name": "Clarabella",
+    "version": "Fuori per una Passeggiata",
+    "rulesText": "\\Migliorare il Paesaggio\\ Quando giochi questo personaggio, puoi esiliare un oggetto a tua scelta. Se lo fai, il suo giocatore aggiunge la prima carta del suo mazzo al suo calamaio, a faccia in giù e impegnata.",
+    "text": [
+      {
+        "title": "Migliorare il Paesaggio",
+        "description": "Quando giochi questo personaggio, puoi esiliare un oggetto a tua scelta. Se lo fai, il suo giocatore aggiunge la prima carta del suo mazzo al suo calamaio, a faccia in giù e impegnata."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": []
+  },
+  "gXx": {
+    "name": "Doug",
+    "version": "In Agguato",
+    "rulesText": "<Protetto>",
+    "text": "<Protetto>",
+    "flavorText": "“Stammi a sentire. Doug non è proprio un tipo <amichevole>.”%—Duke Donnolesi",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "Kk7": {
+    "name": "Flash",
+    "version": "Impiegato Efficiente",
+    "rulesText": "<Resistere> +1 %\\Fai... Con... Calma\\ Tutti i personaggi perdono <Lesto> e non possono ottenere <Lesto>.",
+    "text": [
+      {
+        "title": "<Resistere> +1"
+      },
+      {
+        "title": "Fai... Con... Calma",
+        "description": "Tutti i personaggi perdono <Lesto> e non possono ottenere <Lesto>."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "DrF": {
+    "name": "Artù",
+    "version": "Assistente di Merlino",
+    "rulesText": "\\Viaggio Magico\\ Quando giochi questo personaggio, puoi spostarlo in un luogo gratis.%\\Consegne Arcane\\ Una volta durante il tuo turno, ogni volta che questo personaggio si sposta in un luogo, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Viaggio Magico",
+        "description": "Quando giochi questo personaggio, puoi spostarlo in un luogo gratis."
+      },
+      {
+        "title": "Consegne Arcane",
+        "description": "Una volta durante il tuo turno, ogni volta che questo personaggio si sposta in un luogo, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "S04": {
+    "name": "Edgar Balthazar",
+    "version": "Maggiordomo Paziente",
+    "rulesText": "\\Fidato Ombrello\\ Mentre questo personaggio non ha danno, ottiene <Resistere> +2.",
+    "text": [
+      {
+        "title": "Fidato Ombrello",
+        "description": "Mentre questo personaggio non ha danno, ottiene <Resistere> +2."
+      }
+    ],
+    "flavorText": "“Non mi infastidisce un pizzico di crudeltà, ma non ci sono scuse per la maleducazione!”",
+    "searchableKeywords": ["Aristocats", "Gli Aristogatti"]
+  },
+  "7EL": {
+    "name": "Kit Nuvoletta",
+    "version": "Corriere Imprevedibile",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Mi dispiace! Ho una consegna dall'altra parte della città ed è urgente!”",
+    "searchableKeywords": ["Talespin"]
+  },
+  "ruw": {
+    "name": "Cocò",
+    "version": "Coccodrillo di Canale",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "Non ci sono alligatori nei canali della Città di Hyperia. C'è, tuttavia, un coccodrillo.",
+    "searchableKeywords": ["Peter Pan", "Le avventure di Peter Pan"]
+  },
+  "Imr": {
+    "name": "Tiana",
+    "version": "Ristoratrice",
+    "rulesText": "\\Selezionato con Cura\\ Quando giochi questo personaggio, puoi pescare una carta, poi scegli e scarta una carta.",
+    "text": [
+      {
+        "title": "Selezionato con Cura",
+        "description": "Quando giochi questo personaggio, puoi pescare una carta, poi scegli e scarta una carta."
+      }
+    ],
+    "flavorText": "“C'è qualcosa per tutti in questo posto.”",
+    "searchableKeywords": ["Princess and the Frog", "La Principessa e il Ranocchio"]
+  },
+  "VHh": {
+    "name": "Raya",
+    "version": "Esploratrice Determinata",
+    "rulesText": "\\Fino ai confini del Reame\\ Questo personaggio riceve +1 {L} per ogni luogo che hai in gioco.",
+    "text": [
+      {
+        "title": "Fino ai confini del Reame",
+        "description": "Questo personaggio riceve +1 {L} per ogni luogo che hai in gioco."
+      }
+    ],
+    "flavorText": "“C'è ancora così tanto di Lorcana da esplorare.”",
+    "searchableKeywords": ["Raya e l'Ultimo Drago", "Raya and the Last Dragon"]
+  },
+  "iOz": {
+    "name": "Woolter e Jesse",
+    "version": "Scagnozzi di Bellwether",
+    "rulesText": "<Guardiano> %<Sfidante> +2",
+    "text": [
+      {
+        "title": "<Guardiano>"
+      },
+      {
+        "title": "<Sfidante> +2"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "t66": {
+    "name": "Napoleone",
+    "version": "Cane da Guardia Paziente",
+    "rulesText": "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
+    "text": "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
+    "flavorText": "“Giovanotto, il mio Illuminatore mi ha chiesto di stare a guardia di questa porta, ed è esattamente ciò che intendo fare.”",
+    "searchableKeywords": ["Aristocats", "Gli Aristogatti"]
+  },
+  "nR2": {
+    "name": "Valvola",
+    "version": "Meccanico Non Convenzionale",
+    "rulesText": "\\Beh, È Rotto\\ Quando giochi questo personaggio, puoi esiliare un oggetto a tua scelta.",
+    "text": [
+      {
+        "title": "Beh, È Rotto",
+        "description": "Quando giochi questo personaggio, puoi esiliare un oggetto a tua scelta."
+      }
+    ],
+    "flavorText": "“Oh cielo, mi servirà una bobina di filo, una spatola e almeno sette cubetti di ghiaccio per farlo ritornare a funzionare.”",
+    "searchableKeywords": ["Talespin"]
+  },
+  "omF": {
+    "name": "Ser Caio",
+    "version": "Determinato a Vincere",
+    "rulesText": "\\Vantaggio Competitivo\\ Mentre hai una goccia d'inchiostro, questo personaggio ottiene <Sfidante> +3. (Riceve +3 {S} mentre sta sfidando.)",
+    "text": [
+      {
+        "title": "Vantaggio Competitivo",
+        "description": "Mentre hai una goccia d'inchiostro, questo personaggio ottiene <Sfidante> +3. (Riceve +3 {S} mentre sta sfidando.)"
+      }
+    ],
+    "flavorText": "“Tsk. Non che mi serva una goccia d'inchiostro per vincere. Ma non dirò di no.”",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "yL5": {
+    "name": "Matisse",
+    "version": "Vivace e Scatenato",
+    "rulesText": "\\Comportamento Sconveniente\\ Quando giochi questo personaggio, gli avversari non possono giocare azioni fino all'inizio del tuo prossimo turno.",
+    "text": [
+      {
+        "title": "Comportamento Sconveniente",
+        "description": "Quando giochi questo personaggio, gli avversari non possono giocare azioni fino all'inizio del tuo prossimo turno."
+      }
+    ],
+    "flavorText": "Le dimensioni di una pantofola e il cuore di una tigre.",
+    "searchableKeywords": ["Aristocats", "Gli Aristogatti"]
+  },
+  "SUz": {
+    "name": "Capitano Bogo",
+    "version": "Commissario di Polizia",
+    "rulesText": "\\Io Conosco Questi Vicoli\\ Ogni volta che questo personaggio va all'avventura, puoi spostarlo in un luogo Città di Hyperia gratis.%\\Fermo Dove Sei\\ 6 {I} — Un personaggio avversario a tua scelta non può sfidare fino all'inizio del tuo prossimo turno.",
+    "text": [
+      {
+        "title": "Io Conosco Questi Vicoli",
+        "description": "Ogni volta che questo personaggio va all'avventura, puoi spostarlo in un luogo Città di Hyperia gratis."
+      },
+      {
+        "title": "Fermo Dove Sei",
+        "description": "6 {I} — Un personaggio avversario a tua scelta non può sfidare fino all'inizio del tuo prossimo turno."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "JzV": {
+    "name": "Ser Pilade",
+    "version": "Più Tosto di Quanto Sembra",
+    "rulesText": "<Sfidante> +2 %\\Bottino di Guerra\\ Durante il tuo turno, ogni volta che questo personaggio esilia un altro personaggio in una sfida, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "<Sfidante> +2"
+      },
+      {
+        "title": "Bottino di Guerra",
+        "description": "Durante il tuo turno, ogni volta che questo personaggio esilia un altro personaggio in una sfida, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "ctj": {
+    "name": "Artù",
+    "version": "Apprendista Fabbro",
+    "rulesText": "\\Lavorazione Cauta\\ Quando giochi questo personaggio, puoi pagare 1 {I} per ricevere 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Lavorazione Cauta",
+        "description": "Quando giochi questo personaggio, puoi pagare 1 {I} per ricevere 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Servono braccia e mente forti per forgiare queste gocce d'inchiostro.”%—Merlino",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "4NQ": {
+    "name": "Bizet",
+    "version": "Minuscolo Monello",
+    "rulesText": "\\Piccoli Artigli Affilati\\ Quando giochi questo personaggio, puoi infliggere 1 danno a un personaggio a tua scelta.",
+    "text": [
+      {
+        "title": "Piccoli Artigli Affilati",
+        "description": "Quando giochi questo personaggio, puoi infliggere 1 danno a un personaggio a tua scelta."
+      }
+    ],
+    "flavorText": "“Così impara, quel cattivone di un maggiordomo.”",
+    "searchableKeywords": ["Aristocats", "Gli Aristogatti"]
+  },
+  "B3j": {
+    "name": "Minou",
+    "version": "Colta sul Fatto",
+    "rulesText": "\\Un Bocconcino\\ Ogni volta che questo personaggio va all'avventura, se un personaggio avversario ha subito danno in questo turno, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Un Bocconcino",
+        "description": "Ogni volta che questo personaggio va all'avventura, se un personaggio avversario ha subito danno in questo turno, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Il pericolo non è una scusa per dimenticarsi le buone maniere.”",
+    "searchableKeywords": ["Aristocats", "Gli Aristogatti"]
+  },
+  "EmK": {
+    "name": "Baloo",
+    "version": "Pilota Postale",
+    "rulesText": "\\Pagamento in Anticipo\\ Questo personaggio non può andare all'avventura o sfidare a meno che tu non abbia ricevuto una goccia d'inchiostro in questo turno.",
+    "text": [
+      {
+        "title": "Pagamento in Anticipo",
+        "description": "Questo personaggio non può andare all'avventura o sfidare a meno che tu non abbia ricevuto una goccia d'inchiostro in questo turno."
+      }
+    ],
+    "flavorText": "“Penso che ora sia il momento giusto per dire che la mancia non è inclusa nei costi di spedizione...”",
+    "searchableKeywords": ["Talespin"]
+  },
+  "pP7": {
+    "name": "Koslov",
+    "version": "Scagnozzo Imponente",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Erano tempi duri. Koslov e io, eravamo solo due giovani mammiferi che cercavano di farsi strada nel mondo. Io ho aiutato lui, e lui ha aiutato me.”%—Mr. Big",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "LCo": {
+    "name": "Sir Ettore",
+    "version": "Cavaliere Pomposo",
+    "rulesText": "\\Ben Meritata\\ Durante il tuo turno, ogni volta che questo personaggio esilia un altro personaggio in una sfida, pesca una carta.",
+    "text": [
+      {
+        "title": "Ben Meritata",
+        "description": "Durante il tuo turno, ogni volta che questo personaggio esilia un altro personaggio in una sfida, pesca una carta."
+      }
+    ],
+    "flavorText": "“Lo ripeto, non intendo ascoltare nessuna delle sciocchezze di Martino sulle gocce d'inchiostro, e non si discute!”",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "mVf": {
+    "name": "Baloo",
+    "version": "Pilota da Trasporto",
+    "rulesText": "<Resistere> +1",
+    "text": "<Resistere> +1",
+    "flavorText": "“Ehi, non è giusto! Siete pirati dell'<aria>, non dovreste attaccarmi quando sono <a terra>!”",
+    "searchableKeywords": ["Talespin"]
+  },
+  "zac": {
+    "name": "Kit Nuvoletta",
+    "version": "Colpo Sicuro",
+    "rulesText": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Kit Nuvoletta.)%\\Acrobazie Aeree\\ Ogni volta che questo personaggio va all'avventura, scegli uno:%• Ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)%• Infliggi 1 danno a un personaggio a tua scelta.",
+    "text": [
+      {
+        "title": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Kit Nuvoletta.)"
+      },
+      {
+        "title": "Acrobazie Aeree",
+        "description": "Ogni volta che questo personaggio va all'avventura, scegli uno:"
+      },
+      {
+        "title": "• Ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      },
+      {
+        "title": "• Infliggi 1 danno a un personaggio a tua scelta."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Talespin"]
+  },
+  "GHQ": {
+    "name": "Artù",
+    "version": "Cavaliere da Giostra",
+    "rulesText": "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Artù.)%<Sfidante> +2 %\\Bottino della Vittoria\\ Durante il tuo turno, ogni volta che questo personaggio esilia un altro personaggio in una sfida, pesca una carta e ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Artù.)"
+      },
+      {
+        "title": "<Sfidante> +2"
+      },
+      {
+        "title": "Bottino della Vittoria",
+        "description": "Durante il tuo turno, ogni volta che questo personaggio esilia un altro personaggio in una sfida, pesca una carta e ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "PXK": {
+    "name": "Mr. Big",
+    "version": "Magnate della Distribuzione",
+    "rulesText": "\\Freddato\\ Alla fine del tuo turno, se tutte le carte nel tuo calamaio sono impegnate, un personaggio avversario a tua scelta non può sfidare fino all'inizio del tuo prossimo turno.",
+    "text": [
+      {
+        "title": "Freddato",
+        "description": "Alla fine del tuo turno, se tutte le carte nel tuo calamaio sono impegnate, un personaggio avversario a tua scelta non può sfidare fino all'inizio del tuo prossimo turno."
+      }
+    ],
+    "flavorText": "“Questa faccenda resterà tra noi.”",
+    "searchableKeywords": ["Zootropolis", "Zootopia"]
+  },
+  "lux": {
+    "name": "Shere Khan",
+    "version": "CEO delle Khan Industries",
+    "rulesText": "\\Nuovo Incentivo\\ Quando giochi questo personaggio, un personaggio a tua scelta può sfidare i personaggi preparati per questo turno.%\\Dominare il Mercato\\ Una volta durante il tuo turno, ogni volta che uno dei tuoi altri personaggi esilia un altro personaggio in una sfida, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Nuovo Incentivo",
+        "description": "Quando giochi questo personaggio, un personaggio a tua scelta può sfidare i personaggi preparati per questo turno."
+      },
+      {
+        "title": "Dominare il Mercato",
+        "description": "Una volta durante il tuo turno, ogni volta che uno dei tuoi altri personaggi esilia un altro personaggio in una sfida, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Talespin"]
+  },
+  "j6f": {
+    "name": "Tiana",
+    "version": "Organizzatrice della Festa",
+    "rulesText": "<Trasformazione> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Tiana.)%\\Location Ideale\\ Quando giochi questo personaggio, puoi pescare 2 carte, poi scegli e scarta una carta. Se hai scartato una carta luogo in questo modo, puoi giocarla dai tuoi scarti gratis.",
+    "text": [
+      {
+        "title": "<Trasformazione> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Tiana.)"
+      },
+      {
+        "title": "Location Ideale",
+        "description": "Quando giochi questo personaggio, puoi pescare 2 carte, poi scegli e scarta una carta. Se hai scartato una carta luogo in questo modo, puoi giocarla dai tuoi scarti gratis."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Princess and the Frog", "La Principessa e il Ranocchio"]
+  },
   "oR5": {
     "name": "Woody",
     "version": "Che Aiuta un Amico",
@@ -396,15 +2422,15 @@
   },
   "8Ki": {
     "name": "Pocahontas",
-    "version": "Guiding the Tribe",
-    "rulesText": "\\Stay Close\\ When you play this character, you may play a character with cost 1 for free.",
+    "version": "Guida della Tribù",
+    "rulesText": "\\Statemi Vicino\\ Quando giochi questo personaggio, puoi giocare un personaggio con costo 1 gratis.",
     "text": [
       {
-        "title": "Stay Close",
-        "description": "When you play this character, you may play a character with cost 1 for free."
+        "title": "Statemi Vicino",
+        "description": "Quando giochi questo personaggio, puoi giocare un personaggio con costo 1 gratis."
       }
     ],
-    "flavorText": "“These vines are far from natural. They must end somewhere.\"",
+    "flavorText": "“Questi viticci sono tutto tranne che naturali. Devono ben finire da qualche parte.”",
     "searchableKeywords": ["Pocahontas"]
   },
   "30e": {
@@ -693,11 +2719,11 @@
     "searchableKeywords": ["Taron e la pentola magica", "Black Cauldron"]
   },
   "cU7": {
-    "name": "Malefica",
-    "version": "Incantatrice Entusiasta",
+    "name": "Maleficent",
+    "version": "Exultant Spellcaster",
     "rulesText": "",
     "text": "",
-    "flavorText": "“Quanta distruzione! Guardati intorno: viticci a perdita d'occhio. E noi siamo qui, al centro di tutto.”",
+    "flavorText": "\"Such destruction! Look around—vines as far as the eye can see. And here we sit, at the heart of it.\"",
     "searchableKeywords": ["Sleeping Beauty", "La bella addormentata nel bosco"]
   },
   "FIF": {
@@ -769,16 +2795,16 @@
     "searchableKeywords": ["Aladdin"]
   },
   "NS7": {
-    "name": "Vixey",
-    "version": "Expert Fisher",
-    "rulesText": "\\Stealing In\\ When you play this character, if you have a character with <Evasive> in play, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
+    "name": "Vicky",
+    "version": "Pescatrice Esperta",
+    "rulesText": "\\Furtarello\\ Quando giochi questo personaggio, se hai in gioco un personaggio con <Sfuggente>, puoi far riprendere in mano al suo giocatore un personaggio, un oggetto o un luogo a tua scelta con costo 2 o inferiore.",
     "text": [
       {
-        "title": "Stealing In",
-        "description": "When you play this character, if you have a character with <Evasive> in play, you may return chosen character, item, or location with cost 2 or less to their player's hand."
+        "title": "Furtarello",
+        "description": "Quando giochi questo personaggio, se hai in gioco un personaggio con <Sfuggente>, puoi far riprendere in mano al suo giocatore un personaggio, un oggetto o un luogo a tua scelta con costo 2 o inferiore."
       }
     ],
-    "flavorText": "\"I've got my dinner. Where's yours, Tod?\"",
+    "flavorText": "“Io la mia cena ce l'ho. Dov'è la tua, Red?”",
     "searchableKeywords": ["Fox and the Hound", "Red e Toby nemiciamici"]
   },
   "8t3": {
@@ -1323,19 +3349,19 @@
   },
   "Bqs": {
     "name": "Mushu",
-    "version": "Drago Silenzioso",
-    "rulesText": "<Sfuggente> %\\Spostare l'Ago della Bilancia\\ Ogni volta che questo personaggio va all'avventura, se un avversario ha in mano più carte di te, puoi pescare una carta.",
+    "version": "Stealthy Dragon",
+    "rulesText": "<Evasive> (Only characters with Evasive can challenge this character.)\n\n\\Tip the Scales\\ Whenever this character quests, if an opponent has more cards in their hand than you, you may draw a card.",
     "text": [
       {
-        "title": "<Sfuggente>"
+        "title": "<Evasive> (Only characters with Evasive can challenge this character.)"
       },
       {
-        "title": "Spostare l'Ago della Bilancia",
-        "description": "Ogni volta che questo personaggio va all'avventura, se un avversario ha in mano più carte di te, puoi pescare una carta."
+        "title": "Tip the Scales",
+        "description": "Whenever this character quests, if an opponent has more cards in their hand than you, you may draw a card."
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Mulan"]
+    "searchableKeywords": ["Mulan", "D23"]
   },
   "QUJ": {
     "name": "Carl Fredricksen e Russell",
@@ -1620,15 +3646,15 @@
   },
   "YmS": {
     "name": "Boo",
-    "version": "Energetic Child",
-    "rulesText": "<Rush> (This character can challenge the turn they're played.)\n\n\\Kid-Tastrophe!\\ Whenever this character challenges another character with 3 {S} or less, banish that character. (No damage is dealt in that challenge.)",
+    "version": "Bambina Vivace",
+    "rulesText": "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)%\\Bimbabomba!\\ Ogni volta che questo personaggio sfida un altro personaggio con 3 {S} o inferiore, esilia quel personaggio. (Nessun danno viene inflitto in quella sfida.)",
     "text": [
       {
-        "title": "<Rush> (This character can challenge the turn they're played.)"
+        "title": "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)"
       },
       {
-        "title": "Kid-Tastrophe!",
-        "description": "Whenever this character challenges another character with 3 {S} or less, banish that character. (No damage is dealt in that challenge.)"
+        "title": "Bimbabomba!",
+        "description": "Ogni volta che questo personaggio sfida un altro personaggio con 3 {S} o inferiore, esilia quel personaggio. (Nessun danno viene inflitto in quella sfida.)"
       }
     ],
     "flavorText": "",
@@ -1762,17 +3788,17 @@
     "searchableKeywords": ["Monsters, Inc.", "Monsters & Co"]
   },
   "ZPO": {
-    "name": "Merlin",
-    "version": "Envisioning the Future",
-    "rulesText": "\\Minor Trickery\\ When you play this character, you may draw a card from the bottom of your deck.\n\n\\Age of Inconvenience\\ When this character is banished, put this card from your discard on the bottom of your deck.",
+    "name": "Merlino",
+    "version": "Che si Immagina il Futuro",
+    "rulesText": "\\Banale Trucchetto\\ Quando giochi questo personaggio, puoi pescare una carta dal fondo del tuo mazzo.%\\Tempi Oscuri e Maledettamente Scomodi\\ Quando questo personaggio viene esiliato, metti questa carta dai tuoi scarti in fondo al tuo mazzo.",
     "text": [
       {
-        "title": "Minor Trickery",
-        "description": "When you play this character, you may draw a card from the bottom of your deck."
+        "title": "Banale Trucchetto",
+        "description": "Quando giochi questo personaggio, puoi pescare una carta dal fondo del tuo mazzo."
       },
       {
-        "title": "Age of Inconvenience",
-        "description": "When this character is banished, put this card from your discard on the bottom of your deck."
+        "title": "Tempi Oscuri e Maledettamente Scomodi",
+        "description": "Quando questo personaggio viene esiliato, metti questa carta dai tuoi scarti in fondo al tuo mazzo."
       }
     ],
     "flavorText": "",
@@ -2249,12 +4275,12 @@
   },
   "jjL": {
     "name": "Maximus",
-    "version": "Relentless Stallion",
-    "rulesText": "\\No Escape\\ If you discarded a card this turn, this character gains <Challenger> +2 and can challenge ready characters this turn. (They get +2 {S} while challenging.)",
+    "version": "Stallone Implacabile",
+    "rulesText": "\\Non C'È Scampo\\ Se hai scartato una carta in questo turno, questo personaggio ottiene <Sfidante> +2 e può sfidare i personaggi preparati per questo turno. (Riceve +2 {S} mentre sta sfidando.)",
     "text": [
       {
-        "title": "No Escape",
-        "description": "If you discarded a card this turn, this character gains <Challenger> +2 and can challenge ready characters this turn. (They get +2 {S} while challenging.)"
+        "title": "Non C'È Scampo",
+        "description": "Se hai scartato una carta in questo turno, questo personaggio ottiene <Sfidante> +2 e può sfidare i personaggi preparati per questo turno. (Riceve +2 {S} mentre sta sfidando.)"
       }
     ],
     "flavorText": "",
@@ -2569,16 +4595,16 @@
   },
   "sCi": {
     "name": "Woody",
-    "version": "Leader dei Giocattoli",
-    "rulesText": "\\Andiamo a Casa\\ Quando giochi questo personaggio, guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta personaggio Giocattolo o una carta luogo chiamata La Stanza di Andy e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+    "version": "Leader of the Toys",
+    "rulesText": "\\Let's Go Home\\ When you play this character, look at the top 4 cards of your deck. You may reveal a Toy character card or a location card named Andy's Room and put it into your hand. Put the rest on the bottom of your deck in any order.",
     "text": [
       {
-        "title": "Andiamo a Casa",
-        "description": "Quando giochi questo personaggio, guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta personaggio Giocattolo o una carta luogo chiamata La Stanza di Andy e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine."
+        "title": "Let's Go Home",
+        "description": "When you play this character, look at the top 4 cards of your deck. You may reveal a Toy character card or a location card named Andy's Room and put it into your hand. Put the rest on the bottom of your deck in any order."
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Toy Story"]
+    "searchableKeywords": ["D23", "Toy Story"]
   },
   "vS7": {
     "name": "Ciop",
@@ -3229,16 +5255,16 @@
   },
   "xen": {
     "name": "Buzz Lightyear",
-    "version": "In Arrivo",
-    "rulesText": "\\Missione Segreta\\ Ogni volta che paghi 2 {I} o meno per giocare una carta non personaggio, pesca una carta, poi scegli e scarta una carta.%\\Il Più Bel Giocattolo del Mondo\\ Ogni volta che paghi 2 {I} o meno per giocare un personaggio, infliggi 1 danno a un personaggio avversario danneggiato a tua scelta.",
+    "version": "On the Way",
+    "rulesText": "\\Secret Mission\\ Whenever you pay 2 {I} or less to play a non-character, draw a card, then choose and discard a card.\n\n\\World's Greatest Toy\\ Whenever you pay 2 {I} or less to play a character, deal 1 damage to chosen opposing damaged character.",
     "text": [
       {
-        "title": "Missione Segreta",
-        "description": "Ogni volta che paghi 2 {I} o meno per giocare una carta non personaggio, pesca una carta, poi scegli e scarta una carta."
+        "title": "Secret Mission",
+        "description": "Whenever you pay 2 {I} or less to play a non-character, draw a card, then choose and discard a card."
       },
       {
-        "title": "Il Più Bel Giocattolo del Mondo",
-        "description": "Ogni volta che paghi 2 {I} o meno per giocare un personaggio, infliggi 1 danno a un personaggio avversario danneggiato a tua scelta."
+        "title": "World's Greatest Toy",
+        "description": "Whenever you pay 2 {I} or less to play a character, deal 1 damage to chosen opposing damaged character."
       }
     ],
     "flavorText": "",
@@ -3407,11 +5433,11 @@
     "searchableKeywords": ["Atlantis"]
   },
   "t4R": {
-    "name": "Pegaso",
-    "version": "Che Cerca in Cielo e in Terra",
-    "rulesText": "<Sfuggente>",
-    "text": "<Sfuggente>",
-    "flavorText": "Lorcana era cambiata. Sembrava <più grande> in qualche modo. Ma non importava quanto grande diventasse, lui era determinato a trovare il suo amico.",
+    "name": "Pegasus",
+    "version": "Searching High and Low",
+    "rulesText": "<Evasive> (Only characters with Evasive can challenge this character.)",
+    "text": "<Evasive> (Only characters with Evasive can challenge this character.)",
+    "flavorText": "“This Pegasus can carry almost anything on his back–even a terrified archivist.”\n—Rayyan, an Illumineer",
     "searchableKeywords": ["Hercules"]
   },
   "XG0": {
@@ -4173,17 +6199,17 @@
     "searchableKeywords": ["Incredibles", "Gli Incredibili"]
   },
   "Y1z": {
-    "name": "Mr. Incredibile",
-    "version": "Che Fa Pulizia",
-    "rulesText": "\\Ka-Pow!\\ Quando giochi questo personaggio, puoi infliggere 2 danni a un personaggio avversario Robot o Cattivo a tua scelta.",
+    "name": "Mr. Incredible",
+    "version": "Taking Out the Trash",
+    "rulesText": "\\Ka-Pow!\\ When you play this character, you may deal 2 damage to chosen opposing Robot or Villain character.",
     "text": [
       {
         "title": "Ka-Pow!",
-        "description": "Quando giochi questo personaggio, puoi infliggere 2 danni a un personaggio avversario Robot o Cattivo a tua scelta."
+        "description": "When you play this character, you may deal 2 damage to chosen opposing Robot or Villain character."
       }
     ],
-    "flavorText": "“Problemi drastici richiedono soluzioni drastiche.”%—Mr. Incredibile",
-    "searchableKeywords": ["Incredibles", "Gli Incredibili"]
+    "flavorText": "“Heavyweight problems need heavyweight solutions.”\n—Mr. Incredible",
+    "searchableKeywords": ["D23", "Incredibles", "Gli Incredibili"]
   },
   "NF5": {
     "name": "Lord Dingwall",
@@ -4645,19 +6671,19 @@
   },
   "FwE": {
     "name": "Angel",
-    "version": "Dal Canto di Sirena",
-    "rulesText": "\\Sfavorito\\ Se questo è il tuo primo turno e non sei il primo giocatore, paga 1 {I} in meno per giocare questo personaggio.%<Melodioso> 3",
+    "version": "Siren Singer",
+    "rulesText": "\\Underdog\\ If this is your first turn and you're not the first player, you pay 1 {I} less to play this character.\n\n<Singer> 3 (This character counts as cost 3 to sing songs.)",
     "text": [
       {
-        "title": "Sfavorito",
-        "description": "Se questo è il tuo primo turno e non sei il primo giocatore, paga 1 {I} in meno per giocare questo personaggio."
+        "title": "Underdog",
+        "description": "If this is your first turn and you're not the first player, you pay 1 {I} less to play this character."
       },
       {
-        "title": "<Melodioso> 3"
+        "title": "<Singer> 3 (This character counts as cost 3 to sing songs.)"
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Lilo & Stitch", "Lilo and Stitch"]
+    "searchableKeywords": ["D23", "Lilo & Stitch", "Lilo and Stitch"]
   },
   "EI1": {
     "name": "Signora Tweed",
@@ -4771,16 +6797,16 @@
   },
   "o0i": {
     "name": "Pocahontas",
-    "version": "Che Segue il Vento",
-    "rulesText": "\\Qual è la mia Via?\\ Ogni volta che questo personaggio va all'avventura, ottieni leggenda pari al {L} di un altro personaggio impegnato a tua scelta.",
+    "version": "Following the Wind",
+    "rulesText": "\\What Is My Path?\\ Whenever this character quests, gain lore equal to another chosen exerted character's {L}.",
     "text": [
       {
-        "title": "Qual è la mia Via?",
-        "description": "Ogni volta che questo personaggio va all'avventura, ottieni leggenda pari al {L} di un altro personaggio impegnato a tua scelta."
+        "title": "What Is My Path?",
+        "description": "Whenever this character quests, gain lore equal to another chosen exerted character's {L}."
       }
     ],
-    "flavorText": "“Ha lo spirito di sua madre. Va dove la porta il vento.”%—Kekata",
-    "searchableKeywords": ["Pocahontas"]
+    "flavorText": "“She has her mother’s spirit. She goes wherever the wind takes her.”\n—Kekata",
+    "searchableKeywords": ["D23", "Pocahontas"]
   },
   "l2V": {
     "name": "Darkwing Duck",
@@ -5561,16 +7587,16 @@
     "searchableKeywords": ["Hercules"]
   },
   "bEk": {
-    "name": "Beast",
-    "version": "Snowfield Troublemaker",
-    "rulesText": "<Rush> (This character can challenge the turn they're played.)\n\n\\Dynamic Maneuver\\ Whenever this character challenges, if he's at a location, he takes no damage from the challenge.",
+    "name": "La Bestia",
+    "version": "Combinaguai del Campo Innevato",
+    "rulesText": "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)%\\Manovra Dinamica\\ Ogni volta che questo personaggio sfida, se si trova in un luogo, non subisce danno dalla sfida.",
     "text": [
       {
-        "title": "<Rush> (This character can challenge the turn they're played.)"
+        "title": "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)"
       },
       {
-        "title": "Dynamic Maneuver",
-        "description": "Whenever this character challenges, if he's at a location, he takes no damage from the challenge."
+        "title": "Manovra Dinamica",
+        "description": "Ogni volta che questo personaggio sfida, se si trova in un luogo, non subisce danno dalla sfida."
       }
     ],
     "flavorText": "",
@@ -5977,7 +8003,7 @@
   "Dfc": {
     "name": "Topolino",
     "version": "Bob Cratchit",
-    "rulesText": "\\Duro Lavoro\\ Ogni volta che questo personaggio va all'avventura, metti la prima carta del tuo mazzo a faccia in giù sotto di esso.%\\Un Cuore Generoso\\ Quando questo personaggio viene esiliato in una sfida, puoi mettere tutte le carte che erano sotto di esso sotto a un tuo altro personaggio o luogo a tua scelta.",
+    "rulesText": "\\Duro Lavoro\\ Ogni volta che questo personaggio va all'avventura, metti la prima carta del tuo mazzo a faccia in giù sotto di esso.%\\Un Cuore Generoso\\ Quando questo personaggio viene esiliato in una sfida, puoi mettere tutte le carte che erano sotto di esso sotto a un tuo altro personaggio o luogo a tua scelta, a faccia in giù.",
     "text": [
       {
         "title": "Duro Lavoro",
@@ -5985,7 +8011,7 @@
       },
       {
         "title": "Un Cuore Generoso",
-        "description": "Quando questo personaggio viene esiliato in una sfida, puoi mettere tutte le carte che erano sotto di esso sotto a un tuo altro personaggio o luogo a tua scelta."
+        "description": "Quando questo personaggio viene esiliato in una sfida, puoi mettere tutte le carte che erano sotto di esso sotto a un tuo altro personaggio o luogo a tua scelta, a faccia in giù."
       }
     ],
     "flavorText": "",
@@ -6019,15 +8045,15 @@
   },
   "wmQ": {
     "name": "Rapunzel",
-    "version": "Ethereal Protector",
-    "rulesText": "<Boost> 2 {I} (Once during your turn, you may pay 2 {I} to put the top card of your deck facedown under this character.)\n\n\\Clonk!\\ Whenever this character quests, if there's a card under her, chosen opposing character can't challenge until the start of your next turn.",
+    "version": "Protettrice Eterea",
+    "rulesText": "<Potenziamento> 2 {I} (Una volta durante il tuo turno, puoi pagare 2 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)%\\Clang!\\ Ogni volta che questo personaggio va all'avventura, se c'è una carta sotto di esso, un personaggio avversario a tua scelta non può sfidare fino all'inizio del tuo prossimo turno.",
     "text": [
       {
-        "title": "<Boost> 2 {I} (Once during your turn, you may pay 2 {I} to put the top card of your deck facedown under this character.)"
+        "title": "<Potenziamento> 2 {I} (Una volta durante il tuo turno, puoi pagare 2 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)"
       },
       {
-        "title": "Clonk!",
-        "description": "Whenever this character quests, if there's a card under her, chosen opposing character can't challenge until the start of your next turn."
+        "title": "Clang!",
+        "description": "Ogni volta che questo personaggio va all'avventura, se c'è una carta sotto di esso, un personaggio avversario a tua scelta non può sfidare fino all'inizio del tuo prossimo turno."
       }
     ],
     "flavorText": "",
@@ -6612,17 +8638,17 @@
     "searchableKeywords": ["Ducktales"]
   },
   "qnB": {
-    "name": "Topolino",
-    "version": "Campione d'Ambra",
-    "rulesText": "\\Fare Strada\\ I tuoi altri personaggi Ambra ricevono +2 {W}.%\\Coro Amichevole\\ Mentre hai in gioco 2 o più altri personaggi Ambra, questo personaggio ottiene <Melodioso> 8. (Conta come di costo 8 per cantare le canzoni.)",
+    "name": "Mickey Mouse",
+    "version": "Amber Champion",
+    "rulesText": "\\Leading the Way\\ Your other Amber characters get +2 {W}.\n\n\\Friendly Chorus\\ While you have 2 or more other Amber characters in play, this character gains <Singer> 8. (They count as cost 8 to sing songs.)",
     "text": [
       {
-        "title": "Fare Strada",
-        "description": "I tuoi altri personaggi Ambra ricevono +2 {W}."
+        "title": "Leading the Way",
+        "description": "Your other Amber characters get +2 {W}."
       },
       {
-        "title": "Coro Amichevole",
-        "description": "Mentre hai in gioco 2 o più altri personaggi Ambra, questo personaggio ottiene <Melodioso> 8. (Conta come di costo 8 per cantare le canzoni.)"
+        "title": "Friendly Chorus",
+        "description": "While you have 2 or more other Amber characters in play, this character gains <Singer> 8. (They count as cost 8 to sing songs.)"
       }
     ],
     "flavorText": "",
@@ -6790,7 +8816,7 @@
       }
     ],
     "flavorText": "“Questo mondo ha ancora dei segreti da svelare.”",
-    "searchableKeywords": ["Frozen - Il regno di ghiaccio", "Frozen"]
+    "searchableKeywords": ["Frozen - Il regno di ghiaccio", "Clio Schaffner", "Frozen"]
   },
   "7CA": {
     "name": "Mushu",
@@ -7897,16 +9923,16 @@
   },
   "Imt": {
     "name": "Judy Hopps",
-    "version": "Alla Scoperta di Indizi",
-    "rulesText": "\\Indagine Meticolosa\\ Quando giochi questo personaggio e ogni volta che va all'avventura, guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta personaggio Detective e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+    "version": "Uncovering Clues",
+    "rulesText": "\\Thorough Investigation\\ When you play this character and whenever she quests, look at the top 3 cards of your deck. You may reveal a Detective character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
     "text": [
       {
-        "title": "Indagine Meticolosa",
-        "description": "Quando giochi questo personaggio e ogni volta che va all'avventura, guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta personaggio Detective e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine."
+        "title": "Thorough Investigation",
+        "description": "When you play this character and whenever she quests, look at the top 3 cards of your deck. You may reveal a Detective character card and put it into your hand. Put the rest on the bottom of your deck in any order."
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Zootropolis", "Zootopia"]
+    "searchableKeywords": ["Zootropolis", "D23", "Zootopia"]
   },
   "6GN": {
     "name": "Pluto",
@@ -9508,7 +11534,7 @@
       }
     ],
     "flavorText": "“Who are you? And how did you find me?”",
-    "searchableKeywords": ["Tangled", "Rapunzel - L'intreccio della torre"]
+    "searchableKeywords": ["Tangled", "Rapunzel - L'intreccio della torre", "Clio Schaffner"]
   },
   "8DB": {
     "name": "Mulan",
@@ -9793,7 +11819,7 @@
       }
     ],
     "flavorText": "",
-    "searchableKeywords": ["Sleeping Beauty", "La bella addormentata nel bosco"]
+    "searchableKeywords": ["Clio Schaffner", "Sleeping Beauty", "La bella addormentata nel bosco"]
   },
   "z67": {
     "name": "Aurora",
@@ -11992,12 +14018,12 @@
   },
   "wSF": {
     "name": "Anna",
-    "version": "Sorella Fiduciosa",
-    "rulesText": "\\Insieme Possiamo Farcela\\ Quando giochi questo personaggio, se hai in gioco un personaggio chiamato Elsa, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
+    "version": "Trusting Sister",
+    "rulesText": "\\We Can Do This Together\\ When you play this character, if you have a character named Elsa in play, you may put the top card of your deck into your inkwell facedown and exerted.",
     "text": [
       {
-        "title": "Insieme Possiamo Farcela",
-        "description": "Quando giochi questo personaggio, se hai in gioco un personaggio chiamato Elsa, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata."
+        "title": "We Can Do This Together",
+        "description": "When you play this character, if you have a character named Elsa in play, you may put the top card of your deck into your inkwell facedown and exerted."
       }
     ],
     "flavorText": "",
@@ -13080,15 +15106,15 @@
   },
   "DdM": {
     "name": "Elsa",
-    "version": "Sorella Fidata",
-    "rulesText": "\\Cosa Facciamo Ora?\\ Ogni volta che questo personaggio va all'avventura, se hai in gioco un personaggio chiamato Anna, ottieni 1 leggenda.",
+    "version": "Trusted Sister",
+    "rulesText": "\\What Do We Do Now?\\ Whenever this character quests, if you have a character named Anna in play, gain 1 lore.",
     "text": [
       {
-        "title": "Cosa Facciamo Ora?",
-        "description": "Ogni volta che questo personaggio va all'avventura, se hai in gioco un personaggio chiamato Anna, ottieni 1 leggenda."
+        "title": "What Do We Do Now?",
+        "description": "Whenever this character quests, if you have a character named Anna in play, gain 1 lore."
       }
     ],
-    "flavorText": "“È della paura che non ci si può fidare.”",
+    "flavorText": "\"Fear is what can't be trusted.\"",
     "searchableKeywords": ["Frozen - Il regno di ghiaccio", "Frozen"]
   },
   "UyZ": {
@@ -15427,18 +17453,18 @@
   },
   "Iyt": {
     "name": "Jasmine",
-    "version": "Navigatrice Reale",
-    "rulesText": "\\È La Principessa che ve lo Ordina\\ Quando giochi questo personaggio, scegli uno:%• Impegna un personaggio danneggiato a tua scelta.%• Un personaggio avversario a tua scelta ottiene <Attaccabrighe> durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
+    "version": "Royal Seafarer",
+    "rulesText": "\\By Order of the Princess\\ When you play this character, choose one:\n• Exert chosen damaged character.\n• Chosen opposing character gains <Reckless> during their next turn. (They can't quest and must challenge if able.)",
     "text": [
       {
-        "title": "È La Principessa che ve lo Ordina",
-        "description": "Quando giochi questo personaggio, scegli uno:"
+        "title": "By Order of the Princess",
+        "description": "When you play this character, choose one:"
       },
       {
-        "title": "• Impegna un personaggio danneggiato a tua scelta."
+        "title": "• Exert chosen damaged character."
       },
       {
-        "title": "• Un personaggio avversario a tua scelta ottiene <Attaccabrighe> durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)"
+        "title": "• Chosen opposing character gains <Reckless> during their next turn. (They can't quest and must challenge if able.)"
       }
     ],
     "flavorText": "",
@@ -17109,18 +19135,18 @@
   },
   "3zi": {
     "name": "Elsa",
-    "version": "Il Quinto Spirito",
-    "rulesText": "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)%<Sfuggente> %\\Cristallizzare\\ Quando giochi questo personaggio, impegna un personaggio avversario a tua scelta.",
+    "version": "The Fifth Spirit",
+    "rulesText": "<Rush> (This character can challenge the turn they're played.)\n\n<Evasive> (Only characters with Evasive can challenge this character.)\n\n\\Crystallize\\ When you play this character, exert chosen opposing character.",
     "text": [
       {
-        "title": "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)"
+        "title": "<Rush> (This character can challenge the turn they're played.)"
       },
       {
-        "title": "<Sfuggente>"
+        "title": "<Evasive> (Only characters with Evasive can challenge this character.)"
       },
       {
-        "title": "Cristallizzare",
-        "description": "Quando giochi questo personaggio, impegna un personaggio avversario a tua scelta."
+        "title": "Crystallize",
+        "description": "When you play this character, exert chosen opposing character."
       }
     ],
     "flavorText": "",
@@ -17623,20 +19649,20 @@
     "searchableKeywords": ["Wreck It Ralph", "Ralph Spaccatutto"]
   },
   "ZiJ": {
-    "name": "Paperino",
-    "version": "Lanciatore di Torte",
-    "rulesText": "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Paperino.)%\\Torta di Umiltà\\ Quando giochi questo personaggio, se hai usato <Trasformazione> per giocarlo, ogni avversario perde 2 leggenda.%\\Papero Iracondo\\ Mentre un avversario ha 10 o più leggenda, questo personaggio riceve +6 {S}.",
+    "name": "Donald Duck",
+    "version": "Pie Slinger",
+    "rulesText": "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Donald Duck.)\n\n\\Humble Pie\\ When you play this character, if you used <Shift> to play him, each opponent loses 2 lore.\n\n\\Raging Duck\\ While an opponent has 10 or more lore, this character gets +6 {S}.",
     "text": [
       {
-        "title": "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Paperino.)"
+        "title": "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Donald Duck.)"
       },
       {
-        "title": "Torta di Umiltà",
-        "description": "Quando giochi questo personaggio, se hai usato <Trasformazione> per giocarlo, ogni avversario perde 2 leggenda."
+        "title": "Humble Pie",
+        "description": "When you play this character, if you used <Shift> to play him, each opponent loses 2 lore."
       },
       {
-        "title": "Papero Iracondo",
-        "description": "Mentre un avversario ha 10 o più leggenda, questo personaggio riceve +6 {S}."
+        "title": "Raging Duck",
+        "description": "While an opponent has 10 or more lore, this character gets +6 {S}."
       }
     ],
     "flavorText": "",
@@ -19607,15 +21633,15 @@
   },
   "Mbz": {
     "name": "Rapunzel",
-    "version": "Artista Entusiasta",
-    "rulesText": "\\Compagno Perspicace\\ Mentre hai in gioco un personaggio chiamato Pascal, questo personaggio ottiene <Protetto>. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
+    "version": "Appreciative Artist",
+    "rulesText": "\\Perceptive Partner\\ While you have a character named Pascal in play, this character gains <Ward>. (Opponents can't choose them except to challenge.)",
     "text": [
       {
-        "title": "Compagno Perspicace",
-        "description": "Mentre hai in gioco un personaggio chiamato Pascal, questo personaggio ottiene <Protetto>. (Gli avversari non possono sceglierlo se non per sfidarlo.)"
+        "title": "Perceptive Partner",
+        "description": "While you have a character named Pascal in play, this character gains <Ward>. (Opponents can't choose them except to challenge.)"
       }
     ],
-    "flavorText": "“Pascal! Un nuovo fiore per la parete!”",
+    "flavorText": "“Pascal! A new flower for the wall!”",
     "searchableKeywords": ["Tangled", "Rapunzel - L'intreccio della torre"]
   },
   "IaS": {
@@ -19864,7 +21890,7 @@
   "QEb": {
     "name": "Mickey Mouse",
     "version": "Playful Sorcerer",
-    "rulesText": "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)\n<Resist> +1 (Damage dealt to this character is reduced by 1.)\n\\Sweep Away\\ When you play this character, deal damage to chosen character equal to the number of Broom characters you have in play.",
+    "rulesText": "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)\n\n<Resist> +1 (Damage dealt to this character is reduced by 1.)\n\n\\Sweep Away\\ When you play this character, deal damage to chosen character equal to the number of Broom characters you have in play.",
     "text": [
       {
         "title": "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)"
@@ -24211,6 +26237,110 @@
     "flavorText": "Maui: “Ever defeat a lava monster?”\nMoana: “No. Have you?”",
     "searchableKeywords": ["Moana", "Vaiana", "Oceania"]
   },
+  "iKo": {
+    "name": "Autorità Portuale",
+    "version": "Snodo Centrale",
+    "rulesText": "\\Benvenuti in Città\\ Una volta durante il tuo turno, ogni volta che un personaggio si sposta in questo luogo, ogni giocatore riceve 1 goccia d'inchiostro e ottiene 1 leggenda. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Benvenuti in Città",
+        "description": "Una volta durante il tuo turno, ogni volta che un personaggio si sposta in questo luogo, ogni giocatore riceve 1 goccia d'inchiostro e ottiene 1 leggenda. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "12o": {
+    "name": "Negozio e Laboratorio di Merlino",
+    "version": "Mercato Magico",
+    "rulesText": "\\Siamo Aperti\\ Una volta durante il tuo turno, ogni volta che un personaggio si sposta in questo luogo, pesca una carta e ottieni 1 leggenda.",
+    "text": [
+      {
+        "title": "Siamo Aperti",
+        "description": "Una volta durante il tuo turno, ogni volta che un personaggio si sposta in questo luogo, pesca una carta e ottieni 1 leggenda."
+      }
+    ],
+    "flavorText": "“Se non l'abbiamo, lo possiamo fare!”%—Slogan del negozio",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "JEn": {
+    "name": "La Pianta del Fagiolo Magico",
+    "version": "Sempre Più in Alto",
+    "rulesText": "\\Luoghi Remoti\\ I personaggi ricevono +1 {S} e ottengono <Sfuggente> mentre si trovano in questo luogo. (Solo altri personaggi con Sfuggente possono sfidarli.)",
+    "text": [
+      {
+        "title": "Luoghi Remoti",
+        "description": "I personaggi ricevono +1 {S} e ottengono <Sfuggente> mentre si trovano in questo luogo. (Solo altri personaggi con Sfuggente possono sfidarli.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": []
+  },
+  "6s8": {
+    "name": "Terra delle Anime",
+    "version": "Ponte di Fiori",
+    "rulesText": "\\Doni Onorevoli\\ Mentre hai 10 o più carte nei tuoi scarti, questo luogo riceve +2 {L}.",
+    "text": [
+      {
+        "title": "Doni Onorevoli",
+        "description": "Mentre hai 10 o più carte nei tuoi scarti, questo luogo riceve +2 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "mjT": {
+    "name": "Stadio Khan",
+    "version": "All'Avanguardia",
+    "rulesText": "\\Grande Spettacolo\\ I personaggi ricevono +2 {S} mentre si trovano in questo luogo.",
+    "text": [
+      {
+        "title": "Grande Spettacolo",
+        "description": "I personaggi ricevono +2 {S} mentre si trovano in questo luogo."
+      }
+    ],
+    "flavorText": "Puoi sentire la folla esultare a quartieri di distanza.",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "HMj": {
+    "name": "Istituto Tecnologico",
+    "version": "Laboratorio di Honey Lemon",
+    "rulesText": "\\Intervallo\\ Una volta durante il tuo turno, ogni volta che un personaggio Super va all'avventura mentre si trova in questo luogo, riprendi in mano una carta oggetto dai tuoi scarti.",
+    "text": [
+      {
+        "title": "Intervallo",
+        "description": "Una volta durante il tuo turno, ogni volta che un personaggio Super va all'avventura mentre si trova in questo luogo, riprendi in mano una carta oggetto dai tuoi scarti."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "AUI": {
+    "name": "Stazione Centrale",
+    "version": "Snodo Logistico",
+    "rulesText": "\\Souvenir Gratuito\\ Una volta durante il tuo turno, ogni volta che un personaggio si sposta in questo luogo, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Souvenir Gratuito",
+        "description": "Una volta durante il tuo turno, ogni volta che un personaggio si sposta in questo luogo, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "RAI": {
+    "name": "Industrie Khan",
+    "version": "Monumento della Verdevia",
+    "rulesText": "\\Sicurezza Elevata\\ I personaggi non possono essere sfidati mentre si trovano in questo luogo.",
+    "text": [
+      {
+        "title": "Sicurezza Elevata",
+        "description": "I personaggi non possono essere sfidati mentre si trovano in questo luogo."
+      }
+    ],
+    "flavorText": "Il quartier generale degli affari di Shere Khan, dimora di un impero di gocce d'inchiostro.",
+    "searchableKeywords": ["Talespin"]
+  },
   "gWy": {
     "name": "Torre di Rapunzel",
     "version": "Ghermita dal Viticcio",
@@ -25320,6 +27450,248 @@
     ],
     "flavorText": "Un posto dove trovare quello di cui hai bisogno, non semplicemente quello che vuoi.",
     "searchableKeywords": ["Princess and the Frog", "La Principessa e il Ranocchio"]
+  },
+  "6Lu": {
+    "name": "Chitarra Ancestrale",
+    "version": "",
+    "rulesText": "\\Eredità Musicale\\ Quando giochi questo oggetto, pesca una carta.%\\Dal Cuore\\ {E}, 1 {I} — Un personaggio a tua scelta ottiene <Melodioso> e conta come se avesse costo +2 per cantare le canzoni per questo turno.",
+    "text": [
+      {
+        "title": "Eredità Musicale",
+        "description": "Quando giochi questo oggetto, pesca una carta."
+      },
+      {
+        "title": "Dal Cuore",
+        "description": "{E}, 1 {I} — Un personaggio a tua scelta ottiene <Melodioso> e conta come se avesse costo +2 per cantare le canzoni per questo turno."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "UTF": {
+    "name": "Pila di Amplificatori",
+    "version": "",
+    "rulesText": "\\Volume a Palla\\ I tuoi personaggi con <Melodioso> ricevono +1 {S} e +1 {W}.",
+    "text": [
+      {
+        "title": "Volume a Palla",
+        "description": "I tuoi personaggi con <Melodioso> ricevono +1 {S} e +1 {W}."
+      }
+    ],
+    "flavorText": "“Suoneranno alla grande, promesso! Il gorgonzola aggiunge, uh, formaggiosità.”%—Bobby Zimuruski",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "wya": {
+    "name": "Benedizione di Mamá Imelda",
+    "version": "",
+    "rulesText": "\\Dovere Familiare\\ {E}, 1 {I} — Un personaggio a tua scelta riceve -1 {S} e non può {E} per cantare canzoni fino all'inizio del tuo prossimo turno.",
+    "text": [
+      {
+        "title": "Dovere Familiare",
+        "description": "{E}, 1 {I} — Un personaggio a tua scelta riceve -1 {S} e non può {E} per cantare canzoni fino all'inizio del tuo prossimo turno."
+      }
+    ],
+    "flavorText": "“Beh, tecnicamente può aggiungere tutte le condizioni che vuole.”%—Impiegato del Dipartimento delle Riunioni Familiari",
+    "searchableKeywords": ["Coco"]
+  },
+  "DCF": {
+    "name": "Bacchetta di Merlino",
+    "version": "",
+    "rulesText": "\\Tocco Magico\\ {E}, rivela 2 carte con lo stesso nome dalla tua mano — Paga 1 {I} in meno per giocare la tua prossima carta con quel nome per questo turno.",
+    "text": [
+      {
+        "title": "Tocco Magico",
+        "description": "{E}, rivela 2 carte con lo stesso nome dalla tua mano — Paga 1 {I} in meno per giocare la tua prossima carta con quel nome per questo turno."
+      }
+    ],
+    "flavorText": "“È solo una piccola scorciatoia per accorciare i tempi.”%—Merlino",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "XgC": {
+    "name": "Pattini Inchiostratori",
+    "version": "",
+    "rulesText": "\\All'Ultima Moda\\ {E} — Se un personaggio è andato all'avventura in questo turno, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "All'Ultima Moda",
+        "description": "{E} — Se un personaggio è andato all'avventura in questo turno, ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "“Un po' inchiostratori. Un po' pattini. Un insieme meraviglioso.”%—Cordelia, un'Illuminatrice",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "h3H": {
+    "name": "Guida Turistica di Belle",
+    "version": "",
+    "rulesText": "\\Informazioni Riservate\\ {E} — Se hai giocato un'azione in questo turno, ottieni 1 leggenda.",
+    "text": [
+      {
+        "title": "Informazioni Riservate",
+        "description": "{E} — Se hai giocato un'azione in questo turno, ottieni 1 leggenda."
+      }
+    ],
+    "flavorText": "“Contiene anche dei consigli di lettura <e> una ricetta per qualcosa che si chiama 'pollo stupondo'?”%—Cordelia, un'Illuminatrice",
+    "searchableKeywords": ["La bella e la bestia", "Beauty and the Beast"]
+  },
+  "LdD": {
+    "name": "Gorgonzola Pendente di Pisa",
+    "version": "",
+    "rulesText": "\\Scambio Equo\\ Quando giochi questo oggetto, puoi pescare una carta, poi scegli e scarta una carta.%\\Super Formaggioso\\ Mentre hai in gioco 4 oggetti chiamati Gorgonzola Pendente di Pisa, i tuoi oggetti ottengono <Protetto>. (Gli avversari non possono sceglierli.)",
+    "text": [
+      {
+        "title": "Scambio Equo",
+        "description": "Quando giochi questo oggetto, puoi pescare una carta, poi scegli e scarta una carta."
+      },
+      {
+        "title": "Super Formaggioso",
+        "description": "Mentre hai in gioco 4 oggetti chiamati Gorgonzola Pendente di Pisa, i tuoi oggetti ottengono <Protetto>. (Gli avversari non possono sceglierli.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "aWq": {
+    "name": "Foto di Famiglia dei Rivera",
+    "version": "",
+    "rulesText": "\\Onorare il Passato\\ {E}, 1 {I} — Scegli uno:%• Metti le prime 2 carte del tuo mazzo nei tuoi scarti.%• Se hai 10 o più carte nei tuoi scarti, ottieni 1 leggenda.",
+    "text": [
+      {
+        "title": "Onorare il Passato",
+        "description": "{E}, 1 {I} — Scegli uno:"
+      },
+      {
+        "title": "• Metti le prime 2 carte del tuo mazzo nei tuoi scarti."
+      },
+      {
+        "title": "• Se hai 10 o più carte nei tuoi scarti, ottieni 1 leggenda."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "6g2": {
+    "name": "L'Angolo Strappato",
+    "version": "",
+    "rulesText": "\\Bei Ricordi\\ {E}, 1 {I} — Se hai 10 o più carte nei tuoi scarti, pesca una carta.%\\Riparare la Foto\\ Quando questa carta viene messa nei tuoi scarti dal tuo mazzo, se hai in gioco un oggetto chiamato Foto di Famiglia dei Rivera, puoi giocare questa carta dai tuoi scarti, gratis.",
+    "text": [
+      {
+        "title": "Bei Ricordi",
+        "description": "{E}, 1 {I} — Se hai 10 o più carte nei tuoi scarti, pesca una carta."
+      },
+      {
+        "title": "Riparare la Foto",
+        "description": "Quando questa carta viene messa nei tuoi scarti dal tuo mazzo, se hai in gioco un oggetto chiamato Foto di Famiglia dei Rivera, puoi giocare questa carta dai tuoi scarti, gratis."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "uvh": {
+    "name": "Jukebox",
+    "version": "",
+    "rulesText": "\\In Loop\\ Una volta durante il tuo turno, ogni volta che giochi una canzone, se quella carta ha lo stesso nome di un'altra carta nei tuoi scarti, puoi preparare un personaggio a tua scelta. Se lo fai, non può andare all'avventura per il resto di questo turno.",
+    "text": [
+      {
+        "title": "In Loop",
+        "description": "Una volta durante il tuo turno, ogni volta che giochi una canzone, se quella carta ha lo stesso nome di un'altra carta nei tuoi scarti, puoi preparare un personaggio a tua scelta. Se lo fai, non può andare all'avventura per il resto di questo turno."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "FkS": {
+    "name": "Sfera Chimica Accecante",
+    "version": "",
+    "rulesText": "\\Destabilizzare\\ {E}, 2 {I} — Esilia questo oggetto.%\\Lampo Brillante\\ Durante il tuo turno, quando questo oggetto viene esiliato, puoi ricevere 1 goccia d'inchiostro. Se lo fai, un personaggio a tua scelta riceve -2 {S} per questo turno. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Destabilizzare",
+        "description": "{E}, 2 {I} — Esilia questo oggetto."
+      },
+      {
+        "title": "Lampo Brillante",
+        "description": "Durante il tuo turno, quando questo oggetto viene esiliato, puoi ricevere 1 goccia d'inchiostro. Se lo fai, un personaggio a tua scelta riceve -2 {S} per questo turno. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "oxw": {
+    "name": "Sfera Chimica Prototipo",
+    "version": "",
+    "rulesText": "\\Destabilizzare\\ {E}, 2 {I} — Esilia questo oggetto.%\\Lampo Enigmatico\\ Durante il tuo turno, quando questo oggetto viene esiliato, puoi ricevere 1 goccia d'inchiostro. Se lo fai, un tuo personaggio a tua scelta ottiene <Resistere> +1 fino all'inizio del tuo prossimo turno. (Il danno che gli viene inflitto è ridotto di 1. Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "Destabilizzare",
+        "description": "{E}, 2 {I} — Esilia questo oggetto."
+      },
+      {
+        "title": "Lampo Enigmatico",
+        "description": "Durante il tuo turno, quando questo oggetto viene esiliato, puoi ricevere 1 goccia d'inchiostro. Se lo fai, un tuo personaggio a tua scelta ottiene <Resistere> +1 fino all'inizio del tuo prossimo turno. (Il danno che gli viene inflitto è ridotto di 1. Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "PsC": {
+    "name": "Cappello Cannocchiale",
+    "version": "",
+    "rulesText": "\\Capo d'Alta Moda\\ Ogni volta che giochi questo oggetto o un altro oggetto, se l'oggetto che hai giocato ha un nome diverso da ogni altro oggetto che hai in gioco, puoi aggiungere una carta dalla tua mano al tuo calamaio, a faccia in giù e impegnata.",
+    "text": [
+      {
+        "title": "Capo d'Alta Moda",
+        "description": "Ogni volta che giochi questo oggetto o un altro oggetto, se l'oggetto che hai giocato ha un nome diverso da ogni altro oggetto che hai in gioco, puoi aggiungere una carta dalla tua mano al tuo calamaio, a faccia in giù e impegnata."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Little Mermaid", "La Sirenetta"]
+  },
+  "E31": {
+    "name": "Borsetta Chimica Migliorata",
+    "version": "",
+    "rulesText": "\\Ha le Tasche!\\ {E}, 1 {I}, esilia uno dei tuoi altri oggetti — Guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta oggetto e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+    "text": [
+      {
+        "title": "Ha le Tasche!",
+        "description": "{E}, 1 {I}, esilia uno dei tuoi altri oggetti — Guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta oggetto e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "lTH": {
+    "name": "Espresso della Città di Hyperia",
+    "version": "",
+    "rulesText": "\\Tragitto Semplice\\ {E} — Sposta un tuo personaggio in un luogo gratis.%\\Conveniente ed Elegante\\ I tuoi luoghi Città di Hyperia ricevono +2 {W}.",
+    "text": [
+      {
+        "title": "Tragitto Semplice",
+        "description": "{E} — Sposta un tuo personaggio in un luogo gratis."
+      },
+      {
+        "title": "Conveniente ed Elegante",
+        "description": "I tuoi luoghi Città di Hyperia ricevono +2 {W}."
+      }
+    ],
+    "flavorText": "Arriva in orario, a ogni orario.",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "osH": {
+    "name": "Aereo Pirata",
+    "version": "",
+    "rulesText": "\\Schiva Questo!\\ Quando giochi questo oggetto, puoi infliggere 1 danno a un personaggio a tua scelta.%\\Avvitamento\\ {E}, 1 {I} — Un personaggio a tua scelta ottiene <Vigile> per questo turno. (Può sfidare come se avesse Sfuggente.)",
+    "text": [
+      {
+        "title": "Schiva Questo!",
+        "description": "Quando giochi questo oggetto, puoi infliggere 1 danno a un personaggio a tua scelta."
+      },
+      {
+        "title": "Avvitamento",
+        "description": "{E}, 1 {I} — Un personaggio a tua scelta ottiene <Vigile> per questo turno. (Può sfidare come se avesse Sfuggente.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Talespin"]
   },
   "0mK": {
     "name": "Bastone di Powhatan",
@@ -27202,7 +29574,7 @@
       }
     ],
     "flavorText": "La corona spezzata nasconde poteri oscuri e misteriosi.",
-    "searchableKeywords": []
+    "searchableKeywords": ["Lorcana"]
   },
   "12k": {
     "name": "Cromicon d'Ametista",
@@ -28236,6 +30608,338 @@
     ],
     "flavorText": "“You don't have to say ‘pew pew’ when you use it, but it doesn't hurt.”\n—Lilo, galactic hero",
     "searchableKeywords": ["Lilo & Stitch", "Lilo and Stitch"]
+  },
+  "uqv": {
+    "name": "I Nervi Stanno Per Saltar",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 5 o superiore può {E} per cantare questa canzone gratis.)%Un avversario a tua scelta rivela la sua mano e scarta ogni carta non personaggio rivelata in questo modo.",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 5 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Un avversario a tua scelta rivela la sua mano e scarta ogni carta non personaggio rivelata in questo modo."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "x16": {
+    "name": "Never Too Far Apart",
+    "version": "",
+    "rulesText": "<Cantare Insieme> 9 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 9 o superiore può {E} per cantare questa canzone gratis.)%Guarda le prime 9 carte del tuo mazzo. Rivela fino a 3 carte personaggio con <Melodioso> e aggiungile alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+    "text": [
+      {
+        "title": "<Cantare Insieme> 9 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 9 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Guarda le prime 9 carte del tuo mazzo. Rivela fino a 3 carte personaggio con <Melodioso> e aggiungile alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "v5B": {
+    "name": "Ricordami",
+    "version": "",
+    "rulesText": "<Cantare Insieme> 6 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 6 o superiore può {E} per cantare questa canzone gratis.)%Per il resto di questo turno, puoi giocare i personaggi dai tuoi scarti. Se lo fai, entrano in gioco impegnati e non puoi giocare personaggi con lo stesso nome di personaggi che hai giocato in questo modo in questo turno.",
+    "text": [
+      {
+        "title": "<Cantare Insieme> 6 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 6 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Per il resto di questo turno, puoi giocare i personaggi dai tuoi scarti. Se lo fai, entrano in gioco impegnati e non puoi giocare personaggi con lo stesso nome di personaggi che hai giocato in questo modo in questo turno."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "WDL": {
+    "name": "Never Gonna Let You Cry",
+    "version": "",
+    "rulesText": "<Cantare Insieme> 5 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 5 o superiore può {E} per cantare questa canzone gratis.)%Riprendi in mano fino a 2 carte personaggio con costo 2 o inferiore ciascuna dai tuoi scarti.",
+    "text": [
+      {
+        "title": "<Cantare Insieme> 5 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 5 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Riprendi in mano fino a 2 carte personaggio con costo 2 o inferiore ciascuna dai tuoi scarti."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Red", "Turning Red"]
+  },
+  "nOm": {
+    "name": "Conosci Anche Tu Juanita",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 5 o superiore può {E} per cantare questa canzone gratis.)%Pesca 2 carte. Se hai 10 o più carte nei tuoi scarti, pesca invece 3 carte.",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 5 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Pesca 2 carte. Se hai 10 o più carte nei tuoi scarti, pesca invece 3 carte."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "rWy": {
+    "name": "La Malignità di Magò",
+    "version": "",
+    "rulesText": "Sposta fino a 3 danni da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
+    "text": "Sposta fino a 3 danni da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
+    "flavorText": "“Questo capolavoro di malvagità è la mia miglior maledizione di sempre!”",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "o6L": {
+    "name": "Igitus Figitus",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 6 o superiore può {E} per cantare questa canzone gratis.)%Ricevi 3 gocce d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 6 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Ricevi 3 gocce d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "7PJ": {
+    "name": "Un Poco Loco",
+    "version": "",
+    "rulesText": "<Cantare Insieme> 3 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 3 o superiore può {E} per cantare questa canzone gratis.)%Scegli 2 tuoi personaggi. Se uno di loro ha costo 3 o inferiore, riprendili in mano entrambi.",
+    "text": [
+      {
+        "title": "<Cantare Insieme> 3 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 3 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Scegli 2 tuoi personaggi. Se uno di loro ha costo 3 o inferiore, riprendili in mano entrambi."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "ShR": {
+    "name": "La Magnifica, Splendida",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 4 o superiore può {E} per cantare questa canzone gratis.)%Ottieni 2 leggenda. Pesca una carta.",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 4 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Ottieni 2 leggenda. Pesca una carta."
+      }
+    ],
+    "flavorText": "... Maga Magò",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "mqz": {
+    "name": "Ispirazione Creativa",
+    "version": "",
+    "rulesText": "Pesca 4 carte.",
+    "text": "Pesca 4 carte.",
+    "flavorText": "“Adoro questa città. Soltanto io, il mio inchiostratore, e qualche murales da dipingere.”%—Cordelia, un'Illuminatrice",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "s22": {
+    "name": "Consegna Aerea",
+    "version": "",
+    "rulesText": "Infliggi 3 danni a un personaggio a tua scelta. Se quel personaggio ha danno, infliggi invece 5 danni.",
+    "text": "Infliggi 3 danni a un personaggio a tua scelta. Se quel personaggio ha danno, infliggi invece 5 danni.",
+    "flavorText": "“Non serve che rubiamo il carico, capo. Sta arrivando direttamente da noi!”%—Stritola",
+    "searchableKeywords": ["Talespin"]
+  },
+  "ojw": {
+    "name": "Above the Crowd",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 5 o superiore può {E} per cantare questa canzone gratis.)%Metti un personaggio avversario a tua scelta con 3 {S} o inferiore in fondo al mazzo del suo giocatore.",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 5 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Metti un personaggio avversario a tua scelta con 3 {S} o inferiore in fondo al mazzo del suo giocatore."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Goofy Movie", "In viaggio con Pippo"]
+  },
+  "FIu": {
+    "name": "Tutto Quello che Accadrà",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)%Pesca una carta. Tu e un altro giocatore a tua scelta ricevete ciascuno 1 goccia d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Pesca una carta. Tu e un altro giocatore a tua scelta ricevete ciascuno 1 goccia d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Talespin"]
+  },
+  "5lt": {
+    "name": "Sono Affari",
+    "version": "",
+    "rulesText": "Un avversario a tua scelta sceglie uno:%• L'avversario rivela la sua mano e scarta una carta a tua scelta. Riceve 2 gocce d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)%• Tu peschi una carta e ricevi 2 gocce d'inchiostro.",
+    "text": [
+      {
+        "title": "Un avversario a tua scelta sceglie uno:"
+      },
+      {
+        "title": "• L'avversario rivela la sua mano e scarta una carta a tua scelta. Riceve 2 gocce d'inchiostro. (Ogni goccia d'inchiostro può essere rimossa per pagare 1 {I}.)"
+      },
+      {
+        "title": "• Tu peschi una carta e ricevi 2 gocce d'inchiostro."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Talespin"]
+  },
+  "IpT": {
+    "name": "Provocazione Irritante",
+    "version": "",
+    "rulesText": "Fino all'inizio del tuo prossimo turno, un personaggio avversario a tua scelta ottiene <Attaccabrighe> e, se hai 2 o più avversari, non può sfidare i tuoi personaggi o luoghi. (Non può andare all'avventura e deve sfidare, se possibile.)",
+    "text": "Fino all'inizio del tuo prossimo turno, un personaggio avversario a tua scelta ottiene <Attaccabrighe> e, se hai 2 o più avversari, non può sfidare i tuoi personaggi o luoghi. (Non può andare all'avventura e deve sfidare, se possibile.)",
+    "flavorText": "",
+    "searchableKeywords": ["Talespin"]
+  },
+  "M4n": {
+    "name": "Reazione Chimica",
+    "version": "",
+    "rulesText": "Pesca una carta. Puoi esiliare un tuo oggetto a tua scelta. Se lo fai, un avversario a tua scelta sceglie e scarta una carta.",
+    "text": "Pesca una carta. Puoi esiliare un tuo oggetto a tua scelta. Se lo fai, un avversario a tua scelta sceglie e scarta una carta.",
+    "flavorText": "“<Dovrebbe> essere sicuro.”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "zN3": {
+    "name": "Tattiche d'Intimidazione",
+    "version": "",
+    "rulesText": "Esilia un personaggio a tua scelta con 2 {S} o inferiore.",
+    "text": "Esilia un personaggio a tua scelta con 2 {S} o inferiore.",
+    "flavorText": "“Cosa ci facevano le gocce d'inchiostro qui allo Stadio Khan? Vogliamo risposte, e tu ce le darai.”",
+    "searchableKeywords": ["Gargoyles"]
+  },
+  "Tuy": {
+    "name": "Oltrepassare i Limiti",
+    "version": "",
+    "rulesText": "Un tuo personaggio a tua scelta non subisce danno mentre sta sfidando per questo turno. Ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": "Un tuo personaggio a tua scelta non subisce danno mentre sta sfidando per questo turno. Ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "flavorText": "“Non c'è speranza che le tue sfere chimiche possano tenere testa a queste lame al plasma potenziate!”",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "dTt": {
+    "name": "Farebbe Paura",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 4 o superiore può {E} per cantare questa canzone gratis.)%Esilia un tuo personaggio a tua scelta per esiliare un personaggio a tua scelta.",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 4 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Esilia un tuo personaggio a tua scelta per esiliare un personaggio a tua scelta."
+      }
+    ],
+    "flavorText": "... perfino a un leon",
+    "searchableKeywords": ["101 Dalmatians", "La carica dei 101"]
+  },
+  "XHF": {
+    "name": "Non Dimenticarlo Mai",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)%Metti le prime 3 carte del tuo mazzo nei tuoi scarti. Un personaggio a tua scelta riceve +1 {S} per questo turno per ogni carta canzone nei tuoi scarti.",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Metti le prime 3 carte del tuo mazzo nei tuoi scarti. Un personaggio a tua scelta riceve +1 {S} per questo turno per ogni carta canzone nei tuoi scarti."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Coco"]
+  },
+  "DSF": {
+    "name": "Mai Più Tempi Oscuri",
+    "version": "",
+    "rulesText": "Aggiungi la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata. Ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": "Aggiungi la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata. Ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "flavorText": "“Che strane pietre! Meglio portarne una a Merlino.”",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "UNK": {
+    "name": "Lo Stesso Prurito Nun Te Dà",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 3 o superiore può {E} per cantare questa canzone gratis.)%Guarda le prime 3 carte del tuo mazzo. Aggiungine una al tuo calamaio a faccia in giù e impegnata, mettine una in cima al tuo mazzo e una in fondo al tuo mazzo.",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 3 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Guarda le prime 3 carte del tuo mazzo. Aggiungine una al tuo calamaio a faccia in giù e impegnata, mettine una in cima al tuo mazzo e una in fondo al tuo mazzo."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Aristocats", "Gli Aristogatti"]
+  },
+  "7qV": {
+    "name": "Ricerca Intensa",
+    "version": "",
+    "rulesText": "Guarda le prime 2 carte del tuo mazzo, poi aggiungine una alla tua mano e metti il resto in fondo al tuo mazzo in qualsiasi ordine. Se hai rimosso una goccia d'inchiostro per giocare questa azione, guarda invece le prime 5 carte del tuo mazzo.",
+    "text": "Guarda le prime 2 carte del tuo mazzo, poi aggiungine una alla tua mano e metti il resto in fondo al tuo mazzo in qualsiasi ordine. Se hai rimosso una goccia d'inchiostro per giocare questa azione, guarda invece le prime 5 carte del tuo mazzo.",
+    "flavorText": "",
+    "searchableKeywords": ["Big Hero 6"]
+  },
+  "PdU": {
+    "name": "Smamma!",
+    "version": "",
+    "rulesText": "Aggiungi un personaggio avversario a tua scelta con costo 2 o inferiore al calamaio del suo giocatore, a faccia in giù e impegnato.",
+    "text": "Aggiungi un personaggio avversario a tua scelta con costo 2 o inferiore al calamaio del suo giocatore, a faccia in giù e impegnato.",
+    "flavorText": "“Per l'ultima volta, io non accetto apprendisti!”",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "iRc": {
+    "name": "Giostra Cavalleresca",
+    "version": "",
+    "rulesText": "Infliggi 2 danni a un personaggio a tua scelta. Se hai rimosso una goccia d'inchiostro per giocare questa azione, infliggi invece 5 danni.",
+    "text": "Infliggi 2 danni a un personaggio a tua scelta. Se hai rimosso una goccia d'inchiostro per giocare questa azione, infliggi invece 5 danni.",
+    "flavorText": "“Giostrare è un'arte raffinata. È... è una scienza altamente sviluppata.”%—Ser Pilade",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "Ati": {
+    "name": "Esplosione d'Inchiostro",
+    "version": "",
+    "rulesText": "Infliggi 4 danni a un personaggio a tua scelta. Ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": "Infliggi 4 danni a un personaggio a tua scelta. Ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "flavorText": "“Preferisco il termine 'decostruzione rapida non anticipata'.”%—Honey Lemon",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "PuN": {
+    "name": "Trasporti e Consegne Khan",
+    "version": "",
+    "rulesText": "Pesca una carta. Ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "text": "Pesca una carta. Ricevi 1 goccia d'inchiostro. (Puoi rimuovere una goccia d'inchiostro per pagare 1 {I}.)",
+    "flavorText": "“Quello che vendiamo è potere. Il potere della convenienza.”%—Shere Khan",
+    "searchableKeywords": ["Talespin"]
+  },
+  "cie": {
+    "name": "L'Unica Cosa Che Ora So",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 7 o superiore può {E} per cantare questa canzone gratis.)%Gioca un luogo dalla tua mano o dai tuoi scarti gratis. Se un personaggio ha cantato questa canzone, puoi spostarlo in quel luogo gratis.",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 7 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Gioca un luogo dalla tua mano o dai tuoi scarti gratis. Se un personaggio ha cantato questa canzone, puoi spostarlo in quel luogo gratis."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Princess and the Frog", "La Principessa e il Ranocchio"]
   },
   "3Jh": {
     "name": "Se Non Fossi Con Te",

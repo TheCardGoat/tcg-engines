@@ -26,7 +26,6 @@ describe("OP09-001 Shanks", () => {
       expect.arrayContaining([engine.leader("south"), characterId]),
     );
     engine.resolveDecision("effectTargetSelection", { selectedIds: [characterId] }, "north");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(

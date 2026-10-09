@@ -56,9 +56,7 @@ describe("cancelling a Gear play", () => {
       await user.click(cancel);
 
       await waitFor(() => {
-        expect(
-          view.container.querySelector('[data-testid="prompt-cancel-selection"]'),
-        ).toBeNull();
+        expect(view.container.querySelector('[data-testid="prompt-cancel-selection"]')).toBeNull();
         expect(view.container.querySelector('[data-testid="resolving-program"]')).toBeNull();
       });
       await pom.expectHandSize(CYBERPUNK_P1, 1);

@@ -53,7 +53,7 @@ export const op10Lim037: CharacterCard = {
                 {
                   filter: "trait",
                   value: "ODYSSEY",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -80,7 +80,7 @@ export const op10Lim037: CharacterCard = {
               {
                 filter: "trait",
                 value: "ODYSSEY",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

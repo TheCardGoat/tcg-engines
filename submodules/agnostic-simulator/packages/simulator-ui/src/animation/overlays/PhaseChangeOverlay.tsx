@@ -130,6 +130,7 @@ export function PhaseChangeOverlay() {
             <motion.div
               className={classes.announcement}
               data-animation-overlay="phase-change"
+              data-animation-label-only
               data-animation-variant={compiled.step.variant}
               data-animation-interaction="nonblocking"
               initial={{

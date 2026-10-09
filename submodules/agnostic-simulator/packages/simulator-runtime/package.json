@@ -22,6 +22,10 @@
       "types": "./src/chat.ts",
       "default": "./src/chat.ts"
     },
+    "./statements": {
+      "types": "./src/statements.ts",
+      "default": "./src/statements.ts"
+    },
     "./debug": {
       "types": "./src/debug.ts",
       "default": "./src/debug.ts"

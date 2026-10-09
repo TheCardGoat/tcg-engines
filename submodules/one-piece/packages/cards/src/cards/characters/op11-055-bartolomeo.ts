@@ -23,7 +23,7 @@ export const op11Bartolomeo055: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 2000,
-  traits: ["Supernovas Dressrosa"],
+  traits: ["Dressrosa", "Supernovas"],
   attribute: "special",
   i18n: op11Bartolomeo055I18n,
 };

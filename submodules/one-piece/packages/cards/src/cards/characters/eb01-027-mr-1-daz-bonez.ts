@@ -5,7 +5,7 @@ export const eb01Mr1DazBonez027: CharacterCard = {
   id: "EB01-027",
   canonicalId: "EB01-027",
   slug: "mr-1-daz-bonez/eb01-027",
-  name: "Mr. 1 (Daz.Bonez)",
+  name: "Mr.1(Daz.Bonez)",
   printings: [
     {
       id: "EB01-027",

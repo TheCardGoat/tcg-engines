@@ -1,10 +1,12 @@
 import { GrandArchiveRoleCard } from "./GrandArchiveRoleCard";
+import { grandArchivePhysicalCards } from "./grand-archive-physical-cards";
 import { Button, Group } from "@mantine/core";
 import type { InteractionSubmission } from "@tcg/protocol";
 import {
   currentActionableInput,
+  interactionInputComplete,
   InteractionDraftProvider,
-  InteractionResolutionPrompt,
+  InteractionDraftPrompt,
   useInteractionDraft,
 } from "@tcg/simulator-ui";
 import {
@@ -18,6 +20,8 @@ import {
   type ReactNode,
 } from "react";
 
+import { createPortal } from "react-dom";
+
 import type { GrandArchiveHarnessFixture } from "./fixtureProjection";
 import {
   grandArchiveEntityWithPrintedDetails,
@@ -26,6 +30,7 @@ import {
 
 interface GrandArchiveInteractionWorkspaceValue {
   readonly active: boolean;
+  readonly setPromptHost: (element: HTMLDivElement | null) => void;
   readonly attackSourceId?: string;
   readonly attackTargeting: boolean;
   readonly attackTargetIds: readonly string[];
@@ -36,6 +41,7 @@ interface GrandArchiveInteractionWorkspaceValue {
   readonly selectedOrder: ReadonlyMap<string, number>;
   readonly beginAction: (actionId: string, clickedEntityId?: string) => void;
   readonly selectEntity: (entityId: string) => void;
+  readonly finishSelection: () => void;
   readonly previewEntity: (
     entity: GrandArchiveHarnessFixture["entities"][number] | undefined,
   ) => void;
@@ -46,6 +52,7 @@ const GrandArchiveInteractionWorkspaceContext =
 
 const READ_ONLY_WORKSPACE: GrandArchiveInteractionWorkspaceValue = {
   active: false,
+  setPromptHost: () => undefined,
   attackTargeting: false,
   attackTargetIds: [],
   hasFocusedChoice: false,
@@ -54,6 +61,7 @@ const READ_ONLY_WORKSPACE: GrandArchiveInteractionWorkspaceValue = {
   selectedOrder: new Map(),
   beginAction: () => undefined,
   selectEntity: () => undefined,
+  finishSelection: () => undefined,
   previewEntity: () => undefined,
 };
 
@@ -61,6 +69,12 @@ export function useGrandArchiveInteractionWorkspace(): GrandArchiveInteractionWo
   const workspace = useContext(GrandArchiveInteractionWorkspaceContext);
   if (!workspace) throw new Error("GrandArchiveInteractionWorkspace is unavailable.");
   return workspace;
+}
+
+/** Places the existing accessible prompt inside the portrait board composition. */
+export function GrandArchivePromptHost() {
+  const workspace = useGrandArchiveInteractionWorkspace();
+  return <div className="ga-portrait-prompt-host" ref={workspace.setPromptHost} />;
 }
 
 interface GrandArchiveInteractionLayerProps {
@@ -79,6 +93,12 @@ export function GrandArchiveInteractionLayer({
 }: GrandArchiveInteractionLayerProps) {
   const viewer = fixture.table.seats.find((seat) => seat.perspective === "bottom");
   const view = fixture.interactionView;
+  const { hide: hidePreview } = useGrandArchiveCardPreview();
+  const visibilityKey = `${viewer?.id}:${fixture.id}:${fixture.table.status.stateVersion}:${view?.stateVersion}`;
+  useLayoutEffect(() => {
+    hidePreview();
+    return hidePreview;
+  }, [visibilityKey, hidePreview]);
   if (!view) {
     return (
       <GrandArchiveInteractionWorkspaceContext.Provider value={READ_ONLY_WORKSPACE}>
@@ -90,6 +110,15 @@ export function GrandArchiveInteractionLayer({
     <InteractionDraftProvider
       key={`${viewer?.id}:${fixture.id}`}
       view={view}
+      deferInitialSubmission={(action) =>
+        action.inputs.some(
+          (input) =>
+            input.kind === "entity-selection" &&
+            input.min === 0 &&
+            input.max > 0 &&
+            input.candidates.length > 0,
+        )
+      }
       onSubmit={(submission) => {
         if (!onSubmit) return false;
         return onSubmit(submission);
@@ -106,28 +135,30 @@ export function GrandArchiveInteractionLayer({
   );
 }
 
-// Memory and support piles live behind counters; their choices use the focused modal.
+// Only visible rows count as spatial choices; support zones use the focused chooser.
 function spatialEntityIds(fixture: GrandArchiveHarnessFixture): ReadonlySet<string> {
-  const renderedZoneIds = new Set(
+  const renderedIds = new Set(
     fixture.table.zones
       .filter(
         (zone) =>
           zone.role === "hand" ||
           zone.id === "effects-stack" ||
           zone.id.endsWith(":field") ||
-          ["intent", "pantheon", "inner-lineage", "loaded"].some((name) =>
-            zone.id.endsWith(`:${name}`),
-          ),
+          zone.id.endsWith(":intent"),
       )
       .flatMap((zone) => zone.entityIds),
   );
-  const renderedEntityIds = fixture.entities.flatMap((entity) =>
-    entity.face === "public" &&
-    (renderedZoneIds.has(entity.id) || entity.dataAttributes?.["data-combat-role"] !== undefined)
-      ? [entity.id]
-      : [],
-  );
-  return new Set([...renderedEntityIds, ...fixture.table.seats.map((seat) => seat.id)]);
+  const physical = grandArchivePhysicalCards({
+    entities: fixture.entities,
+    zones: fixture.table.zones,
+  });
+  for (const [nativeId, displayId] of physical.displayEntityIds) {
+    if (renderedIds.has(displayId)) renderedIds.add(nativeId);
+  }
+  return new Set([
+    ...fixture.entities.filter((entity) => renderedIds.has(entity.id)).map((entity) => entity.id),
+    ...fixture.table.seats.map((seat) => seat.id),
+  ]);
 }
 
 function resolveEntityReferences(text: string, fixture: GrandArchiveHarnessFixture): string {
@@ -161,6 +192,7 @@ function GrandArchiveInteractionWorkspace({
   readonly children: ReactNode;
 }) {
   const draft = useInteractionDraft();
+  const [promptHost, setPromptHost] = useState<HTMLDivElement | null>(null);
   const [hoveredEntityId, setHoveredEntityId] = useState<string>();
   const { show: showPreview, hide: hidePreview } = useGrandArchiveCardPreview();
   const view = fixture.interactionView;
@@ -178,14 +210,16 @@ function GrandArchiveInteractionWorkspace({
   );
   const automaticCompletion = pregameActions.length === 1 ? completion : undefined;
   const automaticRequest = useRef<string | null>(null);
-  const authoritativeVersion = `${fixture.table.status.stateVersion}:${view?.stateVersion}`;
+  const authoritativeVersion = `${self?.id}:${fixture.table.status.stateVersion}:${view?.stateVersion}`;
   const previousVersion = useRef(authoritativeVersion);
   useLayoutEffect(() => {
     if (previousVersion.current === authoritativeVersion) return;
     previousVersion.current = authoritativeVersion;
     automaticRequest.current = null;
+    setHoveredEntityId(undefined);
+    hidePreview();
     draft.cancel();
-  }, [authoritativeVersion, draft.cancel]);
+  }, [authoritativeVersion, draft.cancel, hidePreview]);
   useEffect(() => {
     if (!automaticCompletion || !onSubmit || draft.active || errorMessage) return;
     const key = `${view?.stateVersion}:${automaticCompletion.id}`;
@@ -214,7 +248,7 @@ function GrandArchiveInteractionWorkspace({
     stackKind === "activated-ability" || stackKind === "triggered-ability" ? "ability" : "card";
   const stackOwner = stackTop?.ownerId === self?.id ? "your" : "your opponent’s";
   const stackText = stackTop?.details?.rules
-    .map((rule) => rule.text)
+    .map((rule) => rule.text ?? rule.label ?? "")
     .join("\n")
     .trim();
   const responseInstruction = `You have Opportunity. Respond to ${stackOwner} ${stackSubject} or use Pass.`;
@@ -268,9 +302,79 @@ function GrandArchiveInteractionWorkspace({
           .map((candidate) => candidate.entity.instanceId)
       : [];
   const selectedOrder = useMemo(
-    () => new Map(selectedIds.map((id, index) => [id, index + 1])),
-    [selectedIds],
+    () =>
+      new Map(input?.kind === "ordering" ? selectedIds.map((id, index) => [id, index + 1]) : []),
+    [selectedIds, input?.kind],
   );
+  const directSpatialInput =
+    (input?.kind === "entity-selection" || input?.kind === "ordering") &&
+    candidateIds.length > 0 &&
+    candidateIds.every((id) => spatialEntityIds(fixture).has(id));
+  const retaliation =
+    fixture.waitState.kind === "decision" &&
+    fixture.waitState.decisionKind === "choose-retaliators" &&
+    directSpatialInput;
+  const [retaliationAnswers, setRetaliationAnswers] = useState<readonly string[]>([]);
+  useEffect(() => {
+    setRetaliationAnswers([]);
+  }, [authoritativeVersion]);
+  const undecidedRetaliator = retaliation
+    ? candidateIds.find((id) => !retaliationAnswers.includes(id))
+    : undefined;
+  const answerRetaliation = (retaliate: boolean) => {
+    if (!undecidedRetaliator || !input || !draft.active) return;
+    if (retaliate) draft.change(input.id, [...selectedIds, undecidedRetaliator]);
+    else if (inputValue === undefined) draft.change(input.id, []);
+    setRetaliationAnswers((ids) => [...ids, undecidedRetaliator]);
+  };
+  useEffect(() => {
+    if (
+      retaliation &&
+      !draft.submissionRejected &&
+      draft.active &&
+      input &&
+      candidateIds.length === retaliationAnswers.length &&
+      interactionInputComplete(input, inputValue ?? [])
+    )
+      draft.confirmCurrent();
+  }, [
+    retaliation,
+    draft.submissionRejected,
+    draft.active,
+    input,
+    candidateIds.length,
+    retaliationAnswers.length,
+    inputValue,
+    draft.confirmCurrent,
+  ]);
+  // Choosing the last required card commits the selection; no second confirmation step.
+  useEffect(() => {
+    if (
+      !onSubmit ||
+      draft.submissionRejected ||
+      !draft.active ||
+      !directSpatialInput ||
+      retaliation ||
+      (input?.kind !== "entity-selection" && input?.kind !== "ordering")
+    )
+      return;
+    if (selectedIds.length === input.max && interactionInputComplete(input, inputValue))
+      draft.confirmCurrent();
+  }, [
+    onSubmit,
+    draft.submissionRejected,
+    draft.active,
+    directSpatialInput,
+    retaliation,
+    input,
+    inputValue,
+    selectedIds.length,
+    draft.confirmCurrent,
+  ]);
+  const finishSelection = () => {
+    if (!onSubmit || !draft.active || !directSpatialInput || !input || retaliation) return;
+    if (interactionInputComplete(input, inputValue ?? [])) draft.confirmCurrent();
+  };
   const choiceCandidateEntities =
     input &&
     (input.kind === "entity-selection" || input.kind === "ordering") &&
@@ -305,6 +409,10 @@ function GrandArchiveInteractionWorkspace({
       : undefined;
   const selectEntity = (entityId: string) => {
     if (!input || !candidateIds.includes(entityId)) return;
+    if (retaliation) {
+      if (entityId === undecidedRetaliator) answerRetaliation(true);
+      return;
+    }
     if (!draft.active && decisionAction) {
       // A view flip into a decision can clear the auto-begun decision draft in
       // the same commit (the provider's stale-draft invalidation runs after the
@@ -357,6 +465,7 @@ function GrandArchiveInteractionWorkspace({
   const workspace = useMemo<GrandArchiveInteractionWorkspaceValue>(
     () => ({
       active: draft.active || Boolean(view?.resolution),
+      setPromptHost,
       hasFocusedChoice,
       attackSourceId,
       attackTargetIds:
@@ -368,11 +477,12 @@ function GrandArchiveInteractionWorkspace({
         attackTargeting && hoveredEntityId && candidateIds.includes(hoveredEntityId)
           ? hoveredEntityId
           : undefined,
-      candidateIds,
+      candidateIds: retaliation ? (undecidedRetaliator ? [undecidedRetaliator] : []) : candidateIds,
       selectedIds,
       selectedOrder,
       beginAction,
       selectEntity,
+      finishSelection,
       previewEntity: (entity) => {
         setHoveredEntityId(entity?.id);
         if (attackTargeting) hidePreview();
@@ -385,6 +495,9 @@ function GrandArchiveInteractionWorkspace({
       attackTargeting,
       hoveredEntityId,
       hasFocusedChoice,
+      retaliation,
+      undecidedRetaliator,
+      retaliationAnswers,
       candidateIds,
       errorMessage,
       draft.cancel,
@@ -409,17 +522,17 @@ function GrandArchiveInteractionWorkspace({
   const prompt =
     !view ||
     (!view.resolution && !draft.active && !stackPromptActive && !pregamePromptActive) ? null : (
-      <InteractionResolutionPrompt
+      <InteractionDraftPrompt
         view={view}
         viewerId={self?.id ?? ""}
         actionId={selectedActionId}
-        values={draft.values}
-        confirmedInputIds={draft.confirmedInputIds}
         visibleEntityIds={spatialEntityIds(fixture)}
         preferredPlacement="bottom"
         reserveBottomTargetArea
         choiceModal={choiceModal}
-        instructionOnly={!onSubmit || pregamePromptActive || stackPromptActive}
+        instructionOnly={
+          !onSubmit || pregamePromptActive || stackPromptActive || directSpatialInput
+        }
         decisionControls={
           pregamePromptActive ? (
             <Group gap="xs">
@@ -437,39 +550,128 @@ function GrandArchiveInteractionWorkspace({
                 </Button>
               ))}
             </Group>
+          ) : draft.submissionRejected ? (
+            <Group gap="xs">
+              <Button mih={44} size="sm" onClick={draft.confirmCurrent}>
+                Retry selection
+              </Button>
+              <Button
+                mih={44}
+                size="sm"
+                variant="subtle"
+                onClick={() => {
+                  draft.clear();
+                  setRetaliationAnswers([]);
+                }}
+              >
+                Reset selection
+              </Button>
+            </Group>
+          ) : retaliation ? (
+            <Group gap="xs">
+              <Button
+                mih={44}
+                size="sm"
+                disabled={!undecidedRetaliator}
+                onClick={() => answerRetaliation(true)}
+              >
+                Retaliate
+              </Button>
+              <Button
+                mih={44}
+                size="sm"
+                variant="subtle"
+                disabled={!undecidedRetaliator}
+                onClick={() => answerRetaliation(false)}
+              >
+                Take hit
+              </Button>
+            </Group>
+          ) : directSpatialInput && input ? (
+            <Group gap="xs">
+              {input.min !== input.max ? (
+                <Button
+                  mih={44}
+                  size="sm"
+                  onClick={finishSelection}
+                  disabled={!interactionInputComplete(input, inputValue ?? [])}
+                >
+                  {selectedIds.length
+                    ? "Use selected"
+                    : input.id === "weapons"
+                      ? "No weapon"
+                      : "Choose none"}
+                </Button>
+              ) : null}
+              {!view.resolution ? (
+                <Button mih={44} size="sm" variant="subtle" onClick={draft.cancel}>
+                  Cancel
+                </Button>
+              ) : null}
+            </Group>
           ) : undefined
         }
         actionPresentation={
-          pregamePromptActive
-            ? { title: "Before the game begins", body: "Choose your starting-card actions." }
-            : attackTargeting
+          retaliation
+            ? {
+                title: "Choose retaliation",
+                body: `${fixture.entities.find((entity) => entity.id === undecidedRetaliator)?.title ?? "Defending unit"} · ${retaliationAnswers.length + 1} of ${candidateIds.length}`,
+                details: "Decide for each eligible defender. No Opportunity during this choice.",
+              }
+            : directSpatialInput && input
               ? {
-                  title:
-                    input?.id !== "attack-targets"
+                  title: attackTargeting
+                    ? input.id === "attack-targets"
+                      ? "Choose attack targets"
+                      : "Choose the defending player"
+                    : playerChoice
                       ? "Choose the defending player"
-                      : "Choose attack targets",
-                  body:
-                    input?.id !== "attack-targets"
-                      ? "Select a highlighted player."
-                      : "Select highlighted targets to attack.",
+                      : input.kind === "ordering"
+                        ? "Order cards"
+                        : input.kind === "entity-selection" && input.role === "cost"
+                          ? "Pay cost"
+                          : "Choose cards",
+                  body: playerChoice
+                    ? "Select a highlighted player."
+                    : `${selectedIds.length} / ${input.max} selected · tap highlighted cards${input.kind === "ordering" ? " in order" : ""}.`,
                 }
-              : playerChoice
-                ? { title: "Choose the defending player", body: "Select a highlighted player." }
-                : stackPromptActive
+              : pregamePromptActive
+                ? { title: "Before the game begins", body: "Choose your starting-card actions." }
+                : attackTargeting
                   ? {
-                      title: stackTop?.title ?? "Top effect",
-                      body: stackText || responseInstruction,
-                      details: stackText ? responseInstruction : undefined,
+                      title:
+                        input?.id !== "attack-targets"
+                          ? "Choose the defending player"
+                          : "Choose attack targets",
+                      body:
+                        input?.id !== "attack-targets"
+                          ? "Select a highlighted player."
+                          : "Select highlighted targets to attack.",
                     }
-                  : undefined
+                  : playerChoice
+                    ? { title: "Choose the defending player", body: "Select a highlighted player." }
+                    : stackPromptActive
+                      ? {
+                          title: stackTop?.title ?? "Top effect",
+                          body: responseInstruction,
+                          details: stackText || undefined,
+                        }
+                      : undefined
         }
-        onChange={draft.change}
-        onClearInput={draft.unset}
-        onClear={draft.clear}
-        onConfirm={draft.confirmCurrent}
-        onCancel={view.resolution || stackPromptActive ? undefined : draft.cancel}
+        cancellable={!view.resolution && !stackPromptActive}
+        onCancel={draft.cancel}
         onSubmit={onSubmit}
         renderText={(text) => resolveEntityReferences(text, fixture)}
+        candidateCaption={(_, id) => {
+          const entity = fixture.entities.find(
+            (candidate) => candidate.id === id && candidate.face === "public",
+          );
+          if (!entity) return undefined;
+          const owner = fixture.table.seats.find((seat) => seat.id === entity.ownerId);
+          return owner
+            ? `${owner.perspective === "bottom" ? "You" : "Opponent"} · ${entity.title}`
+            : entity.title;
+        }}
         renderCandidate={(_, id) => {
           const entity = fixture.entities.find(
             (candidate) => candidate.id === id && candidate.face === "public",
@@ -483,11 +685,20 @@ function GrandArchiveInteractionWorkspace({
   return (
     <GrandArchiveInteractionWorkspaceContext.Provider value={workspace}>
       {children}
-      {prompt}
+      {promptHost ? createPortal(prompt, promptHost) : prompt}
       {errorMessage ? (
-        <div className="ga-interaction-error" role="alert">
-          {errorMessage}
-        </div>
+        promptHost ? (
+          createPortal(
+            <div className="ga-interaction-error" role="alert">
+              {errorMessage}
+            </div>,
+            promptHost,
+          )
+        ) : (
+          <div className="ga-interaction-error" role="alert">
+            {errorMessage}
+          </div>
+        )
       ) : null}
     </GrandArchiveInteractionWorkspaceContext.Provider>
   );

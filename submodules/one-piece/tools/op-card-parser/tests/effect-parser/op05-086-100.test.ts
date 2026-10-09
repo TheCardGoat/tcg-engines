@@ -74,14 +74,14 @@ describe("OP05-086 through OP05-100 parser regressions", () => {
     });
   });
 
-  test("builds both inclusive Dressrosa triggers for Riku Doldo III", () => {
+  test("builds both exact Dressrosa triggers for Riku Doldo III", () => {
     const action = {
       action: "modifyPower" as const,
       target: {
         player: "self" as const,
         zones: ["character" as const],
         count: { amount: 1 as const, upTo: true },
-        filters: [{ filter: "trait" as const, value: "Dressrosa", match: "includes" as const }],
+        filters: [{ filter: "trait" as const, value: "Dressrosa", match: "exact" as const }],
       },
       value: 2000,
       duration: "thisTurn" as const,
@@ -99,7 +99,7 @@ describe("OP05-086 through OP05-100 parser regressions", () => {
     });
   });
 
-  test("builds Lucci's ordered cost and both independent K.O. actions", () => {
+  test("builds Lucci's ordered cost and both target groups in one K.O.", () => {
     expect(
       buildCardEffects(
         "[On Play] You may place 3 cards from your trash at the bottom of your deck in any order: K.O. up to 1 of your opponent's Characters with a cost of 2 or less and up to 1 of your opponent's Characters with a cost of 1 or less.",
@@ -112,21 +112,21 @@ describe("OP05-086 through OP05-100 parser regressions", () => {
           actions: [
             {
               action: "ko",
-              target: {
-                player: "opponent",
-                zones: ["character"],
-                count: { amount: 1, upTo: true },
-                filters: [{ filter: "cost", comparison: "lte", value: 2 }],
-              },
-            },
-            {
-              action: "ko",
-              target: {
-                player: "opponent",
-                zones: ["character"],
-                count: { amount: 1, upTo: true },
-                filters: [{ filter: "cost", comparison: "lte", value: 1 }],
-              },
+              target: { player: "any", zones: ["character"], count: { amount: 2, upTo: true } },
+              targetGroups: [
+                {
+                  player: "opponent",
+                  zones: ["character"],
+                  count: { amount: 1, upTo: true },
+                  filters: [{ filter: "cost", comparison: "lte", value: 2 }],
+                },
+                {
+                  player: "opponent",
+                  zones: ["character"],
+                  count: { amount: 1, upTo: true },
+                  filters: [{ filter: "cost", comparison: "lte", value: 1 }],
+                },
+              ],
             },
           ],
           optional: true,

@@ -23,7 +23,7 @@ export const op17Brook091: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Elbaph Straw Hat Crew"],
+  traits: ["Elbaph", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     "If there is a Character with a cost of 12 or more, this Character gains +3000 power.\n[On Play] If there is a Character with a cost of 12 or more, your opponent trashes 1 card from their hand.",

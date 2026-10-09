@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op02Solitaire077 } from "../../../../../cards/src/cards/characters/op02-077-solitaire.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP02-077 Solitaire", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op02Solitaire077);
-  });
-});

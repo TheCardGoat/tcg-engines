@@ -29,9 +29,13 @@ export const heiheiCreatedByTheVine: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_c555754465584652a1243655312f4e11",
+    tcgPlayer: "704575",
+  },
   text: [
     {
-      title: "Botanical Remedy",
+      title: "BOTANICAL REMEDY",
       description:
         "Whenever one of your Floodborn characters quests, you may move 1 damage from chosen character to chosen opposing character.",
     },

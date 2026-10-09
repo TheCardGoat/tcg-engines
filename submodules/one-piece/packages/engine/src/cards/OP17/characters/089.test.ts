@@ -66,4 +66,24 @@ describe("OP17-089 Jaguar.D.Saul", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("search takes an eligible Elbaph card and trashes both unchosen revealed cards", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-089"], activeDon: 10, deck: ["OP17-089", "ST02-002", "ST02-006", "OP13-013"] },
+      {},
+    );
+    e.asSouth().play("OP17-089");
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.cardId === "OP17-089")?.cost,
+    ).toBe(16);
+    const step = e.pendingDecision("effectSearchSelection", "south").steps[0];
+    if (step.kind !== "selectEntity") throw new Error("Expected search");
+    const id = step.candidates.find((c) => c.publicInfo?.cardId === "OP17-089")!.ref.id;
+    e.resolveDecision("effectSearchSelection", { selectedIds: [id] }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["OP17-089"]);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toEqual([
+      "ST02-002",
+      "ST02-006",
+    ]);
+    expect(e.getView("south").players.south.deckCount).toBe(1);
+  });
 });

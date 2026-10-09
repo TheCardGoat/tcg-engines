@@ -115,7 +115,7 @@ describe("Rules topics: targeting and impossible actions", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("1-3-2-1: already-rested Characters are excluded from rest candidates", () => {
+  test("1-3-2-1: already-rested Characters may be selected without resting again", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [{ card: eb01MountainGod018, playedOnTurn: 0 }],
@@ -133,9 +133,9 @@ describe("Rules topics: targeting and impossible actions", () => {
     const step = decision.steps[0];
     expect(step?.kind).toBe("selectEntity");
     if (step?.kind !== "selectEntity") throw new Error("Expected rest target selection.");
-    expect(step.candidates.map((c) => c.ref.id)).not.toContain(otamaId);
+    expect(step.candidates.map((c) => c.ref.id)).toContain(otamaId);
 
-    south.chooseNoTargets();
+    south.chooseTargets(otamaId);
     south.chooseTargets(eb01MountainGod018);
 
     expect(
@@ -143,7 +143,7 @@ describe("Rules topics: targeting and impossible actions", () => {
     ).toBe(true);
   });
 
-  test("1-3-3 / targeting: a cannot-be-rested permanent keeps the card out of rest candidates", () => {
+  test("1-3-3 / targeting: a cannot-be-rested permanent prevents execution after selection", () => {
     const engine = OnePieceTestEngine.create(
       {
         hand: [op13NicoRobin032, op03OneTwoJango039],
@@ -165,10 +165,10 @@ describe("Rules topics: targeting and impossible actions", () => {
     const step = decision.steps[0];
     expect(step?.kind).toBe("selectEntity");
     if (step?.kind !== "selectEntity") throw new Error("Expected rest target selection.");
-    // Protected Otama is not offered as a rest target.
-    expect(step.candidates.map((c) => c.ref.id)).not.toContain(otamaId);
+    // Protected Otama can be selected, but the effect cannot rest her.
+    expect(step.candidates.map((c) => c.ref.id)).toContain(otamaId);
 
-    south.chooseNoTargets();
+    south.chooseTargets(otamaId);
     // Power step still resolves if a friendly Character exists — field empty
     // of south characters here, so decline power target.
     if (south.hasPendingChoice()) {

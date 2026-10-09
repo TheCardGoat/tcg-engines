@@ -2,6 +2,7 @@ import { useDraggable, useDroppable } from "@dnd-kit/core";
 import {
   IconBolt,
   IconClockPause,
+  IconMoonStars,
   IconShield,
   IconShieldOff,
   IconSkull,
@@ -15,9 +16,11 @@ import {
 } from "@tcg/protocol";
 import {
   useCallback,
+  useLayoutEffect,
   useId,
   useRef,
   useState,
+  useSyncExternalStore,
   type ComponentPropsWithoutRef,
   type CSSProperties,
   type FocusEvent,
@@ -26,7 +29,7 @@ import {
   type PointerEvent,
   type ReactNode,
 } from "react";
-import { AnimatedEntityNode } from "@tcg/simulator-ui";
+import { AnimatedEntityNode, useSuppressClickAfterDrag } from "@tcg/simulator-ui";
 import { useCardPreview, type CardPreviewDetails } from "../CardPreview/CardPreviewContext";
 import { useHasHover } from "../../../../lib/media-query";
 import { CardImage } from "./CardImage";
@@ -38,7 +41,6 @@ import { useMoveSelection, useMoveSelectionStateForSide } from "./MoveSelectionC
 import {
   PLAYER_SIDE_TO_ID,
   getGearAttachTargets,
-  getProgramSpatialTargets,
   interactionSubmissionToEngineAction,
   interactionViewAbilityIndexForCard,
   interactionViewActionHasCandidate,
@@ -56,8 +58,22 @@ import classes from "./Card.module.css";
 const GEAR_PEEK_PERCENT = 24;
 const GEAR_HOVER_FAN_SPREAD_PERCENT = 58;
 const GEAR_HOVER_FAN_ROTATION_DEGREES = 6;
+const CYBERPUNK_ASSET_BASE_URL = "https://cdn.tcg.online/public/cyberpunk";
 /** Sentinel side used when a card is rendered without engine awareness. */
 const NO_SIDE: Side = "player";
+
+type CyberpunkCardColor = NonNullable<CardProps["color"]>;
+
+function statFrameUrl(kind: "cost" | "power", color: CyberpunkCardColor | undefined) {
+  if (!color) return undefined;
+  const folder = kind === "cost" ? "colors" : "power";
+  return `${CYBERPUNK_ASSET_BASE_URL}/${folder}/${color}.svg`;
+}
+
+function formatStatValue(value: number | null | undefined): string {
+  if (value === null || value === undefined) return "";
+  return value >= 0 && value < 10 ? `0${value}` : String(value);
+}
 
 function cardKindFromType(cardType: EngineCardType | undefined): "leader" | "card" {
   return cardType === "legend" ? "leader" : "card";
@@ -82,7 +98,16 @@ export interface CardGearAttachment {
   hasSellTag?: boolean;
 }
 
+export type CardInteractionAppearance =
+  | "idle"
+  | "actionable"
+  | "target"
+  | "attackTarget"
+  | "selected";
+
 interface CardProps {
+  /** Share the authoritative V1 interaction presentation with alternate renderers. */
+  onInteractionAppearanceChange?: (cardId: string, appearance: CardInteractionAppearance) => void;
   imageUrl?: string;
   name?: string;
   definitionId?: string;
@@ -174,6 +199,7 @@ export function Card({
   activeEffects = [],
   disablePreview = false,
   onCardClick,
+  onInteractionAppearanceChange,
 }: CardProps) {
   const [powerMenuOpen, setPowerMenuOpen] = useState(false);
   const powerMenuCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -187,17 +213,13 @@ export function Card({
   // payment" mode and the one-shot arm apply to direct board interactions,
   // not just the context menu. Falls back to plain dispatch outside the
   // board's provider tree.
-  const dispatchCosted: NonNullable<typeof paymentSelection>["dispatchCostedAction"] = (
-    action,
-    onExecuted,
-  ) => {
+  const dispatchCosted: NonNullable<typeof paymentSelection>["dispatchCostedAction"] = (action) => {
     if (!paymentSelection) {
       if (!engineCtx) return false;
       const result = engineCtx.dispatch(action);
-      onExecuted?.(result);
       return result.success;
     }
-    return paymentSelection.dispatchCostedAction(action, onExecuted);
+    return paymentSelection.dispatchCostedAction(action);
   };
   const choiceSide = engineCtx?.humanSide ?? side ?? NO_SIDE;
   const choicePermission = useInteractionPermission(choiceSide, cardId ?? "");
@@ -229,17 +251,9 @@ export function Card({
   const selectedMoveState = useMoveSelectionStateForSide(side ?? NO_SIDE);
   const selectedMove = selectedMoveState?.moveId ?? null;
   const moveSelection = useMoveSelection();
-  const globalSelectedMoveState =
-    moveSelection.selection?.side === (engineCtx?.humanSide ?? NO_SIDE)
-      ? moveSelection.selection
-      : null;
   const attackSelection = useAttackSelectionState(side, cardId);
   const engineAware = Boolean(cardId && side && engineCtx);
-  const { activeSource, programTargets, gearTargets } = useDragDrop();
-  const globalSelectedSourcePermission = useInteractionPermission(
-    engineCtx?.humanSide ?? NO_SIDE,
-    globalSelectedMoveState?.sourceCardId ?? "",
-  );
+  const { activeSource, gearTargets } = useDragDrop();
   const selectedPlayCardSourceCandidate =
     selectedMove === "playCard" &&
     !selectedMoveState?.sourceCardId &&
@@ -284,28 +298,6 @@ export function Card({
     activeSource.cardType === "gear" &&
     cardId &&
     gearTargets.has(cardId);
-  const selectedProgramSpatialTargets =
-    globalSelectedMoveState?.moveId === "playCard" &&
-    globalSelectedMoveState.sourceCardId &&
-    globalSelectedSourcePermission.kind === "armable" &&
-    engineCtx
-      ? getProgramSpatialTargets(
-          {
-            matchState: engineCtx.matchState,
-            side: globalSelectedMoveState.side,
-            interactionView: engineCtx.interactionViews[globalSelectedMoveState.side],
-          },
-          globalSelectedMoveState.sourceCardId,
-        )
-      : [];
-  const selectedProgramSpatialTarget = Boolean(
-    globalSelectedMoveState?.moveId === "playCard" &&
-    globalSelectedMoveState.sourceCardId &&
-    cardId &&
-    selectedProgramSpatialTargets.includes(cardId),
-  );
-  const activeProgramSpatialTarget =
-    activeSource?.zone === "p-hand" && activeSource.cardId && cardId && programTargets.has(cardId);
   const isValidAttackDropTarget =
     engineAware &&
     acceptsDrop &&
@@ -320,20 +312,23 @@ export function Card({
       cardId,
     );
   const isValidGearDropTarget = engineAware && acceptsDrop && Boolean(activeGearAttachTarget);
-  const isValidProgramDropTarget =
-    engineAware && acceptsDrop && Boolean(activeProgramSpatialTarget);
   const paymentSelectionActive = paymentSelection?.paymentSelectionActive ?? false;
   const paymentEligible = Boolean(
     paymentSelectionActive && cardId && paymentSelection?.eligiblePaymentSourceIds.has(cardId),
   );
   const paymentSelected = Boolean(cardId && paymentSelection?.selectedPaymentSourceIds.has(cardId));
 
+  const isLegendAreaLegend = zone === "p-legendArea" && cardType === "legend";
+  const isLegalGoSoloSource =
+    isLegendAreaLegend &&
+    permission.kind === "armable" &&
+    permission.actionIds.some((actionId) => actionId === "goSolo");
   const draggable =
     !paymentSelectionActive &&
     zone !== undefined &&
     index !== undefined &&
     !faceDown &&
-    (!engineAware || permission.kind === "armable");
+    (!engineAware || (isLegendAreaLegend ? isLegalGoSoloSource : permission.kind === "armable"));
 
   const sourceId = draggable
     ? encodeCardSourceId({
@@ -359,23 +354,6 @@ export function Card({
       cardType,
     );
     if (attachTargets.length > 0) {
-      moveSelection.setSelection({
-        side: actionSide,
-        moveId: "playCard",
-        sourceCardId,
-        sourceCardType: cardType,
-      });
-      return;
-    }
-    const programTargets = getProgramSpatialTargets(
-      {
-        matchState: engineCtx.matchState,
-        side: actionSide,
-        interactionView: engineCtx.interactionViews[actionSide],
-      },
-      sourceCardId,
-    );
-    if (programTargets.length > 0) {
       moveSelection.setSelection({
         side: actionSide,
         moveId: "playCard",
@@ -439,7 +417,7 @@ export function Card({
         selectedAbilityIndex ??
         interactionViewAbilityIndexForCard(engineCtx.interactionViews[actionSide], sourceCardId);
       if (abilityIndex !== null) {
-        engineCtx.dispatch({
+        dispatchCosted({
           type: "activateAbility",
           cardId: sourceCardId,
           abilityIndex,
@@ -467,36 +445,6 @@ export function Card({
       attachToId: cardId,
       as: PLAYER_SIDE_TO_ID[side],
     });
-    moveSelection.clearSelection();
-    return true;
-  };
-
-  const executeProgramTarget = () => {
-    if (
-      !engineCtx ||
-      !globalSelectedMoveState?.sourceCardId ||
-      globalSelectedMoveState.moveId !== "playCard" ||
-      !selectedProgramSpatialTarget ||
-      !cardId
-    ) {
-      return false;
-    }
-    const asPlayer = PLAYER_SIDE_TO_ID[globalSelectedMoveState.side];
-    // The resolveEffectTarget follow-up must wait for a gated play: it runs
-    // after direct dispatches immediately, and after the payment modal is
-    // confirmed otherwise.
-    dispatchCosted(
-      {
-        type: "playCard",
-        cardId: globalSelectedMoveState.sourceCardId,
-        as: asPlayer,
-      },
-      (result) => {
-        if (result.success) {
-          engineCtx.dispatch({ type: "resolveEffectTarget", targetIds: [cardId], as: asPlayer });
-        }
-      },
-    );
     moveSelection.clearSelection();
     return true;
   };
@@ -535,7 +483,11 @@ export function Card({
     if (!action) {
       return false;
     }
-    engineCtx.dispatch(action);
+    if (action.type === "resolveCardToPlay" && !action.pass) {
+      dispatchCosted(action);
+    } else {
+      engineCtx.dispatch(action);
+    }
     return true;
   };
 
@@ -563,9 +515,6 @@ export function Card({
       return;
     }
     if (executeSelectedTarget()) {
-      return;
-    }
-    if (executeProgramTarget()) {
       return;
     }
     if (selectedMove && selectedMoveIsLegal && cardId && side && permission.kind === "armable") {
@@ -624,13 +573,11 @@ export function Card({
           ? "selectable"
           : selectedGearAttachTarget
             ? "selectable"
-            : selectedProgramSpatialTarget
-              ? "selectable"
-              : selectedMove
-                ? selectedMoveIsLegal
-                  ? "selectable"
-                  : "inert"
-                : permission.kind
+            : selectedMove
+              ? selectedMoveIsLegal
+                ? "selectable"
+                : "inert"
+              : permission.kind
     : "legacy";
 
   const handleKeyDown = (ev: KeyboardEvent<HTMLDivElement>) => {
@@ -704,6 +651,7 @@ export function Card({
           : "";
 
   const gearCount = gear.length;
+  const hasLegendGear = gearCount > 0 && (zone === "p-legendArea" || zone === "opp-legendArea");
   const powerEffects = [
     ...activeEffects
       .filter((effect) => effect.modifierLabel)
@@ -755,13 +703,30 @@ export function Card({
   const statusBadges = buildStatusBadges(activeEffects);
   const statusBadgeRules = new Set<string>(statusBadges.map((badge) => badge.rule));
   const visibleAbilityBadges = abilityBadges.filter((badge) => !statusBadgeRules.has(badge.rule));
+  // Spent reads as a rail badge (moon) instead of a printed "SPENT" strip; it
+  // is field-only because other lanes communicate the state by rotating.
+  const isFieldCard = zone === "p-field" || zone === "opp-field";
+  const spentBadge = tapped
+    ? {
+        id: "spent",
+        rule: "spent" as const,
+        label: "Spent: readies during your next ready phase",
+        Icon: IconMoonStars,
+      }
+    : null;
+  const railBadges = [
+    ...(isFieldCard && spentBadge ? [spentBadge] : []),
+    ...visibleAbilityBadges,
+    ...statusBadges,
+  ];
   const hasModifiedCost =
     cost !== undefined &&
     cost !== null &&
     effectiveCost !== undefined &&
     effectiveCost !== null &&
     effectiveCost !== cost;
-  const showCostBadge = !faceDown && imageUrl && hasModifiedCost;
+  const showCostBadge =
+    !faceDown && imageUrl && hasModifiedCost && zone !== "p-field" && zone !== "opp-field";
   const costAriaLabel =
     cost !== undefined && cost !== null && hasModifiedCost
       ? `${cost} printed cost, ${effectiveCost} current cost`
@@ -773,6 +738,18 @@ export function Card({
   );
   const isSelected =
     armed || attackSelection.isSelectedAttacker || effectCardTargetSelected || paymentSelected;
+  const interactionAppearance: CardInteractionAppearance = isSelected
+    ? "selected"
+    : isValidAttackDropTarget || attackSelection.canSelectFightTarget
+      ? "attackTarget"
+      : isValidGearDropTarget || interactionState === "selectable" || activeTriggerSource
+        ? "target"
+        : interactionState === "armable"
+          ? "actionable"
+          : "idle";
+  useLayoutEffect(() => {
+    if (cardId) onInteractionAppearanceChange?.(cardId, interactionAppearance);
+  }, [cardId, interactionAppearance, onInteractionAppearanceChange]);
   const isHandCard = zone === "p-hand" || zone === "opp-hand";
   const powerAriaLabel =
     power !== undefined && power !== null && hasModifiedPower
@@ -831,7 +808,7 @@ export function Card({
           hasSellTag,
         };
   const hoverPreviewable =
-    !disablePreview && hasHover && Boolean(imageUrl) && Boolean(previewDetails);
+    !activeSource && !disablePreview && hasHover && Boolean(imageUrl) && Boolean(previewDetails);
   const showHoverPreview = useCallback(() => {
     if (!hoverPreviewable || !imageUrl) return;
     showCardPreview({
@@ -845,6 +822,7 @@ export function Card({
 
   return (
     <CardDragDropShell
+      entityId={cardId}
       sourceId={sourceId}
       droppableId={droppableId}
       draggable={draggable}
@@ -856,17 +834,16 @@ export function Card({
         peeked && faceDown ? classes.peekedFaceDown : "",
         isValidAttackDropTarget ? classes.validAttackDropTarget : "",
         isValidGearDropTarget ? classes.validGearDropTarget : "",
-        isValidProgramDropTarget ? classes.validProgramDropTarget : "",
         paymentEligible ? classes.paymentEligible : "",
         paymentSelected ? classes.paymentSelected : "",
       ]
         .filter(Boolean)
         .join(" ")}
       data-interaction-state={interactionState}
+      data-interaction-appearance={interactionAppearance}
       data-testid="card"
       data-entity-id={cardId}
       data-sim-entity-id={cardId}
-      data-sim-animation-orientation-target=""
       data-card-kind={cardKindFromType(cardType)}
       data-zone={zone}
       data-zone-index={index}
@@ -894,13 +871,7 @@ export function Card({
       data-choice-type={selectablePermission?.permission.interaction.actionId}
       data-choice-target-kind={choiceTargetKind ?? undefined}
       data-drop-hint={
-        isValidAttackDropTarget
-          ? "attackUnit"
-          : isValidGearDropTarget
-            ? "attachGear"
-            : isValidProgramDropTarget
-              ? "programTarget"
-              : undefined
+        isValidAttackDropTarget ? "attackUnit" : isValidGearDropTarget ? "attachGear" : undefined
       }
       {...publicCardAttrs}
       role={interactionState === "selectable" ? "button" : undefined}
@@ -919,30 +890,40 @@ export function Card({
       onFocus={hoverPreviewable ? showHoverPreview : undefined}
       onBlur={hoverPreviewable ? () => hideCardPreview() : undefined}
     >
-      {gear.map((g, i) => {
-        const offsetPercent = (i + 1) * GEAR_PEEK_PERCENT;
-        const fanCenterIndex = i - (gearCount - 1) / 2;
-        const fanOffsetPercent = fanCenterIndex * GEAR_HOVER_FAN_SPREAD_PERCENT;
-        const fanRotationDegrees = fanCenterIndex * GEAR_HOVER_FAN_ROTATION_DEGREES;
-        return (
-          <AttachedGear
-            key={`${g.cardId ?? g.name}-${i}`}
-            gear={g}
-            side={side}
-            zone={zone}
-            attachedToId={cardId}
-            offsetPercent={offsetPercent}
-            fanOffsetPercent={fanOffsetPercent}
-            fanRotationDegrees={fanRotationDegrees}
-            zIndex={gearCount - i}
-          />
-        );
-      })}
       <div
-        className={`${classes.unit} ${tapped && rotateWhenTapped ? classes.tappedUnit : ""}`}
+        className={hasLegendGear ? classes.legendGearStrip : classes.gearLayer}
+        data-testid={hasLegendGear ? "legend-gear-strip" : undefined}
+        data-gear-count={hasLegendGear ? gearCount : undefined}
+      >
+        {gear.map((g, i) => {
+          const offsetPercent = (i + 1) * GEAR_PEEK_PERCENT;
+          const fanCenterIndex = i - (gearCount - 1) / 2;
+          const fanOffsetPercent = fanCenterIndex * GEAR_HOVER_FAN_SPREAD_PERCENT;
+          const fanRotationDegrees = fanCenterIndex * GEAR_HOVER_FAN_ROTATION_DEGREES;
+          return (
+            <AttachedGear
+              key={`${g.cardId ?? g.name}-${i}`}
+              gear={g}
+              side={side}
+              zone={zone}
+              attachedToId={cardId}
+              offsetPercent={offsetPercent}
+              fanOffsetPercent={fanOffsetPercent}
+              fanRotationDegrees={fanRotationDegrees}
+              selectionOffsetPercent={(i + 1) * 118}
+              zIndex={gearCount - i}
+              presentation={hasLegendGear ? "legend" : "stack"}
+            />
+          );
+        })}
+      </div>
+      <div
+        className={`${classes.unit} ${(tapped || paymentSelected) && rotateWhenTapped ? classes.tappedUnit : ""}`}
         data-sim-animation-face-target=""
+        data-sim-animation-orientation-target=""
       >
         <CardImage
+          side={side}
           imageUrl={imageUrl}
           faceDown={faceDown && !peeked}
           cardType={cardType}
@@ -955,14 +936,24 @@ export function Card({
           <div
             className={classes.costBadge}
             data-modified="true"
+            data-color={color}
+            data-has-frame={Boolean(color)}
             aria-label={costAriaLabel}
             tabIndex={0}
             onClick={stopCostClick}
             onPointerDown={stopCostPointer}
             onPointerUp={stopCostPointer}
           >
-            <span className={classes.costLabel}>COST</span>
-            <span className={classes.costValue}>{effectiveCost}</span>
+            {statFrameUrl("cost", color) ? (
+              <img
+                className={classes.statFrame}
+                src={statFrameUrl("cost", color)}
+                alt=""
+                draggable={false}
+                aria-hidden="true"
+              />
+            ) : null}
+            <span className={classes.costValue}>{formatStatValue(effectiveCost)}</span>
             {costEffects.length > 0 ? (
               <div className={classes.costMenu} aria-label="Cost effects">
                 {costEffects.map((effect) => (
@@ -975,12 +966,9 @@ export function Card({
             ) : null}
           </div>
         ) : null}
-        {!isHandCard &&
-        !faceDown &&
-        imageUrl &&
-        visibleAbilityBadges.length + statusBadges.length > 0 ? (
+        {!isHandCard && !faceDown && imageUrl && railBadges.length > 0 ? (
           <div className={classes.abilityRail} aria-label="Card abilities and effects">
-            {[...visibleAbilityBadges, ...statusBadges].map((badge) => {
+            {railBadges.map((badge) => {
               const Icon = badge.Icon;
               return (
                 <span
@@ -1004,6 +992,8 @@ export function Card({
             className={classes.powerBadge}
             data-modified={hasPowerEffect ? "true" : "false"}
             data-open={hasPowerEffect && powerMenuOpen ? "true" : "false"}
+            data-color={color}
+            data-has-frame={Boolean(color)}
             aria-label={powerAriaLabel}
             aria-expanded={hasPowerEffect ? powerMenuOpen : undefined}
             tabIndex={hasPowerEffect ? 0 : undefined}
@@ -1015,8 +1005,16 @@ export function Card({
             onPointerDown={stopPowerPointer}
             onPointerUp={stopPowerPointer}
           >
-            <span className={classes.powerLabel}>PWR</span>
-            <span className={classes.powerValue}>{effectivePower}</span>
+            {statFrameUrl("power", color) ? (
+              <img
+                className={classes.statFrame}
+                src={statFrameUrl("power", color)}
+                alt=""
+                draggable={false}
+                aria-hidden="true"
+              />
+            ) : null}
+            <span className={classes.powerValue}>{formatStatValue(effectivePower)}</span>
             {hasPowerEffect ? (
               <div
                 className={classes.powerMenu}
@@ -1053,6 +1051,7 @@ export function Card({
 }
 
 interface CardDragDropShellProps extends ComponentPropsWithoutRef<"div"> {
+  readonly entityId?: string;
   readonly sourceId: string;
   readonly droppableId: string;
   readonly draggable: boolean;
@@ -1070,6 +1069,7 @@ interface CardDragDropShellProps extends ComponentPropsWithoutRef<"div"> {
  * the already-rendered card subtree because `children` is unchanged.
  */
 function CardDragDropShell({
+  entityId,
   sourceId,
   droppableId,
   draggable,
@@ -1077,8 +1077,22 @@ function CardDragDropShell({
   className,
   children,
   style,
+  onClickCapture,
+  onPointerDownCapture,
   ...elementProps
 }: CardDragDropShellProps) {
+  const { motion } = useDragDrop();
+  const session = useSyncExternalStore(
+    motion?.subscribe ?? subscribeNoDrag,
+    motion?.getSnapshot ?? noDrag,
+    noDrag,
+  );
+  const ownsVisual = Boolean(
+    session &&
+    (entityId
+      ? session.source.cardId === entityId
+      : encodeCardSourceId(session.source) === sourceId),
+  );
   const instanceId = useId();
   const drag = useDraggable({
     id: sourceId || `inactive-drag:${instanceId}`,
@@ -1090,6 +1104,15 @@ function CardDragDropShell({
   });
   const setDragNodeRef = drag.setNodeRef;
   const setDropNodeRef = drop.setNodeRef;
+  const { resetOnPointerDown, suppressOnClick } = useSuppressClickAfterDrag(drag.isDragging);
+  const handlePointerDownCapture = (event: PointerEvent<HTMLDivElement>) => {
+    resetOnPointerDown();
+    onPointerDownCapture?.(event);
+  };
+  const handleClickCapture = (event: MouseEvent<HTMLDivElement>) => {
+    if (suppressOnClick(event)) return;
+    onClickCapture?.(event);
+  };
   const setNodeRef = useCallback(
     (node: HTMLDivElement | null) => {
       setDragNodeRef(node);
@@ -1102,10 +1125,12 @@ function CardDragDropShell({
     <div
       ref={setNodeRef}
       className={`${className ?? ""}${drop.isOver ? ` ${dropOverClassName}` : ""}`}
-      style={drag.isDragging ? { ...style, opacity: 0 } : style}
+      style={drag.isDragging || ownsVisual ? { ...style, opacity: 0 } : style}
       {...elementProps}
       {...(draggable ? drag.listeners : undefined)}
       {...(draggable ? drag.attributes : undefined)}
+      onPointerDownCapture={handlePointerDownCapture}
+      onClickCapture={handleClickCapture}
     >
       {children}
     </div>
@@ -1129,7 +1154,9 @@ function AttachedGear({
   offsetPercent,
   fanOffsetPercent,
   fanRotationDegrees,
+  selectionOffsetPercent,
   zIndex,
+  presentation = "stack",
 }: {
   gear: CardGearAttachment;
   side?: Side;
@@ -1138,7 +1165,9 @@ function AttachedGear({
   offsetPercent: number;
   fanOffsetPercent: number;
   fanRotationDegrees: number;
+  selectionOffsetPercent: number;
   zIndex: number;
+  presentation?: "stack" | "legend";
 }) {
   const engineCtx = useEngineOptional();
   const choiceSide = engineCtx?.humanSide ?? side ?? NO_SIDE;
@@ -1190,58 +1219,89 @@ function AttachedGear({
     resolveGearTarget();
   };
 
+  const gearPreviewDetails: CardPreviewDetails = {
+    name: gear.name,
+    cardType: gear.cardType,
+    cost: gear.cost,
+    effectiveCost: gear.effectiveCost,
+    power: gear.power,
+    effectivePower: gear.effectivePower,
+    classifications: gear.classifications,
+    keywords: gear.keywords,
+    rules: [
+      ...(gear.keywords?.map(formatPreviewKeyword) ?? []),
+      ...(gear.rulesText ? [gear.rulesText] : []),
+      ...(gear.effectiveRules
+        ?.filter((rule) => !(gear.keywords ?? []).includes(rule))
+        .map((rule) => `Effective: ${formatPreviewKeyword(rule)}.`) ?? []),
+    ],
+    costEffects: gear.costEffects,
+    activeEffects: gear.activeEffects,
+    hasSellTag: gear.hasSellTag,
+  };
+  const { show: showGearPreview, hide: hideGearPreview } = useCardPreview();
   const gearBody = (
     <>
-      <CardImage
-        imageUrl={gear.imageUrl}
-        alt={gear.name}
-        previewDetails={{
-          name: gear.name,
-          cardType: gear.cardType,
-          cost: gear.cost,
-          effectiveCost: gear.effectiveCost,
-          power: gear.power,
-          effectivePower: gear.effectivePower,
-          classifications: gear.classifications,
-          keywords: gear.keywords,
-          rules: [
-            ...(gear.keywords?.map(formatPreviewKeyword) ?? []),
-            ...(gear.rulesText ? [gear.rulesText] : []),
-            ...(gear.effectiveRules
-              ?.filter((rule) => !(gear.keywords ?? []).includes(rule))
-              .map((rule) => `Effective: ${formatPreviewKeyword(rule)}.`) ?? []),
-          ],
-          costEffects: gear.costEffects,
-          activeEffects: gear.activeEffects,
-          hasSellTag: gear.hasSellTag,
-        }}
-      />
-      {selectable || correctionEnabled ? (
-        <button
-          type="button"
-          className={classes.gearHitTarget}
-          aria-label={correctionEnabled ? `${gear.name} board correction` : `Select ${gear.name}`}
-          data-card-id={gear.cardId}
-          data-instance-id={gear.cardId}
-          data-definition-id={gear.definitionId}
-          data-card-name={gear.name}
-          data-card-type={gear.cardType}
-          data-choice-eligible="true"
-          data-choice-side={selectablePermission?.side}
-          data-choice-type={selectablePermission?.permission.interaction.actionId}
-          data-choice-label="Select"
-          onClick={handleGearClick}
-        />
-      ) : null}
+      {/* The rider carries the cascade offset, so its bottom peek band is the
+          gear's visible sliver; the visual lifts out of it on hover while the
+          sliver stays put under the cursor. */}
+      <div className={classes.gearRider}>
+        <div className={classes.gearVisual}>
+          <CardImage
+            imageUrl={gear.imageUrl}
+            alt={gear.name}
+            inspectOnTap
+            previewDetails={gearPreviewDetails}
+          />
+          {selectable || correctionEnabled ? (
+            <button
+              type="button"
+              className={classes.gearHitTarget}
+              aria-label={
+                correctionEnabled ? `${gear.name} board correction` : `Select ${gear.name}`
+              }
+              data-card-id={gear.cardId}
+              data-instance-id={gear.cardId}
+              data-definition-id={gear.definitionId}
+              data-card-name={gear.name}
+              data-card-type={gear.cardType}
+              data-choice-eligible="true"
+              data-choice-side={selectablePermission?.side}
+              data-choice-type={selectablePermission?.permission.interaction.actionId}
+              data-choice-label="Select"
+              onClick={handleGearClick}
+            />
+          ) : null}
+        </div>
+        {presentation === "stack" && (
+          <div
+            className={classes.gearStrip}
+            onMouseEnter={() =>
+              showGearPreview({
+                imageUrl: gear.imageUrl,
+                face: "public",
+                alt: gear.name ?? "",
+                details: gearPreviewDetails,
+              })
+            }
+            onMouseLeave={() => hideGearPreview()}
+          />
+        )}
+      </div>
     </>
   );
-  const gearClassName = [classes.gear, selectable ? classes.selectable : ""]
+  const gearClassName = [
+    classes.gear,
+    presentation === "legend" ? classes.legendGearCard : "",
+    selectable ? classes.selectable : "",
+  ]
     .filter(Boolean)
     .join(" ");
   const gearStyle = {
     "--gear-offset": `${offsetPercent}%`,
     "--gear-fan-x": `${fanOffsetPercent}%`,
     "--gear-fan-rotation": `${fanRotationDegrees}deg`,
+    "--gear-selection-x": `${selectionOffsetPercent}%`,
     "--gear-z-index": zIndex,
   } as CSSProperties;
   const gearAttrs = {
@@ -1257,6 +1317,7 @@ function AttachedGear({
     "data-sim-entity-id": gear.cardId,
     "data-choice-side": selectablePermission?.side,
     "data-choice-type": selectablePermission?.permission.interaction.actionId,
+    "data-choice-eligible": selectable ? "true" : undefined,
   };
   const zoneRef = attachedGearZoneRef(zone, side);
   if (gear.cardId && zoneRef) {
@@ -1330,6 +1391,14 @@ function buildAbilityBadges(
           Icon: IconSwordOff,
         }
       : null,
+    has("canAttackOnPlayedTurnAgainstUnits")
+      ? {
+          id: "canAttackOnPlayedTurnAgainstUnits",
+          rule: "canAttackOnPlayedTurnAgainstUnits" as const,
+          label: "Can attack rival Units on the turn it's played",
+          Icon: IconSwords,
+        }
+      : null,
     has("mustAttack")
       ? {
           id: "mustAttack",
@@ -1374,6 +1443,14 @@ function buildStatusBadges(effects: readonly CardActiveEffectView[]) {
         .filter(Boolean),
     ),
   ];
+  const attackRiskSources = [
+    ...new Set(
+      effects
+        .filter((effect) => effect.defeatIfAttacksAtEndOfTurn)
+        .map((effect) => effect.sourceName)
+        .filter(Boolean),
+    ),
+  ];
   return [
     mustAttackSources.length > 0
       ? {
@@ -1391,9 +1468,20 @@ function buildStatusBadges(effects: readonly CardActiveEffectView[]) {
           Icon: IconSkull,
         }
       : null,
+    attackRiskSources.length > 0
+      ? {
+          id: "defeatIfAttacksEndTurn",
+          rule: "defeatIfAttacksEndTurn" as const,
+          label: `If this Unit steals or fights, defeat it at end of turn. Source: ${attackRiskSources.join(", ")}`,
+          Icon: IconSkull,
+        }
+      : null,
   ].filter((badge): badge is NonNullable<typeof badge> => Boolean(badge));
 }
 
 function signedNumber(value: number): string {
   return value > 0 ? `+${value}` : `${value}`;
 }
+
+const noDrag = () => null;
+const subscribeNoDrag = () => () => {};

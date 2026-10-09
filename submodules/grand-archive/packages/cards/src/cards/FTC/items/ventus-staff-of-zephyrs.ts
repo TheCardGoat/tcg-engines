@@ -45,6 +45,10 @@ export const ventusStaffOfZephyrs: GrandArchiveCard<GrandArchiveAbilityDefinitio
                     },
                     {
                       kind: "subtype",
+                      oneOf: ["MAGE"],
+                    },
+                    {
+                      kind: "subtype",
                       oneOf: ["SPELL"],
                     },
                   ],

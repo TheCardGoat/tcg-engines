@@ -30,7 +30,7 @@ export const op01Crocodile062: LeaderCard = {
   setId: "OP01",
   power: 5000,
   life: 4,
-  traits: ["Baroque Works The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
   attribute: "special",
   effect:
     "[DON!! x1] When you activate an Event, you may draw 1 card if you have 4 or less cards in your hand and haven't drawn a card using this Leader's effect during this turn.",

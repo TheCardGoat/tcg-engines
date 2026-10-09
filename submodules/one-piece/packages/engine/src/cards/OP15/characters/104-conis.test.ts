@@ -45,4 +45,25 @@ describe("OP15-104 Conis", () => {
     expect(south.deckCount).toBe(deckBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("Life Trigger draws two and trashes only one even without lower Life", () => {
+    const engine = OnePieceTestEngine.create(
+      { life: [op15Conis104, "OP12-013", "OP12-013"], deck: 5 },
+      { life: 1 },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    engine.declareAttack(engine.leader("north"), engine.leader("south"), "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "south");
+    const choice = engine.pendingDecision("effectTrashFromHandSelection", "south").steps[0];
+    if (choice?.kind !== "selectEntity") throw new Error("Expected hand discard");
+    engine.resolveDecision(
+      "effectTrashFromHandSelection",
+      { selectedIds: [choice.candidates[0]!.ref.id] },
+      "south",
+    );
+    const view = engine.getView("south");
+    expect(view.players.south.handCount).toBe(1);
+    expect(view.players.south.deckCount).toBe(3);
+    expect(view.players.south.trash).toHaveLength(2);
+    expect(view.players.south.lifeCount).toBe(2);
+  });
 });

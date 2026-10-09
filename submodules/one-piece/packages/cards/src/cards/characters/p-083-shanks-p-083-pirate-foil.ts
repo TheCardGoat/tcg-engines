@@ -33,7 +33,7 @@ export const prb02ShanksP083PirateFoil083: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["The Four Emperors Red-Haired Pirates"],
+  traits: ["The Four Emperors", "Red-Haired Pirates"],
   attribute: "slash",
   effect:
     "[DON!!x1] [When Attacking] You may trash 1 Character card from your hand: Give up to 1 of your opponent's Characters -1000 power during this turn. Then, draw 1 card.",

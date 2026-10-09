@@ -67,6 +67,26 @@ describe("OP06-116 Reject", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
+  test.each([0, 2])(
+    "damage option does not take own Life when opponent has %i Life",
+    (opponentLife) => {
+      const engine = OnePieceTestEngine.create(
+        { hand: [op06Reject116], life: [eb01Fourtricks025, eb01Doma005], activeDon: 4 },
+        { life: opponentLife },
+      );
+      const ownLifeId = engine.findCardInZone("south", "life", eb01Fourtricks025);
+      engine.playCard(op06Reject116);
+      engine.resolveDecision("effectActionChoice", { optionId: "1" }, "south");
+      const view = engine.getView("south");
+      expect(view.players.north.lifeCount).toBe(opponentLife);
+      expect(view.players.south.lifeCount).toBe(2);
+      expect(view.players.south.hand.map((card) => card.instanceId)).not.toContain(ownLifeId);
+      expect(view.players.south.activeDon).toBe(0);
+      expect(view.status).toBe("active");
+      expect(view.prompts).toHaveLength(0);
+    },
+  );
+
   test("Life Trigger draws one card without paying the Main Event cost", () => {
     const engine = OnePieceTestEngine.create(
       {

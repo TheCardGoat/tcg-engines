@@ -63,15 +63,22 @@ export const automatonForgewarden: GrandArchiveCard<GrandArchiveAbilityDefinitio
                 property: "power",
                 operation: "add",
                 amount: {
-                  kind: "count",
-                  collection: {
-                    zones: ["field"],
-                    player: "controller",
-                    filter: {
-                      kind: "token",
-                      value: true,
+                  kind: "calculate",
+                  operator: "minimum",
+                  operands: [
+                    {
+                      kind: "count",
+                      collection: {
+                        zones: ["field"],
+                        player: "controller",
+                        filter: {
+                          kind: "token",
+                          value: true,
+                        },
+                      },
                     },
-                  },
+                    3,
+                  ],
                 },
               },
             },
@@ -94,15 +101,22 @@ export const automatonForgewarden: GrandArchiveCard<GrandArchiveAbilityDefinitio
                 property: "life",
                 operation: "add",
                 amount: {
-                  kind: "count",
-                  collection: {
-                    zones: ["field"],
-                    player: "controller",
-                    filter: {
-                      kind: "token",
-                      value: true,
+                  kind: "calculate",
+                  operator: "minimum",
+                  operands: [
+                    {
+                      kind: "count",
+                      collection: {
+                        zones: ["field"],
+                        player: "controller",
+                        filter: {
+                          kind: "token",
+                          value: true,
+                        },
+                      },
                     },
-                  },
+                    3,
+                  ],
                 },
               },
             },

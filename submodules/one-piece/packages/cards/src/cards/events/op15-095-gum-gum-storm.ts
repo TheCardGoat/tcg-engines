@@ -48,7 +48,7 @@ export const op15GumGumStorm095: EventCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

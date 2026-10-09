@@ -38,7 +38,7 @@ export const op06Shanks007: CharacterCard = {
   setId: "OP06",
   cost: 10,
   power: 12000,
-  traits: ["FILM The Four Emperors Red-Haired Pirates"],
+  traits: ["FILM", "The Four Emperors", "Red-Haired Pirates"],
   attribute: "slash",
 
   effect: "[On play] K.O. up to 1 of your opponent's Characters with 10000 power or less.",

@@ -14,6 +14,10 @@ vi.mock("../CardPreview/CardPreviewContext", () => ({
   useCardPreview: () => preview,
 }));
 
+vi.mock("../../../../lib/media-query", () => ({
+  useHasHover: () => false,
+}));
+
 vi.mock("../../engine/zoneViews", () => ({
   useCardView: () => null,
   useCardViewByName: () => ({
@@ -46,10 +50,15 @@ describe("CardNameToken", () => {
     preview.show.mockReset();
   });
 
-  test("opens the card preview when tapped", () => {
-    render(<CardNameToken fallbackName="Caliber: Totentanz's Top Dog" />);
+  test("opens the card inspector without activating an enclosing choice when tapped", () => {
+    const enclosingChoice = vi.fn();
+    render(
+      <button type="button" onClick={enclosingChoice}>
+        <CardNameToken fallbackName="Caliber: Totentanz's Top Dog" />
+      </button>,
+    );
 
-    fireEvent.click(screen.getByRole("button", { name: "View Caliber: Totentanz's Top Dog" }));
+    fireEvent.click(screen.getByRole("button", { name: "Inspect Caliber: Totentanz's Top Dog" }));
 
     expect(preview.show).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -58,5 +67,6 @@ describe("CardNameToken", () => {
         face: "public",
       }),
     );
+    expect(enclosingChoice).not.toHaveBeenCalled();
   });
 });

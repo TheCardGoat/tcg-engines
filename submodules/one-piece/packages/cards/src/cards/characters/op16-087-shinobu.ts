@@ -36,11 +36,11 @@ export const op16Shinobu087: CharacterCard = {
             cost: "trashThisCard",
           },
         ],
-        conditions: [
+        postCostConditions: [
           {
             condition: "leaderTrait",
             trait: "Land of Wano",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -53,7 +53,7 @@ export const op16Shinobu087: CharacterCard = {
             action: "modifyCost",
             target: {
               player: "self",
-              zones: ["character"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
                 upTo: true,

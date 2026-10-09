@@ -44,6 +44,10 @@ export const veltechPresidentialCard: GrandArchiveCard<GrandArchiveAbilityDefini
               kind: "rule-modification",
               mode: "modify-cost",
               action: "activate",
+              subject: {
+                kind: "player",
+                player: "controller",
+              },
               filter: {
                 kind: "subtype",
                 oneOf: ["VELTECH"],

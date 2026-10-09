@@ -1,9 +1,38 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb01Doma005, op03Brannew089, op03Vergo079 } from "@tcg/op-cards";
+import {
+  eb01Doma005,
+  op03Brannew089,
+  op03Vergo079,
+  op03BellMere051,
+  op11Bins011,
+} from "@tcg/op-cards";
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP03-089 Brannew", () => {
+  test("excludes Former Navy and Neo Navy while accepting a Navy card with another type", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [op03Brannew089],
+      deck: [op03Vergo079, op03BellMere051, op11Bins011, eb01Doma005],
+      activeDon: op03Brannew089.cost,
+    });
+    const navyId = engine.findCardInZone("south", "deck", op03Vergo079);
+    const formerId = engine.findCardInZone("south", "deck", op03BellMere051);
+    const neoId = engine.findCardInZone("south", "deck", op11Bins011);
+    engine.playCard(op03Brannew089, "south");
+    const step = engine.pendingDecision("effectSearchSelection", "south").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected Brannew search.");
+    expect(step.candidates.find((candidate) => candidate.ref.id === navyId)?.legal).toBe(true);
+    expect(step.candidates.find((candidate) => candidate.ref.id === formerId)?.legal).toBe(false);
+    expect(step.candidates.find((candidate) => candidate.ref.id === neoId)?.legal).toBe(false);
+    engine.resolveDecision("effectSearchSelection", { selectedIds: [navyId] }, "south");
+    const view = engine.getView("south");
+    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(navyId);
+    expect(view.players.south.trash.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining([formerId, neoId]),
+    );
+  });
+
   test("finds an included Navy card other than every Brannew, then trashes the looked remainder", () => {
     const engine = OnePieceTestEngine.create({
       hand: [op03Brannew089],

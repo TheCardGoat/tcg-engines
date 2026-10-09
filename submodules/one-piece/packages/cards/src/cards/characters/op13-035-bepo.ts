@@ -22,7 +22,7 @@ export const op13Bepo035: CharacterCard = {
   setId: "OP13",
   cost: 5,
   power: 7000,
-  traits: ["FILM Heart Pirates Minks"],
+  traits: ["Minks", "FILM", "Heart Pirates"],
   attribute: "strike",
   effect: "[End of Your Turn] Set this Character or up to 1 of your DON!! cards as active.",
   effects: {

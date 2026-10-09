@@ -23,7 +23,7 @@ export const op13Brook034: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["FILM Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     '[On Play] If your Leader has the "FILM" or "Straw Hat Crew" type, set up to 1 of your DON!! cards as active.',
@@ -39,12 +39,12 @@ export const op13Brook034: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "FILM",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "leaderTrait",
                 trait: "Straw Hat Crew",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

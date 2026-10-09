@@ -23,7 +23,7 @@ export const op11Aladine024: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["The Sun Pirates Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island", "The Sun Pirates"],
   attribute: "slash",
   effect:
     'When this Character is K.O.\'d by your opponent\'s effect, you may trash 1 card from your hand and rest 1 of your DON!! cards. If you do, play up to 1 "Fish-Man" or "Merfolk" type Character card with a cost of 6 or less from your hand.',
@@ -46,8 +46,8 @@ export const op11Aladine024: CharacterCard = {
               {
                 filter: "anyOf",
                 filters: [
-                  { filter: "trait", value: "Fish-Man", match: "includes" },
-                  { filter: "trait", value: "Merfolk", match: "includes" },
+                  { filter: "trait", value: "Fish-Man", match: "exact" },
+                  { filter: "trait", value: "Merfolk", match: "exact" },
                 ],
               },
               { filter: "cardCategory", value: "character" },

@@ -1,0 +1,22 @@
+{
+  "adapterVersion": "2",
+  "candidateId": "meta-v3",
+  "cardCatalogHash": "fnv1a32:de23a4df",
+  "changes": {},
+  "engineRevision": "fnv1a32:c8337234",
+  "evaluation": {
+    "batchSize": 3,
+    "confidenceLevel": 0.95,
+    "maximumBlocks": 12,
+    "maximumCellRegression": 0,
+    "minimumBlocks": 12,
+    "minimumMeanImprovement": 0,
+    "seedBase": "alpha-clash-meta-holdout-v2",
+    "suiteId": "meta"
+  },
+  "game": "alpha-clash",
+  "hypothesis": "Play and attach before attacks for Contenders with a Void replay ability; retain attack-first order for the other Contenders.",
+  "informationPolicy": "oracle",
+  "parentStrategyId": "meta-v1",
+  "schemaVersion": 1
+}

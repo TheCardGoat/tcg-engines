@@ -38,34 +38,52 @@ export const op05Amazon099: CharacterCard = {
         ],
         actions: [
           {
-            action: "choice",
-            player: "opponent",
-            options: [
-              [
-                {
-                  action: "removeFromLife",
-                  player: "opponent",
-                  count: {
-                    amount: 1,
-                  },
-                  destination: "trash",
-                },
-              ],
-              [
-                {
-                  action: "modifyPower",
-                  target: {
-                    player: "opponent",
-                    zones: ["leader", "character"],
-                    count: {
-                      amount: 1,
-                      upTo: true,
+            action: "conditional",
+            predicate: { condition: "lifeCount", player: "opponent", comparison: "gte", value: 1 },
+            whenTrue: [
+              {
+                action: "choice",
+                player: "opponent",
+                options: [
+                  [
+                    {
+                      action: "removeFromLife",
+                      player: "opponent",
+                      count: {
+                        amount: 1,
+                      },
+                      destination: "trash",
                     },
-                  },
-                  value: -2000,
-                  duration: "thisTurn",
+                  ],
+                  [
+                    {
+                      action: "modifyPower",
+                      target: {
+                        player: "opponent",
+                        zones: ["leader", "character"],
+                        count: {
+                          amount: 1,
+                          upTo: true,
+                        },
+                      },
+                      value: -2000,
+                      duration: "thisTurn",
+                    },
+                  ],
+                ],
+              },
+            ],
+            whenFalse: [
+              {
+                action: "modifyPower",
+                target: {
+                  player: "opponent",
+                  zones: ["leader", "character"],
+                  count: { amount: 1, upTo: true },
                 },
-              ],
+                value: -2000,
+                duration: "thisTurn",
+              },
             ],
           },
         ],

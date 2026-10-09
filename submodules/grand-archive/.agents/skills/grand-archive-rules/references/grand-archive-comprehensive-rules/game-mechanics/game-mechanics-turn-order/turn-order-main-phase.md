@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-turn-order/turn-order-main-phase"
+  relation: "current_index"
+---
+
 # Turn Order - Main Phase
 
 #### General Rules:

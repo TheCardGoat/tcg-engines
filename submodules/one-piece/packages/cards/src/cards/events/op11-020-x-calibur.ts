@@ -22,7 +22,7 @@ export const op11XCalibur020: EventCard = {
   setId: "OP11",
   cost: 2,
   trigger: "K.O. up to 1 of your opponent's Characters with 4000 power or less.",
-  traits: ["Drake Pirates Navy SWORD"],
+  traits: ["Navy", "SWORD", "Drake Pirates"],
   effect:
     '[Main] Give up to 2 of your opponent\'s Characters −2000 power during this turn. Then, up to 1 of your "Navy" type Characters gains +1000 power during this turn.',
   effects: {
@@ -56,7 +56,7 @@ export const op11XCalibur020: EventCard = {
                 {
                   filter: "trait",
                   value: "Navy",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

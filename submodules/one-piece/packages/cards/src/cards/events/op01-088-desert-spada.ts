@@ -21,7 +21,7 @@ export const op01DesertSpada088: EventCard = {
   rarity: "UC",
   setId: "OP01",
   cost: 1,
-  traits: ["Baroque Works The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +2000 power during this battle. Then, look at 3 cards from the top of your deck and place them at the top or bottom of the deck in any order. [Trigger] Draw 2 cards and trash 1 card from your hand. This card has been officially errata'd.",
   effects: {

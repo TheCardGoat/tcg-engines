@@ -86,6 +86,19 @@ export interface ReplaySummary {
   sizeBytes?: number;
 }
 
+/** Player-visible match chat copied into a replay. System rows keep the event key. */
+export interface ReplayChatMessage {
+  id: string;
+  senderPlayerId: string;
+  senderSeat: 0 | 1 | 2;
+  kind: "preset" | "text" | "system";
+  presetKey?: string;
+  text?: string;
+  systemEvent?: string;
+  /** Wall-clock milliseconds, used to reveal the message as the cursor advances. */
+  timestamp: number;
+}
+
 export type ReplayTrust = "server_authoritative" | "player_authored_unverified";
 
 export type ReplayCloudSaveStatus = "saving" | "saved" | "failed" | "expired";
@@ -107,5 +120,10 @@ export interface ReplayPlaybackV1 {
   resources?: unknown;
   presentation?: PresentationBundle;
   presentationBindings?: PresentationBindings;
+  /**
+   * Not part of the cached public document. Clients attach this from the
+   * participant chat route. Empty means that route found no messages.
+   */
+  chatMessages?: ReplayChatMessage[];
   replay: ReplayFile;
 }

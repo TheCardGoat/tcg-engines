@@ -124,4 +124,31 @@ describe("OP17-069 Jack", () => {
     expect(engine.getView("south").players.south.handCount).toBe(Math.max(before.handCount - 1, 0));
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("Rush Character permits a newly played attacker to attack a Character but not the Leader", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-069"], activeDon: 10 },
+      { character: [{ cardId: "OP13-013", rested: true }] },
+    );
+    e.asSouth().play("OP17-069");
+    e.asSouth().declineOptional();
+    expect(() => e.asSouth().attack("OP17-069", e.leader("north"))).toThrow();
+    e.asSouth().attack("OP17-069", "OP13-013");
+    expect(e.getView("south").players.north.trash.some((c) => c.cardId === "OP13-013")).toBe(true);
+  });
+  test("Animal Kingdom Leader enables the paid power reduction, which expires at turn end", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP17-058", hand: ["OP17-069"], activeDon: 9 },
+      { character: ["EB01-018"] },
+    );
+    e.asSouth().play("OP17-069");
+    e.asSouth().acceptOptional();
+    e.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [e.findCardInZone("north", "character", "EB01-018")] },
+      "south",
+    );
+    expect(e.getView("south").players.north.characters[0]?.power).toBe(5000);
+    e.endTurn("south");
+    expect(e.getView("south").players.north.characters[0]?.power).toBe(7000);
+  });
 });

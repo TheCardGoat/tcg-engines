@@ -65,7 +65,12 @@ export function fabUndoBarrierForEvents(events: readonly CommittedEvent[]): FabU
         break;
     }
 
-    if (movesHiddenIdentityToPublic(event)) reasons.add("move-hidden-to-public");
+    if (movesHiddenIdentityToPublic(event)) {
+      reasons.add("move-hidden-to-public");
+      // Playing a known card from hand may be undone. A face-up card moved
+      // directly from deck exposes a previously unknown identity to its owner.
+      if ("from" in event.data && event.data.from === "deck") reasons.add("reveal");
+    }
     if (event.name === "discard" && event.data.random) reasons.add("random-result");
   }
 

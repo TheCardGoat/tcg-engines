@@ -1,14 +1,49 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb01Doma005, eb01MountainGod018 } from "@tcg/op-cards";
+import { eb01Doma005, eb01MountainGod018, op07Sengoku046, op07GeckoMoria042 } from "@tcg/op-cards";
 import { op14eb04TrafalgarLawOp14009009 } from "../../../../../cards/src/cards/characters/op14-009-trafalgar-law-op14-009.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP14-009 Trafalgar Law", () => {
-  test("keeps all three official traits", () => {
-    expect(op14eb04TrafalgarLawOp14009009.traits).toEqual([
-      "Heart Pirates Supernovas The Seven Warlords of the Sea",
-    ]);
+  test("uses the two traits from the official erratum", () => {
+    expect(op14eb04TrafalgarLawOp14009009.traits).toEqual(["Supernovas", "Heart Pirates"]);
+  });
+
+  test("the erratum excludes Law from a Warlords search while retaining a real Warlords target", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [op07Sengoku046],
+      activeDon: 1,
+      deck: [
+        op14eb04TrafalgarLawOp14009009,
+        op07GeckoMoria042,
+        eb01Doma005,
+        eb01Doma005,
+        eb01Doma005,
+        eb01Doma005,
+      ],
+    });
+    const lawId = engine.findCardInZone("south", "deck", op14eb04TrafalgarLawOp14009009);
+    const moriaId = engine.findCardInZone("south", "deck", op07GeckoMoria042);
+    engine.playCard(op07Sengoku046, "south");
+    const search = engine.pendingDecision("effectSearchSelection", "south").steps[0];
+    if (search?.kind !== "selectEntity") throw new Error("Expected Warlords search.");
+    expect(search.candidates.find((candidate) => candidate.ref.id === lawId)?.legal).toBe(false);
+    expect(search.candidates.find((candidate) => candidate.ref.id === moriaId)?.legal).toBe(true);
+    engine.resolveDecision("effectSearchSelection", { selectedIds: [moriaId] }, "south");
+    const order = engine.pendingDecision("effectSearchRemainderOrder", "south").steps[0];
+    if (order?.kind !== "orderItems") throw new Error("Expected remainder order.");
+    engine.resolveDecision(
+      "effectSearchRemainderOrder",
+      { selectedIds: order.candidates.map((candidate) => candidate.ref.id) },
+      "south",
+    );
+    expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).toContain(
+      moriaId,
+    );
+    expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).not.toContain(
+      lawId,
+    );
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
   test("trashes two selected hand cards to swap its Leader's and one own Character's base power during the battle", () => {
@@ -18,7 +53,8 @@ describe("OP14-009 Trafalgar Law", () => {
         hand: [
           op14eb04TrafalgarLawOp14009009,
           op14eb04TrafalgarLawOp14009009,
-          op14eb04TrafalgarLawOp14009009,
+          eb01Doma005,
+          eb01Doma005,
         ],
       },
       {
@@ -32,6 +68,7 @@ describe("OP14-009 Trafalgar Law", () => {
     );
     const lawId = engine.findCardInZone("south", "character", op14eb04TrafalgarLawOp14009009);
     const ownCharacterId = engine.findCardInZone("south", "character", eb01Doma005);
+    const retainedCounterId = engine.findCardInZone("south", "hand", eb01Doma005);
     const opposingCharacterId = engine.findCardInZone("north", "character", eb01Doma005);
     const firstAttackerId = engine.findCardInZone("north", "character", eb01MountainGod018);
     const secondAttackerId = opposingCharacterId;
@@ -90,11 +127,12 @@ describe("OP14-009 Trafalgar Law", () => {
     );
     expect(view.prompts).toHaveLength(0);
 
+    expect(engine.getView("south").players.south.handCount).toBe(2);
     engine.declareAttack(secondAttackerId, engine.leader("south"), "north");
     expect(() => engine.pendingDecision("effectOptional", "south")).toThrow();
     engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
     expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).toContain(
-      paymentIds[2],
+      retainedCounterId,
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
@@ -114,7 +152,7 @@ describe("OP14-009 Trafalgar Law", () => {
 
     engine.declareAttack(attackerId, engine.leader("south"), "north");
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
 
     const view = engine.getView("south");
     expect(view.players.south.hand.map((card) => card.instanceId)).toEqual(

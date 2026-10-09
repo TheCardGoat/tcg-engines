@@ -112,17 +112,20 @@ export const turmSchwartzRook: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               },
             },
             effect: {
-              kind: "move-counter",
-              from: {
-                kind: "event-source",
-              },
-              to: {
+              kind: "add-counter",
+              subject: {
                 kind: "bound",
                 binding: "chosen-object",
               },
               counter: "buff",
               amount: {
-                kind: "all",
+                kind: "counter-count",
+                subject: {
+                  kind: "source",
+                },
+                counter: "buff",
+                basis: "last-known",
+                missing: "zero",
               },
             },
           },

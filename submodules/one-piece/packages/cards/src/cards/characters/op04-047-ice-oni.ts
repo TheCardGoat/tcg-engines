@@ -23,7 +23,7 @@ export const op04IceOni047: CharacterCard = {
   cost: 8,
   power: 0,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates Plague"],
+  traits: ["Plague", "Animal Kingdom Pirates"],
   attribute: "special",
   effect:
     "[Your Turn] At the end of a battle in which this Character battles your opponent's Character with a cost of 5 or less, place the opponent's Character you battled with at the bottom of the owner's deck.",

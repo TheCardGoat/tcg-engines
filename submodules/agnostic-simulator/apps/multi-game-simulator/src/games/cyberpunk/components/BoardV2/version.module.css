@@ -1,0 +1,150 @@
+.errorPage {
+  --v2-cyan: #45d9ee;
+  --v2-red: #ff5365;
+  --v2-yellow: #ffe24e;
+  box-sizing: border-box;
+  display: grid;
+  min-height: min(58vh, 560px);
+  padding: clamp(20px, 5vw, 72px);
+  place-items: center;
+  overflow: hidden;
+  color: #e8edf0;
+  background:
+    radial-gradient(ellipse at 50% 42%, #17232a 0, #0c1115 48%, #070a0d 100%);
+  font-family: "Cyberpunk Blender Pro", "Arial Narrow", sans-serif;
+}
+
+.errorPanel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 30px);
+  width: min(100%, 820px);
+  padding: clamp(22px, 3.2vw, 38px);
+  border: 1px solid #52626a;
+  border-top: 2px solid #ff5365;
+  background:
+    linear-gradient(145deg, #1c262bdc, #090d11f2 72%),
+    repeating-linear-gradient(135deg, #ffffff05 0 1px, transparent 1px 8px);
+  box-shadow:
+    0 18px 60px #0009,
+    inset 0 1px #ffffff12,
+    0 0 28px #ff53651c;
+  clip-path: polygon(0 12px, 12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+}
+
+.errorIcon {
+  display: grid;
+  width: 48px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid #ff5365;
+  color: #ff7180;
+  background: #ff536514;
+  font-family: "Cyberpunk Blender Pro", "Arial Narrow", sans-serif;
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: inset 0 0 16px #ff53651b, 0 0 14px #ff53651c;
+}
+
+.errorCopy {
+  min-width: 0;
+}
+
+.errorEyebrow {
+  margin: 0 0 8px;
+  color: #ff7180;
+  font-family: "Cyberpunk Refinery 25", "Cyberpunk Blender Pro", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.errorCopy h1 {
+  margin: 0;
+  color: #f5f7f8;
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  font-family: "Cyberpunk Refinery 25", "Cyberpunk Blender Pro", sans-serif;
+  letter-spacing: 0.015em;
+  line-height: 1.15;
+}
+
+.errorCopy > p:last-child {
+  margin: 10px 0 0;
+  color: #aab8bd;
+  font-size: clamp(14px, 1.7vw, 17px);
+  line-height: 1.5;
+}
+
+.recoveryButton {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 0 20px;
+  border: 1px solid #ffe24e;
+  color: #111518;
+  background: linear-gradient(180deg, #ffe96d, #e4bd32);
+  box-shadow: 0 3px 0 #806820, 0 0 18px #ffe24e25;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: filter 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+}
+
+.recoveryButton::after {
+  content: "→";
+  font-size: 20px;
+  line-height: 1;
+}
+
+.recoveryButton:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 3px 0 #806820, 0 0 24px #ffe24e4a;
+}
+
+.recoveryButton:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #806820;
+}
+
+.recoveryButton:focus-visible {
+  outline: 3px solid #45d9ee;
+  outline-offset: 4px;
+}
+
+@media (max-width: 680px) {
+  .errorPage {
+    min-height: 48vh;
+    padding: 18px;
+  }
+
+  .errorPanel {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 14px;
+    padding: 20px;
+  }
+
+  .errorIcon {
+    width: 38px;
+    font-size: 22px;
+  }
+
+  .recoveryButton {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recoveryButton {
+    transition: none;
+  }
+}

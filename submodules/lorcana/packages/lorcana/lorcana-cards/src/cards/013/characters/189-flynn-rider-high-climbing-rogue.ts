@@ -31,6 +31,7 @@ export const flynnRiderHighclimbingRogue: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3346eb6f9f874bbbad8c1942445299d3",
+    tcgPlayer: "704684",
   },
   text: [
     {

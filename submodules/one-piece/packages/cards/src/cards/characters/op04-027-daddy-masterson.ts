@@ -22,7 +22,7 @@ export const op04DaddyMasterson027: CharacterCard = {
   setId: "OP04",
   cost: 4,
   power: 5000,
-  traits: ["Former Navy East Blue"],
+  traits: ["East Blue", "Former Navy"],
   attribute: "ranged",
   effect: "[DON!! x1] [End of Your Turn] Set this Character as active.",
   effects: {

@@ -14,34 +14,34 @@ export const pocahontasFollowingTheWindI18n: Record<Languages, I18nProperties> =
   },
   de: {
     name: "Pocahontas",
-    version: "Folgt dem Wind",
+    version: "Following the Wind",
     text: [
       {
-        title: "Welcher ist denn mein Weg?",
+        title: "What Is My Path?",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, wähle einen anderen erschöpften Charakter und sammle so viele Legenden, wie sein {L}-Wert beträgt.",
+          "Whenever this character quests, gain lore equal to another chosen exerted character's {L}.",
       },
     ],
   },
   fr: {
     name: "Pocahontas",
-    version: "Suit le vent",
+    version: "Following the Wind",
     text: [
       {
-        title: "Quel est le droit chemin?",
+        title: "What Is My Path?",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un autre personnage épuisé et gagnez autant d'éclats de Lore que son {L}.",
+          "Whenever this character quests, gain lore equal to another chosen exerted character's {L}.",
       },
     ],
   },
   it: {
     name: "Pocahontas",
-    version: "Che Segue il Vento",
+    version: "Following the Wind",
     text: [
       {
-        title: "Qual è la mia Via?",
+        title: "What Is My Path?",
         description:
-          "Ogni volta che questo personaggio va all'avventura, ottieni leggenda pari al {L} di un altro personaggio impegnato a tua scelta.",
+          "Whenever this character quests, gain lore equal to another chosen exerted character's {L}.",
       },
     ],
   },

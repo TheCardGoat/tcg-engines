@@ -2,6 +2,7 @@ export { validateDeck } from "./deck-validation.ts";
 export type { DeckValidationError, DeckValidationErrorCode } from "./deck-validation.ts";
 export { authoredBotLabDeckSpecs } from "./authored-decks.ts";
 export type { AuthoredBotLabDeckSpec } from "./authored-decks.ts";
+export { recommendedBotLabDeckIds } from "./authored-decks.ts";
 export { resolveAuthoredBotLabDeck } from "./authored-deck-resolution.ts";
 export type { ResolvedAuthoredBotLabDeck } from "./authored-deck-resolution.ts";
 export {

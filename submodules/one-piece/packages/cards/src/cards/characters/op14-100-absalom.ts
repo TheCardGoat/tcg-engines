@@ -48,7 +48,7 @@ export const op14eb04Absalom100: CharacterCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",
@@ -78,7 +78,7 @@ export const op14eb04Absalom100: CharacterCard = {
               {
                 filter: "trait",
                 value: "Thriller Bark Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

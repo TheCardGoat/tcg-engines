@@ -30,7 +30,7 @@ export const op06DouglasBullet010: CharacterCard = {
   effects: {
     permanentEffects: [
       {
-        conditions: [{ condition: "leaderTrait", trait: "FILM", match: "includes" }],
+        conditions: [{ condition: "leaderTrait", trait: "FILM", match: "exact" }],
         actions: [
           {
             action: "grantKeyword",

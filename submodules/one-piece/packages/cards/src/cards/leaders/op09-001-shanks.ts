@@ -30,7 +30,7 @@ export const op09Shanks001: LeaderCard = {
   setId: "OP09",
   power: 5000,
   life: 5,
-  traits: ["The Four Emperors Red-Haired Pirates"],
+  traits: ["The Four Emperors", "Red-Haired Pirates"],
   attribute: "slash",
   effect:
     "[Once Per Turn] This effect can be activated when your opponent attacks. Give up to 1 of your opponent's Leader or Character cards −1000 power during this turn.",

@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import {
   CyberpunkTestEngine,
+  applyOpeningHand,
   defOf,
   getEffectivePower,
   clearCardRegistry,
@@ -8,6 +9,7 @@ import {
   setCardRegistry,
   type FilteredCardView,
 } from "@tcg/cyberpunk-engine";
+import { VIEWER_UNKNOWN_CARD_DEFINITION_ID } from "./viewerPlaceholders";
 import {
   welcomeToNightCityRetailFloorIt,
   welcomeToNightCityRetailMandibularUpgrade,
@@ -19,8 +21,52 @@ import {
   isFilteredMatchView,
   viewerProjectionToMatchState,
 } from "./liveState";
+import { visibleDeckCount } from "../zoneViews";
 
 describe("Cyberpunk live viewer projections", () => {
+  test("shows both card and delayed effects after hydrating a live order choice", () => {
+    const source = getScenario("pendingFightEffectOrder").build();
+    const viewer = createLiveMatchViewerEngine(source.getFilteredView(P1), "pending-fight-order");
+    const choice = viewer.getPrompt(P1).choice;
+    expect(choice?.type).toBe("chooseTrigger");
+    if (choice?.type !== "chooseTrigger") throw new Error("Expected fight effect order");
+    expect(choice.payload.options.map((option) => option.cardName).sort()).toEqual([
+      "Maelstrom Zealots",
+      "Safety Override",
+    ]);
+    expect(choice.payload.options.every((option) => option.abilityText.length > 0)).toBe(true);
+  });
+
+  test("preserves a suspended fight result and its authoritative rival", () => {
+    const source = getScenario("fightResultBeforeDefeats").build();
+    const projection = source.getFilteredView(P2);
+    expect(projection.attackState?.step).toBe("fightResult");
+    expect(projection.prompt.choice?.type).toBe("scry");
+    const state = viewerProjectionToMatchState(projection, "fight-result-projection");
+    expect(state.G.attackState).toEqual(projection.attackState);
+    expect(state.G.attackState).not.toBe(projection.attackState);
+    expect(state.G.attackState?.rivalId).toBe(P2);
+    expect(state.G.turnMetadata.pendingChoice).toBeUndefined();
+    // Private resolution context belongs to the server. The public prompt
+    // carries the complete selectable IDs for the chooser instead.
+    const choice = projection.prompt.choice;
+    if (choice?.type !== "scry") throw new Error("Expected River scry");
+    expect(choice.payload.destinations[0].eligibleCardIds).toEqual(choice.payload.revealedCardIds);
+  });
+
+  test.each(["cold", "unrelated"])(
+    "hydrates bootstrap without a preinstalled catalog (%s)",
+    (mode) => {
+      const source = getScenario(DEFAULT_SCENARIO).build();
+      const projection = source.getFilteredView(P1);
+      if (mode === "cold") clearCardRegistry();
+      else setCardRegistry({ get: () => undefined, *entries() {}, size: 0 });
+      const state = viewerProjectionToMatchState(projection, "cold-bootstrap");
+      expect(state.ctx.stateID).toBe(projection.stateID);
+      expect(createLiveMatchViewerEngine(state).getState().ctx.stateID).toBe(projection.stateID);
+    },
+  );
+
   test("hydrates the renderer from a viewer-safe server projection", () => {
     const source = getScenario(DEFAULT_SCENARIO).build();
     const projection = source.getFilteredView(P1);
@@ -34,6 +80,11 @@ describe("Cyberpunk live viewer projections", () => {
     const state = viewerProjectionToMatchState(projection, "match-projection-test");
     expect(state.ctx.matchId).toBe("match-projection-test");
     expect(state.ctx.stateID).toBe(projection.stateID);
+    expect(state.G.overtime).toBe(projection.overtimeActive);
+    expect(state.G.turnMetadata.previousTurnBeganWithEmptyFixer).toBe(
+      projection.previousTurnBeganWithEmptyFixer,
+    );
+    expect(state.G.turnMetadata.turnBeganWithEmptyFixer).toBe(projection.turnBeganWithEmptyFixer);
     expect(state.G.players[String(P1)]?.zones.hand).toHaveLength(
       Array.isArray(expectedOwnHand) ? expectedOwnHand.length : 0,
     );
@@ -44,6 +95,110 @@ describe("Cyberpunk live viewer projections", () => {
     const viewer = createLiveMatchViewerEngine(projection, "match-projection-test");
     expect(viewer.getState().ctx.stateID).toBe(projection.stateID);
     expect(viewer.getState().G.turnMetadata.activePlayerId).toBe(projection.activePlayerId);
+  });
+
+  test("does not turn a concealed pre-choice deck into a face-down opening hand", () => {
+    const source = CyberpunkTestEngine.createWithFixture(
+      {},
+      {},
+      { skipSetup: false, autoChooseFirstPlayer: false, seed: "live-opening-concealed" },
+    );
+    const pending = source.getState().G.turnMetadata.pendingChoice;
+    expect(pending?.type).toBe("chooseFirstPlayer");
+    if (pending?.type !== "chooseFirstPlayer") throw new Error("expected chooseFirstPlayer");
+
+    const projection = source.getFilteredView(pending.chooserId);
+    const viewer = createLiveMatchViewerEngine(projection, "live-opening-concealed");
+    const hydrated = viewer.getState();
+    expect(hydrated.G.turnMetadata.pendingChoice?.type).toBe("chooseFirstPlayer");
+    expect(hydrated.ctx.stateID).toBe(projection.stateID);
+    for (const playerId of hydrated.ctx.playerIds) {
+      const player = hydrated.G.players[String(playerId)]!;
+      expect(player.zones.hand).toHaveLength(0);
+      expect(player.zones.deck).toHaveLength(0);
+      const projectedDeck = projection.players[String(playerId)]?.zones.deck;
+      expect(typeof projectedDeck).toBe("number");
+      expect((projectedDeck as number) > 0).toBe(true);
+      expect(visibleDeckCount(player.zones.deck.length, projectedDeck)).toBe(projectedDeck);
+    }
+    expect(
+      Object.values(hydrated.G.cardIndex).some(
+        (card) => card.zone === "deck" && card.definitionId === VIEWER_UNKNOWN_CARD_DEFINITION_ID,
+      ),
+    ).toBe(false);
+
+    const before = hydrated.ctx.playerIds.map((id) => ({
+      hand: [...hydrated.G.players[id]!.zones.hand],
+      deck: [...hydrated.G.players[id]!.zones.deck],
+    }));
+    applyOpeningHand(hydrated, pending.chooserId);
+    expect(
+      hydrated.ctx.playerIds.map((id) => ({
+        hand: [...hydrated.G.players[id]!.zones.hand],
+        deck: [...hydrated.G.players[id]!.zones.deck],
+      })),
+    ).toEqual(before);
+  });
+
+  test("keeps the chooser's real hand after they decide to go first", () => {
+    const source = CyberpunkTestEngine.createWithFixture(
+      {},
+      {},
+      { skipSetup: false, autoChooseFirstPlayer: false, seed: "live-opening-go-first" },
+    );
+    const pending = source.getState().G.turnMetadata.pendingChoice;
+    if (pending?.type !== "chooseFirstPlayer") throw new Error("expected chooseFirstPlayer");
+    const chooser = pending.chooserId;
+    source.resolveFirstPlayer(true, { as: chooser });
+
+    const projection = source.getFilteredView(chooser);
+    const projectedHand = projection.players[String(chooser)]?.zones.hand;
+    expect(Array.isArray(projectedHand)).toBe(true);
+    if (!Array.isArray(projectedHand)) return;
+
+    const rivalId = source.getOpponentOf(chooser);
+    expect(typeof projection.players[String(rivalId)]?.zones.hand).toBe("number");
+    expect(projection.players[String(rivalId)]?.zones.hand).toBe(6);
+
+    const viewer = createLiveMatchViewerEngine(projection, "live-opening-go-first");
+    const hand = viewer.getState().G.players[String(chooser)]?.zones.hand ?? [];
+    expect(hand).toHaveLength(6);
+    expect(viewer.getState().ctx.stateID).toBe(projection.stateID);
+    for (const cardId of hand) {
+      const card = viewer.getState().G.cardIndex[String(cardId)];
+      expect(card?.definitionId).not.toBe(VIEWER_UNKNOWN_CARD_DEFINITION_ID);
+      expect(card?.definitionId.length).toBeGreaterThan(0);
+      expect(card?.definitionId.startsWith("viewer:")).toBe(false);
+      expect(card?.meta.faceDown).toBe(false);
+    }
+    const dealt = hand.map(String);
+    applyOpeningHand(viewer.getState(), chooser);
+    expect((viewer.getState().G.players[String(chooser)]?.zones.hand ?? []).map(String)).toEqual(
+      dealt,
+    );
+  });
+
+  test("keeps the rival as first player when the viewer chooses to go second", () => {
+    const source = CyberpunkTestEngine.createWithFixture(
+      {},
+      {},
+      { skipSetup: false, autoChooseFirstPlayer: false, seed: "live-opening-go-second" },
+    );
+    const pending = source.getState().G.turnMetadata.pendingChoice;
+    if (pending?.type !== "chooseFirstPlayer") throw new Error("expected chooseFirstPlayer");
+    const chooser = pending.chooserId;
+    const rivalId = source.getOpponentOf(chooser);
+    source.resolveFirstPlayer(false, { as: chooser });
+
+    const projection = source.getFilteredView(chooser);
+    expect(projection.players[String(chooser)]?.firstPlayer).toBe(false);
+    expect(projection.players[String(rivalId)]?.firstPlayer).toBe(true);
+
+    const viewer = createLiveMatchViewerEngine(projection, "live-opening-go-second");
+    const state = viewer.getState();
+    expect(state.G.turnMetadata.activePlayerId).toBe(rivalId);
+    expect(state.G.players[String(chooser)]?.firstPlayer).toBe(false);
+    expect(state.G.players[String(rivalId)]?.firstPlayer).toBe(true);
   });
 
   test("preserves public Eddie orientation and turn-scoped action flags", () => {
@@ -319,6 +474,9 @@ describe("Cyberpunk live viewer projections", () => {
       power: 0,
       effectivePower: 0,
       cost: null,
+      effectiveCost: null,
+      costEffects: [],
+      activeEffects: [],
       type: null,
       classifications: [],
       hasSellTag: false,
@@ -326,6 +484,7 @@ describe("Cyberpunk live viewer projections", () => {
       attachedToId: null,
       hasLag: false,
       hasAttackedThisTurn: false,
+      hasStolenGigThisTurn: false,
       grantedRules: [],
       keywords: [],
       triggerHints: [],
@@ -363,14 +522,12 @@ describe("Cyberpunk live viewer projections", () => {
     expect(defOf(instance).displayName).not.toBe("Animals Wrecker");
   });
 
-  test("count-collapsed hidden zones keep materializing as placeholders", () => {
-    // Information hiding stays intact: a deck collapsed to a count (34 after
-    // the opening draw) must rebuild into 34 inert placeholder instances
-    // without tripping the face-up guard.
+  test("a count-collapsed deck stays a count the opening deal cannot draw", () => {
     const source = getScenario(DEFAULT_SCENARIO).build();
     const projection = source.getFilteredView(P1);
     const ownDeckCount = projection.players[String(P1)]?.zones.deck;
     expect(typeof ownDeckCount).toBe("number");
+    expect((ownDeckCount as number) > 0).toBe(true);
 
     // A fresh live route hydrates this projection before the viewer engine
     // installs its production catalog. Projection must use its explicit
@@ -380,7 +537,19 @@ describe("Cyberpunk live viewer projections", () => {
 
     try {
       const state = viewerProjectionToMatchState(projection, "match-hidden-deck-test");
-      expect(state.G.players[String(P1)]?.zones.deck).toHaveLength(ownDeckCount as number);
+      const deck = state.G.players[String(P1)]?.zones.deck ?? [];
+      expect(deck).toHaveLength(0);
+      expect(visibleDeckCount(deck.length, ownDeckCount)).toBe(ownDeckCount);
+      expect(
+        Object.values(state.G.cardIndex).some(
+          (card) => card.zone === "deck" && card.definitionId === VIEWER_UNKNOWN_CARD_DEFINITION_ID,
+        ),
+      ).toBe(false);
+      const deckBefore = [...deck];
+      const handBefore = [...(state.G.players[String(P1)]?.zones.hand ?? [])];
+      applyOpeningHand(state, P1);
+      expect(state.G.players[String(P1)]?.zones.deck ?? []).toEqual(deckBefore);
+      expect(state.G.players[String(P1)]?.zones.hand ?? []).toEqual(handBefore);
       expect(() => getCardRegistry()).toThrow(/Card registry not initialized/);
     } finally {
       setCardRegistry(previousCatalog);

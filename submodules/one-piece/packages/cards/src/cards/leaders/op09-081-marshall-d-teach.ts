@@ -30,7 +30,7 @@ export const op09MarshallDTeach081: LeaderCard = {
   setId: "OP09",
   power: 5000,
   life: 5,
-  traits: ["Blackbeard Pirates The Four Emperors"],
+  traits: ["The Four Emperors", "Blackbeard Pirates"],
   attribute: "special",
   effect:
     "Your [On Play] effects are negated.\n[Activate: Main] You may trash 1 card from your hand: Your opponent's [On Play] effects are negated until the end of your opponent's next turn.",

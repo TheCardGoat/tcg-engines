@@ -5,7 +5,7 @@ import {
   createRiftboundClientMatchStateV1,
   reduceRiftboundClientMatchStateV1,
   type RiftboundClientMatchActionV1,
-} from "./state";
+} from "@tcg/riftbound-tabletop";
 
 function fixture() {
   return createRiftboundClientMatchStateV1(

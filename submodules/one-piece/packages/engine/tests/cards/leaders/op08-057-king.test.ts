@@ -49,4 +49,34 @@ describe("OP08-057 King", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test.each([5, 6])("draw branch at hand%s pays DON first and draws only at five", (hand) => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP08-057",
+      hand,
+      restedDon: 4,
+      donDeckCount: 6,
+    });
+    const deck = e.getView("south").players.south.deckCount;
+    e.asSouth().activateMain(e.leader("south"));
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectActionChoice", { optionId: "0" }, "south");
+    expect(e.getView("south").players.south.handCount).toBe(6);
+    expect(e.getView("south").players.south.deckCount).toBe(deck - (hand === 5 ? 1 : 0));
+    expect(e.getView("south").players.south.restedDon).toBe(2);
+    expect(e.getView("south").players.south.donDeckCount).toBe(8);
+    const failed = e.asSouth().expectFailure({ type: "activateMain", sourceId: e.leader("south") });
+    const saved = OnePieceTestEngine.fromState(failed.state);
+    expect(saved.getView("south").players.south.restedDon).toBe(2);
+    expect(saved.getView("south").players.south.deckCount).toBe(deck - (hand === 5 ? 1 : 0));
+  });
+  test("declines optional DON2 with full payment available", () => {
+    const e = OnePieceTestEngine.create({ leaderCardId: "OP08-057", hand: 5, restedDon: 2 });
+    const deck = e.getView("south").players.south.deckCount;
+    e.asSouth().activateMain(e.leader("south"));
+    e.asSouth().declineOptional();
+    expect(e.getView("south").players.south.restedDon).toBe(2);
+    expect(e.getView("south").players.south.handCount).toBe(5);
+    expect(e.getView("south").players.south.deckCount).toBe(deck);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

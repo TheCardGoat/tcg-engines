@@ -7,7 +7,7 @@ function battleTokikake(handCount: number, attachedDon: number) {
   const engine = OnePieceTestEngine.create(
     { character: [{ card: op06Aramaki043, playedOnTurn: 0 }] },
     {
-      hand: handCount,
+      hand: Array.from({ length: handCount }, () => "EB01-005"),
       character: [{ card: op06Tokikake052, attachedDon, rested: true }],
     },
     { firstPlayer: "north", activeSeat: "south" },

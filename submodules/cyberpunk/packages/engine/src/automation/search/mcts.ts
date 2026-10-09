@@ -3,7 +3,7 @@ import type { CommandEnvelope } from "../../types/commands.ts";
 import type { AIStrategy, EngineHandle, MoveDecision } from "../types.ts";
 import { greedyStrategy } from "../strategies/greedy.ts";
 import { randomStrategy } from "../strategies/random.ts";
-import { enumerateCandidateActions, runRollout } from "./shared.ts";
+import { chooseExecutableAction, enumerateCandidateActions, runRollout } from "./shared.ts";
 
 /**
  * UCB1 / MCTS proper. Maintains a search tree across iterations within a
@@ -51,28 +51,11 @@ interface MctsNode {
   rewards: Map<string, number>;
 }
 
-/**
- * Per-engine cache so search work isn't thrown away between turns. Keyed by
- * the live `EngineHandle` (a real player would also retain context between
- * decisions). When a match ends and the engine is GC'd, the cache entry is
- * collected automatically.
- */
-interface PersistentCache {
-  /** The chosen child from the previous decision; descendants may match the live state on next call. */
-  lastChild: MctsNode | null;
-}
-
 export function createMctsStrategy(opts: MctsOptions = {}): AIStrategy {
   const iterations = opts.iterations ?? 50;
   const explorationConstant = opts.explorationConstant ?? Math.sqrt(2);
   const maxRolloutSteps = opts.maxRolloutSteps ?? 200;
   const rolloutStrategy = opts.rolloutStrategy ?? randomStrategy;
-
-  // Per-instance cache. Each `createMctsStrategy()` call gets its own
-  // WeakMap so two concurrent matches sharing the same factory output (or
-  // the singleton `mctsStrategy`) don't corrupt each other's trees. The
-  // map is keyed by the live engine, which is unique per match.
-  const cache = new WeakMap<EngineHandle, PersistentCache>();
 
   return {
     name: `mcts:${rolloutStrategy.name}`,
@@ -82,43 +65,28 @@ export function createMctsStrategy(opts: MctsOptions = {}): AIStrategy {
       }
       // Trivial cases: avoid spinning up a tree when there's nothing to
       // search over.
-      const rootActions = enumerateCandidateActions(ctx.prompt);
+      const rootActions = enumerateCandidateActions(ctx.engine.getPrompt(ctx.playerId));
       if (rootActions.length === 0) return { kind: "stuck", reason: "no actionable moves" };
-      if (rootActions.length === 1) return rootActions[0]!;
+      if (rootActions.length === 1)
+        return chooseExecutableAction(ctx.engine, ctx.playerId, rootActions);
 
-      // Try to reuse a subtree from the previous decision. If we find a
-      // descendant of `lastChild` whose stateID matches the live engine
-      // (and where it's our turn to act), inherit its accumulated visits
-      // and continue iterating from there. Otherwise fall back to a fresh
-      // root.
-      const liveStateID = ctx.engine.getFilteredView(ctx.playerId).stateID;
-      const entry = cache.get(ctx.engine);
-      let root: MctsNode | null = null;
-      if (entry?.lastChild) {
-        root = findResumePoint(entry.lastChild, liveStateID, ctx.playerId);
-      }
-      if (root) {
-        // Detach from the old parent so backprop stops at the new root.
-        root.parent = null;
-        root.actionFromParent = null;
-      } else {
-        root = {
-          engine: ctx.engine.fork(),
-          playerToMove: ctx.playerId,
-          parent: null,
-          actionFromParent: null,
-          untriedActions: rootActions,
-          children: [],
-          visits: 0,
-          rewards: new Map(),
-        };
-      }
+      // A stateID is a command counter, not a position identity. Different
+      // search branches can have the same counter and different legal moves.
+      // Fork the live engine for every decision; keep tree reuse within this
+      // decision only. A public-view match also cannot identify hidden state
+      // or the engine RNG well enough to reuse an old fork safely.
+      const root: MctsNode = {
+        engine: ctx.engine.fork(),
+        playerToMove: ctx.playerId,
+        parent: null,
+        actionFromParent: null,
+        untriedActions: rootActions.slice(),
+        children: [],
+        visits: 0,
+        rewards: new Map(),
+      };
 
-      // Run additional iterations only — if the inherited root already has
-      // visits ≥ iterations, we still run one more pass to refresh the
-      // selection but skip most of the work.
-      const additional = Math.max(1, iterations - root.visits);
-      for (let i = 0; i < additional; i++) {
+      for (let i = 0; i < iterations; i++) {
         // 1. Selection: descend via UCB1 until we hit a node with untried
         //    actions OR a terminal node.
         let node = root;
@@ -150,56 +118,19 @@ export function createMctsStrategy(opts: MctsOptions = {}): AIStrategy {
       // Pick the most-visited root child. Ties broken by highest win-rate
       // for the deciding player, then by the move id for determinism.
       const ownId = ctx.playerId as string;
-      const best = root.children.slice().sort((a, b) => {
+      const ranked = root.children.slice().sort((a, b) => {
         if (a.visits !== b.visits) return b.visits - a.visits;
         const aw = (a.rewards.get(ownId) ?? 0) / Math.max(1, a.visits);
         const bw = (b.rewards.get(ownId) ?? 0) / Math.max(1, b.visits);
         if (aw !== bw) return bw - aw;
         return (a.actionFromParent?.move ?? "").localeCompare(b.actionFromParent?.move ?? "");
-      })[0];
-      if (!best || !best.actionFromParent) return rootActions[0]!;
-      // Persist the chosen child so the next decision can resume from
-      // its subtree (whichever descendant matches the live state by then).
-      cache.set(ctx.engine, { lastChild: best });
-      return best.actionFromParent;
+      });
+      const rankedActions = ranked.flatMap((child) =>
+        child.actionFromParent ? [child.actionFromParent] : [],
+      );
+      return chooseExecutableAction(ctx.engine, ctx.playerId, [...rankedActions, ...rootActions]);
     },
   };
-}
-
-/**
- * Walk a stored subtree looking for a descendant whose engine state matches
- * the live `stateID` AND where it's `ourPlayerId`'s turn to act. That node
- * (if found) becomes the new search root; we inherit its accumulated visits
- * and keep iterating instead of throwing the work away.
- *
- * Bounds the search depth for safety — in practice the matching node is
- * usually one or two steps below `lastChild` (our action → opponent action
- * → our turn again).
- */
-function findResumePoint(
-  node: MctsNode,
-  targetStateID: number,
-  ourPlayerId: PlayerId,
-  maxDepth = 8,
-): MctsNode | null {
-  if (maxDepth <= 0) return null;
-  if (node.playerToMove === ourPlayerId) {
-    const view = safeStateID(node, ourPlayerId);
-    if (view === targetStateID) return node;
-  }
-  for (const child of node.children) {
-    const found = findResumePoint(child, targetStateID, ourPlayerId, maxDepth - 1);
-    if (found) return found;
-  }
-  return null;
-}
-
-function safeStateID(node: MctsNode, viewer: PlayerId): number | null {
-  try {
-    return node.engine.getFilteredView(viewer).stateID;
-  } catch {
-    return null;
-  }
 }
 
 /** Default MCTS: 50 iterations with random rollouts. */

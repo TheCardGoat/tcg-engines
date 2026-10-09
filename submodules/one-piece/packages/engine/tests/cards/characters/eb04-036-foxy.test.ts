@@ -60,7 +60,7 @@ describe("EB04-036 Foxy", () => {
     ).toBe(false);
   });
 
-  test("still pays DON!! -1 and rests a target without the Leader gate, but does not draw or trash", () => {
+  test("pays DON!! -1 without the Leader gate but skips draw, trash and rest", () => {
     const engine = OnePieceTestEngine.create(
       {
         hand: [op14eb04Foxy036, eb01Doma005],
@@ -77,7 +77,6 @@ describe("EB04-036 Foxy", () => {
     engine.playCard(op14eb04Foxy036, "south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
     engine.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "south");
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [targetId] }, "south");
 
     const view = engine.getView("south");
     expect(view.players.south.hand.map((card) => card.instanceId)).toEqual([keptHandId]);
@@ -85,7 +84,7 @@ describe("EB04-036 Foxy", () => {
     expect(view.players.south.trash).toHaveLength(0);
     expect(
       view.players.north.characters.find((card) => card?.instanceId === targetId)?.rested,
-    ).toBe(true);
+    ).toBe(false);
     expect(view.prompts).toHaveLength(0);
   });
 

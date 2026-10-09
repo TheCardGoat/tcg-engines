@@ -14,11 +14,25 @@ import {
   resolveNumericValue,
   type ResolutionContext,
 } from "../effects/target-resolver.ts";
-import { defOf } from "../state/lookups.ts";
+import { defOf, hasEffectiveCardType } from "../state/lookups.ts";
 import { getDefinition } from "../state/card-registry.ts";
 
 export function recomputeActiveEffects(state: MatchState): void {
   const G = state.G;
+
+  for (const effect of G.activeEffects) {
+    if (effect.origin !== "imperative" || effect.kind !== "powerModifier") continue;
+    const formula = effect.powerModifierFormula;
+    if (!formula) continue;
+    effect.powerModifier = resolveNumericValue(formula.value, {
+      state,
+      sourceCardId: effect.sourceCardId,
+      sourcePlayerId: formula.sourcePlayerId,
+      abilityIndex: effect.abilityIndex,
+      contextTargets: formula.contextTargets,
+      boundTargets: formula.boundTargets,
+    });
+  }
 
   // Collect all active source cards from field + legendArea.
   const sourceCandidates: (typeof G.cardIndex)[string][] = [];
@@ -443,13 +457,12 @@ export function findFriendlyDefeatRedirect(
 ): CardInstanceId | null {
   const host = state.G.cardIndex[hostId];
   if (!host) return null;
-  if (getEffectiveRules(state, hostId).includes("redirectFriendlyDefeatToSelf")) return null;
+  if (!hasEffectiveCardType(host, "unit")) return null;
   const controllerId = host.controllerId;
   const player = state.G.players[controllerId as string];
   if (!player) return null;
   for (const zone of ["field", "legendArea"] as const) {
     for (const cardId of player.zones[zone] ?? []) {
-      if ((cardId as string) === hostId) continue;
       if (skipIds.has(cardId as string)) continue;
       const card = state.G.cardIndex[cardId as string];
       if (!card || card.meta.faceDown) continue;

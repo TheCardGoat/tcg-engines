@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/"
+  relation: "current_index"
+---
+
 # Official Flesh and Blood Release Notes
 
 This is the complete official release-note index as published on 8 August 2026.

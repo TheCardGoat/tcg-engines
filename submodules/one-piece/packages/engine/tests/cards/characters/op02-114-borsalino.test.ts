@@ -91,15 +91,17 @@ describe("OP02-114 Borsalino", () => {
     expect(target?.kind).toBe("selectEntity");
     if (target?.kind !== "selectEntity") throw new Error("Expected X.Drake's K.O. target.");
     expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(eligibleId);
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(borsalinoId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [eligibleId] }, "south");
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(borsalinoId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [borsalinoId] }, "south");
 
     const view = engine.getView("south");
     expect(view.players.north.characters.some((card) => card?.instanceId === borsalinoId)).toBe(
       true,
     );
     expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(borsalinoId);
-    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(eligibleId);
+    expect(view.players.north.characters.some((card) => card?.instanceId === eligibleId)).toBe(
+      true,
+    );
     expect(view.prompts).toHaveLength(0);
   });
 

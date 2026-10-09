@@ -90,4 +90,26 @@ describe("EB03-025 Hina", () => {
     expect(view.players.south.characters.some((c) => c?.cardId === eb03Hina025.id)).toBe(true);
     expect(view.prompts).toHaveLength(0);
   });
+  test("exact base6000 permits current7000 and excludes current6000 with base5000", () => {
+    const e = OnePieceTestEngine.create({
+      hand: ["EB03-025", "EB01-005"],
+      activeDon: 7,
+      character: ["EB01-012", "EB01-025"],
+    });
+    const six = e.findCardInZone("south", "character", "EB01-012"),
+      five = e.findCardInZone("south", "character", "EB01-025");
+    e.asSouth().attachDon(six, 1);
+    e.asSouth().attachDon(five, 1);
+    e.asSouth().play("EB03-025");
+    e.asSouth().acceptOptional();
+    const p = e.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (p?.kind !== "selectEntity") throw Error("basepower");
+    expect(p.candidates.map((c) => c.ref.id)).toContain(six);
+    expect(p.candidates.map((c) => c.ref.id)).not.toContain(five);
+    e.asSouth().chooseTargets(six);
+    expect(e.findCardInZone("south", "hand", "EB01-012")).toBe(six);
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === five)?.power,
+    ).toBe(6000);
+  });
 });

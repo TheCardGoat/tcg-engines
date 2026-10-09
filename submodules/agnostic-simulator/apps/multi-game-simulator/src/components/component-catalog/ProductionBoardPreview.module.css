@@ -1,0 +1,7 @@
+.preview { min-width: 0; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-block: 16px; }
+.controls button, .controls label { min-height: 44px; }
+.controls button { border: 1px solid #61768a; border-radius: 6px; padding: 8px 12px; background: #202e40; color: #f2f5f9; }
+.controls label { display: flex; align-items: center; gap: 8px; }
+.frame { display: block; width: 100%; height: 720px; border: 1px solid #405365; border-radius: 8px; background: #0a1018; }
+.frame[data-portrait] { max-width: 390px; height: 844px; margin-inline: auto; }

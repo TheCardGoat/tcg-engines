@@ -24,7 +24,7 @@ export const op16BartholomewKuma093: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Revolutionary Army The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Revolutionary Army"],
   attribute: "strike",
   effect:
     "[On Play] Draw 2 cards and trash 2 cards from your hand. Then, give up to 1 rested DON!! card to your Leader or 1 of your Characters.",

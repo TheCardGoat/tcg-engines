@@ -31,7 +31,7 @@ export const prb01TrafalgarLawSt03008JollyRogerFoil008: CharacterCard = {
   setId: "ST03",
   cost: 1,
   power: 1000,
-  traits: ["Heart Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Heart Pirates"],
   attribute: "slash",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

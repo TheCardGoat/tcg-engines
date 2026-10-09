@@ -6,6 +6,8 @@ import { rhinarRecklessRampageI18n } from "@tcg/flesh-and-blood-cards/cards/hero
 import { localizeFleshAndBloodCard } from "../../../../cards/src/localization.ts";
 import { listLegalCommands } from "../../automation/legal-commands.ts";
 import { FabTestEngine } from "../../testing/test-engine.ts";
+import { blueSeaTricorn } from "../fixtures.ts";
+import { blueSeaTricornI18n } from "@tcg/flesh-and-blood-cards/cards/equipment/blue-sea-tricorn.i18n";
 
 describe("activation labels", () => {
   it("keeps the effect and go again readable beyond the former 48-character cutoff", () => {
@@ -21,5 +23,21 @@ describe("activation labels", () => {
     );
     expect(activation?.label).toMatch(/dominate/i);
     expect(activation?.label).toMatch(/go again/i);
+  });
+
+  it("keeps the printed resource cost when no short ability name is authored", () => {
+    const bravo = localizeFleshAndBloodCard(bravoShowstopper, bravoShowstopperI18n);
+    const rhinar = localizeFleshAndBloodCard(rhinarRecklessRampage, rhinarRecklessRampageI18n);
+    const tricorn = localizeFleshAndBloodCard(blueSeaTricorn, blueSeaTricornI18n);
+    const game = FabTestEngine.start(
+      { hero: bravo, head: [tricorn], resourcePoints: 3, deck: 6 },
+      { hero: rhinar, deck: 6 },
+      { autoPassPriority: false },
+    );
+    const activation = listLegalCommands(game.getRuntime(), game.as(bravo).id).find(
+      (command) =>
+        command.move === "activate" && command.label.startsWith("Activate Blue Sea Tricorn"),
+    );
+    expect(activation?.label).toContain("{r}{r}{r}, destroy this: Draw a card");
   });
 });

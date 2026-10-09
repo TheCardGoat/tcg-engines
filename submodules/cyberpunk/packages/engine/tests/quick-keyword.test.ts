@@ -33,6 +33,7 @@ describe("QUICK keyword", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       { hand: [quickProgram], eddies: 5 },
       { field: [attacker], eddies: 5 },
+      { activePlayerId: P2 },
     );
 
     // P2 attacks P1's field directly (no defender).
@@ -55,6 +56,7 @@ describe("QUICK keyword", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       { hand: [normalProgram], eddies: 5 },
       { field: [attacker], eddies: 5 },
+      { activePlayerId: P2 },
     );
 
     engine.attackRival(attacker, { as: P2 });

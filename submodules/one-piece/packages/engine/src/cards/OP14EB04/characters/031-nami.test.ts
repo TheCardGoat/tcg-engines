@@ -5,6 +5,22 @@ import { op14eb04Nami031 } from "../../../../../cards/src/cards/characters/op14-
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP14-031 Nami", () => {
+  test("printed Counter +1000 prevents damage from an equal-power Leader attack", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: [op14eb04Nami031], life: 3 },
+      {},
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const namiId = engine.findCardInZone("south", "hand", op14eb04Nami031);
+    engine.declareAttack(engine.leader("north"), engine.leader("south"), "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [namiId] }, "south");
+    expect(engine.getView("south").players.south.lifeCount).toBe(3);
+    expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
+      namiId,
+    );
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("on play rests up to two cost-8-or-less opponents and activates up to five DON!! at end of turn", () => {
     const engine = OnePieceTestEngine.create(
       {

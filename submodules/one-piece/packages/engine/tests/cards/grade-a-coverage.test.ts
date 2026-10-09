@@ -5,7 +5,9 @@ import type { OPCard } from "@tcg/op-types";
 
 import {
   buildProofIndex,
+  extractCardIds,
   gradeSource,
+  hasMeaningfulDecline,
   isCard,
   isVanilla,
   listCardBehaviorTestFiles,
@@ -14,6 +16,84 @@ import {
 } from "./grade-a-checker.ts";
 
 describe("Grade A card behavior proofs", () => {
+  test("indexes unnumbered event Leaders without inventing a collector number", () => {
+    const id = "EVENT-LEADER-MONKEY-D-LUFFY";
+    expect([...extractCardIds('"EVENT-LEADER-MONKEY-D-LUFFY" and "OP01-001"')]).toEqual([
+      id,
+      "OP01-001",
+    ]);
+    const primary = "tests/cards/leaders/event-leader-monkey-d-luffy.test.ts";
+    expect(
+      primaryProofPathForCard(id, new Map([[id, ["tests/cards/other.test.ts", primary]]])),
+    ).toBe(primary);
+  });
+
+  test("binds literal card IDs in optional play proofs to the exact subject", () => {
+    const card = Object.values(cardExports).find(
+      (entry) => isCard(entry) && entry.id === "OP17-098",
+    );
+    if (!isCard(card)) throw new Error("Expected Kong Gun definition");
+    const proof = `test("decline Main", () => {
+      engine.playCard("OP17-098");
+      engine.asSouth().declineOptional();
+      expect(engine.getView("south").players.south.activeDon).toBe(6);
+    });`;
+    expect(hasMeaningfulDecline(proof, card)).toBe(true);
+    expect(
+      hasMeaningfulDecline(proof.replace('playCard("OP17-098")', 'playCard("OP17-077")'), card),
+    ).toBe(false);
+  });
+
+  test("binds optional battle-end decline to the subject's physical combatant", () => {
+    const card = Object.values(cardExports).find(
+      (entry) => isCard(entry) && entry.id === "ST08-013",
+    );
+    if (!isCard(card)) throw new Error("Expected Bon Kurei definition");
+    const proof = `test("declines battle-end KO", () => {
+      const engine = OnePieceTestEngine.create({ character: [{ cardId: "ST08-013", attachedDon: 1 }] });
+      const subject = engine.findCardInZone("south", "character", "ST08-013");
+      engine.declareAttack(subject, other, "south");
+      engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+      expect(engine.getView("south").players.south.characters.length).toBe(1);
+    });`;
+    expect(hasMeaningfulDecline(proof, card)).toBe(true);
+    expect(
+      hasMeaningfulDecline(
+        proof.replace("declareAttack(subject, other", "declareAttack(other, subject"),
+        card,
+      ),
+    ).toBe(true);
+    expect(
+      hasMeaningfulDecline(
+        proof.replace("declareAttack(subject, other", "declareAttack(unrelated, other"),
+        card,
+      ),
+    ).toBe(false);
+    expect(
+      hasMeaningfulDecline(
+        proof.replace(
+          'findCardInZone("south", "character", "ST08-013")',
+          'findCardInZone("south", "character", "ST08-012")',
+        ),
+        card,
+      ),
+    ).toBe(false);
+  });
+
+  test("prefers a numbered Stage subject over a Character fixture import", () => {
+    const stage = "src/cards/OP15/stages/057.test.ts";
+    const fixture = "src/cards/OP15/characters/023-arlong.test.ts";
+    expect(primaryProofPathForCard("OP15-057", new Map([["OP15-057", [fixture, stage]]]))).toBe(
+      stage,
+    );
+    expect(
+      primaryProofPathForCard(
+        "OP14-057",
+        new Map([["OP14-057", [stage, "src/cards/OP14/stages/057.test.ts"]]]),
+      ),
+    ).toBe("src/cards/OP14/stages/057.test.ts");
+  });
+
   test("every non-vanilla ability card primary proof is Grade A", () => {
     const allCards = Object.values(cardExports as Record<string, unknown>).filter(isCard);
     const byCanonical = new Map<string, OPCard>();

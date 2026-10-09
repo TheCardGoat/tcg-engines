@@ -1,4 +1,4 @@
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
   expectCombat,
   expectFabCard,
@@ -94,6 +94,66 @@ describe("Emboldened Blade (EVO240) AAA", () => {
 
     Dori.play(emboldenedBladeBlue);
     game.helpers.resolveUntilIdle({ entityTargets: "minimum" });
+    Dori.attackWith(brutalAssaultBlue);
+    expectCombat(game).toHaveAttackPower(4);
+  });
+  it("disclosure: face-down candidates never reveal their identity (CR 1.8.6b)", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: dorinthea,
+        weapon1: [dawnblade],
+        hand: [emboldenedBladeBlue, brutalAssaultBlue],
+        arsenal: [{ card: sinkBelowRed, state: { faceDown: true } }],
+        resourcePoints: 3,
+        actionPoints: 1,
+        deck: 6,
+      },
+      {
+        hero: dash,
+        hand: [],
+        life: 20,
+        arsenal: [{ card: snatchRed, state: { faceDown: true } }],
+        deck: 6,
+      },
+      FAB_MANUAL_HARNESS,
+    );
+    const Dori = game.as(dorinthea);
+    const bladeId = Dori.cardIn("hand", emboldenedBladeBlue).instanceId;
+
+    game.exec({ move: "begin-play", actorId: Dori.id, payload: { instanceId: bladeId } });
+    let decision = game.getState().decision;
+    for (let step = 0; step < 30; step += 1) {
+      decision = game.getState().decision;
+      if (decision) break;
+      const priority = (
+        game as unknown as { getPriorityPlayerId?: () => string | null }
+      ).getPriorityPlayerId?.();
+      if (!priority) break;
+      (game as unknown as { pass: (playerId: string) => void }).pass(priority);
+    }
+    if (decision?.kind !== "entity-target") throw new Error("expected an entity-target decision");
+    expect(decision.candidates).toHaveLength(2);
+    for (const candidate of decision.candidates) {
+      expect(candidate.label).toBe("Face-down card");
+      expect(candidate.hidden).toBe(true);
+      expect(candidate.printedName).toBeUndefined();
+    }
+
+    // Choosing the anonymized candidate still applies the effect normally.
+    const sinkId = Dori.cardIn("arsenal", sinkBelowRed).instanceId;
+    game.exec({
+      move: "answer-decision",
+      actorId: decision.actorId,
+      payload: {
+        decisionId: decision.decisionId,
+        stateVersion: decision.stateVersion,
+        answer: { kind: "entity-target", instanceIds: [sinkId] },
+      },
+    });
+    game.helpers.resolveUntilIdle();
+
+    expectFabCard(Dori, sinkBelowRed).toBeIn("graveyard");
+    expectFabPlayer(Dori).toHaveAP(1);
     Dori.attackWith(brutalAssaultBlue);
     expectCombat(game).toHaveAttackPower(4);
   });

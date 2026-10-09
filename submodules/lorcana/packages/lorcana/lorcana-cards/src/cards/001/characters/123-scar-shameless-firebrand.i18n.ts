@@ -18,7 +18,17 @@ export const scarShamelessFirebrandI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Scar",
     version: "Schamloser Unruhestifter",
-    text: "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Scar-Charaktere auszuspielen.)\\Mitreißende Ansprache\\ Wenn du diesen Charakter ausspielst, mache alle deine Charaktere, die 3 oder weniger kosten, bereit. Sie können in diesem Zug nicht mehr erkunden.",
+    text: [
+      {
+        title:
+          "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Scar-Charaktere auszuspielen.)",
+      },
+      {
+        title: "Mitreißende Ansprache",
+        description:
+          "Wenn du diesen Charakter ausspielst, mache alle deine Charaktere, die 3 oder weniger kosten, bereit. Sie können in diesem Zug nicht mehr erkunden.",
+      },
+    ],
   },
   fr: {
     name: "SCAR",

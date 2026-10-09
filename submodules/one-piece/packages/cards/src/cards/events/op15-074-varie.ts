@@ -28,10 +28,17 @@ export const op15Varie074: EventCard = {
     effects: [
       {
         trigger: "main",
+        optional: true,
         costs: [
           {
             cost: "returnDon",
             amount: 1,
+          },
+        ],
+        postCostConditions: [
+          {
+            condition: "leaderName",
+            name: "Enel",
           },
         ],
         actions: [
@@ -39,10 +46,6 @@ export const op15Varie074: EventCard = {
             action: "draw",
             player: "self",
             amount: 1,
-            condition: {
-              condition: "leaderName",
-              name: "Enel",
-            },
           },
           {
             action: "modifyCost",

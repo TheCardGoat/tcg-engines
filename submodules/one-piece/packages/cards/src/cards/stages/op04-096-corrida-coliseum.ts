@@ -48,7 +48,7 @@ export const op04CorridaColiseum096: StageCard = {
           {
             condition: "leaderTrait",
             trait: "Dressrosa",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -64,7 +64,7 @@ export const op04CorridaColiseum096: StageCard = {
                 {
                   filter: "trait",
                   value: "Dressrosa",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

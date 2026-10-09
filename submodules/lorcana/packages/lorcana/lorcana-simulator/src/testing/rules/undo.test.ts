@@ -24,6 +24,47 @@ function getServerCardCatalog(server: { getResolvedStaticResources(): MatchStati
 }
 
 describe("Undo", () => {
+  it("restores the turn before multiple safe actions as one authoritative undo", () => {
+    const engine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [inkableCard, vanillaCharacter],
+      deck: 1,
+    });
+    const server = engine.getServerEngine();
+    const firstVersion = server.getStateID();
+
+    expect(engine.asPlayerOne().ink(inkableCard)).toBeSuccessfulCommand();
+    expect(engine.asPlayerOne().playCard(vanillaCharacter)).toBeSuccessfulCommand();
+    expect(server.canUndoToTurnStart(PLAYER_ONE)).toBe(true);
+    expect(server.canUndoToTurnStart(PLAYER_TWO)).toBe(false);
+    const saved = getLorcanaServerAuthoritativeSnapshot(server, server.getCardsMaps());
+    const restored = loadLorcanaServerAuthoritativeSnapshot(
+      saved,
+      getServerCardCatalog(
+        server as typeof server & {
+          getResolvedStaticResources(): MatchStaticResources;
+        },
+      ),
+    );
+    expect(restored.canUndoToTurnStart(PLAYER_ONE)).toBe(true);
+
+    const beforeUndoVersion = server.getStateID();
+    expect(server.undoToTurnStart(PLAYER_ONE).success).toBe(true);
+    expect(server.getStateID()).toBe(beforeUndoVersion + 1);
+    expect(engine.asPlayerOne().getZonesCardCount().hand).toBe(2);
+    expect(engine.asPlayerOne().getZonesCardCount().inkwell).toBe(0);
+    expect(server.getMoveHistory()).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          moveId: "undoToTurnStart",
+          transitionType: "undo",
+          restoredCheckpointStateID: firstVersion,
+        }),
+      ]),
+    );
+    expect(engine.asPlayerOne().ink(inkableCard)).toBeSuccessfulCommand();
+    expect(server.canUndoToTurnStart(PLAYER_ONE)).toBe(true);
+  });
+
   describe("undoable moves", () => {
     it("ink a card -> undo succeeds -> card back in hand, ink restored", () => {
       const engine = LorcanaMultiplayerTestEngine.createWithFixture({
@@ -350,6 +391,36 @@ describe("Undo", () => {
       // Non-undoable move clears checkpoint
       expect(engine.asPlayerOne().playCard(drawAction)).toBeSuccessfulCommand();
       expect(server.canUndo(PLAYER_ONE)).toBe(false);
+    });
+
+    it("undoes later quests one at a time but stops at an earlier draw", () => {
+      const engine = LorcanaMultiplayerTestEngine.createWithFixture({
+        hand: [drawAction],
+        play: [vanillaCharacter, simbaProtectiveCub],
+        inkwell: drawAction.cost,
+        deck: 10,
+      });
+      const server = engine.getServerEngine();
+      const loreBefore = engine.asPlayerOne().getLore(PLAYER_ONE);
+
+      expect(engine.asPlayerOne().playCard(drawAction)).toBeSuccessfulCommand();
+      const handAfterDraw = engine.asPlayerOne().getZonesCardCount().hand;
+      expect(server.canUndo(PLAYER_ONE)).toBe(false);
+
+      expect(engine.asPlayerOne().quest(vanillaCharacter)).toBeSuccessfulCommand();
+      expect(engine.asPlayerOne().quest(simbaProtectiveCub)).toBeSuccessfulCommand();
+      expect(server.canUndo(PLAYER_ONE)).toBe(true);
+      expect(server.canUndoToTurnStart(PLAYER_ONE)).toBe(false);
+
+      expect(server.undo(PLAYER_ONE).success).toBe(true);
+      expect(engine.asPlayerOne().isExerted(vanillaCharacter)).toBe(true);
+      expect(engine.asPlayerOne().isExerted(simbaProtectiveCub)).toBe(false);
+      expect(server.undo(PLAYER_ONE).success).toBe(true);
+      expect(engine.asPlayerOne().isExerted(vanillaCharacter)).toBe(false);
+      expect(engine.asPlayerOne().getLore(PLAYER_ONE)).toBe(loreBefore);
+      expect(engine.asPlayerOne().getZonesCardCount().hand).toBe(handAfterDraw);
+      expect(server.canUndo(PLAYER_ONE)).toBe(false);
+      expect(server.undo(PLAYER_ONE).success).toBe(false);
     });
 
     it("opponent-authored commands break the undo tail", () => {

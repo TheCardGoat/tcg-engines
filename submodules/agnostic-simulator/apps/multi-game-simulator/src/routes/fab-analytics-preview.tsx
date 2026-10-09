@@ -4,6 +4,7 @@ import type { FabPostGameSummaryModel } from "../games/flesh-and-blood/FabPostGa
 
 /** Small visual fixture: no deck loading; all numbers are explicitly illustrative. */
 const summary: FabPostGameSummaryModel = {
+  kind: "analytics",
   viewer: { id: "p1", label: "Example player", heroName: "Rhinar", life: 14, result: "win" },
   opponent: { id: "p2", label: "Example opponent", heroName: "Bravo", life: 0, result: "loss" },
   outcome: "victory",

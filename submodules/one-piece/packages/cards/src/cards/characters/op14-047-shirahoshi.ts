@@ -60,12 +60,12 @@ export const op14eb04Shirahoshi047: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Fish-Man",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Merfolk",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

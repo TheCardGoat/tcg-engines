@@ -6,11 +6,34 @@ import {
   op04Gyats080,
   op04Ideo077,
   op04Sabo083,
+  op06Oars083,
 } from "@tcg/op-cards";
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP04-083 Sabo", () => {
+  test("its protected Characters cannot pay a K.O. activation cost", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [op04Sabo083],
+      character: [op06Oars083],
+      activeDon: 5,
+      deck: [eb01Doma005, eb01Fourtricks025, eb01Doma005],
+    });
+    const oarsId = engine.findCardInZone("south", "character", op06Oars083);
+    engine.playCard(op04Sabo083, "south");
+    const failure = engine.expectFailure({
+      type: "activateEffect",
+      seat: "south",
+      sourceInstanceId: oarsId,
+      trigger: "activateMain",
+    });
+    expect(failure.accepted).toBe(false);
+    expect(
+      engine.getView("south").players.south.characters.some((card) => card?.instanceId === oarsId),
+    ).toBe(true);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("draws two, trashes two, and protects all own Characters from effect K.O. until next turn", () => {
     const engine = OnePieceTestEngine.create(
       {
@@ -42,15 +65,13 @@ describe("OP04-083 Sabo", () => {
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
     engine.resolveDecision("effectCostTrashFromHand", { selectedIds: [firstDiscardId] }, "north");
     const protectedTarget = engine.pendingDecision("effectTargetSelection", "north").steps[0];
-    expect(protectedTarget).toMatchObject({ kind: "selectEntity", min: 0, max: 0 });
+    expect(protectedTarget).toMatchObject({ kind: "selectEntity", min: 0, max: 1 });
     if (protectedTarget?.kind !== "selectEntity") {
       throw new Error("Expected Koby's filtered target choice.");
     }
-    expect(protectedTarget.candidates.map((candidate) => candidate.ref.id)).not.toContain(
-      protectedId,
-    );
-    expect(protectedTarget.candidates).toHaveLength(0);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "north");
+    expect(protectedTarget.candidates.map((candidate) => candidate.ref.id)).toContain(protectedId);
+
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [protectedId] }, "north");
     let view = engine.getView("south");
     expect(view.prompts).toHaveLength(0);
     expect(view.players.south.characters.some((card) => card?.instanceId === protectedId)).toBe(

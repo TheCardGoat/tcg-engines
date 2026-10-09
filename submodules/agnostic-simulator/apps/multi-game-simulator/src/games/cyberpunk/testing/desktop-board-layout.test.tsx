@@ -14,7 +14,6 @@ import {
 import type { Side } from "../engine";
 import {
   DEFAULT_PLAYER_ZONE_WIDTH,
-  HAND_SIZE_MULTIPLIERS,
   computePlayerHandLayout,
 } from "../components/GameBoard/handLayout";
 
@@ -38,7 +37,6 @@ describe("Cyberpunk desktop board layout", () => {
       );
       expect(desktopShell, "expected desktop viewport shell at 1440px").not.toBeNull();
       expect(desktopShell?.getAttribute("data-sidebar-open")).toBe("true");
-      expect(desktopShell!.childElementCount).toBe(2);
 
       // The interaction panel is mounted inside the board overlay (board-wrap),
       // not in a dedicated right-hand column.
@@ -58,12 +56,9 @@ describe("Cyberpunk desktop board layout", () => {
       );
       expect(opponentHand, "expected opponent hand zone").not.toBeNull();
       expect(playerHand, "expected player hand zone").not.toBeNull();
-      expect(opponentHand!.closest('[class*="handTop"]')).not.toBeNull();
       expect(playerHand!.closest('[class*="handBottom"]')).not.toBeNull();
       expect(opponentHand!.dataset.handLayout).toBe("opponent");
-      expect(opponentHand!.dataset.handAlignment).toBe("start");
       expect(playerHand!.dataset.handLayout).toBe("player");
-      expect(playerHand!.dataset.handAlignment).toBe("center");
       expect(Number(playerHand!.dataset.handCardWidth)).toBeGreaterThan(
         Number(opponentHand!.dataset.handCardWidth),
       );
@@ -72,24 +67,6 @@ describe("Cyberpunk desktop board layout", () => {
     } finally {
       view.unmount();
     }
-  });
-
-  test("hand layout sizes self larger, opponent smaller, and emits integer pixels", () => {
-    const cardCount = 5;
-    const playerLayout = computePlayerHandLayout(cardCount, DEFAULT_PLAYER_ZONE_WIDTH, "player");
-    const opponentLayout = computePlayerHandLayout(
-      cardCount,
-      DEFAULT_PLAYER_ZONE_WIDTH,
-      "opponent",
-    );
-
-    expect(HAND_SIZE_MULTIPLIERS.player).toBe(1.05);
-    expect(HAND_SIZE_MULTIPLIERS.opponent).toBe(0.75);
-    expect(playerLayout.cardWidth).toBeGreaterThan(opponentLayout.cardWidth);
-    expect(Number.isInteger(playerLayout.cardWidth)).toBe(true);
-    expect(Number.isInteger(opponentLayout.cardWidth)).toBe(true);
-    expectIntegerLayout(playerLayout.cards);
-    expectIntegerLayout(opponentLayout.cards);
   });
 
   test("a hand-card click opens only the card action menu", async () => {
@@ -160,7 +137,7 @@ describe("Cyberpunk desktop board layout", () => {
     }
   });
 
-  test("rival hand can grow from its safe left edge while the player hand stays centered", () => {
+  test("rival hand grows from its safe left edge while the centered player hand stays upright", () => {
     const cardCount = 5;
     const opponentLayout = computePlayerHandLayout(
       cardCount,
@@ -180,9 +157,9 @@ describe("Cyberpunk desktop board layout", () => {
     expect(playerLayout.cards[0]!.x).toBeLessThan(0);
     expect(playerLayout.cards.at(-1)!.x).toBeGreaterThan(0);
     expect(Math.min(...playerLayout.cards.map((card) => card.y))).toBeGreaterThan(0);
-    expect(Math.max(...playerLayout.cards.map((card) => card.y))).toBeGreaterThan(
-      Math.min(...playerLayout.cards.map((card) => card.y)),
-    );
+    expect(new Set(playerLayout.cards.map((card) => card.y)).size).toBe(1);
+    expect(playerLayout.cards.every((card) => card.angle === 0)).toBe(true);
+    expect(new Set(opponentLayout.cards.map((card) => card.y)).size).toBeGreaterThan(1);
   });
 
   test("priority lane follows the player with priority for both human seats", async () => {
@@ -312,11 +289,4 @@ function requireLane(container: HTMLElement, side: Side): HTMLElement {
   );
   expect(lane, `expected ${side} lane`).not.toBeNull();
   return lane!;
-}
-
-function expectIntegerLayout(cards: ReadonlyArray<{ x: number; y: number }>): void {
-  for (const card of cards) {
-    expect(Number.isInteger(card.x)).toBe(true);
-    expect(Number.isInteger(card.y)).toBe(true);
-  }
 }

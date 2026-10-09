@@ -31,7 +31,7 @@ export const op12Shirahoshi102: CharacterCard = {
   cost: 2,
   power: 0,
   counter: 1000,
-  traits: ["Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island"],
   attribute: "wisdom",
   effect:
     "If your Character with a base cost of 6 or less would be removed from the field by your opponent's effect, you may turn 1 card from the top of your Life cards face-up instead.[Opponent's Turn] If you have no other [Shirahoshi] with a base cost of 2, all of your \"Neptunian\" type Characters gain +2000 power.",
@@ -76,7 +76,7 @@ export const op12Shirahoshi102: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Neptunian",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

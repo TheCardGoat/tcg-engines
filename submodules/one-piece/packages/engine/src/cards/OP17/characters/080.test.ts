@@ -66,4 +66,54 @@ describe("OP17-080 Usopp", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("search takes an eligible Elbaph card and trashes both unchosen revealed cards", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-080"], activeDon: 10, deck: ["OP17-089", "ST02-002", "ST02-006", "OP13-013"] },
+      {},
+    );
+    e.asSouth().play("OP17-080");
+    const step = e.pendingDecision("effectSearchSelection", "south").steps[0];
+    if (step.kind !== "selectEntity") throw new Error("Expected search");
+    const id = step.candidates.find((c) => c.publicInfo?.cardId === "OP17-089")!.ref.id;
+    e.resolveDecision("effectSearchSelection", { selectedIds: [id] }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.cardId)).toEqual(["OP17-089"]);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toEqual([
+      "ST02-002",
+      "ST02-006",
+    ]);
+    expect(e.getView("south").players.south.deckCount).toBe(1);
+  });
+  test("an opposing cost-twelve Character activates the power bonus", () => {
+    const e = OnePieceTestEngine.create({ character: ["OP17-080"] }, { character: ["OP17-089"] });
+    expect(e.getView("south").players.south.characters[0]?.power).toBe(5000);
+    const absent = OnePieceTestEngine.create({ character: ["OP17-080"] }, {});
+    expect(absent.getView("south").players.south.characters[0]?.power).toBe(2000);
+  });
+
+  test("loses its live power bonus when the last qualifying Character is K.O.'d", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "ST06-001",
+        character: ["OP17-080"],
+        activeDon: 2,
+        deck: ["ST06-003", "ST06-003", "ST06-003"],
+        life: ["ST06-003", "ST06-003", "ST06-003", "ST06-003"],
+      },
+      {
+        leaderCardId: "ST06-001",
+        character: [{ cardId: "OP17-089", rested: true }],
+        hand: [],
+        deck: ["ST06-003", "ST06-003", "ST06-003"],
+        life: ["ST06-003", "ST06-003", "ST06-003", "ST06-003"],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const target = e.findCardInZone("north", "character", "OP17-089");
+    expect(e.getView("south").players.south.characters[0]?.power).toBe(5000);
+    e.asSouth().attachDon(e.leader("south"), 2);
+    e.asSouth().attack(e.leader("south"), target);
+    expect(e.getView("south").players.north.trash.map((card) => card.instanceId)).toContain(target);
+    expect(e.getView("south").players.south.characters[0]?.power).toBe(2000);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

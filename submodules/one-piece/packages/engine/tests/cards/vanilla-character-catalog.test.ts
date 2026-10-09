@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { getCard } from "@tcg/op-cards";
+import { allCards, getCard } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
 
 /**
@@ -24,6 +24,17 @@ describe("canonical vanilla Character catalog", () => {
   test("contains the complete unique vanilla inventory", () => {
     expect(vanillaCharacterIds.length).toBeGreaterThan(0);
     expect(new Set(vanillaCharacterIds).size).toBe(vanillaCharacterIds.length);
+    const catalogVanillas = allCards
+      .filter(
+        (card) =>
+          card.cardType === "character" &&
+          isBlankAbilityText(card.effect) &&
+          isBlankAbilityText(card.trigger) &&
+          isBlankAbilityText(card.i18n.en.effect) &&
+          card.effects === undefined,
+      )
+      .map((card) => card.id);
+    expect([...vanillaCharacterIds].sort()).toEqual(catalogVanillas.sort());
   });
 
   test.each(vanillaCharacterIds)("%s has no printed or executable ability", (cardId) => {

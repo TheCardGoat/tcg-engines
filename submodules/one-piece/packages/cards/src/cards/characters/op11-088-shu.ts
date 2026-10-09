@@ -35,17 +35,16 @@ export const op11Shu088: CharacterCard = {
         conditions: [
           {
             condition: "triggerEventCard",
-            filters: [
-              {
-                filter: "attribute",
-                value: "slash",
-              },
-            ],
+            filters: [{ filter: "cardCategory", value: "character" }],
           },
         ],
         actions: [
           {
             action: "modifyPower",
+            condition: {
+              condition: "triggerEventCard",
+              filters: [{ filter: "attribute", value: "slash" }],
+            },
             target: {
               player: "self",
               zones: ["character"],

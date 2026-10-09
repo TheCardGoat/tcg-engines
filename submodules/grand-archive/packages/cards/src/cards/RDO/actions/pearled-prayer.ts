@@ -42,8 +42,17 @@ export const pearledPrayer: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               {
                 kind: "conditional",
                 condition: {
-                  kind: "source-activation-context",
-                  phase: "main",
+                  kind: "all",
+                  conditions: [
+                    {
+                      kind: "source-activation-context",
+                      phase: "main",
+                    },
+                    {
+                      kind: "turn-player",
+                      player: "controller",
+                    },
+                  ],
                 },
                 then: {
                   kind: "recover",

@@ -1,66 +1,49 @@
 import { describe, expect, test } from "vite-plus/test";
+import { getCard } from "../../../../../cards/src/runtime-catalog.ts";
 import { OnePieceTestEngine } from "../../../index.ts";
-
 describe("OP17-010 Fossa", () => {
-  test("[Activate: Main] resolves its activated ability", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: ["OP17-010", "EB01-005"], activeDon: 5 },
-      { character: ["OP17-118"], activeDon: 5 },
+  test("gains power and can actually Block during the opponent turn", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP17-010"] },
+      { character: [{ cardId: "OP17-005" }] },
     );
-    const cardId = engine.findCardInZone("south", "character", "OP17-010");
-
-    engine.activateEffect(cardId, "activateMain", "south");
-    engine.acceptLeadingOptional("south");
-
-    for (let i = 0; i < 3; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").prompts).toHaveLength(0);
+    const fossa = e.findCardInZone("south", "character", "OP17-010");
+    e.activateEffect(fossa, "activateMain", "south");
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === fossa)?.power,
+    ).toBe(5000);
+    e.endTurn("south");
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.resolveDecision("battleBlocker", { selectedIds: [fossa] }, "south");
+    expect(e.getView("south").players.south.lifeCount).toBe(4);
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(fossa);
   });
-
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-010", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
-    );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-010",
-    );
-    expect(engine.getView("south").prompts).toHaveLength(0);
+  test("synthetic named Leader counts as another Fossa per the all-names FAQ", () => {
+    const leader = getCard("OP01-001"),
+      saved = leader.alternateNames;
+    try {
+      // There is no all-names Leader in this catalog. Isolate the named-Leader boundary.
+      leader.alternateNames = ["Fossa"];
+      const e = OnePieceTestEngine.create(
+        { leaderCardId: "OP01-001", character: ["OP17-010"] },
+        { character: ["OP17-005"] },
+      );
+      const fossa = e.findCardInZone("south", "character", "OP17-010");
+      const failed = e.expectFailure({
+        type: "activateEffect",
+        seat: "south",
+        sourceInstanceId: fossa,
+        trigger: "activateMain",
+      });
+      const restored = OnePieceTestEngine.fromState(failed.state);
+      expect(
+        restored.getView("south").players.south.characters.find((c) => c?.instanceId === fossa)
+          ?.power,
+      ).toBe(3000);
+      expect(restored.getView("south").prompts).toHaveLength(0);
+    } finally {
+      if (saved === undefined) delete leader.alternateNames;
+      else leader.alternateNames = saved;
+    }
   });
 });

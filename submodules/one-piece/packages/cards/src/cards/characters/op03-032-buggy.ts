@@ -30,7 +30,7 @@ export const op03Buggy032: CharacterCard = {
   setId: "OP03",
   cost: 3,
   power: 5000,
-  traits: ["Buggy Pirates East Blue"],
+  traits: ["East Blue", "Buggy Pirates"],
   attribute: "slash",
   effect: 'This Character cannot be K.O.\'d in battle by "Slash" attribute cards.',
   effects: {

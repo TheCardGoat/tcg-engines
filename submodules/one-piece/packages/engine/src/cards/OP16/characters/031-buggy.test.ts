@@ -38,7 +38,7 @@ describe("OP16-031 Buggy", () => {
 
     engine.endTurn("south");
     engine.asNorth().attack("OP16-003", "OP16-031");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
 
     const south = engine.getView("south").players.south;
     expect(south.trash.map((card) => card.instanceId)).toContain(buggyId);

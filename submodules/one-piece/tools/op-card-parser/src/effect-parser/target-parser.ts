@@ -2,18 +2,46 @@ import type { EffectTrigger, Target, TargetFilter, TotalConstraint, Zone } from 
 import { KEYWORD_BRACKET_TO_TYPE } from "./constants.ts";
 import { mapZoneNoun, parseZoneList, parseComparison } from "./helpers.ts";
 
+/** The group selectors retain their own filters and limits until one movement. */
+export function combineTargetGroups(groups: Target[]): Target | null {
+  let amount = 0;
+  for (const group of groups) {
+    if (typeof group.count.amount !== "number") return null;
+    amount += group.count.amount;
+  }
+  return {
+    player: "any",
+    zones: [...new Set(groups.flatMap((group) => group.zones))],
+    count: { amount, upTo: true },
+  };
+}
+
+// Ordinary type names match one complete official type. Only explicit
+// "type including" wording uses substring matching.
+export function ordinaryTraitMatch(): "exact" {
+  return "exact";
+}
+
 export function traitAlternativesFilter(
   traits: string[],
-  match?: "exact" | "includes",
+  match?: "exact" | "includes" | "ordinary",
 ): TargetFilter | null {
   const unique = [...new Set(traits.map((trait) => trait.trim()).filter(Boolean))];
   if (unique.length === 0) return null;
   if (unique.length === 1) {
-    return { filter: "trait", value: unique[0]!, ...(match && { match }) };
+    return {
+      filter: "trait",
+      value: unique[0]!,
+      ...(match && { match: match === "ordinary" ? ordinaryTraitMatch() : match }),
+    };
   }
   return {
     filter: "anyOf",
-    filters: unique.map((value) => ({ filter: "trait", value, ...(match && { match }) })),
+    filters: unique.map((value) => ({
+      filter: "trait",
+      value,
+      ...(match && { match: match === "ordinary" ? ordinaryTraitMatch() : match }),
+    })),
   };
 }
 
@@ -239,6 +267,24 @@ export function extractTargetFilters(text: string): {
 
 export function parseTarget(text: string): Target | null {
   const trimmed = text.trim().replace(/\.+$/, "");
+  const allNamedAlternatives =
+    /^all\s+of\s+your\s+\[([^\]]+)\]\s+and\s+\[([^\]]+)\]\s+Characters$/i.exec(trimmed);
+  if (allNamedAlternatives)
+    return {
+      player: "self",
+      zones: ["character"],
+      count: { amount: "all" },
+      filters: [
+        {
+          filter: "anyOf",
+          filters: [
+            { filter: "name", value: allNamedAlternatives[1]! },
+            { filter: "name", value: allNamedAlternatives[2]! },
+          ],
+        },
+      ],
+    };
+
   if (!trimmed) return null;
 
   // Self-reference: "this Character/Leader/Stage"
@@ -328,7 +374,7 @@ export function parseTarget(text: string): Target | null {
         .replace(/[[\]{}"\u201c\u201d]$/g, "")
         .trim(),
     );
-    const alternatives = traitAlternativesFilter(traits, "includes");
+    const alternatives = traitAlternativesFilter(traits, "ordinary");
     if (alternatives) traitFilters.push(alternatives);
     rest = rest.slice(traitPrefixMatch[0].length);
   }
@@ -336,9 +382,8 @@ export function parseTarget(text: string): Target | null {
   // Attribute prefix: "(Special) attribute Characters" / "\"Slash\" attribute Characters"
   let attributeFilter: TargetFilter | null = null;
   if (!traitPrefixMatch) {
-    const attrPrefixMatch = /^(?:\(([^)]+)\)|["\u201c]([^"\u201d]+)["\u201d])\s+attribute\s+/i.exec(
-      rest,
-    );
+    const attrPrefixMatch =
+      /^(?:[<(＜]([^)>＞]+)[)>＞]|["\u201c]([^"\u201d]+)["\u201d])\s+attribute\s+/i.exec(rest);
     if (attrPrefixMatch) {
       attributeFilter = {
         filter: "attribute",
@@ -395,7 +440,7 @@ export function parseTarget(text: string): Target | null {
     const traitParts = [
       ...mixedDonTraitCharacters[1]!.matchAll(/[[{"\u201c]([^\]}"\u201d]+)[\]}"\u201d]/g),
     ].map((entry) => entry[1]!);
-    const traitFilter = traitAlternativesFilter(traitParts, "includes");
+    const traitFilter = traitAlternativesFilter(traitParts, "ordinary");
     const suffixFilters = extractTargetFilters(
       `Characters${mixedDonTraitCharacters[2] ?? ""}`,
     ).filters;
@@ -521,7 +566,7 @@ export function parseTargetWithoutPlayer(text: string): Target | null {
   );
   const finalZonesText = traitPrefix ? traitPrefix[2]! : zonesText;
   const traitFilters: TargetFilter[] = traitPrefix
-    ? [{ filter: "trait", value: traitPrefix[1]!, match: "includes" }]
+    ? [{ filter: "trait", value: traitPrefix[1]!, match: ordinaryTraitMatch() }]
     : [];
 
   // Strip "other than [Name]" from zone text
@@ -552,6 +597,78 @@ export function parseTargetWithoutPlayer(text: string): Target | null {
 export function parseModifyPowerTarget(text: string): Target | null {
   const trimmed = text.trim();
 
+  // A comma-delimited trailing power qualifier applies to both alternatives.
+  const namedOrIncludingTrait =
+    /^up to (\d+) of your \[([^\]]+)\] Characters? or up to \1 of your Characters? with a type including ["“]([^"”]+)["”], with (\d+) power or (more|less),?$/i.exec(
+      trimmed,
+    );
+  if (namedOrIncludingTrait)
+    return {
+      player: "self",
+      zones: ["character"],
+      count: { amount: Number(namedOrIncludingTrait[1]), upTo: true },
+      filters: [
+        {
+          filter: "anyOf",
+          filters: [
+            { filter: "name", value: namedOrIncludingTrait[2]! },
+            { filter: "trait", value: namedOrIncludingTrait[3]!, match: "includes" },
+          ],
+        },
+        {
+          filter: "power",
+          comparison: namedOrIncludingTrait[5]!.toLowerCase() === "more" ? "gte" : "lte",
+          value: Number(namedOrIncludingTrait[4]),
+        },
+      ],
+    };
+
+  const namedLeader = /^your\s+\[([^\]]+)\]\s+Leader$/i.exec(trimmed);
+  if (namedLeader)
+    return {
+      player: "self",
+      zones: ["leader"],
+      count: { amount: 1 },
+      filters: [{ filter: "name", value: namedLeader[1]! }],
+    };
+  const allNamedCards = /^all\s+of\s+your\s+\[([^\]]+)\]\s+and\s+\[([^\]]+)\]\s+cards$/i.exec(
+    trimmed,
+  );
+  if (allNamedCards)
+    return {
+      player: "self",
+      zones: ["leader", "character", "stage"],
+      count: { amount: "all" },
+      filters: [
+        {
+          filter: "anyOf",
+          filters: [
+            { filter: "name", value: allNamedCards[1]! },
+            { filter: "name", value: allNamedCards[2]! },
+          ],
+        },
+      ],
+    };
+
+  const characterOrNamedCard =
+    /^up\s+to\s+(\d+)\s+of\s+your\s+Characters?\s+or\s+\[([^\]]+)\]$/i.exec(trimmed);
+  if (characterOrNamedCard) {
+    return {
+      player: "self",
+      zones: ["leader", "character"],
+      count: { amount: parseInt(characterOrNamedCard[1]!, 10), upTo: true },
+      filters: [
+        {
+          filter: "anyOf",
+          filters: [
+            { filter: "cardCategory", value: "character" },
+            { filter: "name", value: characterOrNamedCard[2]! },
+          ],
+        },
+      ],
+    };
+  }
+
   const ownedTraitLeaderOrCharacterMatch =
     /^up\s+to\s+(\d+)\s+(?:[[{"\u201c])([^\]}"\u201d]+)(?:[\]}"\u201d])\s+type\s+Leader\s+or\s+Character\s+cards?\s+on\s+your\s+field$/i.exec(
       trimmed,
@@ -565,7 +682,7 @@ export function parseModifyPowerTarget(text: string): Target | null {
         {
           filter: "trait",
           value: ownedTraitLeaderOrCharacterMatch[2]!,
-          match: "includes",
+          match: ordinaryTraitMatch(),
         },
       ],
     };
@@ -592,8 +709,18 @@ export function parseModifyPowerTarget(text: string): Target | null {
       player: "self",
       zones: ["leader"],
       count: { amount: 1 },
-      filters: [{ filter: "trait", value: traitLeaderMatch[1]!, match: "includes" }],
+      filters: [
+        {
+          filter: "trait",
+          value: traitLeaderMatch[1]!,
+          match: ordinaryTraitMatch(),
+        },
+      ],
     };
+  }
+
+  if (/^your opponent['’]s Leader and all (?:of their )?Characters$/i.test(trimmed)) {
+    return { player: "opponent", zones: ["leader", "character"], count: { amount: "all" } };
   }
 
   // "Your Leader and all of your Characters" → multi-zone target
@@ -632,7 +759,7 @@ export function parseModifyPowerTarget(text: string): Target | null {
     const zoneText = allTraitMatch[3]!.toLowerCase();
     const zones: Zone[] = zoneText.includes("leader") ? ["leader", "character"] : ["character"];
     let rest = allTraitMatch[4] || "";
-    const traitFilter = traitAlternativesFilter([trait, ...(trait2 ? [trait2] : [])], "includes");
+    const traitFilter = traitAlternativesFilter([trait, ...(trait2 ? [trait2] : [])], "ordinary");
     const filters: TargetFilter[] = traitFilter ? [traitFilter] : [];
     if (/\bother\s+than\s+this\s+Character\b/i.test(rest)) {
       filters.push({ filter: "excludeSelf" });

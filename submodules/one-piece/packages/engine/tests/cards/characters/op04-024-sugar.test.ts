@@ -11,6 +11,24 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP04-024 Sugar", () => {
+  test("cannot resolve its play reaction after Marco's On Play K.O.s it", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op04DonquixoteDoflamingo019, character: [op04Sugar024] },
+      { hand: ["OP03-013"], activeDon: 5 },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const sugarId = engine.findCardInZone("south", "character", op04Sugar024);
+    const marcoId = engine.findCardInZone("north", "hand", "OP03-013");
+    engine.playCard("OP03-013", "north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [sugarId] }, "north");
+    const view = engine.getView("south");
+    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(sugarId);
+    expect(view.players.north.characters.find((card) => card?.instanceId === marcoId)?.rested).toBe(
+      false,
+    );
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("on the opponent's turn lets its controller rest an opposing Character, then rests itself", () => {
     const engine = OnePieceTestEngine.create(
       {
@@ -108,7 +126,7 @@ describe("OP04-024 Sugar", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("On Play rests only an active opposing cost-4-or-less Character", () => {
+  test("On Play rests an opposing cost-4-or-less Character", () => {
     const engine = OnePieceTestEngine.create(
       {
         hand: [op04Sugar024],
@@ -136,10 +154,13 @@ describe("OP04-024 Sugar", () => {
     expect(step?.kind).toBe("selectEntity");
     if (step?.kind !== "selectEntity") throw new Error("Expected Sugar's On Play target.");
     expect(step).toMatchObject({ min: 0, max: 1 });
-    expect(step.candidates.map((candidate) => candidate.ref.id)).toEqual([eligibleId]);
+    expect(step.candidates.map((candidate) => candidate.ref.id)).toEqual([
+      eligibleId,
+      alreadyRestedId,
+    ]);
     expect(step.candidates.map((candidate) => candidate.ref.id)).not.toContain(ownId);
     expect(step.candidates.map((candidate) => candidate.ref.id)).not.toContain(tooExpensiveId);
-    expect(step.candidates.map((candidate) => candidate.ref.id)).not.toContain(alreadyRestedId);
+    expect(step.candidates.map((candidate) => candidate.ref.id)).toContain(alreadyRestedId);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [eligibleId] }, "south");
 
     const view = engine.getView("south");

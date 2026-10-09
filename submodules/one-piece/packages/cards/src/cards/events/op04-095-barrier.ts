@@ -46,7 +46,7 @@ export const op04Barrier095: EventCard = {
   rarity: "C",
   setId: "OP04",
   cost: 1,
-  traits: ["Dressrosa Barto Club"],
+  traits: ["Dressrosa", "Barto Club"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +2000 power during this battle. Then, if you have 15 or more cards in your trash, that card gains an additional +2000 power during this battle. [Trigger] Draw 2 cards and trash 1 card from your hand.",
   effects: {

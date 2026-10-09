@@ -10,7 +10,8 @@ describe("OP10-045 Cavendish", () => {
       {
         character: [{ card: op10Cavendish045, playedOnTurn: 0 }],
         hand: [eb01Doma005],
-        deck: [eb01Fourtricks025, eb01MountainGod018],
+        // Keep a bottom card so deck-empty defeat does not end this effect test.
+        deck: [eb01Fourtricks025, eb01MountainGod018, eb01Doma005],
       },
       {},
       { firstPlayer: "north", activeSeat: "south" },

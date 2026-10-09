@@ -23,7 +23,7 @@ export const op07FisherTiger032: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Fish-Man The Sun Pirates"],
+  traits: ["Fish-Man", "The Sun Pirates"],
   attribute: "strike",
   effect:
     "This Character can attack Characters on the turn in which it is played. [On Play] If your Leader has the [Fish-Man] or [Merfolk] type, rest up to 1 of your opponent's Characters with a cost of 6 or less.",
@@ -39,12 +39,12 @@ export const op07FisherTiger032: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Fish-Man",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "leaderTrait",
                 trait: "Merfolk",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

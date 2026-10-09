@@ -1,69 +1,49 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-// Auto-verified: Gerd (OP17-081) cost=2 power=3000 counter=2000
 describe("OP17-081 Gerd", () => {
-  test("[On Play] resolves its play effects", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-081"], activeDon: 4 },
-      { character: ["OP13-013"], activeDon: 5 },
+  test("a non-Elbaph Leader leaves cost two, and payable recovery may be declined", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "ST06-001",
+        hand: ["OP17-081", "ST06-004"],
+        trash: ["ST06-008"],
+        activeDon: 2,
+      },
+      {},
     );
-
-    engine.playCard("OP17-081");
-    engine.acceptLeadingOptional("south");
-
-    // Resolve any remaining prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-081",
-    );
+    const retained = e.findCardInZone("south", "hand", "ST06-004");
+    const recovery = e.findCardInZone("south", "trash", "ST06-008");
+    e.asSouth().play("OP17-081");
+    e.pendingDecision("effectOptional", "south");
+    e.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const view = e.getView("south");
+    expect(view.players.south.characters[0]?.cost).toBe(2);
+    expect(view.players.south.hand.map((card) => card.instanceId)).toEqual([retained]);
+    expect(view.players.south.trash.map((card) => card.instanceId)).toEqual([recovery]);
+    expect(view.players.south.activeDon).toBe(0);
+    expect(view.players.south.restedDon).toBe(2);
+    expect(view.prompts).toHaveLength(0);
   });
 
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-081", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
+  test("the paid hand card becomes a recovery candidate, excluding Gerd and cost-nine Characters", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP17-079",
+        hand: ["OP17-081", "ST06-004"],
+        trash: ["OP17-081", "OP17-064"],
+        activeDon: 2,
+      },
+      {},
     );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-081",
-    );
-    expect(engine.getView("south").prompts).toHaveLength(0);
+    const paid = e.findCardInZone("south", "hand", "ST06-004");
+    e.asSouth().play("OP17-081");
+    e.asSouth().acceptOptional();
+    const step = e.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (step.kind !== "selectEntity") throw new Error("Expected recovery");
+    expect(step.candidates.map((c) => c.ref.id)).toEqual([paid]);
+    e.resolveDecision("effectTargetSelection", { selectedIds: [paid] }, "south");
+    expect(e.getView("south").players.south.hand[0]?.instanceId).toBe(paid);
+    expect(e.getView("south").players.south.characters[0]?.cost).toBe(14);
   });
 });

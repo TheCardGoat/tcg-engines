@@ -4,7 +4,8 @@ import { LocalEngine } from "../transport/local-engine.ts";
 import { AIPlayer } from "./ai-player.ts";
 import type { AIStrategy, StepResult } from "./types.ts";
 import { assertNever } from "./util/assert-never.ts";
-import { createSemanticCycleDetector, stableBotHash } from "@tcg/bot-core";
+import { createSemanticCycleDetector } from "@tcg/bot-core";
+import { semanticViewHash } from "./public-view-hash.ts";
 
 export interface RunAutoMatchOptions {
   players: [PlayerSetup, PlayerSetup];
@@ -39,16 +40,6 @@ export interface AutoMatchResult {
   /** True when the harness converted an automation failure into a real concession. */
   automationConcessionApplied: boolean;
   log: AutoMatchLogEntry[];
-}
-
-function semanticViewHash(view: unknown): string {
-  return stableBotHash(
-    JSON.parse(
-      JSON.stringify(view, (key, value) =>
-        key === "stateID" || key === "_stateID" ? undefined : value,
-      ),
-    ),
-  );
 }
 
 /**

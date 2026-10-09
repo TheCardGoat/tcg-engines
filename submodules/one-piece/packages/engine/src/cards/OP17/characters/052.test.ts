@@ -66,4 +66,19 @@ describe("OP17-052 Don Marlon", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("recovers the selected blue cost0 Event and excludes other categories, colors and costs", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP17-052"], activeDon: 3, trash: ["OP17-055", "OP17-038", "OP01-086", "EB01-005"] },
+      {},
+    );
+    const id = e.findCardInZone("south", "trash", "OP17-055");
+    e.playCard("OP17-052");
+    const step = e.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected recovery");
+    expect(step.candidates.map((c) => c.ref.id)).toEqual([id]);
+    e.resolveDecision("effectTargetSelection", { selectedIds: [id] }, "south");
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toEqual([id]);
+    expect(e.getView("south").players.south.trash).toHaveLength(3);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

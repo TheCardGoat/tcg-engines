@@ -23,7 +23,7 @@ export const eb03JewelryBonney017: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Bonney Pirates Supernovas"],
+  traits: ["Supernovas", "Bonney Pirates"],
   attribute: "special",
   effect:
     "[On Play] If your Leader has the {Supernovas} type, set up to 1 of your DON!! cards as active. Then, up to 1 of your opponent's Characters with a cost of 8 or less cannot be rested until the end of your opponent's next End Phase.",
@@ -35,7 +35,7 @@ export const eb03JewelryBonney017: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Supernovas",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

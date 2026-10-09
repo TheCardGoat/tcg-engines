@@ -43,7 +43,7 @@ describe("OP04-072 Mr.5 (Gem)", () => {
     );
     engine.declareAttack(secondAttackerId, engine.leader("south"), "north");
     expect(() => engine.pendingDecision("effectOptional", "south")).toThrow();
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
@@ -110,7 +110,7 @@ describe("OP04-072 Mr.5 (Gem)", () => {
     engine.declareAttack(secondAttackerId, engine.leader("south"), "north");
     expect(engine.pendingDecision("effectOptional", "south").actorId).toBe("south");
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    // No usable Counter remains, so the Counter Step ends automatically.
     view = engine.getView("south");
     expect(view.players.south.activeDon).toBe(2);
     expect(view.prompts).toHaveLength(0);

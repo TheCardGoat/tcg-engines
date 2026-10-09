@@ -259,54 +259,54 @@ describe("parseActions — placeFromHandToDeck", () => {
 });
 
 describe("parseActions — compound return to hand/deck", () => {
-  test("return two groups to owner's hand", () => {
+  test("returns both printed groups in one hand movement", () => {
     const result = parseActions(
       "Return up to 1 Character with a cost of 8 or less and up to 1 Character with a cost of 3 or less to the owner's hand.",
     );
-    expect(result.parsed).toHaveLength(2);
-    expect(result.parsed[0]).toMatchObject({
-      action: "returnToHand",
-      target: {
-        player: "any",
-        zones: ["character"],
-        count: { amount: 1, upTo: true },
-        filters: [{ filter: "cost", comparison: "lte", value: 8 }],
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toMatchObject([
+      {
+        action: "returnToHand",
+        targetGroups: [
+          {
+            player: "any",
+            zones: ["character"],
+            count: { amount: 1, upTo: true },
+            filters: [{ filter: "cost", comparison: "lte", value: 8 }],
+          },
+          {
+            player: "any",
+            zones: ["character"],
+            count: { amount: 1, upTo: true },
+            filters: [{ filter: "cost", comparison: "lte", value: 3 }],
+          },
+        ],
       },
-    });
-    expect(result.parsed[1]).toMatchObject({
-      action: "returnToHand",
-      target: {
-        player: "any",
-        zones: ["character"],
-        count: { amount: 1, upTo: true },
-        filters: [{ filter: "cost", comparison: "lte", value: 3 }],
-      },
-    });
+    ]);
   });
-
-  test("place two groups at bottom of owner's deck", () => {
+  test("places both groups in one bottom-deck movement", () => {
     const result = parseActions(
       "Place up to 1 of your opponent's Characters with a cost of 2 or less and up to 1 of your opponent's Characters with a cost of 5 or less at the bottom of the owner's deck.",
     );
-    expect(result.parsed).toHaveLength(2);
-    expect(result.parsed[0]).toMatchObject({
-      action: "returnToDeck",
-      target: {
-        player: "opponent",
-        zones: ["character"],
-        filters: [{ filter: "cost", comparison: "lte", value: 2 }],
+    expect(result.unparsed).toBe("");
+    expect(result.parsed).toMatchObject([
+      {
+        action: "returnToDeck",
+        position: "bottom",
+        targetGroups: [
+          {
+            player: "opponent",
+            zones: ["character"],
+            filters: [{ filter: "cost", comparison: "lte", value: 2 }],
+          },
+          {
+            player: "opponent",
+            zones: ["character"],
+            filters: [{ filter: "cost", comparison: "lte", value: 5 }],
+          },
+        ],
       },
-      position: "bottom",
-    });
-    expect(result.parsed[1]).toMatchObject({
-      action: "returnToDeck",
-      target: {
-        player: "opponent",
-        zones: ["character"],
-        filters: [{ filter: "cost", comparison: "lte", value: 5 }],
-      },
-      position: "bottom",
-    });
+    ]);
   });
 });
 
@@ -379,7 +379,7 @@ describe("parseAddFromTrashToHandAction", () => {
     ]);
   });
 
-  test("quoted trait trash recovery uses inclusive matching", () => {
+  test("quoted trait trash recovery uses exact matching", () => {
     const result = parseActions(
       'Add up to 1 "Straw Hat Crew" type Character card other than [Tony Tony.Chopper] with a cost of 4 or less from your trash to your hand.',
     );
@@ -392,7 +392,7 @@ describe("parseAddFromTrashToHandAction", () => {
           zones: ["trash"],
           count: { amount: 1, upTo: true },
           filters: [
-            { filter: "trait", value: "Straw Hat Crew", match: "includes" },
+            { filter: "trait", value: "Straw Hat Crew", match: "exact" },
             { filter: "cardCategory", value: "character" },
             { filter: "excludeName", value: "Tony Tony.Chopper" },
             { filter: "cost", comparison: "lte", value: 4 },
@@ -416,7 +416,7 @@ describe("parseAddFromTrashToHandAction", () => {
             zones: ["trash"],
             count: { amount: 1, upTo: true },
             filters: [
-              { filter: "trait", value: "SMILE", match: "includes" },
+              { filter: "trait", value: "SMILE", match: "exact" },
               { filter: "cost", comparison: "lte", value: 5 },
             ],
           },

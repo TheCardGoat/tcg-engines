@@ -1,5 +1,7 @@
+import { hostedUndoProposalPolicy } from "@tcg/shared/game-adapter";
 import { fleshAndBloodPresentationAdapter } from "./presentation.ts";
 import { allFleshAndBloodCards, getFleshAndBloodCard } from "@tcg/flesh-and-blood-cards/catalog";
+import { isFleshAndBloodFormatPlayable } from "@tcg/flesh-and-blood-types";
 import { fabDefaultPrintingId } from "@tcg/flesh-and-blood-cards";
 import { validateFabDeckConstruction, type FabValidationCode } from "./deck-validation.ts";
 import { createFabValidationCard } from "./deck-validation-card.ts";
@@ -331,6 +333,7 @@ function fabSimulatorSettingsFromGameSettings(gameSettings: unknown):
 export const fleshAndBloodServerAdapter: GameAdapter = {
   practiceDecks: fleshAndBloodPracticeDecks,
   slug: "flesh-and-blood",
+  proposalPolicy: hostedUndoProposalPolicy,
   deckInterchange: fleshAndBloodDeckInterchangeAdapter,
 
   createGameId: () => `flesh-and-blood-game-${crypto.randomUUID()}`,
@@ -411,7 +414,7 @@ export const fleshAndBloodServerAdapter: GameAdapter = {
           const isYoung = hasCatalogType(card, "Young");
           if (rules.heroAge === "young" ? !isYoung : isYoung) return false;
           const legality = rules.legalityKey ? card.legalities[rules.legalityKey] : null;
-          return !legality || (legality.legal && !legality.banned && !legality.suspended);
+          return legality === null || isFleshAndBloodFormatPlayable(legality);
         })
         .map((card) => ({
           id: card.canonicalId,

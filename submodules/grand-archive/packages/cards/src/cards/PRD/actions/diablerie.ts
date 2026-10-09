@@ -37,8 +37,17 @@ export const diablerie: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> 
               subject: {
                 kind: "event-object",
                 filter: {
-                  kind: "supertype",
-                  oneOf: ["REGALIA"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "supertype",
+                      oneOf: ["REGALIA"],
+                    },
+                    {
+                      kind: "has-keyword",
+                      keyword: "divine-relic",
+                    },
+                  ],
                 },
               },
             },

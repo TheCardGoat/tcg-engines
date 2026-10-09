@@ -23,7 +23,7 @@ export const hadesLookingForADealIconic: CharacterCard = {
   franchise: "Hercules",
   set: "010",
   cardNumber: 242,
-  rarity: "common",
+  rarity: "iconic",
   specialRarity: "iconic",
   cost: 5,
   strength: 3,

@@ -127,7 +127,7 @@ export const swoopingTalons: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                                     property: "memory-cost",
                                     basis: "base",
                                   },
-                                  operator: "lte",
+                                  operator: "eq",
                                   right: 0,
                                 },
                               },

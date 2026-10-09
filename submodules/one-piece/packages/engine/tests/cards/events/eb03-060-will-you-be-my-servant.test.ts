@@ -63,6 +63,23 @@ describe("EB03-060 Will You Be My Servant?", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
+  test("a non-Nami Leader pays the Event cost but does not search", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [eb03WillYouBeMyServant060],
+      deck: [eb01Blueno017, eb02DonAccino004, eb01Doma005, op01DraculeMihawk070],
+      activeDon: 1,
+    });
+    engine.asSouth().play(eb03WillYouBeMyServant060);
+    const view = engine.getView("south");
+    expect(view.players.south.hand).toHaveLength(0);
+    expect(view.players.south.trash.map((card) => card.cardId)).toContain(
+      eb03WillYouBeMyServant060.id,
+    );
+    expect(view.players.south.activeDon).toBe(0);
+    expect(view.players.south.deckCount).toBe(4);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("activates Nami's Main search from Life without paying the Event cost", () => {
     const engine = OnePieceTestEngine.create(
       {
@@ -89,11 +106,15 @@ describe("EB03-060 Will You Be My Servant?", () => {
     engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
     const activeDonBeforeTrigger = engine.getView("north").players.north.activeDon;
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
-    engine.resolveDecision("effectSearchSelection", { selectedIds: [] }, "north");
-    engine.resolveDecision("effectSearchRemainderOrder", { selectedIds: lookedIds }, "north");
+    const selectedId = engine.findCardInZone("north", "deck", eb02DonAccino004);
+    const remainder = lookedIds.filter((id) => id !== selectedId).reverse();
+    engine.resolveDecision("effectSearchSelection", { selectedIds: [selectedId] }, "north");
+    engine.resolveDecision("effectSearchRemainderOrder", { selectedIds: remainder }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.activeDon).toBe(activeDonBeforeTrigger);
+    expect(view.players.north.hand.map((card) => card.instanceId)).toContain(selectedId);
+    expect(engine.getState().players.north.deck).toEqual(remainder);
     expect(view.players.north.trash.map((card) => card.cardId)).toContain(
       eb03WillYouBeMyServant060.id,
     );

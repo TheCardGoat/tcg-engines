@@ -14,7 +14,7 @@ export const darkwingDuckLaunchpadStCanardsFinest: CharacterCard = {
       artId: "set13-165",
       setCode: "set13",
       collectorNumber: "165",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -26,12 +26,16 @@ export const darkwingDuckLaunchpadStCanardsFinest: CharacterCard = {
   franchise: "Darkwing Duck",
   set: "013",
   cardNumber: 165,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 7,
   strength: 5,
   willpower: 7,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_34bf92312be441f79ca04258943a09f0",
+    tcgPlayer: "702697",
+  },
   text: [
     {
       title: "Shift 5 {I}",
@@ -40,7 +44,7 @@ export const darkwingDuckLaunchpadStCanardsFinest: CharacterCard = {
       title: "Ward",
     },
     {
-      title: "Victory Pose",
+      title: "VICTORY POSE",
       description:
         "During your turn, whenever this character banishes another character in a challenge, gain 2 lore.",
     },

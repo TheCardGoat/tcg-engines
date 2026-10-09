@@ -25,7 +25,7 @@ export const isabelaMadrigalSuchALovelyVoiceEpic: CharacterCard = {
   franchise: "Encanto",
   set: "012",
   cardNumber: 207,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 3,

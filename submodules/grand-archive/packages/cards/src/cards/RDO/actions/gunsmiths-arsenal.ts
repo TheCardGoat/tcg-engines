@@ -79,8 +79,17 @@ export const gunsmithsArsenal: GrandArchiveCard<GrandArchiveAbilityDefinition, "
                 relationship: "zone-of",
                 player: "controller",
                 filter: {
-                  kind: "subtype",
-                  oneOf: ["GUN"],
+                  kind: "any",
+                  filters: [
+                    {
+                      kind: "subtype",
+                      oneOf: ["BULLET"],
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["GUN"],
+                    },
+                  ],
                 },
               },
             },

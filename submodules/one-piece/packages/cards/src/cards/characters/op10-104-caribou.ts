@@ -23,7 +23,7 @@ export const op10Caribou104: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Caribou Pirates Supernovas"],
+  traits: ["Supernovas", "Caribou Pirates"],
   attribute: "special",
   effect:
     '[DON!! x1] If your Leader has the "Supernovas" type and your opponent has 3 or more Life cards, this Character cannot be K.O.\'d in battle.',
@@ -42,7 +42,7 @@ export const op10Caribou104: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Supernovas",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "lifeCount",

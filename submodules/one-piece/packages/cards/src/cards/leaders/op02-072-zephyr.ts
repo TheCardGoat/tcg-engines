@@ -30,7 +30,7 @@ export const op02Zephyr072: LeaderCard = {
   setId: "OP02",
   power: 5000,
   life: 4,
-  traits: ["Film Neo Navy"],
+  traits: ["FILM", "Neo Navy"],
   attribute: "strike",
   effect:
     "[When Attacking] DON!! -4 (You may return the specified number of DON!! cards from your field to your DON!! deck.): K.O. up to 1 of your opponent's Characters with a cost of 3 or less. Then, this Leader gains +1000 power during this turn.",

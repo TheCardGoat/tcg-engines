@@ -39,7 +39,7 @@ export const eb03Koala042: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "strike",
   effect:
     "If your Leader has the {Revolutionary Army} type, this Character gains +4 cost.\n[Opponent's Turn] [On K.O.] Play up to 1 {Revolutionary Army} type Character card with a cost of 6 or less other than [Koala] or up to 1 [Nico Robin] with a cost of 6 or less from your hand or trash.",
@@ -81,7 +81,7 @@ export const eb03Koala042: CharacterCard = {
                     {
                       filter: "trait",
                       value: "Revolutionary Army",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                   [

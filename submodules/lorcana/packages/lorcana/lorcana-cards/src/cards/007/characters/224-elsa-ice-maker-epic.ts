@@ -25,7 +25,7 @@ export const elsaIceMakerEpic: CharacterCard = {
   franchise: "Frozen",
   set: "007",
   cardNumber: 224,
-  rarity: "common",
+  rarity: "super_rare",
   specialRarity: "epic",
   cost: 7,
   strength: 5,

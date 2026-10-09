@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-game-zones/game-zones-intent"
+  relation: "current_index"
+---
+
 # Game Zones - Intent
 
 #### General Rules:

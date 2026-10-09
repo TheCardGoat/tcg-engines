@@ -359,6 +359,18 @@ function appliesNumericSelfReplacement(
         getCardStrength(ctx, resolutionInput.triggerContext?.subjectCardId) >=
         replacement.condition.value
       );
+    case "selected-target-has-damage": {
+      const selectedTargetId = Array.isArray(resolutionInput.targets)
+        ? (resolutionInput.targets.find(
+            (target): target is CardInstanceId => typeof target === "string",
+          ) ?? undefined)
+        : typeof resolutionInput.targets === "string"
+          ? (resolutionInput.targets as CardInstanceId)
+          : undefined;
+      if (!selectedTargetId) return false;
+      const meta = ctx.cards.getMeta?.(selectedTargetId) as { damage?: number } | undefined;
+      return Number(meta?.damage ?? 0) > 0;
+    }
     case "condition":
       return evaluateCondition(replacement.condition.condition, {
         ...buildReplacementConditionContext(ctx, cardPlayed.playerId, cardPlayed.cardId),

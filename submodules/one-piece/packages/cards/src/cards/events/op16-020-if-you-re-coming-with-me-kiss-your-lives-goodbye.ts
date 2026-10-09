@@ -5,7 +5,7 @@ export const op16IfYouReComingWithMeKissYourLivesGoodbye020: EventCard = {
   id: "OP16-020",
   canonicalId: "OP16-020",
   slug: "if-you-re-coming-with-me-kiss-your-lives-goodbye/op16-020",
-  name: "If You're Coming with Me...Kiss Your Lives Goodbye!!",
+  name: "If You're Coming with Me... Kiss Your Lives Goodbye!!",
   printings: [
     {
       id: "OP16-020",
@@ -21,7 +21,7 @@ export const op16IfYouReComingWithMeKissYourLivesGoodbye020: EventCard = {
   rarity: "UC",
   setId: "OP16",
   cost: 0,
-  traits: ["The Four Emperors Whitebeard Pirates"],
+  traits: ["The Four Emperors", "Whitebeard Pirates"],
   effect:
     "[Main] You may rest 1 of your DON!! cards and reveal 1 Character card with 8000 power from your hand: Draw 1 card.  [Counter] You may trash 1 card from your hand: Up to 1 of your Leader or Character cards gains +3000 power during this battle.",
   effects: {
@@ -32,6 +32,14 @@ export const op16IfYouReComingWithMeKissYourLivesGoodbye020: EventCard = {
           {
             cost: "restDon",
             amount: 1,
+          },
+          {
+            cost: "revealFromHand",
+            amount: 1,
+            filters: [
+              { filter: "cardCategory", value: "character" },
+              { filter: "power", comparison: "eq", value: 8000 },
+            ],
           },
         ],
         actions: [

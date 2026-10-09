@@ -30,7 +30,7 @@ export const op09ComeOnWeLlFightYou020: EventCard = {
   setId: "OP09",
   cost: 1,
   trigger: "Draw 1 card.",
-  traits: ["The Four Emperors Red-Haired Pirates"],
+  traits: ["The Four Emperors", "Red-Haired Pirates"],
   effect:
     '[Main] Look at 5 cards from the top of your deck; reveal up to 1 "Red-Haired Pirates" type card other than [Come On!! We\'ll Fight You!!] and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
   effects: {
@@ -57,7 +57,7 @@ export const op09ComeOnWeLlFightYou020: EventCard = {
               {
                 filter: "trait",
                 value: "Red-Haired Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

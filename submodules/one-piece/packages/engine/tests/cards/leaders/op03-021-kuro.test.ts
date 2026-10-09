@@ -102,4 +102,22 @@ describe("OP03-021 Kuro", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("can rest an active cost-5 Character but excludes an active cost-6 Character", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op03Kuro021, character: [op03Genzo046, op03Carne045], activeDon: 3 },
+      { character: ["EB01-018", "EB01-008"] },
+    );
+    const eligibleId = engine.findCardInZone("north", "character", "EB01-018");
+    const excludedId = engine.findCardInZone("north", "character", "EB01-008");
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    const step = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected Kuro's rest target.");
+    expect(step.candidates.map((candidate) => candidate.ref.id)).toEqual([eligibleId]);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [eligibleId] }, "south");
+    const characters = engine.getView("south").players.north.characters;
+    expect(characters.find((card) => card?.instanceId === eligibleId)?.rested).toBe(true);
+    expect(characters.find((card) => card?.instanceId === excludedId)?.rested).toBe(false);
+    expect(engine.getView("south").players.south).toMatchObject({ activeDon: 0, restedDon: 3 });
+  });
 });

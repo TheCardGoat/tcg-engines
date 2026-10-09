@@ -52,17 +52,17 @@ export const op11FishManIsland117: StageCard = {
                     {
                       filter: "trait",
                       value: "Neptunian",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "trait",
                       value: "Fish-Man",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "trait",
                       value: "Merfolk",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                 },

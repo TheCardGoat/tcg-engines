@@ -64,12 +64,21 @@ export const hoarfrostHold: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                   },
                   candidates: {
                     kind: "card",
-                    zones: ["hand"],
+                    zones: ["hand", "memory"],
                     relationship: "zone-of",
                     player: "controller",
                     filter: {
-                      kind: "subtype",
-                      oneOf: ["SPELL"],
+                      kind: "all",
+                      filters: [
+                        {
+                          kind: "subtype",
+                          oneOf: ["SUITED"],
+                        },
+                        {
+                          kind: "subtype",
+                          oneOf: ["SPELL"],
+                        },
+                      ],
                     },
                   },
                 },

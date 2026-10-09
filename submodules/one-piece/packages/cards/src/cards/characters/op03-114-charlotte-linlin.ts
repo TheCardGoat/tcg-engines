@@ -38,7 +38,7 @@ export const op03CharlotteLinlin114: CharacterCard = {
   setId: "OP03",
   cost: 10,
   power: 12000,
-  traits: ["Big Mom Pirates"],
+  traits: ["The Four Emperors", "Big Mom Pirates"],
   attribute: "special",
 
   effect:
@@ -51,7 +51,7 @@ export const op03CharlotteLinlin114: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Big Mom Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

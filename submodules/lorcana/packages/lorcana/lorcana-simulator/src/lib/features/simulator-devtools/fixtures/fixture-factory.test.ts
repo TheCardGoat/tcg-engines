@@ -88,7 +88,10 @@ describe("createFixtureFromDeckList", () => {
     const intoTheUnknown = deck[1];
 
     expect(underTheSea?.set).toBe("009");
-    expect(intoTheUnknown?.rarity).toBe("common");
+    // Regular printing is super_rare after the rarity-vocabulary fix; it must
+    // still win over the set8-213 enchanted special.
+    expect(intoTheUnknown?.set).toBe("008");
+    expect(intoTheUnknown?.rarity).toBe("super_rare");
   });
 
   it("fails fast on malformed decklist lines", async () => {

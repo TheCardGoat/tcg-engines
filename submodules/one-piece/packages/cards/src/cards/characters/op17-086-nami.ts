@@ -24,7 +24,7 @@ export const op17Nami086: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Elbaph Straw Hat Crew"],
+  traits: ["Elbaph", "Straw Hat Crew"],
   attribute: "special",
   effect: "[On Play] You may trash 1 {Elbaph} type card from your hand: Draw 2 cards.",
   effects: {
@@ -39,7 +39,7 @@ export const op17Nami086: CharacterCard = {
               {
                 filter: "trait",
                 value: "Elbaph",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

@@ -31,6 +31,10 @@ export const hadesMeticulousSchemer: CharacterCard = {
   willpower: 5,
   lore: 3,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_6542c10846c84435b3c66558ed5c137e",
+    tcgPlayer: "704653",
+  },
   text: "Ward",
   classifications: ["Storyborn", "Villain"],
   abilities: [ward],

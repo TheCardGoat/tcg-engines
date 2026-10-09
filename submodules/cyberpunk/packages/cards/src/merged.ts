@@ -1,25 +1,22 @@
-import type { CardDefinition, StructuredCardDefinition } from "@tcg/cyberpunk-types";
-import { prm01Cards } from "./PRM01/index.ts";
-import { boxToppersRetailCards } from "./boxtoppersretail/index.ts";
-import { promoCards } from "./promo/index.ts";
-import { theHeistRetailStarterDeckCards } from "./theheistretailstarterdeck/index.ts";
-import { embracingPowerRetailStarterDeckCards } from "./embracingpowerretailstarterdeck/index.ts";
-import { welcomeToNightCityRetailCards } from "./welcometonightcityretail/index.ts";
+import {
+  CYBERPUNK_CANONICAL_SET_PRIORITY,
+  type CardDefinition,
+  type SetCode,
+  type StructuredCardDefinition,
+} from "@tcg/cyberpunk-types";
+import { structuredCards } from "./cards/index.ts";
+import { cyberpunkArtworkManifest } from "./artwork-manifest.ts";
+import { getCyberpunkArtIdForPrinting } from "./artwork.ts";
 
 /**
- * The full runtime Cyberpunk card pool before any dedup/merge, assembled from
- * the exported set arrays. This mirrors the assembly in `src/index.ts` and
- * `src/bundle.ts`; preview-only sets are intentionally excluded from runtime
+ * The full runtime Cyberpunk card pool before any dedup/merge. Since the
+ * canonical-card consolidation this is already slug-unique — one authored
+ * definition per card under `src/cards/<type>/` — and the merge below stays as
+ * the defensive canonical-selection + printing-union pass shared with the
+ * platform catalog. Preview-only sets are intentionally excluded from runtime
  * card lookup and deck validation.
  */
-const allStructuredCards: StructuredCardDefinition[] = [
-  ...promoCards,
-  ...prm01Cards,
-  ...boxToppersRetailCards,
-  ...theHeistRetailStarterDeckCards,
-  ...embracingPowerRetailStarterDeckCards,
-  ...welcomeToNightCityRetailCards,
-];
+const allStructuredCards: StructuredCardDefinition[] = structuredCards;
 
 /**
  * Minimal shape a card must expose to participate in the cross-set merge.
@@ -48,17 +45,24 @@ export interface MergeableCard {
  * `platform/apps/general-api/src/modules/cyberpunk/service.ts`. It is exported
  * so the catalog imports it from here instead of re-declaring it.
  */
-export const SET_PRIORITY: Record<string, number> = {
-  welcometonightcityretail: 100,
-  theheistretailstarterdeck: 90,
-  embracingpowerretailstarterdeck: 90,
-  boxtoppersretail: 80,
-  promo: 70,
-  PRM01: 70,
-};
+export const SET_PRIORITY = CYBERPUNK_CANONICAL_SET_PRIORITY;
+
+/**
+ * Sets that have parsed cards in the shipped runtime catalog. `SetCode` also
+ * includes preview-only vocabulary, so it cannot be inferred from the
+ * exhaustive priority map.
+ */
+export const RUNTIME_SET_CODES = [
+  "promo",
+  "PRM01",
+  "boxtoppersretail",
+  "theheistretailstarterdeck",
+  "embracingpowerretailstarterdeck",
+  "welcometonightcityretail",
+] as const satisfies readonly SetCode[];
 
 export function setPriority(setCode: string): number {
-  return SET_PRIORITY[setCode] ?? 50;
+  return setCode in SET_PRIORITY ? SET_PRIORITY[setCode as SetCode] : 50;
 }
 
 /**
@@ -136,16 +140,26 @@ export function mergeDuplicateCards<TCard extends MergeableCard>(cards: TCard[])
  *
  * The merge itself stays identity-agnostic (it groups by `id`/`slug` only); the
  * authoritative canonical identity is stamped HERE, on the merged output, so
- * every consumer of the merged pool sees a stable `canonicalId == slug` and
- * each printing's `artId == printing.id` (the 1:1 degenerate art tier — RFC §3,
- * §4, §7). Raw authored `id` is per-set and source-only (see `CardIdentity.id`).
+ * every consumer of the merged pool sees a stable `canonicalId == slug` and a
+ * reviewed visual art identity shared by equivalent printings. Raw authored
+ * `id` remains per-set and source-only (see `CardIdentity.id`).
  */
 const mergedCyberpunkCards: CardDefinition[] = mergeDuplicateCards(allStructuredCards).map(
-  (card) => ({
-    ...card,
-    canonicalId: card.slug,
-    printings: card.printings.map((printing) => ({ ...printing, artId: printing.id })),
-  }),
+  (card) => {
+    const artwork = Object.entries(cyberpunkArtworkManifest).find(
+      ([slug]) => slug === card.slug,
+    )?.[1];
+    if (!artwork) throw new Error(`Missing Cyberpunk art manifest for ${card.slug}`);
+    return {
+      ...card,
+      canonicalId: card.slug,
+      printings: card.printings.map((printing) => {
+        const artId = getCyberpunkArtIdForPrinting(printing.id);
+        if (!artId) throw new Error(`Missing Cyberpunk art identity for printing ${printing.id}`);
+        return { ...printing, artId };
+      }),
+    };
+  },
 );
 
 /**
@@ -205,10 +219,15 @@ function indexUnambiguousDerivedDisplaySlugs(
 }
 
 /**
- * Lookup keyed by each stable canonical slug, merged runtime id, and authored
- * source id. Preview-only ids are intentionally absent, so callers can keep a
- * strict "Unknown Cyberpunk card" rejection while resolving any legitimately
- * stored identity to its complete printing set. Memoized at module load.
+ * Lookup keyed by each stable canonical slug, merged runtime id, authored
+ * source id, and every printing id on the merged cards. With one authored
+ * definition per slug, non-canonical set versions survive only as `printings[]`
+ * entries — indexing those ids keeps stored deck rows, art selections, and
+ * format-specific decks resolving to the canonical
+ * definition that owns them. Preview-only ids are intentionally absent, so
+ * callers can keep a strict "Unknown Cyberpunk card" rejection while resolving
+ * any legitimately stored identity to its complete printing set. Memoized at
+ * module load.
  */
 const mergedCyberpunkCardsById: ReadonlyMap<string, CardDefinition> = (() => {
   const slugToMerged = new Map<string, CardDefinition>();
@@ -219,6 +238,16 @@ const mergedCyberpunkCardsById: ReadonlyMap<string, CardDefinition> = (() => {
   for (const merged of mergedCyberpunkCards) {
     byId.set(merged.canonicalId, merged);
     byId.set(merged.id, merged);
+  }
+  // Printing ids resolve to their owning canonical card; definition ids win
+  // collisions (a printing id equal to a definition id is that card's own
+  // primary printing).
+  for (const merged of mergedCyberpunkCards) {
+    for (const printing of merged.printings) {
+      if (!byId.has(printing.id)) {
+        byId.set(printing.id, merged);
+      }
+    }
   }
   for (const source of allStructuredCards) {
     const merged = slugToMerged.get(source.slug);

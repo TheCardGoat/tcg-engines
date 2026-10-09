@@ -22,7 +22,7 @@ export const op10Sai048: CharacterCard = {
   setId: "OP10",
   cost: 3,
   power: 5000,
-  traits: ["Happosui Army Dressrosa"],
+  traits: ["Dressrosa", "Happosui Army"],
   attribute: "slash",
   effect:
     "[On Play] You may rest 1 of your \"Dressrosa\" type Leader or Stage cards: Return up to 1 of your opponent's Characters with a cost of 1 or less to the owner's hand.",
@@ -38,7 +38,7 @@ export const op10Sai048: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "anyOf",

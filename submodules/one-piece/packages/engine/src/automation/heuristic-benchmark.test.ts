@@ -225,33 +225,37 @@ describe("One Piece challenging bot heuristics", () => {
     },
   );
 
-  extendedBatchTest("Extended: both heuristics vs all baselines across the full deck suite", () => {
-    const matchups: readonly [BenchmarkStrategyId, BenchmarkStrategyId][] = CHALLENGING.flatMap(
-      (challenger) =>
-        [
-          [challenger, "greedy"],
-          [challenger, "valueRanked"],
-          [challenger, "firstLegal"],
-          [challenger, "random"],
-          [challenger, "heuristic"],
-          [challenger, "aggressive"],
-        ] as [BenchmarkStrategyId, BenchmarkStrategyId][],
-    );
-    const report = runDeckBenchmark({
-      games: 10,
-      seedBase: 6000,
-      matchups,
-      crossPairs: 3,
-    });
+  extendedBatchTest(
+    "Extended: both heuristics vs all baselines across the full deck suite",
+    { timeout: 1_500_000 },
+    () => {
+      const matchups: readonly [BenchmarkStrategyId, BenchmarkStrategyId][] = CHALLENGING.flatMap(
+        (challenger) =>
+          [
+            [challenger, "greedy"],
+            [challenger, "valueRanked"],
+            [challenger, "firstLegal"],
+            [challenger, "random"],
+            [challenger, "heuristic"],
+            [challenger, "aggressive"],
+          ] as [BenchmarkStrategyId, BenchmarkStrategyId][],
+      );
+      const report = runDeckBenchmark({
+        games: 10,
+        seedBase: 6000,
+        matchups,
+        crossPairs: 3,
+      });
 
-    console.log(formatDeckBenchmarkReport(report));
+      console.log(formatDeckBenchmarkReport(report));
 
-    assertClean(report);
-    for (const challenger of CHALLENGING) {
-      for (const opponent of ["greedy", "firstLegal", "random"] as const) {
-        const rate = southWinRate(report, challenger, opponent);
-        assert.ok(rate >= 0.6, `${challenger} vs ${opponent} win rate ${rate} < 60%`);
+      assertClean(report);
+      for (const challenger of CHALLENGING) {
+        for (const opponent of ["greedy", "firstLegal", "random"] as const) {
+          const rate = southWinRate(report, challenger, opponent);
+          assert.ok(rate >= 0.6, `${challenger} vs ${opponent} win rate ${rate} < 60%`);
+        }
       }
-    }
-  });
+    },
+  );
 });

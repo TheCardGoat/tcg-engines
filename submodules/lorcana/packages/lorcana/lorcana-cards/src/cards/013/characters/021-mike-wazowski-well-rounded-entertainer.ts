@@ -31,6 +31,7 @@ export const mikeWazowskiWellroundedEntertainer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cd584ce92868463191e0e226b3a8c371",
+    tcgPlayer: "690200",
   },
   text: [
     {

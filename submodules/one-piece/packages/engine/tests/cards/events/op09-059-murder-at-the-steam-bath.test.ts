@@ -66,4 +66,25 @@ describe("OP09-059 Murder at the Steam Bath", () => {
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test.each([0, 1])("Counter mills exactly %s chosen hand cards", (count) => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST01-001" },
+      { leaderCardId: "ST01-001", hand: ["OP09-059", "ST02-002", "ST02-006"], activeDon: 2 },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const event = e.findCardInZone("north", "hand", "OP09-059"),
+      payment = e.findCardInZone("north", "hand", "ST02-002");
+    e.declareAttack(e.leader("south"), e.leader("north"), "south");
+    e.resolveDecision("battleCounter", { selectedIds: [event] }, "north");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [e.leader("north")] }, "north");
+    e.resolveDecision(
+      "effectTrashFromHandSelection",
+      { selectedIds: count ? [payment] : [] },
+      "north",
+    );
+    e.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    expect(e.getView("north").players.north.deckCount).toBe(10 - count);
+    expect(e.getView("north").players.north.lifeCount).toBe(5);
+    expect(e.getView("north").prompts).toHaveLength(0);
+  });
 });

@@ -65,4 +65,33 @@ describe("OP14-060 Donquixote Doflamingo", () => {
     expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(defenderId);
     expect(view.players.south.trash.map((card) => card.instanceId)).not.toContain(defenderId);
   });
+  test("excludes unrelated allies and opposing Characters from redirect choices", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op14eb04DonquixoteDoflamingoOp14060060,
+        character: ["ST02-012", op14eb04Diamante066],
+        restedDon: 1,
+      },
+      { character: [{ card: op14eb04Diamante066, playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    engine.declareAttack(
+      engine.findCardInZone("north", "character", op14eb04Diamante066),
+      engine.leader("south"),
+      "north",
+    );
+    engine.accept("south");
+    const step = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected redirect choice");
+    expect(step.candidates.map((candidate) => candidate.ref.id)).toEqual([
+      engine.leader("south"),
+      engine.findCardInZone("south", "character", op14eb04Diamante066),
+    ]);
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.leader("south")] },
+      "south",
+    );
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

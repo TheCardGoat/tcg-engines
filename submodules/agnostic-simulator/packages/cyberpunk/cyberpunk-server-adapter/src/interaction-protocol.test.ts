@@ -4,13 +4,162 @@ import {
   InteractionSubmission,
   validateInteractionSubmission,
 } from "@tcg/protocol";
-import type { PlayerPrompt } from "@tcg/cyberpunk-engine";
+import { CyberpunkTestEngine, P1, type PlayerPrompt } from "@tcg/cyberpunk-engine";
+import {
+  RawGatewayStateSyncMessageSchema,
+  RawGatewayStateUpdateMessageSchema,
+} from "@tcg/protocol/gateway";
 import {
   buildCyberpunkInteractionView,
   cyberpunkSubmissionToPayload,
 } from "./interaction-protocol.js";
 
 describe("Cyberpunk interaction protocol adapter", () => {
+  it("publishes and accepts passing an optional Play trigger", () => {
+    const prompt: PlayerPrompt = {
+      status: "choice",
+      availableMoves: [],
+      choice: {
+        type: "chooseTrigger",
+        chooserId: "p1",
+        payload: {
+          canPass: true,
+          options: [
+            {
+              triggerId: "maxtac-play",
+              sourceCardId: "maxtac-1",
+              sourcePlayerId: "p1",
+              abilityIndex: 0,
+              abilityText: "You may swap a friendly Gig with a rival Gig.",
+              cardName: "MaxTac AV",
+              optional: true,
+            },
+          ],
+        },
+      },
+    };
+    const view = buildCyberpunkInteractionView({ actorId: "p1", stateVersion: 72, prompt });
+    expect(view.actions[0]?.inputs).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ kind: "boolean", id: "pass", required: false }),
+      ]),
+    );
+
+    for (const [values, payload] of [
+      [{ pass: true }, { pass: true }],
+      [{ triggerId: "maxtac-play" }, { pass: false, triggerId: "maxtac-play" }],
+    ] as const) {
+      const submission = InteractionSubmission.parse({
+        protocolVersion: 2,
+        stateVersion: 72,
+        requestId: view.actions[0]?.requestId,
+        actionId: "resolveTrigger",
+        values,
+      });
+      expect(validateInteractionSubmission(view, submission).ok).toBe(true);
+      expect(cyberpunkSubmissionToPayload(submission)).toEqual({
+        moveType: "resolveTrigger",
+        payload,
+      });
+    }
+  });
+
+  it("projects an optional single Gig reroll as one direct keep-or-reroll decision", () => {
+    const prompt: PlayerPrompt = {
+      status: "choice",
+      availableMoves: [],
+      choice: {
+        type: "chooseTarget",
+        chooserId: "p1",
+        payload: {
+          type: "effectTarget",
+          targetKind: "gig",
+          min: 0,
+          max: 1,
+          eligibleIds: ["gig-1"],
+          effect: { effect: "rerollGig", optional: true },
+        },
+      },
+    };
+    const view = buildCyberpunkInteractionView({ actorId: "p1", stateVersion: 71, prompt });
+    expect(view.actions[0]?.inputs[0]).toMatchObject({
+      kind: "option-selection",
+      id: "rerollDieIds",
+      min: 0,
+      max: 1,
+      presentation: { kind: "direct", emptyText: { key: "Keep result" } },
+      options: [{ id: "gig-1", text: { key: "Reroll Gig" }, enabled: true }],
+    });
+
+    for (const [values, payload] of [
+      [{ rerollDieIds: [] }, { pass: true }],
+      [{ rerollDieIds: ["gig-1"] }, { targetIds: ["gig-1"] }],
+    ] as const) {
+      const submission = InteractionSubmission.parse({
+        protocolVersion: 2,
+        stateVersion: 71,
+        requestId: view.actions[0]?.requestId,
+        actionId: "resolveEffectTarget",
+        values,
+      });
+      expect(validateInteractionSubmission(view, submission).ok).toBe(true);
+      expect(cyberpunkSubmissionToPayload(submission)).toEqual({
+        moveType: "resolveEffectTarget",
+        payload,
+      });
+    }
+  });
+
+  it.each([{ eligibleIds: [] }, { eligibleIds: ["target-1"] }])(
+    "publishes optional target bounds that survive update and sync parsing: $eligibleIds",
+    ({ eligibleIds }) => {
+      const prompt: PlayerPrompt = {
+        status: "choice",
+        availableMoves: [],
+        choice: {
+          type: "chooseTarget",
+          chooserId: "p1",
+          payload: {
+            type: "effectTarget",
+            targetKind: "card",
+            min: 0,
+            max: 3,
+            canDecline: true,
+            eligibleIds,
+          },
+        },
+      };
+      const view = buildCyberpunkInteractionView({ actorId: "p1", stateVersion: 70, prompt });
+      const snapshot = {
+        gameId: "game-1",
+        stateVersion: 70,
+        state: {},
+        engineLogs: [],
+        animationPlan: null,
+        interactionView: view,
+      };
+      expect(
+        RawGatewayStateSyncMessageSchema.safeParse({ ...snapshot, type: "state_sync" }).success,
+      ).toBe(true);
+      expect(
+        RawGatewayStateUpdateMessageSchema.safeParse({
+          ...snapshot,
+          patches: [],
+          type: "state_update",
+        }).success,
+      ).toBe(true);
+      expect(view.actions[0]?.inputs[0]).toMatchObject({ min: 0, max: eligibleIds.length });
+      expect(
+        validateInteractionSubmission(view, {
+          protocolVersion: 2,
+          stateVersion: 70,
+          requestId: "cyberpunk:70:resolveEffectTarget",
+          actionId: "resolveEffectTarget",
+          values: { targetIds: [] },
+        }).ok,
+      ).toBe(true);
+    },
+  );
   it("projects native available moves into protocol actions", () => {
     const prompt: PlayerPrompt = {
       status: "action",
@@ -77,8 +226,8 @@ describe("Cyberpunk interaction protocol adapter", () => {
     expect(parsed.actions.map((action) => action.id)).toEqual(["resolveAttack"]);
   });
 
-  it("projects deck-search eligibility and dynamic-limit context for the client", () => {
-    const revealedCards = [9, 5, 1, 2].map((cost, index) => ({
+  it("projects engine-selected deck-search eligibility and dynamic-limit context", () => {
+    const revealedCards = [9, 5, 5, 2].map((cost, index) => ({
       instanceId: `card-${index}`,
       definitionId: `definition-${index}`,
       cardName: `Card ${index}`,
@@ -119,7 +268,8 @@ describe("Cyberpunk interaction protocol adapter", () => {
               min: 0,
               max: 2,
               reveal: true,
-              target: { allowedCosts: [2, 5] },
+              eligibleCardIds: ["card-1", "card-3"],
+              eligibilityLabel: "cost matching a friendly Gig value (2, 5)",
               selectionLimitContext: {
                 kind: "basePlusPerCount",
                 base: 1,
@@ -133,7 +283,12 @@ describe("Cyberpunk interaction protocol adapter", () => {
                 },
               },
             },
-            { zone: "deckBottom", remainder: true, order: "random", target: null },
+            {
+              zone: "deckBottom",
+              remainder: true,
+              order: "random",
+              eligibleCardIds: revealedCards.map((card) => card.instanceId),
+            },
           ],
         },
       },
@@ -447,6 +602,47 @@ describe("Cyberpunk interaction protocol adapter", () => {
     });
   });
 
+  it("projects the native ordered Gig-copy constraint without card-name inference", () => {
+    const prompt: PlayerPrompt = {
+      status: "choice",
+      availableMoves: [],
+      choice: {
+        type: "chooseTarget",
+        chooserId: "p1",
+        payload: {
+          type: "effectTarget",
+          targetKind: "gig",
+          min: 2,
+          max: 2,
+          eligibleIds: ["friendly_gig", "rival_gig"],
+          pairConstraint: "gig-copy-between-players",
+          source: {
+            cardId: "padre_1",
+            definitionId: "padre",
+            displayName: "Localized card name",
+            cardType: "legend",
+          },
+        },
+      },
+    };
+
+    const parsed = EngineInteractionView.parse(
+      buildCyberpunkInteractionView({ actorId: "p1", stateVersion: 11, prompt }),
+    );
+
+    expect(parsed.actions[0]).toMatchObject({
+      id: "resolveEffectTarget",
+      text: { params: { gigCopyPairConstraint: "gig-copy-between-players" } },
+      inputs: [
+        expect.objectContaining({
+          kind: "entity-selection",
+          id: "targetIds",
+          ordered: true,
+        }),
+      ],
+    });
+  });
+
   it("projects discard choices with source card metadata", () => {
     const prompt: PlayerPrompt = {
       status: "choice",
@@ -583,6 +779,30 @@ describe("Cyberpunk interaction protocol adapter", () => {
       min: 1,
       max: 1,
     });
+  });
+
+  it("rejects an impossible required target choice at the adapter boundary", () => {
+    const prompt: PlayerPrompt = {
+      status: "choice",
+      availableMoves: [],
+      choice: {
+        type: "chooseTarget",
+        chooserId: "p1",
+        payload: {
+          type: "effectTarget",
+          targetKind: "gig",
+          min: 1,
+          max: 1,
+          eligibleIds: [],
+        },
+      },
+    };
+
+    expect(() =>
+      buildCyberpunkInteractionView({ actorId: "p1", stateVersion: 14, prompt }),
+    ).toThrow(
+      'Cyberpunk interaction input "targetIds" requires 1 selections but has 0 enabled candidates',
+    );
   });
 
   it("disables unaffordable play-from-trash candidates", () => {
@@ -733,6 +953,97 @@ describe("Cyberpunk interaction protocol adapter", () => {
     });
   });
 
+  it("declares manual payment sources for activated abilities", () => {
+    const state = CyberpunkTestEngine.createWithFixture({ eddies: 2 }).getState();
+    const paymentSourceIds = [
+      ...state.G.players[P1].eddieCardIds,
+      ...state.G.players[P1].zones.legendArea,
+    ].map(String);
+    const prompt: PlayerPrompt = {
+      status: "action",
+      choice: null,
+      availableMoves: [
+        {
+          moveId: "activateAbility",
+          inputSpec: {
+            type: "selectAbility",
+            candidates: [
+              {
+                cardId: "legend_1",
+                abilityIndex: 0,
+                effectHints: [],
+                eddieCost: 1,
+                spendsCard: false,
+              },
+            ],
+          },
+        },
+      ],
+    };
+
+    const view = buildCyberpunkInteractionView({
+      actorId: P1,
+      stateVersion: 21,
+      prompt,
+      state,
+    });
+
+    expect(view.actions[0]?.inputs[2]).toMatchObject({
+      kind: "entity-selection",
+      id: "paymentSourceIds",
+      candidates: paymentSourceIds.map((instanceId) => ({ entity: { instanceId } })),
+    });
+    expect(
+      validateInteractionSubmission(view, {
+        protocolVersion: 2,
+        stateVersion: 21,
+        requestId: "cyberpunk:21:activateAbility",
+        actionId: "activateAbility",
+        values: { cardId: "legend_1", abilityIndex: "0", paymentSourceIds: [paymentSourceIds[0]] },
+      }).ok,
+    ).toBe(true);
+  });
+
+  it("declares manual payment sources for card-play choices", () => {
+    const state = CyberpunkTestEngine.createWithFixture({ eddies: 1 }).getState();
+    const paymentSourceIds = [
+      ...state.G.players[P1].eddieCardIds,
+      ...state.G.players[P1].zones.legendArea,
+    ].map(String);
+    const paymentSourceId = paymentSourceIds[0]!;
+    const prompt: PlayerPrompt = {
+      status: "choice",
+      availableMoves: [],
+      choice: {
+        type: "chooseCardToPlay",
+        chooserId: P1,
+        payload: { player: P1, cardIds: ["card_1"], free: false, canDecline: false },
+      },
+    };
+
+    const view = buildCyberpunkInteractionView({
+      actorId: P1,
+      stateVersion: 22,
+      prompt,
+      state,
+    });
+
+    expect(view.actions[0]?.inputs[1]).toMatchObject({
+      kind: "entity-selection",
+      id: "paymentSourceIds",
+      candidates: paymentSourceIds.map((instanceId) => ({ entity: { instanceId } })),
+    });
+    expect(
+      validateInteractionSubmission(view, {
+        protocolVersion: 2,
+        stateVersion: 22,
+        requestId: "cyberpunk:22:resolveCardToPlay",
+        actionId: "resolveCardToPlay",
+        values: { cardId: "card_1", paymentSourceIds: [paymentSourceId] },
+      }).ok,
+    ).toBe(true);
+  });
+
   it("translates protocol submissions back to native command args", () => {
     const submission = InteractionSubmission.parse({
       protocolVersion: 2,
@@ -872,6 +1183,14 @@ describe("Cyberpunk interaction protocol adapter", () => {
         type: "chooseEffect",
         chooserId: "p1",
         payload: {
+          source: {
+            cardId: "nocturne-1",
+            controllerId: "p1",
+            definitionId: "nocturne-op55-n1",
+            displayName: "Nocturne OP55 N1",
+            cardType: "program",
+            color: "blue",
+          },
           options: [
             { id: "power-down", label: "Give a rival Unit -5 power this turn" },
             { id: "bottom-deck", label: "Bottom-deck a rival Unit with power 0" },
@@ -888,6 +1207,13 @@ describe("Cyberpunk interaction protocol adapter", () => {
       id: "resolveChooseEffect",
       intent: "choose-option",
       enabled: true,
+      source: { kind: "card", instanceId: "nocturne-1" },
+      text: {
+        params: {
+          sourceCardId: "nocturne-1",
+          sourceDisplayName: "Nocturne OP55 N1",
+        },
+      },
     });
     expect(parsed.actions[0]?.inputs[0]).toMatchObject({
       kind: "option-selection",

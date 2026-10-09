@@ -84,7 +84,7 @@ export function classifyPromotion(input: PromotionGateInput): {
     reasons.push(`${input.hardFailureCount} hard automation failure(s)`);
   }
   for (const [cell, regression] of Object.entries(input.cellRegressions)) {
-    if (regression <= -input.spec.maximumCellRegression) {
+    if (regression < -input.spec.maximumCellRegression) {
       reasons.push(
         `${cell} regressed by ${Math.abs(regression * 100).toFixed(1)} percentage points`,
       );

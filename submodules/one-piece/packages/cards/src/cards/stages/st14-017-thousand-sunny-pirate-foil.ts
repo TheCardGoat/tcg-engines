@@ -42,7 +42,7 @@ export const prb02ThousandSunnyPirateFoil017: StageCard = {
           {
             condition: "leaderTrait",
             trait: "Straw Hat Crew",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [
@@ -73,7 +73,7 @@ export const prb02ThousandSunnyPirateFoil017: StageCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

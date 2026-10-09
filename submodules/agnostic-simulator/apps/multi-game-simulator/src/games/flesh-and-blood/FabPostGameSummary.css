@@ -28,6 +28,11 @@
   outline: none;
 }
 
+.fab-post-game-summary[data-view="result"] .fab-summary-scroll-region {
+  display: grid;
+  align-items: center;
+}
+
 .fab-summary-app-header {
   position: sticky;
   z-index: 4;
@@ -815,6 +820,14 @@
   padding: 0.55rem 0.85rem;
 }
 
+.fab-summary-actions [role="status"] {
+  flex: 0 1 15rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--summary-muted);
+  font-size: 0.75rem;
+}
+
 .fab-summary-actions .fab-summary-primary-action {
   border-color: #b8883f;
   background: #9b2f2a;
@@ -945,6 +958,10 @@
 
   .fab-summary-actions button {
     min-width: 0;
+  }
+
+  .fab-summary-actions [role="status"] {
+    grid-column: 1 / -1;
   }
 
   .fab-summary-actions .fab-summary-primary-action {

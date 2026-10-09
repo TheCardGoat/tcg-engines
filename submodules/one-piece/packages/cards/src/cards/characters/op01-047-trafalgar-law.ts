@@ -55,7 +55,7 @@ export const op01TrafalgarLaw047: CharacterCard = {
   setId: "OP01",
   cost: 5,
   power: 6000,
-  traits: ["Heart Pirates Supernovas"],
+  traits: ["Supernovas", "Heart Pirates"],
   attribute: "slash",
 
   effect:

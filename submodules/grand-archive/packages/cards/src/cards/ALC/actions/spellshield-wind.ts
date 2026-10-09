@@ -62,29 +62,6 @@ export const spellshieldWind: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
           id: "99sx6q3p6i-a2",
           kind: "card-resolution",
           text: "The next time damage would be dealt to your champion this turn, prevent that damage. If 3 or more damage was prevented this way, put a buff counter on an ally you control.",
-          targets: [
-            {
-              id: "target-1",
-              kind: "target",
-              declared: "announcement",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              unique: true,
-              candidates: {
-                kind: "object",
-                zones: ["field"],
-                relationship: "controlled-by",
-                player: "controller",
-                filter: {
-                  kind: "type",
-                  oneOf: ["ALLY"],
-                },
-              },
-            },
-          ],
           effect: {
             kind: "replacement",
             event: {
@@ -122,13 +99,36 @@ export const spellshieldWind: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                 },
               },
               then: {
-                kind: "add-counter",
-                subject: {
-                  kind: "bound",
-                  binding: "target-1",
+                kind: "choose",
+                selection: {
+                  id: "chosen-counter-object",
+                  kind: "choice",
+                  declared: "resolution",
+                  chooser: "controller",
+                  count: {
+                    kind: "exactly",
+                    amount: 1,
+                  },
+                  candidates: {
+                    kind: "object",
+                    zones: ["field"],
+                    relationship: "controlled-by",
+                    player: "controller",
+                    filter: {
+                      kind: "type",
+                      oneOf: ["ALLY"],
+                    },
+                  },
                 },
-                counter: "buff",
-                amount: 1,
+                effect: {
+                  kind: "add-counter",
+                  subject: {
+                    kind: "bound",
+                    binding: "chosen-counter-object",
+                  },
+                  counter: "buff",
+                  amount: 1,
+                },
               },
             },
           },

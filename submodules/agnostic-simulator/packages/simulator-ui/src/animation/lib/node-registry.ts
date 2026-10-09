@@ -15,6 +15,8 @@ export interface AnimationNodeRecord {
 }
 
 export interface AnimationNodeRegistry {
+  setDragOrigin(entityId: string, rect: DOMRect | null): void;
+  takeDragOrigin(entityId: string): DOMRect | null;
   register(record: AnimationNodeRecord): () => void;
   get(ref: AnimationRef): readonly AnimationNodeRecord[];
   getPreferred(ref: AnimationRef): AnimationNodeRecord | null;
@@ -28,6 +30,7 @@ export function animationRefKey(ref: AnimationRef): string {
 }
 
 export function createAnimationNodeRegistry(): AnimationNodeRegistry {
+  const dragOrigins = new Map<string, DOMRect>();
   const records = new Map<string, Map<string, AnimationNodeRecord>>();
   const listeners = new Set<() => void>();
   let version = 0;
@@ -37,6 +40,15 @@ export function createAnimationNodeRegistry(): AnimationNodeRegistry {
   };
 
   return {
+    setDragOrigin(entityId, rect) {
+      if (rect) dragOrigins.set(entityId, rect);
+      else dragOrigins.delete(entityId);
+    },
+    takeDragOrigin(entityId) {
+      const rect = dragOrigins.get(entityId) ?? null;
+      dragOrigins.delete(entityId);
+      return rect;
+    },
     register(record) {
       const refKey = animationRefKey(record.ref);
       const entries = records.get(refKey) ?? new Map<string, AnimationNodeRecord>();
@@ -67,6 +79,7 @@ export function createAnimationNodeRegistry(): AnimationNodeRegistry {
       return () => listeners.delete(listener);
     },
     clear() {
+      dragOrigins.clear();
       if (records.size === 0) return;
       records.clear();
       publish();

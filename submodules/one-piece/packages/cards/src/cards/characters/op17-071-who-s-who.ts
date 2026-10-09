@@ -24,7 +24,7 @@ export const op17WhoSWho071: CharacterCard = {
   power: 3000,
   counter: 1000,
   trigger: "Play this card.",
-  traits: ["Animal Kingdom Pirates Former CP9"],
+  traits: ["Animal Kingdom Pirates", "Former CP9"],
   attribute: "slash",
   effect:
     "[On Play] DON!! -1: K.O. up to 2 of your opponent's Characters with a cost of 2 or less.",

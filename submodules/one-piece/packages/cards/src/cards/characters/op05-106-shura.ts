@@ -23,7 +23,7 @@ export const op05Shura106: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Sky Island Vassals"],
+  traits: ["Sky Island", "Vassals"],
   attribute: "slash",
   effect:
     "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 [Sky Island] type card other than [Shura] and add it to your hand. Then, place the rest at the bottom of your deck in any order. [Trigger] Play this card.",
@@ -51,7 +51,7 @@ export const op05Shura106: CharacterCard = {
               {
                 filter: "trait",
                 value: "Sky Island",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

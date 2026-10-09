@@ -39,6 +39,13 @@ export const op14eb04Foxy036: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        postCostConditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Foxy Pirates",
+            match: "exact",
+          },
+        ],
         costs: [
           {
             cost: "returnDon",
@@ -50,21 +57,11 @@ export const op14eb04Foxy036: CharacterCard = {
             action: "draw",
             player: "self",
             amount: 2,
-            condition: {
-              condition: "leaderTrait",
-              trait: "Foxy Pirates",
-              match: "includes",
-            },
           },
           {
             action: "trashFromHand",
             player: "self",
             amount: 1,
-            condition: {
-              condition: "leaderTrait",
-              trait: "Foxy Pirates",
-              match: "includes",
-            },
           },
           {
             action: "rest",

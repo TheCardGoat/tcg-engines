@@ -25,7 +25,7 @@ export const op09BartholomewKuma108: CharacterCard = {
   counter: 2000,
   trigger:
     'If your Leader has the "Revolutionary Army" type and you and your opponent have a total of 5 or less Life cards, play this card.',
-  traits: ["Revolutionary Army The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Revolutionary Army"],
   attribute: "strike",
   effect:
     '[Trigger] If your Leader has the "Revolutionary Army" type and you and your opponent have a total of 5 or less Life cards, play this card.',
@@ -41,7 +41,7 @@ export const op09BartholomewKuma108: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Revolutionary Army",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "totalLifeCount",

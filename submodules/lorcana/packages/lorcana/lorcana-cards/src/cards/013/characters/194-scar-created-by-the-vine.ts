@@ -29,14 +29,18 @@ export const scarCreatedByTheVine: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_7e0e75f0935349869524de14d4b6bd22",
+    tcgPlayer: "704690",
+  },
   text: [
     {
-      title: "Victor's Reward",
+      title: "VICTOR'S REWARD",
       description:
         "During your turn, whenever one of your Floodborn characters banishes another character in a challenge, gain 1 lore.",
     },
     {
-      title: "Fill the Ranks",
+      title: "FILL THE RANKS",
       description:
         "During an opponent's turn, whenever one of your Floodborn characters is banished, draw a card.",
     },

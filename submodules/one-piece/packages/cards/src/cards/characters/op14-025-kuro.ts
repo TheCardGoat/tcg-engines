@@ -22,7 +22,7 @@ export const op14eb04Kuro025: CharacterCard = {
   setId: "OP14",
   cost: 7,
   power: 8000,
-  traits: ["East Blue Black Cat Pirates"],
+  traits: ["East Blue", "Black Cat Pirates"],
   attribute: "slash",
   effect:
     "[On Play] If your Leader is [Kuro], play up to 1 {East Blue} type Character card with a cost of 6 or less from your hand.",
@@ -56,7 +56,7 @@ export const op14eb04Kuro025: CharacterCard = {
               {
                 filter: "trait",
                 value: "East Blue",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

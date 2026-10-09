@@ -77,6 +77,8 @@ export type ScryDestination =
  * Base properties shared by all scry destinations
  */
 interface ScryBaseDestination {
+  /** Disable this destination when fewer cards were looked at; earlier printed instructions take precedence. */
+  requiresLookedAtLeast?: number;
   /** Minimum cards that MUST go to this destination (default: 0) */
   min?: number;
   /** Maximum cards that CAN go to this destination */

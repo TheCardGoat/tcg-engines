@@ -44,7 +44,7 @@ export const op07Pickles069: CharacterCard = {
               zones: ["character"],
               count: { amount: "all" },
               filters: [
-                { filter: "trait", value: "Foxy Pirates", match: "includes" },
+                { filter: "trait", value: "Foxy Pirates", match: "exact" },
                 { filter: "excludeName", value: "Pickles" },
               ],
             },

@@ -43,7 +43,7 @@ export const eb01Blueno033: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Water Seven",
-              match: "includes",
+              match: "exact",
             },
             source: {
               player: "self",
@@ -66,7 +66,7 @@ export const eb01Blueno033: CharacterCard = {
               {
                 filter: "trait",
                 value: "Water Seven",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

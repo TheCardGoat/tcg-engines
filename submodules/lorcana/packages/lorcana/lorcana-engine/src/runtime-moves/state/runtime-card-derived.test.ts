@@ -382,7 +382,16 @@ describe("runtime-card-derived", () => {
   it("returns willpower for locations with valid willpower", () => {
     const locationCard: LocationCard = {
       id: "location-with-willpower",
-      printings: [{ id: "location-with-willpower", artId: "location-with-willpower", setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
+      printings: [
+        {
+          id: "location-with-willpower",
+          artId: "location-with-willpower",
+          setCode: "TST",
+          collectorNumber: "1",
+          rarity: "common",
+          imageUrl: "",
+        },
+      ],
       canonicalId: "ci_location-with-willpower",
       slug: "lorcana-ci_location-with-willpower",
       cardType: "location",
@@ -415,7 +424,16 @@ describe("runtime-card-derived", () => {
   it("applies location willpower modifiers and clamps at zero", () => {
     const locationCard: LocationCard = {
       id: "location-with-modifier",
-      printings: [{ id: "location-with-modifier", artId: "location-with-modifier", setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
+      printings: [
+        {
+          id: "location-with-modifier",
+          artId: "location-with-modifier",
+          setCode: "TST",
+          collectorNumber: "1",
+          rarity: "common",
+          imageUrl: "",
+        },
+      ],
       canonicalId: "ci_location-with-modifier",
       slug: "lorcana-ci_location-with-modifier",
       cardType: "location",
@@ -473,7 +491,16 @@ describe("runtime-card-derived", () => {
     // Create a location-like card with missing willpower (simulating edge case)
     const locationNoWillpower = {
       id: "location-no-willpower",
-      printings: [{ id: "location-no-willpower", artId: "location-no-willpower", setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
+      printings: [
+        {
+          id: "location-no-willpower",
+          artId: "location-no-willpower",
+          setCode: "TST",
+          collectorNumber: "1",
+          rarity: "common",
+          imageUrl: "",
+        },
+      ],
       canonicalId: "ci_location-no-willpower",
       slug: "lorcana-ci_location-no-willpower",
       cardType: "location",
@@ -506,7 +533,16 @@ describe("runtime-card-derived", () => {
   it("returns 0 strength and willpower for non-character, non-location cards", () => {
     const actionCard: LorcanaCard = {
       id: "action-card",
-      printings: [{ id: "action-card", artId: "action-card", setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
+      printings: [
+        {
+          id: "action-card",
+          artId: "action-card",
+          setCode: "TST",
+          collectorNumber: "1",
+          rarity: "common",
+          imageUrl: "",
+        },
+      ],
       canonicalId: "ci_action-card",
       slug: "lorcana-ci_action-card",
       cardType: "action",

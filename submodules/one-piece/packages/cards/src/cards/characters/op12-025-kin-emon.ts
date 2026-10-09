@@ -23,7 +23,7 @@ export const op12KinEmon025: CharacterCard = {
   cost: 6,
   power: 8000,
   counter: 1000,
-  traits: ["Land of Wano The Akazaya Nine"],
+  traits: ["Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   i18n: op12KinEmon025I18n,
 };

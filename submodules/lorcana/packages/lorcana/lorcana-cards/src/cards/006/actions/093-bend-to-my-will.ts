@@ -11,7 +11,7 @@ export const bendToMyWill: ActionCard = {
       artId: "set6-093",
       setCode: "set6",
       collectorNumber: "93",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -22,7 +22,7 @@ export const bendToMyWill: ActionCard = {
   franchise: "Aladdin",
   set: "006",
   cardNumber: 93,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 7,
   inkable: false,
   externalIds: {

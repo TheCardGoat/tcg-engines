@@ -33,6 +33,7 @@ export const rooHunnyRogue: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1e4e5fcae0fd4a5d92c33919e298257c",
+    tcgPlayer: "702653",
   },
   text: [
     {

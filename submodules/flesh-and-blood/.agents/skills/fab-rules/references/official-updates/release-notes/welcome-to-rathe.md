@@ -1,6 +1,10 @@
 ---
+official_source:
+  publisher: "Legend Story Studios"
+  url: "https://fabtcg.com/rules-and-policy-center/release-notes/welcome-to-rathe/"
+  relation: "exact_document"
+  retrieved_at: "2026-08-08"
 title: "Welcome to Rathe"
-source: https://fabtcg.com/rules-and-policy-center/release-notes/welcome-to-rathe/
 archived_at: 2026-08-08T09:52:15+00:00
 content_sha256: 335bc15e826c31f94a83783edd55f2e6a9f381f605ad850d68bf8c091018c301
 ---

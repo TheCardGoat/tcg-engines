@@ -132,6 +132,10 @@ export const huntWeissKing: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                           },
                           {
                             kind: "subtype",
+                            oneOf: ["CHESSMAN"],
+                          },
+                          {
+                            kind: "subtype",
                             oneOf: ["BISHOP"],
                           },
                         ],
@@ -209,6 +213,10 @@ export const huntWeissKing: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                                 {
                                   kind: "type",
                                   oneOf: ["ALLY"],
+                                },
+                                {
+                                  kind: "subtype",
+                                  oneOf: ["CHESSMAN"],
                                 },
                                 {
                                   kind: "subtype",

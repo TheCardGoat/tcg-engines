@@ -1,4 +1,4 @@
-import { describe, test } from "vite-plus/test";
+import { describe, expect, test } from "vite-plus/test";
 import { fireEvent } from "@testing-library/react";
 import { welcomeToNightCityRetailKerryEurodyneTheLastRockerboy } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -40,11 +40,17 @@ describe("Kerry Eurodyne (Retail) jsdom happy path", () => {
       }
       fireEvent.click(kerryCard);
 
-      expectEqual(
-        "sole quick action bypasses the card menu",
-        document.body.querySelector("[data-card-context-menu]"),
-        null,
+      const menu = document.body.querySelector("[data-card-context-menu]");
+      expect(menu).not.toBeNull();
+      await pom.expectFieldCardSpent(CYBERPUNK_P1, kerry.instanceId, false);
+      await pom.expectHandSize(CYBERPUNK_P1, handBefore);
+      const attack = menu?.querySelector<HTMLButtonElement>('[data-action-id^="attackRival:"]');
+      expect(attack?.dataset.actionAvailability).toBe("enabled");
+      const ability = menu?.querySelector<HTMLButtonElement>(
+        '[data-action-id^="activateAbility:"]',
       );
+      if (!ability) throw new Error("Expected Kerry's ability choice.");
+      fireEvent.click(ability);
 
       await pom.expectFieldCardSpent(CYBERPUNK_P1, kerry.instanceId, true);
       await pom.expectHandSize(CYBERPUNK_P1, handBefore + 2);

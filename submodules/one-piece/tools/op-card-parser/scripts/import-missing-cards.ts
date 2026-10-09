@@ -1,3 +1,4 @@
+import { renderAlternateNames } from "../src/alternate-names.ts";
 // One-off import: generate card definitions for catalog ids that are missing
 // from the checked-in catalog but present in an optcgapi.com snapshot.
 //
@@ -373,6 +374,8 @@ function main(): void {
     if ("trigger" in card && card.trigger !== undefined) {
       lines.push(renderValue("trigger", card.trigger, "  "));
     }
+    const aliasLine = renderAlternateNames(card.alternateNames);
+    if (aliasLine) lines.push(aliasLine);
     if (card.traits !== undefined) lines.push(renderValue("traits", card.traits, "  "));
     if (card.attribute !== undefined) lines.push(renderValue("attribute", card.attribute, "  "));
     if (card.effect !== undefined) lines.push(renderValue("effect", card.effect, "  "));

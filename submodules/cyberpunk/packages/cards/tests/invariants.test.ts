@@ -31,12 +31,13 @@ const KNOWN_SET_CODE_VALUES: ReadonlySet<string> = new Set([
   "theheistretailstarterdeck",
   "welcometonightcitybeta",
   "welcometonightcityretail",
+  "welcometonightcityretail-fr",
   "prereleasebeta",
   "edgerunneropens1",
   "nightcitybrawls1",
   "nightcityshowdowns1",
 ]);
-const KNOWN_LEGALITIES: ReadonlySet<string> = new Set(["legal"]);
+const KNOWN_LEGALITIES: ReadonlySet<string> = new Set(["legal", "not-legal"]);
 const KNOWN_COLORS: ReadonlySet<string> = new Set(["blue", "green", "red", "yellow"]);
 const KNOWN_RAW_COLORS: ReadonlySet<string> = new Set(["Blue", "Green", "Red", "Yellow"]);
 const KNOWN_CARD_TYPES: ReadonlySet<string> = new Set(["legend", "unit", "gear", "program"]);
@@ -171,16 +172,8 @@ function assertCompactPrintings(
 
     const record = printing as Record<string, unknown>;
     assertString(source, `${fieldPrefix}.id`, record.id, violations, { regex: UUID_REGEX });
-    // artId is platform-derived 1:1 with the printing id today (RFC §4/§7).
+    // artId is the reviewed appearance ID, so equivalent prints can share it.
     assertString(source, `${fieldPrefix}.artId`, record.artId, violations, { regex: UUID_REGEX });
-    if (record.artId !== record.id) {
-      violations.push({
-        cardSlug: source,
-        field: `${fieldPrefix}.artId`,
-        reason: "artId must equal printing id (1:1 degenerate art tier)",
-        value: record.artId,
-      });
-    }
     assertString(source, `${fieldPrefix}.collectorNumber`, record.collectorNumber, violations);
     assertEnum(source, `${fieldPrefix}.setCode`, record.setCode, KNOWN_SET_CODE_VALUES, violations);
     assertString(source, `${fieldPrefix}.rarity`, record.rarity, violations, { nonEmpty: false });

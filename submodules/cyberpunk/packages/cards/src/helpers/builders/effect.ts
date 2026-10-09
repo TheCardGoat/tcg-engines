@@ -23,6 +23,8 @@ import type {
   TrashFromDeckEffect,
 } from "@tcg/cyberpunk-types";
 
+type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
+
 export const effect = {
   defeat: (args: Omit<DefeatEffect, "effect">): DefeatEffect => ({ effect: "defeat", ...args }),
   spend: (args: Omit<SpendEffect, "effect">): SpendEffect => ({ effect: "spend", ...args }),
@@ -39,7 +41,7 @@ export const effect = {
     effect: "adjustGig",
     ...args,
   }),
-  modifyPower: (args: Omit<ModifyPowerEffect, "effect">): ModifyPowerEffect => ({
+  modifyPower: (args: DistributiveOmit<ModifyPowerEffect, "effect">): ModifyPowerEffect => ({
     effect: "modifyPower",
     ...args,
   }),

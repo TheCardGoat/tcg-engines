@@ -23,7 +23,7 @@ export const op02NicoRobin037: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Film Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[On Play] Play up to 1 [FILM] or [Straw Hat Crew] type Character card with a cost of 2 or less from your hand.",
@@ -54,12 +54,12 @@ export const op02NicoRobin037: CharacterCard = {
                   {
                     filter: "trait",
                     value: "FILM",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Straw Hat Crew",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

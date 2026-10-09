@@ -10,7 +10,8 @@ describe("OP09-092 Marshall.D.Teach", () => {
       {
         character: [op09MarshallDTeach092],
         hand: [eb01Doma005],
-        deck: [eb01Fourtricks025, eb01MountainGod018],
+        // Keep a bottom card so deck-empty defeat does not end this effect test.
+        deck: [eb01Fourtricks025, eb01MountainGod018, eb01Doma005],
       },
       { hand: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018, eb01Doma005] },
     );

@@ -1,3 +1,11 @@
+---
+official_source:
+  publisher: "Ravensburger"
+  url: "https://files.disneylorcana.com/Comprehensive-Rules_2.2.0-EN.pdf"
+  relation: "current_index"
+  copy_version: "2.0.1"
+---
+
 # Lorcana Glossary
 
 Load this file before rules-facing Lorcana work. Use these terms in player-facing copy, tests, and implementation notes unless the codebase has an established narrower type name.

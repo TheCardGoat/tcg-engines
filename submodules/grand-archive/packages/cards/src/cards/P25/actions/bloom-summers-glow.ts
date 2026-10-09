@@ -122,6 +122,7 @@ export const bloomSummersGlow: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               },
             ],
           },
+          functionalZones: ["hand"],
         },
       ],
     },

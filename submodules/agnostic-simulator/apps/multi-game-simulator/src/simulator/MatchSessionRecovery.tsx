@@ -4,6 +4,7 @@ import { useMatchSession } from "./MatchSessionProvider";
 /** Place inside blocking dialogs so recovery remains keyboard-accessible. */
 export function MatchSessionRecovery() {
   const { refresh, refreshing, error } = useMatchSession();
+  if (!error) return null;
   return (
     <Stack gap="xs">
       {error && (
@@ -13,7 +14,7 @@ export function MatchSessionRecovery() {
       )}
       <Group justify="flex-end" gap="xs">
         <Text size="xs" role="status" flex={1} c="dimmed">
-          {refreshing ? "Refreshing match…" : error ? "Reconnecting automatically…" : null}
+          Reconnecting automatically…
         </Text>
         <Button
           variant="subtle"
@@ -23,7 +24,7 @@ export function MatchSessionRecovery() {
           loading={refreshing}
           onClick={() => void refresh("retry")}
         >
-          Refresh match
+          Retry connection
         </Button>
       </Group>
     </Stack>

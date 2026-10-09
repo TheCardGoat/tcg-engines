@@ -31,12 +31,16 @@ export const pachaPanickedCustomer: CharacterCard = {
   willpower: 6,
   lore: 0,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_bb548680d2f248e4bc6aefaaf8df0f54",
+    tcgPlayer: "704626",
+  },
   text: [
     {
       title: "Reckless",
     },
     {
-      title: "Adrenaline Surge",
+      title: "ADRENALINE SURGE",
       description: "During your turn, this character gets +4 {S}.",
     },
   ],

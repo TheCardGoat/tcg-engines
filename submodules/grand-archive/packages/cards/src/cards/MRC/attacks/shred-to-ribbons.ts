@@ -56,8 +56,28 @@ export const shredToRibbons: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                   kind: "event-attacker",
                 },
                 otherFilter: {
-                  kind: "type",
-                  oneOf: ["ALLY"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY"],
+                    },
+                    {
+                      kind: "numeric",
+                      comparison: {
+                        left: {
+                          kind: "property",
+                          subject: {
+                            kind: "candidate",
+                          },
+                          property: "life",
+                          basis: "current",
+                        },
+                        operator: "gte",
+                        right: 5,
+                      },
+                    },
+                  ],
                 },
               },
               duration: {

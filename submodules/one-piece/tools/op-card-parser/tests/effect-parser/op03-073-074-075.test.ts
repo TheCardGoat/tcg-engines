@@ -17,7 +17,7 @@ describe("OP03-073/074/075 parser regressions", () => {
           condition: {
             condition: "leaderTrait",
             trait: "Water Seven",
-            match: "includes",
+            match: "exact",
           },
         },
       ],

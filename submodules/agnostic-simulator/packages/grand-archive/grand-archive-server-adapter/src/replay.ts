@@ -19,9 +19,39 @@ export interface GrandArchiveReplayCommandV1 {
   readonly actorId: string;
   readonly expectedStateVersion: number;
   readonly resultingStateVersion: number;
-  readonly command: GrandArchiveCommand;
+  readonly command: GrandArchiveCommand | {
+    readonly move: "undo" | "undoToTurnStart";
+    readonly checkpointStateVersion: number;
+    readonly checkpointSnapshot: GrandArchiveMatchSnapshotV1;
+  };
   readonly eventTypes: readonly string[];
   readonly correlationId?: string;
+}
+
+function isUndoCommand(command: GrandArchiveReplayCommandV1["command"]): command is Extract<GrandArchiveReplayCommandV1["command"], { move: "undo" | "undoToTurnStart" }> {
+  return command.move === "undo" || command.move === "undoToTurnStart";
+}
+
+/** Restore a safe checkpoint while keeping identity counters and the CAS version monotonic. */
+export function grandArchiveUndoSnapshot(
+  current: GrandArchiveMatchSnapshotV1,
+  checkpoint: GrandArchiveMatchSnapshotV1,
+  nextVersion: number,
+): GrandArchiveMatchSnapshotV1 {
+  return {
+    ...checkpoint,
+    stateVersion: nextVersion,
+    nextObjectOrdinal: Math.max(current.nextObjectOrdinal, checkpoint.nextObjectOrdinal),
+    nextStackOrdinal: Math.max(current.nextStackOrdinal, checkpoint.nextStackOrdinal),
+    nextDecisionOrdinal: Math.max(current.nextDecisionOrdinal, checkpoint.nextDecisionOrdinal),
+    nextEventOrdinal: Math.max(current.nextEventOrdinal, checkpoint.nextEventOrdinal),
+    nextContinuousOrdinal: Math.max(current.nextContinuousOrdinal, checkpoint.nextContinuousOrdinal),
+    nextReplacementOrdinal: Math.max(current.nextReplacementOrdinal, checkpoint.nextReplacementOrdinal),
+    nextRuleModificationOrdinal: Math.max(current.nextRuleModificationOrdinal, checkpoint.nextRuleModificationOrdinal),
+    nextPendingTriggerOrdinal: Math.max(current.nextPendingTriggerOrdinal, checkpoint.nextPendingTriggerOrdinal),
+    nextGeneratedTriggerOrdinal: Math.max(current.nextGeneratedTriggerOrdinal, checkpoint.nextGeneratedTriggerOrdinal),
+    nextDelayedTriggerOrdinal: Math.max(current.nextDelayedTriggerOrdinal, checkpoint.nextDelayedTriggerOrdinal),
+  };
 }
 
 /** Server-authoritative replay. Never expose this envelope directly to a viewer. */
@@ -152,7 +182,14 @@ export function parseGrandArchiveReplayJournal(
       command.resultingStateVersion <= command.expectedStateVersion ||
       typeof command.actorId !== "string" ||
       !command.command ||
-      !isGrandArchiveMoveName(command.command.move) ||
+      (!isUndoCommand(command.command) && !isGrandArchiveMoveName(command.command.move)) ||
+      (isUndoCommand(command.command) && (
+        !Number.isSafeInteger(command.command.checkpointStateVersion) ||
+        command.command.checkpointStateVersion < initialSnapshot.stateVersion ||
+        command.command.checkpointStateVersion >= command.expectedStateVersion ||
+        command.command.checkpointSnapshot?.stateVersion !== command.command.checkpointStateVersion ||
+        command.eventTypes.length !== 0
+      )) ||
       !Array.isArray(command.eventTypes) ||
       command.eventTypes.some((eventType: unknown) => typeof eventType !== "string") ||
       (command.correlationId !== undefined &&
@@ -173,6 +210,51 @@ export function parseGrandArchiveReplayJournal(
   return candidate as GrandArchiveReplayJournalV1;
 }
 
+function replayEntries(
+  program: GrandArchiveMatchProgram,
+  initialSnapshot: GrandArchiveMatchSnapshotV1,
+  entries: readonly GrandArchiveReplayCommandV1[],
+  label: string,
+): GrandArchiveMatchRuntime {
+  let runtime = new GrandArchiveMatchRuntime(
+    program, restoreGrandArchiveMatchSnapshot(program, initialSnapshot),
+  );
+  const snapshots = new Map<number, GrandArchiveMatchSnapshotV1>([
+    [initialSnapshot.stateVersion, initialSnapshot],
+  ]);
+  for (const entry of entries) {
+    if (runtime.state.stateVersion !== entry.expectedStateVersion) {
+      throw new Error(`${label} diverged before command ${entry.sequence}`);
+    }
+    if (isUndoCommand(entry.command)) {
+      const checkpoint = snapshots.get(entry.command.checkpointStateVersion);
+      if (!checkpoint || fingerprintGrandArchiveValue(checkpoint) !==
+        fingerprintGrandArchiveValue(entry.command.checkpointSnapshot) ||
+        entry.eventTypes.length !== 0 || entry.resultingStateVersion !== entry.expectedStateVersion + 1) {
+        throw new Error(`${label} undo checkpoint diverged at command ${entry.sequence}`);
+      }
+      const restored = grandArchiveUndoSnapshot(
+        serializeGrandArchiveMatchSnapshot(runtime.state), checkpoint, entry.resultingStateVersion,
+      );
+      runtime = new GrandArchiveMatchRuntime(program, restoreGrandArchiveMatchSnapshot(program, restored));
+    } else {
+      const transition = runtime.execute(entry.command, {
+        playerId: grandArchivePlayerId(entry.actorId),
+        expectedStateVersion: entry.expectedStateVersion,
+      });
+      if (!transition.ok || transition.state.stateVersion !== entry.resultingStateVersion) {
+        throw new Error(`${label} rejected or diverged at command ${entry.sequence}`);
+      }
+      if (fingerprintGrandArchiveValue(transition.events.map((event) => event.type)) !==
+        fingerprintGrandArchiveValue(entry.eventTypes)) {
+        throw new Error(`${label} event stream diverged at command ${entry.sequence}`);
+      }
+    }
+    snapshots.set(entry.resultingStateVersion, serializeGrandArchiveMatchSnapshot(runtime.state));
+  }
+  return runtime;
+}
+
 /** Restores only by replaying the validated authoritative command journal. */
 export function restoreGrandArchiveReplayJournal(
   program: GrandArchiveMatchProgram,
@@ -182,28 +264,7 @@ export function restoreGrandArchiveReplayJournal(
   readonly runtime: GrandArchiveMatchRuntime;
 } {
   const journal = parseGrandArchiveReplayJournal(value, program);
-  const runtime = new GrandArchiveMatchRuntime(
-    program,
-    restoreGrandArchiveMatchSnapshot(program, journal.initialSnapshot),
-  );
-  for (const entry of journal.commands) {
-    if (runtime.state.stateVersion !== entry.expectedStateVersion) {
-      throw new Error(`Grand Archive journal diverged before command ${entry.sequence}`);
-    }
-    const transition = runtime.execute(entry.command, {
-      playerId: grandArchivePlayerId(entry.actorId),
-      expectedStateVersion: entry.expectedStateVersion,
-    });
-    if (!transition.ok || transition.state.stateVersion !== entry.resultingStateVersion) {
-      throw new Error(`Grand Archive journal rejected or diverged at command ${entry.sequence}`);
-    }
-    if (
-      fingerprintGrandArchiveValue(transition.events.map((event) => event.type)) !==
-      fingerprintGrandArchiveValue(entry.eventTypes)
-    ) {
-      throw new Error(`Grand Archive journal event stream diverged at command ${entry.sequence}`);
-    }
-  }
+  const runtime = replayEntries(program, journal.initialSnapshot, journal.commands, "Grand Archive journal");
   return { journal, runtime };
 }
 
@@ -235,28 +296,7 @@ export function replayGrandArchiveReplay(
   if (replay.programFingerprint !== program.fingerprint) {
     throw new Error("Grand Archive replay program fingerprint does not match the catalog");
   }
-  const runtime = new GrandArchiveMatchRuntime(
-    program,
-    restoreGrandArchiveMatchSnapshot(program, replay.initialSnapshot),
-  );
-  for (const entry of replay.commands) {
-    if (runtime.state.stateVersion !== entry.expectedStateVersion) {
-      throw new Error(`Grand Archive replay diverged before command ${entry.sequence}`);
-    }
-    const transition = runtime.execute(entry.command, {
-      playerId: grandArchivePlayerId(entry.actorId),
-      expectedStateVersion: entry.expectedStateVersion,
-    });
-    if (!transition.ok || transition.state.stateVersion !== entry.resultingStateVersion) {
-      throw new Error(`Grand Archive replay rejected or diverged at command ${entry.sequence}`);
-    }
-    if (
-      fingerprintGrandArchiveValue(transition.events.map((event) => event.type)) !==
-      fingerprintGrandArchiveValue(entry.eventTypes)
-    ) {
-      throw new Error(`Grand Archive replay event stream diverged at command ${entry.sequence}`);
-    }
-  }
+  const runtime = replayEntries(program, replay.initialSnapshot, replay.commands, "Grand Archive replay");
   const snapshot = serializeGrandArchiveMatchSnapshot(runtime.state);
   if (fingerprintGrandArchiveValue(snapshot) !== replay.finalSnapshotFingerprint) {
     throw new Error("Grand Archive replay final snapshot fingerprint diverged");
@@ -287,28 +327,8 @@ export function inspectGrandArchiveReplay(
   ) {
     throw new Error("Replay command index is outside the accepted command stream");
   }
-  const runtime = new GrandArchiveMatchRuntime(
-    program,
-    restoreGrandArchiveMatchSnapshot(program, replay.initialSnapshot),
-  );
-  for (const entry of replay.commands.slice(0, throughCommand)) {
-    if (runtime.state.stateVersion !== entry.expectedStateVersion) {
-      throw new Error(`Replay inspection diverged before command ${entry.sequence}`);
-    }
-    const transition = runtime.execute(entry.command, {
-      playerId: grandArchivePlayerId(entry.actorId),
-      expectedStateVersion: entry.expectedStateVersion,
-    });
-    if (!transition.ok || transition.state.stateVersion !== entry.resultingStateVersion) {
-      throw new Error(`Replay inspection diverged at command ${entry.sequence}`);
-    }
-    if (
-      fingerprintGrandArchiveValue(transition.events.map((event) => event.type)) !==
-      fingerprintGrandArchiveValue(entry.eventTypes)
-    ) {
-      throw new Error(`Replay inspection event stream diverged at command ${entry.sequence}`);
-    }
-  }
+  const runtime = replayEntries(program, replay.initialSnapshot,
+    replay.commands.slice(0, throughCommand), "Replay inspection");
   const playerId = grandArchivePlayerId(viewerId);
   return {
     schemaVersion: 1,

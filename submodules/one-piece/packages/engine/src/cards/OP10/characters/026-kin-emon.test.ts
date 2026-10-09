@@ -36,11 +36,15 @@ describe("OP10-026 Kin'emon", () => {
     engine.activateEffect(sourceId, "activateMain", "south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
     const cost = engine.pendingDecision("effectCostReturnTrashToDeck", "south").steps[0];
-    expect(cost).toMatchObject({ kind: "payCost", min: 1, max: 1 });
+    expect(cost).toMatchObject({ kind: "payCost", min: 2, max: 2, ordered: true });
     if (cost?.kind !== "payCost") throw new Error("Expected Kin'emon's trash payment.");
     expect(cost.candidates.map((candidate) => candidate.ref.id)).toContain(paymentId);
     expect(cost.candidates.map((candidate) => candidate.ref.id)).not.toContain(wrongPowerId);
-    engine.resolveDecision("effectCostReturnTrashToDeck", { selectedIds: [paymentId] }, "south");
+    engine.resolveDecision(
+      "effectCostReturnTrashToDeck",
+      { selectedIds: [sourceId, paymentId] },
+      "south",
+    );
 
     const play = engine.pendingDecision("effectPlaySelection", "south").steps[0];
     expect(play).toMatchObject({ kind: "selectEntity", min: 0, max: 1 });
@@ -85,4 +89,69 @@ describe("OP10-026 Kin'emon", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+
+  test.each(["source-first", "trash-first"])(
+    "orders mixed cost %s after snapshot and rejects invalid payments",
+    (order) => {
+      let e = OnePieceTestEngine.create({
+        character: ["OP10-026"],
+        trash: ["OP10-027", "OP10-027", "OP10-026"],
+        hand: ["OP04-102", "P-096", "P-096"],
+        deck: ["ST02-012"],
+        activeDon: 5,
+      });
+      const source = e.findCardInZone("south", "character", "OP10-026");
+      const payments = e
+        .getView("south")
+        .players.south.trash.filter((c) => c.cardId === "OP10-027")
+        .flatMap((c) => (c.instanceId ? [c.instanceId] : []));
+      const wrong = e.findCardInZone("south", "trash", "OP10-026");
+      e.asSouth().attachDon(source, 1);
+      e.asSouth().activateMain(source);
+      e.asSouth().acceptOptional();
+      const decision = e.pendingDecision("effectCostReturnTrashToDeck", "south");
+      expect(decision.steps[0]).toMatchObject({ kind: "payCost", ordered: true, min: 2, max: 2 });
+      e = OnePieceTestEngine.fromState(JSON.parse(JSON.stringify(e.getState())));
+      for (const selectedIds of [payments, [source, source], [source, wrong]]) {
+        const failure = e.expectFailure({
+          type: "resolvePrompt",
+          seat: "south",
+          promptId: decision.id,
+          selectedIds,
+        });
+        expect(failure.accepted).toBe(false);
+        e = OnePieceTestEngine.fromState(failure.state);
+        expect(e.pendingDecision("effectCostReturnTrashToDeck", "south").id).toBe(decision.id);
+        expect(e.getView("south").players.south.characters[0]?.instanceId).toBe(source);
+        expect(e.getView("south").players.south.characters[0]?.attachedDon).toBe(1);
+        expect(e.getView("south").players.south.trash).toHaveLength(3);
+        expect(e.getView("south").players.south.deckCount).toBe(1);
+      }
+      const selectedIds =
+        order === "source-first" ? [source, payments[0]!] : [payments[0]!, source];
+      e.resolveDecision("effectCostReturnTrashToDeck", { selectedIds }, "south");
+      e.resolveDecision("effectPlaySelection", { selectedIds: [] }, "south");
+      expect(e.getView("south").players.south.restedDon).toBe(1);
+      expect(e.getView("south").players.south.characters.filter(Boolean)).toHaveLength(0);
+      e.asSouth().play("P-096");
+      e.resolveDecision(
+        "effectTrashFromHandSelection",
+        { selectedIds: [e.findCardInZone("south", "hand", "ST02-012")] },
+        "south",
+      );
+      e.asSouth().play("P-096");
+      e.resolveDecision(
+        "effectTrashFromHandSelection",
+        { selectedIds: [e.findCardInZone("south", "hand", "OP04-102")] },
+        "south",
+      );
+      expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toContain(
+        selectedIds[0],
+      );
+      expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).not.toContain(
+        selectedIds[1],
+      );
+      expect(e.getView("south").players.south.deckCount).toBe(1);
+    },
+  );
 });

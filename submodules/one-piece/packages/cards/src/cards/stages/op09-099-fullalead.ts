@@ -53,7 +53,7 @@ export const op09Fullalead099: StageCard = {
               {
                 filter: "trait",
                 value: "Blackbeard Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

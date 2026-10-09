@@ -32,7 +32,7 @@ export const op15Gin007: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Krieg Pirates East Blue"],
+  traits: ["East Blue", "Krieg Pirates"],
   attribute: "strike",
   effect:
     "[On Play] If your Leader has the {East Blue} type, play up to 1 Character card with a cost of 5 or less from your hand.",
@@ -44,7 +44,7 @@ export const op15Gin007: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "East Blue",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

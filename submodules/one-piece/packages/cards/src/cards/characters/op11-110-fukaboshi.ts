@@ -22,7 +22,7 @@ export const op11Fukaboshi110: CharacterCard = {
   setId: "OP11",
   cost: 3,
   power: 5000,
-  traits: ["Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island"],
   attribute: "slash",
   effect:
     "If this Character would be K.O.'d, you may rest 1 of your [Fish-Man Island] or your [Shirahoshi] Leader instead.\n[On Play] You may add 1 card from the top or bottom of your Life cards to your hand: K.O. up to 1 of your opponent's Characters with a cost of 1 or less.",
@@ -81,7 +81,7 @@ export const op11Fukaboshi110: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Fish-Man Island",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "name",

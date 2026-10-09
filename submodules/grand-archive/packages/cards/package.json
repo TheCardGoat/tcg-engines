@@ -26,7 +26,7 @@
     "coverage:cards:write": "node --experimental-transform-types --no-warnings scripts/card-coverage.ts --write",
     "coverage:cards:next": "node --experimental-transform-types --no-warnings scripts/card-coverage.ts --next-cluster",
     "generate:cards": "node --experimental-transform-types --no-warnings scripts/generate-card-objects.ts && vp fmt scripts/generate-card-objects.ts src/cards src/generated/grand-archive-card-registry.ts",
-    "test": "vp test run"
+    "test": "vp test run --maxWorkers=2 --testTimeout=15000"
   },
   "dependencies": {
     "@tcg/grand-archive-types": "workspace:*"

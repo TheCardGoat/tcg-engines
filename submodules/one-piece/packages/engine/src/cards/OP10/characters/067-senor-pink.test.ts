@@ -42,4 +42,25 @@ describe("OP10-067 Senor Pink", () => {
     expect(view.players.south.activeDon).toBe(2);
     expect(view.prompts).toHaveLength(0);
   });
+  test("may skip recovering an Event and still ready one DON", () => {
+    const e = OnePieceTestEngine.create({ hand: ["OP10-067"], trash: ["OP10-079"], activeDon: 7 });
+    e.asSouth().play("OP10-067");
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "south");
+    e.asSouth().chooseNoTargets();
+    const before = e.getView("south").players.south.activeDon;
+    e.resolveDecision("effectSetActiveDon", { optionId: "1" }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(before + 1);
+    expect(e.getView("south").players.south.trash.some((c) => c.cardId === "OP10-079")).toBe(true);
+  });
+  test("may decline the DON cost and neither recover the Event nor ready DON", () => {
+    const e = OnePieceTestEngine.create({ hand: ["OP10-067"], trash: ["OP10-079"], activeDon: 7 });
+    e.asSouth().play("OP10-067");
+    const before = e.getView("south").players.south;
+    e.asSouth().declineOptional();
+    expect(e.getView("south").players.south.activeDon).toBe(before.activeDon);
+    expect(e.getView("south").players.south.restedDon).toBe(before.restedDon);
+    expect(e.getView("south").players.south.donDeckCount).toBe(before.donDeckCount);
+    expect(e.getView("south").players.south.trash.some((c) => c.cardId === "OP10-079")).toBe(true);
+  });
 });

@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op11FishManIsland117 } from "../../../../../cards/src/cards/stages/op11-117-fish-man-island.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP11-117 Fish-Man Island", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op11FishManIsland117);
-  });
-});

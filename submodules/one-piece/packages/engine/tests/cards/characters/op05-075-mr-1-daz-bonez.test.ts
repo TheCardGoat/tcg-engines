@@ -3,6 +3,7 @@ import {
   eb01Doma005,
   eb01Fourtricks025,
   eb01MountainGod018,
+  op01Mr1DazBonez083,
   op02Mr1DazBonez063,
   op04MissMerrychristmasDrophy067,
   op05Mr1DazBonez075,
@@ -11,10 +12,15 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP05-075 Mr.1 (Daz.Bonez)", () => {
-  test("on an opponent's attack returns DON!! to play an included Baroque Works Character once", () => {
+  test("on an opponent's attack returns DON!! to play an Baroque Works Character once", () => {
     const engine = OnePieceTestEngine.create(
       {
-        hand: [op02Mr1DazBonez063, op04MissMerrychristmasDrophy067, eb01Doma005],
+        hand: [
+          op01Mr1DazBonez083,
+          op04MissMerrychristmasDrophy067,
+          eb01Doma005,
+          op02Mr1DazBonez063,
+        ],
         character: [op05Mr1DazBonez075],
         activeDon: 2,
         life: 2,
@@ -30,7 +36,7 @@ describe("OP05-075 Mr.1 (Daz.Bonez)", () => {
     const attackers = engine
       .getView("north")
       .players.north.characters.flatMap((card) => (card ? [card.instanceId] : []));
-    const eligibleId = engine.findCardInZone("south", "hand", op02Mr1DazBonez063);
+    const eligibleId = engine.findCardInZone("south", "hand", op01Mr1DazBonez083);
     const highCostId = engine.findCardInZone("south", "hand", op04MissMerrychristmasDrophy067);
     const wrongTraitId = engine.findCardInZone("south", "hand", eb01Doma005);
 
@@ -45,6 +51,9 @@ describe("OP05-075 Mr.1 (Daz.Bonez)", () => {
     expect(play.candidates.map((candidate) => candidate.ref.id)).toContain(eligibleId);
     expect(play.candidates.map((candidate) => candidate.ref.id)).not.toContain(highCostId);
     expect(play.candidates.map((candidate) => candidate.ref.id)).not.toContain(wrongTraitId);
+    expect(play.candidates.map((candidate) => candidate.ref.id)).not.toContain(
+      engine.findCardInZone("south", "hand", op02Mr1DazBonez063),
+    );
     engine.resolveDecision("effectPlaySelection", { selectedIds: [eligibleId] }, "south");
 
     expect(
@@ -62,7 +71,7 @@ describe("OP05-075 Mr.1 (Daz.Bonez)", () => {
   test("may decline without returning DON!! or playing a Character", () => {
     const engine = OnePieceTestEngine.create(
       {
-        hand: [op02Mr1DazBonez063],
+        hand: [op01Mr1DazBonez083],
         character: [op05Mr1DazBonez075],
         activeDon: 2,
       },
@@ -70,7 +79,7 @@ describe("OP05-075 Mr.1 (Daz.Bonez)", () => {
       { firstPlayer: "south", activeSeat: "north" },
     );
     const attackerId = engine.findCardInZone("north", "character", eb01MountainGod018);
-    const handId = engine.findCardInZone("south", "hand", op02Mr1DazBonez063);
+    const handId = engine.findCardInZone("south", "hand", op01Mr1DazBonez083);
 
     engine.declareAttack(attackerId, engine.leader("south"), "north");
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");

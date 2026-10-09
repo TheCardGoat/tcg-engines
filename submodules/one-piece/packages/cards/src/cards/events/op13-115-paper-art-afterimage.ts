@@ -22,7 +22,7 @@ export const op13PaperArtAfterimage115: EventCard = {
   setId: "OP13",
   cost: 2,
   trigger: "Draw 1 card.",
-  traits: ["CP0 Egghead"],
+  traits: ["Egghead", "CP0"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +3000 power during this battle. Then, if your opponent has 2 or less Life cards, up to 1 of your Leader or Character cards gains +1000 power during this turn.",
   effects: {

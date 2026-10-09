@@ -39,7 +39,7 @@ export const op10GodThread079: EventCard = {
   setId: "OP10",
   cost: 5,
   trigger: "Add up to 1 DON!! card from your DON!! deck and set it as active.",
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   effect:
     "[Main] K.O. up to 1 of your opponent's Characters with a cost 5 or less. Then, add up to 1 DON!! card from your DON!! deck and set it as active.",
   effects: {

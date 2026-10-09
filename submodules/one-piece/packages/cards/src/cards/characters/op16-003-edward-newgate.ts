@@ -31,7 +31,7 @@ export const op16EdwardNewgate003: CharacterCard = {
   setId: "OP16",
   cost: 8,
   power: 10000,
-  traits: ["Whitebeard Pirates"],
+  traits: ["The Four Emperors", "Whitebeard Pirates"],
   attribute: "special",
   effect:
     "[Your Turn] Your Leader gains [Double Attack] and +2000 power. [On Play] You may reveal 2 Character cards with 8000 power from your hand: Give up to 1 of your opponent's Characters -6000 power during this turn.",
@@ -89,7 +89,7 @@ export const op16EdwardNewgate003: CharacterCard = {
               player: "self",
               zones: ["leader"],
               count: {
-                amount: 1,
+                amount: "all",
               },
             },
             keyword: "doubleAttack",

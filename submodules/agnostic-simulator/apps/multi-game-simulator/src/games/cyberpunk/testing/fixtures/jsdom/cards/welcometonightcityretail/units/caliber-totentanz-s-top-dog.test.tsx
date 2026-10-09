@@ -6,7 +6,10 @@ import {
   welcomeToNightCityRetailCaliberTotentanzSTopDog,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+import {
+  expectEqual,
+  resolveAttackSteps,
+} from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 import {
   expectIncludes,
   getChoiceDefinitionIds,
@@ -39,9 +42,7 @@ describe("Caliber (Retail) jsdom happy path", () => {
       );
 
       await pom.attackUnit(caliber.instanceId, minotaur.instanceId, CYBERPUNK_P1);
-      await pom.resolveAttack(CYBERPUNK_P1);
-      await pom.resolveAttack(CYBERPUNK_P2, { pass: true });
-      await pom.resolveAttack(CYBERPUNK_P1);
+      await resolveAttackSteps(pom, CYBERPUNK_P2, CYBERPUNK_P1);
 
       await pom.expectTrashSize(CYBERPUNK_P1, 1);
       await pom.getCardInZoneByDefinitionId(

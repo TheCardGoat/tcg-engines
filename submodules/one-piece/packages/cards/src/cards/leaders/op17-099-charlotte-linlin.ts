@@ -32,7 +32,7 @@ export const op17CharlotteLinlin099: LeaderCard = {
   setId: "OP17",
   power: 5000,
   life: 5,
-  traits: ["The Four Emperors Big Mom Pirates"],
+  traits: ["The Four Emperors", "Big Mom Pirates"],
   attribute: "special",
   effect:
     "[When Attacking] You may trash 1 card from your hand:\nYour opponent chooses one:\n• Trash 1 card from your hand. Then, add up to 1 card from the top of your deck to the top of your Life cards.\n• Trash 1 card from your opponent's hand.",
@@ -72,6 +72,7 @@ export const op17CharlotteLinlin099: LeaderCard = {
                 {
                   action: "trashFromHand",
                   player: "opponent",
+                  chosenBy: "self",
                   amount: 1,
                 },
               ],

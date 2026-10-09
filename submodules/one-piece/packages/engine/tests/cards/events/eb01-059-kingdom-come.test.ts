@@ -85,7 +85,6 @@ describe("EB01-059 Kingdom Come", () => {
     engine.endTurn("south");
     engine.endTurn("north");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const triggerDecision = engine.pendingDecision("lifeTrigger", "north");
     expect(triggerDecision).toMatchObject({ actorId: "north", kind: "confirm" });
@@ -117,5 +116,17 @@ describe("EB01-059 Kingdom Come", () => {
     expect(view.players.north.trash.map((card) => card.cardId)).toContain(eb01KingdomCome059.id);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+  test.each([0, 1])("Main keeps %i Life unchanged after its first effect", (lifeCount) => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["EB01-059"], activeDon: 6, life: lifeCount },
+      { character: ["EB01-018"] },
+    );
+    e.playCard("EB01-059");
+    e.asSouth().chooseTargets(e.findCardInZone("north", "character", "EB01-018"));
+    expect(e.getView("south").players.north.trash.map((c) => c.cardId)).toContain("EB01-018");
+    expect(e.getView("south").players.south.lifeCount).toBe(lifeCount);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toEqual(["EB01-059"]);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

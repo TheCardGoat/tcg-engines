@@ -161,3 +161,26 @@ describe("ChoiceResolutionOverlay", () => {
     expect(body.match(/Open Simba - Protective Cub preview/g)?.length).toBe(3);
   });
 });
+
+it("uses the active choice ability instead of a preceding Shift keyword", () => {
+  const { body } = render(ChoiceResolutionOverlay, {
+    props: {
+      view,
+      selectedChoiceIndex: null,
+      abilityIndex: 1,
+      sourceCard: {
+        ...sourceCard,
+        label: "Kit Cloudkicker - Sure Shot",
+        textEntries: [
+          { title: "Shift 3 {I}" },
+          {
+            title: "AERIAL ACROBATICS",
+            description: "Whenever this character quests, choose one:",
+          },
+        ],
+      },
+    },
+  });
+  expect(body).toContain("AERIAL ACROBATICS");
+  expect(body).not.toContain("Shift 3 {I}");
+});

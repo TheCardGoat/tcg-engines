@@ -22,7 +22,7 @@ export const op07Ain002: CharacterCard = {
   setId: "OP07",
   cost: 7,
   power: 6000,
-  traits: ["FILM Neo Navy"],
+  traits: ["FILM", "Neo Navy"],
   attribute: "special",
   effect: "[On Play] Set the power of up to 1 of your opponent's Characters to 0 during this turn.",
   effects: {

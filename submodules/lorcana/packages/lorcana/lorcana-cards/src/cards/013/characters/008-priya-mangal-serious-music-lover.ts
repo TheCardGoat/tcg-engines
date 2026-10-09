@@ -31,6 +31,7 @@ export const priyaMangalSeriousMusicLover: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c6e7805e169f4387b3b24b9f358b6400",
+    tcgPlayer: "704544",
   },
   text: [
     {

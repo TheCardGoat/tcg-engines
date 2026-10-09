@@ -31,6 +31,7 @@ export const peterPanPlayfulPrankster: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bba75cf2d3da48a09892b1fce921d9d6",
+    tcgPlayer: "704578",
   },
   text: [
     {

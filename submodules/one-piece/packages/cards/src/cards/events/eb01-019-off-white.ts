@@ -21,7 +21,7 @@ export const eb01OffWhite019: EventCard = {
   rarity: "R",
   setId: "EB01",
   cost: 2,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +4000 power during this battle. Then, look at 3 cards from the top of your deck; reveal up to 1 [Donquixote Pirates] type Character card and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
   effects: {
@@ -57,7 +57,7 @@ export const eb01OffWhite019: EventCard = {
               {
                 filter: "trait",
                 value: "Donquixote Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

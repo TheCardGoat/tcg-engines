@@ -11,6 +11,23 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 import { SOUTH_ATTACKS_WITHOUT_TURN_SETUP } from "./battle-fixture.shared.ts";
 
 describe("EB04-040 Flame Dragon Torch", () => {
+  test("FAQ: with no Kaido, paying six DON still rests an opposing Character", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["EB04-040"], activeDon: 7 },
+      { character: ["EB01-005"] },
+    );
+    const target = e.findCardInZone("north", "character", "EB01-005");
+    e.playCard("EB04-040");
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.south).toMatchObject({ activeDon: 0, restedDon: 7 });
+    expect(e.getView("south").players.north.characters[0]).toMatchObject({
+      instanceId: target,
+      rested: true,
+    });
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+
   test("pays the optional Main cost and maps the Kaido power and opposing rest choices", () => {
     const engine = OnePieceTestEngine.create(
       {

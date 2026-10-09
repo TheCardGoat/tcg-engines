@@ -8,7 +8,9 @@ import type {
   DeckList,
   PlayerSetup,
 } from "../types/match-state.ts";
-import type { GigDie, DieType } from "../types/gig-die.ts";
+import type { DieType } from "@tcg/cyberpunk-types";
+import type { GameEvent } from "../types/game-events.ts";
+import type { GigDie } from "../types/gig-die.ts";
 import type { TimeControlConfig } from "@tcg/engine-core";
 import {
   createCardInstanceId,
@@ -17,12 +19,23 @@ import {
   createMatchId,
 } from "../types/branded.ts";
 import { createCardInstance } from "../types/card-instance.ts";
-import { STANDARD_GIG_DICE } from "../types/gig-die.ts";
+import { STANDARD_GIG_DICE } from "@tcg/cyberpunk-types";
 import { SeededRNG } from "./rng.ts";
 import { setCardRegistry } from "./card-registry.ts";
 
 /** Number of cards drawn for the opening hand. (Rules: Setup → Draw 6.) */
 const OPENING_HAND_SIZE = 6;
+
+/** Constructed crews are three Legends. D.2.2 allows fewer and fills the rest with blank Eddies. */
+const LEGEND_CREW_SIZE = 3;
+
+/** Viewer projections use this prefix for cards whose identity was not sent. */
+const PLACEHOLDER_DEFINITION_PREFIX = "viewer:";
+
+/** A hidden or unknown card. The opening deal must never move one into a hand. */
+export function isOpeningHandPlaceholderIdentity(definitionId: string): boolean {
+  return definitionId.length === 0 || definitionId.startsWith(PLACEHOLDER_DEFINITION_PREFIX);
+}
 
 /** Spent-legend count given to the first player at game start. (Rules: Setup.) */
 const FIRST_PLAYER_SPENT_LEGENDS = 2;
@@ -48,6 +61,7 @@ export function createEmptyPlayerState(playerId: PlayerId, isFirst: boolean): Pl
       eddieArea: [],
       removedFromGame: [],
     },
+    combatPriority: "automatic",
     eddies: 0,
     spentEddies: 0,
     fixerArea: [],
@@ -67,6 +81,7 @@ export function createEmptyPlayerState(playerId: PlayerId, isFirst: boolean): Pl
  */
 export function createInitialGameState(): GameState {
   return {
+    eventLogVersion: 2,
     players: {},
     cardIndex: {},
     gigDice: {},
@@ -74,11 +89,13 @@ export function createInitialGameState(): GameState {
     turnMetadata: {
       turnNumber: 1,
       activePlayerId: createPlayerId("p1"),
-      previousTurnNoGigTaken: false,
+      previousTurnBeganWithEmptyFixer: false,
+      turnBeganWithEmptyFixer: false,
       gigTakenThisTurn: false,
       playedCardTypesThisTurn: {},
       overtimeActive: false,
       abilityFiredThisTurn: [],
+      firstTimeEventsThisTurn: [],
       triggerQueue: [],
       nextTriggerId: 1,
     },
@@ -112,12 +129,13 @@ function makeIdGenerator(rng: SeededRNG): IdGenerator {
 }
 
 /**
- * Place a player's legends face-down (random order), shuffle the main deck,
- * and seed all 6 gig dice into the fixer area. Mutates `state` and returns
- * the populated {@link PlayerState}.
+ * Present a player's Legends face-up in deck-list order, shuffle the main
+ * deck into a face-down pile, and seed all 6 gig dice into the fixer area.
+ * Mutates `state` and returns the populated {@link PlayerState}.
  *
- * Rules: Setup → "Place 3 Legends face-down in random order. Shuffle every
- * non-Legend card into the deck. Put all Gig Dice in the fixer area."
+ * Tournament Game 1 presents both decks and face-up Legends before anyone
+ * chooses who goes first. CR 7.7 hides and randomizes Legends only after
+ * that choice ({@link concealPresentedLegends}).
  */
 export function populatePlayerBoard(
   state: MatchState,
@@ -130,14 +148,19 @@ export function populatePlayerBoard(
   const player = state.G.players[playerId as string];
   if (!player) throw new Error(`Player ${playerId as string} not found in state`);
 
-  // Legends — random order, face-down (createCardInstance auto-sets faceDown
-  // when zone is "legendArea").
-  for (const defId of rng.shuffle([...deckList.legends])) {
+  // Burn the historical legend-shuffle draws so the main-deck order for a
+  // seed stays on the same random stream. The presented order is the
+  // registered list, not that discarded permutation.
+  rng.shuffle([...deckList.legends]);
+  // Legends stay in registration order and face-up until the first-player
+  // choice. createCardInstance would otherwise mark the zone face-down.
+  for (const defId of deckList.legends) {
     const def = catalog.get(defId);
     if (!def) throw new Error(`Legend card not found: ${defId}`);
     const instanceId = createCardInstanceId(ids.next("ci"));
-    const instance = createCardInstance(instanceId, def, playerId, "legendArea");
-    instance.meta.faceDown = true;
+    const instance = createCardInstance(instanceId, def, playerId, "legendArea", {
+      faceDown: false,
+    });
     state.G.cardIndex[instanceId as string] = instance;
     player.zones.legendArea.push(instanceId);
   }
@@ -191,41 +214,134 @@ export function chooseFirstPlayer(playerIds: PlayerId[], rng: SeededRNG): Player
  * The mulligan window opens *after* this step (gamePhase remains `setup`);
  * the mulligan move is what swaps a hand back for 6 fresh cards.
  */
+/**
+ * Hide every presented Legend, then randomize each Legends area.
+ *
+ * Tournament play sequence: after the first-player choice, the three Legends
+ * are placed face-down in random order (CR 4.3, 5.7.1, 7.7.1–7.7.3). The
+ * first player's two left-most spent Legends are applied only after this.
+ */
+export function concealPresentedLegends(state: MatchState): GameEvent[] {
+  const events: GameEvent[] = [];
+  for (const playerId of state.ctx.playerIds) {
+    const player = state.G.players[playerId as string];
+    if (!player || player.zones.legendArea.length === 0) continue;
+    for (const cardId of player.zones.legendArea) {
+      const card = state.G.cardIndex[cardId as string];
+      if (card) card.meta.faceDown = true;
+    }
+    // Separate from the match stream so hiding Legends does not reshuffle
+    // the main deck or later die rolls.
+    const rng = new SeededRNG(`${state.ctx.seed}:legends:${playerId as string}`);
+    player.zones.legendArea = rng.shuffle(player.zones.legendArea);
+    events.push({ type: "legendsShuffled", playerId });
+  }
+  return events;
+}
+
 export function applyChooserGoesFirstIfPending(state: MatchState): void {
   const choice = state.G.turnMetadata.pendingChoice;
   if (!choice || choice.type !== "chooseFirstPlayer") return;
-  const chooserId = choice.chooserId;
-  for (const pid of state.ctx.playerIds) {
-    const player = state.G.players[pid as string];
-    if (player) player.firstPlayer = pid === chooserId;
-  }
-  state.G.turnMetadata.activePlayerId = chooserId;
-  state.G.turnMetadata.pendingChoice = undefined;
-  applyOpeningHand(state, chooserId);
+  applyFirstPlayerChoice(state, choice.chooserId);
 }
 
-export function applyOpeningHand(state: MatchState, firstPlayerId: PlayerId): void {
+/** Apply an authoritative turn-order decision during setup or game creation. */
+export function applyFirstPlayerChoice(
+  state: MatchState,
+  firstPlayerId: PlayerId,
+): { events: GameEvent[]; blankEddieCounts: Record<string, number> } {
+  const choice = state.G.turnMetadata.pendingChoice;
+  if (choice?.type !== "chooseFirstPlayer" || !state.ctx.playerIds.includes(firstPlayerId)) {
+    throw new Error("Invalid first-player choice for this game");
+  }
+  const events = concealPresentedLegends(state);
+  for (const pid of state.ctx.playerIds) {
+    const player = state.G.players[pid as string];
+    if (player) player.firstPlayer = pid === firstPlayerId;
+  }
+  state.G.turnMetadata.activePlayerId = firstPlayerId;
+  state.G.turnMetadata.pendingChoice = undefined;
+  if (state.ctx.clockState) {
+    for (const [playerId, clock] of Object.entries(state.ctx.clockState)) {
+      clock.isOnClock = playerId === firstPlayerId;
+    }
+  }
+  return { events, ...applyOpeningHand(state, firstPlayerId) };
+}
+
+/**
+ * Move the top of the deck into the Eddies area for each Legend short of a
+ * full crew. The card stays face-down and unrevealed (CR 5.8.3.1). This is
+ * not a sell, so it does not spend the once-per-turn sell.
+ */
+function placeBlankEddies(state: MatchState, playerId: PlayerId): number {
+  const player = state.G.players[playerId as string];
+  if (!player) return 0;
+  const missing = Math.max(0, LEGEND_CREW_SIZE - player.zones.legendArea.length);
+  let placed = 0;
+  for (let index = 0; index < missing; index += 1) {
+    const nextId = player.zones.deck[0];
+    if (!nextId) break;
+    const card = state.G.cardIndex[nextId as string];
+    if (!card) break;
+    player.zones.deck.shift();
+    card.zone = "eddieArea";
+    card.meta.faceDown = true;
+    card.meta.revealed = false;
+    card.meta.spent = false;
+    player.zones.eddieArea.push(nextId);
+    player.eddieCardIds.push(nextId);
+    player.eddies += 1;
+    placed += 1;
+  }
+  return placed;
+}
+
+export function applyOpeningHand(
+  state: MatchState,
+  firstPlayerId: PlayerId,
+): { blankEddieCounts: Record<string, number> } {
+  const blankEddieCounts: Record<string, number> = {};
+  if (state.G.blankEddiesForMissingLegends && !state.G.blankEddiesPlaced) {
+    state.G.blankEddiesPlaced = true;
+    for (const playerId of state.ctx.playerIds) {
+      blankEddieCounts[playerId as string] = placeBlankEddies(state, playerId);
+    }
+  }
+
   for (const playerId of state.ctx.playerIds) {
     const player = state.G.players[playerId as string]!;
     const isFirst = playerId === firstPlayerId;
+    const legendsToSpend = state.G.blankEddiesForMissingLegends
+      ? Math.min(FIRST_PLAYER_SPENT_LEGENDS, player.zones.legendArea.length)
+      : player.zones.legendArea.length >= FIRST_PLAYER_SPENT_LEGENDS
+        ? FIRST_PLAYER_SPENT_LEGENDS
+        : 0;
 
-    if (isFirst && player.zones.legendArea.length >= FIRST_PLAYER_SPENT_LEGENDS) {
-      for (let i = 0; i < FIRST_PLAYER_SPENT_LEGENDS; i++) {
+    if (isFirst && legendsToSpend > 0) {
+      for (let i = 0; i < legendsToSpend; i++) {
         const legId = player.zones.legendArea[i]!;
         state.G.cardIndex[legId as string]!.meta.spent = true;
       }
     }
 
+    // Already dealt. A second call must not take more cards or rewrite faces.
+    if (player.zones.hand.length > 0) continue;
+
     const drawn: CardInstanceId[] = [];
     for (let c = 0; c < OPENING_HAND_SIZE; c++) {
-      const cardId = player.zones.deck.shift();
-      if (cardId) {
-        state.G.cardIndex[cardId as string]!.zone = "hand";
-        drawn.push(cardId);
-      }
+      const nextId = player.zones.deck[0];
+      if (!nextId) break;
+      const card = state.G.cardIndex[nextId as string];
+      if (!card || isOpeningHandPlaceholderIdentity(card.definitionId)) break;
+      player.zones.deck.shift();
+      card.zone = "hand";
+      card.meta.faceDown = false;
+      drawn.push(nextId);
     }
-    player.zones.hand = drawn;
+    if (drawn.length > 0) player.zones.hand = drawn;
   }
+  return { blankEddieCounts };
 }
 
 // ── Production entry point ───────────────────────────────────────────────
@@ -237,16 +353,24 @@ export interface CreateMatchStateOptions {
   seed?: string;
   matchId?: string;
   timeControl?: TimeControlConfig;
+  /** Series chooser assigned by the host; omit to select a chooser at random. */
+  firstPlayerChooserId?: string;
+  /** Decision already made during hosted pregame; omit for an in-engine choice. */
+  firstTurnPlayerId?: string;
+  /** Format setup that constructed Alpha does not use. */
+  setup?: {
+    blankEddiesForMissingLegends?: boolean;
+  };
 }
 
 /**
  * Build a {@link MatchState} ready for the setup phase.
  *
  * Resulting state:
- * - Each player's legends placed face-down in random order.
- * - Each player's main deck shuffled.
+ * - Each player's Legends presented face-up in deck-list order.
+ * - Each player's main deck shuffled into a face-down pile.
  * - All 6 gig dice in each fixer area.
- * - First player chosen randomly; their first 2 legends start spent.
+ * - A chooser is assigned by the host or selected at random, then chooses who starts.
  * - Both players holding a 6-card opening hand.
  * - `gamePhase = "setup"` so the mulligan move and legacy setup-start `passPhase`
  *   are still legal. `turnNumber = 1`.
@@ -276,10 +400,17 @@ export function createMatchState(options: CreateMatchStateOptions): MatchState {
 
   const playerIds = options.players.map((p) => createPlayerId(p.id));
   const matchId = createMatchId(options.matchId ?? `match_${seed}`);
-  const firstPlayerChooserId = chooseFirstPlayer(playerIds, rng);
+  const designatedChooserId = options.firstPlayerChooserId
+    ? createPlayerId(options.firstPlayerChooserId)
+    : undefined;
+  if (designatedChooserId && !playerIds.includes(designatedChooserId)) {
+    throw new Error(`First-player chooser ${designatedChooserId} is not seated in this game`);
+  }
+  const firstPlayerChooserId = designatedChooserId ?? chooseFirstPlayer(playerIds, rng);
 
   const G = createInitialGameState();
   G.turnMetadata.activePlayerId = firstPlayerChooserId;
+  if (options.setup?.blankEddiesForMissingLegends) G.blankEddiesForMissingLegends = true;
 
   for (let i = 0; i < playerIds.length; i++) {
     const pid = playerIds[i]!;
@@ -323,6 +454,10 @@ export function createMatchState(options: CreateMatchStateOptions): MatchState {
     effectId: "",
     payload: {},
   };
+
+  if (options.firstTurnPlayerId) {
+    applyFirstPlayerChoice(state, createPlayerId(options.firstTurnPlayerId));
+  }
 
   // Persist RNG advance from setup so tests + replays see deterministic
   // post-setup randomness.

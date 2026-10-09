@@ -31,6 +31,7 @@ export const booHumanChild: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a20b4ff3bdc54782b01f21cfb663ea60",
+    tcgPlayer: "702696",
   },
   text: [
     {

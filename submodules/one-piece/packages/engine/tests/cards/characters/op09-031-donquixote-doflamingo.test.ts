@@ -49,4 +49,29 @@ describe("OP09-031 Donquixote Doflamingo", () => {
       view.players.north.characters.find((card) => card?.instanceId === doflamingoId)?.rested,
     ).toBe(true);
   });
+  test("FAQ: only one of two rested copies becomes active after chosen first source", () => {
+    const e = OnePieceTestEngine.create({
+      character: [
+        { cardId: "OP09-031", rested: true },
+        { cardId: "OP09-031", rested: true },
+      ],
+    });
+    const ids = e
+      .getView("south")
+      .players.south.characters.filter((c) => c !== null)
+      .map((c) => c.instanceId);
+    e.asSouth().endTurn();
+    const order = e.pendingDecision("readyEffectOrder", "south").steps[0];
+    if (order?.kind !== "chooseOption") throw Error("order");
+    const selected = order.options.find((o) => o.targetId === ids[1]);
+    if (!selected) throw Error("secondsource");
+    e.resolveDecision("readyEffectOrder", { optionId: selected.id }, "south");
+    expect(
+      e
+        .getView("south")
+        .players.south.characters.filter((c) => c !== null)
+        .map((c) => c.rested),
+    ).toEqual([true, false]);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

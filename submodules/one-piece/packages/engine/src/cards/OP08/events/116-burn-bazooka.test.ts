@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op08BurnBazooka116 } from "../../../../../cards/src/cards/events/op08-116-burn-bazooka.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP08-116 Burn Bazooka", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op08BurnBazooka116);
-  });
-});

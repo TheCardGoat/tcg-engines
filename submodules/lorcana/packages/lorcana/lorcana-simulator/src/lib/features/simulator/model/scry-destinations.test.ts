@@ -126,3 +126,120 @@ describe("scry destination helpers", () => {
     ).toBe(false);
   });
 });
+
+it("restricts Belle's hand destination to the named item or an action", () => {
+  const rule: ResolutionSelectionDestinationRule = {
+    id: "belle-hand",
+    zone: "hand",
+    min: 0,
+    max: 1,
+    remainder: false,
+    filters: [
+      {
+        type: "or",
+        filters: [
+          {
+            type: "and",
+            filters: [
+              { type: "card-type", cardType: "item" },
+              { type: "has-name", name: "Belle's City Guide" },
+            ],
+          },
+          { type: "card-type", cardType: "action" },
+        ],
+      },
+    ],
+  };
+  expect(
+    canAssignCardToScryDestination(
+      { cardType: "item", nameVariants: ["Belle's City Guide"] },
+      rule,
+    ),
+  ).toBe(true);
+  expect(
+    canAssignCardToScryDestination({ cardType: "item", nameVariants: ["Inkcaster Skates"] }, rule),
+  ).toBe(false);
+  expect(
+    canAssignCardToScryDestination(
+      { cardType: "character", nameVariants: ["Belle's City Guide"] },
+      rule,
+    ),
+  ).toBe(false);
+  expect(canAssignCardToScryDestination({ cardType: "action", actionSubtype: "song" }, rule)).toBe(
+    true,
+  );
+});
+
+it("restricts Fred's hand destination to a Super character or item", () => {
+  const rule: ResolutionSelectionDestinationRule = {
+    id: "fred-hand",
+    zone: "hand",
+    min: 0,
+    max: 1,
+    remainder: false,
+    filters: [
+      {
+        type: "or",
+        filters: [
+          {
+            type: "and",
+            filters: [
+              { type: "card-type", cardType: "character" },
+              { type: "has-classification", classification: "Super" },
+            ],
+          },
+          { type: "card-type", cardType: "item" },
+        ],
+      },
+    ],
+  };
+  expect(
+    canAssignCardToScryDestination({ cardType: "character", classifications: ["Super"] }, rule),
+  ).toBe(true);
+  expect(
+    canAssignCardToScryDestination({ cardType: "character", classifications: ["Hero"] }, rule),
+  ).toBe(false);
+  expect(canAssignCardToScryDestination({ cardType: "item" }, rule)).toBe(true);
+  expect(
+    canAssignCardToScryDestination({ cardType: "action", classifications: ["Super"] }, rule),
+  ).toBe(false);
+});
+
+it("offers Abby's hand route only for a song or a character with Singer", () => {
+  const rule: ResolutionSelectionDestinationRule = {
+    id: "abby-hand",
+    zone: "hand",
+    min: 0,
+    max: 1,
+    remainder: false,
+    filters: [
+      {
+        type: "or",
+        filters: [
+          { type: "is-song" },
+          {
+            type: "and",
+            filters: [
+              { type: "card-type", cardType: "character" },
+              { type: "has-keyword", keyword: "Singer" },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+  expect(canAssignCardToScryDestination({ cardType: "action", actionSubtype: "song" }, rule)).toBe(
+    true,
+  );
+  expect(
+    canAssignCardToScryDestination({ cardType: "character", keywords: ["Singer"] }, rule),
+  ).toBe(true);
+  expect(
+    canAssignCardToScryDestination({ cardType: "character", keywords: ["Support"] }, rule),
+  ).toBe(false);
+  expect(canAssignCardToScryDestination({ cardType: "action" }, rule)).toBe(false);
+  expect(canAssignCardToScryDestination({ cardType: "item", keywords: ["Singer"] }, rule)).toBe(
+    false,
+  );
+  expect(canAssignCardToScryDestination({ cardType: "location" }, rule)).toBe(false);
+});

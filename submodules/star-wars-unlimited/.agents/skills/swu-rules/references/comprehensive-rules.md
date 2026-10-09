@@ -1,6 +1,13 @@
+---
+official_source:
+  publisher: "Fantasy Flight Games"
+  url: "https://cdn.starwarsunlimited.com//SWH_Comp_Rules_2_0_abd621bde5.pdf"
+  relation: "exact_document"
+  copy_version: "2.0"
+---
+
 # Star Wars: Unlimited Comprehensive Rules v2.0
 
-Source: https://cdn.starwarsunlimited.com//SWH_Comp_Rules_2_0_abd621bde5.pdf
 Document date/version: 6/21/24 - V 2.0.
 This is extracted text from the official PDF for local rule lookup and citation. Preserve official section numbers when citing.
 

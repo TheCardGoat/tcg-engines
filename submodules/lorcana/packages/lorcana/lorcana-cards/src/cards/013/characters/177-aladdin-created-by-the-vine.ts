@@ -29,9 +29,13 @@ export const aladdinCreatedByTheVine: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_ffbdd26e83b74f17b37785290253f9e3",
+    tcgPlayer: "704673",
+  },
   text: [
     {
-      title: "The Vine Provides",
+      title: "THE VINE PROVIDES",
       description:
         "Whenever one of your Floodborn characters quests, you may draw a card, then choose and discard a card.",
     },

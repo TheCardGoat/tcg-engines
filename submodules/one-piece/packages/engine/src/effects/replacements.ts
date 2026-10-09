@@ -1,6 +1,12 @@
-import type { ReplacementEffect } from "@tcg/op-types";
+import {
+  currentReplacementProcess,
+  replacementProcessKey,
+  replacementTargetKey,
+} from "./replacement-process.ts";
+import type { ReplacementEffect, TargetFilter } from "@tcg/op-types";
 
 import {
+  cardName,
   effectsAreNegated,
   getCardForInstance,
   getInstance,
@@ -9,6 +15,7 @@ import {
   otherSeat,
 } from "../shared.ts";
 import type { MatchSeat, MatchState } from "../types.ts";
+import { isRestPreventedByPermanentEffect } from "./permanent.ts";
 import { evaluateConditions } from "./conditions.ts";
 import { candidatePoolForTarget, matchesTargetFilter } from "./targeting.ts";
 
@@ -26,11 +33,25 @@ export function replacementEffectKey(effect: ReplacementEffect, replacementEffec
     : `replacement:${effect.replacedEvent}:${replacementEffectIndex}`;
 }
 
+// Mixed descriptions can qualify only Characters by cost or type. For DON!!,
+// apply only explicit state restrictions, preserving their Boolean grouping.
+function donMatchesStateFilter(filter: TargetFilter, rested: boolean): boolean {
+  if (filter.filter === "state") return (filter.value === "rested") === rested;
+  if (filter.filter === "allOf")
+    return filter.filters.every((child) => donMatchesStateFilter(child, rested));
+  if (filter.filter === "anyOf")
+    return "groups" in filter
+      ? filter.groups.some((group) => group.every((child) => donMatchesStateFilter(child, rested)))
+      : filter.filters.some((child) => donMatchesStateFilter(child, rested));
+  return true;
+}
+
 export function restActionCandidateIds(
   state: MatchState,
   controller: MatchSeat,
   sourceInstanceId: string,
   target: Extract<ReplacementEffect["replacementAction"], { action: "rest" }>["target"],
+  mode: "selection" | "performable" = "performable",
 ): string[] {
   const fieldZones = target.zones.filter((zone) => zone !== "costArea");
   const fieldCandidates =
@@ -41,8 +62,10 @@ export function restActionCandidateIds(
           zones: fieldZones,
         }).candidateIds.filter(
           (instanceId) =>
-            !getInstance(state, instanceId).rested &&
-            !hasFlagModifier(state, instanceId, "cannotBeRested") &&
+            (mode === "selection" ||
+              (!getInstance(state, instanceId).rested &&
+                !hasFlagModifier(state, instanceId, "cannotBeRested") &&
+                !isRestPreventedByPermanentEffect(state, instanceId, sourceInstanceId))) &&
             (target.filters ?? []).every((filter) => {
               const result = matchesTargetFilter(state, sourceInstanceId, instanceId, filter);
               return result.supported && result.matches;
@@ -53,14 +76,44 @@ export function restActionCandidateIds(
       ? ([controller, otherSeat(controller)] as const)
       : ([target.player === "self" ? controller : otherSeat(controller)] as const);
   const donCandidates = target.zones.includes("costArea")
-    ? seats.flatMap((seat) =>
-        Array.from(
+    ? seats.flatMap((seat) => [
+        ...Array.from(
           { length: getPlayer(state, seat).activeDon },
           (_, index) => `active-don:${seat}:${index}`,
         ),
-      )
+        ...(mode === "selection"
+          ? Array.from(
+              { length: getPlayer(state, seat).restedDon },
+              (_, index) => `rested-don:${seat}:${index}`,
+            )
+          : []),
+      ])
     : [];
-  return [...fieldCandidates, ...donCandidates];
+  return [
+    ...fieldCandidates,
+    ...donCandidates.filter((id) =>
+      (target.filters ?? []).every((filter) =>
+        donMatchesStateFilter(filter, id.startsWith("rested-don:")),
+      ),
+    ),
+  ];
+}
+
+/** OP11-001 FAQ: a removed member cannot fund another member's replacement. */
+export function unavailableRemovalPayments(state: MatchState): string[] {
+  return (["south", "north"] as const).flatMap((seat) => {
+    const player = getPlayer(state, seat);
+    return [player.leaderInstanceId, ...player.characterArea, player.stageArea]
+      .filter((id): id is string => Boolean(id))
+      .flatMap((id) =>
+        (getCardForInstance(state, id).effects?.replacementEffects ?? []).flatMap((effect, index) =>
+          effect.replacedEvent !== "rested" &&
+          !replacementActionIsAvailable(state, seat, id, effect.replacementAction)
+            ? [replacementProcessKey(state, id, replacementEffectKey(effect, index))]
+            : [],
+        ),
+      );
+  });
 }
 
 function replacementActionIsAvailable(
@@ -148,24 +201,29 @@ function replacementActionIsAvailable(
   }
 }
 
-function findRemovalReplacement(
+export function findRemovalReplacements(
   state: MatchState,
   targetId: string,
   effectController: MatchSeat,
   koCause: "battle" | "effect",
   replacedEvents: ReadonlySet<ReplacementEffect["replacedEvent"]>,
   effectSourceInstanceId?: string,
-): KoReplacementCandidate | null {
+): KoReplacementCandidate[] {
+  const candidates: KoReplacementCandidate[] = [];
   const target = getInstance(state, targetId);
   const targetController = target.controller;
-  const player = getPlayer(state, targetController);
   const sourceIds = [
-    targetId,
-    player.leaderInstanceId,
-    ...player.characterArea.filter(
-      (instanceId): instanceId is string => Boolean(instanceId) && instanceId !== targetId,
-    ),
-    ...(player.stageArea ? [player.stageArea] : []),
+    ...new Set([
+      targetId,
+      ...([state.activeSeat, otherSeat(state.activeSeat)] as const).flatMap((seat) => {
+        const player = getPlayer(state, seat);
+        return [
+          player.leaderInstanceId,
+          ...player.characterArea.filter((id): id is string => Boolean(id)),
+          ...(player.stageArea ? [player.stageArea] : []),
+        ];
+      }),
+    ]),
   ];
 
   for (const sourceInstanceId of sourceIds) {
@@ -176,6 +234,24 @@ function findRemovalReplacement(
     const effects = getCardForInstance(state, sourceInstanceId).effects?.replacementEffects ?? [];
     for (const [replacementEffectIndex, effect] of effects.entries()) {
       const effectKey = replacementEffectKey(effect, replacementEffectIndex);
+      if (
+        currentReplacementProcess(state)?.unavailableRemovalPayments?.includes(
+          replacementProcessKey(state, sourceInstanceId, effectKey),
+        )
+      )
+        continue;
+      if (
+        currentReplacementProcess(state)?.declined?.[
+          replacementTargetKey(state, targetId)
+        ]?.includes(replacementProcessKey(state, sourceInstanceId, effectKey))
+      )
+        continue;
+      if (
+        currentReplacementProcess(state)?.applied.includes(
+          replacementProcessKey(state, sourceInstanceId, effectKey),
+        )
+      )
+        continue;
       if (
         !replacedEvents.has(effect.replacedEvent) ||
         (effect.oncePerTurn && source.usedEffectKeys.includes(effectKey))
@@ -253,16 +329,49 @@ function findRemovalReplacement(
       ) {
         continue;
       }
-      return {
+      candidates.push({
         sourceInstanceId,
         controller: source.controller,
         replacementEffectIndex,
         effect,
         effectKey,
-      };
+      });
     }
   }
-  return null;
+  // Retain the existing compulsory affected-card precedence interpretation.
+  // Official 8-1-3-4-2 does not settle that interpretation explicitly.
+  // Other sources use turn-player then non-turn-player controller groups.
+  const prioritized = candidates.some(
+    (candidate) => candidate.sourceInstanceId === targetId && candidate.effect.mandatory,
+  )
+    ? candidates.filter((candidate) => candidate.sourceInstanceId === targetId)
+    : candidates.some((candidate) => candidate.controller === state.activeSeat)
+      ? candidates.filter((candidate) => candidate.controller === state.activeSeat)
+      : candidates;
+  // One printed replacement may have separate event records. A shared
+  // once-per-turn key explicitly identifies those records (Koby); otherwise
+  // collapse only equivalent mandatory actions without a usage limit (Thatch).
+  return prioritized.filter(
+    (candidate, index) =>
+      !prioritized.slice(0, index).some((earlier) => {
+        const sameLimitedEffect =
+          Boolean(candidate.effect.oncePerTurnKey) &&
+          earlier.effect.oncePerTurnKey === candidate.effect.oncePerTurnKey &&
+          earlier.effect.oncePerTurn === candidate.effect.oncePerTurn;
+        const sameUnlimitedMandatoryEffect =
+          candidate.effect.mandatory &&
+          earlier.effect.mandatory &&
+          !candidate.effect.oncePerTurn &&
+          !earlier.effect.oncePerTurn;
+        return (
+          earlier.sourceInstanceId === candidate.sourceInstanceId &&
+          Boolean(earlier.effect.mandatory) === Boolean(candidate.effect.mandatory) &&
+          (sameLimitedEffect || sameUnlimitedMandatoryEffect) &&
+          JSON.stringify(earlier.effect.replacementAction) ===
+            JSON.stringify(candidate.effect.replacementAction)
+        );
+      }),
+  );
 }
 
 export function findKoReplacement(
@@ -272,13 +381,15 @@ export function findKoReplacement(
   koCause: "battle" | "effect",
   effectSourceInstanceId?: string,
 ): KoReplacementCandidate | null {
-  return findRemovalReplacement(
-    state,
-    targetId,
-    effectController,
-    koCause,
-    new Set(koCause === "effect" ? ["ko", "removeFromField", "leaveField"] : ["ko", "leaveField"]),
-    effectSourceInstanceId,
+  return (
+    findRemovalReplacements(
+      state,
+      targetId,
+      effectController,
+      koCause,
+      new Set(["ko", "removeFromField", "leaveField"]),
+      effectSourceInstanceId,
+    )[0] ?? null
   );
 }
 
@@ -288,13 +399,15 @@ export function findRemoveFromFieldReplacement(
   effectController: MatchSeat,
   effectSourceInstanceId: string,
 ): KoReplacementCandidate | null {
-  return findRemovalReplacement(
-    state,
-    targetId,
-    effectController,
-    "effect",
-    new Set(["removeFromField", "leaveField"]),
-    effectSourceInstanceId,
+  return (
+    findRemovalReplacements(
+      state,
+      targetId,
+      effectController,
+      "effect",
+      new Set(["removeFromField", "leaveField"]),
+      effectSourceInstanceId,
+    )[0] ?? null
   );
 }
 
@@ -304,12 +417,75 @@ export function findRestReplacement(
   effectController: MatchSeat,
   effectSourceInstanceId: string,
 ): KoReplacementCandidate | null {
-  return findRemovalReplacement(
+  return (
+    findRemovalReplacements(
+      state,
+      targetId,
+      effectController,
+      "effect",
+      new Set(["rested"]),
+      effectSourceInstanceId,
+    )[0] ?? null
+  );
+}
+
+export function findKoReplacements(
+  state: MatchState,
+  targetId: string,
+  controller: MatchSeat,
+  cause: "battle" | "effect",
+  sourceId?: string,
+): KoReplacementCandidate[] {
+  return findRemovalReplacements(
     state,
     targetId,
-    effectController,
+    controller,
+    cause,
+    new Set(["ko", "removeFromField", "leaveField"]),
+    sourceId,
+  );
+}
+
+export function replacementOptionId(candidate: KoReplacementCandidate): string {
+  return `replacement:${candidate.sourceInstanceId}:${candidate.replacementEffectIndex}`;
+}
+
+export function findRemoveFromFieldReplacements(
+  state: MatchState,
+  targetId: string,
+  controller: MatchSeat,
+  sourceId: string,
+): KoReplacementCandidate[] {
+  return findRemovalReplacements(
+    state,
+    targetId,
+    controller,
+    "effect",
+    new Set(["removeFromField", "leaveField"]),
+    sourceId,
+  );
+}
+
+export function replacementChoiceLabel(state: MatchState, sourceId: string): string {
+  const source = getInstance(state, sourceId);
+  const slot = getPlayer(state, source.controller).characterArea.indexOf(sourceId);
+  const location =
+    slot >= 0 ? `Character ${slot + 1}` : source.zone === "leader" ? "Leader" : "Stage";
+  return `${cardName(getCardForInstance(state, sourceId))} (${location})`;
+}
+
+export function findRestReplacements(
+  state: MatchState,
+  targetId: string,
+  controller: MatchSeat,
+  sourceId: string,
+): KoReplacementCandidate[] {
+  return findRemovalReplacements(
+    state,
+    targetId,
+    controller,
     "effect",
     new Set(["rested"]),
-    effectSourceInstanceId,
+    sourceId,
   );
 }

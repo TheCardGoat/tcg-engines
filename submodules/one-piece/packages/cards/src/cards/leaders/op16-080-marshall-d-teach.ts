@@ -32,7 +32,7 @@ export const op16MarshallDTeach080: LeaderCard = {
   setId: "OP16",
   power: 5000,
   life: 4,
-  traits: ["Blackbeard Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Blackbeard Pirates"],
   attribute: "special",
   effect:
     "[Opponent's Turn] All of your Characters gain +1 cost. [On your Opponent's Attack] [Once Per Turn] You may trash 1 card with a [Trigger] from your hand: Change the target of that attack to this Leader or to one of your {Blackbeard Pirates} type Character cards.",
@@ -90,7 +90,7 @@ export const op16MarshallDTeach080: LeaderCard = {
                       {
                         filter: "trait",
                         value: "Blackbeard Pirates",
-                        match: "includes",
+                        match: "exact",
                       },
                     ],
                   ],

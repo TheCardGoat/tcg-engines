@@ -353,6 +353,10 @@
   "sim.inkwell.dialog.summary": "{matchCount} / {totalCount} matches",
   "sim.inkwell.playerOne": "Player One",
   "sim.inkwell.playerTwo": "Player Two",
+  "sim.inkDropsBadge.instructionStart": "klicken, um das Bezahlen mit Tintetropfen zu starten",
+  "sim.inkDropsBadge.instructionStop": "klicken, um das Bezahlen mit Tintetropfen zu beenden",
+  "sim.inkDropsBadge.countOne": "{count} Tintetropfen",
+  "sim.inkDropsBadge.countMany": "{count} Tintetropfen",
   "sim.hand.count": "{count} cards",
   "sim.hand.hide": "Hide hand",
   "sim.hand.returnToHand": "Return to hand",
@@ -582,6 +586,8 @@
   "sim.actions.selectionSummary.singer": "Singer",
   "sim.actions.selectionSummary.source": "Source",
   "sim.actions.selectionSummary.target": "Target",
+  "sim.card.tags.adventurous.label": "Adventurous",
+  "sim.card.tags.adventurous.tooltip": "Adventurous: This character can't challenge and must quest if able.",
   "sim.card.tags.atLocation.label": "At Location",
   "sim.card.tags.atLocation.tooltip": "This character is currently at a location.",
   "sim.card.tags.bodyguard.label": "Bodyguard",
@@ -710,5 +716,8 @@
   "sim.settings.openAccount": "Kontoeinstellungen öffnen",
   "practice_mode_self_title": "Beide Seiten spielen",
   "practice_mode_self_controlling": "Steuerung: Spieler {player}",
-  "practice_mode_self_status": "Das Spielfeld folgt dem Spieler, der als Nächstes entscheidet."
+  "practice_mode_self_status": "Das Spielfeld folgt dem Spieler, der als Nächstes entscheidet.",
+  "sim.effect.canChallengeReady": "Kann bereite Charaktere herausfordern",
+  "sim.support.openTriageLabel": "Fehlerbericht ansehen",
+  "sim.support.dismissReminderLabel": "Feedback-Erinnerung für eine Woche ausblenden"
 }

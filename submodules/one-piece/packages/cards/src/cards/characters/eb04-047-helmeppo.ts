@@ -23,7 +23,7 @@ export const eb04Helmeppo047: CharacterCard = {
   cost: 3,
   power: 3000,
   counter: 2000,
-  traits: ["Navy SWORD"],
+  traits: ["Navy", "SWORD"],
   attribute: "slash",
   effect:
     "[Activate: Main] You may trash this Character: Play up to 1 {SWORD} type Character card with a cost of 3 or less other than [Helmeppo] from your hand or trash.",
@@ -60,7 +60,7 @@ export const eb04Helmeppo047: CharacterCard = {
               {
                 filter: "trait",
                 value: "SWORD",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

@@ -53,6 +53,33 @@ async function createPracticeEngine(seed: string): Promise<AlphaClashServerEngin
 }
 
 describe("Alpha Clash deck validation", () => {
+  it("restores a safe phase pass through the hosted undo checkpoint", async () => {
+    const engine = await createPracticeEngine("undo-pass-7");
+    const context = { gameId: "alpha-undo", sourceAuthority: "server" as const };
+    expect(engine.dispatch("startGame", P1, {}, context).success).toBe(true);
+    const actor = engine.seatToPlayerId[engine.state.activePlayer];
+    const before = structuredClone(engine.state);
+    const set = engine.dispatch("pass", actor, {}, context);
+    expect(set.success).toBe(true);
+    expect(engine.canUndo(actor)).toBe(true);
+    const snapshot = alphaClashSerializeEngine(engine, { cardInstances: {}, owners: {} });
+    const restored = await alphaClashRestoreEngine(snapshot, {
+      gameSlug: "alpha-clash",
+      seed: "undo-pass-7",
+      player1Id: P1,
+      player2Id: P2,
+    });
+    if (!(restored instanceof AlphaClashServerEngine)) throw new Error("Wrong engine type");
+    expect(restored.canUndo(actor)).toBe(true);
+    const priorVersion = restored.getStateID();
+    expect(restored.dispatch("undo", actor, {}, context).success).toBe(true);
+    expect(restored.getStateID()).toBe(priorVersion + 1);
+    expect(restored.state.phase).toEqual(before.phase);
+    expect(restored.state.activePlayer).toBe(before.activePlayer);
+    expect(restored.state.deckOrder).toEqual(before.deckOrder);
+    expect(restored.state.moveLog).toEqual(before.moveLog);
+  });
+
   it("accepts a generated practice deck", () => {
     const result = alphaClashServerAdapter.validateDeckForFormat(
       "constructed",
@@ -150,7 +177,7 @@ describe("Alpha Clash card summaries", () => {
       .map(([instanceId]) => instanceId);
     expect(contenderInstances).toHaveLength(1);
     const contenderCardId = maps.cardInstances[contenderInstances[0]];
-    expect(alphaClashServerAdapter.getCardById(contenderCardId)?.label).toContain("Titan");
+    expect(alphaClashServerAdapter.getCardById(contenderCardId)?.label).toBe("Magnate, Awakened");
   });
 });
 

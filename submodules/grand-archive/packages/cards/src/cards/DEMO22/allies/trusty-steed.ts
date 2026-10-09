@@ -57,8 +57,16 @@ export const trustySteed: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
                 relationship: "controlled-by",
                 player: "controller",
                 filter: {
-                  kind: "type",
-                  oneOf: ["ALLY"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY"],
+                    },
+                    {
+                      kind: "not-source",
+                    },
+                  ],
                 },
               },
             },

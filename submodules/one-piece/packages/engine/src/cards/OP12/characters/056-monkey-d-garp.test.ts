@@ -58,4 +58,31 @@ describe("OP12-056 Monkey.D.Garp", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("cannot play the Navy Character drawn by Kuzan after Garp finishes resolving", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: "OP12-040",
+      hand: [op12MonkeyDGarp056, eb01Doma005, "OP12-050"],
+      deck: [op12Jango045, eb01Doma005, eb01Doma005],
+      activeDon: op12MonkeyDGarp056.cost,
+    });
+    const payment = engine.findCardInZone("south", "hand", eb01Doma005);
+    const existing = engine.findCardInZone("south", "hand", "OP12-050");
+    const drawn = engine.findCardInZone("south", "deck", op12Jango045);
+    engine.asSouth().play(op12MonkeyDGarp056);
+    engine.asSouth().acceptOptional();
+    engine.resolveDecision("effectCostTrashFromHand", { selectedIds: [payment] }, "south");
+    const step = engine.pendingDecision("effectPlaySelection", "south").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected Garp play choice");
+    expect(step.candidates.map((c) => c.ref.id)).toContain(existing);
+    expect(step.candidates.map((c) => c.ref.id)).not.toContain(drawn);
+    expect(engine.getView("south").players.south.hand.map((c) => c.instanceId)).not.toContain(
+      drawn,
+    );
+    engine.resolveDecision("effectPlaySelection", { selectedIds: [existing] }, "south");
+    expect(engine.getView("south").players.south.characters.map((c) => c?.instanceId)).toContain(
+      existing,
+    );
+    expect(engine.getView("south").players.south.hand.map((c) => c.instanceId)).toContain(drawn);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

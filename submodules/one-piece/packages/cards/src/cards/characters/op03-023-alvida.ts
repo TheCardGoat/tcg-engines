@@ -23,7 +23,7 @@ export const op03Alvida023: CharacterCard = {
   cost: 1,
   power: 3000,
   counter: 1000,
-  traits: ["East Blue Alvida Pirates"],
+  traits: ["East Blue", "Alvida Pirates"],
   attribute: "strike",
   effect: "",
   i18n: op03Alvida023I18n,

@@ -78,7 +78,7 @@ export const rapidCombustion: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                               property: "memory-cost",
                               basis: "base",
                             },
-                            operator: "lte",
+                            operator: "eq",
                             right: 0,
                           },
                         },

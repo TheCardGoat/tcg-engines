@@ -22,6 +22,7 @@ import { executeGrandArchiveEffect } from "../../procedures/effects/effect-execu
 import { grandArchiveObjectFace } from "../../game/card-runtime.ts";
 import {
   grandArchiveObjectId,
+  grandArchiveGameEventId,
   grandArchivePlayerId,
   grandArchiveStackItemId,
   type GrandArchiveObjectId,
@@ -308,6 +309,78 @@ function falseStepReplacement(): GrandArchiveReplacementEffect {
 }
 
 describe("Grand Archive replacement effect execution", () => {
+  for (const mode of ["grouped", "single", "missing-id"] as const) {
+    it(`persists next-damage consumption and limits it to one source/event pair: ${mode}`, () => {
+      const fixture = setup();
+      const sourceId = fixture.state.zones[fixture.p1].field[0]!;
+      const targetId = fixture.state.zones[fixture.p2].field[0]!;
+      const group = grandArchiveGameEventId("grouped-damage-test");
+      const created = executeGrandArchiveEffect(
+        {
+          kind: "replacement",
+          ...(mode !== "single" ? { consumptionScope: "source-game-event" as const } : {}),
+          event: { name: "damage-dealt" },
+          operation: { kind: "modify-amount", operation: "add", amount: 3 },
+          duration: {
+            kind: "for-next-event",
+            event: "damage-dealt",
+            expires: { kind: "this-turn" },
+          },
+        },
+        {
+          program: fixture.program,
+          state: fixture.state,
+          controllerId: fixture.p1,
+          sourceId,
+          bindings: {},
+        },
+        (state, events) => {
+          const tx = new GrandArchiveTransactionKernel().transact(state, events);
+          return { state: tx.state, events: tx.result.events };
+        },
+      ).state;
+      const kernel = rulesKernel(fixture);
+      const first = kernel.transact(created, [
+        {
+          type: "damage-marked",
+          objectId: targetId,
+          sourceId,
+          amount: 1,
+          ...(mode !== "missing-id" ? { gameEventId: group } : {}),
+        },
+      ]).state;
+      expect(first.objects[targetId]!.damage).toBe(4);
+      const saved = JSON.parse(JSON.stringify(serializeGrandArchiveMatchSnapshot(first)));
+      const restored = restoreGrandArchiveMatchSnapshot(fixture.program, saved);
+      if (mode === "grouped") {
+        expect(restored.replacementEffects[0]?.consumedBy).toEqual({
+          gameEventId: group,
+          sourceId,
+        });
+        const malformed = structuredClone(saved);
+        malformed.replacementEffects[0].consumedBy.gameEventId = 7;
+        expect(() => restoreGrandArchiveMatchSnapshot(fixture.program, malformed)).toThrow();
+      } else expect(restored.replacementEffects).toHaveLength(0);
+      const result = kernel.transact(restored, [
+        { type: "damage-marked", objectId: targetId, sourceId, amount: 1, gameEventId: group },
+        {
+          type: "damage-marked",
+          objectId: targetId,
+          sourceId: targetId,
+          amount: 1,
+          gameEventId: group,
+        },
+        {
+          type: "damage-marked",
+          objectId: targetId,
+          sourceId,
+          amount: 1,
+          gameEventId: grandArchiveGameEventId("later-damage-test"),
+        },
+      ]).state;
+      expect(result.objects[targetId]!.damage).toBe(mode === "grouped" ? 10 : 7);
+    });
+  }
   it("applies printed recovery-amount replacements and suppresses recovery reduced to zero", () => {
     const auraFixture = setup();
     const auraId = objectId(auraFixture.state, auraFixture.p1, transfusiveAura.canonicalId);

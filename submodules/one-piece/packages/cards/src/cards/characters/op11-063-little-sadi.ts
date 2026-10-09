@@ -58,7 +58,7 @@ export const op11LittleSadi063: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Impel Down",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

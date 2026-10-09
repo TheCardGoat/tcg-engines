@@ -21,7 +21,7 @@ export const op04GumGumKingKongGun093: EventCard = {
   rarity: "UC",
   setId: "OP04",
   cost: 3,
-  traits: ["Straw Hat Crew Dressrosa"],
+  traits: ["Dressrosa", "Straw Hat Crew"],
   effect:
     "[Main] Up to 1 of your [Dressrosa] type Characters gains +6000 power during this turn. Then, if you have 15 or more cards in your trash, that card gains [Double Attack] during this turn. (This card deals 2 damage.) [Trigger] Draw 3 cards and trash 2 cards from your hand.",
   effects: {
@@ -42,7 +42,7 @@ export const op04GumGumKingKongGun093: EventCard = {
                 {
                   filter: "trait",
                   value: "Dressrosa",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -62,7 +62,7 @@ export const op04GumGumKingKongGun093: EventCard = {
                 {
                   filter: "trait",
                   value: "Dressrosa",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

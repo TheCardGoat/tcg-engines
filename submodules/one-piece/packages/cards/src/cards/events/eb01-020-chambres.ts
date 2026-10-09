@@ -21,7 +21,7 @@ export const eb01Chambres020: EventCard = {
   rarity: "C",
   setId: "EB01",
   cost: 1,
-  traits: ["Heart Pirates Supernovas"],
+  traits: ["Supernovas", "Heart Pirates"],
   effect:
     "[Main] If your Leader has the [Supernovas] type, return 1 of your Characters to the owner's hand, and play up to 1 Character card with a cost of 2 or less from your hand that is a different color than the returned Character.[Trigger] Activate this card's [Main] effect.",
   effects: {
@@ -32,7 +32,7 @@ export const eb01Chambres020: EventCard = {
           {
             condition: "leaderTrait",
             trait: "Supernovas",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

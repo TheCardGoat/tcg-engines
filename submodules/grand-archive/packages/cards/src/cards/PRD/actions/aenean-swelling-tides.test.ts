@@ -7,3 +7,10 @@ import { aeneanSwellingTides } from "./aenean-swelling-tides.ts";
 describe("Aenean Swelling Tides — Class Bonus Floating Memory", () => {
   proveClassBonusFloatingMemory({ card: aeneanSwellingTides });
 });
+
+import { proveRecoveryActionBoundaries } from "../../../testing/recovery-action-boundaries.ts";
+/** @covers 10zrMmtUg2-a1 */
+/** @covers 10zrMmtUg2-a2 */
+describe("aeneanSwellingTides recovery boundaries", () => {
+  proveRecoveryActionBoundaries(aeneanSwellingTides, "tides");
+});

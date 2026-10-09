@@ -37,4 +37,19 @@ describe("OP13-004 Sabo", () => {
     expect(view.players.south.leader.power).toBe(6000);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("an opponent's cost-eight Character does not enable the own-field aura", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op13Sabo004,
+        life: [eb01Doma005, eb01Doma005, eb01Doma005],
+        character: [eb01Doma005],
+        activeDon: 1,
+      },
+      { character: [op12Shiki005] },
+    );
+    engine.attachDon(engine.leader("south"), 1, "south");
+    expect(engine.getView("south").players.south.leader.power).toBe(6000);
+    expect(engine.getView("south").players.south.characters[0]?.power).toBe(3000);
+    expect(engine.getView("south").players.north.characters[0]?.power).toBe(10000);
+  });
 });

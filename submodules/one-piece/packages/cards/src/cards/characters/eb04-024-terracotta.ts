@@ -54,7 +54,7 @@ export const op14eb04Terracotta024: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Alabasta",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

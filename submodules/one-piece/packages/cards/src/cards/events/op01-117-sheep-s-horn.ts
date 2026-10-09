@@ -21,7 +21,7 @@ export const op01SheepSHorn117: EventCard = {
   rarity: "C",
   setId: "OP01",
   cost: 2,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   effect:
     "[Main] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Rest up to 1 of your opponent's Characters with a cost of 6 or less.  This card has been officially errata'd.",
   effects: {

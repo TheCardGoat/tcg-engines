@@ -54,7 +54,7 @@ export const op09Wire017: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Kid Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

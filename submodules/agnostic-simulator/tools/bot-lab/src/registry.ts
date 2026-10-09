@@ -1,6 +1,7 @@
 import type { BotLabAdapter } from "./adapter.ts";
 
 const ADAPTER_LOADERS = {
+  "alpha-clash": async () => (await import("./adapters/alpha-clash.ts")).alphaClashBotLabAdapter,
   cyberpunk: async () => (await import("./adapters/cyberpunk.ts")).cyberpunkBotLabAdapter,
   gundam: async () => (await import("./adapters/gundam.ts")).gundamBotLabAdapter,
   lorcana: async () => (await import("./adapters/lorcana.ts")).lorcanaBotLabAdapter,

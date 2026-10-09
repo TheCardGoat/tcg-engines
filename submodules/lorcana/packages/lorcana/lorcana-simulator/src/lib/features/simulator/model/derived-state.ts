@@ -529,6 +529,7 @@ function buildEntriesForAvailableMove(
   move: AvailableMove,
   availableMoves: AvailableMove[],
   sourceCardId?: string,
+  paymentOptions?: { inkDrops?: number },
 ): ExecutableMoveEntry[] {
   const entries: ExecutableMoveEntry[] = [];
 
@@ -806,7 +807,7 @@ function buildEntriesForAvailableMove(
       }
       case "shiftCard": {
         const id = String(cardId);
-        const shiftTargetOptions = engine.getMoveOptions("shiftCard", cardId);
+        const shiftTargetOptions = engine.getMoveOptions("shiftCard", cardId, paymentOptions);
         const multiShiftRules = getMultiShiftRules(engine, id);
 
         if (shiftTargetOptions.length > 0) {
@@ -1054,7 +1055,11 @@ function buildEntriesForAvailableMove(
         continue;
       }
       case "moveCharacterToLocation": {
-        const locationOptions = engine.getMoveOptions("moveCharacterToLocation", cardId);
+        const locationOptions = engine.getMoveOptions(
+          "moveCharacterToLocation",
+          cardId,
+          paymentOptions,
+        );
         for (const option of locationOptions) {
           if (option.kind !== "card") continue;
           const characterId = String(cardId);
@@ -1062,7 +1067,10 @@ function buildEntriesForAvailableMove(
           const params = {
             characterId,
             locationId,
-          } as LorcanaSimulatorMoveParams["moveCharacterToLocation"];
+            ...(paymentOptions?.inkDrops !== undefined
+              ? { inkDrops: paymentOptions.inkDrops }
+              : {}),
+          } satisfies LorcanaSimulatorMoveParams["moveCharacterToLocation"];
           const label = getMoveOptionLabel("moveCharacterToLocation", params, cards);
           entries.push({
             id: `moveCharacterToLocation:${characterId}:${locationId}`,
@@ -1080,7 +1088,7 @@ function buildEntriesForAvailableMove(
         continue;
       }
       case "activateAbility": {
-        const abilityOptions = engine.getMoveOptions("activateAbility", cardId);
+        const abilityOptions = engine.getMoveOptions("activateAbility", cardId, paymentOptions);
         for (const option of abilityOptions) {
           if (option.kind !== "ability") continue;
           const id = String(cardId);
@@ -1204,11 +1212,21 @@ export function buildExecutableMoves(
   cards: CardSnapshotMap,
   availableMoves: AvailableMove[],
   legalMoveIds: readonly string[],
+  paymentOptions?: { inkDrops?: number },
 ): ExecutableMoveEntry[] {
   const entries: ExecutableMoveEntry[] = [];
 
   for (const move of availableMoves) {
-    entries.push(...buildEntriesForAvailableMove(engine, cards, move, availableMoves));
+    entries.push(
+      ...buildEntriesForAvailableMove(
+        engine,
+        cards,
+        move,
+        availableMoves,
+        undefined,
+        paymentOptions,
+      ),
+    );
   }
 
   pushSupplementalExecutableMoves(engine, legalMoveIds, entries);
@@ -1386,6 +1404,7 @@ export function expandCategoryMoves(
   availableMoves: AvailableMove[],
   legalMoveIds: readonly string[],
   categoryId: ExecutableMovePresentationCategoryId,
+  paymentOptions?: { inkDrops?: number },
 ): ExecutableMoveEntry[] {
   const entries: ExecutableMoveEntry[] = [];
   const relevantMoves = availableMoves.filter((move) => {
@@ -1420,7 +1439,16 @@ export function expandCategoryMoves(
   });
 
   for (const move of relevantMoves) {
-    entries.push(...buildEntriesForAvailableMove(engine, cards, move, availableMoves));
+    entries.push(
+      ...buildEntriesForAvailableMove(
+        engine,
+        cards,
+        move,
+        availableMoves,
+        undefined,
+        paymentOptions,
+      ),
+    );
   }
 
   if (categoryId === "alter-hand" || categoryId === "concede" || categoryId === "undo") {
@@ -1440,6 +1468,7 @@ export function expandCardMoves(
   availableMoves: AvailableMove[],
   _legalMoveIds: readonly string[],
   cardId: string,
+  paymentOptions?: { inkDrops?: number },
 ): ExecutableMoveEntry[] {
   const entries: ExecutableMoveEntry[] = [];
 
@@ -1457,7 +1486,9 @@ export function expandCardMoves(
       continue;
     }
 
-    entries.push(...buildEntriesForAvailableMove(engine, cards, move, availableMoves, cardId));
+    entries.push(
+      ...buildEntriesForAvailableMove(engine, cards, move, availableMoves, cardId, paymentOptions),
+    );
   }
 
   return sortExecutableMoves(entries).filter((move) => getSourceCardId(move) === cardId);
@@ -1470,6 +1501,7 @@ export function expandCardActionCategoryMoves(
   legalMoveIds: readonly string[],
   cardId: string,
   categoryId: ExecutableMovePresentationCategoryId,
+  paymentOptions?: { inkDrops?: number },
 ): ExecutableMoveEntry[] {
   const entries: ExecutableMoveEntry[] = [];
   const relevantMoves = availableMoves.filter((move) => {
@@ -1496,7 +1528,9 @@ export function expandCardActionCategoryMoves(
   });
 
   for (const move of relevantMoves) {
-    entries.push(...buildEntriesForAvailableMove(engine, cards, move, availableMoves, cardId));
+    entries.push(
+      ...buildEntriesForAvailableMove(engine, cards, move, availableMoves, cardId, paymentOptions),
+    );
   }
 
   if (categoryId === "alter-hand" || categoryId === "concede" || categoryId === "undo") {
@@ -1789,6 +1823,7 @@ export function getPlayerSummary(
 
   return {
     lore: snapshot.players[ownerId]?.lore ?? 0,
+    inkDrops: snapshot.players[ownerId]?.inkDrops ?? 0,
     deckCount: getZoneCardCount(snapshot, side, "deck"),
     handCount: getZoneCardCount(snapshot, side, "hand"),
     discardCount: getZoneCardCount(snapshot, side, "discard"),
@@ -1798,4 +1833,24 @@ export function getPlayerSummary(
     effectSourceCardIds,
     timer,
   };
+}
+
+/**
+ * Hyperia City ink-drop payment claim for a standard-cost playCard dispatch.
+ *
+ * Armed mode claims every held drop — the engine clamps the request to the
+ * real (effective) play cost and records what was actually spent, so
+ * client-side printed-cost math could only underpay when cost effects are in
+ * play. Unarmed mode never claims: validation refuses drop-coverable
+ * shortfall plays until the badge arms payment.
+ */
+export function resolveSimulatorInkDropPayment(args: {
+  armed: boolean;
+  heldDrops: number;
+}): number {
+  const { armed, heldDrops } = args;
+  if (!armed || heldDrops <= 0) {
+    return 0;
+  }
+  return heldDrops;
 }

@@ -23,7 +23,7 @@ export const eb03Monet010: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Donquixote Pirates Punk Hazard"],
+  traits: ["Punk Hazard", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "[Blocker] [On Play] Look at 5 cards from the top of your deck; reveal up to 1 Character card with 1000 power or less or up to 1 Event card and add it to your hand. Then, place the rest at the bottom of your deck in any order.",

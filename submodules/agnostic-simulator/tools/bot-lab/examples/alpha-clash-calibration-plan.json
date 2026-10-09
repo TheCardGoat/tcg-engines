@@ -1,0 +1,12 @@
+{
+  "candidateId": "meta-v1",
+  "parentStrategyId": "meta-v1",
+  "hypothesis": "Calibrate the laboratory baseline against itself on Clarity and Absence. This plan does not train or claim an improved heuristic.",
+  "evaluation": {
+    "suiteId": "meta",
+    "seedBase": "alpha-clash-meta-calibration-v1",
+    "minimumBlocks": 3,
+    "maximumBlocks": 3,
+    "batchSize": 3
+  }
+}

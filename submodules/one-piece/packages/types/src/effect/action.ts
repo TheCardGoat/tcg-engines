@@ -1,14 +1,20 @@
-import type { OPAttribute } from "../card.ts";
+import type { OPAttribute, OPCardType } from "../card.ts";
 import type { Duration, EffectTrigger, Keyword, Player, TargetCount, Zone } from "./primitives.ts";
 import type { Target, TotalConstraint, TargetFilter } from "./target.ts";
 import type { Condition } from "./condition.ts";
+import type { Cost } from "./cost.ts";
 
 export type Action =
+  | AddActivationCostsAction
+  | AddActivationConditionsAction
   | SequenceAction
+  | SimultaneousStateChangeAction
   | OptionalAction
   | DelayedAction
+  | ModifyLifeValueAction
   | ModifyPowerAction
   | ModifyCounterAction
+  | SetCounterAction
   | KoAction
   | DrawAction
   | RedrawHandAction
@@ -30,6 +36,7 @@ export type Action =
   | GrantAttributeAction
   | GrantKeywordAction
   | AddToLifeAction
+  | LifeToHandReplacementAction
   | RemoveFromLifeAction
   | SetPowerAction
   | SetBasePowerAction
@@ -38,6 +45,7 @@ export type Action =
   | SwapBasePowerAction
   | ModifyCostAction
   | SetCostAction
+  | SetBaseCostAction
   | NegateEffectsAction
   | NegatePlayerEffectsAction
   | CannotAttackAction
@@ -83,6 +91,16 @@ export type Action =
   | GuessTopDeckCostAction
   | TurnLifeFaceDownAction
   | TurnLifeFaceUpAction;
+
+/** Explicit simultaneous card state changes; ordinary action lists remain ordered. */
+export interface SimultaneousStateChangeAction {
+  action: "simultaneousStateChange";
+  groups: Array<{
+    state: "active" | "rested";
+    target: Omit<Target, "zones"> & { zones: Array<"leader" | "character" | "stage" | "costArea"> };
+  }>;
+  condition?: Condition;
+}
 
 export interface SequenceAction {
   action: "sequence";
@@ -144,9 +162,25 @@ export interface ModifyCounterAction {
   condition?: Condition;
 }
 
+/** Continuous replacement of a Character's Counter value. */
+export interface SetCounterAction {
+  action: "setCounter";
+  target: Target;
+  value: number;
+  condition?: Condition;
+}
+
 export interface KoAction {
   action: "ko";
+  /** Result qualification after choosing a target, not a selection restriction. */
+  selectedTargetFilters?: TargetFilter[];
+  /** The opposite physical participant in this completed battle, not a chosen card. */
+  battleOpponent?: true;
+  /** Resolve only if this instruction actually K.O.s at least one target. */
+  thenActions?: Action[];
   target: Target;
+  /** Select each group before moving any selected card. */
+  targetGroups?: Target[];
   previousActionTargets?: boolean;
   condition?: Condition;
 }
@@ -157,6 +191,8 @@ export interface DrawAction {
   amount: number;
   amountFromTarget?: Target;
   amountFromTriggerEvent?: boolean;
+  /** Number of physical cards moved by the immediately preceding action. */
+  amountFromPreviousActionTargets?: boolean;
   upTo?: boolean;
   untilHandSize?: number;
   condition?: Condition;
@@ -171,6 +207,9 @@ export interface RedrawHandAction {
 
 export interface TrashFromHandAction {
   action: "trashFromHand";
+  thenActions?: Action[];
+  /** If you do: require the entire requested discard before the follow-up. */
+  thenRequiresFullAmount?: boolean;
   player: Player;
   chosenBy?: Player;
   amount: number | "all";
@@ -222,11 +261,10 @@ export interface GroupedPlayAction {
   }>;
   playStates: {
     single: "active";
-    multiple: ["active", "rested"];
+    multiple: ["active", "rested"] | ["active", ..."active"[]];
     /** When true, each state in `multiple` is constrained by the matching group. */
     byGroup?: true;
   };
-  chooseOnPlayOrder: true;
   /** Restrict the grouped choice to physical cards selected by the preceding action. */
   previousActionTargets?: boolean;
   condition?: Condition;
@@ -264,13 +302,19 @@ export interface SetActiveAction {
 export interface ReturnToHandAction {
   action: "returnToHand";
   target: Target;
+  /** Select each group before moving any selected card. */
+  targetGroups?: Target[];
   thenActions?: Action[];
   condition?: Condition;
 }
 
 export interface ReturnToDeckAction {
+  /** Use the physical cards selected for this ability's payment, even after intervening actions. */
+  costPaymentTargets?: true;
   action: "returnToDeck";
   target: Target;
+  /** Select each group before moving any selected card. */
+  targetGroups?: Target[];
   position: "top" | "bottom" | "any";
   order?: "any";
   destinationPlayer?: Player;
@@ -282,14 +326,20 @@ export interface ReturnToDeckAction {
 export interface SearchAction {
   action: "search";
   lookCount: number;
+  /** Choose how many cards to inspect before revealing any deck information. */
+  lookCountUpTo?: boolean;
   source: {
     player: Player;
     zone: Zone;
   };
+  /** Selected cards are revealed unless the printed effect only adds them privately. */
+  reveal?: boolean;
   revealCount: TargetCount;
   revealFilters?: TargetFilter[];
   revealFilterMode?: "all" | "any";
   revealDestination: Zone;
+  /** Face-up placement when a search adds its selected cards to Life. */
+  lifeFaceUp?: boolean;
   remainderPosition: "top" | "bottom" | "any" | "trash";
   playState?: "rested" | "active";
   condition?: Condition;
@@ -316,8 +366,8 @@ export interface GiveDonAction {
   /** "any" funds the give from both DON!! pools (a "cost area" source). */
   donState?: "rested" | "active" | "any";
   distribution?: "single" | "each";
-  /** Whose DON!! pool funds the give; defaults to the effect controller. */
-  donorPlayer?: Player;
+  /** Whose pool funds the give; targetOwner keeps either owner's DON!! with that owner. */
+  donorPlayer?: Player | "targetOwner";
   condition?: Condition;
 }
 
@@ -333,11 +383,21 @@ export interface GrantAttributeAction {
 
 export interface GrantKeywordAction {
   action: "grantKeyword";
+  /** Apply to the physical card that caused the trigger, not a chosen substitute. */
+  triggerEventTarget?: boolean;
   target: Target;
   keyword: Keyword;
   duration: Duration;
   previousActionTargets?: boolean;
   condition?: Condition;
+}
+
+export interface LifeToHandReplacementAction {
+  action: "lifeToHandReplacement";
+  player: "self";
+  faceUp: true;
+  destination: "deck";
+  position: "bottom";
 }
 
 export interface AddToLifeAction {
@@ -407,10 +467,23 @@ export interface SwapBasePowerAction {
 
 export interface ModifyCostAction {
   action: "modifyCost";
+  /** Continuous cost-of-playing reduction; does not change the card cost characteristic. */
+  paymentOnly?: true;
+  target: Target;
+  value: number;
+  /** Multiplies a continuous cost modifier by complete groups in the target area. */
+  valuePerCardGroup?: { target: Target; size: number };
+  duration?: Duration;
+  consumeOnPlay?: boolean;
+  condition?: Condition;
+}
+
+/** Sets the base cost; additive cost changes still apply above this value. */
+export interface SetBaseCostAction {
+  action: "setBaseCost";
   target: Target;
   value: number;
   duration?: Duration;
-  consumeOnPlay?: boolean;
   condition?: Condition;
 }
 
@@ -450,6 +523,8 @@ export interface CannotAttackAction {
 
 export interface CannotBeKodAction {
   action: "cannotBeKod";
+  /** Bind protection to the physical card chosen by the preceding action. */
+  previousActionTargets?: boolean;
   target: Target;
   duration: Duration;
   restriction?: "inBattle" | "byEffect";
@@ -579,6 +654,7 @@ export interface RevealTopDeckCardAction {
   conditional?: {
     filters: TargetFilter[];
     actions: Action[];
+    finalPosition?: "top" | "bottom" | "choice";
   };
   finalPosition: "top" | "bottom" | "choice";
   condition?: Condition;
@@ -597,12 +673,16 @@ export interface TrashFromDeckAction {
   amount: number;
   amountFromPreviousActionTargets?: boolean;
   upTo?: boolean;
+  /** "If you do" requires the full trash amount; "Then" does not. */
+  thenRequiresFullAmount?: boolean;
   thenActions?: Action[];
   condition?: Condition;
 }
 
 export interface FreezeAction {
   action: "freeze";
+  /** Restrict the next Refresh to this player, relative to the effect controller. */
+  refreshPlayer?: "self" | "opponent";
   target: Target;
   previousActionTargets?: boolean;
   condition?: Condition;
@@ -620,6 +700,7 @@ export interface PlayRestrictionAction {
   restriction: "cannotPlay";
   filters: TargetFilter[];
   sourceZones?: Extract<Zone, "hand" | "deck" | "trash" | "life">[];
+  origin?: "command" | "effect";
   duration: Duration;
   condition?: Condition;
 }
@@ -627,6 +708,8 @@ export interface PlayRestrictionAction {
 export interface OpponentReturnDonAction {
   action: "opponentReturnDon";
   amount: number;
+  /** Which DON!! cards may be returned; defaults to any DON!! on the field. */
+  donState?: "active" | "rested" | "any";
   condition?: Condition;
 }
 
@@ -634,6 +717,8 @@ export interface ReturnDonAction {
   action: "returnDon";
   player: Player;
   amount: number;
+  /** Which DON!! cards may be returned; defaults to any DON!! on the field. */
+  donState?: "active" | "rested" | "any";
   untilSameCountAsOpponent?: boolean;
   thenActions?: Action[];
   condition?: Condition;
@@ -685,6 +770,8 @@ export interface CannotBeRestedAction {
   duration: Duration;
   /** Restrict effect-based rest prevention to effects controlled by this relative player. */
   byPlayer?: "self" | "opponent";
+  /** Restrict permanent rest prevention to these source card types. */
+  byCardTypes?: OPCardType[];
   condition?: Condition;
 }
 
@@ -706,6 +793,7 @@ export interface CannotSetDonActiveAction {
 
 export interface CannotBePlayedByEffectsAction {
   action: "cannotBePlayedByEffects";
+  sourceZones?: Extract<Zone, "hand" | "deck" | "trash" | "life">[];
   condition?: Condition;
 }
 
@@ -774,5 +862,33 @@ export interface TurnLifeFaceUpAction {
   player: Player;
   count: number;
   position: "top" | "bottom";
+  condition?: Condition;
+}
+
+/** Adds requirements to the recipient's effects; self/opponent refer to that recipient's controller. */
+export interface AddActivationCostsAction {
+  action: "addActivationCosts";
+  target: Target;
+  costs: Cost[];
+  effectTypes?: EffectTrigger[];
+  duration: Duration;
+  condition?: Condition;
+}
+
+export interface AddActivationConditionsAction {
+  action: "addActivationConditions";
+  target: Target;
+  conditions: Condition[];
+  effectTypes?: EffectTrigger[];
+  duration: Duration;
+  condition?: Condition;
+}
+
+/** Changes the Leader's Life characteristic, never the number of cards in Life. */
+export interface ModifyLifeValueAction {
+  action: "modifyLifeValue";
+  target: Target;
+  value: number;
+  duration: Duration;
   condition?: Condition;
 }

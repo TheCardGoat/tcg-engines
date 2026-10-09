@@ -52,6 +52,16 @@ export function parseGrandArchiveArtPin(value: unknown): GrandArchiveArtPin {
 export async function restoreGrandArchiveArt(value: unknown): Promise<GrandArchiveFrozenArt> {
   if (value === undefined) return currentGrandArchiveArt(); // Pre-migration snapshots have no frozen art.
   const pin = parseGrandArchiveArtPin(value);
+  // This retired v2 catalog referenced inner-frame pixels removed from the asset repository.
+  // Migrate its art only; object printing bindings and all gameplay state stay intact.
+  if (pin.catalog.revision === "de8d6cef5102f3b020479f81db34c96e48148644e2b9effbd392905e60391005") {
+    const available = new Set(
+      Object.values(records.records).flatMap((card) => Object.keys(card.printings)),
+    );
+    if (Object.values(pin.printingIdByObjectId).some((printing) => !available.has(printing)))
+      throw new Error("Retired Grand Archive printing missing from replacement catalog");
+    return { ...currentGrandArchiveArt(), printingIdByObjectId: pin.printingIdByObjectId };
+  }
   if (pin.catalog.revision === grandArchivePresentationReference.revision)
     return { ...pin, records };
   const response = await fetch(pin.catalog.url, {

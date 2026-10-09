@@ -22,7 +22,7 @@ export const op06BlueDragonSealWaterStream019: EventCard = {
   setId: "OP06",
   cost: 3,
   trigger: "K.O. up to 1 of your opponent's Characters with 4000 power or less.",
-  traits: ["FILM Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   effect: "[Main] K.O. up to 1 of your opponent's Characters with 5000 power or less.",
   effects: {
     effects: [

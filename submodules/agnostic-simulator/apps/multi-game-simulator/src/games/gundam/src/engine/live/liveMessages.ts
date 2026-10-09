@@ -87,6 +87,7 @@ export function reduceLiveGatewayMessage(
           // previous affordance. Otherwise a bot turn can leave the player
           // with a stale Undo button until the next full sync.
           canUndo: message.undoable === true,
+          canUndoTurn: message.undoTurnAvailable === true,
           animationPackets: appendAnimationPlans(
             view.animationPackets,
             "animationPlan" in message ? message.animationPlan : null,

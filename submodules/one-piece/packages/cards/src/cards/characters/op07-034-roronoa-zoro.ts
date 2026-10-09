@@ -23,7 +23,7 @@ export const op07RoronoaZoro034: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   attribute: "slash",
   effect:
     "[When Attacking] If you have 3 or more Characters, this Character gains +2000 power during this turn.",

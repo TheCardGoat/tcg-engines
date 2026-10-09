@@ -73,4 +73,33 @@ describe("OP16-039 Gum-Gum Twin Jet Pistol", () => {
     expect(engine.getView("south").players.south.trash.map((c) => c.cardId)).toContain("OP16-039");
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+
+  test("Life Trigger rests the attacking opponent's Leader", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: "OP01-001", life: ["OP16-039"] },
+      { leaderCardId: "OP01-001", character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+      { activeSeat: "north" },
+    );
+    engine.asNorth().attack("EB01-018", engine.asSouth().leader());
+    engine.asSouth().activateLifeTrigger();
+    expect(engine.asSouth().view().players.north.leader.rested).toBe(true);
+    expect(
+      engine
+        .asSouth()
+        .view()
+        .players.south.trash.map((card) => card.cardId),
+    ).toContain("OP16-039");
+  });
+  test("without an Impel Down Leader the Double Attack still applies but rest does not", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST01-001", hand: ["OP16-039"], activeDon: 1 },
+      { character: ["EB01-005"] },
+    );
+    const life = e.getView("south").players.north.lifeCount;
+    e.playCard("OP16-039");
+    e.asSouth().chooseTargets(e.leader("south"));
+    expect(e.getView("south").players.north.characters[0]?.rested).toBe(false);
+    e.asSouth().attack(e.leader("south"), e.leader("north"));
+    expect(e.getView("south").players.north.lifeCount).toBe(life - 2);
+  });
 });

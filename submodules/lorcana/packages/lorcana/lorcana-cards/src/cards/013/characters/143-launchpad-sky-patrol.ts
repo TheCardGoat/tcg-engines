@@ -29,6 +29,10 @@ export const launchpadSkyPatrol: CharacterCard = {
   willpower: 4,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_f49a387be3834d1ea587f913559a22eb",
+    tcgPlayer: "704642",
+  },
   text: [
     {
       title: "Alert",

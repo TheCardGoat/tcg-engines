@@ -1,22 +1,18 @@
-# Lorcana Engine Package
+# Lorcana Engine
 
-This package owns Lorcana state transitions, targeting, effect resolution,
-derived state, projection, automation, and engine-level tests.
+Owns deterministic state transitions, targeting, effects, projection, and
+automation.
 
-## Invariants
+- Register new condition, target, and effect variants in the exhaustive registry
+  and cover their behavior. See [variant extension](docs/variant-extension.md).
+- Keep multiplayer semantics intact.
+- Do not import `@tcg/lorcana-cards`, including in tests: it creates a cycle.
+  Tests using both real cards and the engine belong in the simulator's
+  `src/testing/` directory.
 
-- Keep every condition, target, and effect discriminator registered in its
-  exhaustive variant registry.
-- Add a focused per-variant test with every new discriminator or resolver.
-- Preserve deterministic state transitions and multiplayer semantics.
-- Card-specific gaps may be extended through the `lorcana-cards` skill;
-  cross-cutting engine work remains owned here.
+Use the Lorcana rules and test-generation skills for rules and harness guidance.
 
-## References
-
-Use [`docs/variant-extension.md`](docs/variant-extension.md) for the condition,
-target, effect, and test registration workflow. Use the parent Lorcana rules
-and test-generation skills for rules grounding and harness syntax.
-
-Run the smallest focused Bun test first, then the package type check and the
-Lorcana workspace gate when the change crosses package boundaries.
+Run focused engine tests and relevant type checks locally. Tests under the
+simulator's `src/testing/` directory also run without a dev server. Start a
+simulator only for changed browser behavior; use platform integration only
+when the changed behavior crosses that service boundary.

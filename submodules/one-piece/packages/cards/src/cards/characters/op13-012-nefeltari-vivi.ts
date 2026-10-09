@@ -55,12 +55,12 @@ export const op13NefeltariVivi012: CharacterCard = {
                   {
                     filter: "trait",
                     value: "Alabasta",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Straw Hat Crew",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

@@ -21,6 +21,7 @@ import type {
 } from "@tcg/simulator-ui";
 
 import styles from "./CyberpunkCardContextVisualIdentity.module.css";
+import { CyberpunkRulesText } from "./CyberpunkRulesText";
 
 function statValue(
   stats: readonly { label: string; value: string }[],
@@ -76,17 +77,49 @@ function CyberpunkControlIcon({ control }: CardContextMenuControlIconProps) {
 
 export const CYBERPUNK_CARD_CONTEXT_VISUAL_IDENTITY: CardContextMenuVisualIdentity = {
   className: styles.surface,
-  renderIdentity: ({ entity }) => {
+  hideDetailsTags: true,
+  renderIdentity: ({ entity, onInspect, onPreviewStart, onPreviewEnd }) => {
     const cost = statValue(entity.stats, "cost");
     const power = statValue(entity.stats, "power");
+    const classifications = [
+      ...new Set(
+        entity.traits
+          .map((trait) => trait.trim())
+          .filter(
+            (trait) => trait && trait.toLocaleLowerCase() !== entity.subtitle.toLocaleLowerCase(),
+          ),
+      ),
+    ];
     return (
       <div className={styles.identity} data-cyberpunk-card-context-identity>
         <div className={styles.titleRow}>
-          <strong>{entity.title}</strong>
-          <span>{entity.subtitle}</span>
+          <button
+            type="button"
+            className={styles.inspectTitle}
+            onClick={onInspect}
+            onPointerEnter={(event) => { if (event.pointerType !== "touch") onPreviewStart?.(); }}
+            onPointerLeave={onPreviewEnd}
+            onFocus={onPreviewStart}
+            onBlur={onPreviewEnd}
+            style={{ color: `color-mix(in srgb, ${entity.frameStyle?.color ?? "#9bc5d0"} 72%, white)` }}
+            aria-label={`Inspect ${entity.title}`}
+            title={`Inspect ${entity.title}`}
+          >
+            <strong>{entity.title}</strong>
+          </button>
         </div>
-        {cost !== undefined || power !== undefined ? (
+        {entity.subtitle || cost !== undefined || power !== undefined ? (
           <div className={styles.stats} aria-label="Card stats">
+            {entity.subtitle ? <span className={styles.typeBadge}>{entity.subtitle}</span> : null}
+            {classifications.length > 0 ? (
+              <span className={styles.classificationBadges} aria-label="Card classifications">
+                {classifications.map((classification) => (
+                  <span key={classification} className={styles.classificationBadge}>
+                    {classification}
+                  </span>
+                ))}
+              </span>
+            ) : null}
             {cost !== undefined ? (
               <span data-stat="cost" aria-label={`Cost ${cost}`}>
                 Cost <b>{cost}</b>
@@ -104,5 +137,9 @@ export const CYBERPUNK_CARD_CONTEXT_VISUAL_IDENTITY: CardContextMenuVisualIdenti
   },
   renderActionIcon: (props) => <CyberpunkActionIcon {...props} />,
   renderControlIcon: (props) => <CyberpunkControlIcon {...props} />,
-  renderText: ({ text, kind }) => <span data-cyberpunk-context-text={kind}>{text}</span>,
+  renderText: ({ text, kind }) => (
+    <span data-cyberpunk-context-text={kind}>
+      <CyberpunkRulesText text={text} />
+    </span>
+  ),
 };

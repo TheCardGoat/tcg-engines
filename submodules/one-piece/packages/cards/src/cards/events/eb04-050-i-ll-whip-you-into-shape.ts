@@ -5,7 +5,7 @@ export const eb04ILlWhipYouIntoShape050: EventCard = {
   id: "EB04-050",
   canonicalId: "EB04-050",
   slug: "i-ll-whip-you-into-shape/eb04-050",
-  name: "I'll Whip You Into Shape.",
+  name: "I'll Whip You Into Shape. ♡",
   printings: [
     {
       id: "EB04-050",
@@ -21,7 +21,7 @@ export const eb04ILlWhipYouIntoShape050: EventCard = {
   rarity: "R",
   setId: "EB04",
   cost: 1,
-  traits: ["Navy SWORD"],
+  traits: ["Navy", "SWORD"],
   effect:
     "[Main] Up to 1 of your {SWORD} type Leader or Character cards can also attack active Characters during this turn.[Counter] Your Leader gains +3000 power during this battle.",
   effects: {
@@ -42,7 +42,7 @@ export const eb04ILlWhipYouIntoShape050: EventCard = {
                 {
                   filter: "trait",
                   value: "SWORD",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

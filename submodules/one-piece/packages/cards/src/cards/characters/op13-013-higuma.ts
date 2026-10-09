@@ -22,7 +22,7 @@ export const op13Higuma013: CharacterCard = {
   setId: "OP13",
   cost: 1,
   power: 3000,
-  traits: ["Mountain Bandits Mountain Bandits"],
+  traits: ["Mountain Bandits"],
   attribute: "slash",
   effect: "[On Play] K.O. up to 1 of your opponent's Characters with 0 power or less.",
   effects: {

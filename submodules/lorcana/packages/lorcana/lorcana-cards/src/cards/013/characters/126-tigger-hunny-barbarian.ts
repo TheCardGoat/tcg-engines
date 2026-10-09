@@ -33,6 +33,7 @@ export const tiggerHunnyBarbarian: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a64acded1f7842399029a5fa95b6c78d",
+    tcgPlayer: "702660",
   },
   text: [
     {

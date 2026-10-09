@@ -32,7 +32,7 @@ export const op17NicoRobin087: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Straw Hat Crew Elbaph"],
+  traits: ["Elbaph", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "If there is a Character with a cost of 12 or more, this Character gains +3000 power. [On Play] If there is a Character with a cost of 12 or more, give up to 1 of your opponent's Characters -3000 power during this turn.",

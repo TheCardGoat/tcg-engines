@@ -51,7 +51,7 @@ export const op10CeaserSoldier007: CharacterCard = {
               {
                 filter: "trait",
                 value: "Punk Hazard",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

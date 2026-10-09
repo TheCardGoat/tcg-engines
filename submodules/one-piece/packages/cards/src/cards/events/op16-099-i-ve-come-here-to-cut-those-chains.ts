@@ -59,7 +59,7 @@ export const op16IVeComeHereToCutThoseChains099: EventCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

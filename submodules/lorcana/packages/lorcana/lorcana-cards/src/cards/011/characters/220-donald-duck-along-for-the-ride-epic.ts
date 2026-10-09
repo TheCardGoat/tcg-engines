@@ -22,7 +22,7 @@ export const donaldDuckAlongForTheRideEpic: CharacterCard = {
   inkType: ["steel"],
   set: "011",
   cardNumber: 220,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 5,
   strength: 4,

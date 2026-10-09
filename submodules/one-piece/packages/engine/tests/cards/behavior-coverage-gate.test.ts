@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vite-plus/test";
 import * as cardExports from "@tcg/op-cards";
 import type { OPCard } from "@tcg/op-types";
+import { extractCardIds } from "./grade-a-checker.ts";
 
 /**
  * Hard gate: every non-vanilla canonical ability card must have a command-driven
@@ -79,18 +80,6 @@ function hasCommandDrivenProof(source: string): boolean {
     return true;
   }
   return false;
-}
-
-/** Extract collector-style ids (OP09-045, EB02-008, ST01-014) from test text/filename. */
-function extractCardIds(text: string): Set<string> {
-  const ids = new Set<string>();
-  for (const match of text.matchAll(/\b([A-Z]{1,4}\d{0,2}-\d{3})(?:_[a-zA-Z0-9]+)?\b/g)) {
-    ids.add(match[1]!.toUpperCase());
-  }
-  for (const match of text.matchAll(/\b([a-z]{1,4}\d{0,2}-\d{3})\b/g)) {
-    ids.add(match[1]!.toUpperCase());
-  }
-  return ids;
 }
 
 describe("card behavior coverage gate", () => {

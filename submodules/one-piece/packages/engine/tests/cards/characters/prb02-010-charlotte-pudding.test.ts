@@ -11,6 +11,36 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("PRB02-010 Charlotte Pudding", () => {
+  test.each(["leader", "don"])(
+    "failed %s condition after payment prevents draw and play",
+    (failed) => {
+      const engine = OnePieceTestEngine.create(
+        {
+          leaderCardId: failed === "leader" ? "OP01-001" : op03CharlotteKatakuri099,
+          hand: [prb02CharlottePuddingPrb02010010, op11CharlotteDaifuku068],
+          activeDon: 9,
+        },
+        { activeDon: failed === "don" ? 5 : 6 },
+      );
+      const before = engine.getView("south").players.south;
+      engine.playCard(prb02CharlottePuddingPrb02010010);
+      engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+      engine.resolveDecision(
+        "effectCostReturnDon",
+        { selectedIds: ["active-don:0", "active-don:1"] },
+        "south",
+      );
+      const view = engine.getView("south");
+      expect(view.players.south.deckCount).toBe(before.deckCount);
+      expect(view.players.south.donDeckCount).toBe(before.donDeckCount + 2);
+      expect(view.players.south.hand.map((card) => card.cardId)).toContain(
+        op11CharlotteDaifuku068.id,
+      );
+      expect(view.players.south.characters.filter(Boolean)).toHaveLength(1);
+      expect(view.prompts).toHaveLength(0);
+    },
+  );
+
   test("returns 2 DON!!, draws 2, and plays only a 6000-8000 power Big Mom Pirates Character", () => {
     const engine = OnePieceTestEngine.create(
       {
@@ -21,7 +51,7 @@ describe("PRB02-010 Charlotte Pudding", () => {
           op11CharlotteDaifuku068,
           op08CharlotteKatakuri062,
         ],
-        deck: [eb01Doma005, eb01Fourtricks025],
+        deck: [eb01Doma005, eb01Fourtricks025, "EB01-025"],
         activeDon: 9,
       },
       { activeDon: 6 },

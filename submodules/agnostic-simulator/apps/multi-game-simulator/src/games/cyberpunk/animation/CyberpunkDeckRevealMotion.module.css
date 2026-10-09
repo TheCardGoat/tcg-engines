@@ -1,0 +1,328 @@
+.stage {
+  position: fixed;
+  inset: 0;
+  /* Above the board and the hover preview (4300), below the choice scrim
+     (4600): when a deck-search prompt is already asking for a pick, the
+     held cards must dim under it instead of covering the question. */
+  z-index: 4500;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  perspective: 900px;
+  --reveal-card-w: clamp(92px, 24dvw, 150px);
+}
+
+/* Lift the reveal moment off the crowded board: a soft vignette that leads
+   the fly-in and clears as the cards return. */
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 62% 55% at 50% 50%,
+    rgb(3 6 10 / 62%) 0%,
+    rgb(3 6 10 / 0%) 100%
+  );
+  opacity: 0;
+  animation-name: scrim-in, scrim-out;
+  animation-duration: 280ms, var(--fly-ms, 360ms);
+  animation-timing-function: ease-out, ease-in;
+  animation-delay: 0ms, var(--scrim-out-delay, 0ms);
+  animation-fill-mode: both, forwards;
+}
+
+[data-owner-side="player"] {
+  --owner-accent: 98 213 237;
+}
+
+[data-owner-side="opponent"] {
+  --owner-accent: 244 114 130;
+}
+
+/* On the caption, the actor outranks the deck owner: cyan when you are the
+   one looking, red when it is your Rival — even over your own deck. */
+.caption[data-actor-side="player"] {
+  --owner-accent: 98 213 237;
+}
+
+.caption[data-actor-side="opponent"] {
+  --owner-accent: 244 114 130;
+}
+
+.card {
+  grid-area: 1 / 1;
+  width: var(--reveal-card-w);
+  aspect-ratio: 5 / 7;
+  border-radius: 7px;
+  box-shadow:
+    0 12px 34px rgb(0 0 0 / 70%),
+    0 0 20px rgb(var(--owner-accent, 98 213 237) / 45%);
+  overflow: hidden;
+  opacity: 0;
+  /* Fly out of the deck, hold at the display spot, then fly back together:
+     the return leg starts at --return-delay for every card of the cue. */
+  animation-name: reveal-fly-in, reveal-fly-back;
+  animation-duration: var(--fly-ms), var(--fly-ms);
+  animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1), cubic-bezier(0.55, 0, 0.85, 0.45);
+  animation-delay: var(--fly-in-delay), var(--return-delay);
+  animation-fill-mode: both, forwards;
+}
+
+.card > * {
+  width: 100%;
+  height: 100%;
+}
+
+/* Answers "whose deck is this coming from": a tinted halo on the physical
+   deck stack the cards flew out of. */
+.deckGlow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--deck-w);
+  height: var(--deck-h);
+  transform: translate(calc(-50% + var(--deck-x)), calc(-50% + var(--deck-y)));
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 2px rgb(var(--owner-accent, 98 213 237) / 75%),
+    0 0 22px 4px rgb(var(--owner-accent, 98 213 237) / 35%);
+  opacity: 0;
+  animation-name: glow-in, glow-breathe, glow-out;
+  animation-duration: var(--fly-ms, 360ms), 1600ms, var(--fly-ms, 360ms);
+  animation-timing-function: ease-out, ease-in-out, ease-in;
+  animation-delay: 0ms, var(--fly-ms, 360ms), var(--return-delay, 0ms);
+  animation-fill-mode: both, none, forwards;
+}
+
+/* The caption sits above the held cards and carries the one thing the board
+   cannot show: which ability is revealing, and from whose deck. */
+.caption {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - var(--reveal-card-w) * 0.7 - 46px);
+  transform: translate(calc(-50% + var(--caption-x, 0px)), -50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(82vw, 640px);
+  padding: 8px 15px 8px 10px;
+  border: 1px solid rgb(var(--owner-accent, 98 213 237) / 55%);
+  border-radius: 8px;
+  background:
+    linear-gradient(rgb(6 10 16 / 88%), rgb(6 10 16 / 88%)) padding-box,
+    linear-gradient(rgb(3 5 9 / 92%), rgb(3 5 9 / 92%)) padding-box;
+  box-shadow:
+    0 8px 26px rgb(0 0 0 / 60%),
+    0 0 18px rgb(var(--owner-accent, 98 213 237) / 25%);
+  opacity: 0;
+  animation-name: caption-in, caption-out;
+  animation-duration: var(--fly-ms, 360ms), var(--fly-ms, 360ms);
+  animation-timing-function: ease-out, ease-in;
+  animation-delay: var(--fly-in-delay, 0ms), var(--return-delay, 0ms);
+  animation-fill-mode: both, forwards;
+}
+
+/* Sits under a private look's card backs so the row of backs is never
+   unexplained: the viewer is watching someone else's choice. */
+.privateBadge {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + var(--reveal-card-w) * 0.7 + 34px);
+  transform: translate(calc(-50% + var(--caption-x, 0px)), -50%);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 13px;
+  border: 1px solid rgb(var(--owner-accent, 98 213 237) / 45%);
+  border-radius: 999px;
+  background: linear-gradient(rgb(6 10 16 / 90%), rgb(6 10 16 / 90%)) padding-box;
+  color: rgb(var(--owner-accent, 98 213 237));
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 6px rgb(0 0 0 / 80%);
+  box-shadow: 0 8px 26px rgb(0 0 0 / 60%);
+  opacity: 0;
+  animation-name: caption-in, caption-out;
+  animation-duration: var(--fly-ms, 360ms), var(--fly-ms, 360ms);
+  animation-timing-function: ease-out, ease-in;
+  animation-delay: var(--fly-in-delay, 0ms), var(--return-delay, 0ms);
+  animation-fill-mode: both, forwards;
+}
+
+.privateBadgeIcon {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: none;
+}
+
+.captionArt {
+  height: 44px;
+  width: auto;
+  aspect-ratio: 5 / 7;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px rgb(var(--owner-accent, 98 213 237) / 45%);
+}
+
+.captionBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.captionSource {
+  color: rgb(var(--owner-accent, 98 213 237));
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.25;
+  text-shadow: 0 1px 6px rgb(0 0 0 / 80%);
+}
+
+.captionLine {
+  color: #e2ecf2;
+  font-size: 13.5px;
+  line-height: 1.3;
+  text-shadow: 0 1px 6px rgb(0 0 0 / 80%);
+}
+
+.caption[data-reveal-private] .captionLine {
+  font-style: italic;
+  color: #b7c6d1;
+}
+
+@keyframes reveal-fly-in {
+  0% {
+    opacity: 0;
+    transform: translate(var(--from-x), var(--from-y)) rotateY(-72deg) scale(0.55);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(var(--slot-x), 0) rotateY(0) scale(1);
+  }
+}
+
+@keyframes reveal-fly-back {
+  0% {
+    opacity: 1;
+    transform: translate(var(--slot-x), 0) rotateY(0) scale(1);
+  }
+  25% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--from-x), var(--from-y)) rotateY(48deg) scale(0.55);
+  }
+}
+
+@keyframes caption-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes caption-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes scrim-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes scrim-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes glow-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes glow-breathe {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 2px rgb(var(--owner-accent, 98 213 237) / 75%),
+      0 0 22px 4px rgb(var(--owner-accent, 98 213 237) / 35%);
+  }
+  50% {
+    box-shadow:
+      0 0 0 3px rgb(var(--owner-accent, 98 213 237) / 95%),
+      0 0 34px 9px rgb(var(--owner-accent, 98 213 237) / 55%);
+  }
+}
+
+@keyframes glow-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: reveal-card-reduced linear both;
+    animation-duration: calc(var(--return-delay) + var(--fly-ms) - var(--fly-in-delay));
+    animation-delay: var(--fly-in-delay);
+  }
+
+  /* Caption, badge, scrim and glow are pure opacity fades; keep them, just
+     let the caption ride the whole cue instead of keying off the first card. */
+  .caption,
+  .privateBadge {
+    animation-name: caption-in, caption-out;
+    animation-duration: 120ms, var(--fly-ms, 360ms);
+    animation-timing-function: linear, linear;
+    animation-delay: 0ms, var(--return-delay, 0ms);
+    animation-fill-mode: both, forwards;
+  }
+
+  @keyframes reveal-card-reduced {
+    0%,
+    100% {
+      opacity: 0;
+    }
+
+    20%,
+    80% {
+      opacity: 1;
+    }
+  }
+}

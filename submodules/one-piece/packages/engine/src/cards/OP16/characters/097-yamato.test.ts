@@ -48,4 +48,17 @@ describe("OP16-097 Yamato", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("FAQ: declining recovery still allows the hand Character play", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["OP16-097", "EB01-005"], trash: ["OP16-091"], activeDon: 8 },
+      {},
+    );
+    const recovered = e.findCardInZone("south", "trash", "OP16-091");
+    const played = e.findCardInZone("south", "hand", "EB01-005");
+    e.playCard("OP16-097");
+    e.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    e.resolveDecision("effectPlaySelection", { selectedIds: [played] }, "south");
+    expect(e.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(recovered);
+    expect(e.getView("south").players.south.characters.map((c) => c?.instanceId)).toContain(played);
+  });
 });

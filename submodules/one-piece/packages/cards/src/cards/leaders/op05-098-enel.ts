@@ -49,17 +49,11 @@ export const op05Enel098: LeaderCard = {
       {
         trigger: "whenLifeRemoved",
         // Only Enel's own Life removals count — not the turn player's Life costs.
-        eventFilter: { player: "self" },
+        eventFilter: { player: "self", lifeCountAfterRemoval: 0 },
         conditions: [
           {
             condition: "turn",
             value: "opponent",
-          },
-          {
-            condition: "lifeCount",
-            player: "self",
-            comparison: "eq",
-            value: 0,
           },
         ],
         actions: [

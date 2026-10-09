@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/general-rules/general-rules-card-types/card-types-attack"
+  relation: "current_index"
+---
+
 # Card Types - Attack
 
 #### General Rules

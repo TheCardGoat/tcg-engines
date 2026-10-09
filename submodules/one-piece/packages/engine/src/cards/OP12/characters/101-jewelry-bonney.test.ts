@@ -45,4 +45,21 @@ describe("OP12-101 Jewelry Bonney", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test.each(["ST01-001", "ST04-001"])(
+    "Life Trigger plays Bonney only with a Supernovas Leader: %s",
+    (leader) => {
+      const e = OnePieceTestEngine.create(
+        { character: [{ cardId: "EB01-018", playedOnTurn: 0 }] },
+        { leaderCardId: leader, life: [op12JewelryBonney101] },
+        { firstPlayer: "north", activeSeat: "south" },
+      );
+      const id = e.findCardInZone("north", "life", op12JewelryBonney101);
+      e.asSouth().attack(e.findCardInZone("south", "character", "EB01-018"), e.leader("north"));
+      e.asNorth().activateLifeTrigger();
+      const north = e.getView("north").players.north;
+      expect(north.characters.some((c) => c?.instanceId === id)).toBe(leader === "ST01-001");
+      expect(north.trash.some((c) => c.instanceId === id)).toBe(leader !== "ST01-001");
+      expect(north.hand.map((c) => c.instanceId)).not.toContain(id);
+    },
+  );
 });

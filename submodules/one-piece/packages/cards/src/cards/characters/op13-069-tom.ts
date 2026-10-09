@@ -23,7 +23,7 @@ export const op13Tom069: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Fish-Man Water Seven"],
+  traits: ["Fish-Man", "Water Seven"],
   attribute: "wisdom",
   effect:
     "[On Play] DON!! -1: Add up to 1 Stage card with a cost of 3 or less from your trash to your hand.",

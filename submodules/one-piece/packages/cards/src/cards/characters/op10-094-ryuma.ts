@@ -22,7 +22,7 @@ export const op10Ryuma094: CharacterCard = {
   setId: "OP10",
   cost: 4,
   power: 6000,
-  traits: ["Land of Wano Thriller Bark Pirates"],
+  traits: ["Land of Wano", "Thriller Bark Pirates"],
   attribute: "slash",
   effect: "[DON!! x1] This Character gains [Double Attack].",
   effects: {

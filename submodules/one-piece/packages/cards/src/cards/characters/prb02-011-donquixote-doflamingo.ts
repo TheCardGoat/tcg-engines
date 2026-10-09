@@ -31,7 +31,7 @@ export const prb02DonquixoteDoflamingo011: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   attribute: "special",
   effect:
     "[Blocker][On Play] If your Leader is multicolored, add up to 1 DON!! card from your DON!! deck and rest it.",

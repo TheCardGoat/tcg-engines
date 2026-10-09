@@ -19,49 +19,49 @@ export const buzzLightyearOnTheWayI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Buzz Lightyear",
-    version: "Schon unterwegs",
+    version: "On the Way",
     text: [
       {
-        title: "Geheime Mission",
+        title: "Secret Mission",
         description:
-          "Jedes Mal, wenn du 2 oder weniger {I} bezahlst, um eine Karte auszuspielen, die kein Charakter ist, ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
+          "Whenever you pay 2 {I} or less to play a non-character, draw a card, then choose and discard a card.",
       },
       {
-        title: "Das tollste Spielzeug der Welt",
+        title: "World's Greatest Toy",
         description:
-          "Jedes Mal, wenn du 2 oder weniger {I} bezahlst, um einen Charakter auszuspielen, füge einem gegnerischen beschädigten Charakter deiner Wahl 1 Schaden zu.",
+          "Whenever you pay 2 {I} or less to play a character, deal 1 damage to chosen opposing damaged character.",
       },
     ],
   },
   fr: {
-    name: "Buzz l'Éclair",
-    version: "J'arrive",
+    name: "Buzz Lightyear",
+    version: "On the Way",
     text: [
       {
-        title: "Mission secrète",
+        title: "Secret Mission",
         description:
-          "Chaque fois que vous payez 2 {I} ou moins pour jouer une carte non-Personnage, piochez une carte puis défaussez une carte.",
+          "Whenever you pay 2 {I} or less to play a non-character, draw a card, then choose and discard a card.",
       },
       {
-        title: "Super jouet universel",
+        title: "World's Greatest Toy",
         description:
-          "Chaque fois que vous payez 2 {I} ou moins pour jouer un personnage, choisissez un personnage adverse ayant au moins un dommage et infligez-lui 1 dommage.",
+          "Whenever you pay 2 {I} or less to play a character, deal 1 damage to chosen opposing damaged character.",
       },
     ],
   },
   it: {
     name: "Buzz Lightyear",
-    version: "In Arrivo",
+    version: "On the Way",
     text: [
       {
-        title: "Missione Segreta",
+        title: "Secret Mission",
         description:
-          "Ogni volta che paghi 2 {I} o meno per giocare una carta non personaggio, pesca una carta, poi scegli e scarta una carta.",
+          "Whenever you pay 2 {I} or less to play a non-character, draw a card, then choose and discard a card.",
       },
       {
-        title: "Il Più Bel Giocattolo del Mondo",
+        title: "World's Greatest Toy",
         description:
-          "Ogni volta che paghi 2 {I} o meno per giocare un personaggio, infliggi 1 danno a un personaggio avversario danneggiato a tua scelta.",
+          "Whenever you pay 2 {I} or less to play a character, deal 1 damage to chosen opposing damaged character.",
       },
     ],
   },

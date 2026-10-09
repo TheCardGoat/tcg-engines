@@ -11,7 +11,7 @@ export const whosWithMe: ActionCard = {
       artId: "set5-131",
       setCode: "set5",
       collectorNumber: "131",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -22,7 +22,7 @@ export const whosWithMe: ActionCard = {
   franchise: "Beauty and the Beast",
   set: "005",
   cardNumber: 131,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 3,
   inkable: true,
   externalIds: {

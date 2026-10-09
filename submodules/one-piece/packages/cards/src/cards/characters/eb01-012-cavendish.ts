@@ -39,7 +39,7 @@ export const eb01Cavendish012: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Beautiful Pirates Supernovas"],
+  traits: ["Supernovas", "Beautiful Pirates"],
   attribute: "slash",
 
   effect:
@@ -56,7 +56,7 @@ export const eb01Cavendish012: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Supernovas",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "notHasCard",
@@ -99,7 +99,7 @@ export const eb01Cavendish012: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Supernovas",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "notHasCard",

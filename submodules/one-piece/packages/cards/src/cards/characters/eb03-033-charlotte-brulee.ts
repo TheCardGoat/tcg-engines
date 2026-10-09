@@ -40,7 +40,7 @@ export const eb03CharlotteBrulee033: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Big Mom Pirates",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

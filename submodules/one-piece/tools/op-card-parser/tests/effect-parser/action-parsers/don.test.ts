@@ -137,7 +137,7 @@ describe("parseActions — AddDonAction", () => {
 });
 
 describe("parseActions — GiveDonAction", () => {
-  test("gives up to one rested DON!! to every included-trait Character", () => {
+  test("gives up to one rested DON!! to every exact-trait Character", () => {
     const result = parseActions(
       "Give up to 1 rested DON!! card to each of your [Alabasta] type Characters.",
     );
@@ -150,7 +150,7 @@ describe("parseActions — GiveDonAction", () => {
           player: "self",
           zones: ["character"],
           count: { amount: "all", upTo: true },
-          filters: [{ filter: "trait", value: "Alabasta", match: "includes" }],
+          filters: [{ filter: "trait", value: "Alabasta", match: "exact" }],
         },
         count: { amount: 1, upTo: true },
         donState: "rested",
@@ -236,7 +236,7 @@ describe("parseActions — GiveDonAction", () => {
       target: {
         player: "self",
         zones: ["leader"],
-        filters: [{ filter: "trait", value: "Land of Wano", match: "includes" }],
+        filters: [{ filter: "trait", value: "Land of Wano", match: "exact" }],
       },
     });
   });
@@ -294,4 +294,42 @@ describe("parseActions — addDon typo fix", () => {
       state: "active",
     });
   });
+});
+
+describe("DON!! given to its owner's cards", () => {
+  test.each([
+    ["Give up to 1 rested DON!! card to its owner's Leader or 1 of their Characters.", "rested"],
+    [
+      "Give up to 1 DON!! card from its owner's cost area to its owner's Leader or 1 of their Characters.",
+      "any",
+    ],
+  ])("parses either-owner transfer: %s", (text, donState) => {
+    expect(parseActions(text)).toEqual({
+      parsed: [
+        {
+          action: "giveDon",
+          donorPlayer: "targetOwner",
+          target: { player: "both", zones: ["leader", "character"], count: { amount: 1 } },
+          count: { amount: 1, upTo: true },
+          donState,
+        },
+      ],
+      unparsed: "",
+    });
+  });
+});
+
+test("OP08 Chopper distributes independently to each chosen trait recipient", () => {
+  const result = parseActions(
+    "Give up to 3 of your [Animal] or [Drum Kingdom] type Characters up to 1 rested DON!! card each.",
+  );
+  expect(result.unparsed).toBe("");
+  expect(result.parsed).toMatchObject([
+    {
+      action: "giveDon",
+      distribution: "each",
+      count: { amount: 1, upTo: true },
+      target: { count: { amount: 3, upTo: true } },
+    },
+  ]);
 });

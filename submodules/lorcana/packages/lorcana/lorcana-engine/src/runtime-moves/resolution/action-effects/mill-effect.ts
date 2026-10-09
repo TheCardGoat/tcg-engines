@@ -4,6 +4,7 @@ import type { CardPlayedPayload } from "../../../types/index";
 import type { DynamicAmountEventSnapshot } from "../../../types/domain-events";
 import type { PlayCardExecutionContext } from "./types";
 import { resolveCurrentTurnPlayerId } from "../../../targeting/runtime";
+import { queueTriggeredEvent } from "../../effects/triggered-abilities";
 
 type ResolvedMillEffectInput = {
   millAmount?: number;
@@ -80,21 +81,28 @@ export function resolveMillEffect(
   );
 
   for (const playerId of targetPlayerIds) {
-    const deckCards = ctx.framework.zones.getCards({
-      zone: "deck",
-      playerId,
-    });
-    const millCount = Math.min(deckCards.length, millAmount);
-    const cardsToMill = deckCards
-      .slice(-millCount)
-      .reverse()
+    const cardsToMill = ctx.framework.zones
+      .mill({ zone: "deck", playerId }, { zone: "discard", playerId }, millAmount)
       .filter((cardId): cardId is CardInstanceId => typeof cardId === "string");
-
-    for (const cardId of cardsToMill) {
-      ctx.framework.zones.moveCard(cardId, {
-        zone: "discard",
-        playerId,
-      });
+    if (cardsToMill.length > 0) {
+      // Milling is "putting cards into your discard from your deck" — expose a
+      // discard trigger event per milled card with the deck origin. The shared
+      // triggerBatchKey lets player-scoped "1 or more cards" triggers dedupe
+      // to a single bag item per mill (see shouldDeduplicateDiscardBatch).
+      const triggerBatchKey = `mill:${cardsToMill.join("|")}`;
+      for (const cardId of cardsToMill) {
+        queueTriggeredEvent(ctx, {
+          event: "discard",
+          playerId: playerId as PlayerId,
+          subjectCardId: cardId,
+          triggerSourceCardId: cardId,
+          fromZone: "deck",
+          eventSnapshot: {
+            triggerBatchKey,
+            triggerAmount: cardsToMill.length,
+          },
+        });
+      }
     }
     if (cardsToMill.length > 0 && resolvedInput.eventSnapshot) {
       resolvedInput.eventSnapshot.discardedCardIds = [

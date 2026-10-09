@@ -23,7 +23,7 @@ export const op07Capote063: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Fish-Man Foxy Pirates"],
+  traits: ["Fish-Man", "Foxy Pirates"],
   attribute: "strike",
   effect:
     "[On Play] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your Leader has the [Foxy Pirates] type, up to 1 of your opponent's Characters with a cost of 6 or less cannot attack until the end of your opponent's next turn.",
@@ -59,7 +59,7 @@ export const op07Capote063: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Foxy Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

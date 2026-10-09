@@ -23,7 +23,7 @@ export const op12JaguarDSaul050: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Giant Navy Ohara"],
+  traits: ["Giant", "Ohara", "Navy"],
   attribute: "strike",
   effect:
     "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",

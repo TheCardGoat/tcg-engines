@@ -268,6 +268,11 @@ function observedEventObject(
   const id = observed.subjectId ?? observed.recipientId;
   if (!id) return undefined;
   if (
+    observed.committedEvent.type === "damage-marked" &&
+    observed.committedEvent.sourceSnapshot?.id === id
+  )
+    return observed.committedEvent.sourceSnapshot;
+  if (
     observed.committedEvent.type === "object-removed-from-game" &&
     observed.committedEvent.object.id === id
   ) {
@@ -413,6 +418,12 @@ export function matchesGrandArchiveEventPattern(
   skipOccurrence = false,
 ): boolean {
   if (pattern.name !== observed.name) return false;
+  if (
+    pattern.name === "ability-activated" &&
+    pattern.abilityLabel !== undefined &&
+    pattern.abilityLabel !== observed.abilityLabel
+  )
+    return false;
   if (
     pattern.actor &&
     (!observed.actorId ||
@@ -637,6 +648,21 @@ export function matchesGrandArchiveEventPattern(
       const turnStartIndex = history.map((event) => event.type).lastIndexOf("turn-started");
       if (turnStartIndex >= 0) history = history.slice(turnStartIndex);
     }
+    if (pattern.occurrence.subjectScope === "same-object") {
+      if (!observed.subjectId) return false;
+      // A returned card is a new source, even when its persistent card ID is reused.
+      for (let index = history.length - 1; index >= 0; index--) {
+        const event = history[index]!;
+        if (
+          event.type === "object-moved" &&
+          event.objectId === observed.subjectId &&
+          event.from !== event.to
+        ) {
+          history = history.slice(index);
+          break;
+        }
+      }
+    }
     const historyIncludesCurrent =
       currentEventId !== undefined && history.some((event) => event.eventId === currentEventId);
     const observations = [
@@ -646,6 +672,8 @@ export function matchesGrandArchiveEventPattern(
     if (pattern.occurrence.actorScope === "same-player" && !observed.actorId) return false;
     const count = observations.filter(
       (historical) =>
+        (pattern.occurrence?.subjectScope !== "same-object" ||
+          historical.subjectId === observed.subjectId) &&
         (pattern.occurrence?.actorScope !== "same-player" ||
           historical.actorId === observed.actorId) &&
         matchesGrandArchiveEventPattern(
@@ -863,6 +891,7 @@ function startingDeckDefinitionMatchesFilter(
     case "attacking-subject":
     case "activation-state":
     case "entered-field-this-turn":
+    case "leveled-up-this-turn":
     case "linked":
     case "same-characteristic":
       throw new GrandArchiveUnsupportedRuleError(`starting-deck filter ${filter.kind}`);
@@ -1137,7 +1166,8 @@ export function resolveGrandArchiveSubjectObjects(
           return host ? [host] : [];
         });
       }
-      if (subject.relation === "attacker" && context.state.combat) {
+      if (subject.relation === "attacker") {
+        if (!context.state.combat) return [];
         const attacker = context.state.objects[context.state.combat.attackerId];
         return attacker ? [attacker] : [];
       }
@@ -1610,6 +1640,9 @@ export function evaluateGrandArchiveAmount(
       return rounding === "up" ? Math.ceil(value) : rounding === "down" ? Math.floor(value) : value;
     }
     case "target-count": {
+      if (amount.ability === "this" && context.declaredTargetIds !== undefined) {
+        return context.declaredTargetIds.length;
+      }
       const stackItemIds =
         amount.ability === "event-stack-item"
           ? context.bindings.eventStackItem
@@ -1765,9 +1798,10 @@ function distinctCollectionCount(
     const characteristics = deriveGrandArchiveCharacteristics(object, context);
     if (distinctBy === "name") {
       for (const value of characteristics.names) keys.add(value);
-    } else if (distinctBy === "reserve-cost")
-      keys.add(String(numericProperty(object, "reserve-cost", context)));
-    else if (distinctBy === "type") for (const value of characteristics.types) keys.add(value);
+    } else if (distinctBy === "reserve-cost") {
+      const cost = numericProperty(object, "reserve-cost", context);
+      if (cost !== undefined) keys.add(String(cost));
+    } else if (distinctBy === "type") for (const value of characteristics.types) keys.add(value);
     else if (distinctBy === "class") for (const value of characteristics.classes) keys.add(value);
     else if (distinctBy === "element")
       for (const value of characteristics.elements) keys.add(value);
@@ -1836,12 +1870,16 @@ export function resolveGrandArchiveCollection(
   if (collection.relationship === "lineage-of") {
     objects = [
       ...objects,
-      ...relationshipHosts.map((host): GrandArchiveCardInstance => ({
-        ...host,
-        activeDefinitionId: undefined,
-        zone: "inner-lineage",
-        hostId: host.id,
-      })),
+      ...relationshipHosts
+        .filter((host) => !host.baseLineageCardId)
+        .map(
+          (host): GrandArchiveCardInstance => ({
+            ...host,
+            activeDefinitionId: undefined,
+            zone: "inner-lineage",
+            hostId: host.id,
+          }),
+        ),
     ];
   }
   if (collection.zones)
@@ -2165,6 +2203,12 @@ export function matchesGrandArchiveCardFilter(
           context.derivingProperties ? { derivingProperties: context.derivingProperties } : {},
         )
       ).some((keyword) => keyword.name === "link" && keyword.target === filter.target);
+    case "leveled-up-this-turn": {
+      const turnStart = historyWindowStart("this-turn", context);
+      return context.state.eventHistory
+        .slice(turnStart)
+        .some((event) => event.type === "champion-leveled-up" && event.championId === object.id);
+    }
     case "entered-field-this-turn": {
       const turnStart = historyWindowStart("this-turn", context);
       return context.state.eventHistory.slice(turnStart).some((event) => {
@@ -2241,10 +2285,16 @@ export function evaluateGrandArchiveCondition(
     case "collection-exists":
       return resolveGrandArchiveCollection(condition.collection, context).length > 0;
     case "subject-matches": {
-      const subjects = resolveGrandArchiveSubjectObjects(condition.subject, context);
+      const informationContext =
+        condition.basis === "last-known"
+          ? { ...context, objectInformationBasis: "last-known" as const }
+          : context;
+      const subjects = resolveGrandArchiveSubjectObjects(condition.subject, informationContext);
       return (
         subjects.length > 0 &&
-        subjects.every((object) => matchesGrandArchiveCardFilter(object, condition.filter, context))
+        subjects.every((object) =>
+          matchesGrandArchiveCardFilter(object, condition.filter, informationContext),
+        )
       );
     }
     case "shares-characteristic": {

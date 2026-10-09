@@ -23,7 +23,7 @@ export const op12Kuina026: CharacterCard = {
   cost: 4,
   power: 1000,
   counter: 1000,
-  traits: ["East Blue Frost Moon Village"],
+  traits: ["East Blue", "Frost Moon Village"],
   attribute: "slash",
   effect:
     "[Activate: Main] You may rest this Character: Rest up to 1 of your opponent's Characters with a base cost of 4 or less. Then, give up to 3 rested DON!! cards to your [Roronoa Zoro] Leader.",

@@ -139,7 +139,8 @@ export interface FabPlayerLog {
   readonly kind: "player-narrative";
   readonly schemaVersion: 1;
   readonly commandId: string;
-  readonly moveType: FabMoveName;
+  readonly moveType: FabMoveName | "undo";
+  readonly restoredCheckpointStateID?: number;
   readonly actorId: string;
   readonly timestamp: number;
   readonly turnNumber: number;
@@ -259,7 +260,11 @@ export function isFabPlayerLog(value: unknown): value is FabPlayerLog {
     log.schemaVersion !== 1 ||
     typeof log.commandId !== "string" ||
     typeof log.moveType !== "string" ||
-    !isFabMoveName(log.moveType) ||
+    (!isFabMoveName(log.moveType) && log.moveType !== "undo") ||
+    (log.moveType === "undo" &&
+      (typeof log.restoredCheckpointStateID !== "number" ||
+        !Number.isInteger(log.restoredCheckpointStateID) ||
+        log.restoredCheckpointStateID < 0)) ||
     typeof log.actorId !== "string" ||
     typeof log.timestamp !== "number" ||
     !Number.isFinite(log.timestamp) ||
@@ -429,7 +434,7 @@ function finalizeDraws(
 /** Finalize reducer facts once, after the candidate state passes validation. */
 export function finalizeFabPlayerLog(input: {
   readonly commandId: string;
-  readonly moveType: FabMoveName;
+  readonly moveType: FabMoveName | "undo";
   readonly actorId: string;
   readonly timestamp: number;
   readonly turnNumber: number;
@@ -737,6 +742,9 @@ export function visibleFabPlayerLog(
     schemaVersion: log.schemaVersion,
     commandId: log.commandId,
     moveType: log.moveType,
+    ...(log.restoredCheckpointStateID !== undefined
+      ? { restoredCheckpointStateID: log.restoredCheckpointStateID }
+      : {}),
     actorId: log.actorId,
     timestamp: log.timestamp,
     turnNumber: log.turnNumber,

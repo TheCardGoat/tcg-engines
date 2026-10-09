@@ -31,6 +31,7 @@ export const lumpyHunnyDruid: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_57a4d6e90d224dd7923ff2d0c1acee92",
+    tcgPlayer: "704566",
   },
   text: [
     {
@@ -55,7 +56,10 @@ export const lumpyHunnyDruid: CharacterCard = {
         chooser: "CONTROLLER",
         effect: {
           type: "move-damage",
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           from: "CHOSEN_CHARACTER",
           to: "CHOSEN_OPPOSING_CHARACTER",
         },

@@ -15,7 +15,7 @@ function koMinorhinoceros(leaderCardId: typeof op02Magellan071) {
       leaderCardId,
       character: [{ card: op03Minorhinoceros069, rested: true }],
       hand: [eb01Doma005],
-      deck: [eb01Doma005, eb01Doma005],
+      deck: [eb01Doma005, eb01Doma005, "EB01-025"],
     },
     { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
     { firstPlayer: "south", activeSeat: "north" },

@@ -13,9 +13,9 @@
  */
 import { structuredCards } from "@tcg/cyberpunk-cards";
 
-import { authoredBotLabDeckSpecs } from "./authored-decks.ts";
+import type { AuthoredBotLabDeckId } from "./authored-decks.ts";
 
-export type AuthoredBotLabDeckId = (typeof authoredBotLabDeckSpecs)[number]["id"];
+export type { AuthoredBotLabDeckId };
 
 export type GearHostPreferType = "legend" | "unit";
 
@@ -39,6 +39,30 @@ export interface AuthoredDeckStrategyProfile {
   readonly blockDirectStealsAtLeast?: number;
   readonly pacing?: "develop-first" | "attack-first";
   readonly preferSpendOverAttack?: readonly string[];
+  /**
+   * When a free-play choice offers one of these cards, keep only those
+   * candidates. Lizzy's program choice and Yorinobu's unit choice use this.
+   */
+  readonly preferredFreeCards?: readonly string[];
+  /**
+   * Carrier display name → cards that carrier should play. While the carrier
+   * is a legal play and one of those cards is in hand, do not play the
+   * payload directly.
+   */
+  readonly playThrough?: Readonly<Record<string, readonly string[]>>;
+  /** Optional effects from these sources are taken. Decline is removed. */
+  readonly commitSources?: readonly string[];
+  /** Adjust choices from these sources set the Gig to 1 when that face exists. */
+  readonly minGigSources?: readonly string[];
+  /**
+   * Units played as soon as they are legal, a program is in hand, and a
+   * rival unit is on the field. Placide discards that program.
+   */
+  readonly priorityPlays?: readonly string[];
+  /** Spare programs sold to stay on the Eddie curve. Passing is not an alternative. */
+  readonly curveSellCards?: readonly string[];
+  /** Curve units. A legal cheaper one is played before a legal expensive one. */
+  readonly curveUnits?: readonly string[];
 }
 
 const displayToEngineName = new Map<string, string>();
@@ -503,6 +527,176 @@ const rawDeckStrategyProfiles: Record<AuthoredBotLabDeckId, AuthoredDeckStrategy
     blockDirectStealsAtLeast: 1,
     pacing: "develop-first",
   },
+  "authored-rry-llorona-steel-dragon": {
+    deckId: "authored-rry-llorona-steel-dragon",
+    plan: "Spendable €$ after each turn's sell is 2 on the play and 4 on the draw, then 5, 6, 7, and 8. On the play T1: sell a spare program and Call the one ready Legend. On the draw T1: sell, Call Muamar or Dexter (not V), and play All is Lost or The Heist. T2: All is Lost if no curve unit is in hand, or The Heist when a Gig shows 1 or 2 and no blade is in hand. T3: La Llorona or Dexter: One Last Chance. T4: Meredith or 6th Street. T5: Mantis, Faceplate, or Satori on those bodies, not a Legend, and do not Go Solo V.",
+    coreCards: [
+      "Yorinobu Arasaka: Steel Dragon",
+      "Meredith Stout: Stone Cold Corpo",
+      "La Llorona: Ghost of the Past",
+      "6th Street Recruits",
+      "Trauma Team Operatives",
+      "Mantis Blades",
+      "Satori: Sword of Saburo",
+      "Zetatech Faceplate",
+    ],
+    mulligan: {
+      cheapUnitCost: 4,
+      minCheapUnits: 1,
+      minSellable: 1,
+      congestionNames: ["Yorinobu Arasaka: Steel Dragon"],
+      congestionMinCopies: 2,
+    },
+    gearHosts: {
+      "Mantis Blades": [
+        "6th Street Recruits",
+        "Meredith Stout: Stone Cold Corpo",
+        "Trauma Team Operatives",
+        "Yorinobu Arasaka: Steel Dragon",
+      ],
+      "Satori: Sword of Saburo": [
+        "Yorinobu Arasaka: Steel Dragon",
+        "Trauma Team Operatives",
+        "Meredith Stout: Stone Cold Corpo",
+      ],
+      "Zetatech Faceplate": ["Meredith Stout: Stone Cold Corpo", "La Llorona: Ghost of the Past"],
+    },
+    gearHostTypes: {
+      "Mantis Blades": "unit",
+      "Satori: Sword of Saburo": "unit",
+      "Zetatech Faceplate": "unit",
+    },
+    preferredFreeCards: [
+      "Meredith Stout: Stone Cold Corpo",
+      "6th Street Recruits",
+      "La Llorona: Ghost of the Past",
+      "Dexter DeShawn: One Last Chance",
+    ],
+    commitSources: ["Yorinobu Arasaka: Steel Dragon"],
+    curveSellCards: [
+      "All is Lost",
+      "Industrial Assembly",
+      "The Heist",
+      "Bonnie and Clyde",
+      "Over the Edge",
+      "Carnage at the Colosseum",
+    ],
+    curveUnits: [
+      "La Llorona: Ghost of the Past",
+      "Dexter DeShawn: One Last Chance",
+      "6th Street Recruits",
+      "Meredith Stout: Stone Cold Corpo",
+    ],
+    blockDirectStealsAtLeast: 1,
+    pacing: "develop-first",
+  },
+  "authored-bbg-towerfall-control": {
+    deckId: "authored-bbg-towerfall-control",
+    plan: "Spendable €$ after each turn's sell is 2 on the play and 4 on the draw, then 5, 6, 7, and 8. Keep Chrome Reverie, Trust No One, and Peace Offering. On the play T1: sell, then Trust No One if a friendly Gig shows 2–4, otherwise Call the one ready Legend, not both. On the draw T1: sell, Call a Legend, play Jacked-In, and set that Gig to a min with Trust No One; if either is missing, use the on-the-play line. T2: Jacked-In if he is not out, and he does not attack. T3: Peace Offering, else Trust No One, else Floor It, then attack with Jacked-In. T4: Pepe, attacking only when a value-pair would ready Alt and Jackie. T5: Lizzy free-plays a cost-3-or-less program from the curve list.",
+    coreCards: [
+      "Lizzy Wizzy: Delicate Weapon",
+      "Chrome Reverie",
+      "Placide: Voodoo Sentinel",
+      "Jacked-In Voodoo Boy",
+      "Pepe Najarro: Working Doubles",
+      "Towerfall",
+      "Les Élémens",
+      "Trust No One",
+      "Peace Offering",
+    ],
+    mulligan: {
+      cheapUnitCost: 2,
+      minCheapUnits: 1,
+      minSellable: 2,
+      congestionNames: ["Placide: Voodoo Sentinel", "Towerfall"],
+      congestionMinCopies: 2,
+    },
+    preferredFreeCards: ["Chrome Reverie"],
+    playThrough: {
+      "Lizzy Wizzy: Delicate Weapon": ["Chrome Reverie"],
+    },
+    commitSources: ["Placide: Voodoo Sentinel", "Trust No One", "Chrome Reverie"],
+    minGigSources: ["Trust No One", "Jackie Welles: Pour One Out For Me"],
+    priorityPlays: ["Placide: Voodoo Sentinel"],
+    curveSellCards: [
+      "Floor It",
+      "Three Mouths, One Desire",
+      "Nocturne OP55 N1",
+      "Pyramid Song",
+      "Les Élémens",
+      "Towerfall",
+    ],
+    curveUnits: [
+      "Jacked-In Voodoo Boy",
+      "Pepe Najarro: Working Doubles",
+      "Lizzy Wizzy: Delicate Weapon",
+    ],
+    blockDirectStealsAtLeast: 1,
+    pacing: "develop-first",
+  },
+  "authored-rry-detonate-gear-curve": {
+    deckId: "authored-rry-detonate-gear-curve",
+    plan: "Spendable €$ after each turn's sell is 2 on the play and 4 on the draw, then 5, 6, 7, and 8. On the play T1: sell a spare program and Call the one ready Legend. On the draw T1: sell, Call Muamar or Dexter (not V), and play All is Lost or The Heist. T2: All is Lost if no curve unit is in hand, or The Heist when a Gig shows 1 or 2 and no blade is in hand. T3: La Llorona or Dexter: One Last Chance. T4: Meredith or 6th Street. T5: Mantis, Faceplate, or Satori on those bodies, not a Legend, and do not Go Solo V. Detonate strips enemy Gear later; V Go Solos after this curve.",
+    coreCards: [
+      "Yorinobu Arasaka: Steel Dragon",
+      "Meredith Stout: Stone Cold Corpo",
+      "La Llorona: Ghost of the Past",
+      "6th Street Recruits",
+      "Trauma Team Operatives",
+      "Mantis Blades",
+      "Satori: Sword of Saburo",
+      "Zetatech Faceplate",
+    ],
+    mulligan: {
+      cheapUnitCost: 4,
+      minCheapUnits: 1,
+      minSellable: 1,
+      congestionNames: ["Yorinobu Arasaka: Steel Dragon"],
+      congestionMinCopies: 2,
+    },
+    gearHosts: {
+      "Mantis Blades": [
+        "6th Street Recruits",
+        "Meredith Stout: Stone Cold Corpo",
+        "Trauma Team Operatives",
+        "Yorinobu Arasaka: Steel Dragon",
+      ],
+      "Satori: Sword of Saburo": [
+        "Yorinobu Arasaka: Steel Dragon",
+        "Trauma Team Operatives",
+        "Meredith Stout: Stone Cold Corpo",
+      ],
+      "Zetatech Faceplate": ["Meredith Stout: Stone Cold Corpo", "La Llorona: Ghost of the Past"],
+    },
+    gearHostTypes: {
+      "Mantis Blades": "unit",
+      "Satori: Sword of Saburo": "unit",
+      "Zetatech Faceplate": "unit",
+    },
+    preferredFreeCards: [
+      "Meredith Stout: Stone Cold Corpo",
+      "6th Street Recruits",
+      "La Llorona: Ghost of the Past",
+      "Dexter DeShawn: One Last Chance",
+    ],
+    commitSources: ["Yorinobu Arasaka: Steel Dragon"],
+    curveSellCards: [
+      "All is Lost",
+      "Industrial Assembly",
+      "The Heist",
+      "Bonnie and Clyde",
+      "Over the Edge",
+      "Carnage at the Colosseum",
+    ],
+    curveUnits: [
+      "La Llorona: Ghost of the Past",
+      "Dexter DeShawn: One Last Chance",
+      "6th Street Recruits",
+      "Meredith Stout: Stone Cold Corpo",
+    ],
+    blockDirectStealsAtLeast: 1,
+    pacing: "develop-first",
+  },
 };
 
 function translateProfile(profile: AuthoredDeckStrategyProfile): AuthoredDeckStrategyProfile {
@@ -529,6 +723,14 @@ function translateProfile(profile: AuthoredDeckStrategyProfile): AuthoredDeckStr
         ]),
       )
     : undefined;
+  const playThrough = profile.playThrough
+    ? Object.fromEntries(
+        Object.entries(profile.playThrough).map(([carrier, payloads]) => [
+          engineCardName(carrier),
+          payloads.map(engineCardName),
+        ]),
+      )
+    : undefined;
   return {
     ...profile,
     coreCards: profile.coreCards.map(engineCardName),
@@ -536,6 +738,13 @@ function translateProfile(profile: AuthoredDeckStrategyProfile): AuthoredDeckStr
     gearHosts,
     gearHostTypes,
     preferSpendOverAttack: profile.preferSpendOverAttack?.map(engineCardName),
+    preferredFreeCards: profile.preferredFreeCards?.map(engineCardName),
+    playThrough,
+    commitSources: profile.commitSources?.map(engineCardName),
+    minGigSources: profile.minGigSources?.map(engineCardName),
+    priorityPlays: profile.priorityPlays?.map(engineCardName),
+    curveSellCards: profile.curveSellCards?.map(engineCardName),
+    curveUnits: profile.curveUnits?.map(engineCardName),
   };
 }
 

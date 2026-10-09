@@ -22,7 +22,7 @@ export const op11GlorpWeb019: EventCard = {
   setId: "OP11",
   cost: 2,
   trigger: "Up to 1 of your Leader or Character cards gains +1000 power during this turn.",
-  traits: ["Navy SWORD"],
+  traits: ["Navy", "SWORD"],
   effect:
     "[Counter] Up to 1 of your Leader or Character cards gains +2000 power during this battle. Then, if your opponent has a Character with 6000 power or more, up to 1 of your Leader or Character cards gains +1000 power during this turn.",
   effects: {

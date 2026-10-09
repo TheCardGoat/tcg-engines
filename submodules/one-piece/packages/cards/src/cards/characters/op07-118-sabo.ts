@@ -64,39 +64,39 @@ export const op07Sabo118: CharacterCard = {
         actions: [
           {
             action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 5,
+            target: { player: "opponent", zones: ["character"], count: { amount: 2, upTo: true } },
+            targetGroups: [
+              {
+                player: "opponent",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
                 },
-              ],
-            },
-          },
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 5,
+                  },
+                ],
               },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 3,
+              {
+                player: "opponent",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
                 },
-              ],
-            },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 3,
+                  },
+                ],
+              },
+            ],
           },
         ],
         optional: true,

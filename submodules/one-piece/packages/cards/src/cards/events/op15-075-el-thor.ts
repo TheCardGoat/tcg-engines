@@ -28,12 +28,14 @@ export const op15ElThor075: EventCard = {
     effects: [
       {
         trigger: "main",
+        optional: true,
         costs: [
           {
             cost: "returnDon",
             amount: 1,
           },
         ],
+        postCostConditions: [{ condition: "leaderName", name: "Enel" }],
         actions: [
           {
             action: "modifyPower",
@@ -47,10 +49,6 @@ export const op15ElThor075: EventCard = {
             },
             value: 1000,
             duration: "thisTurn",
-            condition: {
-              condition: "leaderName",
-              name: "Enel",
-            },
           },
           {
             action: "ko",

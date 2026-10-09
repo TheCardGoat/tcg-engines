@@ -20,7 +20,7 @@ describe("cyberpunkServerAdapter.getCanonicalCardId", () => {
     const canonical = getMergedCyberpunkCards()[0];
     expect(canonical).toBeDefined();
 
-    const result = cyberpunkServerAdapter.validateDeckForFormat("alpha", [
+    const result = cyberpunkServerAdapter.validateDeckForFormat("constructed", [
       { cardId: canonical!.canonicalId, quantity: 1 },
     ]);
 
@@ -30,7 +30,7 @@ describe("cyberpunkServerAdapter.getCanonicalCardId", () => {
   });
 
   it("accepts an unambiguous accent-folded display slug from legacy deck rows", () => {
-    const result = cyberpunkServerAdapter.validateDeckForFormat("alpha", [
+    const result = cyberpunkServerAdapter.validateDeckForFormat("constructed", [
       { cardId: "gilded-maton", quantity: 1 },
     ]);
 
@@ -56,7 +56,7 @@ describe("cyberpunkServerAdapter.getCanonicalCardId", () => {
     const canonical = getMergedCyberpunkCards().find((card) => card.type !== "legend");
     expect(canonical).toBeDefined();
 
-    const result = cyberpunkServerAdapter.validateDeckForFormat("alpha", [
+    const result = cyberpunkServerAdapter.validateDeckForFormat("constructed", [
       { cardId: canonical!.canonicalId, quantity: 4 },
     ]);
 
@@ -68,11 +68,32 @@ describe("cyberpunkServerAdapter.getCanonicalCardId", () => {
     );
   });
 
-  it.each(["alpha", "spoiler"] as const)("rejects cards from the %s set", (setCode) => {
-    const previewCard = cards.find((card) => card.set.code === setCode);
+  it("rejects an Alpha Kit printing as not constructed legal", () => {
+    const alphaCard = cards.find((card) => card.set.code === "alpha");
+    expect(alphaCard).toBeDefined();
+
+    const result = cyberpunkServerAdapter.validateDeckForFormat("constructed", [
+      { cardId: alphaCard!.id, quantity: 1 },
+    ]);
+
+    expect(result.valid).toBe(false);
+    expect(result.rules).toContainEqual(
+      expect.objectContaining({ kind: "card-pool", passed: true }),
+    );
+    expect(result.rules).toContainEqual(
+      expect.objectContaining({
+        kind: "constructed-legality",
+        passed: false,
+        details: expect.objectContaining({ cardId: alphaCard!.id }),
+      }),
+    );
+  });
+
+  it("rejects cards from the spoiler set", () => {
+    const previewCard = cards.find((card) => card.set.code === "spoiler");
     expect(previewCard).toBeDefined();
 
-    const result = cyberpunkServerAdapter.validateDeckForFormat("alpha", [
+    const result = cyberpunkServerAdapter.validateDeckForFormat("constructed", [
       { cardId: previewCard!.id, quantity: 1 },
     ]);
 

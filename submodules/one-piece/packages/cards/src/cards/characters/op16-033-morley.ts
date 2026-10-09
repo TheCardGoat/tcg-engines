@@ -23,7 +23,7 @@ export const op16Morley033: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Giant Revolutionary Army"],
+  traits: ["Giant", "Revolutionary Army"],
   attribute: "special",
   effect:
     "If this Character would be K.O.'d, you may rest 2 of your cards instead.\n\n[Unblockable] (This card cannot be blocked.)",
@@ -32,6 +32,7 @@ export const op16Morley033: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "ko",
+        eventFilter: { targetSelf: true },
         target: {
           player: "self",
           zones: ["character"],

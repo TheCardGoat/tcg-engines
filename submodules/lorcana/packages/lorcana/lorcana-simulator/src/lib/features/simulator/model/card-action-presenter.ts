@@ -225,7 +225,7 @@ function buildEnabledCategoryAction(
   const label = isDeckBottomShiftCost
     ? getDeckBottomShiftActionLabel(card)
     : categoryId === "quest" && typeof card.loreValue === "number"
-      ? `${m["sim.actions.label.quest"]({})} for ${card.loreValue} lore`
+      ? `${m["sim.actions.label.quest"]({})} for ${Math.max(0, card.loreValue)} lore`
       : (moves[0]?.presentation.categoryLabel ?? categoryId);
   const detail = isDeckBottomShiftCost
     ? getDeckBottomShiftActionDetail(moves[0]!)
@@ -261,7 +261,7 @@ function buildBlockedAction(
 ): CardActionView {
   const label =
     categoryId === "quest" && typeof card.loreValue === "number"
-      ? `${m["sim.actions.label.quest"]({})} for ${card.loreValue} lore`
+      ? `${m["sim.actions.label.quest"]({})} for ${Math.max(0, card.loreValue)} lore`
       : categoryId === "challenge"
         ? m["sim.actions.label.challenge"]({})
         : categoryId === "move-to-location"
@@ -272,7 +272,9 @@ function buildBlockedAction(
               ? m["sim.actions.label.shiftCard"]({})
               : categoryId === "ink-card"
                 ? m["sim.actions.label.inkCard"]({})
-                : m["sim.actions.label.activateAbility"]({});
+                : categoryId === "sing-card"
+                  ? m["sim.actions.label.singCard"]({})
+                  : m["sim.actions.label.activateAbility"]({});
 
   return {
     id: `disabled:${categoryId}:${card.cardId}`,
@@ -318,11 +320,17 @@ function getQuestBlockedReason(card: LorcanaCardSnapshot): string {
 }
 
 function getChallengeBlockedReason(card: LorcanaCardSnapshot): string {
-  if (card.isDrying) {
+  if (card.isDrying && !hasKeyword(card, "Rush")) {
     return m["sim.card.tags.freshInk.tooltip"]({});
   }
   if (card.readyState === "exerted") {
-    return "This character is exerted.";
+    return m["sim.card.tags.exerted.tooltip"]({});
+  }
+  if (
+    card.hasChallengeRestriction ||
+    typeof card.temporaryRestrictions?.["cant-challenge"] === "number"
+  ) {
+    return m["sim.card.tags.cantChallenge.tooltip"]({});
   }
   return "No legal challenge targets right now.";
 }

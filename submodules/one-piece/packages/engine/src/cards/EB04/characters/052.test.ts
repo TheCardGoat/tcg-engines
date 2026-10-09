@@ -65,4 +65,16 @@ describe("EB04-052", () => {
 
     expect(engine.getView("south").players.north.lifeCount).toBe(lifeBefore - 1);
   });
+  test("copies current modified Leader power and expires at turn end", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ cardId: "EB04-052", attachedDon: 1 }] },
+      { character: ["OP15-092"], trash: 20 },
+    );
+    const sanji = engine.findCardInZone("south", "character", "EB04-052");
+    expect(engine.getView("south").players.north.leader.power).toBe(7000);
+    engine.declareAttack(sanji, engine.leader("north"), "south");
+    expect(engine.getView("south").players.south.characters[0]?.power).toBe(8000);
+    engine.endTurn("south");
+    expect(engine.getView("south").players.south.characters[0]?.power).toBe(4000);
+  });
 });

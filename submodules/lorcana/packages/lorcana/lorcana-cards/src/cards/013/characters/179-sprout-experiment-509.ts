@@ -33,6 +33,7 @@ export const sproutExperiment509: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_60150c9c325b46adaa51b606ccd3deaa",
+    tcgPlayer: "704674",
   },
   text: [
     {

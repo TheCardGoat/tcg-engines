@@ -5,6 +5,19 @@ import { op15Sai045 } from "../../../../../cards/src/cards/characters/op15-045-s
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP15-045 Sai", () => {
+  test("Blocker redirects an opposing Leader attack away from Life", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op15Sai045], hand: [], life: 3 },
+      {},
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const blockerId = engine.findCardInZone("south", "character", op15Sai045);
+    engine.declareAttack(engine.leader("north"), engine.leader("south"), "north");
+    engine.resolveDecision("battleBlocker", { selectedIds: [blockerId] }, "south");
+    expect(engine.getView("south").players.south.lifeCount).toBe(3);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[On Play] trashes an Event to draw 2 cards", () => {
     const engine = OnePieceTestEngine.create(
       {

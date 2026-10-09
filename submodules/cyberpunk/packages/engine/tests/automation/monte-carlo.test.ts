@@ -169,22 +169,16 @@ describe("mctsStrategy", () => {
     expect(["command", "stuck"]).toContain(decision.kind);
   });
 
-  test("persists per-engine cache across calls without throwing", () => {
-    // Smoke test: run two consecutive decisions on the same engine. The
-    // second call should reuse subtree state (if any matched). We don't
-    // try to assert reuse positively here — that would couple the test
-    // to internal node addressing — but at minimum it must not crash.
+  test("executes consecutive decisions against the live engine", () => {
     const strategy = createMctsStrategy({ iterations: 8, maxRolloutSteps: 50 });
     const { ctx, engine, activeId } = makeContext("mcts-persistent");
-    if (ctx.prompt.availableMoves.length === 0) return;
-
     const firstDecision = strategy.decideAction(ctx);
     expect(firstDecision.kind).toBe("command");
-    if (firstDecision.kind !== "command") return;
+    if (firstDecision.kind !== "command") throw new Error("Expected first command");
 
     // Apply the chosen action so the live engine advances. This mirrors
     // what the AIPlayer driver does between decideAction calls.
-    engine.processCommand(
+    const firstResult = engine.processCommand(
       {
         commandID: "persistent-test",
         move: firstDecision.move,
@@ -192,17 +186,27 @@ describe("mctsStrategy", () => {
       },
       activeId,
     );
+    expect(firstResult.success).toBe(true);
 
-    // Second call against the same engine — should not throw, even when
-    // no matching subtree is found and we fall back to a fresh root.
-    const view = engine.getFilteredView(activeId);
-    if (view.gameEnded) return;
-    const secondId = view.activePlayerId === (activeId as string) ? activeId : activeId;
-    const ctx2 = buildDecisionContext(engine, secondId, () => 0.5);
-    if (ctx2.prompt.availableMoves.length > 0) {
-      const second = strategy.decideAction(ctx2);
-      expect(["command", "stuck"]).toContain(second.kind);
-    }
+    const nextPlayer = createTestPlayers().find(
+      (player) => engine.getPrompt(player.id).status === "action",
+    );
+    if (!nextPlayer) throw new Error("Expected next opening decision");
+    const ctx2 = buildDecisionContext(engine, nextPlayer.id, () => 0.5);
+    const second = strategy.decideAction(ctx2);
+    expect(second.kind).toBe("command");
+    if (second.kind !== "command") throw new Error("Expected second command");
+    expect(engine.getFilteredView(nextPlayer.id)).toEqual(ctx2.view);
+    expect(
+      engine.processCommand(
+        {
+          commandID: "consecutive-test",
+          move: second.move,
+          input: second.args ? { args: second.args } : undefined,
+        },
+        nextPlayer.id,
+      ).success,
+    ).toBe(true);
   });
 });
 

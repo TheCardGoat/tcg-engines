@@ -23,7 +23,7 @@ export const op16RoronoaZoro053: CharacterCard = {
   setId: "OP16",
   cost: 7,
   power: 9000,
-  traits: ["Straw Hat Crew Supernovas Dressrosa"],
+  traits: ["Dressrosa", "Supernovas", "Straw Hat Crew"],
   attribute: "slash",
   effect: "[When Attacking] If you have 6 or less cards in your hand, draw 1 card.",
   effects: {

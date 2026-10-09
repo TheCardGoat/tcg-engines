@@ -5,6 +5,9 @@ import {
   eb01MountainGod018,
   eb01OffWhite019,
   op04DonquixoteRosinante119,
+  op01Kaido094,
+  op01King091,
+  op04Kyros082,
 } from "@tcg/op-cards";
 
 import { registerCards } from "../../../../cards/src/runtime-catalog.ts";
@@ -56,6 +59,38 @@ function resolveKoTargets(
 }
 
 describe("OP04-119 Donquixote Rosinante", () => {
+  test.each([false, true])(
+    "preserves simultaneous protection when Rosinante leaves, with replacement pause=%s",
+    (withReplacement) => {
+      let engine = OnePieceTestEngine.create(
+        { leaderCardId: op01King091, hand: [op01Kaido094], activeDon: 10 },
+        {
+          character: [
+            { card: op04DonquixoteRosinante119, rested: true },
+            ...(withReplacement ? [op04Kyros082] : []),
+            eb01MountainGod018,
+          ],
+        },
+      );
+      const rosinanteId = engine.findCardInZone("north", "character", op04DonquixoteRosinante119);
+      const protectedId = engine.findCardInZone("north", "character", eb01MountainGod018);
+      engine.playCard(op01Kaido094, "south");
+      engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+      if (withReplacement) {
+        engine.pendingDecision("effectKoReplacement", "north");
+        engine = OnePieceTestEngine.fromState(JSON.parse(JSON.stringify(engine.getState())));
+        engine.resolveDecision("effectKoReplacement", { optionId: "no" }, "north");
+      }
+      const view = engine.getView("north");
+      expect(view.players.north.trash.map((card) => card.instanceId)).toContain(rosinanteId);
+      expect(view.players.north.characters.some((card) => card?.instanceId === protectedId)).toBe(
+        true,
+      );
+      expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(protectedId);
+      expect(view.prompts).toHaveLength(0);
+    },
+  );
+
   test("may rest itself on play to play only a green cost-5 Character from hand", () => {
     const engine = OnePieceTestEngine.create({
       hand: [op04DonquixoteRosinante119, eb01MountainGod018, eb01Doma005],
@@ -107,7 +142,7 @@ describe("OP04-119 Donquixote Rosinante", () => {
     if (!restedCostFiveId) throw new Error("Expected the rested cost-5 Character fixture.");
 
     engine.playCard(koThreeCharacters, "south");
-    resolveKoTargets(engine, [restedCostFiveId, activeWrongCostId], [activeCostFiveId]);
+    resolveKoTargets(engine, [restedCostFiveId, activeWrongCostId, activeCostFiveId]);
 
     const view = engine.getView("south");
     expect(

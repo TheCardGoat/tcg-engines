@@ -25,7 +25,7 @@ export const op07TonyTonyChopper103: CharacterCard = {
   counter: 1000,
   trigger:
     "Up to 1 of your {Egghead} type Characters gains [Blocker] during this turn. Then, add this card to your hand.",
-  traits: ["Animal Straw Hat Crew Egghead"],
+  traits: ["Animal", "Egghead", "Straw Hat Crew"],
   attribute: "wisdom",
   effect:
     "[Trigger] Up to 1 of your {Egghead} type Characters gains [Blocker] during this turn. Then, add this card to your hand.",
@@ -40,7 +40,7 @@ export const op07TonyTonyChopper103: CharacterCard = {
               player: "self",
               zones: ["character"],
               count: { amount: 1, upTo: true },
-              filters: [{ filter: "trait", value: "Egghead", match: "includes" }],
+              filters: [{ filter: "trait", value: "Egghead", match: "exact" }],
             },
             keyword: "blocker",
             duration: "thisTurn",

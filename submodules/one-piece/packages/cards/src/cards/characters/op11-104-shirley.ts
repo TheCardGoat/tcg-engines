@@ -23,7 +23,7 @@ export const op11Shirley104: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Merfolk Fish-Man Island"],
+  traits: ["Merfolk", "Fish-Man Island"],
   attribute: "wisdom",
   effect:
     '[Blocker]\n[On Play] You may turn 1 card from the top of your Life cards face-down: Look at 3 cards from the top of your deck; reveal up to 1 "Fish-Man Island" type card and add it to your hand. Then, place the rest at the top or bottom of the deck in any order.',
@@ -55,7 +55,7 @@ export const op11Shirley104: CharacterCard = {
               {
                 filter: "trait",
                 value: "Fish-Man Island",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

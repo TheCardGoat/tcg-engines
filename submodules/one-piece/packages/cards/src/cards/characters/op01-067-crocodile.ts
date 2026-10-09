@@ -31,7 +31,7 @@ export const op01Crocodile067: CharacterCard = {
   cost: 7,
   power: 7000,
   counter: 1000,
-  traits: ["Baroque Works The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
   attribute: "special",
   effect:
     "[Banish] (When this card deals damage, the target card is trashed without activating its Trigger.) [DON!! x1] Give blue Events in your hand -1 cost.",

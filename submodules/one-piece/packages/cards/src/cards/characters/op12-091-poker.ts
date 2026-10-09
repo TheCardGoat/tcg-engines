@@ -23,7 +23,7 @@ export const op12Poker091: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   attribute: "strike",
   effect:
     '[Activate: Main] [Once Per Turn] You may place 3 cards from your trash at the bottom of your deck in any order: Up to 2 of your "SMILE" type Characters gain +2000 power during this turn.',
@@ -52,7 +52,7 @@ export const op12Poker091: CharacterCard = {
                 {
                   filter: "trait",
                   value: "SMILE",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

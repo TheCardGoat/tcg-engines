@@ -85,3 +85,20 @@ describe("EB03-059 S-Snake", () => {
     );
   });
 });
+
+test.each([
+  { leader: "OP07-097", life: 1 },
+  { leader: "ST01-001", life: 2 },
+])("S-Snake does not add Life when its Leader/Life gate fails: %s", ({ leader, life }) => {
+  const e = OnePieceTestEngine.create({
+    leaderCardId: leader,
+    hand: ["EB03-059", "EB03-058"],
+    life,
+    activeDon: eb03SSnake059.cost,
+  });
+  const held = e.findCardInZone("south", "hand", "EB03-058");
+  e.asSouth().play("EB03-059");
+  expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toContain(held);
+  expect(e.getView("south").players.south.lifeCount).toBe(life);
+  expect(e.getView("south").prompts).toHaveLength(0);
+});

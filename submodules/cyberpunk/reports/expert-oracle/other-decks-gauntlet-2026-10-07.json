@@ -1,0 +1,2377 @@
+{
+  "schemaVersion": 1,
+  "seedBase": "cyberpunk-other-decks-2026-10-07-v1",
+  "provenance": "fnv1a32:8c87d7dd",
+  "decks": [
+    "authored-cyberpsychosis-deadman-burst-insurance",
+    "authored-yorinobu-two-units-for-one",
+    "authored-ryg-low-cost-value"
+  ],
+  "deckSelection": "explicit",
+  "selection": null,
+  "screen": [
+    {
+      "id": "expert-oracle",
+      "games": 84,
+      "validGames": 82,
+      "wins": 73,
+      "losses": 9,
+      "draws": 0,
+      "failures": 2,
+      "ownFailures": 0,
+      "score": 0.8902439024390244,
+      "eligible": true
+    },
+    {
+      "id": "tactical",
+      "games": 84,
+      "validGames": 80,
+      "wins": 56,
+      "losses": 24,
+      "draws": 0,
+      "failures": 4,
+      "ownFailures": 0,
+      "score": 0.7,
+      "eligible": true
+    },
+    {
+      "id": "tactical-ability-aware",
+      "games": 84,
+      "validGames": 80,
+      "wins": 56,
+      "losses": 24,
+      "draws": 0,
+      "failures": 4,
+      "ownFailures": 0,
+      "score": 0.7,
+      "eligible": true
+    },
+    {
+      "id": "monte-carlo-greedy",
+      "games": 84,
+      "validGames": 72,
+      "wins": 43,
+      "losses": 29,
+      "draws": 0,
+      "failures": 12,
+      "ownFailures": 0,
+      "score": 0.5972222222222222,
+      "eligible": true
+    },
+    {
+      "id": "greedy",
+      "games": 84,
+      "validGames": 79,
+      "wins": 42,
+      "losses": 37,
+      "draws": 0,
+      "failures": 5,
+      "ownFailures": 0,
+      "score": 0.5316455696202531,
+      "eligible": true
+    },
+    {
+      "id": "monte-carlo",
+      "games": 84,
+      "validGames": 80,
+      "wins": 15,
+      "losses": 65,
+      "draws": 0,
+      "failures": 4,
+      "ownFailures": 0,
+      "score": 0.1875,
+      "eligible": true
+    },
+    {
+      "id": "mcts",
+      "games": 84,
+      "validGames": 58,
+      "wins": 8,
+      "losses": 50,
+      "draws": 0,
+      "failures": 26,
+      "ownFailures": 22,
+      "score": 0.13793103448275862,
+      "eligible": false
+    },
+    {
+      "id": "mcts-greedy",
+      "games": 84,
+      "validGames": 65,
+      "wins": 5,
+      "losses": 60,
+      "draws": 0,
+      "failures": 19,
+      "ownFailures": 16,
+      "score": 0.07692307692307693,
+      "eligible": false
+    }
+  ],
+  "finalists": [
+    {
+      "id": "expert-oracle",
+      "games": 60,
+      "validGames": 60,
+      "wins": 35,
+      "losses": 25,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.5833333333333334,
+      "eligible": true
+    },
+    {
+      "id": "tactical",
+      "games": 60,
+      "validGames": 60,
+      "wins": 28,
+      "losses": 32,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.4666666666666667,
+      "eligible": true
+    },
+    {
+      "id": "tactical-ability-aware",
+      "games": 60,
+      "validGames": 60,
+      "wins": 27,
+      "losses": 33,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.45,
+      "eligible": true
+    }
+  ],
+  "reference": [
+    {
+      "id": "choombattler-expert",
+      "games": 12,
+      "validGames": 12,
+      "wins": 11,
+      "losses": 1,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.9166666666666666,
+      "eligible": true
+    },
+    {
+      "id": "expert-oracle",
+      "games": 12,
+      "validGames": 12,
+      "wins": 1,
+      "losses": 11,
+      "draws": 0,
+      "failures": 0,
+      "ownFailures": 0,
+      "score": 0.08333333333333333,
+      "eligible": true
+    }
+  ],
+  "invalidGames": 45,
+  "totalGames": 1194,
+  "promotionEligible": false,
+  "boundaries": [
+    "Decks were explicitly selected; this run does not rank decks.",
+    "Strategies retain their declared public/oracle information policies; this is not an equal-information promotion gate.",
+    "Default is an Expert alias. Controls are included in the screen but excluded from finalist selection.",
+    "Choombattler runs on its native engine with our adapted Expert chooser; scores cannot be merged with native-engine standings."
+  ],
+  "validation": {
+    "focusedTestsPassed": 27,
+    "sourceDriftGuards": "passed"
+  },
+  "referenceRuntime": {
+    "adapterVersion": "choombattler-reference-2",
+    "engineRevision": "fnv1a32:13c0e6d4",
+    "cardCatalogHash": "fnv1a32:0ca3b018",
+    "workerUrl": "https://choombattler.com/assets/bot.worker-DCis42UZ.js",
+    "workerSha256": "c834449c4463db4aa01e4ceaaa3de59afd460db90f0379a723b78a995369fa40",
+    "catalogSha256": "0e130e4d982f7c42bbe571ec82cc33b3e841cd8aea211d37e1c59122c9c9caf3"
+  },
+  "analysis": {
+    "strategy-screen": {
+      "totalGames": 1092,
+      "invalidGames": 45,
+      "provenance": "fnv1a32:8c87d7dd",
+      "scheduleHash": "fnv1a32:0c9374f5",
+      "standings": [
+        {
+          "id": "expert-oracle",
+          "games": 156,
+          "validGames": 154,
+          "wins": 143,
+          "losses": 11,
+          "draws": 0,
+          "failures": 2,
+          "ownFailures": 0,
+          "score": 0.9285714285714286,
+          "eligible": true
+        },
+        {
+          "id": "tactical",
+          "games": 156,
+          "validGames": 152,
+          "wins": 125,
+          "losses": 27,
+          "draws": 0,
+          "failures": 4,
+          "ownFailures": 0,
+          "score": 0.8223684210526315,
+          "eligible": true
+        },
+        {
+          "id": "tactical-ability-aware",
+          "games": 156,
+          "validGames": 152,
+          "wins": 125,
+          "losses": 27,
+          "draws": 0,
+          "failures": 4,
+          "ownFailures": 0,
+          "score": 0.8223684210526315,
+          "eligible": true
+        },
+        {
+          "id": "monte-carlo-greedy",
+          "games": 156,
+          "validGames": 144,
+          "wins": 112,
+          "losses": 32,
+          "draws": 0,
+          "failures": 12,
+          "ownFailures": 0,
+          "score": 0.7777777777777778,
+          "eligible": true
+        },
+        {
+          "id": "greedy",
+          "games": 156,
+          "validGames": 151,
+          "wins": 111,
+          "losses": 40,
+          "draws": 0,
+          "failures": 5,
+          "ownFailures": 0,
+          "score": 0.7350993377483444,
+          "eligible": true
+        },
+        {
+          "id": "first-legal",
+          "games": 156,
+          "validGames": 150,
+          "wins": 102,
+          "losses": 48,
+          "draws": 0,
+          "failures": 6,
+          "ownFailures": 0,
+          "score": 0.68,
+          "eligible": true
+        },
+        {
+          "id": "monte-carlo",
+          "games": 156,
+          "validGames": 152,
+          "wins": 74,
+          "losses": 78,
+          "draws": 0,
+          "failures": 4,
+          "ownFailures": 0,
+          "score": 0.4868421052631579,
+          "eligible": true
+        },
+        {
+          "id": "random",
+          "games": 156,
+          "validGames": 155,
+          "wins": 64,
+          "losses": 91,
+          "draws": 0,
+          "failures": 1,
+          "ownFailures": 0,
+          "score": 0.4129032258064516,
+          "eligible": true
+        },
+        {
+          "id": "attack-rival-only",
+          "games": 156,
+          "validGames": 156,
+          "wins": 24,
+          "losses": 132,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.15384615384615385,
+          "eligible": true
+        },
+        {
+          "id": "attack-unit-only",
+          "games": 156,
+          "validGames": 156,
+          "wins": 24,
+          "losses": 132,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.15384615384615385,
+          "eligible": true
+        },
+        {
+          "id": "pass-only",
+          "games": 156,
+          "validGames": 156,
+          "wins": 24,
+          "losses": 132,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.15384615384615385,
+          "eligible": true
+        },
+        {
+          "id": "call-legend-only",
+          "games": 156,
+          "validGames": 156,
+          "wins": 1,
+          "losses": 155,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.00641025641025641,
+          "eligible": true
+        },
+        {
+          "id": "mcts",
+          "games": 156,
+          "validGames": 126,
+          "wins": 59,
+          "losses": 67,
+          "draws": 0,
+          "failures": 30,
+          "ownFailures": 26,
+          "score": 0.46825396825396826,
+          "eligible": false
+        },
+        {
+          "id": "mcts-greedy",
+          "games": 156,
+          "validGames": 134,
+          "wins": 59,
+          "losses": 75,
+          "draws": 0,
+          "failures": 22,
+          "ownFailures": 19,
+          "score": 0.44029850746268656,
+          "eligible": false
+        }
+      ],
+      "competitiveStandings": [
+        {
+          "id": "expert-oracle",
+          "games": 84,
+          "validGames": 82,
+          "wins": 73,
+          "losses": 9,
+          "draws": 0,
+          "failures": 2,
+          "ownFailures": 0,
+          "score": 0.8902439024390244,
+          "eligible": true
+        },
+        {
+          "id": "tactical",
+          "games": 84,
+          "validGames": 80,
+          "wins": 56,
+          "losses": 24,
+          "draws": 0,
+          "failures": 4,
+          "ownFailures": 0,
+          "score": 0.7,
+          "eligible": true
+        },
+        {
+          "id": "tactical-ability-aware",
+          "games": 84,
+          "validGames": 80,
+          "wins": 56,
+          "losses": 24,
+          "draws": 0,
+          "failures": 4,
+          "ownFailures": 0,
+          "score": 0.7,
+          "eligible": true
+        },
+        {
+          "id": "monte-carlo-greedy",
+          "games": 84,
+          "validGames": 72,
+          "wins": 43,
+          "losses": 29,
+          "draws": 0,
+          "failures": 12,
+          "ownFailures": 0,
+          "score": 0.5972222222222222,
+          "eligible": true
+        },
+        {
+          "id": "greedy",
+          "games": 84,
+          "validGames": 79,
+          "wins": 42,
+          "losses": 37,
+          "draws": 0,
+          "failures": 5,
+          "ownFailures": 0,
+          "score": 0.5316455696202531,
+          "eligible": true
+        },
+        {
+          "id": "monte-carlo",
+          "games": 84,
+          "validGames": 80,
+          "wins": 15,
+          "losses": 65,
+          "draws": 0,
+          "failures": 4,
+          "ownFailures": 0,
+          "score": 0.1875,
+          "eligible": true
+        },
+        {
+          "id": "mcts",
+          "games": 84,
+          "validGames": 58,
+          "wins": 8,
+          "losses": 50,
+          "draws": 0,
+          "failures": 26,
+          "ownFailures": 22,
+          "score": 0.13793103448275862,
+          "eligible": false
+        },
+        {
+          "id": "mcts-greedy",
+          "games": 84,
+          "validGames": 65,
+          "wins": 5,
+          "losses": 60,
+          "draws": 0,
+          "failures": 19,
+          "ownFailures": 16,
+          "score": 0.07692307692307693,
+          "eligible": false
+        }
+      ],
+      "terminationCounts": {
+        "winCondition": 1010,
+        "concede": 37,
+        "illegal": 45
+      },
+      "ownFailures": {
+        "mcts-greedy": 19,
+        "mcts": 26
+      },
+      "summedGameSeconds": 14347.428536230993,
+      "byDeck": {
+        "authored-cyberpsychosis-deadman-burst-insurance": [
+          {
+            "id": "greedy",
+            "games": 28,
+            "validGames": 28,
+            "wins": 15,
+            "losses": 13,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical",
+            "games": 28,
+            "validGames": 28,
+            "wins": 23,
+            "losses": 5,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical-ability-aware",
+            "games": 28,
+            "validGames": 28,
+            "wins": 23,
+            "losses": 5,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "expert-oracle",
+            "games": 28,
+            "validGames": 28,
+            "wins": 23,
+            "losses": 5,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "monte-carlo",
+            "games": 28,
+            "validGames": 28,
+            "wins": 5,
+            "losses": 23,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "monte-carlo-greedy",
+            "games": 28,
+            "validGames": 27,
+            "wins": 15,
+            "losses": 12,
+            "draws": 0,
+            "failures": 1
+          },
+          {
+            "id": "mcts",
+            "games": 28,
+            "validGames": 25,
+            "wins": 3,
+            "losses": 22,
+            "draws": 0,
+            "failures": 3
+          },
+          {
+            "id": "mcts-greedy",
+            "games": 28,
+            "validGames": 26,
+            "wins": 2,
+            "losses": 24,
+            "draws": 0,
+            "failures": 2
+          }
+        ],
+        "authored-yorinobu-two-units-for-one": [
+          {
+            "id": "greedy",
+            "games": 28,
+            "validGames": 27,
+            "wins": 16,
+            "losses": 11,
+            "draws": 0,
+            "failures": 1
+          },
+          {
+            "id": "tactical",
+            "games": 28,
+            "validGames": 26,
+            "wins": 15,
+            "losses": 11,
+            "draws": 0,
+            "failures": 2
+          },
+          {
+            "id": "tactical-ability-aware",
+            "games": 28,
+            "validGames": 26,
+            "wins": 15,
+            "losses": 11,
+            "draws": 0,
+            "failures": 2
+          },
+          {
+            "id": "expert-oracle",
+            "games": 28,
+            "validGames": 26,
+            "wins": 22,
+            "losses": 4,
+            "draws": 0,
+            "failures": 2
+          },
+          {
+            "id": "monte-carlo",
+            "games": 28,
+            "validGames": 26,
+            "wins": 5,
+            "losses": 21,
+            "draws": 0,
+            "failures": 2
+          },
+          {
+            "id": "monte-carlo-greedy",
+            "games": 28,
+            "validGames": 22,
+            "wins": 16,
+            "losses": 6,
+            "draws": 0,
+            "failures": 6
+          },
+          {
+            "id": "mcts",
+            "games": 28,
+            "validGames": 16,
+            "wins": 2,
+            "losses": 14,
+            "draws": 0,
+            "failures": 12
+          },
+          {
+            "id": "mcts-greedy",
+            "games": 28,
+            "validGames": 19,
+            "wins": 3,
+            "losses": 16,
+            "draws": 0,
+            "failures": 9
+          }
+        ],
+        "authored-ryg-low-cost-value": [
+          {
+            "id": "greedy",
+            "games": 28,
+            "validGames": 24,
+            "wins": 11,
+            "losses": 13,
+            "draws": 0,
+            "failures": 4
+          },
+          {
+            "id": "tactical",
+            "games": 28,
+            "validGames": 26,
+            "wins": 18,
+            "losses": 8,
+            "draws": 0,
+            "failures": 2
+          },
+          {
+            "id": "tactical-ability-aware",
+            "games": 28,
+            "validGames": 26,
+            "wins": 18,
+            "losses": 8,
+            "draws": 0,
+            "failures": 2
+          },
+          {
+            "id": "expert-oracle",
+            "games": 28,
+            "validGames": 28,
+            "wins": 28,
+            "losses": 0,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "monte-carlo",
+            "games": 28,
+            "validGames": 26,
+            "wins": 5,
+            "losses": 21,
+            "draws": 0,
+            "failures": 2
+          },
+          {
+            "id": "monte-carlo-greedy",
+            "games": 28,
+            "validGames": 23,
+            "wins": 12,
+            "losses": 11,
+            "draws": 0,
+            "failures": 5
+          },
+          {
+            "id": "mcts",
+            "games": 28,
+            "validGames": 17,
+            "wins": 3,
+            "losses": 14,
+            "draws": 0,
+            "failures": 11
+          },
+          {
+            "id": "mcts-greedy",
+            "games": 28,
+            "validGames": 20,
+            "wins": 0,
+            "losses": 20,
+            "draws": 0,
+            "failures": 8
+          }
+        ]
+      },
+      "headToHead": [
+        {
+          "a": "greedy",
+          "b": "tactical",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 2,
+          "winsB": 10,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0,
+            "upper": 0.33333333333333337
+          }
+        },
+        {
+          "a": "greedy",
+          "b": "tactical-ability-aware",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 2,
+          "winsB": 10,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0,
+            "upper": 0.33333333333333337
+          }
+        },
+        {
+          "a": "greedy",
+          "b": "expert-oracle",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 2,
+          "winsB": 10,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0,
+            "upper": 0.33333333333333337
+          }
+        },
+        {
+          "a": "greedy",
+          "b": "monte-carlo",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 12,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "greedy",
+          "b": "monte-carlo-greedy",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 5,
+          "winsB": 7,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.25,
+            "upper": 0.5
+          }
+        },
+        {
+          "a": "greedy",
+          "b": "mcts",
+          "games": 12,
+          "validGames": 8,
+          "winsA": 8,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 3,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "greedy",
+          "b": "mcts-greedy",
+          "games": 12,
+          "validGames": 11,
+          "winsA": 11,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 5,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "tactical",
+          "b": "tactical-ability-aware",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 6,
+          "winsB": 6,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.5,
+            "upper": 0.5
+          }
+        },
+        {
+          "a": "tactical",
+          "b": "expert-oracle",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 2,
+          "winsB": 10,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0,
+            "upper": 0.33333333333333337
+          }
+        },
+        {
+          "a": "tactical",
+          "b": "monte-carlo",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 11,
+          "winsB": 1,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.75,
+            "upper": 1
+          }
+        },
+        {
+          "a": "tactical",
+          "b": "monte-carlo-greedy",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 7,
+          "winsB": 5,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.25,
+            "upper": 0.9166666666666667
+          }
+        },
+        {
+          "a": "tactical",
+          "b": "mcts",
+          "games": 12,
+          "validGames": 10,
+          "winsA": 10,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 4,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "tactical",
+          "b": "mcts-greedy",
+          "games": 12,
+          "validGames": 10,
+          "winsA": 10,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 4,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "tactical-ability-aware",
+          "b": "expert-oracle",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 2,
+          "winsB": 10,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0,
+            "upper": 0.33333333333333337
+          }
+        },
+        {
+          "a": "tactical-ability-aware",
+          "b": "monte-carlo",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 11,
+          "winsB": 1,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.75,
+            "upper": 1
+          }
+        },
+        {
+          "a": "tactical-ability-aware",
+          "b": "monte-carlo-greedy",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 7,
+          "winsB": 5,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.25,
+            "upper": 0.9166666666666667
+          }
+        },
+        {
+          "a": "tactical-ability-aware",
+          "b": "mcts",
+          "games": 12,
+          "validGames": 10,
+          "winsA": 10,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 4,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "tactical-ability-aware",
+          "b": "mcts-greedy",
+          "games": 12,
+          "validGames": 10,
+          "winsA": 10,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 4,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "expert-oracle",
+          "b": "monte-carlo",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 11,
+          "winsB": 1,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.75,
+            "upper": 1
+          }
+        },
+        {
+          "a": "expert-oracle",
+          "b": "monte-carlo-greedy",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 10,
+          "winsB": 2,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.6666666666666666,
+            "upper": 1
+          }
+        },
+        {
+          "a": "expert-oracle",
+          "b": "mcts",
+          "games": 12,
+          "validGames": 11,
+          "winsA": 11,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 5,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "expert-oracle",
+          "b": "mcts-greedy",
+          "games": 12,
+          "validGames": 11,
+          "winsA": 11,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 5,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "monte-carlo",
+          "b": "monte-carlo-greedy",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 0,
+          "winsB": 12,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0,
+            "upper": 0
+          }
+        },
+        {
+          "a": "monte-carlo",
+          "b": "mcts",
+          "games": 12,
+          "validGames": 8,
+          "winsA": 3,
+          "winsB": 5,
+          "draws": 0,
+          "completePairedBlocks": 2,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.5,
+            "upper": 0.5
+          }
+        },
+        {
+          "a": "monte-carlo",
+          "b": "mcts-greedy",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 9,
+          "winsB": 3,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.5833333333333334,
+            "upper": 0.9166666666666667
+          }
+        },
+        {
+          "a": "monte-carlo-greedy",
+          "b": "mcts",
+          "games": 12,
+          "validGames": 6,
+          "winsA": 6,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 2,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "monte-carlo-greedy",
+          "b": "mcts-greedy",
+          "games": 12,
+          "validGames": 6,
+          "winsA": 6,
+          "winsB": 0,
+          "draws": 0,
+          "completePairedBlocks": 2,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 1,
+            "upper": 1
+          }
+        },
+        {
+          "a": "mcts",
+          "b": "mcts-greedy",
+          "games": 12,
+          "validGames": 5,
+          "winsA": 3,
+          "winsB": 2,
+          "draws": 0,
+          "completePairedBlocks": 1,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.5,
+            "upper": 0.5
+          }
+        }
+      ]
+    },
+    "finalists": {
+      "totalGames": 90,
+      "invalidGames": 0,
+      "provenance": "fnv1a32:8c87d7dd",
+      "scheduleHash": "fnv1a32:f2cc3b2b",
+      "standings": [
+        {
+          "id": "expert-oracle",
+          "games": 60,
+          "validGames": 60,
+          "wins": 35,
+          "losses": 25,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.5833333333333334,
+          "eligible": true
+        },
+        {
+          "id": "tactical",
+          "games": 60,
+          "validGames": 60,
+          "wins": 28,
+          "losses": 32,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.4666666666666667,
+          "eligible": true
+        },
+        {
+          "id": "tactical-ability-aware",
+          "games": 60,
+          "validGames": 60,
+          "wins": 27,
+          "losses": 33,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.45,
+          "eligible": true
+        }
+      ],
+      "competitiveStandings": [
+        {
+          "id": "expert-oracle",
+          "games": 60,
+          "validGames": 60,
+          "wins": 35,
+          "losses": 25,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.5833333333333334,
+          "eligible": true
+        },
+        {
+          "id": "tactical",
+          "games": 60,
+          "validGames": 60,
+          "wins": 28,
+          "losses": 32,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.4666666666666667,
+          "eligible": true
+        },
+        {
+          "id": "tactical-ability-aware",
+          "games": 60,
+          "validGames": 60,
+          "wins": 27,
+          "losses": 33,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.45,
+          "eligible": true
+        }
+      ],
+      "terminationCounts": {
+        "winCondition": 90
+      },
+      "ownFailures": {},
+      "summedGameSeconds": 1953.986461824999,
+      "byDeck": {
+        "authored-cyberpsychosis-deadman-burst-insurance": [
+          {
+            "id": "expert-oracle",
+            "games": 20,
+            "validGames": 20,
+            "wins": 8,
+            "losses": 12,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical",
+            "games": 20,
+            "validGames": 20,
+            "wins": 11,
+            "losses": 9,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical-ability-aware",
+            "games": 20,
+            "validGames": 20,
+            "wins": 11,
+            "losses": 9,
+            "draws": 0,
+            "failures": 0
+          }
+        ],
+        "authored-yorinobu-two-units-for-one": [
+          {
+            "id": "expert-oracle",
+            "games": 20,
+            "validGames": 20,
+            "wins": 12,
+            "losses": 8,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical",
+            "games": 20,
+            "validGames": 20,
+            "wins": 9,
+            "losses": 11,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical-ability-aware",
+            "games": 20,
+            "validGames": 20,
+            "wins": 9,
+            "losses": 11,
+            "draws": 0,
+            "failures": 0
+          }
+        ],
+        "authored-ryg-low-cost-value": [
+          {
+            "id": "expert-oracle",
+            "games": 20,
+            "validGames": 20,
+            "wins": 15,
+            "losses": 5,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical",
+            "games": 20,
+            "validGames": 20,
+            "wins": 8,
+            "losses": 12,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "tactical-ability-aware",
+            "games": 20,
+            "validGames": 20,
+            "wins": 7,
+            "losses": 13,
+            "draws": 0,
+            "failures": 0
+          }
+        ]
+      },
+      "headToHead": [
+        {
+          "a": "expert-oracle",
+          "b": "tactical",
+          "games": 30,
+          "validGames": 30,
+          "winsA": 18,
+          "winsB": 12,
+          "draws": 0,
+          "completePairedBlocks": 15,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.43333333333333335,
+            "upper": 0.7666666666666666
+          }
+        },
+        {
+          "a": "expert-oracle",
+          "b": "tactical-ability-aware",
+          "games": 30,
+          "validGames": 30,
+          "winsA": 17,
+          "winsB": 13,
+          "draws": 0,
+          "completePairedBlocks": 15,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.4,
+            "upper": 0.7333333333333334
+          }
+        },
+        {
+          "a": "tactical",
+          "b": "tactical-ability-aware",
+          "games": 30,
+          "validGames": 30,
+          "winsA": 16,
+          "winsB": 14,
+          "draws": 0,
+          "completePairedBlocks": 15,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0.5,
+            "upper": 0.6
+          }
+        }
+      ]
+    },
+    "choombattler-reference": {
+      "totalGames": 12,
+      "invalidGames": 0,
+      "provenance": "fnv1a32:14f669e7",
+      "scheduleHash": "fnv1a32:d69b1697",
+      "standings": [
+        {
+          "id": "choombattler-expert",
+          "games": 12,
+          "validGames": 12,
+          "wins": 11,
+          "losses": 1,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.9166666666666666,
+          "eligible": true
+        },
+        {
+          "id": "expert-oracle",
+          "games": 12,
+          "validGames": 12,
+          "wins": 1,
+          "losses": 11,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.08333333333333333,
+          "eligible": true
+        }
+      ],
+      "competitiveStandings": [
+        {
+          "id": "choombattler-expert",
+          "games": 12,
+          "validGames": 12,
+          "wins": 11,
+          "losses": 1,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.9166666666666666,
+          "eligible": true
+        },
+        {
+          "id": "expert-oracle",
+          "games": 12,
+          "validGames": 12,
+          "wins": 1,
+          "losses": 11,
+          "draws": 0,
+          "failures": 0,
+          "ownFailures": 0,
+          "score": 0.08333333333333333,
+          "eligible": true
+        }
+      ],
+      "terminationCounts": {
+        "rules-win": 12
+      },
+      "ownFailures": {},
+      "summedGameSeconds": 1149.397452249,
+      "byDeck": {
+        "authored-cyberpsychosis-deadman-burst-insurance": [
+          {
+            "id": "expert-oracle",
+            "games": 4,
+            "validGames": 4,
+            "wins": 1,
+            "losses": 3,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "choombattler-expert",
+            "games": 4,
+            "validGames": 4,
+            "wins": 3,
+            "losses": 1,
+            "draws": 0,
+            "failures": 0
+          }
+        ],
+        "authored-yorinobu-two-units-for-one": [
+          {
+            "id": "expert-oracle",
+            "games": 4,
+            "validGames": 4,
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "choombattler-expert",
+            "games": 4,
+            "validGames": 4,
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "failures": 0
+          }
+        ],
+        "authored-ryg-low-cost-value": [
+          {
+            "id": "expert-oracle",
+            "games": 4,
+            "validGames": 4,
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "failures": 0
+          },
+          {
+            "id": "choombattler-expert",
+            "games": 4,
+            "validGames": 4,
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "failures": 0
+          }
+        ]
+      },
+      "headToHead": [
+        {
+          "a": "expert-oracle",
+          "b": "choombattler-expert",
+          "games": 12,
+          "validGames": 12,
+          "winsA": 1,
+          "winsB": 11,
+          "draws": 0,
+          "completePairedBlocks": 6,
+          "pairedWinRateCI": {
+            "level": 0.95,
+            "lower": 0,
+            "upper": 0.25
+          }
+        }
+      ]
+    }
+  },
+  "failures": [
+    {
+      "index": 219,
+      "block": "authored-cyberpsychosis-deadman-burst-insurance/first-legal-vs-mcts-greedy/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-cyberpsychosis-deadman-burst-insurance/seed-1",
+      "swap": true,
+      "deckA": "authored-cyberpsychosis-deadman-burst-insurance",
+      "deckB": "authored-cyberpsychosis-deadman-burst-insurance",
+      "strategyA": "first-legal",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 39,
+      "turns": 6,
+      "finalHash": "fnv1a32:2dd9905b",
+      "traceHash": "fnv1a32:ee5e493b",
+      "elapsedMs": 44155.60562499997
+    },
+    {
+      "index": 352,
+      "block": "authored-cyberpsychosis-deadman-burst-insurance/monte-carlo-greedy-vs-mcts/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-cyberpsychosis-deadman-burst-insurance/seed-0",
+      "swap": false,
+      "deckA": "authored-cyberpsychosis-deadman-burst-insurance",
+      "deckB": "authored-cyberpsychosis-deadman-burst-insurance",
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 81,
+      "turns": 12,
+      "finalHash": "fnv1a32:22597ec5",
+      "traceHash": "fnv1a32:53ebc704",
+      "elapsedMs": 32517.059834000072
+    },
+    {
+      "index": 360,
+      "block": "authored-cyberpsychosis-deadman-burst-insurance/mcts-vs-mcts-greedy/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-cyberpsychosis-deadman-burst-insurance/seed-0",
+      "swap": false,
+      "deckA": "authored-cyberpsychosis-deadman-burst-insurance",
+      "deckB": "authored-cyberpsychosis-deadman-burst-insurance",
+      "strategyA": "mcts",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 43,
+      "turns": 9,
+      "finalHash": "fnv1a32:4851cc49",
+      "traceHash": "fnv1a32:d6dc3fda",
+      "elapsedMs": 87829.60950000002
+    },
+    {
+      "index": 361,
+      "block": "authored-cyberpsychosis-deadman-burst-insurance/mcts-vs-mcts-greedy/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-cyberpsychosis-deadman-burst-insurance/seed-0",
+      "swap": true,
+      "deckA": "authored-cyberpsychosis-deadman-burst-insurance",
+      "deckB": "authored-cyberpsychosis-deadman-burst-insurance",
+      "strategyA": "mcts",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 39,
+      "turns": 10,
+      "finalHash": "fnv1a32:5b60d12e",
+      "traceHash": "fnv1a32:b8cf1017",
+      "elapsedMs": 64511.36058400001
+    },
+    {
+      "index": 410,
+      "block": "authored-yorinobu-two-units-for-one/greedy-vs-mcts/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": false,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "greedy",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 63,
+      "turns": 12,
+      "finalHash": "fnv1a32:f36499a5",
+      "traceHash": "fnv1a32:58e15f76",
+      "elapsedMs": 18619.73225
+    },
+    {
+      "index": 459,
+      "block": "authored-yorinobu-two-units-for-one/tactical-vs-mcts/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "tactical",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 71,
+      "turns": 10,
+      "finalHash": "fnv1a32:68c2c780",
+      "traceHash": "fnv1a32:5174180c",
+      "elapsedMs": 22512.581915999996
+    },
+    {
+      "index": 463,
+      "block": "authored-yorinobu-two-units-for-one/tactical-vs-mcts-greedy/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "tactical",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 70,
+      "turns": 10,
+      "finalHash": "fnv1a32:7958548e",
+      "traceHash": "fnv1a32:131c776a",
+      "elapsedMs": 85989.37624999997
+    },
+    {
+      "index": 503,
+      "block": "authored-yorinobu-two-units-for-one/tactical-ability-aware-vs-mcts/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "tactical-ability-aware",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 71,
+      "turns": 10,
+      "finalHash": "fnv1a32:68c2c780",
+      "traceHash": "fnv1a32:5174180c",
+      "elapsedMs": 28778.9863339999
+    },
+    {
+      "index": 507,
+      "block": "authored-yorinobu-two-units-for-one/tactical-ability-aware-vs-mcts-greedy/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "tactical-ability-aware",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 70,
+      "turns": 10,
+      "finalHash": "fnv1a32:7958548e",
+      "traceHash": "fnv1a32:131c776a",
+      "elapsedMs": 95863.27304099989
+    },
+    {
+      "index": 542,
+      "block": "authored-yorinobu-two-units-for-one/expert-oracle-vs-mcts/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": false,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "expert-oracle",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 67,
+      "turns": 12,
+      "finalHash": "fnv1a32:b1f9f33c",
+      "traceHash": "fnv1a32:965237b6",
+      "elapsedMs": 30568.562000000034
+    },
+    {
+      "index": 544,
+      "block": "authored-yorinobu-two-units-for-one/expert-oracle-vs-mcts-greedy/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-0",
+      "swap": false,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "expert-oracle",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 80,
+      "turns": 14,
+      "finalHash": "fnv1a32:2579abc9",
+      "traceHash": "fnv1a32:85d44269",
+      "elapsedMs": 101201.28883299988
+    },
+    {
+      "index": 576,
+      "block": "authored-yorinobu-two-units-for-one/first-legal-vs-mcts/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-0",
+      "swap": false,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "first-legal",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 49,
+      "turns": 7,
+      "finalHash": "fnv1a32:859679e3",
+      "traceHash": "fnv1a32:be3f9726",
+      "elapsedMs": 22090.235208000056
+    },
+    {
+      "index": 579,
+      "block": "authored-yorinobu-two-units-for-one/first-legal-vs-mcts/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "first-legal",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 67,
+      "turns": 11,
+      "finalHash": "fnv1a32:ea578e54",
+      "traceHash": "fnv1a32:cc289aa9",
+      "elapsedMs": 20767.925791999907
+    },
+    {
+      "index": 709,
+      "block": "authored-yorinobu-two-units-for-one/monte-carlo-vs-mcts/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-0",
+      "swap": true,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "monte-carlo",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 55,
+      "turns": 9,
+      "finalHash": "fnv1a32:1c7f195e",
+      "traceHash": "fnv1a32:e4d7923a",
+      "elapsedMs": 19872.38779200008
+    },
+    {
+      "index": 711,
+      "block": "authored-yorinobu-two-units-for-one/monte-carlo-vs-mcts/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "monte-carlo",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 71,
+      "turns": 17,
+      "finalHash": "fnv1a32:d19bb545",
+      "traceHash": "fnv1a32:7d59d2a2",
+      "elapsedMs": 28110.878125000047
+    },
+    {
+      "index": 717,
+      "block": "authored-yorinobu-two-units-for-one/monte-carlo-greedy-vs-mcts/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-0",
+      "swap": true,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 49,
+      "turns": 9,
+      "finalHash": "fnv1a32:55998008",
+      "traceHash": "fnv1a32:d9518dbf",
+      "elapsedMs": 17389.972999999998
+    },
+    {
+      "index": 718,
+      "block": "authored-yorinobu-two-units-for-one/monte-carlo-greedy-vs-mcts/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": false,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 59,
+      "turns": 10,
+      "finalHash": "fnv1a32:4afd71ec",
+      "traceHash": "fnv1a32:06b753d3",
+      "elapsedMs": 18691.15616600006
+    },
+    {
+      "index": 719,
+      "block": "authored-yorinobu-two-units-for-one/monte-carlo-greedy-vs-mcts/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 63,
+      "turns": 9,
+      "finalHash": "fnv1a32:2a102cba",
+      "traceHash": "fnv1a32:85aa147b",
+      "elapsedMs": 27901.681083000032
+    },
+    {
+      "index": 721,
+      "block": "authored-yorinobu-two-units-for-one/monte-carlo-greedy-vs-mcts-greedy/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-0",
+      "swap": true,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 51,
+      "turns": 9,
+      "finalHash": "fnv1a32:e2d7c654",
+      "traceHash": "fnv1a32:08c893de",
+      "elapsedMs": 57876.64037499996
+    },
+    {
+      "index": 722,
+      "block": "authored-yorinobu-two-units-for-one/monte-carlo-greedy-vs-mcts-greedy/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": false,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 63,
+      "turns": 10,
+      "finalHash": "fnv1a32:a6587f5b",
+      "traceHash": "fnv1a32:4100675a",
+      "elapsedMs": 75146.78850000002
+    },
+    {
+      "index": 723,
+      "block": "authored-yorinobu-two-units-for-one/monte-carlo-greedy-vs-mcts-greedy/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 81,
+      "turns": 11,
+      "finalHash": "fnv1a32:2fa0f975",
+      "traceHash": "fnv1a32:273e7c43",
+      "elapsedMs": 85484.09391699987
+    },
+    {
+      "index": 725,
+      "block": "authored-yorinobu-two-units-for-one/mcts-vs-mcts-greedy/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-0",
+      "swap": true,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "mcts",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 70,
+      "turns": 15,
+      "finalHash": "fnv1a32:6a74cadd",
+      "traceHash": "fnv1a32:4cc727ca",
+      "elapsedMs": 75038.13304199988
+    },
+    {
+      "index": 726,
+      "block": "authored-yorinobu-two-units-for-one/mcts-vs-mcts-greedy/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": false,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "mcts",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 95,
+      "turns": 28,
+      "finalHash": "fnv1a32:a9169a62",
+      "traceHash": "fnv1a32:6c15cb31",
+      "elapsedMs": 108581.39795900008
+    },
+    {
+      "index": 727,
+      "block": "authored-yorinobu-two-units-for-one/mcts-vs-mcts-greedy/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-yorinobu-two-units-for-one/seed-1",
+      "swap": true,
+      "deckA": "authored-yorinobu-two-units-for-one",
+      "deckB": "authored-yorinobu-two-units-for-one",
+      "strategyA": "mcts",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 58,
+      "turns": 11,
+      "finalHash": "fnv1a32:abee4e1b",
+      "traceHash": "fnv1a32:ac1710b9",
+      "elapsedMs": 86486.96579200006
+    },
+    {
+      "index": 773,
+      "block": "authored-ryg-low-cost-value/greedy-vs-mcts/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "greedy",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 53,
+      "turns": 9,
+      "finalHash": "fnv1a32:cc616838",
+      "traceHash": "fnv1a32:0035e2c2",
+      "elapsedMs": 27865.51108399988
+    },
+    {
+      "index": 774,
+      "block": "authored-ryg-low-cost-value/greedy-vs-mcts/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": false,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "greedy",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 18,
+      "turns": 3,
+      "finalHash": "fnv1a32:dfc5b1b2",
+      "traceHash": "fnv1a32:ce731e1d",
+      "elapsedMs": 8588.376666000113
+    },
+    {
+      "index": 775,
+      "block": "authored-ryg-low-cost-value/greedy-vs-mcts/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": true,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "greedy",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 50,
+      "turns": 9,
+      "finalHash": "fnv1a32:cb631a33",
+      "traceHash": "fnv1a32:4cc6076e",
+      "elapsedMs": 19878.22474999982
+    },
+    {
+      "index": 777,
+      "block": "authored-ryg-low-cost-value/greedy-vs-mcts-greedy/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "greedy",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 56,
+      "turns": 9,
+      "finalHash": "fnv1a32:2c9ec50d",
+      "traceHash": "fnv1a32:2510fee8",
+      "elapsedMs": 55742.588833000045
+    },
+    {
+      "index": 821,
+      "block": "authored-ryg-low-cost-value/tactical-vs-mcts/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "tactical",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 73,
+      "turns": 10,
+      "finalHash": "fnv1a32:4085c393",
+      "traceHash": "fnv1a32:020d8db1",
+      "elapsedMs": 24991.415000000037
+    },
+    {
+      "index": 824,
+      "block": "authored-ryg-low-cost-value/tactical-vs-mcts-greedy/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": false,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "tactical",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 74,
+      "turns": 10,
+      "finalHash": "fnv1a32:670e16a0",
+      "traceHash": "fnv1a32:10c77d69",
+      "elapsedMs": 81958.64608300012
+    },
+    {
+      "index": 865,
+      "block": "authored-ryg-low-cost-value/tactical-ability-aware-vs-mcts/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "tactical-ability-aware",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 73,
+      "turns": 10,
+      "finalHash": "fnv1a32:4085c393",
+      "traceHash": "fnv1a32:2c93f294",
+      "elapsedMs": 24653.5517500001
+    },
+    {
+      "index": 868,
+      "block": "authored-ryg-low-cost-value/tactical-ability-aware-vs-mcts-greedy/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": false,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "tactical-ability-aware",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 74,
+      "turns": 10,
+      "finalHash": "fnv1a32:670e16a0",
+      "traceHash": "fnv1a32:10c77d69",
+      "elapsedMs": 83174.52958399989
+    },
+    {
+      "index": 943,
+      "block": "authored-ryg-low-cost-value/first-legal-vs-mcts/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": true,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "first-legal",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 63,
+      "turns": 9,
+      "finalHash": "fnv1a32:08a6fd7f",
+      "traceHash": "fnv1a32:fef9ea6a",
+      "elapsedMs": 18919.72387499991
+    },
+    {
+      "index": 945,
+      "block": "authored-ryg-low-cost-value/first-legal-vs-mcts-greedy/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "first-legal",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 68,
+      "turns": 11,
+      "finalHash": "fnv1a32:1fd119ad",
+      "traceHash": "fnv1a32:e816ac01",
+      "elapsedMs": 59326.73429200007
+    },
+    {
+      "index": 946,
+      "block": "authored-ryg-low-cost-value/first-legal-vs-mcts-greedy/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": false,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "first-legal",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 56,
+      "turns": 8,
+      "finalHash": "fnv1a32:6287856e",
+      "traceHash": "fnv1a32:ed89e04e",
+      "elapsedMs": 59117.63424999989
+    },
+    {
+      "index": 974,
+      "block": "authored-ryg-low-cost-value/random-vs-mcts/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": false,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "random",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 105,
+      "turns": 26,
+      "finalHash": "fnv1a32:ebb7cdec",
+      "traceHash": "fnv1a32:0c323201",
+      "elapsedMs": 30615.73387500015
+    },
+    {
+      "index": 1073,
+      "block": "authored-ryg-low-cost-value/monte-carlo-vs-mcts/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "monte-carlo",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 60,
+      "turns": 13,
+      "finalHash": "fnv1a32:307905b5",
+      "traceHash": "fnv1a32:47056d5f",
+      "elapsedMs": 17311.5922079999
+    },
+    {
+      "index": 1074,
+      "block": "authored-ryg-low-cost-value/monte-carlo-vs-mcts/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": false,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "monte-carlo",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 55,
+      "turns": 10,
+      "finalHash": "fnv1a32:d2cfed58",
+      "traceHash": "fnv1a32:891e63a0",
+      "elapsedMs": 18480.077792000026
+    },
+    {
+      "index": 1080,
+      "block": "authored-ryg-low-cost-value/monte-carlo-greedy-vs-mcts/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": false,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 73,
+      "turns": 10,
+      "finalHash": "fnv1a32:f26a4f16",
+      "traceHash": "fnv1a32:dc20701d",
+      "elapsedMs": 21061.532166999998
+    },
+    {
+      "index": 1081,
+      "block": "authored-ryg-low-cost-value/monte-carlo-greedy-vs-mcts/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 57,
+      "turns": 9,
+      "finalHash": "fnv1a32:9ba84c4a",
+      "traceHash": "fnv1a32:13de403f",
+      "elapsedMs": 17151.377624999965
+    },
+    {
+      "index": 1084,
+      "block": "authored-ryg-low-cost-value/monte-carlo-greedy-vs-mcts-greedy/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": false,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 72,
+      "turns": 10,
+      "finalHash": "fnv1a32:edfb4d52",
+      "traceHash": "fnv1a32:6c8bf2e3",
+      "elapsedMs": 49497.05775000015
+    },
+    {
+      "index": 1085,
+      "block": "authored-ryg-low-cost-value/monte-carlo-greedy-vs-mcts-greedy/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": true,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 60,
+      "turns": 9,
+      "finalHash": "fnv1a32:bae110f2",
+      "traceHash": "fnv1a32:b9ed627b",
+      "elapsedMs": 44618.920124999946
+    },
+    {
+      "index": 1086,
+      "block": "authored-ryg-low-cost-value/monte-carlo-greedy-vs-mcts-greedy/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": false,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "monte-carlo-greedy",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 76,
+      "turns": 12,
+      "finalHash": "fnv1a32:db9fa59a",
+      "traceHash": "fnv1a32:9a2b5266",
+      "elapsedMs": 55826.14020899986
+    },
+    {
+      "index": 1088,
+      "block": "authored-ryg-low-cost-value/mcts-vs-mcts-greedy/seed-0",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-0",
+      "swap": false,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "mcts",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts-greedy",
+      "actions": 50,
+      "turns": 10,
+      "finalHash": "fnv1a32:da2704ff",
+      "traceHash": "fnv1a32:5743eb12",
+      "elapsedMs": 46431.094082999974
+    },
+    {
+      "index": 1090,
+      "block": "authored-ryg-low-cost-value/mcts-vs-mcts-greedy/seed-1",
+      "seed": "cyberpunk-other-decks-2026-10-07-v1/screen/authored-ryg-low-cost-value/seed-1",
+      "swap": false,
+      "deckA": "authored-ryg-low-cost-value",
+      "deckB": "authored-ryg-low-cost-value",
+      "strategyA": "mcts",
+      "strategyB": "mcts-greedy",
+      "winner": null,
+      "reason": "illegal",
+      "valid": false,
+      "failedStrategy": "mcts",
+      "actions": 38,
+      "turns": 9,
+      "finalHash": "fnv1a32:9feeaac2",
+      "traceHash": "fnv1a32:93bd267d",
+      "elapsedMs": 41148.56287500006
+    }
+  ],
+  "failureReplays": [
+    {
+      "gameIndex": 219,
+      "verified": true,
+      "reason": "illegal",
+      "finalHash": "fnv1a32:2dd9905b",
+      "traceHash": "fnv1a32:ee5e493b",
+      "failure": {
+        "stepIndex": 38,
+        "playerId": "p1",
+        "result": {
+          "kind": "illegal",
+          "decision": {
+            "kind": "command",
+            "move": "playCard",
+            "args": {
+              "cardId": "ci_461459414",
+              "attachToId": "ci_598749760"
+            }
+          },
+          "decisionDurationMs": 5015.720457999996,
+          "error": "Not enough eddies",
+          "errorCode": "INSUFFICIENT_EDDIES"
+        }
+      },
+      "path": "/tmp/cyberpunk-other-decks-2026-10-07-v1/strategy-screen/219.json.replay-evidence.json"
+    }
+  ]
+}

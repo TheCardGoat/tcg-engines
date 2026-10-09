@@ -31,7 +31,7 @@ export const prb02Koby001: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Navy SWORD"],
+  traits: ["Navy", "SWORD"],
   attribute: "strike",
   effect:
     "[Opponent's Turn] If your Leader has the \"Navy\" type, this Character gains +1000 power.[When Attacking] K.O. up to 1 of your opponent's Characters with 3000 base power or less. Then, if you have 6 or less cards in your hand, draw 1 card.",
@@ -82,7 +82,7 @@ export const prb02Koby001: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Navy",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

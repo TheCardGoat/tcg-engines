@@ -72,11 +72,22 @@ function normalizeCardType(
   }
 }
 
+function getChosenCardName(
+  ctx: PlayCardExecutionContext,
+  resolutionInput: ActionResolutionInput,
+): string | undefined {
+  const chosenCardId = resolutionInput.eventSnapshot?.chosenCardId;
+  const definition = chosenCardId
+    ? (ctx.cards.getDefinition(chosenCardId) as { name?: string } | undefined)
+    : undefined;
+  return definition?.name;
+}
+
 export function resolveCostReductionEffect(
   ctx: PlayCardExecutionContext,
   cardPlayed: CardPlayedPayload,
   effect: CostReductionEffect,
-  _resolutionInput: ActionResolutionInput,
+  resolutionInput: ActionResolutionInput,
   resolvedInput: ResolvedCostReductionEffectInput = {},
 ): void {
   const amount = resolveCostReductionAmount(effect, resolvedInput.reductionAmount);
@@ -94,7 +105,7 @@ export function resolveCostReductionEffect(
     ctx,
     cardPlayed,
     effect.target,
-    _resolutionInput.targets,
+    resolutionInput.targets,
   );
   const recipients = targetPlayerIds.length > 0 ? targetPlayerIds : [cardPlayed.playerId];
   const reductionsByPlayer =
@@ -109,7 +120,11 @@ export function resolveCostReductionEffect(
       sourceId: cardPlayed.cardId,
       cardType: normalizedCardType,
       classification: normalizedClassification,
-      cardName: effect.cardName,
+      cardName:
+        effect.cardName ??
+        (effect.cardNameFrom === "chosen-card"
+          ? getChosenCardName(ctx, resolutionInput)
+          : undefined),
       playMethod: effect.playMethod,
       consumeOnUse,
       expiresAtTurn,

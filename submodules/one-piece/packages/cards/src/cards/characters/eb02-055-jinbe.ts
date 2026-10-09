@@ -25,7 +25,7 @@ export const eb02Jinbe055: CharacterCard = {
   counter: 2000,
   trigger:
     'If your Leader has the "Fish-Man" or "Merfolk" type and you have 2 or less Life cards, play this card.',
-  traits: ["Fish-Man Straw Hat Crew"],
+  traits: ["Fish-Man", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     '[Trigger] If your Leader has the "Fish-Man" or "Merfolk" type and you have 2 or less Life cards, play this card.',
@@ -45,12 +45,12 @@ export const eb02Jinbe055: CharacterCard = {
                   {
                     condition: "leaderTrait",
                     trait: "Fish-Man",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     condition: "leaderTrait",
                     trait: "Merfolk",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

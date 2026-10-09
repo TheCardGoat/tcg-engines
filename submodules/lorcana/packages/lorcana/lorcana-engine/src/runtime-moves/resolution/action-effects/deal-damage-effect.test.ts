@@ -1,4 +1,4 @@
-import { describe, expect, it, spyOn } from "bun:test";
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import type { CardInstanceId, PlayerId } from "#core";
 import { addTemporaryKeyword } from "../../effects/temporary-effects";
 import { resolveDealDamageEffect, resolvePutDamageLikeEffect } from "./deal-damage-effect";
@@ -66,6 +66,7 @@ function createTestContext(args?: {
 
     cards: cardsApi,
     framework: {
+      log: mock(() => {}),
       cards: cardsApi,
       events: {
         emit: () => undefined,

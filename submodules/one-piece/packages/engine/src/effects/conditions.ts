@@ -1,7 +1,10 @@
 import { getCard } from "../../../cards/src/runtime-catalog.ts";
 import type { Condition, LeaderCard, Target } from "@tcg/op-types";
 import {
-  cardNames,
+  cardMatchesName,
+  cardMatchesTrait,
+  cardsShareName,
+  getCardAttribute,
   donCardsOnField,
   getCardCost,
   getCardPower,
@@ -29,6 +32,22 @@ function evaluateCondition(
   const leader = getCard(controllerPlayer.leaderCardId) as LeaderCard;
 
   switch (condition.condition) {
+    case "cardTrashedFromHandByEffectThisTurn": {
+      const player = condition.player === "self" ? controllerPlayer : opponentPlayer;
+      return { supported: true, matches: player.handTrashedByEffectOnTurn === state.turnNumber };
+    }
+    case "characterKodThisTurn": {
+      const seat = condition.player === "self" ? controller : otherSeat(controller);
+      return {
+        supported: true,
+        matches: state.eventHistory.some(
+          (event) =>
+            event.type === "characterKod" &&
+            event.turn === state.turnNumber &&
+            event.payload.targetController === seat,
+        ),
+      };
+    }
     case "donAttached":
       return {
         supported: true,
@@ -83,25 +102,33 @@ function evaluateCondition(
       break;
     }
     case "leaderName":
-      return { supported: true, matches: cardNames(leader).includes(condition.name) };
+      return {
+        supported: true,
+        matches: cardMatchesName(leader, condition.name, condition.match),
+      };
     case "leaderAttribute":
-      return { supported: true, matches: leader.attribute === condition.attribute };
+      return {
+        supported: true,
+        matches: getCardAttribute(state, controllerPlayer.leaderInstanceId).includes(
+          condition.attribute,
+        ),
+      };
     case "leaderTrait":
       return {
         supported: true,
-        matches:
-          condition.match === "exact"
-            ? (leader.traits ?? []).includes(condition.trait)
-            : (leader.traits ?? []).some((trait) => trait.includes(condition.trait)),
+        matches: cardMatchesTrait(leader, condition.trait, condition.match),
       };
     case "leaderMulticolored":
       return { supported: true, matches: leader.color.length > 1 };
     case "leaderColor":
       return { supported: true, matches: leader.color.includes(condition.color) };
     case "zoneCount": {
-      const player = condition.player === "self" ? controllerPlayer : opponentPlayer;
-      const seat = condition.player === "self" ? controller : otherSeat(controller);
-      const instanceIds =
+      const seats =
+        condition.player === "any"
+          ? [controller, otherSeat(controller)]
+          : [condition.player === "self" ? controller : otherSeat(controller)];
+      const players = seats.map((seat) => getPlayer(state, seat));
+      const instanceIds = players.flatMap((player) =>
         condition.zone === "hand"
           ? player.hand
           : condition.zone === "life"
@@ -111,9 +138,7 @@ function evaluateCondition(
               : condition.zone === "trash"
                 ? player.trash
                 : condition.zone === "character"
-                  ? player.characterArea.filter(
-                      (instanceId): instanceId is string => instanceId !== null,
-                    )
+                  ? player.characterArea.filter((id): id is string => id !== null)
                   : condition.zone === "leader"
                     ? [player.leaderInstanceId]
                     : condition.zone === "stage"
@@ -123,22 +148,19 @@ function evaluateCondition(
                       : condition.zone === "field"
                         ? [
                             player.leaderInstanceId,
-                            ...player.characterArea.filter(
-                              (instanceId): instanceId is string => instanceId !== null,
-                            ),
+                            ...player.characterArea.filter((id): id is string => id !== null),
                             ...(player.stageArea ? [player.stageArea] : []),
                           ]
-                        : [];
+                        : [],
+      );
       let total =
         condition.zone === "costArea"
-          ? player.activeDon + player.restedDon
+          ? players.reduce((sum, player) => sum + player.activeDon + player.restedDon, 0)
           : condition.zone === "don"
-            ? donCardsOnField(state, seat)
+            ? seats.reduce((sum, seat) => sum + donCardsOnField(state, seat), 0)
             : condition.zone === "donDeck"
-              ? player.donDeckCount
-              : condition.zone === "field"
-                ? 1 + player.characterArea.filter(Boolean).length + (player.stageArea ? 1 : 0)
-                : instanceIds.length;
+              ? players.reduce((sum, player) => sum + player.donDeckCount, 0)
+              : instanceIds.length;
       if (condition.filters?.length) {
         if (
           condition.zone === "costArea" ||
@@ -158,6 +180,28 @@ function evaluateCondition(
         if (!supported) {
           return { supported: false, matches: false };
         }
+      }
+      if (condition.distinctNames) {
+        const eligible = instanceIds.filter((id) =>
+          (condition.filters ?? []).every((filter) => {
+            const result = matchesTargetFilter(state, sourceInstanceId, id, filter);
+            return result.supported && result.matches;
+          }),
+        );
+        const largestDistinctGroup = (index: number, selected: string[]): number => {
+          if (index === eligible.length) return 0;
+          const candidate = getCard(getInstance(state, eligible[index]!).cardId);
+          const skip = largestDistinctGroup(index + 1, selected);
+          if (
+            selected.some((id) => cardsShareName(candidate, getCard(getInstance(state, id).cardId)))
+          )
+            return skip;
+          return Math.max(
+            skip,
+            1 + largestDistinctGroup(index + 1, [...selected, eligible[index]!]),
+          );
+        };
+        total = largestDistinctGroup(0, []);
       }
       switch (condition.comparison) {
         case "eq":
@@ -571,7 +615,8 @@ function evaluateCondition(
         matches: source.battledOpponentCharacterOnTurn === state.turnNumber,
       };
     case "activeDonCount": {
-      const value = controllerPlayer.activeDon;
+      const value =
+        condition.player === "opponent" ? opponentPlayer.activeDon : controllerPlayer.activeDon;
       switch (condition.comparison) {
         case "eq":
           return { supported: true, matches: value === condition.value };

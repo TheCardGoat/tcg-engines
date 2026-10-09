@@ -25,7 +25,7 @@ export const merlinCompletingHisResearchEpic: CharacterCard = {
   franchise: "Sword in the Stone",
   set: "010",
   cardNumber: 209,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 2,
   strength: 0,

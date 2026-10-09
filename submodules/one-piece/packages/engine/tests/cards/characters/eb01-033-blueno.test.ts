@@ -61,4 +61,37 @@ describe("EB01-033 Blueno", () => {
     expect(view.players.south.characters.map((card) => card?.instanceId)).not.toContain(trashId);
     expect(view.prompts).toHaveLength(0);
   });
+  test("a wrong Leader can pay DON minus one but gets no Water Seven result", () => {
+    const e = OnePieceTestEngine.create({
+      hand: ["EB01-033"],
+      trash: ["EB01-031", "EB01-005"],
+      activeDon: 6,
+    });
+    e.playCard("EB01-033");
+    const before = e.getView("south").players.south;
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    e.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "south");
+    expect(e.getView("south").players.south.donDeckCount).toBe(before.donDeckCount + 1);
+    expect(e.getView("south").players.south.trash).toHaveLength(2);
+    expect(e.getView("south").players.south.hand).toHaveLength(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+  test("plays the selected cost-five Water Seven Character from hand", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "OP03-058",
+      hand: ["EB01-033", "EB01-031"],
+      activeDon: 5,
+    });
+    const kalifa = e.findCardInZone("south", "hand", "EB01-031");
+    e.playCard("EB01-033");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    e.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "south");
+    e.resolveDecision("effectPlaySelection", { selectedIds: [kalifa] }, "south");
+    e.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === kalifa)?.rested,
+    ).toBe(false);
+    expect(e.getView("south").players.south.hand).toHaveLength(0);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

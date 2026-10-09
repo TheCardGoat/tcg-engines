@@ -41,11 +41,31 @@ export const op17CharlotteLinlin112: CharacterCard = {
   setId: "OP17",
   cost: 10,
   power: 12000,
-  traits: ["The Four Emperors Big Mom Pirates"],
+  traits: ["The Four Emperors", "Big Mom Pirates"],
   attribute: "special",
   effect:
     "[Your Turn] The base power of all of your Characters with a [Trigger] and 4000 base power becomes 8000.\n[On Play] Draw 1 card, then choose one:\n•Add up to 1 card from the top of your deck to the top of your Life cards.\n• Add up to 1 card from the top of your opponent's Life cards to the owner's hand.",
   effects: {
+    permanentEffects: [
+      {
+        conditions: [{ condition: "turn", value: "your" }],
+        actions: [
+          {
+            action: "setBasePower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: "all" },
+              filters: [
+                { filter: "hasTrigger", value: true },
+                { filter: "basePower", comparison: "eq", value: 4000 },
+              ],
+            },
+            value: 8000,
+          },
+        ],
+      },
+    ],
     effects: [
       {
         trigger: "onPlay",

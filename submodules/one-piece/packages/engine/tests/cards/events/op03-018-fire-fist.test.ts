@@ -12,6 +12,27 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 import { SOUTH_ATTACKS_WITHOUT_TURN_SETUP } from "./battle-fixture.shared.ts";
 
 describe("OP03-018 Fire Fist", () => {
+  test("declining the first target group still permits the second group", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: ["OP03-018", "OP02-117"], activeDon: 8, life: 2 },
+      { character: ["EB01-005", "EB01-005"] },
+    );
+    const kept = engine.getView("south").players.north.characters[0]!.instanceId;
+    const selected = engine.getView("south").players.north.characters[1]?.instanceId;
+    if (!selected) throw new Error("Expected second opposing Character");
+    engine.playCard("OP03-018");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    expect(
+      engine.getView("south").players.north.characters.some((card) => card?.instanceId === kept),
+    ).toBe(true);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [selected] }, "south");
+    const view = engine.getView("south");
+    expect(view.players.north.characters.some((card) => card?.instanceId === kept)).toBe(true);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(selected);
+    expect(view.prompts).toHaveLength(0);
+  });
+
   test("trashes a chosen Event, then maps the ordered power-5000 and power-4000 K.O.s", () => {
     const engine = OnePieceTestEngine.create(
       {
@@ -56,6 +77,11 @@ describe("OP03-018 Fire Fist", () => {
       secondKoId,
     ]);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [firstKoId] }, "south");
+    expect(
+      engine
+        .getView("south")
+        .players.north.characters.some((card) => card?.instanceId === firstKoId),
+    ).toBe(true);
 
     const secondDecision = engine.pendingDecision("effectTargetSelection", "south");
     const secondStep = secondDecision.steps[0];

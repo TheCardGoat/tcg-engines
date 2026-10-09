@@ -55,8 +55,8 @@ export const bellOfTheChosen: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
               {
                 kind: "conditional",
                 condition: {
-                  kind: "activation-state",
-                  state: "entered-from-banishment",
+                  kind: "event-origin",
+                  zone: "banishment",
                 },
                 then: {
                   kind: "keyword-action",

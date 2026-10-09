@@ -97,3 +97,17 @@
     animation: none;
   }
 }
+
+.previousPath {
+  fill: none;
+  stroke: #b99a9f;
+  stroke-width: 1.5;
+  stroke-dasharray: 5 8;
+}
+.blockingBadge > path:first-child { fill: #0a1c22; stroke: #79d4df; stroke-width: 1; }
+.blockingBadge text { fill: #c8f6f7; font: 700 10px "Cyberpunk Blender Pro", sans-serif; letter-spacing: 1px; }
+.shieldIcon { fill: none; stroke: #79d4df; stroke-width: 1.5; }
+
+.protectedTarget { fill: #0a1c22; stroke: #79d4df; stroke-width: 1.5; animation: protected-target 1.2s ease-out both; }
+@keyframes protected-target { 0%, 65% { opacity: 1; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .protectedTarget { animation: none; opacity: 0; } }

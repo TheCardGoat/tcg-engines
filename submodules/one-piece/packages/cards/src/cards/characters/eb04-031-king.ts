@@ -31,7 +31,7 @@ export const op14eb04King031: CharacterCard = {
   setId: "EB04",
   cost: 6,
   power: 7000,
-  traits: ["Animal Kingdom Pirates Lunarian"],
+  traits: ["Lunarian", "Animal Kingdom Pirates"],
   attribute: "special",
   effect:
     "If this Character would be K.O.'d, you may return 1 DON!! card from your field to your DON!! deck instead. [Activate: Main] [Once Per Turn] If your Leader has the {Animal Kingdom Pirates} type and you have no other [King] Characters, add up to 1 DON!! card from your DON!! deck and set it as active, and add up to 1 additional DON!! card and rest it.",
@@ -47,7 +47,7 @@ export const op14eb04King031: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Animal Kingdom Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "notHasCard",

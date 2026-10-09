@@ -16,6 +16,7 @@ const TEST_INITIAL_STATE_KEYS = new Set<keyof TestInitialState>([
   "inkwell",
   "discard",
   "lore",
+  "inkDrops",
 ]);
 
 export type CanonicalPlayerId = typeof CANONICAL_PLAYER_ONE | typeof CANONICAL_PLAYER_TWO;
@@ -23,7 +24,7 @@ export type CanonicalPlayerId = typeof CANONICAL_PLAYER_ONE | typeof CANONICAL_P
 export type FixtureSeedBundle = {
   zoneCardsByKey: Record<string, string[]>;
   cardDefinitionsByInstanceId: Record<string, LorcanaCard>;
-  ownerByInstanceId: Record<string, CanonicalPlayerId>;
+  ownerByInstanceId: Record<string, string>;
   fixtureStateByInstanceId: Record<
     string,
     Omit<TestFixtureCardState, "card" | "cardsUnder"> & { cardsUnder?: string[] }
@@ -104,23 +105,20 @@ export function createInitialCardMeta(
 export function buildFixtureSeedBundle(
   playerOneState: TestInitialState,
   playerTwoState: TestInitialState,
+  additionalPlayers: Readonly<Record<string, TestInitialState>> = {},
 ): FixtureSeedBundle {
   const definitions: Record<string, LorcanaCard> = {};
   const records: Record<string, { instanceId: string; definitionId: string; ownerID: string }> = {};
   const zoneCardsByKey: Record<string, string[]> = {};
   const cardDefinitionsByInstanceId: Record<string, LorcanaCard> = {};
-  const ownerByInstanceId: Record<string, CanonicalPlayerId> = {};
+  const ownerByInstanceId: Record<string, string> = {};
   const fixtureStateByInstanceId: FixtureSeedBundle["fixtureStateByInstanceId"] = {};
 
   let seq = 1;
   let placeholderSeq = 1;
   const nextInstanceId = () => `t${String(seq++).padStart(6, "0")}`;
 
-  const registerCard = (
-    playerId: CanonicalPlayerId,
-    zoneKey: string,
-    definition: LorcanaCard,
-  ): string => {
+  const registerCard = (playerId: string, zoneKey: string, definition: LorcanaCard): string => {
     const instanceId = nextInstanceId();
     const definitionId = (definition as unknown as { id: string }).id;
     definitions[definitionId] = definition;
@@ -136,7 +134,7 @@ export function buildFixtureSeedBundle(
     return instanceId;
   };
 
-  const ingestPlayer = (playerId: CanonicalPlayerId, state: TestInitialState) => {
+  const ingestPlayer = (playerId: string, state: TestInitialState) => {
     const zones: Record<FixtureZoneName, number | unknown[] | undefined> = {
       deck: state.deck,
       hand: state.hand,
@@ -194,6 +192,9 @@ export function buildFixtureSeedBundle(
 
   ingestPlayer(CANONICAL_PLAYER_ONE, playerOneState);
   ingestPlayer(CANONICAL_PLAYER_TWO, playerTwoState);
+  for (const [playerId, playerState] of Object.entries(additionalPlayers)) {
+    ingestPlayer(playerId, playerState);
+  }
 
   return {
     zoneCardsByKey,
@@ -215,7 +216,7 @@ function isLikelyCharacterOrLocation(card: LorcanaCard): boolean {
 
 function materializeZoneDefinitions(
   zoneName: FixtureZoneName,
-  playerId: CanonicalPlayerId,
+  playerId: string,
   zoneValue: number | unknown[] | undefined,
   nextPlaceholderSeq: () => number,
 ): MaterializedFixtureEntry[] {
@@ -270,7 +271,7 @@ function isFixtureCardState(value: unknown): value is TestFixtureCardState {
 function coerceFixtureCardUnderEntry(
   entry: unknown,
   zoneName: InternalFixtureZoneName,
-  playerId: CanonicalPlayerId,
+  playerId: string,
 ): { definition: LorcanaCard; publicFaceState?: "faceUp" | "faceDown" } {
   if (
     entry &&
@@ -290,7 +291,7 @@ function coerceFixtureCardUnderEntry(
 function coerceFixtureCardDefinition(
   entry: unknown,
   zoneName: InternalFixtureZoneName,
-  playerId: CanonicalPlayerId,
+  playerId: string,
   index = 0,
   nextPlaceholderSeq: (() => number) | undefined = undefined,
 ): LorcanaCard {
@@ -308,7 +309,7 @@ function coerceFixtureCardDefinition(
 
 function createPlaceholderCard(
   zoneName: FixtureZoneName,
-  playerId: CanonicalPlayerId,
+  playerId: string,
   seq: number,
   index = 0,
 ): LorcanaCard {

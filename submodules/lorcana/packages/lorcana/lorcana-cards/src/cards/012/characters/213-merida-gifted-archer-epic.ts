@@ -25,7 +25,7 @@ export const meridaGiftedArcherEpic: CharacterCard = {
   franchise: "Brave",
   set: "012",
   cardNumber: 213,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 5,
   strength: 3,

@@ -9,9 +9,7 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 export const legendAltCunninghamSoulkillerArchitectBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendAltCunninghamSoulkillerArchitect",
   label: "Alt Cunningham - steal gig and replay a program",
-  references: [
-    "packages/engine/src/cards/welcometonightcityretail/legends/alt-cunningham-soulkiller-architect.test.ts",
-  ],
+  references: ["packages/engine/src/cards/legends/alt-cunningham-soulkiller-architect.test.ts"],
   async run(pom) {
     const alt = await pom.getCardInZoneByDefinitionId(
       "field",

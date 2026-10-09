@@ -1,28 +1,31 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
-
-describe("OP17-047", () => {
-  test("[Blocker/ability] on-field state", () => {
-    const engine = OnePieceTestEngine.create({ character: ["OP17-047"], activeDon: 3 }, {});
-    expect(engine.findCardInZone("south", "character", "OP17-047")).toBeDefined();
-    expect(engine.getView("south").prompts).toHaveLength(0);
+describe("OP17-047 Shiki", () => {
+  test("FAQ: at two hand cards, opponent chooses their card to bottom", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP17-047"], hand: ["EB01-005", "OP17-006"] },
+      { hand: ["OP17-002", "OP17-006"], deck: ["OP17-005"] },
+    );
+    const selected = e.findCardInZone("north", "hand", "OP17-006"),
+      kept = e.findCardInZone("north", "hand", "OP17-002");
+    e.endTurn("south");
+    const step = e.pendingDecision("effectTargetSelection", "north").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected opponent's hand choice");
+    expect(step.candidates.map((c) => c.ref.id)).toEqual([kept, selected]);
+    e.resolveDecision("effectTargetSelection", { selectedIds: [selected] }, "north");
+    expect(e.getView("north").players.north.hand.map((c) => c.instanceId)).toContain(kept);
+    expect(e.getView("north").players.north.hand.map((c) => c.instanceId)).not.toContain(selected);
+    // Exact hidden deck position is not present in the projection.
+    expect(e.getState().players.north.deck.at(-1)).toBe(selected);
   });
-
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-047", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
+  test("three own hand cards disable the end-of-turn effect", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["OP17-047"], hand: ["EB01-005", "OP17-006", "OP17-002"] },
+      { hand: ["OP17-006"] },
     );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-047",
-    );
-    expect(engine.getView("south").prompts).toHaveLength(0);
+    const kept = e.findCardInZone("north", "hand", "OP17-006");
+    e.endTurn("south");
+    expect(e.getView("north").players.north.hand.map((c) => c.instanceId)).toContain(kept);
+    expect(e.getView("north").prompts).toHaveLength(0);
   });
 });

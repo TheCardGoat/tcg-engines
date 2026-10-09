@@ -127,6 +127,7 @@ function ComparisonVisual({
         }}
       >
         <motion.div
+          data-animation-label
           initial={{ opacity: 0, transform: "translate3d(0, -8px, 0)" }}
           animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }}
           transition={{ delay: delaySeconds + 0.08, duration: 0.2 }}
@@ -200,6 +201,7 @@ function ComparisonVisual({
                     </div>
                   ) : null}
                   <div
+                    data-animation-label
                     style={{
                       display: "grid",
                       minWidth: 0,
@@ -260,6 +262,7 @@ function ComparisonVisual({
                   ) : (
                     <div
                       data-animation-comparison-fallback=""
+                      data-animation-label
                       style={{
                         width: "100%",
                         height: "100%",
@@ -278,6 +281,7 @@ function ComparisonVisual({
                   )}
                 </motion.div>
                 <div
+                  data-animation-label
                   style={{
                     maxWidth: 170,
                     color: "white",
@@ -288,7 +292,10 @@ function ComparisonVisual({
                 >
                   {participant.label}
                 </div>
-                <div style={{ color: won ? "#f6dfa0" : "#e8d8d1", fontSize: 16, fontWeight: 950 }}>
+                <div
+                  data-animation-label
+                  style={{ color: won ? "#f6dfa0" : "#e8d8d1", fontSize: 16, fontWeight: 950 }}
+                >
                   {participant.valueLabel}
                 </div>
               </motion.div>
@@ -296,6 +303,7 @@ function ComparisonVisual({
           })}
         </div>
         <motion.div
+          data-animation-label
           initial={{ opacity: 0, transform: "translate3d(0, 8px, 0) scale(0.94)" }}
           animate={{
             opacity: [0, 1, 1, 0],

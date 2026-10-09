@@ -1,4 +1,4 @@
-import type { DieType } from "../types/gig-die.ts";
+import type { DieType } from "@tcg/cyberpunk-types";
 import type { RngState } from "../types/match-state.ts";
 
 // Re-export engine-core RNG primitives for cross-engine consumers.

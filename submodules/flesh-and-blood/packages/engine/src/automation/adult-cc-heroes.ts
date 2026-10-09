@@ -2,7 +2,7 @@
  * Adult Classic Constructed–legal hero printings from the shipped card library.
  */
 import { getFleshAndBloodCard } from "@tcg/flesh-and-blood-cards/catalog";
-import { getFabCardCategory } from "@tcg/flesh-and-blood-types";
+import { getFabCardCategory, isFleshAndBloodFormatPlayable } from "@tcg/flesh-and-blood-types";
 import type { FabHeroClass } from "./deck-catalog-model.ts";
 import type { FabDeckCardLibrary } from "./resolve-text-deck.ts";
 import { createFabValidationCard } from "../deck-validation-card.ts";
@@ -69,7 +69,7 @@ export function isAdultCcLegalHeroPrinting(canonicalId: string, types: readonly 
   if (types.includes("Young")) return false;
   const metadata = getFleshAndBloodCard(canonicalId);
   const cc = metadata?.legalities.cc;
-  return Boolean(cc?.legal && !cc.banned && !cc.suspended);
+  return cc !== undefined && isFleshAndBloodFormatPlayable(cc);
 }
 
 /** Unique adult hero printings the shipped CC validator will accept as the seated hero. */

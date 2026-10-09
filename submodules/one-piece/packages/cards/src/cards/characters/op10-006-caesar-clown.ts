@@ -22,7 +22,7 @@ export const op10CaesarClown006: CharacterCard = {
   setId: "OP10",
   cost: 7,
   power: 7000,
-  traits: ["Punk Hazard Scientist"],
+  traits: ["Scientist", "Punk Hazard"],
   attribute: "special",
   effect:
     "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 [Smiley] and add it to your hand. Then, place the rest at the bottom of your deck in any order and play up to 1 [Smiley] from your hand.",

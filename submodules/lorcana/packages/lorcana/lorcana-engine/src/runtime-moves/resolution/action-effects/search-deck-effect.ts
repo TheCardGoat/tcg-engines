@@ -1,3 +1,4 @@
+import { markLastEffectPerformed } from "./event-snapshot-utils";
 import type { CardInstanceId } from "#core";
 import type { SearchDeckEffect } from "@tcg/lorcana-types";
 import type { CardPlayedPayload } from "../../../types";
@@ -127,6 +128,7 @@ export function resolveSearchDeckEffect(
   }) as CardInstanceId[];
   const candidates = deckCards.filter((cardId) => matchesSearchFilter(ctx, cardId, effect));
   if (candidates.length === 0) {
+    markLastEffectPerformed(resolutionInput.eventSnapshot, false);
     return;
   }
 
@@ -188,4 +190,5 @@ export function resolveSearchDeckEffect(
   if (resolutionInput.eventSnapshot) {
     resolutionInput.eventSnapshot.chosenCardId = chosenCardId;
   }
+  markLastEffectPerformed(resolutionInput.eventSnapshot, true);
 }

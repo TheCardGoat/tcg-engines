@@ -1,4 +1,5 @@
 import { createCardCatalog, type CardCatalog } from "@tcg/cyberpunk-cards";
+import { isDieType } from "@tcg/cyberpunk-types";
 import type {
   CardZone,
   LegendCardDefinition,
@@ -15,12 +16,8 @@ import {
   createPlayerId,
   getEffectivePowerFromCatalog,
   setCardRegistry,
-  type AttackKind,
-  type AttackState,
-  type AttackStep,
   type CardInstance,
   type ChoicePrompt,
-  type DieType,
   type FilteredCardView,
   type FilteredMatchView,
   type GamePhase,
@@ -29,9 +26,11 @@ import {
   type PendingChoice,
   type PlayerId,
 } from "@tcg/cyberpunk-engine";
+import {
+  VIEWER_UNKNOWN_CARD_DEFINITION_ID,
+  VIEWER_UNKNOWN_LEGEND_DEFINITION_ID,
+} from "./viewerPlaceholders";
 
-const UNKNOWN_CARD_DEFINITION_ID = "viewer:unknown-card";
-const UNKNOWN_LEGEND_DEFINITION_ID = "viewer:unknown-legend";
 const CARD_BACK_IMAGE_URL = "https://cdn.tcg.online/public/cyberpunk/cards/back/card-back.webp";
 const LEGEND_CARD_BACK_IMAGE_URL =
   "https://cdn.tcg.online/public/cyberpunk/cards/back/legend-card-back.webp";
@@ -43,8 +42,8 @@ const LEGEND_CARD_BACK_IMAGE_URL =
  * "Unknown Card", not confidently show an unrelated legal card.
  */
 const UNKNOWN_CARD_DEFINITION = {
-  id: UNKNOWN_CARD_DEFINITION_ID,
-  canonicalId: UNKNOWN_CARD_DEFINITION_ID,
+  id: VIEWER_UNKNOWN_CARD_DEFINITION_ID,
+  canonicalId: VIEWER_UNKNOWN_CARD_DEFINITION_ID,
   slug: "unknown-card",
   name: "Unknown Card",
   displayName: "Unknown Card",
@@ -72,8 +71,8 @@ const UNKNOWN_CARD_DEFINITION = {
 
 const UNKNOWN_LEGEND_DEFINITION = {
   ...UNKNOWN_CARD_DEFINITION,
-  id: UNKNOWN_LEGEND_DEFINITION_ID,
-  canonicalId: UNKNOWN_LEGEND_DEFINITION_ID,
+  id: VIEWER_UNKNOWN_LEGEND_DEFINITION_ID,
+  canonicalId: VIEWER_UNKNOWN_LEGEND_DEFINITION_ID,
   slug: "unknown-legend",
   name: "Unknown Legend",
   displayName: "Unknown Legend",
@@ -85,8 +84,8 @@ const UNKNOWN_LEGEND_DEFINITION = {
 
 const productionCardCatalog = createCardCatalog();
 const viewerPlaceholderDefinitions = new Map<string, StructuredCardDefinition>([
-  [UNKNOWN_CARD_DEFINITION_ID, UNKNOWN_CARD_DEFINITION],
-  [UNKNOWN_LEGEND_DEFINITION_ID, UNKNOWN_LEGEND_DEFINITION],
+  [VIEWER_UNKNOWN_CARD_DEFINITION_ID, UNKNOWN_CARD_DEFINITION],
+  [VIEWER_UNKNOWN_LEGEND_DEFINITION_ID, UNKNOWN_LEGEND_DEFINITION],
 ]);
 const liveMatchCatalog: CardCatalog = {
   get(definitionId) {
@@ -116,7 +115,9 @@ export function createLiveMatchViewerEngine(
   setCardRegistry(liveMatchCatalog);
   return CyberpunkTestEngine.fromState(
     isMatchState(state) ? state : viewerProjectionToMatchState(state, matchId),
-    { autoGainGig: false },
+    // Opening hands are dealt only by the server, after the first-player
+    // choice. Resolving that choice here would draw from the redacted deck.
+    { autoGainGig: false, autoChooseFirstPlayer: false },
   );
 }
 
@@ -143,19 +144,21 @@ export function viewerProjectionToMatchState(
   G.gigDice = {};
   const projectedCards = new Map<string, FilteredCardView>();
 
-  for (const [playerIndex, [rawPlayerId, projectedPlayer]] of Object.entries(
-    projection.players,
-  ).entries()) {
+  for (const [rawPlayerId, projectedPlayer] of Object.entries(projection.players)) {
     const playerId = createPlayerId(rawPlayerId);
-    const player = createEmptyPlayerState(playerId, playerIndex === 0);
+    const player = createEmptyPlayerState(playerId, projectedPlayer.firstPlayer);
     player.eddies = projectedPlayer.eddies;
     player.spentEddies = Math.max(0, projectedPlayer.eddies - projectedPlayer.availableEddies);
     player.soldThisTurn = projectedPlayer.soldThisTurn;
     player.calledLegendThisTurn = projectedPlayer.calledLegendThisTurn;
     player.calledLegendThisRivalTurn = projectedPlayer.calledLegendThisRivalTurn;
+    if (projectedPlayer.combatPriority) player.combatPriority = projectedPlayer.combatPriority;
 
     for (const zone of CARD_ZONES) {
       const projectedZone = projectedPlayer.zones[zone];
+      // A hidden deck stays a count. Materializing it would give the opening
+      // deal card instances it could shift into a fake hand.
+      if (zone === "deck" && !Array.isArray(projectedZone)) continue;
       const cards = Array.isArray(projectedZone)
         ? projectedZone
         : hiddenCards(rawPlayerId, zone, projectedZone ?? 0, placeholderDefinitionId);
@@ -186,13 +189,17 @@ export function viewerProjectionToMatchState(
   G.gamePhase = gamePhase(projection.gamePhase);
   G.turnMetadata.turnNumber = projection.turnNumber;
   G.turnMetadata.activePlayerId = createPlayerId(projection.activePlayerId);
+  G.overtime = projection.overtimeActive;
+  G.turnMetadata.overtimeActive = projection.overtimeActive;
+  G.turnMetadata.previousTurnBeganWithEmptyFixer = projection.previousTurnBeganWithEmptyFixer;
+  G.turnMetadata.turnBeganWithEmptyFixer = projection.turnBeganWithEmptyFixer;
   G.turnMetadata.playedCardTypesThisTurn = Object.fromEntries(
     Object.entries(projection.playedCardTypesThisTurn).map(([playerId, types]) => [
       playerId,
       [...types],
     ]),
   );
-  G.attackState = attackStateFromProjection(projection, G.players);
+  G.attackState = structuredClone(projection.attackState);
   G.gameEnded = projection.gameEnded;
   G.winnerId = projection.winnerId ? createPlayerId(projection.winnerId) : null;
   G.winReason = projection.winReason;
@@ -417,6 +424,20 @@ export function pendingChoiceFromPromptChoice(choice: ChoicePrompt): PendingChoi
             abilityText: option.abilityText,
             cardName: option.cardName,
             ...(option.optional !== undefined ? { optional: option.optional } : {}),
+            ...(option.containsOptionalEffect !== undefined
+              ? { containsOptionalEffect: option.containsOptionalEffect }
+              : {}),
+            ...(option.context?.kind === "gigRoll"
+              ? {
+                  context: {
+                    kind: "gigRoll" as const,
+                    dieId: createGigDieId(option.context.dieId),
+                    dieType: option.context.dieType,
+                    result: option.context.result,
+                    origin: option.context.origin,
+                  },
+                }
+              : {}),
           })),
         },
       };
@@ -480,8 +501,6 @@ export function pendingChoiceFromPromptChoice(choice: ChoicePrompt): PendingChoi
             kind: "fight",
             remainingCardIds: [],
             fightPlayerId: createPlayerId(choice.payload.fightPlayerId),
-            attackerPower: 0,
-            defenderPower: 0,
           },
         },
       };
@@ -497,38 +516,14 @@ export function pendingChoiceFromPromptChoice(choice: ChoicePrompt): PendingChoi
             kind: "fight",
             remainingCardIds: [],
             fightPlayerId: createPlayerId(choice.payload.fightPlayerId),
-            attackerPower: 0,
-            defenderPower: 0,
           },
           defeatedBy: null,
         },
       };
     case "scry":
-      return {
-        type: "scry",
-        chooserId,
-        effectId,
-        payload: {
-          player: choice.payload.player,
-          amount: choice.payload.amount,
-          // The projection's destination filters (ScryTargetFilter) are a
-          // display projection of the engine's CardTargetDSL, so `target` is
-          // not reconstructed; viewer-side resolution never runs.
-          destinations: choice.payload.destinations.map((destination) => ({
-            zone: destination.zone,
-            ...(destination.min !== undefined ? { min: destination.min } : {}),
-            ...(destination.max !== undefined ? { max: destination.max } : {}),
-            ...(destination.reveal !== undefined ? { reveal: destination.reveal } : {}),
-            ...(destination.remainder !== undefined ? { remainder: destination.remainder } : {}),
-            ...(destination.order !== undefined ? { order: destination.order } : {}),
-          })),
-          revealedCardIds: choice.payload.revealedCardIds.map(createCardInstanceId),
-          sourceCardId: choice.payload.source
-            ? createCardInstanceId(choice.payload.source.cardId)
-            : undefined,
-          sourcePlayerId: choice.payload.source ? chooserId : undefined,
-        },
-      };
+      // Scry resolution needs private bound targets and source context. Keep it
+      // solely in the public prompt/interaction view; never fabricate executable state.
+      return undefined;
     case "revealDestination":
       return {
         type: "revealDestination",
@@ -613,7 +608,7 @@ export function pendingChoiceFromPromptChoice(choice: ChoicePrompt): PendingChoi
 }
 
 function hiddenCardPlaceholderDefinitionId(): string {
-  return UNKNOWN_CARD_DEFINITION_ID;
+  return VIEWER_UNKNOWN_CARD_DEFINITION_ID;
 }
 
 /**
@@ -623,7 +618,7 @@ function hiddenCardPlaceholderDefinitionId(): string {
  * the legend card back.
  */
 function legendCardPlaceholderDefinitionId(): string {
-  return UNKNOWN_LEGEND_DEFINITION_ID;
+  return VIEWER_UNKNOWN_LEGEND_DEFINITION_ID;
 }
 
 function hiddenCards(
@@ -643,6 +638,9 @@ function hiddenCards(
     power: 0,
     effectivePower: 0,
     cost: null,
+    effectiveCost: null,
+    costEffects: [],
+    activeEffects: [],
     type: null,
     classifications: [],
     hasSellTag: false,
@@ -718,46 +716,4 @@ function gamePhase(value: string): GamePhase {
   return value === "setup" || value === "start" || value === "main" || value === "end"
     ? value
     : "setup";
-}
-
-function attackStateFromProjection(
-  projection: FilteredMatchView,
-  players: MatchState["G"]["players"],
-): AttackState | null {
-  const attack = projection.attackState;
-  if (!attack || !attack.attackerId || !isAttackKind(attack.kind) || !isAttackStep(attack.step)) {
-    return null;
-  }
-  const attackerOwner = Object.entries(players).find(([, player]) =>
-    player.zones.field.some((id) => String(id) === attack.attackerId),
-  )?.[0];
-  const rivalId = Object.keys(players).find((playerId) => playerId !== attackerOwner);
-  if (!rivalId) return null;
-  return {
-    attackerId: createCardInstanceId(attack.attackerId),
-    defenderId: attack.defenderId ? createCardInstanceId(attack.defenderId) : null,
-    rivalId: createPlayerId(rivalId),
-    kind: attack.kind,
-    step: attack.step,
-    redirectedByBlocker: attack.redirectedByBlocker,
-  };
-}
-
-function isAttackKind(value: string): value is AttackKind {
-  return value === "fight" || value === "direct";
-}
-
-function isAttackStep(value: string): value is AttackStep {
-  return value === "attack" || value === "react" || value === "fight" || value === "steal";
-}
-
-function isDieType(value: string): value is DieType {
-  return (
-    value === "d4" ||
-    value === "d6" ||
-    value === "d8" ||
-    value === "d10" ||
-    value === "d12" ||
-    value === "d20"
-  );
 }

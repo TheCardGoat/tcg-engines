@@ -2,8 +2,8 @@ import { describe, expect, test } from "vite-plus/test";
 import {
   op09Fullalead099,
   op09JesusBurgess086,
+  op09Stronger089,
   op09Peachbeard094,
-  op13Higuma013,
   op13Otama043,
   op13WindmillVillage022,
   op13York094,
@@ -16,13 +16,13 @@ describe("OP09-099 Fullalead", () => {
     const engine = OnePieceTestEngine.create({
       stage: op09Fullalead099,
       hand: [op13Otama043, op13York094],
-      deck: [op09Peachbeard094, op13Higuma013, op09JesusBurgess086, op13WindmillVillage022],
+      deck: [op09Stronger089, op09Peachbeard094, op09JesusBurgess086, op13WindmillVillage022],
     });
     const stageId = engine.findCardInZone("south", "stage", op09Fullalead099);
     const keptHandId = engine.findCardInZone("south", "hand", op13Otama043);
     const costId = engine.findCardInZone("south", "hand", op13York094);
-    const compositeEligibleId = engine.findCardInZone("south", "deck", op09Peachbeard094);
-    const ineligibleId = engine.findCardInZone("south", "deck", op13Higuma013);
+    const compositeEligibleId = engine.findCardInZone("south", "deck", op09Stronger089);
+    const ineligibleId = engine.findCardInZone("south", "deck", op09Peachbeard094);
     const exactEligibleId = engine.findCardInZone("south", "deck", op09JesusBurgess086);
     const untouchedBottomId = engine.findCardInZone("south", "deck", op13WindmillVillage022);
 
@@ -86,7 +86,7 @@ describe("OP09-099 Fullalead", () => {
     const engine = OnePieceTestEngine.create({
       stage: op09Fullalead099,
       hand: [op13Otama043, op13York094],
-      deck: [op09Peachbeard094, op13Higuma013, op09JesusBurgess086, op13WindmillVillage022],
+      deck: [op09Stronger089, op09Peachbeard094, op09JesusBurgess086, op13WindmillVillage022],
     });
     const stageId = engine.findCardInZone("south", "stage", op09Fullalead099);
     engine.activateEffect(stageId, "activateMain");

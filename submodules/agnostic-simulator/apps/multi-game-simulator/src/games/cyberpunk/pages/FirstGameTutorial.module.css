@@ -1,0 +1,159 @@
+.page {
+  min-height: 100vh;
+}
+.guide {
+  position: fixed;
+  z-index: 4000;
+  top: 12px;
+  right: 12px;
+  width: min(370px, calc(100vw - 24px));
+  max-height: min(75vh, 560px);
+  overflow: auto;
+  padding: 18px;
+  border: 2px solid #f5e642;
+  border-radius: 12px;
+  background: #0b1018f5;
+  box-shadow: 0 14px 50px #000a;
+  color: #f5f7fa;
+  font:
+    15px/1.5 system-ui,
+    sans-serif;
+}
+.guide h1 {
+  margin: 12px 0;
+  font-size: 24px;
+  line-height: 1.2;
+}
+.guide p {
+  margin: 0 0 16px;
+}
+.invitation {
+  z-index: 199;
+  width: min(350px, calc(100vw - 24px));
+  max-height: min(75vh, 560px);
+  padding: 16px;
+}
+.invitation p {
+  margin: 8px 0 12px;
+}
+.topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #f5e642;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.topline button,
+.actions button,
+.restore {
+  min-height: 40px;
+  border: 1px solid #6b7786;
+  border-radius: 6px;
+  background: #162230;
+  color: #fff;
+  cursor: pointer;
+  padding: 7px 12px;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.actions .primary,
+.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  border: 0;
+  border-radius: 6px;
+  background: #f5e642;
+  color: #111;
+  font-weight: 700;
+  padding: 7px 14px;
+  text-decoration: none;
+}
+.actions .primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.status {
+  color: #f5e642;
+  font-weight: 700;
+}
+.mobileText {
+  display: none;
+}
+.spotlight {
+  position: fixed;
+  z-index: 3900;
+  box-sizing: border-box;
+  pointer-events: none;
+  border: 4px solid #ffe63b;
+  border-radius: 10px;
+  background: transparent;
+  box-shadow:
+    0 0 0 100vmax #03070e99,
+    0 0 0 2px #090c12,
+    0 0 26px 8px #ffe63bcc;
+}
+.page[data-step="cards"] :global([data-zone="p-hand"]),
+.page[data-step="sell"] :global([data-zone="p-hand"][data-zone-index="2"]),
+.page[data-step="play"] :global([data-zone="p-hand"][data-zone-index="1"]),
+.page[data-step="attack"] :global([data-zone="p-field"][data-zone-index="1"]),
+.page[data-step="block"] :global([data-zone="p-field"][data-zone-index="2"]),
+.page[data-step="settings"] :global([aria-label="Open your player actions"]),
+.page[data-step="report"] :global([aria-label="Opponent match status"]),
+.page[data-step="payment"] :global([aria-label="Choose payment for every cost"]),
+.page[data-step="payment"] :global([aria-label="Manual payment enabled"]),
+.page[data-step="priority"] :global([aria-label="Hold combat priority"]),
+.page[data-step="bug"] :global([aria-label="Open your player actions"]),
+.page[data-step="correction"] :global([aria-label="Open your player actions"]),
+.page[data-step="undo"] :global([aria-label="Undo last move"]),
+.page[data-step="undo"] :global([aria-label="No undoable move available"]) {
+  outline: 4px solid #ffe63b;
+  outline-offset: 3px;
+  box-shadow: 0 0 24px 7px #ffe63bcc;
+}
+@media (max-width: 767px) {
+  .guide {
+    top: 8px;
+    right: 8px;
+    max-height: 34vh;
+    padding: 12px;
+  }
+  .page[data-step="settings"] .guide,
+  .page[data-step="report"] .guide,
+  .page[data-step="payment"] .guide,
+  .page[data-step="priority"] .guide,
+  .page[data-step="bug"] .guide,
+  .page[data-step="correction"] .guide {
+    top: calc(env(safe-area-inset-top, 0px) + 56px);
+  }
+  .page[data-step="settings"] :global([aria-label="Open more match options"]),
+  .page[data-step="bug"] :global([aria-label="Open more match options"]),
+  .page[data-step="correction"] :global([aria-label="Open more match options"]),
+  .page[data-step="undo"] :global([aria-label="Undo last move"]),
+  .page[data-step="report"] :global([aria-label="Opponent status"]) {
+    outline: 4px solid #ffe63b;
+    outline-offset: 3px;
+    box-shadow: 0 0 24px 7px #ffe63bcc;
+  }
+  .guide h1 {
+    margin: 6px 0;
+    font-size: 18px;
+  }
+  .guide p {
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .desktopText {
+    display: none;
+  }
+  .mobileText {
+    display: block;
+  }
+}

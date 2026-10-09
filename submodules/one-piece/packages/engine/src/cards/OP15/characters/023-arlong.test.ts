@@ -1,11 +1,47 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb01Doma005, op15Arlong023 } from "@tcg/op-cards";
+import { eb01Doma005, op15Arlong023, op03Buggy032 } from "@tcg/op-cards";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 
 const OPPONENTS_TURN = { firstPlayer: "south", activeSeat: "north" } as const;
 
 describe("OP15-023 Arlong", () => {
+  test("the printed Slash attribute cannot defeat Slash-protected Buggy in battle", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: op15Arlong023, playedOnTurn: 0 }] },
+      { character: [{ card: op03Buggy032, rested: true }], hand: [] },
+    );
+    const arlongId = engine.findCardInZone("south", "character", op15Arlong023);
+    const buggyId = engine.findCardInZone("north", "character", op03Buggy032);
+    engine.declareAttack(arlongId, buggyId, "south");
+    expect(
+      engine.getView("south").players.north.characters.map((card) => card?.instanceId),
+    ).toContain(buggyId);
+    expect(engine.getView("south").players.north.trash).toHaveLength(0);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("the erratum permits donating an active DON!! after the rested-DON!! cost", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op15Arlong023], activeDon: 1 },
+      { character: [eb01Doma005], restedDon: 1 },
+    );
+    const arlongId = engine.findCardInZone("south", "character", op15Arlong023);
+    engine.activateEffect(arlongId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectGiveDonCount", { optionId: "1" }, "south");
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.leader("south")] },
+      "south",
+    );
+    expect(engine.getView("south").players.south.leader.attachedDon).toBe(1);
+    expect(engine.getView("south").players.south.activeDon).toBe(0);
+    expect(engine.getView("south").players.north.restedDon).toBe(0);
+    expect(engine.getView("south").players.north.characters[0]?.attachedDon).toBe(1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[On K.O.] freezes up to 2 of the opponent's rested cards through their next Refresh Phase", () => {
     const engine = OnePieceTestEngine.create(
       {
@@ -62,12 +98,11 @@ describe("OP15-023 Arlong", () => {
     );
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
 
-    const payment = engine.pendingDecision("effectCostGiveDon", "south").steps[0];
-    expect(payment?.kind).toBe("payCost");
-    if (payment?.kind !== "payCost") throw new Error("Expected the clog cost.");
-    expect(payment.candidates.map((candidate) => candidate.ref.id)).toEqual([leaderId, domaId]);
-    engine.resolveDecision("effectCostGiveDon", { selectedIds: [domaId] }, "south");
     expect(engine.getView("south").players.north.restedDon).toBe(1);
+    expect(
+      engine.getView("south").players.north.characters.find((card) => card?.instanceId === domaId)
+        ?.attachedDon,
+    ).toBe(1);
 
     const count = engine.pendingDecision("effectGiveDonCount", "south").steps[0];
     if (count?.kind !== "chooseOption") throw new Error("Expected the give count.");
@@ -76,7 +111,9 @@ describe("OP15-023 Arlong", () => {
     if (target?.kind !== "selectEntity") throw new Error("Expected the clog target.");
     engine.resolveDecision("effectTargetSelection", { selectedIds: [leaderId] }, "south");
 
-    // The cost-area give draws from the rested pool first.
+    engine.resolveDecision("effectGiveDonSource", { optionId: "0" }, "south");
+
+    // The controller chooses the rested DON!! from the cost area.
     const north = engine.getView("south").players.north;
     expect(north.restedDon).toBe(0);
     expect(north.activeDon).toBe(2);
@@ -100,13 +137,6 @@ describe("OP15-023 Arlong", () => {
     // A declined activation is not a use: the window must reopen.
     engine.activateEffect(arlongId, "activateMain", "south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
-    const payment = engine.pendingDecision("effectCostGiveDon", "south").steps[0];
-    if (payment?.kind !== "payCost") throw new Error("Expected the clog cost.");
-    engine.resolveDecision(
-      "effectCostGiveDon",
-      { selectedIds: [payment.candidates[0]!.ref.id] },
-      "south",
-    );
     engine.resolveDecision("effectGiveDonCount", { optionId: "0" }, "south");
 
     north = engine.getView("south").players.north;
@@ -116,5 +146,28 @@ describe("OP15-023 Arlong", () => {
 
     // The accepted activation consumed the once-per-turn.
     expect(() => engine.activateEffect(arlongId, "activateMain", "south")).toThrow();
+  });
+  test("On KO can freeze an opposing Leader and Stage", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: op15Arlong023, rested: true }] },
+      { stage: { cardId: "OP15-057", rested: true }, activeDon: 3 },
+      OPPONENTS_TURN,
+    );
+    const leader = engine.leader("north");
+    const stage = engine.getView("south").players.north.stage!.instanceId!;
+    engine.attachDon(leader, 3, "north");
+    engine.declareAttack(
+      leader,
+      engine.findCardInZone("south", "character", op15Arlong023),
+      "north",
+    );
+    const step = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected freeze targets");
+    expect(step.candidates.map((c) => c.ref.id)).toEqual([leader, stage]);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [leader, stage] }, "south");
+    engine.endTurn("north");
+    engine.endTurn("south");
+    expect(engine.getView("south").players.north.leader.rested).toBe(true);
+    expect(engine.getView("south").players.north.stage?.rested).toBe(true);
   });
 });

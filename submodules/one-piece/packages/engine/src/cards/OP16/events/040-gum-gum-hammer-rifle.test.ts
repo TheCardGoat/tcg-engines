@@ -40,4 +40,35 @@ describe("OP16-040 Gum-Gum Hammer Rifle", () => {
         ?.rested,
     ).toBe(true);
   });
+  test("Main counts the Luffy Leader and expires after the opponent's next Refresh", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: "ST01-001", character: ["OP09-056"], hand: ["OP16-040"], activeDon: 5 },
+      { character: [{ cardId: "OP13-013", rested: true }] },
+    );
+    const target = engine.findCardInZone("north", "character", "OP13-013");
+    engine.asSouth().play("OP16-040");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    engine.endTurn("south");
+    expect(
+      engine.getView("south").players.north.characters.find((c) => c?.instanceId === target)
+        ?.rested,
+    ).toBe(true);
+    engine.endTurn("north");
+    engine.endTurn("south");
+    expect(
+      engine.getView("south").players.north.characters.find((c) => c?.instanceId === target)
+        ?.rested,
+    ).toBe(false);
+  });
+
+  test("Main does not freeze without Mr.3 even with the Luffy Leader", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: "ST01-001", hand: ["OP16-040"], activeDon: 5 },
+      { character: [{ cardId: "OP13-013", rested: true }] },
+    );
+    engine.asSouth().play("OP16-040");
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    engine.endTurn("south");
+    expect(engine.getView("south").players.north.characters[0]?.rested).toBe(false);
+  });
 });

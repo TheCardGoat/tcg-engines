@@ -27,6 +27,7 @@ export const potato: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_11e7ec08264e4f45b0859b62bb6db93e",
+    tcgPlayer: "704614",
   },
   text: [
     {

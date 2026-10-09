@@ -32,6 +32,7 @@ import {
 import { createPortal } from "react-dom";
 
 import { CardFace } from "./CardFace";
+import { ViewerSafeCardImage } from "./ViewerSafeCardImage";
 import classes from "./CardContextMenu.module.css";
 import { useSimulatorViewportLayout } from "./SimulatorViewportShell";
 import { useActiveLayout, type ActiveLayout } from "../hooks/useActiveLayout";
@@ -47,6 +48,10 @@ const AUTO_ACTIVATE_LONG_PRESS_MS = 450;
 export interface CardContextMenuIdentityProps {
   entity: SimulatorEntity;
   mode: CardInteractionMode;
+  /** Opens a persistent inspection of this card without changing its action menu. */
+  onInspect: () => void;
+  onPreviewStart?: () => void;
+  onPreviewEnd?: () => void;
 }
 
 export interface CardContextMenuActionIconProps {
@@ -92,6 +97,8 @@ export interface CardContextMenuVisualIdentity {
   anchorAboveOnMobile?: boolean;
   /** Lets an opted-in game put executable actions before reference details on small screens. */
   actionsFirstOnMobile?: boolean;
+  /** A game may surface state and classification badges in its header instead of the detail body. */
+  hideDetailsTags?: boolean;
   renderIdentity?: (props: CardContextMenuIdentityProps) => ReactNode;
   renderActionIcon?: (props: CardContextMenuActionIconProps) => ReactNode;
   renderControlIcon?: (props: CardContextMenuControlIconProps) => ReactNode;
@@ -113,6 +120,8 @@ export interface CardContextMenuProps {
   onPreviewEntity?: (entity: SimulatorEntity, mode: "hover" | "pinned") => void;
   /** An entity id ends incidental hover; no id explicitly dismisses inspection. */
   onPreviewEnd?: (hoverEntityId?: string) => void;
+  /** Public entities named by this card's relationships. */
+  relatedEntities?: readonly SimulatorEntity[];
   visualIdentity?: CardContextMenuVisualIdentity;
   /** Uses the owning simulator shell's resolved layout when the controller sits above that shell. */
   layoutOverride?: ActiveLayout;
@@ -135,6 +144,7 @@ export function CardContextMenu({
   onOpenChange,
   onPreviewEntity,
   onPreviewEnd,
+  relatedEntities = [],
   visualIdentity,
   layoutOverride,
 }: CardContextMenuProps) {
@@ -201,6 +211,21 @@ export function CardContextMenu({
     nativePreviewActive.current = null;
     onPreviewEndRef.current?.(hoverEntityId);
   }, []);
+
+  const inspectCard = useCallback(() => {
+    if (usesNativePreview) {
+      if (nativePreviewPinnedRef.current) return;
+      nativePreviewPinnedRef.current = true;
+      setNativePreviewPinned(true);
+      showNativePreview("pinned");
+      return;
+    }
+    if (isMobileLayout) {
+      setMobilePreviewOpen(true);
+      return;
+    }
+    setPreviewPinned(true);
+  }, [isMobileLayout, showNativePreview, usesNativePreview]);
 
   useEffect(() => () => hideNativePreview(), [hideNativePreview]);
 
@@ -333,13 +358,29 @@ export function CardContextMenu({
               {entity.title}
             </h2>
             <div className={classes.identity}>
-              {visualIdentity.renderIdentity({ entity, mode })}
+              {visualIdentity.renderIdentity({ entity, mode, onInspect: inspectCard,
+                onPreviewStart: () => {
+                  if (usesNativePreview) { setNativePreviewHovered(true); showNativePreview("hover"); }
+                  else if (!isMobileLayout) setPreviewHovered(true);
+                },
+                onPreviewEnd: () => {
+                  if (usesNativePreview) {
+                    setNativePreviewHovered(false);
+                    if (!nativePreviewPinnedRef.current) hideNativePreview(entity.id);
+                  } else setPreviewHovered(false);
+                },
+              })}
             </div>
           </>
         ) : (
-          <DefaultCardContextIdentity entity={entity} mode={mode} titleId={titleId} />
+          <DefaultCardContextIdentity
+            entity={entity}
+            mode={mode}
+            onInspect={inspectCard}
+            titleId={titleId}
+          />
         )}
-        {mode === "detailed" ? (
+        {mode === "detailed" || isMobileLayout ? (
           <button
             ref={previewToggleRef}
             type="button"
@@ -448,12 +489,14 @@ export function CardContextMenu({
       </header>
 
       <div className={classes.scrollRegion}>
-        {mode === "detailed" ? (
+        {mode === "detailed" || isMobileLayout || previewOpen ? (
           <DetailedCardContext
             entity={entity}
             previewId={previewId}
             previewOpen={usesNativePreview ? false : previewOpen}
             visualIdentity={visualIdentity}
+            relatedEntities={relatedEntities}
+            onInspectRelatedEntity={onPreviewEntity}
           />
         ) : null}
 
@@ -594,11 +637,18 @@ export function CardContextMenu({
           focusAnchor();
         }}
         position="bottom"
-        size="min(78dvh, 640px)"
+        size="auto"
         padding={0}
         zIndex={2100}
         withCloseButton={false}
         returnFocus={false}
+        styles={{
+          content: {
+            flex: "0 1 auto",
+            height: "auto",
+            overflow: "hidden",
+          },
+        }}
         title={<span className={classes.srOnly}>{entity.title} card menu</span>}
         overlayProps={{ backgroundOpacity: 0.58 }}
         classNames={{
@@ -770,30 +820,34 @@ function DetailedCardContext({
   previewId,
   previewOpen,
   visualIdentity,
+  relatedEntities,
+  onInspectRelatedEntity,
 }: {
   entity: SimulatorEntity;
   previewId: string;
   previewOpen: boolean;
   visualIdentity?: CardContextMenuVisualIdentity;
+  relatedEntities: readonly SimulatorEntity[];
+  onInspectRelatedEntity?: (entity: SimulatorEntity, mode: "hover" | "pinned") => void;
 }) {
-  const [detailsExpanded, setDetailsExpanded] = useState(false);
+  const [effectsExpanded, setEffectsExpanded] = useState(false);
   const rules = deduplicateCardRules(entity.details?.rules ?? []).filter(
     (rule) =>
       isMeaningfulPublicText(rule.text) ||
       (rule.label !== undefined && isMeaningfulPublicText(rule.label)),
   );
   const relationships = entity.details?.relationships ?? [];
+  const relatedEntityById = new Map(relatedEntities.map((related) => [related.id, related]));
   const visibleTags = [...entity.states, ...entity.traits].filter(
     (tag) => !entity.subtitle.toLocaleLowerCase().includes(tag.toLocaleLowerCase()),
   );
+  const showTags = !visualIdentity?.hideDetailsTags;
   const hasFacts =
     entity.stats.length > 0 ||
-    visibleTags.length > 0 ||
+    (showTags && visibleTags.length > 0) ||
     rules.length > 0 ||
     (entity.activeEffects?.length ?? 0) > 0 ||
     relationships.length > 0;
-  const collapsibleDetails = rules.length > 1 || (entity.activeEffects?.length ?? 0) > 0;
-  const visibleRules = detailsExpanded ? rules : rules.slice(0, 1);
   const activeEffectCount = entity.activeEffects?.length ?? 0;
 
   return (
@@ -805,20 +859,16 @@ function DetailedCardContext({
       ) : null}
       <div className={classes.facts}>
         {!hasFacts ? <p className={classes.emptyDetails}>No additional public details.</p> : null}
-        {visibleTags.length > 0 ? (
+        {showTags && visibleTags.length > 0 ? (
           <div className={classes.tags} aria-label="Card state and traits">
             {visibleTags.map((tag) => (
               <span key={tag}>{tag}</span>
             ))}
           </div>
         ) : null}
-        {visibleRules.length > 0 ? (
-          <div
-            className={classes.rules}
-            aria-label="Rules and abilities"
-            data-collapsed={collapsibleDetails && !detailsExpanded ? "true" : undefined}
-          >
-            {visibleRules.map((rule) => (
+        {rules.length > 0 ? (
+          <div className={classes.rules} aria-label="Rules and abilities">
+            {rules.map((rule) => (
               <article key={rule.id} data-card-context-rule={rule.id}>
                 {rule.label ? (
                   <div className={classes.ruleHeader}>
@@ -834,7 +884,7 @@ function DetailedCardContext({
             ))}
           </div>
         ) : null}
-        {detailsExpanded && activeEffectCount > 0 ? (
+        {effectsExpanded && activeEffectCount > 0 ? (
           <DetailGroup title="Active effects">
             <div className={classes.effects}>
               {entity.activeEffects?.map((effect) => (
@@ -846,32 +896,70 @@ function DetailedCardContext({
             </div>
           </DetailGroup>
         ) : null}
-        {collapsibleDetails ? (
+        {activeEffectCount > 0 ? (
           <button
             type="button"
             className={classes.detailsToggle}
-            aria-expanded={detailsExpanded}
+            aria-expanded={effectsExpanded}
             data-card-context-details-toggle
-            onClick={() => setDetailsExpanded((expanded) => !expanded)}
+            onClick={() => setEffectsExpanded((expanded) => !expanded)}
           >
-            {detailsExpanded
-              ? "Show less"
-              : activeEffectCount > 0
-                ? `Show full text and ${activeEffectCount} active ${
-                    activeEffectCount === 1 ? "effect" : "effects"
-                  }`
-                : "Show full text"}
+            {effectsExpanded
+              ? "Hide active effects"
+              : `Show ${activeEffectCount} active ${activeEffectCount === 1 ? "effect" : "effects"}`}
           </button>
         ) : null}
         {relationships.length > 0 ? (
           <DetailGroup title="Related cards">
             <div className={classes.relationships}>
               {relationships.map((relationship) => (
-                <RelationshipChip key={relationship.id} relationship={relationship} />
+                <RelationshipCards
+                  key={relationship.id}
+                  relationship={relationship}
+                  relatedEntityById={relatedEntityById}
+                  onInspect={onInspectRelatedEntity}
+                />
               ))}
             </div>
           </DetailGroup>
         ) : null}
+      </div>
+    </section>
+  );
+}
+
+function RelationshipCards({
+  relationship,
+  relatedEntityById,
+  onInspect,
+}: {
+  relationship: NonNullable<NonNullable<SimulatorEntity["details"]>["relationships"]>[number];
+  relatedEntityById: ReadonlyMap<string, SimulatorEntity>;
+  onInspect?: (entity: SimulatorEntity, mode: "hover" | "pinned") => void;
+}) {
+  const cards = relationship.entityIds.flatMap((id) => {
+    const related = relatedEntityById.get(id);
+    return related?.face === "public" ? [related] : [];
+  });
+  if (cards.length === 0) return <RelationshipChip relationship={relationship} />;
+
+  return (
+    <section className={classes.relatedGroup} aria-label={relationship.label}>
+      <span className={classes.relatedLabel}>{relationship.label}</span>
+      <div className={classes.relatedCards}>
+        {cards.map((card) => (
+          <button
+            key={card.id}
+            type="button"
+            className={classes.relatedCard}
+            aria-label={`Inspect ${card.title}`}
+            onClick={() => onInspect?.(card, "pinned")}
+            disabled={!onInspect}
+          >
+            <ViewerSafeCardImage entity={card} alt="" aria-hidden="true" />
+            <span>{card.title}</span>
+          </button>
+        ))}
       </div>
     </section>
   );
@@ -921,7 +1009,8 @@ function readablePublicText(value: string): string {
   return value.replace(/<br\s*\/?>/giu, "\n").replace(/\n{3,}/gu, "\n\n");
 }
 
-function isMeaningfulPublicText(value: string): boolean {
+function isMeaningfulPublicText(value: string | undefined): value is string {
+  if (value === undefined) return false;
   const text = readablePublicText(value).trim();
   return text.length > 0 && !/^[-–—]+$/u.test(text);
 }
@@ -955,8 +1044,11 @@ function deduplicateCardRules(
   });
 }
 
-function comparableRuleText(value: string): string {
+function comparableRuleText(value: string | undefined): string {
+  if (value === undefined) return "";
   return readablePublicText(value)
+    .toLocaleLowerCase()
+    .replace(/\{[^}]+\}/gu, " ")
     .replace(/([a-z])([A-Z])/gu, "$1 $2")
     .replace(/can't|cant/giu, "cannot")
     .replace(/this (?:card|unit) has |this unit /giu, "")
@@ -1507,6 +1599,12 @@ export function CardContextMenuController({
             onAction={(action) => onAction(action, entity)}
             onPreviewEntity={onPreviewEntity}
             onPreviewEnd={onPreviewEnd}
+            relatedEntities={entity.details?.relationships?.flatMap((relationship) =>
+              relationship.entityIds.flatMap((id) => {
+                const related = entityMap.get(id);
+                return related?.face === "public" ? [related] : [];
+              }),
+            )}
             visualIdentity={visualIdentity}
             layoutOverride={layoutOverride}
           />

@@ -2,7 +2,7 @@
   "name": "@tcg/riftbound-server-adapter",
   "version": "0.1.0",
   "private": true,
-  "description": "Riftbound client-authoritative game adapter.",
+  "description": "Riftbound hosted tabletop game adapter.",
   "files": [
     "src/"
   ],
@@ -21,6 +21,7 @@
     "test": "vp test run --configLoader runner"
   },
   "dependencies": {
+    "@tcg/riftbound-tabletop": "link:../riftbound-tabletop",
     "@tcg/riftbound-cards": "link:../../../../riftbound/packages/cards",
     "@tcg/riftbound-decks": "link:../../../../riftbound/packages/decks",
     "@tcg/riftbound-types": "link:../../../../riftbound/packages/types",

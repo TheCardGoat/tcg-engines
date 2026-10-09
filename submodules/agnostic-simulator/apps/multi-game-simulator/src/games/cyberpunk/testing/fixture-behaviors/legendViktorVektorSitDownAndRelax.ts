@@ -15,8 +15,8 @@ export const legendViktorVektorSitDownAndRelaxBehavior: CyberpunkFixtureBehavior
   scenarioId: "legendViktorVektorSitDownAndRelax",
   label: "Viktor Vektor - call searches top deck for gear and retail unit equips trash Gear",
   references: [
-    "packages/engine/src/cards/theheistretailstarterdeck/legends/viktor-vektor-sit-down-and-relax.test.ts",
-    "packages/engine/src/cards/welcometonightcityretail/units/viktor-vektor-you-might-feel-a-little-pinch.test.ts",
+    "packages/engine/src/cards/legends/viktor-vektor-sit-down-and-relax.test.ts",
+    "packages/engine/src/cards/units/viktor-vektor-you-might-feel-a-little-pinch.test.ts",
   ],
   async run(pom) {
     const viktor = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P1, 0);

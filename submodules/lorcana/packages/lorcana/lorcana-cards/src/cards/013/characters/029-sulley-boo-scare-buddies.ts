@@ -13,7 +13,7 @@ export const sulleyBooScareBuddies: CharacterCard = {
       artId: "set13-029",
       setCode: "set13",
       collectorNumber: "29",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -25,7 +25,7 @@ export const sulleyBooScareBuddies: CharacterCard = {
   franchise: "Monsters, Inc.",
   set: "013",
   cardNumber: 29,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 6,
   strength: 6,
   willpower: 5,
@@ -33,6 +33,7 @@ export const sulleyBooScareBuddies: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_84ac4e601f31462988d5fef80d41f5b2",
+    tcgPlayer: "702674",
   },
   text: [
     {

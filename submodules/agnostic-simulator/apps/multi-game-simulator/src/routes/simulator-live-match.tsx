@@ -1,9 +1,11 @@
 import { makeSimulatorRouteLoader, SimulatorRouteModule } from "./simulator-route-module";
-import type { ClientLoaderFunctionArgs } from "react-router";
+import { useParams, type ClientLoaderFunctionArgs } from "react-router";
 import { initRootSocket, destroyRootSocket } from "../lib/gateway/root-socket";
 import { logDebugPayload } from "../lib/debug-logging";
 import { sessionGameId } from "@tcg/game-page-contract";
 import { isPlayableGameSlug } from "@tcg/protocol";
+import { CyberpunkMatchLoading } from "./CyberpunkMatchLoading";
+import { SimulatorRouteStatus } from "@tcg/simulator-ui";
 
 export const loader = makeSimulatorRouteLoader("live-match");
 
@@ -30,6 +32,15 @@ export async function clientLoader({ serverLoader }: ClientLoaderFunctionArgs) {
   return data;
 }
 clientLoader.hydrate = true as const;
+
+export function HydrateFallback() {
+  const { gameSlug } = useParams();
+  return gameSlug === "cyberpunk" ? (
+    <CyberpunkMatchLoading />
+  ) : (
+    <SimulatorRouteStatus title="Loading match" message="Connecting to the match server." />
+  );
+}
 
 export default function SimulatorLiveMatchRoute() {
   return <SimulatorRouteModule routeKind="live-match" />;

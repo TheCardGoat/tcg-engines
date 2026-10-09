@@ -11,6 +11,7 @@ import { SimulatorProviders } from "../simulator/providers";
 import { SimulatorDebugExportControl } from "../simulator/debug-export/SimulatorDebugExportControl";
 import { SimulatorDebugExportProvider } from "../simulator/debug-export/SimulatorDebugExportContext";
 import { MatchUnavailable } from "./MatchUnavailable";
+import { CyberpunkMatchLoading } from "./CyberpunkMatchLoading";
 
 export { buildSimulatorRouteParams, makeSimulatorRouteLoader } from "./simulator-route-loader";
 
@@ -150,7 +151,7 @@ function GameAuthSessionHydrator({
   if (gameSlug !== "cyberpunk") return children;
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<CyberpunkMatchLoading />}>
       <CyberpunkServerAuthSessionHydrator auth={auth}>
         {children}
       </CyberpunkServerAuthSessionHydrator>

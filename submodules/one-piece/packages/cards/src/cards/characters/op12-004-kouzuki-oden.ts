@@ -23,7 +23,7 @@ export const op12KouzukiOden004: CharacterCard = {
   cost: 2,
   power: 3000,
   counter: 1000,
-  traits: ["Land of Wano Kouzuki Clan Roger Pirates"],
+  traits: ["Land of Wano", "Kouzuki Clan", "Roger Pirates"],
   attribute: "slash",
   effect:
     "[Activate: Main] [Once Per Turn] You may reveal 2 Events from your hand: This Character gains +2000 power during this turn.",

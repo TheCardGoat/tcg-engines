@@ -27,6 +27,7 @@ export const magicalHunnyStaff: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f29818146dfa457bafbe71778a9367eb",
+    tcgPlayer: "704589",
   },
   text: [
     {

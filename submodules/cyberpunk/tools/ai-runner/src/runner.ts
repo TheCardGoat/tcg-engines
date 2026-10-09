@@ -11,6 +11,7 @@ import {
   randomStrategy,
   runAutoMatch,
   tacticalStrategy,
+  expertOracleStrategy,
   type AIStrategy,
   type AutoMatchResult,
 } from "@tcg/cyberpunk-engine";
@@ -30,6 +31,7 @@ import { bindStrategyToDeck } from "./bind-deck-strategy.ts";
 
 export type StrategyName =
   | "default"
+  | "expert-oracle"
   | "first-legal"
   | "attack-rival-only"
   | "random"
@@ -41,6 +43,7 @@ export type StrategyName =
   | "tactical";
 
 const STRATEGIES: Record<StrategyName, AIStrategy> = {
+  "expert-oracle": expertOracleStrategy,
   default: getSafeAutomatedActionStrategyOption().strategy,
   "first-legal": firstLegalStrategy,
   "attack-rival-only": attackRivalOnlyStrategy,
@@ -107,6 +110,8 @@ export interface BatchOptions {
   deckPairLimit?: number;
   monteCarloRollouts?: number;
   monteCarloRolloutSteps?: number;
+  /** Print each match's engine move logs and game events. */
+  printGameLog?: boolean;
 }
 
 export interface DeckPairMetadata {
@@ -199,6 +204,7 @@ export function runBatch(opts: BatchOptions): BatchSummary {
       const failure = failureMetadata(opts, pair, matchSeed, result.reason);
 
       if (ordinal === 0) summary.firstMatch = { ...result, seed: matchSeed, failure };
+      if (opts.printGameLog) printMatchGameLog(ordinal, matchSeed, result);
 
       summary.reasonCounts[result.reason] += 1;
       if (result.winnerId) {
@@ -234,6 +240,33 @@ export function runBatch(opts: BatchOptions): BatchSummary {
   summary.averageTurnCount = summary.matches === 0 ? 0 : totalTurns / summary.matches;
   summary.averageStepCount = summary.matches === 0 ? 0 : totalSteps / summary.matches;
   return summary;
+}
+
+function printMatchGameLog(index: number, seed: string, result: AutoMatchResult): void {
+  console.log(
+    `GAME ${index + 1} seed=${seed} reason=${result.reason} winner=${result.winnerId ?? "draw"} turns=${result.turnCount} steps=${result.stepCount}`,
+  );
+  for (const entry of result.log) {
+    if (entry.result.kind !== "acted" || !entry.result.result.success) continue;
+    for (const log of entry.result.result.moveLogs) {
+      const record = log as unknown as Record<string, unknown>;
+      const name =
+        record.cardName ?? record.legendName ?? record.attackerName ?? record.blockerName ?? "";
+      const cost = record.cost ?? "";
+      console.log(
+        `GAMELOG ${index + 1} ${entry.playerId} moveLog ${String(record.type)} name=${String(name)} cost=${String(cost)}`,
+      );
+    }
+    for (const event of entry.result.result.gameEvents) {
+      const record = event as unknown as Record<string, unknown>;
+      if (record.type !== "actionLog" && record.type !== "ruleGranted") continue;
+      const params = record.params ? JSON.stringify(record.params) : "";
+      const rule = record.rule ? String(record.rule) : "";
+      console.log(
+        `GAMELOG ${index + 1} ${entry.playerId} event ${String(record.type)} key=${String(record.messageKey ?? "")} rule=${rule} params=${params}`,
+      );
+    }
+  }
 }
 
 function matchSeedFor(opts: BatchOptions, pair: RunnerDeckPair, matchIndex: number): string {

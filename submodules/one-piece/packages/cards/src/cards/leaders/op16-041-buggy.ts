@@ -32,7 +32,7 @@ export const op16Buggy041: LeaderCard = {
   setId: "OP16",
   power: 5000,
   life: 5,
-  traits: ["Buggy Pirates Impel Down"],
+  traits: ["Impel Down", "Buggy Pirates"],
   attribute: "slash",
   effect:
     "[DON!! X1] [Once Per Turn] This effect can be activated when your {Impel Down} type Character card is removed from the field. Play up to 1 [Prisoner of Impel Down] card from your hand.",
@@ -40,6 +40,12 @@ export const op16Buggy041: LeaderCard = {
     effects: [
       {
         trigger: "whenCharacterRemoved",
+        eventFilter: {
+          player: "self",
+          filters: [{ filter: "trait", value: "Impel Down", match: "exact" }],
+        },
+        conditions: [{ condition: "donAttached", amount: 1 }],
+        optional: true,
         oncePerTurn: true,
         actions: [
           {

@@ -63,17 +63,17 @@ export const eb02WithoutYourHelpICanTBecomeTheKingOfThePirates059: EventCard = {
                 value: "character",
               },
               {
+                filter: "color",
+                value: "yellow",
+              },
+              {
                 filter: "anyOf",
                 groups: [
                   [
                     {
-                      filter: "color",
-                      value: "yellow",
-                    },
-                    {
                       filter: "trait",
                       value: "Straw Hat Crew",
-                      match: "includes",
+                      match: "exact",
                     },
                   ],
                   [

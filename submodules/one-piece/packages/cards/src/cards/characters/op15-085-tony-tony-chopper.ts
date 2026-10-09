@@ -24,7 +24,7 @@ export const op15TonyTonyChopper085: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Animal Straw Hat Crew"],
+  traits: ["Animal", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[On Play] Trash 3 cards from the top of your deck.\n[Activate: Main] You may trash this Character: If your Leader has the {Straw Hat Crew} type, add up to 1 {Straw Hat Crew} type Character card other than [Tony Tony.Chopper] from your trash to your hand.",
@@ -61,7 +61,7 @@ export const op15TonyTonyChopper085: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Straw Hat Crew",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   filter: "cardCategory",
@@ -76,7 +76,7 @@ export const op15TonyTonyChopper085: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Straw Hat Crew",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

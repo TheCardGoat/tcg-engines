@@ -25,7 +25,7 @@ export const megaraSecretKeeperEpic: CharacterCard = {
   franchise: "Hercules",
   set: "010",
   cardNumber: 213,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 3,

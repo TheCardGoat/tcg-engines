@@ -12,7 +12,12 @@ import { SOUTH_ATTACKS_WITHOUT_TURN_SETUP } from "./battle-fixture.shared.ts";
 describe("OP07-096 Tempest Kick", () => {
   test("Main draws after payment makes ten trash, then reduces the chosen opposing cost by 3", () => {
     const engine = OnePieceTestEngine.create(
-      { hand: [op07TempestKick096], deck: [eb01Doma005], trash: 9, activeDon: 1 },
+      {
+        hand: [op07TempestKick096],
+        deck: [eb01Doma005, eb01Fourtricks025],
+        trash: 9,
+        activeDon: 1,
+      },
       { character: [eb01MountainGod018] },
     );
     const targetId = engine.findCardInZone("north", "character", eb01MountainGod018);

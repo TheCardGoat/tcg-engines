@@ -71,6 +71,15 @@ export const DECK_ARCHETYPE_SIGNATURES: readonly DeckArchetypeSignature[] = [
     require: { "Field Operator": 1 },
   },
   {
+    profileId: "authored-bbg-towerfall-control",
+    label: "BBG Towerfall control",
+    require: {
+      Towerfall: 1,
+      "Les Élémens": 1,
+      "Placide: Voodoo Sentinel": 1,
+    },
+  },
+  {
     profileId: "authored-ryb-low-cost-tempo",
     label: "RYB low-cost tempo",
     require: { "Psycho Squad": 1 },
@@ -105,6 +114,23 @@ export const DECK_ARCHETYPE_SIGNATURES: readonly DeckArchetypeSignature[] = [
     profileId: "authored-oda-industrial-assembly-pairs-plateaus",
     label: "Oda pairs",
     require: { "Sandayu Oda: Hanako's Guardian": 3 },
+  },
+  {
+    profileId: "authored-rry-detonate-gear-curve",
+    label: "RRY Detonate gear curve",
+    require: {
+      Detonate: 2,
+      "Yorinobu Arasaka: Steel Dragon": 1,
+    },
+  },
+  {
+    profileId: "authored-rry-llorona-steel-dragon",
+    label: "RRY Steel Dragon curve",
+    require: {
+      "Yorinobu Arasaka: Steel Dragon": 3,
+      "La Llorona: Ghost of the Past": 1,
+      "Trauma Team Operatives": 1,
+    },
   },
   {
     profileId: "authored-yorinobu-two-units-for-one",

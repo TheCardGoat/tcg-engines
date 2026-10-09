@@ -32,7 +32,7 @@ export const op17EdwardNewgate001: LeaderCard = {
   setId: "OP17",
   power: 5000,
   life: 5,
-  traits: ["The Four Emperors Whitebeard Pirates"],
+  traits: ["The Four Emperors", "Whitebeard Pirates"],
   attribute: "special",
   effect:
     "[On Your Opponent's Attack] [Once Per Turn] You may trash 1 card from your hand: Up to 1 of your Leader or Characters gains +4000 power during this battle.",

@@ -23,7 +23,7 @@ export const op06Eldoraggo070: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["FILM Eldoraggo Crew"],
+  traits: ["FILM", "Eldoraggo Crew"],
   attribute: "special",
   i18n: op06Eldoraggo070I18n,
 };

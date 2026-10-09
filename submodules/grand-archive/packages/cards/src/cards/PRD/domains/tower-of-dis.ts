@@ -58,6 +58,10 @@ export const towerOfDis: GrandArchiveCard<GrandArchiveAbilityDefinition, "card">
                       },
                       {
                         kind: "subtype",
+                        oneOf: ["DISCORP"],
+                      },
+                      {
+                        kind: "subtype",
                         oneOf: ["AUTOMATON"],
                       },
                     ],
@@ -93,6 +97,10 @@ export const towerOfDis: GrandArchiveCard<GrandArchiveAbilityDefinition, "card">
                       {
                         kind: "type",
                         oneOf: ["ALLY"],
+                      },
+                      {
+                        kind: "subtype",
+                        oneOf: ["DISCORP"],
                       },
                       {
                         kind: "subtype",

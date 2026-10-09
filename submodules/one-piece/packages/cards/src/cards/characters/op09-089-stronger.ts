@@ -23,7 +23,7 @@ export const op09Stronger089: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 2000,
-  traits: ["Animal Blackbeard Pirates"],
+  traits: ["Animal", "Blackbeard Pirates"],
   attribute: "wisdom",
   effect:
     '[Activate: Main] You may trash 1 card from your hand and trash this Character: If your Leader has the "Blackbeard Pirates" type, draw 1 card. Then, give up to 1 of your opponent\'s Characters –2 cost during this turn.',
@@ -40,16 +40,18 @@ export const op09Stronger089: CharacterCard = {
             cost: "trashThisCard",
           },
         ],
+        postCostConditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Blackbeard Pirates",
+            match: "exact",
+          },
+        ],
         actions: [
           {
             action: "draw",
             player: "self",
             amount: 1,
-            condition: {
-              condition: "leaderTrait",
-              trait: "Blackbeard Pirates",
-              match: "includes",
-            },
           },
           {
             action: "modifyCost",

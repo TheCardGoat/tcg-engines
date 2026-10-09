@@ -1,4 +1,5 @@
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
+import * as Popover from "@radix-ui/react-popover";
 import { copyTextToClipboard, safeStringify } from "@tcg/simulator-runtime/debug";
 import classes from "./ConnectionPanel.module.css";
 
@@ -62,9 +63,7 @@ export function ConnectionPanel({
 }: ConnectionPanelProps) {
   return (
     <section
-      className={`${classes.panel} ${embedded ? classes.panelEmbedded : ""} ${
-        popoverAlign === "end" ? classes.popoverEnd : ""
-      }`}
+      className={`${classes.panel} ${embedded ? classes.panelEmbedded : ""}`}
       aria-label="Connection diagnostics"
     >
       {sides.map((side) => (
@@ -73,6 +72,7 @@ export function ConnectionPanel({
           side={side}
           diagnostic={diagnostic}
           indicatorOnly={indicatorOnly}
+          popoverAlign={popoverAlign}
           copyPayload={copyPayload}
         />
       ))}
@@ -84,36 +84,42 @@ function SideConnection({
   side,
   diagnostic,
   indicatorOnly,
+  popoverAlign,
   copyPayload,
 }: {
   side: ConnectionPanelProps["sides"][number];
   diagnostic?: ConnectionPanelProps["diagnostic"];
   indicatorOnly: boolean;
+  popoverAlign: "start" | "end";
   copyPayload?: unknown;
 }) {
   const status = side.connection?.status ?? "unknown";
   return (
     <div className={classes.row} data-side={side.side} data-connection-status={status}>
-      <ConnectionPopover side={side} diagnostic={diagnostic} copyPayload={copyPayload} />
+      <ConnectionPopover
+        side={side}
+        diagnostic={diagnostic}
+        copyPayload={copyPayload}
+        popoverAlign={popoverAlign}
+      />
       {indicatorOnly ? null : <span className={classes.label}>{side.label}</span>}
     </div>
   );
 }
 
 function ConnectionPopover({
+  popoverAlign,
   side,
   diagnostic,
   copyPayload,
 }: {
+  popoverAlign: "start" | "end";
   side: ConnectionPanelProps["sides"][number];
   diagnostic?: ConnectionPanelProps["diagnostic"];
   copyPayload?: unknown;
 }) {
   const [open, setOpen] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState<"copied" | "failed" | null>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const popoverRef = useRef<HTMLDivElement>(null);
-  const popoverId = useId();
   const status = side.connection?.status ?? "unknown";
   const latencyMs = side.connection?.latencyMs ?? diagnostic?.connection?.latencyMs;
   const reconnectAttempts = diagnostic?.connection?.reconnectAttempts ?? 0;
@@ -146,52 +152,28 @@ function ConnectionPopover({
     [copyPayload, diagnostic, disconnectCount, latencyMs, reconnectAttempts],
   );
 
-  useEffect(() => {
-    if (!open) return;
-    popoverRef.current?.focus();
-    const handleClick = (event: MouseEvent) => {
-      const target = event.target as Node;
-      if (popoverRef.current?.contains(target) || triggerRef.current?.contains(target)) {
-        return;
-      }
-      setOpen(false);
-    };
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      setOpen(false);
-      triggerRef.current?.focus();
-    };
-    document.addEventListener("mousedown", handleClick);
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [open]);
-
   const handleCopy = async () => {
     const ok = await copyTextToClipboard(safeStringify(payload));
     setCopyFeedback(ok ? "copied" : "failed");
   };
 
   return (
-    <div className={classes.popoverWrap}>
-      <button
-        ref={triggerRef}
-        type="button"
-        className={classes.dot}
-        data-status={status}
-        aria-label={`${side.label} connection status: ${statusLabel(status)}`}
-        aria-expanded={open}
-        aria-controls={popoverId}
-        onClick={() => setOpen((prev) => !prev)}
-      >
-        <span className={`${classes.dotVisual} ${classes[status]}`} aria-hidden="true" />
-      </button>
-      {open ? (
-        <div
-          ref={popoverRef}
-          id={popoverId}
+    <Popover.Root open={open} onOpenChange={setOpen}>
+      <Popover.Trigger asChild>
+        <button
+          type="button"
+          className={classes.dot}
+          data-status={status}
+          aria-label={`${side.label} connection status: ${statusLabel(status)}`}
+        >
+          <span className={`${classes.dotVisual} ${classes[status]}`} aria-hidden="true" />
+        </button>
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
+          align={popoverAlign}
+          sideOffset={8}
+          collisionPadding={14}
           className={classes.popover}
           data-status={status}
           role="dialog"
@@ -320,9 +302,9 @@ function ConnectionPopover({
               {copyFeedback === "copied" ? "Copied JSON to clipboard." : "Clipboard unavailable."}
             </p>
           ) : null}
-        </div>
-      ) : null}
-    </div>
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }
 

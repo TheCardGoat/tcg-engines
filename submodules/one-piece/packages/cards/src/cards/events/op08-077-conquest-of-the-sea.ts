@@ -21,7 +21,7 @@ export const op08ConquestOfTheSea077: EventCard = {
   rarity: "R",
   setId: "OP08",
   cost: 6,
-  traits: ["Animal Kingdom Pirates The Four Emperors Big Mom Pirates"],
+  traits: ["The Four Emperors", "Animal Kingdom Pirates", "Big Mom Pirates"],
   effect:
     "[Main] DON!! −2 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your Leader has the [Animal Kingdom Pirates] or [Big Mom Pirates] type, K.O. up to 2 of your opponent's Characters with a cost of 6 or less.",
   effects: {
@@ -59,12 +59,12 @@ export const op08ConquestOfTheSea077: EventCard = {
                 {
                   condition: "leaderTrait",
                   trait: "Animal Kingdom Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   condition: "leaderTrait",
                   trait: "Big Mom Pirates",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

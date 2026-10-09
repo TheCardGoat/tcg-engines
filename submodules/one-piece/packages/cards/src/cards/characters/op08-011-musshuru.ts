@@ -23,7 +23,7 @@ export const op08Musshuru011: CharacterCard = {
   cost: 6,
   power: 8000,
   counter: 1000,
-  traits: ["FILM Drum Kingdom"],
+  traits: ["FILM", "Drum Kingdom"],
   attribute: "special",
   effect: "NULL",
   i18n: op08Musshuru011I18n,

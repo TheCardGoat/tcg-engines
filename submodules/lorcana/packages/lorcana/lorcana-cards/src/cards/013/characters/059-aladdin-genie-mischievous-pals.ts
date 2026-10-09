@@ -13,7 +13,7 @@ export const aladdinGenieMischievousPals: CharacterCard = {
       artId: "set13-059",
       setCode: "set13",
       collectorNumber: "59",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -25,7 +25,7 @@ export const aladdinGenieMischievousPals: CharacterCard = {
   franchise: "Aladdin",
   set: "013",
   cardNumber: 59,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 5,
   strength: 3,
   willpower: 3,
@@ -33,12 +33,11 @@ export const aladdinGenieMischievousPals: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b0820bdd94db41b597a5bafeb75e9e96",
+    tcgPlayer: "704579",
   },
   text: [
     {
-      title: "Shift 3",
-      description:
-        "(You may pay 3 to play this on top of one of your characters named Aladdin or Genie.)",
+      title: "Shift 3 {I}",
     },
     {
       title: "SLEIGHT OF HAND",

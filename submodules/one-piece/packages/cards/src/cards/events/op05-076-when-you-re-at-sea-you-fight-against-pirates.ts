@@ -47,17 +47,17 @@ export const op05WhenYouReAtSeaYouFightAgainstPirates076: EventCard = {
                   {
                     filter: "trait",
                     value: "Straw Hat Crew",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Kid Pirates",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Heart Pirates",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

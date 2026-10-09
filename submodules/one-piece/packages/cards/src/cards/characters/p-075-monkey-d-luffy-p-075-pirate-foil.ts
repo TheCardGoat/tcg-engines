@@ -31,10 +31,10 @@ export const prb02MonkeyDLuffyP075PirateFoil075: CharacterCard = {
   setId: "P",
   cost: 7,
   power: 7000,
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   attribute: "strike",
   effect:
-    "[On Play] Give up to 1 rested DON!! card to your Leader or 1 of your Characters.[When Attacking] If you have a Character with a cost of 8 or more on your field, draw 1 card and trash 1 card from your hand.Disclaimer: This card was reprinted from the original set with a different border (Note: the original print had a full art border).",
+    "[On Play] Give up to 1 rested DON!! card to your Leader or 1 of your Characters.[When Attacking] If you have a Character with a cost of 8 or more on your field, draw 1 card and trash 1 card from your hand.",
   effects: {
     effects: [
       {

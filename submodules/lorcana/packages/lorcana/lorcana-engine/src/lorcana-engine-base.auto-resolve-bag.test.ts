@@ -827,7 +827,9 @@ describe("LorcanaEngineBase bag auto-resolution", () => {
       .getMoveLogHistory()
       .flatMap((log) => log.public.map((entry) => entry.key));
     expect(
-      publicLogKeys.filter((key) => key === "lorcana.effect.resolve.optionalSelection.rejected"),
+      publicLogKeys.filter(
+        (key) => key === "lorcana.effect.resolve.optionalSelection.rejected.named",
+      ),
     ).toHaveLength(1);
     expect(
       publicLogKeys.filter((key) => key.startsWith("lorcana.bag.resolve.completed")),

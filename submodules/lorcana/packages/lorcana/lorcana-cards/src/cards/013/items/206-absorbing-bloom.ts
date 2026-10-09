@@ -25,9 +25,13 @@ export const absorbingBloom: ItemCard = {
   rarity: "uncommon",
   cost: 2,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_283d7e0b9b2e422291e66eb7fd6a0547",
+    tcgPlayer: "704698",
+  },
   text: [
     {
-      title: "Metamorphosis",
+      title: "METAMORPHOSIS",
       description:
         "{E}, 1 {I} — If a character was banished in a challenge this turn, draw a card.",
     },

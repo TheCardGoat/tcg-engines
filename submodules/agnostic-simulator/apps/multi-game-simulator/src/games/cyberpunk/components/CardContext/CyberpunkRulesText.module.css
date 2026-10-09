@@ -1,0 +1,38 @@
+.officialIcon {
+  display: inline-block;
+  width: auto;
+  height: 1.45em;
+  margin: -0.15em 0.18em -0.3em 0;
+  vertical-align: baseline;
+}
+
+.streetCred {
+  display: inline-block;
+  min-width: 1.05em;
+  color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 100%);
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 1.55em;
+  font-weight: 800;
+  line-height: 0.68;
+  text-align: center;
+  text-shadow: 0 1px 5px rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 56%);
+  vertical-align: -0.08em;
+}
+
+.fallbackToken {
+  display: inline-flex;
+  min-height: 1.5em;
+  align-items: center;
+  margin: 0 0.2em;
+  padding: 0.08em 0.35em;
+  border: 1px solid rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 64%);
+  border-radius: 3px;
+  background: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 14%);
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 96%);
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 0.82em;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  vertical-align: baseline;
+}

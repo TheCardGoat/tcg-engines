@@ -1,9 +1,28 @@
-import { describe, expect, it } from "vite-plus/test";
+import { render, screen } from "@testing-library/react";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { describe, expect, it, vi } from "vite-plus/test";
+
+vi.mock("./DemoFixture.page", () => ({
+  DemoFixturePage: () => <main>Demo match</main>,
+}));
 
 import { AI_STRATEGIES, getStrategyById } from "../engine";
-import { resolveFixtureAiOptions } from "./TestFixture.page";
+import { resolveFixtureAiOptions, TestFixturePage } from "./TestFixture.page";
 
 describe("TestFixturePage AI query options", () => {
+  it("opens the demo from the active fixture route", () => {
+    render(
+      <MemoryRouter initialEntries={["/tests/demo"]}>
+        <Routes>
+          <Route path="/tests/:fixtureId" element={<TestFixturePage />} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText("Demo match")).toBeTruthy();
+    expect(screen.queryByText("Fixture not found.")).toBeNull();
+  });
+
   it("exposes unique strategy ids for React option keys", () => {
     const ids = AI_STRATEGIES.map((strategy) => strategy.id);
 

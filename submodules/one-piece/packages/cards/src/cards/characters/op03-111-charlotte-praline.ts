@@ -23,7 +23,7 @@ export const op03CharlottePraline111: CharacterCard = {
   cost: 3,
   power: 5000,
   counter: 1000,
-  traits: ["The Sun Pirates Merfolk"],
+  traits: ["Merfolk", "The Sun Pirates"],
   attribute: "wisdom",
   i18n: op03CharlottePraline111I18n,
 };

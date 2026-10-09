@@ -39,7 +39,7 @@ export const op10Tashigi032: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 2000,
-  traits: ["Navy Punk Hazard"],
+  traits: ["Punk Hazard", "Navy"],
   attribute: "special",
 
   effect:

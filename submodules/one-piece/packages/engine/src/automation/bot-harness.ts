@@ -49,6 +49,9 @@ export function resolveBotPromptCommand(
     };
   }
 
+  if (prompt.resolutionContext?.intent === "loopIterations")
+    return { type: "resolvePrompt", seat, promptId: prompt.id, iterations: 0 };
+
   let optionId: string | undefined;
   let selectedIds: string[] | undefined;
 
@@ -91,6 +94,8 @@ function resolvePromptWithAgents(
   context: OnePieceBotDecisionContext,
 ): EngineCommand | null {
   if (prompt.kind !== "judge" && (prompt.seat === "north" || prompt.seat === "south")) {
+    if (prompt.resolutionContext?.intent === "loopIterations")
+      return resolveBotPromptCommand(state, prompt);
     const resolved = agents[prompt.seat].resolvePrompt?.(state, prompt, context);
     if (resolved) {
       return resolved;

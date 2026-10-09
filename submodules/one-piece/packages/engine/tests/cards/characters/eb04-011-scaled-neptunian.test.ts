@@ -38,12 +38,12 @@ describe("EB04-011 Scaled Neptunian", () => {
   test("draws and trashes once for each exact or compound Neptunian Character", () => {
     const engine = OnePieceTestEngine.create({
       hand: [op14eb04ScaledNeptunian011, eb01Doma005],
-      deck: [eb01Fourtricks025, eb01Doma005, eb01Fourtricks025],
+      deck: [eb01Fourtricks025, eb01Doma005, eb01Fourtricks025, "EB01-025"],
       character: [op11ScaledNeptunian026, op13LordOfTheCoast010],
       activeDon: op14eb04ScaledNeptunian011.cost,
     });
     const originalHandId = engine.findCardInZone("south", "hand", eb01Doma005);
-    const drawnIds = [...engine.getState().players.south.deck];
+    const drawnIds = engine.getState().players.south.deck.slice(0, 3);
 
     engine.playCard(op14eb04ScaledNeptunian011, "south");
 
@@ -61,7 +61,7 @@ describe("EB04-011 Scaled Neptunian", () => {
     );
 
     const view = engine.getView("south");
-    expect(view.players.south.deckCount).toBe(0);
+    expect(view.players.south.deckCount).toBe(1);
     expect(view.players.south.trash.map((card) => card.instanceId)).toEqual(
       expect.arrayContaining([originalHandId, drawnIds[0], drawnIds[1]]),
     );
@@ -76,7 +76,7 @@ describe("EB04-011 Scaled Neptunian", () => {
         deck: [eb01Fourtricks025, eb01Doma005],
         activeDon: op14eb04ScaledNeptunian011.cost,
       },
-      { character: [{ card: eb01Doma005, rested: true, playedOnTurn: 0 }] },
+      { character: [{ card: eb01Doma005, rested: true, playedOnTurn: 0 }, eb01Fourtricks025] },
       { firstPlayer: "north", activeSeat: "south" },
     );
     const discardId = engine.findCardInZone("south", "hand", eb01Doma005);
@@ -94,6 +94,15 @@ describe("EB04-011 Scaled Neptunian", () => {
         targetId: engine.leader("north"),
       }).reason,
     ).toContain("cannot be attacked");
+    // FAQ: Rush: Character does not permit attacking an active Character.
+    expect(
+      engine.expectFailure({
+        type: "declareAttack",
+        seat: "south",
+        attackerId: neptunianId,
+        targetId: engine.findCardInZone("north", "character", eb01Fourtricks025),
+      }).accepted,
+    ).toBe(false);
     engine.declareAttack(neptunianId, targetId, "south");
 
     expect(engine.getView("south").players.north.trash.map((card) => card.instanceId)).toContain(

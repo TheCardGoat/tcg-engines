@@ -47,6 +47,8 @@ function ensureTurnMetadata(ctx: Pick<TurnMetricContext, "G">): LorcanaG["turnMe
       LorcanaG["turnMetadata"]["pendingCostReductionsByPlayer"][PlayerId]
     >,
     cardsDrawnThisTurnByPlayer: {} as Record<PlayerId, number>,
+    inkDropsGainedThisTurn: {} as Record<PlayerId, number>,
+    inkDropsRemovedThisTurn: {} as Record<PlayerId, number>,
   };
   ctx.G.turnMetadata = initialized;
   return initialized;
@@ -207,6 +209,30 @@ export function recordCardDrawnThisTurn(
     turnMetadata.cardsDrawnThisTurnByPlayer ??
     (turnMetadata.cardsDrawnThisTurnByPlayer = {} as Record<PlayerId, number>);
   incrementRecord(record, playerId);
+}
+
+export function recordInkDropsGainedThisTurn(
+  ctx: Pick<TurnMetricContext, "G">,
+  playerId: PlayerId,
+  amount = 1,
+): void {
+  const turnMetadata = ensureTurnMetadata(ctx);
+  const record =
+    turnMetadata.inkDropsGainedThisTurn ??
+    (turnMetadata.inkDropsGainedThisTurn = {} as Record<PlayerId, number>);
+  incrementRecord(record, playerId, amount);
+}
+
+export function recordInkDropsRemovedThisTurn(
+  ctx: Pick<TurnMetricContext, "G">,
+  playerId: PlayerId,
+  amount = 1,
+): void {
+  const turnMetadata = ensureTurnMetadata(ctx);
+  const record =
+    turnMetadata.inkDropsRemovedThisTurn ??
+    (turnMetadata.inkDropsRemovedThisTurn = {} as Record<PlayerId, number>);
+  incrementRecord(record, playerId, amount);
 }
 
 export function recordCardPutUnderThisTurn(

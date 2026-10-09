@@ -48,4 +48,22 @@ describe("OP15-082 Charlotte Lola", () => {
 
     expect(engine.getView("south").players.south.deckCount).toBe(deckBefore - 3);
   });
+  test("On KO may return zero cards even with eligible cards in trash", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: op15CharlotteLola082, rested: true }], trash: [op04Kyros082] },
+      { activeDon: 3 },
+      { activeSeat: "north" },
+    );
+    engine.attachDon(engine.leader("north"), 3, "north");
+    engine.declareAttack(
+      engine.leader("north"),
+      engine.findCardInZone("south", "character", op15CharlotteLola082),
+      "north",
+    );
+    const step = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (step?.kind !== "selectEntity") throw new Error("Expected recovery choice");
+    expect(step.min).toBe(0);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    expect(engine.getView("south").players.south.handCount).toBe(0);
+  });
 });

@@ -124,8 +124,17 @@ export const diamondInTheRough: GrandArchiveCard<GrandArchiveAbilityDefinition, 
                     subject: {
                       kind: "event-object",
                       filter: {
-                        kind: "subtype",
-                        oneOf: ["SPELL"],
+                        kind: "all",
+                        filters: [
+                          {
+                            kind: "subtype",
+                            oneOf: ["SUITED"],
+                          },
+                          {
+                            kind: "subtype",
+                            oneOf: ["SPELL"],
+                          },
+                        ],
                       },
                     },
                   },

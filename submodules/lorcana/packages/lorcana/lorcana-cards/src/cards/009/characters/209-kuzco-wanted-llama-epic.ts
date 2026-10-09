@@ -23,7 +23,7 @@ export const kuzcoWantedLlamaEpic: CharacterCard = {
   franchise: "Emperors New Groove",
   set: "009",
   cardNumber: 209,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 2,
   strength: 1,

@@ -79,6 +79,28 @@ export const morganSoulGuide: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
           kind: "static",
           staticKind: "effects",
           text: "[Level 2+] Your opponents can't  recover.",
+          restrictions: [
+            {
+              kind: "static",
+              name: "level-restriction",
+              condition: {
+                kind: "compare",
+                comparison: {
+                  left: {
+                    kind: "property",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    property: "level",
+                    basis: "current",
+                  },
+                  operator: "gte",
+                  right: 2,
+                },
+              },
+            },
+          ],
           effects: [
             {
               kind: "rule-modification",

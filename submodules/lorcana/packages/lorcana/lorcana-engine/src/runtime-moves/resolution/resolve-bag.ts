@@ -1,6 +1,7 @@
 import type { CardInstanceId, PlayerId, RuntimeValidationResult } from "#core";
 import type {
   BagEffectEntry,
+  CardPlayedPayload,
   PendingActionResolutionInput,
   TargetResolutionSelectionContext,
 } from "../../types";
@@ -8,6 +9,7 @@ import { createLorcanaLogProjection, type LorcanaMoveDefinition } from "../../ty
 import type { LogTargetId, ResolveBagCancelledCause } from "../../types/log-messages";
 import { continuePendingChallengeResolution } from "../moves/core/challenge";
 import { continuePendingTurnTransition } from "../moves/turn/pass-turn";
+import { isScryEffect, validateScrySelection } from "./action-effects/scry-effect";
 import { resolveActionEffect } from "./action-effects/composed-effect-resolver";
 import type { ActionResolutionInput } from "./action-effects/types";
 import { evaluateActionCondition } from "./action-effects/action-condition-evaluator";
@@ -421,6 +423,18 @@ function logResolveBagOptionalDecline(
   ctx: ResolveBagExecutionContext,
   bagEffect: NonNullable<ReturnType<typeof getBagEffect>>,
 ): void {
+  const abilityName = bagEffect.abilityName?.trim();
+  if (abilityName) {
+    ctx.framework.log(
+      createLorcanaLogProjection(
+        "lorcana.effect.resolve.optionalSelection.rejected.named",
+        { playerId: bagEffect.controllerId, sourceCardId: bagEffect.sourceId, abilityName },
+        { mode: "PUBLIC" },
+        "action",
+      ),
+    );
+    return;
+  }
   ctx.framework.log(
     createLorcanaLogProjection(
       "lorcana.effect.resolve.optionalSelection.rejected",
@@ -604,6 +618,16 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
     }
 
     const params = ctx.args.params;
+    if (
+      params?.choiceIndex !== undefined &&
+      (!Number.isInteger(params.choiceIndex) || params.choiceIndex < 0)
+    ) {
+      return {
+        valid: false,
+        error: "resolveBag choiceIndex must be a non-negative integer",
+        errorCode: "INVALID_RESOLVE_BAG_CHOICE_INDEX",
+      };
+    }
     // For conditional effects, we must evaluate the condition before determining
     // resolution requirements. The branches of a conditional are only reachable
     // when the condition passes; requiring targets for the then-branch when the
@@ -614,6 +638,32 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
     const hasExplicitTargets = hasExplicitTargetSelectionInput(explicitTargets);
     const explicitTargetCount = countExplicitTargetSelections(explicitTargets);
     const sourceCardDefinition = ctx.cards.getDefinition(bagEffect.sourceId as CardInstanceId);
+    if (params?.destinations && isScryEffect(effectForRequirements)) {
+      const amount = effectForRequirements.amount;
+      const scryValidation = validateScrySelection(
+        ctx,
+        {
+          cardId: bagEffect.sourceId as CardInstanceId,
+          cardType: sourceCardDefinition?.cardType ?? "character",
+          costType: "free",
+          playerId: bagEffect.controllerId as PlayerId,
+        },
+        effectForRequirements,
+        {
+          scryAmount: typeof amount === "number" ? amount : undefined,
+          selectedPlayerIds: resolveTargetPlayerIds(
+            ctx,
+            effectForRequirements.target ?? "CONTROLLER",
+            {
+              controllerId: bagEffect.controllerId as PlayerId,
+              sourceCardId: bagEffect.sourceId as CardInstanceId,
+            },
+          ),
+          destinations: params.destinations,
+        },
+      );
+      if (!scryValidation.valid) return scryValidation;
+    }
     const isAcceptingOptionalDeckSearch =
       params?.resolveOptional === true &&
       (bagEffect.effect as { type?: unknown; effect?: { type?: unknown } } | null)?.type ===
@@ -651,6 +701,30 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
       resolutionInput: selectionResolutionInput,
       ctx,
     });
+    const choiceValidationContext =
+      params?.choiceIndex === undefined
+        ? undefined
+        : buildResolutionSelectionContext({
+            origin: "bag",
+            requestId: bagEffect.id,
+            sourceCardId: bagEffect.sourceId as CardInstanceId,
+            chooserId: bagEffect.controllerId as PlayerId,
+            cardPlayed: bagEffect.cardPlayed,
+            effect: validationEffect,
+            resolutionInput: { ...selectionResolutionInput, choiceIndex: undefined },
+            ctx,
+          });
+    if (
+      params?.choiceIndex !== undefined &&
+      choiceValidationContext?.kind === "choice-selection" &&
+      !choiceValidationContext.options.some((option) => option.index === params.choiceIndex)
+    ) {
+      return {
+        valid: false,
+        error: "resolveBag choiceIndex must identify an existing choice",
+        errorCode: "INVALID_RESOLVE_BAG_CHOICE_INDEX",
+      };
+    }
     const isDecliningOptional =
       params?.resolveOptional === false &&
       (requirements.isOptional || effectContainsOptional(bagEffect.effect));
@@ -662,13 +736,6 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
         ? ((effectRecord.options as unknown[] | undefined)?.[resolutionInput.choiceIndex] ??
           bagEffect.effect)
         : bagEffect.effect;
-    if (effectRecord?.type === "or") {
-      // console.log("[DEBUG] or effect detected", {
-      //   choiceIndex: resolutionInput?.choiceIndex,
-      //   isUsingChosenOption: effectForTargetAnalysis !== bagEffect.effect,
-      //   effectType: (effectForTargetAnalysis as Record<string, unknown> | null)?.type,
-      // });
-    }
     const targetAnalysis = analyzeEffectTargets(
       effectForTargetAnalysis,
       controllerId,
@@ -754,8 +821,13 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
       !evaluateActionCondition(
         bagEffect.condition as Parameters<typeof evaluateActionCondition>[0],
         ctx as unknown as Parameters<typeof evaluateActionCondition>[1],
-        bagEffect.cardPlayed,
+        // Source-relative conditions (`has-card-under`, controller-scoped
+        // "you") anchor to the ability source's own payload...
+        bagEffect.cardPlayed as CardPlayedPayload,
         validationResolutionInput,
+        // ...while "that card"-scoped conditions (played-card-name etc.) read
+        // the play-event subject, not the observing card.
+        bagEffect.eventCardPlayed as CardPlayedPayload | undefined,
       );
     const optionalWithNoCandidates =
       requirements.isOptional &&
@@ -857,6 +929,11 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
         {
           currentPlayer: controllerId,
           ctx,
+          sourceCardId: bagEffect.sourceId,
+          movementTargetDsl:
+            targetSelectionContext?.expectedSlottedKind === "move-to-location"
+              ? targetSelectionContext.targetDsl
+              : undefined,
         },
       );
       const normalizedSelection =
@@ -1130,7 +1207,7 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
     // must still run the remaining iterations, not remove the bag item entirely.
     if (topLevelType === "optional" && resolutionInput.resolveOptional === false) {
       logResolveBagOptionalDecline(ctx, bagEffect);
-      recordBagEffectResolution(ctx, bagEffect);
+      // CR 6.1.1 and 6.1.13.2: declining does not fully resolve the ability.
       removeBagEffect(ctx, bagId);
       traceLorcanaRuntimeStep({
         kind: "bag.effect.resolution.completed",
@@ -1206,7 +1283,17 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
     if (shouldAttemptResolution) {
       const shouldResolve =
         !bagEffect.condition ||
-        evaluateActionCondition(bagEffect.condition, ctx, bagEffect.cardPlayed, resolutionInput);
+        evaluateActionCondition(
+          bagEffect.condition,
+          ctx,
+          // Source-relative conditions anchor to the ability source's own
+          // payload (see abilityConditionWillFail above)...
+          bagEffect.cardPlayed as CardPlayedPayload,
+          resolutionInput,
+          // ...while "that card"-scoped conditions read the play-event
+          // subject (e.g. the song), not the observing card.
+          bagEffect.eventCardPlayed as CardPlayedPayload | undefined,
+        );
       if (!shouldResolve) {
         removeBagEffect(ctx, bagId);
         traceLorcanaRuntimeStep({
@@ -1237,9 +1324,22 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
           bagEffect.sourceId as CardInstanceId,
           { eventSnapshot: resolutionInput.eventSnapshot },
         );
+        // Triggered-ability effects anchor to the ABILITY SOURCE, not the
+        // event's played card: `selector: "self"` (and other source-anchored
+        // lookups) must resolve to the character/item that owns the trigger
+        // even when the trigger subject is a different card (e.g.
+        // "whenever you play a song, deal 1 damage to this character").
+        // Event-identity needs read `eventCardPlayed` / trigger-subject refs.
+        const effectAnchorCardPlayed: CardPlayedPayload = {
+          ...bagEffect.cardPlayed,
+          playerId:
+            bagEffect.cardPlayed?.playerId ??
+            (bagEffect.controllerId as CardPlayedPayload["playerId"]),
+          cardId: bagEffect.sourceId as CardInstanceId,
+        };
         const result = resolveActionEffect(
           ctx,
-          bagEffect.cardPlayed,
+          effectAnchorCardPlayed,
           bagEffect.effect,
           resolutionInput,
           {
@@ -1268,6 +1368,11 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
           // with bagId only); top-level effect was a sequence; the pending effect
           // is an optional-selection.
           const pendingEffect = result.pendingEffect;
+          pendingEffect.bagUsage = {
+            id: bagEffect.id,
+            abilityKey: bagEffect.abilityKey,
+            trigger: bagEffect.trigger,
+          };
           const callerParams = ctx.args.params;
           const isAutoDrain = !callerParams || Object.keys(callerParams).length === 0;
           const wasSequence =
@@ -1304,7 +1409,6 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
           removeBagEffect(ctx, bagId);
           return;
         }
-        recordBagEffectResolution(ctx, bagEffect);
         removeBagEffect(ctx, bagId);
         traceLorcanaRuntimeStep({
           kind: "bag.effect.resolution.completed",
@@ -1316,12 +1420,20 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
           message: "Effect resolution completes",
         });
         const wasAutoRejectedForNoTargets = (() => {
-          if (allTargets.length > 0) return false;
+          if (allTargets.length > 0 || resolutionInput.eventSnapshot?.anyEffectPerformed)
+            return false;
           // For control-flow effects like "or" and "choice", skip the post-resolution auto-rejection check.
           // These effects have already validated their branches/options during resolution and should not be
           // marked as "no-valid-targets" after successful resolution of one branch.
           const effectRecord = bagEffect.effect as unknown as Record<string, unknown> | null;
-          if (effectRecord?.type === "or" || effectRecord?.type === "choice") return false;
+          if (
+            effectRecord?.type === "or" ||
+            effectRecord?.type === "choice" ||
+            // Each opponent's nested effect resolves independently. A missing
+            // discard target can still resolve a later reward branch.
+            effectRecord?.type === "for-each-opponent"
+          )
+            return false;
           const targetAnalysis = analyzeEffectTargets(
             bagEffect.effect,
             bagEffect.controllerId,
@@ -1369,6 +1481,12 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
           }
           return false;
         })();
+        if (
+          !wasAutoRejectedForNoTargets &&
+          resolutionInput.eventSnapshot?.abilityFullyResolved !== false
+        ) {
+          recordBagEffectResolution(ctx, bagEffect);
+        }
         logResolveBagMessage(
           ctx,
           bagEffect,

@@ -71,26 +71,32 @@ describe("OP15-039 Rebecca", () => {
     expect(legal).toBe(false);
   });
 
-  test("[Activate: Main] may be declined", () => {
+  test("returns and immediately replays the same cost-3 Dressrosa Character (FAQ)", () => {
     const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP15-039", rested: false }], activeDon: 5 },
-      { character: ["OP13-013"], activeDon: 5 },
+      { leaderCardId: op15Rebecca039, character: [op06Sai088], hand: [] },
+      {},
     );
-    const donBefore =
-      engine.getView("south").players.south.activeDon +
-      engine.getView("south").players.south.restedDon;
-
-    engine.activateEffect(
-      engine.findCardInZone("south", "character", "OP15-039"),
-      "activateMain",
-      "south",
-    );
-    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
-
+    const sai = engine.findCardInZone("south", "character", op06Sai088);
+    engine.asSouth().activateMain(engine.leader("south"));
+    engine.asSouth().acceptOptional();
+    engine.resolveDecision("effectPlaySelection", { selectedIds: [sai] }, "south");
     expect(
-      engine.getView("south").players.south.activeDon +
-        engine.getView("south").players.south.restedDon,
-    ).toBe(donBefore);
-    expect(engine.getView("south").prompts).toHaveLength(0);
+      engine.getView("south").players.south.characters.some((card) => card?.instanceId === sai),
+    ).toBe(true);
+    expect(engine.getView("south").players.south.hand).toHaveLength(0);
+    expect(engine.getView("south").players.south.leader?.rested).toBe(true);
+  });
+  test("[Activate: Main] may be declined with a payable Dressrosa Character", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op15Rebecca039, character: [op06Sai088] },
+      {},
+    );
+    const sai = engine.findCardInZone("south", "character", op06Sai088);
+    engine.asSouth().activateMain(engine.leader("south"));
+    engine.asSouth().declineOptional();
+    expect(engine.getView("south").players.south.leader?.rested).toBe(false);
+    expect(
+      engine.getView("south").players.south.characters.some((card) => card?.instanceId === sai),
+    ).toBe(true);
   });
 });

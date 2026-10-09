@@ -3,6 +3,7 @@ import {
   eb01Doma005,
   eb01Fourtricks025,
   eb01MountainGod018,
+  op04Sabo083,
   op06Cerberus087,
   op06Kumacy085,
   op06ShadowsAsgard095,
@@ -17,20 +18,6 @@ function leaderPower(engine: OnePieceTestEngine, seat: "south" | "north") {
     throw new Error("Expected the Leader to expose its current power.");
   }
   return power;
-}
-
-function preventKoByEffect(engine: OnePieceTestEngine, targetId: string) {
-  engine.getState().modifiers["op06-095-cannot-ko"] = {
-    id: "op06-095-cannot-ko",
-    sourceInstanceId: null,
-    targetId,
-    type: "flag",
-    flag: "cannotBeKO",
-    duration: "permanent",
-    expiresAtTurn: null,
-    expiresAtBattleId: null,
-    expiresOnTurnStartOfSeat: null,
-  };
 }
 
 describe("OP06-095 Shadows Asgard", () => {
@@ -87,23 +74,32 @@ describe("OP06-095 Shadows Asgard", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
-  test("excludes protected Characters and scales additional power by the eligible K.O.", () => {
+  test("allows protected Characters but scales power only by cards actually K.O.’d", () => {
     const engine = OnePieceTestEngine.create({
-      hand: [op06ShadowsAsgard095],
-      character: [op06Kumacy085, op06Cerberus087],
-      activeDon: 2,
+      hand: [op04Sabo083, op06Cerberus087, op06ShadowsAsgard095],
+      character: [op06Kumacy085],
+      activeDon: 10,
+      deck: [eb01Doma005, eb01Fourtricks025, eb01Doma005],
     });
     const protectedId = engine.findCardInZone("south", "character", op06Kumacy085);
+    const firstDrawId = engine.findCardInZone("south", "deck", eb01Doma005);
+    const secondDrawId = engine.findCardInZone("south", "deck", eb01Fourtricks025);
+    engine.playCard(op04Sabo083);
+    engine.resolveDecision(
+      "effectTrashFromHandSelection",
+      { selectedIds: [firstDrawId, secondDrawId] },
+      "south",
+    );
+    engine.playCard(op06Cerberus087);
     const koId = engine.findCardInZone("south", "character", op06Cerberus087);
     const powerBefore = leaderPower(engine, "south");
-    preventKoByEffect(engine, protectedId);
 
     engine.playCard(op06ShadowsAsgard095);
     const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     if (target?.kind !== "selectEntity") throw new Error("Expected the K.O. target choice.");
     expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(koId);
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(protectedId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [koId] }, "south");
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(protectedId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [protectedId, koId] }, "south");
 
     expect(engine.getState().cards[protectedId]?.zone).toBe("character");
     expect(engine.getState().cards[koId]?.zone).toBe("trash");

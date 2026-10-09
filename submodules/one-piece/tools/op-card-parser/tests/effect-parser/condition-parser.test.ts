@@ -27,7 +27,7 @@ describe("parseInlineCondition", () => {
               zone: "leader",
               filters: [{ filter: "power", comparison: "gte", value: 7000 }],
             },
-            { condition: "leaderTrait", trait: "Kid Pirates", match: "includes" },
+            { condition: "leaderTrait", trait: "Kid Pirates", match: "exact" },
           ],
         },
         remainingText: "this Character gains [Rush].",
@@ -42,7 +42,7 @@ describe("parseInlineCondition", () => {
       expect(result!.condition).toEqual({
         condition: "leaderTrait",
         trait: "Revolutionary Army",
-        match: "includes",
+        match: "exact",
       });
       expect(result!.remainingText).toBe("draw 1 card.");
     });
@@ -55,7 +55,7 @@ describe("parseInlineCondition", () => {
       expect(result!.condition).toEqual({
         condition: "leaderTrait",
         trait: "Water Seven",
-        match: "includes",
+        match: "exact",
       });
     });
 
@@ -67,7 +67,7 @@ describe("parseInlineCondition", () => {
       expect(result!.condition).toEqual({
         condition: "leaderTrait",
         trait: "Donquixote Pirates",
-        match: "includes",
+        match: "exact",
       });
     });
 
@@ -109,7 +109,7 @@ describe("parseInlineCondition", () => {
         zone: "character",
         filters: [
           { filter: "color", value: "yellow" },
-          { filter: "trait", value: "Supernovas", match: "includes" },
+          { filter: "trait", value: "Supernovas", match: "exact" },
           { filter: "excludeName", value: "Scratchmen Apoo" },
         ],
       });
@@ -259,7 +259,7 @@ describe("parseInlineCondition", () => {
       });
     });
 
-    test("you have N or more colored included-type Characters", () => {
+    test("you have N or more colored named-type Characters", () => {
       const result = parseInlineCondition(
         'If you have 3 or more blue "Cross Guild" type Characters, draw 1 card.',
       );
@@ -271,7 +271,7 @@ describe("parseInlineCondition", () => {
         value: 3,
         filters: [
           { filter: "color", value: "blue" },
-          { filter: "trait", value: "Cross Guild", match: "includes" },
+          { filter: "trait", value: "Cross Guild", match: "exact" },
         ],
       });
     });
@@ -899,7 +899,7 @@ describe("parseInlineCondition — replacement conditions", () => {
         player: "self",
         zones: ["character"],
         count: { amount: 1 },
-        filters: [{ filter: "trait", value: "Supernovas", match: "includes" }],
+        filters: [{ filter: "trait", value: "Supernovas", match: "exact" }],
       },
     });
   });
@@ -1128,8 +1128,8 @@ describe("parseInlineCondition — multi-trait leader condition", () => {
       condition: "compound",
       operator: "or",
       conditions: [
-        { condition: "leaderTrait", trait: "Fish-Man", match: "includes" },
-        { condition: "leaderTrait", trait: "Merfolk", match: "includes" },
+        { condition: "leaderTrait", trait: "Fish-Man", match: "exact" },
+        { condition: "leaderTrait", trait: "Merfolk", match: "exact" },
       ],
     });
   });
@@ -1143,8 +1143,8 @@ describe("parseInlineCondition — multi-trait leader condition", () => {
       condition: "compound",
       operator: "or",
       conditions: [
-        { condition: "leaderTrait", trait: "Shandian Warrior", match: "includes" },
-        { condition: "leaderTrait", trait: "Skypiea", match: "includes" },
+        { condition: "leaderTrait", trait: "Shandian Warrior", match: "exact" },
+        { condition: "leaderTrait", trait: "Skypiea", match: "exact" },
       ],
     });
   });
@@ -1158,7 +1158,7 @@ describe("parseInlineCondition — multi-trait leader condition", () => {
       condition: "compound",
       operator: "or",
       conditions: [
-        { condition: "leaderTrait", trait: "Cross Guild", match: "includes" },
+        { condition: "leaderTrait", trait: "Cross Guild", match: "exact" },
         { condition: "leaderTrait", trait: "Baroque Works", match: "includes" },
       ],
     });
@@ -1172,7 +1172,7 @@ describe("parseInlineCondition — multi-trait leader condition", () => {
     expect(result!.condition).toEqual({
       condition: "leaderTrait",
       trait: "Donquixote Pirates",
-      match: "includes",
+      match: "exact",
     });
   });
 });

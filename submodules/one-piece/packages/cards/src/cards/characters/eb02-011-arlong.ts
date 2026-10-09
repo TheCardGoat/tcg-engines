@@ -32,7 +32,7 @@ export const eb02Arlong011: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Fish-Man Arlong Pirates East Blue"],
+  traits: ["Fish-Man", "East Blue", "Arlong Pirates"],
   attribute: "slash",
   effect:
     '[On Play] If your Leader has the "Fish-Man" or "East Blue" type, give up to 1 rested DON!! card to 1 of your Leader. Then, up to 1 of your opponent\'s Characters with a cost of 5 or less cannot be rested until the end of your opponent\'s next turn.',
@@ -48,12 +48,12 @@ export const eb02Arlong011: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Fish-Man",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "leaderTrait",
                 trait: "East Blue",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

@@ -22,7 +22,7 @@ export const op13TheOneWhoIsTheMostFreeIsThePirateKing116: EventCard = {
   setId: "OP13",
   cost: 1,
   trigger: "Activate this card's [Main] effect.",
-  traits: ["Straw Hat Crew Supernovas"],
+  traits: ["Supernovas", "Straw Hat Crew"],
   effect:
     '[Main] Look at 5 cards from the top of your deck; reveal up to 1 "Supernovas" type Character card and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
   effects: {
@@ -45,7 +45,7 @@ export const op13TheOneWhoIsTheMostFreeIsThePirateKing116: EventCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

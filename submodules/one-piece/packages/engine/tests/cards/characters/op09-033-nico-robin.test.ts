@@ -88,10 +88,12 @@ describe("OP09-033 Nico Robin", () => {
       throw new Error("Expected the filtered effect K.O. target.");
     }
     const candidateIds = protectedTarget.candidates.map((candidate) => candidate.ref.id);
-    expect(candidateIds).not.toContain(odysseyId);
-    expect(candidateIds).not.toContain(strawHatId);
+    expect(candidateIds).toContain(odysseyId);
+    expect(candidateIds).toContain(strawHatId);
     expect(candidateIds).toContain(wrongTraitId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [wrongTraitId] }, "north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [odysseyId] }, "north");
+    koTarget(engine, strawHatId);
+    koTarget(engine, wrongTraitId);
 
     let view = engine.getView("south");
     expect(view.players.south.characters.some((card) => card?.instanceId === odysseyId)).toBe(true);

@@ -73,17 +73,8 @@ export const cordeliaAurousKaiser: GrandArchiveCard<GrandArchiveAbilityDefinitio
                   zones: ["field"],
                   player: "controller",
                   filter: {
-                    kind: "all",
-                    filters: [
-                      {
-                        kind: "token",
-                        value: true,
-                      },
-                      {
-                        kind: "subtype",
-                        oneOf: ["TOKEN"],
-                      },
-                    ],
+                    kind: "token",
+                    value: true,
                   },
                 },
               },

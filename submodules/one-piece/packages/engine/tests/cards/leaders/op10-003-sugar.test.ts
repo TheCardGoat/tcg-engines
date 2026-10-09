@@ -44,6 +44,7 @@ describe("OP10-003 Sugar", () => {
       "south",
     );
     engine.resolveDecision("effectAddDon", { optionId: "1" }, "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
 
     engine.declareAttack(attackerId, engine.leader("south"), "north");
     engine.resolveDecision("battleCounter", { selectedIds: [eventIds[1]!] }, "south");
@@ -57,5 +58,34 @@ describe("OP10-003 Sugar", () => {
     expect(view.players.south.donDeckCount).toBe(1);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+  test("declining a Counter Event's optional discard still activates Sugar's Event reaction", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP10-003", hand: ["OP04-016", "EB01-005"], donDeckCount: 2 },
+      {},
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const kept = e.findCardInZone("south", "hand", "EB01-005");
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().chooseCounter("OP04-016");
+    e.asSouth().declineOptional();
+    e.resolveDecision("effectAddDon", { optionId: "1" }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(1);
+    expect(e.getView("south").players.south.donDeckCount).toBe(1);
+    expect(e.getView("south").players.south.hand.map((c) => c.instanceId)).toContain(kept);
+  });
+  test("an Event's Life Trigger does not activate Sugar's Event reaction", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP10-003", life: ["OP04-016"], donDeckCount: 2 },
+      {},
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().activateLifeTrigger();
+    e.asSouth().chooseTargets(e.leader("north"));
+    expect(e.getView("south").players.north.leader.power).toBe(2000);
+    expect(e.getView("south").players.south.activeDon).toBe(0);
+    expect(e.getView("south").players.south.donDeckCount).toBe(2);
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

@@ -23,7 +23,7 @@ export const op15Leo052: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 2000,
-  traits: ["Dressrosa The Tontattas"],
+  traits: ["The Tontattas", "Dressrosa"],
   attribute: "strike",
   effect:
     "If your Character with 7000 base power or less would be removed from the field by your opponent's effect, you may place 1 of your Characters at the bottom of the owner's deck instead.",

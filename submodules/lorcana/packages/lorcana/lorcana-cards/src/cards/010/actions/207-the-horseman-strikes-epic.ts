@@ -22,7 +22,7 @@ export const theHorsemanStrikesEpic: ActionCard = {
   franchise: "Sleepy Hollow",
   set: "010",
   cardNumber: 207,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   inkable: true,

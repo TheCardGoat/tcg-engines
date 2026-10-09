@@ -93,12 +93,14 @@ describe("OP14-111 Perona", () => {
     const exactId = engine.findCardInZone("north", "trash", op06Inuppe082);
     const wrongTraitId = engine.findCardInZone("north", "trash", eb01Doma005);
 
+    const resolvingTriggerId = engine.findCardInZone("north", "life", op14eb04PeronaOp14111111);
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
     const play = engine.pendingDecision("effectPlaySelection", "north").steps[0];
     if (play?.kind !== "selectEntity") throw new Error("Expected Perona's Trigger choice.");
     expect(play.candidates.map((candidate) => candidate.ref.id)).toEqual([includedId, exactId]);
     expect(play.candidates.map((candidate) => candidate.ref.id)).not.toContain(wrongTraitId);
+    expect(play.candidates.map((candidate) => candidate.ref.id)).not.toContain(resolvingTriggerId);
     engine.resolveDecision("effectPlaySelection", { selectedIds: [includedId] }, "north");
 
     expect(

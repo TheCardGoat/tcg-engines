@@ -32,6 +32,9 @@ export const op17CharlotteMontDOr111: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          { cost: "revealFromHand", amount: 2, filters: [{ filter: "hasTrigger", value: true }] },
+        ],
         actions: [
           {
             action: "ko",

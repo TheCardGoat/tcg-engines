@@ -31,6 +31,7 @@ export const russellJuniorWildernessExplorer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c78da4f23cfe4cb39c87abf0893dbcb4",
+    tcgPlayer: "704597",
   },
   text: [
     {

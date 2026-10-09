@@ -27,6 +27,7 @@ import {
 
 import { AnimationDriver } from "../driver/AnimationDriver";
 import { SimulatorEntityVisualProvider } from "../components/SimulatorEntityVisual";
+import { simulatorAnimationDebug } from "../debug";
 import { createAnimationNodeRegistry } from "../lib/node-registry";
 import {
   AnimationRuntimeContext,
@@ -255,7 +256,21 @@ export function createSimulatorAnimationScope<TState>() {
     useEffect(() => {
       if (!activeId || !activePhase || !compiledPlan) return;
       if ((motionSuppressed && !reducedMotionCrossfade) || animationSpeed === "off") {
+        const instantAudio = harnessMotionSuppressed
+          ? []
+          : [
+              activePlan,
+              ...store.getSnapshot().queuedTransitions.map((transition) => transition.plan),
+            ].flatMap((plan) =>
+              plan
+                ? withViewerRelativeResultAudio(compileAnimationPlan(plan, "off"), viewerSeatId)
+                    .audioCues
+                : [],
+            );
         settle("completed", { type: "latest" });
+        // Settling cancels the old clock first. Sound remains useful when
+        // movement is disabled; schedule it on the resulting instant clock.
+        callbacks.current.onScheduleAudio?.(instantAudio);
         return;
       }
       if (activePhase === "preparing") {
@@ -278,7 +293,23 @@ export function createSimulatorAnimationScope<TState>() {
         (activePhase === "running"
           ? (playbackStartedAtMs ?? performance.now())
           : performance.now()) + duration;
-      if (activePhase === "running") callbacks.current.onScheduleAudio?.(compiledPlan.audioCues);
+      if (activePhase === "running") {
+        simulatorAnimationDebug("plan-running", {
+          transitionId: activeId,
+          playbackStartedAtMs,
+          now: Math.round(performance.now()),
+          interactionBlockingDurationMs: compiledPlan.interactionBlockingDurationMs,
+          reflowDurationMs: compiledPlan.reflowDurationMs,
+          steps: compiledPlan.steps.map((entry) => ({
+            id: entry.step.id,
+            type: entry.step.type,
+            entity: "entity" in entry.step ? entry.step.entity.id : undefined,
+            startAtMs: entry.startAtMs,
+            durationMs: entry.durationMs,
+          })),
+        });
+        callbacks.current.onScheduleAudio?.(compiledPlan.audioCues);
+      }
       // The compiled timeline owns completion. Missing nodes and visual callbacks
       // cannot extend gameplay locks or prevent the next transition from starting.
       const timer = setTimeout(
@@ -294,6 +325,9 @@ export function createSimulatorAnimationScope<TState>() {
       activeId,
       activePhase,
       compiledPlan,
+      activePlan,
+      harnessMotionSuppressed,
+      viewerSeatId,
       motionSuppressed,
       reducedMotionCrossfade,
       animationSpeed,

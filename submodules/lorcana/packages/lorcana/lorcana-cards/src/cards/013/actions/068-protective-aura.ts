@@ -27,6 +27,7 @@ export const protectiveAura: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_91e3400d60684980b0cd74c9ba06e21f",
+    tcgPlayer: "704586",
   },
   text: "Your Floodborn characters gain Evasive until the start of your next turn.",
   abilities: [

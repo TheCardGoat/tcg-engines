@@ -47,4 +47,31 @@ describe("EB01-034 Ms. Wednesday", () => {
     ).toBe(true);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("declining the first attack preserves payment and permits activation on a later attack", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP01-062",
+        character: ["EB01-034"],
+        hand: ["EB01-005"],
+        activeDon: 1,
+        donDeckCount: 1,
+      },
+      { character: ["EB01-005"] },
+      { activeSeat: "north" },
+    );
+    e.declareAttack(e.leader("north"), e.leader("south"), "north");
+    e.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    expect(e.getView("south").players.south.activeDon).toBe(1);
+    expect(e.getView("south").players.south.donDeckCount).toBe(1);
+    e.resolveDecision("battleBlocker", { selectedIds: ["skip"] }, "south");
+    e.asSouth().chooseCounter();
+    e.asNorth().attack("EB01-005", e.leader("south"));
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    e.resolveDecision("effectAddDon", { optionId: "1" }, "south");
+    e.resolveDecision("battleBlocker", { selectedIds: ["skip"] }, "south");
+    e.asSouth().chooseCounter();
+    expect(e.getView("south").players.south.activeDon).toBe(1);
+    expect(e.getView("south").players.south.donDeckCount).toBe(1);
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

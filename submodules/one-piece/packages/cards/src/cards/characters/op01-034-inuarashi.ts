@@ -31,7 +31,7 @@ export const op01Inuarashi034: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Former Whitebeard Pirates Land of Wano Minks The Akazaya Nine"],
+  traits: ["Minks", "Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[DON!! x2] [When Attacking] Set up to 1 of your DON!! cards as active.  This card has been officially errata'd.",

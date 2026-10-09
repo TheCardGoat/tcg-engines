@@ -23,7 +23,7 @@ export const op15DraculeMihawk027: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 2000,
-  traits: ["The Seven Warlords of the Sea East Blue"],
+  traits: ["East Blue", "The Seven Warlords of the Sea"],
   attribute: "slash",
   effect: "[On Play] Rest up to 1 of your opponent's Characters with a DON!! card given.",
   effects: {

@@ -50,4 +50,29 @@ describe("OP10-043 Moocy", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("printed 2000 Counter protects a 5000 Leader from a 6000 attack", () => {
+    const e = OnePieceTestEngine.create(
+      { character: ["ST02-006"] },
+      { hand: ["OP10-043"], life: 3 },
+    );
+    e.asSouth().attack(e.findCardInZone("south", "character", "ST02-006"), e.leader("north"));
+    e.asNorth().chooseCounter(e.findCardInZone("north", "hand", "OP10-043"));
+    expect(e.getView("north").players.north.lifeCount).toBe(3);
+    expect(e.getView("north").players.north.trash.map((c) => c.cardId)).toContain("OP10-043");
+  });
+  test("paid Leader rest grants Banish to Luffy for a real Life damage attack", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP10-042", hand: ["OP10-043"], character: ["ST01-012"], activeDon: 2 },
+      { life: ["ST01-015"] },
+    );
+    e.asSouth().play("OP10-043");
+    e.asSouth().acceptOptional();
+    const luffy = e.findCardInZone("south", "character", "ST01-012");
+    e.asSouth().chooseTargets(luffy);
+    expect(e.getView("south").players.south.leader.rested).toBe(true);
+    e.asSouth().attack(luffy, e.leader("north"));
+    expect(e.getView("north").players.north.trash.map((c) => c.cardId)).toContain("ST01-015");
+    expect(e.getView("north").players.north.handCount).toBe(0);
+    expect(e.getView("north").prompts).toHaveLength(0);
+  });
 });

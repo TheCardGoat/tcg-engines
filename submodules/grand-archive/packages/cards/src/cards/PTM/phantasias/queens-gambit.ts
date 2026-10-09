@@ -92,6 +92,7 @@ export const queensGambit: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
                 kind: "conditional",
                 condition: {
                   kind: "subject-matches",
+                  basis: "last-known",
                   subject: {
                     kind: "bound",
                     binding: "sacrificed-object",

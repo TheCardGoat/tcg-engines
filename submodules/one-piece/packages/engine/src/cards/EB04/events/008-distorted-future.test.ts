@@ -3,6 +3,21 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("EB04-008 Distorted Future", () => {
+  test("Main at three Life pays the Event cost but does not reduce power", () => {
+    const e = OnePieceTestEngine.create(
+      { hand: ["EB04-008"], activeDon: 1, life: 3 },
+      { character: ["EB01-005"] },
+    );
+    e.playCard("EB04-008");
+    expect(e.getView("south").players.north.characters[0]?.power).toBe(3000);
+    expect(e.getView("south").players.south).toMatchObject({
+      activeDon: 0,
+      restedDon: 1,
+      lifeCount: 3,
+    });
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
+
   test("[Main] with 2-or-less Life gives -3000 to an opposing Character", () => {
     const engine = OnePieceTestEngine.create(
       {

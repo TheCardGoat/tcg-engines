@@ -64,8 +64,12 @@ function renderDocument(document: ManifestDocument, fetchedAt: string, original:
   const hashLine = document.htmlSha256 ? `content_sha256: ${document.htmlSha256}\n` : "";
   return (
     "---\n" +
+    "official_source:\n" +
+    '  publisher: "Legend Story Studios"\n' +
+    `  url: ${quoteYaml(document.source)}\n` +
+    '  relation: "exact_document"\n' +
+    `  retrieved_at: ${quoteYaml(fetchedAt.slice(0, 10))}\n` +
     `title: ${quoteYaml(document.title)}\n` +
-    `source: ${document.source}\n` +
     `archived_at: ${fetchedAt}\n` +
     hashLine +
     "---\n\n" +
@@ -74,11 +78,14 @@ function renderDocument(document: ManifestDocument, fetchedAt: string, original:
 }
 
 function validateDocument(document: ManifestDocument, markdown: string): void {
-  if (!markdown.startsWith(`---\ntitle: ${quoteYaml(document.title)}\n`)) {
-    throw new Error(`${document.file}: missing normalized title front matter`);
+  if (!markdown.startsWith("---\nofficial_source:\n")) {
+    throw new Error(`${document.file}: missing official-source front matter`);
   }
-  if (!markdown.includes(`source: ${document.source}\n`)) {
-    throw new Error(`${document.file}: missing source provenance`);
+  if (
+    !markdown.includes(`title: ${quoteYaml(document.title)}\n`) ||
+    !markdown.includes(`  url: ${quoteYaml(document.source)}\n`)
+  ) {
+    throw new Error(`${document.file}: missing title or publisher URL`);
   }
   if (!markdown.includes(`\n# ${document.title}\n`)) {
     throw new Error(`${document.file}: missing H1 title`);

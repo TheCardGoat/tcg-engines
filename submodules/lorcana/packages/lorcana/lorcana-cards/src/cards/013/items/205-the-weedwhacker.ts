@@ -25,15 +25,19 @@ export const theWeedwhacker: ItemCard = {
   rarity: "uncommon",
   cost: 3,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_f90552969d7f41bd9495cf81924514a2",
+    tcgPlayer: "704697",
+  },
   text: [
     {
-      title: "Full Power",
+      title: "FULL POWER",
       description:
         "{E}, 1 {I} — Chosen character gains Challenger +2 this turn. (They get +2 {S} while challenging.)",
     },
     {
-      title: "Clear-Cut",
-      description: "2 {I}, Banish this item — Banish chosen Vineling character.",
+      title: "CLEAR-CUT 2",
+      description: "{I}, Banish this item — Banish chosen Vineling character.",
     },
   ],
   abilities: [

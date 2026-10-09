@@ -22,7 +22,7 @@ export const op16BlackHole117: EventCard = {
   setId: "OP16",
   cost: 2,
   trigger: "Add up to 1 {Blackbeard Pirates} type card from your trash to your hand.",
-  traits: ["Blackbeard Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Blackbeard Pirates"],
   effect:
     "[Main] You may trash 1 card with a [Trigger] from your hand: Negate the effects of up to 1 of your opponent's Characters with a cost of 8 or less during this turn.",
   effects: {
@@ -63,6 +63,29 @@ export const op16BlackHole117: EventCard = {
           },
         ],
         optional: true,
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "returnToHand",
+            target: {
+              player: "self",
+              zones: ["trash"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Blackbeard Pirates",
+                  match: "exact",
+                },
+              ],
+            },
+          },
+        ],
       },
     ],
   },

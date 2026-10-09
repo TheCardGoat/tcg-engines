@@ -385,6 +385,8 @@ function subtitleFor(card: ProjectedCard): string {
       return "Deck";
     case "life":
       return "Life";
+    case "resolution":
+      return "Resolution";
   }
 }
 

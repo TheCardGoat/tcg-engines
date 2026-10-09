@@ -22,7 +22,7 @@ export const op12WeLlRingTheBellWaitingForYou116: EventCard = {
   setId: "OP12",
   cost: 3,
   trigger: "Draw 1 card.",
-  traits: ["Sky Island Shandian Warrior Jaya"],
+  traits: ["Jaya", "Sky Island", "Shandian Warrior"],
   effect:
     '[Main] Look at 5 cards from the top of your deck; reveal a total of up to 2 "Shandian Warrior" type Character cards or [Mont Blanc Noland] and add them to your hand. Then, place the rest at the bottom of your deck in any order.',
   effects: {
@@ -51,7 +51,7 @@ export const op12WeLlRingTheBellWaitingForYou116: EventCard = {
                       {
                         filter: "trait",
                         value: "Shandian Warrior",
-                        match: "includes",
+                        match: "exact",
                       },
                       {
                         filter: "cardCategory",

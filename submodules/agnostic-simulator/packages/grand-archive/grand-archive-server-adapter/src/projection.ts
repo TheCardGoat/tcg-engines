@@ -1,3 +1,7 @@
+import {
+  projectGrandArchiveStackPresentation,
+  type GrandArchiveStackPresentation,
+} from "./stack-presentation.ts";
 import { grandArchiveCardPresentation } from "./card-presentation.ts";
 import { getGrandArchiveCard } from "@tcg/grand-archive-cards";
 import type { EngineInteractionView, InteractionAction } from "@tcg/protocol";
@@ -28,6 +32,7 @@ import {
 } from "./counter-presentation.ts";
 
 export interface GrandArchiveSimulatorProjection {
+  readonly stackView: GrandArchiveStackPresentation;
   readonly combatView: GrandArchiveViewerState["combatView"];
   readonly interactionView?: EngineInteractionView;
   readonly cardImageUrls?: Readonly<Record<string, string>>;
@@ -415,6 +420,14 @@ function viewerWaitState(viewer: GrandArchiveViewerState): GrandArchiveSimulator
       decisionKind: viewer.decision.kind,
     };
   }
+  // Combat decision ownership is public even when its private choices are not.
+  if (viewer.combatView?.active && viewer.combatView.decision) {
+    return {
+      kind: "decision",
+      playerId: viewer.combatView.decision.playerId,
+      decisionKind: viewer.combatView.decision.kind,
+    };
+  }
   if (viewer.status === "pregame") {
     return viewer.pregamePlayerId
       ? { kind: "pregame-action", playerId: viewer.pregamePlayerId }
@@ -600,6 +613,7 @@ export function projectGrandArchiveViewerSimulator(
   const activeSeatId =
     viewer.decision?.playerId ?? viewer.opportunityHolderId ?? viewer.turn.playerId;
   return {
+    stackView: projectGrandArchiveStackPresentation(viewer),
     combatView: viewer.combatView,
     turnPlayerId: viewer.turn.playerId,
     table: {
@@ -776,6 +790,7 @@ export function projectGrandArchiveSimulator(
   });
   const activeSeatId = "playerId" in waitState ? waitState.playerId : state.turn.playerId;
   return {
+    stackView: projectGrandArchiveStackPresentation(viewer),
     combatView: viewer.combatView,
     turnPlayerId: state.turn.playerId,
     table: {

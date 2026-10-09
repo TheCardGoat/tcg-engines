@@ -61,7 +61,7 @@ export const op13TheEmptyThrone099: StageCard = {
               {
                 filter: "trait",
                 value: "Five Elders",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

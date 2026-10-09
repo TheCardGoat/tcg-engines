@@ -22,7 +22,7 @@ export const heHurledHisThunderboltEpic: ActionCard = {
   franchise: "Hercules",
   set: "010",
   cardNumber: 222,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 4,
   inkable: false,

@@ -69,7 +69,7 @@ export const op04DonquixoteFamily036: EventCard = {
               {
                 filter: "trait",
                 value: "Donquixote Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

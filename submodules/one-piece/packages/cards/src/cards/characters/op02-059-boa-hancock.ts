@@ -31,7 +31,7 @@ export const op02BoaHancock059: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Kuja Pirates The Seven Warlords of the Sea Impel Down"],
+  traits: ["Impel Down", "The Seven Warlords of the Sea", "Kuja Pirates"],
   attribute: "special",
   effect:
     "[When Attacking] Draw 1 card and trash 1 card from your hand. Then, trash up to 3 cards from your hand.",

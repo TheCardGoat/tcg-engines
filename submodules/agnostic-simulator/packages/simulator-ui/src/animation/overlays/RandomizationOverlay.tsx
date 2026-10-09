@@ -31,7 +31,6 @@ export function RandomizationOverlay() {
               center={center}
               delaySeconds={compiled.startAtMs / 1_000}
               durationSeconds={compiled.durationMs / 1_000}
-              label={compiled.step.resultLabel ?? RANDOMIZATION_LABELS.shuffle}
             />
           );
         }
@@ -40,6 +39,7 @@ export function RandomizationOverlay() {
             key={compiled.step.id}
             data-animation-overlay="randomization"
             data-animation-randomization-kind={compiled.step.kind}
+            data-animation-label-only
             initial={{
               opacity: 0,
               transform: "translate3d(-50%, -50%, 0) rotate(-10deg) scale(0.8)",
@@ -82,12 +82,10 @@ function ShuffleRandomizationVisual({
   center,
   delaySeconds,
   durationSeconds,
-  label,
 }: {
   readonly center: { x: number; y: number };
   readonly delaySeconds: number;
   readonly durationSeconds: number;
-  readonly label: string;
 }) {
   const cardStyle = {
     position: "absolute",
@@ -150,25 +148,6 @@ function ShuffleRandomizationVisual({
         transition={transition}
         style={cardStyle}
       />
-      <div
-        style={{
-          position: "absolute",
-          left: "50%",
-          top: "calc(100% + 8px)",
-          translate: "-50% 0",
-          borderRadius: 999,
-          background: "rgba(2, 6, 23, .9)",
-          border: "1px solid var(--game-accent, #5eead4)",
-          color: "white",
-          padding: "4px 8px",
-          fontSize: 10,
-          fontWeight: 900,
-          letterSpacing: ".08em",
-          whiteSpace: "nowrap",
-        }}
-      >
-        {label}
-      </div>
     </motion.div>
   );
 }

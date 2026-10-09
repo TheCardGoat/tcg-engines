@@ -30,7 +30,7 @@ export const op01Okiku035: CharacterCard = {
   setId: "OP01",
   cost: 3,
   power: 5000,
-  traits: ["Land of Wano The Akazaya Nine"],
+  traits: ["Land of Wano", "The Akazaya Nine"],
   attribute: "slash",
   effect:
     "[DON!! x1] [When Attacking] [Once Per Turn] Rest up to 1 of your opponent's Characters with a cost of 5 or less.  This card has been officially errata'd.",

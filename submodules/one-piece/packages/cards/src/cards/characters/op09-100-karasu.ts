@@ -42,7 +42,7 @@ export const op09Karasu100: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Revolutionary Army",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "totalLifeCount",

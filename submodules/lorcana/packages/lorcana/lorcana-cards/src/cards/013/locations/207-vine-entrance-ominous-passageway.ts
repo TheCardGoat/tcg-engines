@@ -29,9 +29,13 @@ export const vineEntranceOminousPassageway: LocationCard = {
   moveCost: 1,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_4f7c41cd799047fc81c2f28408765760",
+    tcgPlayer: "704699",
+  },
   text: [
     {
-      title: "Root of Power",
+      title: "ROOT OF POWER",
       description:
         "The first time a Floodborn character moves here each turn, you may deal 1 damage to chosen character.",
     },

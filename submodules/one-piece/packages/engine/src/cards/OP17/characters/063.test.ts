@@ -64,4 +64,38 @@ describe("OP17-063 Kaido", () => {
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("negates a cost-five Character's KO protection before K.O.ing that same Character", () => {
+    const e = OnePieceTestEngine.create(
+      { character: [{ cardId: "OP17-063", playedOnTurn: 3 }], activeDon: 1 },
+      { character: ["OP06-086", "OP02-114"] },
+      { turnNumber: 3 },
+    );
+    const target = e.findCardInZone("north", "character", "OP02-114");
+    e.asSouth().activateMain("OP17-063");
+    e.asSouth().acceptOptional();
+    e.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "south");
+    expect(e.getView("south").players.north.trash.map((c) => c.instanceId)).toContain(target);
+    expect(e.getView("south").players.north.characters.some((c) => c?.cardId === "OP06-086")).toBe(
+      true,
+    );
+  });
+  test("after a real turn cycle the DON cost is paid but the played-this-turn effect does not apply", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP17-058", hand: ["OP17-063"], activeDon: 10 },
+      { character: ["EB01-005"] },
+    );
+    const target = e.findCardInZone("north", "character", "EB01-005");
+    e.asSouth().play("OP17-063");
+    e.endTurn("south");
+    e.endTurn("north");
+    const before = e.getView("south").players.south;
+    e.asSouth().activateMain("OP17-063");
+    e.asSouth().acceptOptional();
+    const after = e.getView("south");
+    expect(after.players.south.activeDon).toBe(before.activeDon - 1);
+    expect(after.players.south.donDeckCount).toBe(before.donDeckCount + 1);
+    expect(after.players.north.characters.some((c) => c?.instanceId === target)).toBe(true);
+    expect(after.players.north.trash).toHaveLength(0);
+    expect(after.prompts).toHaveLength(0);
+  });
 });

@@ -1,9 +1,0 @@
-import { describe, test } from "vite-plus/test";
-import { op02BartholomewKuma057 } from "../../../../../cards/src/cards/characters/op02-057-bartholomew-kuma.ts";
-import { validateCardAbility } from "../../card-behavior-harness.ts";
-
-describe("OP02-057 Bartholomew Kuma", () => {
-  test.skip("validates its ability through OnePieceTestEngine", () => {
-    validateCardAbility(op02BartholomewKuma057);
-  });
-});

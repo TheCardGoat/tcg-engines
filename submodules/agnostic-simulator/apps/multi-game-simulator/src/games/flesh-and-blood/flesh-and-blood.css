@@ -5523,8 +5523,8 @@ button.fab-chain-mobile-gallery-card[data-provisional-defender="true"]:active,
    that space to the two permanent lanes without changing the outer board. */
 @media (orientation: portrait) {
   .fab-mobile-arena-row[data-center-mode="board"]:has(
-    > .fab-shared-arena[data-arena-mode="closed"]
-  ):not(:has(.fab-mobile-resolution-row > *, .fab-mobile-stack-control > *)) {
+      > .fab-shared-arena[data-arena-mode="closed"]
+    ):not(:has(.fab-mobile-resolution-row > *, .fab-mobile-stack-control > *)) {
     grid-template-rows: minmax(0, 1fr) 0 minmax(0, 1fr);
   }
 }

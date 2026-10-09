@@ -1,3 +1,6 @@
+import { createLorcanaLogProjection } from "../../../types";
+import { projectLorcanaCardDerived } from "../../../projection/card-derived";
+import { sweepLethalDamageInPlay } from "../../state/lethal-damage-sweep";
 import type { CardInstanceId, PlayerId } from "#core";
 import type {
   CardSelectionFilter,
@@ -25,6 +28,7 @@ import {
   emitTriggeredLorcanaEvent,
   flushTriggeredEventsToBag,
   registerAbility,
+  snapshotBoardTriggerCandidates,
 } from "../../effects/triggered-abilities";
 import { resolveActionCardEffects } from "../action-effect-resolver";
 import {
@@ -59,7 +63,7 @@ import {
 } from "./selection-state";
 
 type CardDefinitionLike = {
-  actionSubtype?: string;
+  actionSubtype?: string | null;
   abilities?: unknown[];
   cardType?: "character" | "item" | "location" | "action";
   classifications?: string[];
@@ -151,6 +155,7 @@ function isContextDependentPlayCardFilter(effect: PlayCardEffect): boolean {
       (filter.maxCost as { type?: unknown }).type === "chosen-card-cost") ||
     filter.excludeChosenCard === true ||
     filter.sameNameAsChosenCard === true ||
+    filter.inEventSnapshotDiscardedCards === true ||
     filter.inEventSnapshotCardsUnder === true
   ) {
     return true;
@@ -172,6 +177,7 @@ function isDeterministicNameRestrictedPlayCardFilter(effect: PlayCardEffect): bo
     filter?.sameNameAsChosenCard === true ||
     filter?.sameInstanceAsSource === true ||
     filter?.sameInstanceAsTriggerSubject === true ||
+    filter?.inEventSnapshotDiscardedCards === true ||
     filter?.inEventSnapshotCardsUnder === true
   );
 }
@@ -426,6 +432,13 @@ function matchesPlayCardFilter(
     }
   }
 
+  if (filter.inEventSnapshotDiscardedCards === true) {
+    const discardedCardIds = resolutionInput.eventSnapshot?.discardedCardIds;
+    if (!Array.isArray(discardedCardIds) || !discardedCardIds.includes(cardId)) {
+      return false;
+    }
+  }
+
   if (filter.excludeChosenCard === true) {
     const chosenCardId = resolutionInput.eventSnapshot?.chosenCardId as CardInstanceId | undefined;
     if (chosenCardId && chosenCardId === cardId) {
@@ -506,6 +519,123 @@ function matchesPlayableCardCriteria(
   return true;
 }
 
+/**
+ * Observing "enters-with-damage" auras: static abilities on in-play cards
+ * (e.g. Lady Tremaine - Scornful Snob "HARSH CRITIQUE — Opposing characters
+ * with Singer enter play with 1 damage") that add entry damage to characters
+ * entering play under an opposing player's control. Only `has-keyword` /
+ * `has-classification` filters are evaluated; auras with other filters are
+ * skipped rather than guessed.
+ */
+export function getObservingEntersWithDamage(
+  ctx: PlayCardExecutionContext,
+  definition: CardDefinitionLike | undefined,
+  enteringPlayerId: PlayerId,
+  enteringCardId?: CardInstanceId,
+): number {
+  if (!definition || definition.cardType !== "character") {
+    return 0;
+  }
+
+  const projected = enteringCardId
+    ? projectLorcanaCardDerived({
+        definition: ctx.cards.getDefinition(enteringCardId),
+        meta: ctx.cards.require(enteringCardId).meta,
+        state: createProjectionState(ctx.framework.state, ctx.G),
+        cardInstanceId: enteringCardId,
+        ownerID: enteringPlayerId,
+        controllerID: enteringPlayerId,
+        zoneID: "play",
+        actorPlayerId: enteringPlayerId,
+        getDefinitionByInstanceId: (id) => ctx.cards.getDefinition(id),
+        registry: getOrBuildMoveRegistry(ctx),
+      })
+    : undefined;
+  const filterDefinition = projected
+    ? {
+        abilities: (projected.keywords ?? []).map((keyword) => ({ type: "keyword", keyword })),
+        classifications: projected.classifications,
+      }
+    : definition;
+  let total = 0;
+  for (const auraPlayerId of ctx.framework.state.playerIds) {
+    if (auraPlayerId === enteringPlayerId) {
+      continue; // "opposing characters" auras affect the other player's entries
+    }
+    for (const cardId of ctx.framework.zones.getCards({
+      zone: "play",
+      playerId: auraPlayerId,
+    }) as CardInstanceId[]) {
+      const auraDefinition = ctx.cards.getDefinition(cardId) as CardDefinitionLike | undefined;
+      for (const ability of auraDefinition?.abilities ?? []) {
+        if (!ability || typeof ability !== "object" || !("effect" in ability)) {
+          continue;
+        }
+        const effect = (ability as { effect?: unknown }).effect;
+        if (!effect || typeof effect !== "object" || Array.isArray(effect)) {
+          continue;
+        }
+        if ((effect as { type?: unknown }).type !== "enters-with-damage") {
+          continue;
+        }
+
+        const typed = effect as {
+          amount?: unknown;
+          target?: {
+            owner?: string;
+            cardTypes?: string[];
+            filter?: Parameters<typeof matchesCardFilterArray>[0];
+          };
+        };
+        // Self-only entry damage is handled on the entering card, not as an aura.
+        if (typed.target?.owner !== "opponent") {
+          continue;
+        }
+        const cardTypes = typed.target?.cardTypes;
+        if (cardTypes && cardTypes.length > 0 && !cardTypes.includes("character")) {
+          continue;
+        }
+
+        const amount = Number(typed.amount ?? 0);
+        if (!Number.isFinite(amount) || amount <= 0) {
+          continue;
+        }
+
+        const filters = typed.target?.filter;
+        if (
+          filters &&
+          filters.length > 0 &&
+          !matchesCardFilterArray(
+            filters,
+            filterDefinition as Parameters<typeof matchesCardFilterArray>[1],
+          )
+        ) {
+          continue;
+        }
+
+        const entryDamage = Math.max(0, Math.floor(amount));
+        total += entryDamage;
+        if (enteringCardId && entryDamage > 0) {
+          ctx.framework.log(
+            createLorcanaLogProjection(
+              "lorcana.outcome.entryDamage",
+              {
+                playerId: auraPlayerId,
+                sourceId: cardId,
+                targetId: enteringCardId,
+                amount: entryDamage,
+              },
+              { mode: "PUBLIC" },
+              "rules",
+            ),
+          );
+        }
+      }
+    }
+  }
+  return total;
+}
+
 export function getEntersWithDamageAmount(definition: CardDefinitionLike | undefined): number {
   if (!definition || definition.cardType !== "character" || !Array.isArray(definition.abilities)) {
     return 0;
@@ -525,6 +655,12 @@ export function getEntersWithDamageAmount(definition: CardDefinitionLike | undef
       return total;
     }
 
+    // A targeted entry aura modifies other entrants, not its own source.
+    const target = (effect as { target?: { selector?: string } | string }).target;
+    if (target && target !== "SELF" && (typeof target !== "object" || target.selector !== "self")) {
+      return total;
+    }
+
     const amount = Number((effect as { amount?: unknown }).amount ?? 0);
     return total + (Number.isFinite(amount) ? Math.max(0, amount) : 0);
   }, 0);
@@ -536,12 +672,15 @@ function initializePlayedCardMeta(
   definition: CardDefinitionLike,
   entersExerted: boolean,
   playedCostType: CardPlayedPayload["costType"],
+  enteringPlayerId?: PlayerId,
 ): void {
   const cardType = definition.cardType;
   if (cardType === "character") {
     ctx.cards.setMeta(cardId, {
       state: entersExerted ? "exerted" : "ready",
-      damage: getEntersWithDamageAmount(definition),
+      damage:
+        getEntersWithDamageAmount(definition) +
+        getObservingEntersWithDamage(ctx, definition, enteringPlayerId ?? ctx.playerId, cardId),
       isDrying: true,
       publicFaceState: undefined,
       atLocationId: undefined,
@@ -1058,6 +1197,7 @@ export function resolvePlayCardEffect(
           resolutionInput.enterPlayExerted === true &&
           hasBodyguardKeyword(definition)),
       costType,
+      playerId as PlayerId,
     );
 
     emitTriggeredLorcanaEvent(
@@ -1073,6 +1213,7 @@ export function resolvePlayCardEffect(
         event: "play",
         playerId,
         subjectCardId: chosenCardId,
+        triggerCandidates: snapshotBoardTriggerCandidates(ctx),
       },
     );
 
@@ -1131,6 +1272,8 @@ export function resolvePlayCardEffect(
     delete resolutionInput.eventSnapshot.chosenCardId;
     return;
   }
+
+  sweepLethalDamageInPlay(ctx, { reasonCardId: cardPlayed.cardId });
 
   if (
     hasPendingActionEffectResolution(ctx) ||

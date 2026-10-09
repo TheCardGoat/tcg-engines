@@ -52,38 +52,45 @@ export const op03FireFist018: EventCard = {
           {
             action: "ko",
             target: {
-              player: "opponent",
+              player: "any",
               zones: ["character"],
               count: {
-                amount: 1,
+                amount: 2,
                 upTo: true,
               },
-              filters: [
-                {
-                  filter: "power",
-                  comparison: "lte",
-                  value: 5000,
-                },
-              ],
             },
-          },
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
+            targetGroups: [
+              {
+                player: "opponent",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                filters: [
+                  {
+                    filter: "power",
+                    comparison: "lte",
+                    value: 5000,
+                  },
+                ],
               },
-              filters: [
-                {
-                  filter: "power",
-                  comparison: "lte",
-                  value: 4000,
+              {
+                player: "opponent",
+                zones: ["character"],
+                count: {
+                  amount: 1,
+                  upTo: true,
                 },
-              ],
-            },
+                filters: [
+                  {
+                    filter: "power",
+                    comparison: "lte",
+                    value: 4000,
+                  },
+                ],
+              },
+            ],
           },
         ],
         optional: true,

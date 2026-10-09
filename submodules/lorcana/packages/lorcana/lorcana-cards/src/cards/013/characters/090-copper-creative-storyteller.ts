@@ -32,6 +32,7 @@ export const copperCreativeStoryteller: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_b9398a559c3b428886334b84cdd3425a",
+    tcgPlayer: "704604",
   },
   classifications: ["Storyborn", "Hero", "Puppy"],
   i18n: copperCreativeStorytellerI18n,

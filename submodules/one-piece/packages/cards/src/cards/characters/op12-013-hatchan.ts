@@ -23,7 +23,7 @@ export const op12Hatchan013: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Fish-Man Former Arlong Pirates"],
+  traits: ["Fish-Man", "Former Arlong Pirates"],
   attribute: "slash",
   effect:
     "[Activate: Main] You may rest this Character and reveal 2 Events from your hand: Give up to 2 rested DON!! cards to your Leader or 1 of your Characters.",

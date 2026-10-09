@@ -1,69 +1,40 @@
 import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
-// Auto-verified: Charlotte Mont-d'or (OP17-111) cost=3 power=4000 counter=1000
 describe("OP17-111 Charlotte Mont-d'or", () => {
-  test("[On Play] resolves its play effects", () => {
-    const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-111"], activeDon: 5 },
-      { character: ["OP13-013"], activeDon: 5 },
+  test("opponent-turn Life Trigger plays Mont-d'Or then reveals cards to K.O. two Characters", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "ST07-001",
+        life: ["OP17-111", "OP17-107"],
+        hand: ["OP17-107", "OP17-108", "OP17-109"],
+      },
+      { leaderCardId: "OP01-002", character: ["OP13-013", "OP13-013", "EB01-005"] },
+      { activeSeat: "north" },
     );
-
-    engine.playCard("OP17-111");
-    engine.acceptLeadingOptional("south");
-
-    // Resolve any remaining prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
-
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-111",
-    );
-  });
-
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP17-111", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
-    );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-111",
-    );
-    expect(engine.getView("south").prompts).toHaveLength(0);
+    const hand = e.getView("south").players.south.hand;
+    e.asNorth().attack(e.leader("north"), e.leader("south"));
+    e.asSouth().chooseCounter();
+    e.resolveDecision("lifeTrigger", { optionId: "activate" }, "south");
+    e.asSouth().acceptOptional();
+    const reveal = [
+      e.findCardInZone("south", "hand", "OP17-107"),
+      e.findCardInZone("south", "hand", "OP17-108"),
+    ];
+    e.resolveDecision("effectCostRevealFromHand", { selectedIds: reveal }, "south");
+    const targets = e
+      .getView("south")
+      .players.north.characters.flatMap((c) =>
+        c?.cardId === "OP13-013" && c.instanceId ? [c.instanceId] : [],
+      );
+    e.resolveDecision("effectTargetSelection", { selectedIds: targets }, "south");
+    const view = e.getView("south");
+    expect(view.players.south.characters.some((c) => c?.cardId === "OP17-111")).toBe(true);
+    expect(view.players.south.hand.map((c) => c.instanceId)).toEqual(hand.map((c) => c.instanceId));
+    expect(view.players.south.trash).toHaveLength(0);
+    expect(view.players.south.lifeCount).toBe(1);
+    expect(view.players.north.trash.map((c) => c.instanceId)).toEqual(targets);
+    expect(view.players.north.characters.filter(Boolean)).toHaveLength(1);
+    expect(view.prompts).toHaveLength(0);
   });
 });

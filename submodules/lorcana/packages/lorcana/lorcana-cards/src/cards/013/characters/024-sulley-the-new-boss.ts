@@ -13,7 +13,7 @@ export const sulleyTheNewBoss: CharacterCard = {
       artId: "set13-024",
       setCode: "set13",
       collectorNumber: "24",
-      rarity: "common",
+      rarity: "super_rare",
       imageUrl: "",
     },
   ],
@@ -25,7 +25,7 @@ export const sulleyTheNewBoss: CharacterCard = {
   franchise: "Monsters, Inc.",
   set: "013",
   cardNumber: 24,
-  rarity: "common",
+  rarity: "super_rare",
   cost: 5,
   strength: 4,
   willpower: 4,
@@ -33,6 +33,7 @@ export const sulleyTheNewBoss: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3d891594b966483f9789a9b480178942",
+    tcgPlayer: "690201",
   },
   text: [
     {

@@ -96,8 +96,11 @@ export const immaterialDissolution: GrandArchiveCard<GrandArchiveAbilityDefiniti
                       value: true,
                     },
                     {
-                      kind: "supertype",
-                      oneOf: ["REGALIA"],
+                      kind: "not",
+                      filter: {
+                        kind: "supertype",
+                        oneOf: ["REGALIA"],
+                      },
                     },
                     {
                       kind: "numeric",

@@ -26,6 +26,8 @@ export class ImmersiveExperienceState {
   isFullscreen = $state(false);
   hasStartedSession = $state(false);
 
+  #routeChromeActive = false;
+
   #fullscreenListener = () => {
     this.isFullscreen = isFullscreenActive();
     this.#syncDocumentChrome();
@@ -81,10 +83,12 @@ export class ImmersiveExperienceState {
   }
 
   activateRouteChrome(): void {
+    this.#routeChromeActive = true;
     this.#syncDocumentChrome();
   }
 
   deactivateRouteChrome(): void {
+    this.#routeChromeActive = false;
     setImmersiveDocumentChrome(false);
   }
 
@@ -133,7 +137,9 @@ export class ImmersiveExperienceState {
   }
 
   #syncDocumentChrome(): void {
-    setImmersiveDocumentChrome(this.hasStartedSession || this.isStandalone || this.isFullscreen);
+    setImmersiveDocumentChrome(
+      this.#routeChromeActive || this.hasStartedSession || this.isStandalone || this.isFullscreen,
+    );
   }
 }
 

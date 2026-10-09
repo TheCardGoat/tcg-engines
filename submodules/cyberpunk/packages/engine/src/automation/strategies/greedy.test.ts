@@ -10,18 +10,16 @@ import {
 } from "../../testing/index.ts";
 import { AIPlayer } from "../ai-player.ts";
 import {
-  AUTOMATED_ACTION_STRATEGIES,
-  DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
   buildAutomatedActionStrategyOptions,
   getSafeAutomatedActionStrategyOption,
 } from "../strategy-registry.ts";
-import { DEFAULT_GREEDY_WEIGHTS } from "./greedy.ts";
+import { DEFAULT_GREEDY_WEIGHTS, greedyStrategy } from "./greedy.ts";
 
-function runDefaultBot(engine: CyberpunkTestEngine, playerId = P1) {
+function runSharpBot(engine: CyberpunkTestEngine, playerId = P1) {
   const bot = new AIPlayer(
     engine.getLocalEngine(),
     playerId,
-    getSafeAutomatedActionStrategyOption().strategy,
+    getSafeAutomatedActionStrategyOption("tactical").strategy,
     { rngSeed: "default-combat-safety" },
   );
   return bot.step();
@@ -114,20 +112,7 @@ function createUnitOnlyFightFixture(attackerPower: number, defenderPower: number
   return { attacker, defender, engine };
 }
 
-describe("cyberpunk default automated action strategy", () => {
-  test("is the safe fallback for missing or unknown strategy ids", () => {
-    expect(DEFAULT_AUTOMATED_ACTION_STRATEGY_ID).toBe("tactical");
-    expect(getSafeAutomatedActionStrategyOption().id).toBe("tactical");
-    expect(getSafeAutomatedActionStrategyOption("default").id).toBe("tactical");
-    expect(getSafeAutomatedActionStrategyOption("does-not-exist").id).toBe("tactical");
-    expect(
-      AUTOMATED_ACTION_STRATEGIES.find((option) => option.id === "first-legal")?.testOnly,
-    ).toBe(true);
-    expect(
-      AUTOMATED_ACTION_STRATEGIES.find((option) => option.id === "tactical")?.testOnly,
-    ).not.toBe(true);
-  });
-
+describe("Cyberpunk Sharp combat heuristic", () => {
   test("reconstructs a promoted trained strategy from its recorded weights", () => {
     const options = buildAutomatedActionStrategyOptions({
       promotedStrategyId: "greedy-trained-test",
@@ -144,7 +129,7 @@ describe("cyberpunk default automated action strategy", () => {
   test("does not attack a spent stronger Unit when the attacker would die", () => {
     const { attacker, defender, engine } = createUnitOnlyFightFixture(2, 5);
     engine.spendAllLegends();
-    const result = runDefaultBot(engine);
+    const result = runSharpBot(engine);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -158,7 +143,7 @@ describe("cyberpunk default automated action strategy", () => {
   test("does not take a mutual-defeat Unit fight by default", () => {
     const { attacker, defender, engine } = createUnitOnlyFightFixture(4, 4);
     engine.spendAllLegends();
-    const result = runDefaultBot(engine);
+    const result = runSharpBot(engine);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -170,7 +155,7 @@ describe("cyberpunk default automated action strategy", () => {
   test("attacks a spent Unit when the attacker survives the fight", () => {
     const { attacker, defender, engine } = createUnitOnlyFightFixture(6, 3);
     engine.spendAllLegends();
-    const result = runDefaultBot(engine);
+    const result = runSharpBot(engine);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -194,12 +179,40 @@ describe("cyberpunk default automated action strategy", () => {
     );
 
     engine.spendAllLegends();
-    const result = runDefaultBot(engine);
+    const result = runSharpBot(engine);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
     expect(result.decision.move).toBe("passPhase");
     expect(engine.getCard(attacker, "field", P1).meta.spent).toBe(false);
+  });
+
+  test("pressures a stronger blocker with the weaker of two ready attackers", () => {
+    const small = createMockUnit({ id: "greedy-pressure-small", power: 2 });
+    const large = createMockUnit({ id: "greedy-pressure-large", power: 4 });
+    const blocker = createMockUnit({
+      id: "greedy-pressure-blocker",
+      power: 5,
+      keywords: ["blocker"],
+    });
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        field: [
+          { card: small, spent: false, hasLag: false },
+          { card: large, spent: false, hasLag: false },
+        ],
+      },
+      { field: [{ card: blocker, spent: false }], gigArea: [{ dieType: "d6", faceValue: 4 }] },
+    );
+
+    engine.spendAllLegends();
+    const result = new AIPlayer(engine.getLocalEngine(), P1, greedyStrategy).step();
+    expect(result.kind).toBe("acted");
+    if (result.kind !== "acted") return;
+    expect(result.decision).toMatchObject({
+      move: "attackRival",
+      args: { attackerId: engine.findCardId(small, "field", P1) },
+    });
   });
 
   test("direct-attacks when the attacker can beat every ready blocker", () => {
@@ -215,7 +228,7 @@ describe("cyberpunk default automated action strategy", () => {
     );
 
     engine.spendAllLegends();
-    const result = runDefaultBot(engine);
+    const result = runSharpBot(engine);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -242,7 +255,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends(P2);
     engine.attackRival(attacker, { as: P2 });
     engine.resolveAttack({ as: P2 });
-    const result = runDefaultBot(engine, P1);
+    const result = runSharpBot(engine, P1);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -277,7 +290,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends(P2);
     engine.attackRival(attacker, { as: P2 });
     engine.resolveAttack({ as: P2 });
-    const result = runDefaultBot(engine, P1);
+    const result = runSharpBot(engine, P1);
     const blockerId = engine.findCardId(blocker, "field", P1);
 
     expect(result.kind).toBe("acted");
@@ -311,7 +324,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends(P2);
     engine.attackRival(attacker, { as: P2 });
     engine.resolveAttack({ as: P2 });
-    const result = runDefaultBot(engine, P1);
+    const result = runSharpBot(engine, P1);
     const blockerId = engine.findCardId(blocker, "field", P1);
 
     expect(result.kind).toBe("acted");
@@ -346,7 +359,7 @@ describe("cyberpunk default automated action strategy", () => {
     addStealsOneFewerGigRule(engine, attackerId as string, P2);
     engine.attackRival(attacker, { as: P2 });
     engine.resolveAttack({ as: P2 });
-    const result = runDefaultBot(engine, P1);
+    const result = runSharpBot(engine, P1);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -385,7 +398,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends(P2);
     engine.attackRival(highPowerAttacker, { as: P2 });
     engine.resolveAttack({ as: P2 });
-    const result = runDefaultBot(engine, P1);
+    const result = runSharpBot(engine, P1);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -424,7 +437,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends(P2);
     engine.attackRival(highPowerAttacker, { as: P2 });
     engine.resolveAttack({ as: P2 });
-    const result = runDefaultBot(engine, P1);
+    const result = runSharpBot(engine, P1);
     const blockerId = engine.findCardId(blocker, "field", P1);
 
     expect(result.kind).toBe("acted");
@@ -465,7 +478,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends(P2);
     engine.attackRival(currentAttacker, { as: P2 });
     engine.resolveAttack({ as: P2 });
-    const result = runDefaultBot(engine, P1);
+    const result = runSharpBot(engine, P1);
     const blockerId = engine.findCardId(blocker, "field", P1);
 
     expect(result.kind).toBe("acted");
@@ -510,7 +523,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends(P2);
     engine.attackRival(currentAttacker, { as: P2 });
     engine.resolveAttack({ as: P2 });
-    const result = runDefaultBot(engine, P1);
+    const result = runSharpBot(engine, P1);
     const blockerId = engine.findCardId(blocker, "field", P1);
 
     expect(result.kind).toBe("acted");
@@ -557,7 +570,7 @@ describe("cyberpunk default automated action strategy", () => {
     addRequiresProgramPlayedThisTurnRule(engine, gatedFollowUpId as string, P2);
     engine.attackRival(currentAttacker, { as: P2 });
     engine.resolveAttack({ as: P2 });
-    const result = runDefaultBot(engine, P1);
+    const result = runSharpBot(engine, P1);
     const blockerId = engine.findCardId(blocker, "field", P1);
 
     expect(result.kind).toBe("acted");
@@ -599,7 +612,7 @@ describe("cyberpunk default automated action strategy", () => {
     addRequiresProgramPlayedThisTurnRule(engine, gatedFollowUpId as string, P2);
     engine.attackRival(currentAttacker, { as: P2 });
     engine.resolveAttack({ as: P2 });
-    const result = runDefaultBot(engine, P1);
+    const result = runSharpBot(engine, P1);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -642,7 +655,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends(P2);
     engine.attackRival(currentAttacker, { as: P2 });
     engine.resolveAttack({ as: P2 });
-    const result = runDefaultBot(engine, P1);
+    const result = runSharpBot(engine, P1);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -691,7 +704,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.attackRival(currentAttacker, { as: P2 });
     addMustAttackRule(engine, requiredFollowUpId as string, P2);
     engine.resolveAttack({ as: P2 });
-    const result = runDefaultBot(engine, P1);
+    const result = runSharpBot(engine, P1);
     const blockerId = engine.findCardId(blocker, "field", P1);
 
     expect(result.kind).toBe("acted");
@@ -753,7 +766,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends(P2);
     engine.attackRival(attacker, { as: P2 });
     engine.resolveAttack({ as: P2 });
-    const result = runDefaultBot(engine, P1);
+    const result = runSharpBot(engine, P1);
     const blockerId = engine.findCardId(blocker, "field", P1);
 
     expect(result.kind).toBe("acted");
@@ -783,7 +796,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends(P2);
     engine.attackRival(attacker, { as: P2 });
     engine.resolveAttack({ as: P2 });
-    const result = runDefaultBot(engine, P1);
+    const result = runSharpBot(engine, P1);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -841,7 +854,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends(P2);
     engine.attackUnit(attacker, defender, { as: P1 });
     engine.resolveAttack({ as: P1 });
-    const result = runDefaultBot(engine, P2);
+    const result = runSharpBot(engine, P2);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -873,7 +886,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends(P2);
     engine.attackUnit(attacker, defender, { as: P1 });
     engine.resolveAttack({ as: P1 });
-    const result = runDefaultBot(engine, P2);
+    const result = runSharpBot(engine, P2);
     const blockerId = engine.findCardId(blocker, "field", P2);
 
     expect(result.kind).toBe("acted");
@@ -919,7 +932,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends(P2);
     engine.attackUnit(attacker, defender, { as: P1 });
     engine.resolveAttack({ as: P1 });
-    const result = runDefaultBot(engine, P2);
+    const result = runSharpBot(engine, P2);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -951,7 +964,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends(P2);
     engine.attackUnit(attacker, defender, { as: P1 });
     engine.resolveAttack({ as: P1 });
-    const result = runDefaultBot(engine, P2);
+    const result = runSharpBot(engine, P2);
     const blockerId = engine.findCardId(blocker, "field", P2);
 
     expect(result.kind).toBe("acted");
@@ -981,7 +994,7 @@ describe("cyberpunk default automated action strategy", () => {
     engine.spendAllLegends();
     const requiredId = engine.findCardId(required, "field", P1);
     addMustAttackRule(engine, requiredId as string);
-    const result = runDefaultBot(engine);
+    const result = runSharpBot(engine);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -997,7 +1010,7 @@ describe("cyberpunk default automated action strategy", () => {
     );
 
     engine.spendAllLegends();
-    const result = runDefaultBot(engine);
+    const result = runSharpBot(engine);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -1016,7 +1029,7 @@ describe("cyberpunk default automated action strategy", () => {
     );
 
     engine.spendAllLegends();
-    const result = runDefaultBot(engine);
+    const result = runSharpBot(engine);
 
     expect(result.kind).toBe("acted");
     if (result.kind !== "acted") return;
@@ -1043,7 +1056,7 @@ describe("cyberpunk default automated action strategy", () => {
     );
 
     engine.spendAllLegends();
-    const first = runDefaultBot(engine);
+    const first = runSharpBot(engine);
 
     expect(first.kind).toBe("acted");
     if (first.kind !== "acted") return;
@@ -1058,7 +1071,7 @@ describe("cyberpunk default automated action strategy", () => {
     expect(engine.getAttackState()).toBeNull();
 
     engine.spendAllLegends();
-    const second = runDefaultBot(engine);
+    const second = runSharpBot(engine);
 
     expect(second.kind).toBe("acted");
     if (second.kind !== "acted") return;
@@ -1084,7 +1097,7 @@ describe("cyberpunk default automated action strategy", () => {
       { activePlayerId: P2 },
     );
 
-    const first = runDefaultBot(engine, P2);
+    const first = runSharpBot(engine, P2);
 
     expect(first.kind).toBe("acted");
     if (first.kind !== "acted") return;
@@ -1099,7 +1112,7 @@ describe("cyberpunk default automated action strategy", () => {
     expect(engine.getAttackState()).toBeNull();
 
     engine.spendAllLegends(P2);
-    const second = runDefaultBot(engine, P2);
+    const second = runSharpBot(engine, P2);
 
     expect(second.kind).toBe("acted");
     if (second.kind !== "acted") return;

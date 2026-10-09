@@ -25,7 +25,8 @@
     "./ws-ticket": "./src/ws-ticket.ts",
     "./presentation": "./src/presentation.ts",
     "./native": "./src/native.ts",
-    "./drop-eligibility": "./src/drop-eligibility.ts"
+    "./drop-eligibility": "./src/drop-eligibility.ts",
+    "./preparation": "./src/preparation.ts"
   },
   "scripts": {
     "check-types": "tsc --noEmit",

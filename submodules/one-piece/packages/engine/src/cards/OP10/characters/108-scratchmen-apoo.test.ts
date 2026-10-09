@@ -21,8 +21,22 @@ describe("OP10-108 Scratchmen Apoo", () => {
     if (blocker?.kind !== "selectEntity") throw new Error("Expected Apoo's conditional Blocker.");
     expect(blocker.candidates.map((candidate) => candidate.ref.id)).toContain(apooId);
 
-    expect(engine.getState().capabilityHistory).toHaveLength(0);
-    expect(engine.getView("south").players.south.leader).toBeTruthy();
-    expect(engine.getView("south").players.south.deckCount).toBeGreaterThanOrEqual(0);
+    const life = engine.getView("south").players.south.lifeCount;
+    engine.asSouth().chooseBlocker(apooId);
+    expect(engine.getView("south").players.south.lifeCount).toBe(life);
+    expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(apooId);
+  });
+  test("another Apoo or a non-yellow Supernovas Character does not enable Blocker", () => {
+    for (const companion of ["OP10-108", "ST02-010"]) {
+      const e = OnePieceTestEngine.create(
+        { character: ["OP10-108", companion] },
+        {},
+        { firstPlayer: "south", activeSeat: "north" },
+      );
+      const life = e.getView("south").players.south.lifeCount;
+      e.asNorth().attack(e.leader("north"), e.leader("south"));
+      expect(e.getView("south").players.south.lifeCount).toBe(life - 1);
+      expect(e.getView("south").prompts).toHaveLength(0);
+    }
   });
 });

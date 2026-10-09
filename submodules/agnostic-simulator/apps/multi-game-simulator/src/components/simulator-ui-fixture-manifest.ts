@@ -1,3 +1,5 @@
+import { interactionCatalog } from "./interaction-catalog";
+
 export const SIMULATOR_UI_CONNECTION_FIXTURE_STATES = [
   "connected",
   "reconnecting",
@@ -26,4 +28,6 @@ export const INTERACTION_PROMPT_FIXTURE_IDS = [
 export type PromptFixtureId = (typeof INTERACTION_PROMPT_FIXTURE_IDS)[number];
 
 export const SHARED_SIMULATOR_UI_FIXTURE_COUNT =
-  SIMULATOR_UI_CONNECTION_FIXTURE_STATES.length + INTERACTION_PROMPT_FIXTURE_IDS.length;
+  SIMULATOR_UI_CONNECTION_FIXTURE_STATES.length +
+  INTERACTION_PROMPT_FIXTURE_IDS.length +
+  interactionCatalog.length;

@@ -39,7 +39,7 @@ export const op07Vegapunk097: LeaderCard = {
   setId: "OP07",
   power: 5000,
   life: 2,
-  traits: ["Scientist Egghead"],
+  traits: ["Scientist", "Egghead"],
   attribute: "wisdom",
 
   effect:
@@ -73,7 +73,7 @@ export const op07Vegapunk097: LeaderCard = {
                     {
                       filter: "trait",
                       value: "Egghead",
-                      match: "includes",
+                      match: "exact",
                     },
                     {
                       filter: "cost",
@@ -97,7 +97,7 @@ export const op07Vegapunk097: LeaderCard = {
                       {
                         filter: "trait",
                         value: "Egghead",
-                        match: "includes",
+                        match: "exact",
                       },
                       {
                         filter: "cost",

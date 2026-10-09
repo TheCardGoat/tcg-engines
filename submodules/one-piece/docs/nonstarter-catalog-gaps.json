@@ -1,0 +1,199 @@
+{
+  "checkedOn": "2026-10-08",
+  "scope": "Exported canonical gameplay membership compared with 24 Western English non-starter card-list products and the English Asia Promotion/Other Product lists. Regional promo rows were added after an official FAQ referenced P-067, absent from the Western listing. Alternate-art suffixes are collapsed; DON artwork is excluded. This is bounded presence evidence, not complete coverage of every region/product or behavior proof. Starter gaps are tracked separately.",
+  "officialUniqueCanonicalCount": 2546,
+  "missingUniqueCount": 0,
+  "missingIds": [],
+  "products": [
+    {
+      "product": "569101",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569101",
+      "officialCanonicalCount": 121,
+      "missingIds": []
+    },
+    {
+      "product": "569102",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569102",
+      "officialCanonicalCount": 121,
+      "missingIds": []
+    },
+    {
+      "product": "569103",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569103",
+      "officialCanonicalCount": 127,
+      "missingIds": []
+    },
+    {
+      "product": "569104",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569104",
+      "officialCanonicalCount": 124,
+      "missingIds": []
+    },
+    {
+      "product": "569105",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569105",
+      "officialCanonicalCount": 125,
+      "missingIds": []
+    },
+    {
+      "product": "569106",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569106",
+      "officialCanonicalCount": 126,
+      "missingIds": []
+    },
+    {
+      "product": "569107",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569107",
+      "officialCanonicalCount": 126,
+      "missingIds": []
+    },
+    {
+      "product": "569108",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569108",
+      "officialCanonicalCount": 126,
+      "missingIds": []
+    },
+    {
+      "product": "569109",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569109",
+      "officialCanonicalCount": 127,
+      "missingIds": []
+    },
+    {
+      "product": "569110",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569110",
+      "officialCanonicalCount": 126,
+      "missingIds": []
+    },
+    {
+      "product": "569111",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569111",
+      "officialCanonicalCount": 127,
+      "missingIds": []
+    },
+    {
+      "product": "569112",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569112",
+      "officialCanonicalCount": 127,
+      "missingIds": []
+    },
+    {
+      "product": "569113",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569113",
+      "officialCanonicalCount": 129,
+      "missingIds": []
+    },
+    {
+      "product": "569114",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569114",
+      "officialCanonicalCount": 160,
+      "missingIds": []
+    },
+    {
+      "product": "569115",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569115",
+      "officialCanonicalCount": 158,
+      "missingIds": []
+    },
+    {
+      "product": "569116",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569116",
+      "officialCanonicalCount": 125,
+      "missingIds": []
+    },
+    {
+      "product": "569117",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569117",
+      "officialCanonicalCount": 130,
+      "missingIds": []
+    },
+    {
+      "product": "569201",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569201",
+      "officialCanonicalCount": 61,
+      "missingIds": []
+    },
+    {
+      "product": "569202",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569202",
+      "officialCanonicalCount": 87,
+      "missingIds": []
+    },
+    {
+      "product": "569203",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569203",
+      "officialCanonicalCount": 62,
+      "missingIds": []
+    },
+    {
+      "product": "569301",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569301",
+      "officialCanonicalCount": 111,
+      "missingIds": []
+    },
+    {
+      "product": "569302",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569302",
+      "officialCanonicalCount": 173,
+      "missingIds": []
+    },
+    {
+      "product": "569801",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569801",
+      "officialCanonicalCount": 152,
+      "missingIds": []
+    },
+    {
+      "product": "569901",
+      "source": "https://en.onepiece-cardgame.com/cardlist/?series=569901",
+      "officialCanonicalCount": 240,
+      "missingIds": []
+    },
+    {
+      "product": "556801",
+      "source": "https://asia-en.onepiece-cardgame.com/cardlist/?series=556801",
+      "officialCanonicalCount": 167,
+      "missingIds": [
+        "P-136",
+        "P-137",
+        "P-138",
+        "P-139",
+        "P-140",
+        "P-141",
+        "P-142",
+        "P-143",
+        "P-144",
+        "P-145",
+        "P-146",
+        "P-147",
+        "P-148",
+        "P-149",
+        "P-159"
+      ]
+    },
+    {
+      "product": "556901",
+      "source": "https://asia-en.onepiece-cardgame.com/cardlist/?series=556901",
+      "officialCanonicalCount": 322,
+      "missingIds": [
+        "P-038",
+        "P-040",
+        "P-064",
+        "P-066",
+        "P-080",
+        "P-086",
+        "P-087",
+        "P-094",
+        "P-095",
+        "P-108",
+        "P-109",
+        "P-114",
+        "P-116",
+        "P-118",
+        "P-121",
+        "P-157"
+      ]
+    }
+  ],
+  "regionalAuditSourcesCheckedOn": "2026-10-08"
+}

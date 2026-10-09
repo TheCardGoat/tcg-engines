@@ -18,12 +18,13 @@ import { vileInquisitionRed } from "./vile-inquisition.ts";
  * {r}{r} less to play.\nTarget hero banishes the top card of their deck. If
  * it's red, they lose 1{h}.\nBlood Debt"
  *
- * Life loss is authored against `attack-target` on a non-attack. Pin current
- * resolution: the chosen top card is banished and the hero does not lose life.
+ * The target hero is declared when the card is played (CR 1.8.5); the deck
+ * top is banished unconditionally and "they lose 1{h}" resolves against the
+ * declared hero when the banished card matches the color.
  */
 
 describe("Vile Inquisition (DTD178) AAA", () => {
-  it("happy: a red top card is not banished and they do not lose 1{h} (attack-target gap)", () => {
+  it("happy: the target hero banishes their red top card and loses 1{h}", () => {
     const game = FabTestEngine.start(
       {
         hero: chane,
@@ -38,17 +39,16 @@ describe("Vile Inquisition (DTD178) AAA", () => {
     const Chane = game.as(chane);
     const Dash = game.as(dash);
 
-    const topId = Dash.zone("deck")[Dash.zone("deck").length - 1]!;
-    Chane.play(vileInquisitionRed, { targetInstanceId: topId });
-    game.helpers.resolveUntilIdle({ optionalBoolean: false, entityTargets: "maximum" });
+    Chane.play(vileInquisitionRed, { target: Dash.id });
+    game.helpers.resolveUntilIdle({ optionalBoolean: false });
 
-    expect(Dash.zone("deck")).toContain(snatchRed.canonicalId);
-    expect(Dash.zone("banished")).not.toContain(snatchRed.canonicalId);
-    expectFabPlayer(Dash).toHaveLife(20);
+    expect(Dash.zone("deck")).not.toContain(snatchRed.canonicalId);
+    expect(Dash.zone("banished")).toContain(snatchRed.canonicalId);
+    expectFabPlayer(Dash).toHaveLife(19);
     expectFabCard(Chane, vileInquisitionRed).toBeIn("graveyard");
   });
 
-  it("boundary: a non-red top card stays in the deck and they lose no life", () => {
+  it("boundary: a non-red top card is banished without life loss", () => {
     const game = FabTestEngine.start(
       {
         hero: chane,
@@ -63,12 +63,35 @@ describe("Vile Inquisition (DTD178) AAA", () => {
     const Chane = game.as(chane);
     const Dash = game.as(dash);
 
-    const topId = Dash.zone("deck")[Dash.zone("deck").length - 1]!;
-    Chane.play(vileInquisitionRed, { targetInstanceId: topId });
-    game.helpers.resolveUntilIdle({ optionalBoolean: false, entityTargets: "maximum" });
+    Chane.play(vileInquisitionRed, { target: Dash.id });
+    game.helpers.resolveUntilIdle({ optionalBoolean: false });
 
-    expect(Dash.zone("deck")).toContain(nimblismBlue.canonicalId);
+    expect(Dash.zone("deck")).not.toContain(nimblismBlue.canonicalId);
+    expect(Dash.zone("banished")).toContain(nimblismBlue.canonicalId);
     expectFabPlayer(Dash).toHaveLife(20);
+  });
+
+  it("target: you may declare your own hero and banish your own deck top", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: chane,
+        hand: [vileInquisitionRed],
+        resourcePoints: 2,
+        actionPoints: 1,
+        life: 20,
+        deckTop: [snatchRed],
+        deck: 6,
+      },
+      { hero: dash, hand: [], life: 20, deck: 6 },
+      FAB_MANUAL_HARNESS,
+    );
+    const Chane = game.as(chane);
+
+    Chane.play(vileInquisitionRed, { target: Chane.id });
+    game.helpers.resolveUntilIdle({ optionalBoolean: false });
+
+    expect(Chane.zone("banished")).toContain(snatchRed.canonicalId);
+    expectFabPlayer(Chane).toHaveLife(19);
   });
 
   it("timing: you may play this from banished for {r}{r} less; Blood Debt ticks at end phase", () => {
@@ -86,9 +109,9 @@ describe("Vile Inquisition (DTD178) AAA", () => {
     const Chane = game.as(chane);
     const Dash = game.as(dash);
 
-    const topId = Dash.zone("deck")[Dash.zone("deck").length - 1]!;
-    Chane.play(vileInquisitionRed, { from: "banished", targetInstanceId: topId });
-    game.helpers.resolveUntilIdle({ optionalBoolean: false, entityTargets: "maximum" });
+    Chane.play(vileInquisitionRed, { from: "banished", target: Dash.id });
+    game.helpers.resolveUntilIdle({ optionalBoolean: false });
+    expect(Dash.zone("banished")).toContain(nimblismBlue.canonicalId);
     expectFabCard(Chane, vileInquisitionRed).toBeIn("graveyard");
 
     const unpaid = FabTestEngine.start(

@@ -1562,6 +1562,18 @@ export const rawCards = [
     ],
     selected_printing_id: "2ba68619-7050-44c5-b0ce-b32d48b8f40f",
     legality: "legal",
+    rulings: [
+      {
+        id: "9ad7e1cf-9965-4ba0-8503-ac17c897ffbd",
+        kind: "faq",
+        question: "Can I use this Legend's [Blocker] in the Legend area?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "08e6a687-56b7-4ac1-982f-8a8d6d0c0bc5",
@@ -1643,6 +1655,19 @@ export const rawCards = [
     ],
     selected_printing_id: "42e03e7a-923d-4f2b-8d79-191e69873947",
     legality: "legal",
+    rulings: [
+      {
+        id: "0c5b038a-705c-44ba-bff6-95403c35f032",
+        kind: "faq",
+        question:
+          "If all my friendly Legends become face-up after I declare an attack, does Goro Takemura's effect trigger?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "066641c5-acc2-45f4-ba67-16a8d20cce73",
@@ -1755,6 +1780,28 @@ export const rawCards = [
     ],
     selected_printing_id: "19587d4f-6d47-44fe-b4da-99743e2742f7",
     legality: "legal",
+    rulings: [
+      {
+        id: "a6bfa127-ff5b-4aed-a261-fac2be6a71c5",
+        kind: "faq",
+        question: "Can I still play this card if I don't have more Street Cred than my Rival?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "1528eec2-100f-4436-9874-d45f3589e9af",
+        kind: "faq",
+        question: "Do I have to defeat a rival Unit with power 5 or less, even if I don't want to?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "cf50fa24-bf94-4c35-bcc1-c6d56a6f68d8",
@@ -1882,6 +1929,18 @@ export const rawCards = [
     ],
     selected_printing_id: "6ac7adce-01af-4b5b-956b-698eda0bed14",
     legality: "legal",
+    rulings: [
+      {
+        id: "18318e94-6979-4623-9cf5-fee73924d728",
+        kind: "faq",
+        question: "Do my Friendly Arasaka Units have +1 power while in the fight or steal step?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "31fa5825-946a-4ca2-afa8-8f07b9898d6a",
@@ -2009,6 +2068,19 @@ export const rawCards = [
     ],
     selected_printing_id: "f70b75b5-aa2f-4c2d-b8c3-01fcb2a670ec",
     legality: "legal",
+    rulings: [
+      {
+        id: "61ad63b3-47d9-48ee-a3f6-4c2842b11c66",
+        kind: "faq",
+        question:
+          "If I've already attacked with an ARASAKA Unit this turn before Yorinobu Arasaka is face-up, then flip Yorinobu, can I trigger Yorinobu's effect that turn by attacking with another ARASAKA Unit?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "4acee220-f0ae-4bdc-85c9-f8e70ba99673",
@@ -3564,6 +3636,19 @@ export const rawCards = [
     ],
     selected_printing_id: "e2f38541-ecc9-41dc-ae15-164171391bff",
     legality: "legal",
+    rulings: [
+      {
+        id: "ac95df60-d8dd-44bc-b04f-1246a08a8540",
+        kind: "faq",
+        question:
+          "With the [Play] and [Attack] effect. If I choose to adjust up to 0. Does that still count as adjusting a Gig?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "40502c1f-78a2-426a-a706-c60ebd4b31e3",
@@ -3691,6 +3776,40 @@ export const rawCards = [
     ],
     selected_printing_id: "a33d3324-fe48-4a9f-80a8-8545a0a4727f",
     legality: "legal",
+    rulings: [
+      {
+        id: "15b27a52-f1e8-48fb-9c59-ac9d2d4c6824",
+        kind: "faq",
+        question:
+          "If I've already played a Blue Unit or Gear this turn before Jackie Welles is face-up, then flip Jackie, can I trigger Jackie's effect that turn by playing another Blue Gear or Unit?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "763356ba-0750-492a-86d2-2b7b75325208",
+        kind: "faq",
+        question:
+          "Does playing a Legend from the Legends area to the field, trigger Jackie Welles's effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "c58d792f-af25-4060-b261-dc7369c18aa2",
+        kind: "faq",
+        question: "If I choose an already min Gig for Jackie Welles's effect, can I draw 1?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "619429c9-132f-496e-8aa0-414e850c87ec",
@@ -3772,6 +3891,29 @@ export const rawCards = [
     ],
     selected_printing_id: "5f0d9dac-2547-4ecb-896e-0c603968422a",
     legality: "legal",
+    rulings: [
+      {
+        id: "b0b79c55-4167-448c-8717-b9f9f60b7ea6",
+        kind: "faq",
+        question: "Am I able to sell this card even if it is a Unit?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "4ab27f37-6192-43a3-97eb-cf81060bb6d3",
+        kind: "faq",
+        question:
+          "If I have lower Street Cred when I attack with MT0D12 Flathead, but triggered effects or reactions make my Rival's Street Cred lower than mine, can my Rival then block the MT0D12 Flathead's attack?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "627186b3-cffb-4228-aed4-b3ee35235fb6",
@@ -3899,6 +4041,18 @@ export const rawCards = [
     ],
     selected_printing_id: "4a5591f9-743e-4186-8deb-560971bb3f82",
     legality: "legal",
+    rulings: [
+      {
+        id: "22eadcab-b88a-45cd-9e07-ef51084da8cf",
+        kind: "faq",
+        question: "Can I play this Legend to the Field area without using the [GO SOLO] keyword?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "f090dc44-d7f0-4aec-a19e-9213155a6611",
@@ -4026,6 +4180,19 @@ export const rawCards = [
     ],
     selected_printing_id: "7d539173-4022-402e-a9f4-100338935fd2",
     legality: "legal",
+    rulings: [
+      {
+        id: "03d7a874-2d53-4fc9-9f7d-905cebcedcc7",
+        kind: "faq",
+        question:
+          "When I search the top 5 cards of my deck, can I choose not to reveal any cards and bottom-deck them all even if there's a viable Gear among them?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "e48c9d39-ef27-4b8f-8690-d75c3a4807b0",
@@ -4092,6 +4259,18 @@ export const rawCards = [
     ],
     selected_printing_id: "756f3e53-9ff3-4c01-9f33-bb27a1cd5957",
     legality: "legal",
+    rulings: [
+      {
+        id: "ed0b637f-567a-418c-a759-ab8deb631ce4",
+        kind: "faq",
+        question: "If a friendly Unit steals two d6s simultaneously, can I increase two Gigs?",
+        answer: "Yes, the effect triggers for each stolen d6.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "eff41c12-b872-4101-9779-00e691532893",
@@ -4204,6 +4383,53 @@ export const rawCards = [
     ],
     selected_printing_id: "a9c1137e-2e33-4293-9dcc-9351c9a0bbee",
     legality: "legal",
+    rulings: [
+      {
+        id: "4dc5a7cb-cb53-4a44-bcd4-33e373dafbd3",
+        kind: "faq",
+        question:
+          "Does Adam Smasher’s [PLAY] effect trigger when he is called or flipped face-up as a Legend?",
+        answer:
+          "No, the [PLAY] effect only activates when you play Adam Smasher to the field area.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "439b43af-068f-4296-923b-fd7a55ec73a9",
+        kind: "faq",
+        question: "Does Adam Smasher’s [PLAY] effect trigger when he Goes Solo?",
+        answer:
+          "Yes. [GO SOLO] plays Adam Smasher to the field area and triggers the [PLAY] effect.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "89104f80-8329-4ad9-85ff-cb23f3320d53",
+        kind: "faq",
+        question:
+          "If Adam Smasher is removed from the field area after being played to the field area is Adam Smasher removed from the game instead of being placed in the designated area?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "321ab46b-ddf1-4110-9078-9e691a8267e6",
+        kind: "faq",
+        question:
+          "If Adam Smasher’s cost is reduced does that also reduce cost to activate [GO SOLO]?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "a2ad9c2f-bfb7-473b-9408-91af142d269d",
@@ -4330,6 +4556,19 @@ export const rawCards = [
     ],
     selected_printing_id: "d23e322f-ad60-431d-b33e-1e8a813248ff",
     legality: "legal",
+    rulings: [
+      {
+        id: "a40401c6-6467-486a-9e91-a0e95a95b210",
+        kind: "faq",
+        question:
+          "If I manage to play Adam Smasher on my Rival's turn. Does it still get the [PLAY] effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "6a5a1e34-fdd3-42de-b6bd-4b2553d6df39",
@@ -4397,6 +4636,19 @@ export const rawCards = [
     ],
     selected_printing_id: "535df2a9-d2af-463c-85dd-dafe67cab8fb",
     legality: "legal",
+    rulings: [
+      {
+        id: "fc82d674-d5c0-42f8-9fd9-a47a71be9ec7",
+        kind: "faq",
+        question:
+          "If my Rival controls exactly 2 more Gigs than me when I play Adrenline Converter but I steal a Gig before I attack with the equipped Unit,  does it still have [ADRENALINE]?",
+        answer: "No, the Unit only has [ADRENALINE] while the conditions are met.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "d039e4b3-9b83-40da-8d8f-b1dfb1f172f1",
@@ -4539,6 +4791,19 @@ export const rawCards = [
     ],
     selected_printing_id: "d53925ee-df55-4b71-8ca0-13ec3ede2076",
     legality: "legal",
+    rulings: [
+      {
+        id: "e81b51a1-5dd8-4a2b-9bb8-28b93b227bee",
+        kind: "faq",
+        question:
+          "If I choose not to adjust a Gig, can I still draw 1 if I control 2 or more Gigs with different values?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "1f969c27-dddb-4971-9ab5-bd728c3e3e52",
@@ -4605,6 +4870,39 @@ export const rawCards = [
     ],
     selected_printing_id: "d1a3c0e0-e0e7-418d-afb4-e6e43400c42e",
     legality: "legal",
+    rulings: [
+      {
+        id: "6f7d6a80-3536-4417-bbb8-c27485f07557",
+        kind: "faq",
+        question:
+          "If All is Lost trashes one or more Units, do I have to add them to my hand  even if I don't want to?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "086fb943-7bfb-4fee-8645-01f3cf132232",
+        kind: "faq",
+        question: "If All is Lost's effect trashes no Units, can I still add a Unit to my hand?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "8227301d-f845-4e94-b4ff-556fd7c9e5d0",
+        kind: "faq",
+        question: "If I have fewer than 3 cards in my deck, can I still play All is Lost?",
+        answer: "Yes. Trash as many cards as possible, instead.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "858e95f5-2efb-460e-b890-e8a5140e11c9",
@@ -4687,6 +4985,18 @@ export const rawCards = [
     ],
     selected_printing_id: "e782dd02-a136-4bf8-b04b-328c65b84f19",
     legality: "legal",
+    rulings: [
+      {
+        id: "9c300537-ed1f-4196-a9c7-076dc5fd4603",
+        kind: "faq",
+        question: "Do both effects work on either players turn?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "12475e77-0e16-420e-a935-65eb74290de8",
@@ -4814,6 +5124,40 @@ export const rawCards = [
     ],
     selected_printing_id: "cb23a651-dd1d-48f8-aca3-8d33fef79fdd",
     legality: "legal",
+    rulings: [
+      {
+        id: "f6e95797-6d5e-4a78-b1ab-dbc01b1821f4",
+        kind: "faq",
+        question: "Does Alt Cunningham's first effect apply to Programs played from Trash, too?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "c2b026c3-6e44-4b3e-97db-abef28faa220",
+        kind: "faq",
+        question:
+          "If I ready Alt Cunningham after using her first effect and use it again before playing a Program, does the discount stack?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "dd4138dc-c8ee-4d08-899a-d3f69fb00fc7",
+        kind: "faq",
+        question:
+          "I activated Alt Cunningham's first effect with 2 friendly min Gigs, but before I play my next Program I acquire a 3rd min Gig. Does my next Program play for -3 €$ instead of -2€$?",
+        answer: "No, the reduction amount is determined when you activate the effect.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "e8aa7757-e5e3-4137-8970-4fa546b9bed9",
@@ -4947,6 +5291,42 @@ export const rawCards = [
     ],
     selected_printing_id: "f274789d-69f2-4acf-a511-f728c67d1a13",
     legality: "legal",
+    rulings: [
+      {
+        id: "f7e7ce23-ddae-4f92-a770-e2e7a0fe368e",
+        kind: "faq",
+        question:
+          "When I play Appetite for Destruction, do I choose a friendly Unit, or can any friendly Unit satisfy the effect later this turn?",
+        answer:
+          "You must choose a friendly Unit when you play this card. The condition will only be met when that Unit wins a fight.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "dd350a6e-8ee0-4c1f-9418-2d22a5160c40",
+        kind: "faq",
+        question:
+          "If a Unit steals a Gig because of Appetite for Destruction, does that count as that Unit stealing a Gig for effects that trigger when that Unit steals a Gig?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "82802953-08ff-450a-8630-517546b3091a",
+        kind: "faq",
+        question:
+          "If the friendly Unit cannot defeat the rival Unit but still wins the fight, does it still steal a Gig?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5233bacc-f39f-4383-8e25-57ef634735ca",
@@ -5044,6 +5424,19 @@ export const rawCards = [
     ],
     selected_printing_id: "d2da65d5-fdaf-44f4-a692-a5672d2c1cca",
     legality: "legal",
+    rulings: [
+      {
+        id: "d3587386-2389-4745-b6e9-8953bc790bfe",
+        kind: "faq",
+        question:
+          "If the equipped Unit or Legend is spent as part of an attack, can Arasaka Emergency Radioport Call a Legend before that Unit’s [ATTACK] effect resolves?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "ce45cb9d-430a-4ccf-bb4b-acf0b76120e0",
@@ -5111,6 +5504,18 @@ export const rawCards = [
     ],
     selected_printing_id: "a195323a-e29e-4c05-8e6c-7f1638c8264c",
     legality: "legal",
+    rulings: [
+      {
+        id: "1dc1d892-bdbf-46a6-a217-ab452b6c0c63",
+        kind: "faq",
+        question: "Can I use [BLOCKER] even if my Rival has no cards in their hand?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3eb0f8bf-afb9-42a7-a4fa-710e2eb5c89c",
@@ -5178,6 +5583,19 @@ export const rawCards = [
     ],
     selected_printing_id: "26d60270-1b43-4af3-a8b7-1c3db9675cfa",
     legality: "legal",
+    rulings: [
+      {
+        id: "b3bcae3f-acb3-4891-a985-4d69fea65fc7",
+        kind: "faq",
+        question:
+          "If a Rival controls at least 2 more Gigs than me, can I still choose to defeat only one Unit?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "84561b4c-67f0-4b2e-80ac-6b9c0a2396e3",
@@ -5275,6 +5693,40 @@ export const rawCards = [
     ],
     selected_printing_id: "decc76ed-f5ed-4f02-90d7-e01e2a3975e0",
     legality: "legal",
+    rulings: [
+      {
+        id: "63c9a5f8-27f2-485d-a779-79587ac49d91",
+        kind: "faq",
+        question: "Do I reveal or get to look at the card I am selling?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "71cfd404-4021-41e1-bebe-a468e11f0a3d",
+        kind: "faq",
+        question:
+          "If the top card of my deck doesn't have a sell tag, do I still sell it for this effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "68737f4d-0d40-42b9-b490-30d02b06544f",
+        kind: "faq",
+        question:
+          "If I already sold a card during my main phase, can I still sell a card from Bootleg Sapphire's effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "0273f402-94fb-4b59-90ec-a1057c2d1284",
@@ -5342,6 +5794,29 @@ export const rawCards = [
     ],
     selected_printing_id: "4b5dc479-0db1-46dd-859f-e7dc34d50f03",
     legality: "legal",
+    rulings: [
+      {
+        id: "31c66530-6c62-4ba8-a521-e34ec9be6b01",
+        kind: "faq",
+        question: "Do I have to defeat a rival Unit with cost 2 or less even if I don't want to?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "03bc1552-a6ba-410b-8c26-4fbc895a57d5",
+        kind: "faq",
+        question:
+          "If the second card my Rival discards also has a cost equal to a friendly Gig, does my rival have to discard again?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "81fb66ee-b054-4f78-b0c9-7d2c9ff53435",
@@ -5409,6 +5884,19 @@ export const rawCards = [
     ],
     selected_printing_id: "36128749-4cb1-440d-b4de-4fd463cc2f5c",
     legality: "legal",
+    rulings: [
+      {
+        id: "31ed50ec-6a68-4eff-9f47-fc232e4e90e6",
+        kind: "faq",
+        question:
+          "When I play this Program for less because of it's effect does that change the cost of the card too?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3c4cf61f-c469-4ad6-a209-67e715f9d45b",
@@ -5506,6 +5994,61 @@ export const rawCards = [
     ],
     selected_printing_id: "40db55a6-0220-4cb9-8854-0e23f7cb91f8",
     legality: "legal",
+    rulings: [
+      {
+        id: "42c38a1d-103c-4c9a-adf0-e199853a16e9",
+        kind: "faq",
+        question: "Does Chrome Fang’s effect apply to all rival Units?",
+        answer: "Yes. Including any new rival Units played after Chrome Fang.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "eb37dc38-f33d-49c8-aade-383f879945c8",
+        kind: "faq",
+        question:
+          "Does Chrome Fang’s effect continue to apply if Chrome Fang leaves the field before your next turn?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "28a0d1ab-e3a1-4dd4-a952-b0ad4403f831",
+        kind: "faq",
+        question: "If my rival Unit has power 6 can it steal a friendly Gig with value 6?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "18a0c359-400b-43de-9055-c7fc79baf415",
+        kind: "faq",
+        question:
+          "What happens if a rival Unit attacks my Gig area while Chrome Fang's effect is active, but all friendly Gig values are higher than its power?",
+        answer: "The attack still happens, but the rival Unit does not steal any Gigs.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "fa5d28f5-57df-451f-8246-cd8949f324ad",
+        kind: "faq",
+        question:
+          "If an effect says a Unit steals an additional Gig (like Gorilla Arms), does Chrome Fang's effect apply?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "19f34c9b-a24a-43be-bd9f-62c37435e994",
@@ -5573,6 +6116,40 @@ export const rawCards = [
     ],
     selected_printing_id: "3f0319b8-e315-4e71-85b7-147a5b8ceba5",
     legality: "legal",
+    rulings: [
+      {
+        id: "9caf46ed-3bf8-4dd7-9110-7d9e147e821e",
+        kind: "faq",
+        question:
+          "If I the chosen rival Unit that can't attack until my next turn is given the effect to attack. Can it?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "5139f71f-b1f8-4819-8a83-51880067dbea",
+        kind: "faq",
+        question: "What is a min Gig?",
+        answer: "A Gig showing it's 1 value.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "1dc8b307-ebd1-43e8-9d14-d11a7893c1d1",
+        kind: "faq",
+        question:
+          "When resolving this effect and do not choose to Call a Legend for free. Can I call a Legend for free later in the turn from this effect?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "71652e73-984a-4630-be47-af947f87d5c1",
@@ -5715,6 +6292,18 @@ export const rawCards = [
     ],
     selected_printing_id: "80dcc139-d31d-4b89-86ff-cdbdd2664953",
     legality: "legal",
+    rulings: [
+      {
+        id: "030e8902-1692-4ba3-86de-56b83c036897",
+        kind: "faq",
+        question: "If this Unit gains [ADRENALINE] the turn it's played, can it attack?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "71fb410b-b56e-42b2-a793-4c49e935b9f1",
@@ -5826,6 +6415,28 @@ export const rawCards = [
     ],
     selected_printing_id: "d3dc7194-a545-4588-9702-b094c27ce359",
     legality: "legal",
+    rulings: [
+      {
+        id: "4496adf7-0641-4c06-a1f7-6eb120c075bf",
+        kind: "faq",
+        question: "Can I play this card without a rival Unit on the field?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "00513475-b873-4eec-b582-c8bb969fe1e5",
+        kind: "faq",
+        question: "Can I choose a Unit that's already spent for this card's effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "87e001dd-8604-4523-af6e-d768118ccf98",
@@ -5923,6 +6534,41 @@ export const rawCards = [
     ],
     selected_printing_id: "5aafe80b-7c7d-4060-8677-a2881a21dd72",
     legality: "legal",
+    rulings: [
+      {
+        id: "b59cc194-67ee-4b3e-9e4e-6858131f2903",
+        kind: "faq",
+        question: "Can I choose an equipped rival Unit with this effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "0f661d5c-bfc7-4c2a-8174-b4f98e7d8b61",
+        kind: "faq",
+        question:
+          "If I play this Program [QUICK] as a reaction and choose the attacking rival Unit for the effect, what happens?",
+        answer:
+          "The rival Unit gets the power boost for the ensuing fight and is defeated at the end of the turn.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "0a4c62a0-f5aa-4b7e-9341-db86caf28c81",
+        kind: "faq",
+        question:
+          "If a Unit  under the effect of Cyberpsychosis attacks but does not make it to the Fight or Steal step, is it still defeated at the end of the turn?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "1d8f611c-dd08-48d1-82eb-451d56dcf651",
@@ -5990,6 +6636,30 @@ export const rawCards = [
     ],
     selected_printing_id: "32957075-42ff-47e3-8252-e78877ef61f7",
     legality: "legal",
+    rulings: [
+      {
+        id: "307b211e-ebe4-46db-9baa-e652918576fe",
+        kind: "faq",
+        question:
+          "If a Unit or Legend with two or more Deadman Transmitters is defeated, do I have to defeat both Deadman Transmitters?",
+        answer: "No, choose one of them.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "4b85693e-f6d3-4895-8606-e9917f6c706a",
+        kind: "faq",
+        question:
+          "If Deadman Transmitter protects a Unit from being defeated in a fight did that Unit still lose the fight?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "a1e60653-5e28-49ee-9798-d16520b553c3",
@@ -6131,6 +6801,19 @@ export const rawCards = [
     ],
     selected_printing_id: "5b9cdefa-29f4-4a3a-a426-eea46302ef60",
     legality: "legal",
+    rulings: [
+      {
+        id: "59552a2f-6661-4130-95cd-6f119a95f6b6",
+        kind: "faq",
+        question:
+          "If this Unit steals a Gig but is no longer in the field area at the end of the turn, do I still ready 1 Eddie?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3bb1f191-927e-45b3-86ca-cb30baabfe0d",
@@ -6197,6 +6880,18 @@ export const rawCards = [
     ],
     selected_printing_id: "c7eba3a0-63cb-4311-988e-d487a7c0841a",
     legality: "legal",
+    rulings: [
+      {
+        id: "cdc01e4e-6e36-43a8-a193-90564776528d",
+        kind: "faq",
+        question: "Do I have to Draw 2 with this card's [PLAY] effect even if I don't want to?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "2697ed9d-72fc-4658-9c94-977668911a67",
@@ -6263,6 +6958,28 @@ export const rawCards = [
     ],
     selected_printing_id: "bec995b7-b76b-4605-9c36-3d7697cdd4f5",
     legality: "legal",
+    rulings: [
+      {
+        id: "2ae2b855-aecf-4b12-9858-234649764cf1",
+        kind: "faq",
+        question: "Can Detonate defeat Gear equipped to a face-up Legend?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "c459acd1-042d-47ae-9278-3cdd05d98283",
+        kind: "faq",
+        question: "Can I play Detonate if there are no rival Gears in play?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "91df478a-91d5-4d42-a624-4c20ec61121c",
@@ -6405,6 +7122,41 @@ export const rawCards = [
     ],
     selected_printing_id: "9a298f42-3a9f-4510-b2fd-9cf1b34ade27",
     legality: "legal",
+    rulings: [
+      {
+        id: "47feaf18-6dff-4cf7-b24f-ba01d2a92514",
+        kind: "faq",
+        question:
+          "If I don't have a friendly Unit on the field when I call Dexter Deshawn, do I have to choose Draw 1?",
+        answer: "No, you can still choose the other effect, it just fails.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "f868fe18-6a35-457a-9ed5-004b48956db9",
+        kind: "faq",
+        question:
+          "If I call Dexter Deshawn as a reaction, can I play a [QUICK] card that I drew off of Dexter's effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "2a8619f2-2d2b-4b22-a190-623617b0b515",
+        kind: "faq",
+        question:
+          "Can Dexter Deshawn ’s [Spend Icon:] effect increase either a friendly Gig or a rival Gig?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "17a80b46-c583-4867-97ac-7855494363a9",
@@ -6501,6 +7253,28 @@ export const rawCards = [
     ],
     selected_printing_id: "e96d3167-5115-4c82-9b35-546cba0aaead",
     legality: "legal",
+    rulings: [
+      {
+        id: "fc26a153-0d04-43ec-8f94-beaa97ce3a93",
+        kind: "faq",
+        question: "If all rival Units are already spent, can I still use this card?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "1715a8ca-857b-4dcc-9c1c-4782ccd13c04",
+        kind: "faq",
+        question: "Can I defeat a spent Unit that I did not spend with this effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3b3f941d-aa58-4337-99dc-4af3fd3ccd47",
@@ -6598,6 +7372,29 @@ export const rawCards = [
     ],
     selected_printing_id: "aaac486c-dbfd-4137-b373-24a2df29522c",
     legality: "legal",
+    rulings: [
+      {
+        id: "94144c1c-7f0c-4bb0-898f-a9edaa1d0cd9",
+        kind: "faq",
+        question: "Can Dum Dum’s [QUICK] effect choose a friendly Unit with no equipped Gear?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "bfb1adc4-7e30-4d4c-8219-c62ee23df515",
+        kind: "faq",
+        question:
+          "If the chosen Unit gains or loses Gear after Dum Dum’s [QUICK] effect resolves, does the power bonus change?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "df06b6e2-1675-48a3-bfe2-d0bc4c5f35eb",
@@ -6740,6 +7537,30 @@ export const rawCards = [
     ],
     selected_printing_id: "2b1b6268-193f-4b9e-a63c-0cbc200d6db7",
     legality: "legal",
+    rulings: [
+      {
+        id: "5f960b7a-2008-4b2c-bbfd-ec852848651f",
+        kind: "faq",
+        question:
+          'If I choose not to decrease a Gig, can I still ready 2 Eddies at the end of my turn if the equipped Unit is named "V"?',
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "881c635b-268e-4855-8617-a84587951a8f",
+        kind: "faq",
+        question:
+          'If this Gear is attached to a Unit named "V" and the Unit attacks but is defeated before the end of the turn, can I still ready 2 Eddies?',
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "c688ca08-b3b7-441d-b161-78b9a63a8a9e",
@@ -6807,6 +7628,41 @@ export const rawCards = [
     ],
     selected_printing_id: "94180516-28a6-4f5c-b79e-de38a95ed47b",
     legality: "legal",
+    rulings: [
+      {
+        id: "2984e648-802f-48da-9ecd-0e0c0434f9e3",
+        kind: "faq",
+        question:
+          "If I control multiple friendly max Gigs, can I choose which one El Sombrerón's effect uses?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "71386fef-475e-4a5f-9a81-084f6a32f02b",
+        kind: "faq",
+        question:
+          "If the value of my chosen friendly max Gig changes later in the turn, does El Sombrerón’s gained power change too?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "a51b1f00-a914-4586-8baf-9926b76fcbec",
+        kind: "faq",
+        question:
+          "If I do not control a friendly max Gig can I still pay 2 €$ for El Sombrerón’s effect?",
+        answer: "Yes, but El Sombrerón won't gain any power from it.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "917e6515-ed23-4a1d-baaa-474d879bdabc",
@@ -7030,6 +7886,32 @@ export const rawCards = [
     ],
     selected_printing_id: "ba766c1d-d929-4a22-bc91-7400784536c8",
     legality: "legal",
+    rulings: [
+      {
+        id: "6f60b8fc-5126-488c-9aeb-5ee39226a5f0",
+        kind: "faq",
+        question:
+          "If a rival Unit chosen by Evenlyn Parker's second effect makes an attack and then readies in the same turn, is it forced to make another attack?",
+        answer:
+          "Yes; as long as the chosen Unit can attack, your Rival cannot end their turn until it attacks.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "99f345a2-35ad-4d4e-8f7b-c6da08c50b4a",
+        kind: "faq",
+        question:
+          "If I have a Unit chosen by Evelyn Parker's second effect, do I have to attack with it as soon as possible, or can I play other cards first?",
+        answer:
+          "You may do other actions but cannot end your turn if the Unit chosen by Evelyn Parker can still legally declare an attack.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "a3cc3d15-8e6a-4684-b2ca-c843b4a854e2",
@@ -7142,6 +8024,18 @@ export const rawCards = [
     ],
     selected_printing_id: "7d174619-2183-4058-a89a-082c6b7b5a5c",
     legality: "legal",
+    rulings: [
+      {
+        id: "21199b77-ad4d-42ac-834c-416bf3d458b5",
+        kind: "faq",
+        question: "Is Evelyn Parker's [ATTACK] effect mandatory?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "4a8dfe3f-980d-4370-ac10-6bd989042cdf",
@@ -7268,6 +8162,18 @@ export const rawCards = [
     ],
     selected_printing_id: "876dfa5c-6df4-4930-b284-f2c466e6b90c",
     legality: "legal",
+    rulings: [
+      {
+        id: "e83fc5f6-3649-4162-9415-f1ff3fde56ed",
+        kind: "faq",
+        question: "Does 0 count as an even number?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "0cd37c43-e722-48eb-91ef-4c1bd1645215",
@@ -7409,6 +8315,18 @@ export const rawCards = [
     ],
     selected_printing_id: "91f9d30c-f74d-4be4-8505-52f05d309c92",
     legality: "legal",
+    rulings: [
+      {
+        id: "2c3ac370-03ca-4a5c-9cf3-a61e9789b515",
+        kind: "faq",
+        question: "Can you play this with no rival Units in play?",
+        answer: "Yes",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "c5d2fed1-1470-4ac5-9f84-bf66705901ce",
@@ -7476,6 +8394,19 @@ export const rawCards = [
     ],
     selected_printing_id: "7751b719-978b-44b1-a82f-b2881d3a416e",
     legality: "legal",
+    rulings: [
+      {
+        id: "7cc65141-2888-4258-9e95-b77b60f43754",
+        kind: "faq",
+        question:
+          "When I reveal the top 2 cards of my deck, are they still considered part of my deck?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "1f71ec32-3c11-466b-bcdd-a8a3009ea8ac",
@@ -7543,6 +8474,18 @@ export const rawCards = [
     ],
     selected_printing_id: "846b55b4-5e12-44b6-a204-53bd8c862888",
     legality: "legal",
+    rulings: [
+      {
+        id: "db8d72b0-4892-45a9-82fb-9d7cf1df3791",
+        kind: "faq",
+        question: "If my Rival does not have a Unit, may I still defeat a friendly Gear?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "6dd172b1-2341-473f-8837-a9efe6a75701",
@@ -7610,6 +8553,19 @@ export const rawCards = [
     ],
     selected_printing_id: "e1959b9e-d32d-43be-94c3-a595809e0c28",
     legality: "legal",
+    rulings: [
+      {
+        id: "978f0a21-058a-4676-8366-ce220a6f6aa4",
+        kind: "faq",
+        question:
+          "Who steals the Gig with this effect; the player, or the Unit equipped with Gorilla arms?",
+        answer: "The Unit.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "424c9c0f-cc01-40ec-8404-75957985c7f8",
@@ -7707,6 +8663,50 @@ export const rawCards = [
     ],
     selected_printing_id: "0f6e52f0-511f-4ae9-a380-5e718b26e58a",
     legality: "legal",
+    rulings: [
+      {
+        id: "c40c2c04-c8eb-453b-8a04-2cb0cb4fd1a4",
+        kind: "faq",
+        question:
+          "If I manage to play a Unit during my React step and I give it [BLOCKER] from Goro Takemura, can that friendly Unit use [BLOCKER] immediately?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "46be1b50-5788-41f0-92de-af2fb2f670be",
+        kind: "faq",
+        question: "When a friendly Unit uses [BLOCKER] am I forced to discard 1?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "3e703f01-25ac-4255-ae2f-b3c0fb7a816c",
+        kind: "faq",
+        question: "If I have no cards in deck may I still discard 1?",
+        answer: "Yes, but you must draw 1 after, so you will lose the game.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "048e77d0-3873-4e27-a4ee-b419fc503d3d",
+        kind: "faq",
+        question:
+          "Does a friendly Unit using [BLOCKER] trigger Goro Takemura's second effect even if it's not a result of first effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "27c01b18-2a9c-4d66-ad21-b75869fba666",
@@ -7774,6 +8774,29 @@ export const rawCards = [
     ],
     selected_printing_id: "efc5dfdd-f393-4bbe-a7bc-ac959ba1e6bc",
     legality: "legal",
+    rulings: [
+      {
+        id: "2a901389-f319-4b65-ae4b-00483f4e80f5",
+        kind: "faq",
+        question: "Can I choose the order of the two effects?",
+        answer: "No. You must resolve the effect from top to bottom.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "e4e22bef-839b-49d6-9bed-8a34f59b95ce",
+        kind: "faq",
+        question:
+          "When my Rival chooses the effect for Gunpoint Diplomacy, do they also choose the friendly Unit?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "d2a9bcb0-a5e1-4413-8140-8b808258a753",
@@ -7840,6 +8863,19 @@ export const rawCards = [
     ],
     selected_printing_id: "7dc71978-0995-4b93-9ba3-83d1118c3c4b",
     legality: "legal",
+    rulings: [
+      {
+        id: "d7f37678-fda8-4c98-b027-af22cc68b7c6",
+        kind: "faq",
+        question:
+          "After I trash 3 with this effect do I have to add a Program to hand from those 3?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "380b5e52-2651-4cde-8222-1db2ae6469e2",
@@ -7922,6 +8958,38 @@ export const rawCards = [
     ],
     selected_printing_id: "2c4a77e8-0fda-4ec1-9519-1d15e0f172b3",
     legality: "legal",
+    rulings: [
+      {
+        id: "b9dffd87-5e0a-45a6-92c3-dae20f68df5f",
+        kind: "faq",
+        question: "If either myself or my Rival controls 0 Gigs, can I swap?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "1b9a65e5-250a-446e-971f-867ab7f688fb",
+        kind: "faq",
+        question: "Is swapping Gigs considered stealing?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "4b611db2-a369-4b7f-b074-377613c6cada",
+        kind: "faq",
+        question: "When I activate this effect, do I get to choose the rival Gig too?",
+        answer: "Yes, you choose both Gigs involved in the swap.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "2902da45-ec28-4971-a731-ea1eda4c6ba1",
@@ -8101,6 +9169,18 @@ export const rawCards = [
     ],
     selected_printing_id: "2fc5ac93-dae5-4af5-a813-77abc0cc8dfd",
     legality: "legal",
+    rulings: [
+      {
+        id: "89eca244-872c-4c28-bf2c-7dbf294e0e6c",
+        kind: "faq",
+        question: "May I defeat a Gear if I don't have any Gigs that match cost with value?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "a708461f-1f91-4789-bb0d-96e3de5fcf44",
@@ -8242,6 +9322,29 @@ export const rawCards = [
     ],
     selected_printing_id: "9103b5db-bf95-4385-8941-308cb0353c9a",
     legality: "legal",
+    rulings: [
+      {
+        id: "ad3b75f8-1401-485f-891d-7e54fdbfe30f",
+        kind: "faq",
+        question: "Can I choose to increase a Gig by 0?",
+        answer:
+          'Yes, but it does not count as "adjusting" a Gig for effects triggered by "adjusting a Gig."',
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "2f4ce47f-25ba-4321-a673-809fc8f75bd7",
+        kind: "faq",
+        question: "Can I adjust a rival Gig?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "b0453570-7ed8-4031-9562-cb73d7a979e5",
@@ -8308,6 +9411,19 @@ export const rawCards = [
     ],
     selected_printing_id: "8e2f2d0c-0e92-4744-a510-a9c7ac371d81",
     legality: "legal",
+    rulings: [
+      {
+        id: "39c1b729-a65b-4cf6-81dd-150719aa38b3",
+        kind: "faq",
+        question:
+          "If this Unit gains [ADRENALINE] the turn it's played , can it attack even if I haven't played a Program yet?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "04a82ebf-eba1-4888-a95d-f01b9bbd0167",
@@ -8435,6 +9551,50 @@ export const rawCards = [
     ],
     selected_printing_id: "9f61ebda-53fd-4b23-8383-d0e0bd32b847",
     legality: "legal",
+    rulings: [
+      {
+        id: "739fcd51-c571-4770-9ceb-dc6d7c785842",
+        kind: "faq",
+        question:
+          "When I defeat Jackie Welles instead of a friendly Unit, does the Unit's [DEFEATED] effect trigger?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "659dec0e-519c-445d-966e-6e27e4ad5c1f",
+        kind: "faq",
+        question: "Can I use this effect if Jackie Welles is in the Field area as a Unit?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "2d22697d-50af-4372-bffb-29cae81f45cc",
+        kind: "faq",
+        question: "Can I use this effect if Jackie Welles is in the Legends area?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "ab195483-70b3-4bdf-9d42-488148b666ec",
+        kind: "faq",
+        question:
+          "If Jackie Welles would be defeated while it's a Unit, could I use Jackie Welle's effect to defeat himself instead of being defeated the other way?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "b665e103-456b-4c51-9551-95b0bc87212a",
@@ -8532,6 +9692,29 @@ export const rawCards = [
     ],
     selected_printing_id: "12d44604-ad7b-4e82-b517-9edb0be44427",
     legality: "legal",
+    rulings: [
+      {
+        id: "801aa9c8-c507-44e9-89c1-3477c1f8a2b1",
+        kind: "faq",
+        question: "If Gig becomes odd after Jackie attacks, does Jackie lose the +2 power?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "c61101be-05ed-46e3-b027-d05f5981632f",
+        kind: "faq",
+        question:
+          "If I acquire another friendly even Gig after Jackie Welles attacks, does Jackie Welles get another +2 power this turn?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "e8b0432c-4d2d-4464-9a00-f3626917a7f0",
@@ -8599,6 +9782,18 @@ export const rawCards = [
     ],
     selected_printing_id: "30619097-d9d7-42fe-bf4c-cd4ae822792d",
     legality: "legal",
+    rulings: [
+      {
+        id: "cce96f5d-9d4d-4a30-b6ba-5e49c53280dc",
+        kind: "faq",
+        question: "Can Japantown Jonin choose itself with its own [PLAY] effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "9a4002b0-0f0b-4c9a-a198-691d058b6dcc",
@@ -8681,6 +9876,53 @@ export const rawCards = [
     ],
     selected_printing_id: "14ab188f-2ce3-4790-8823-5a352371ff1f",
     legality: "legal",
+    rulings: [
+      {
+        id: "3cfb42c3-4d87-44db-9b06-7f48c24b912f",
+        kind: "faq",
+        question: 'What "This Unit wins all fights against CORPO Units" mean?',
+        answer:
+          "When Johnny Silvlerhand attacks (or is attacked by) a CORPO Unit,  he always wins the fight, regardless of power. So, Johnny Silverhand defeats the opposing CORPO Unit (as long as he has power 1+).",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "e512816e-a856-491a-896b-fde16d661ea7",
+        kind: "faq",
+        question:
+          "If Johnny wins a fight during a Rival’s turn, does he still ready from his effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "d33a4200-b3f8-48ee-8a83-35c113ee45da",
+        kind: "faq",
+        question:
+          "If Johnny wins his first fight this turn but is already ready, can I use the effect on his next attack instead?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "69794180-6e80-4a4c-b0dc-df8c290bdc19",
+        kind: "faq",
+        question:
+          "If Johnny has power 0 when he fights a CORPO Unit., does he still defeat the opposing rival Unit?",
+        answer:
+          "No. Johnny Silverhand still wins the fight, but Units at power 0 can't defeat other Units in a fight, so neither Unit is defeated.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "56947a14-0b1e-4c3d-89e0-17839bcf4280",
@@ -8763,6 +10005,39 @@ export const rawCards = [
     ],
     selected_printing_id: "a8a7d286-0c66-4f01-aca7-45570474d9e4",
     legality: "legal",
+    rulings: [
+      {
+        id: "97a58f36-cd0e-4e0b-9be0-b1ff61a9d2b4",
+        kind: "faq",
+        question: "Can I reduce Johnny Silverhand’s effect cost to 0 €$?",
+        answer: "Yes, but you still need to spend Johnny Silverhand to activate it.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "7af4302f-2f3e-4ddc-9445-fe0ac9f755d7",
+        kind: "faq",
+        question: "Can I use Johnny's effect on a Unit that wasn't played this turn?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "e403c866-e7b1-4982-8c0c-0b7d672b7185",
+        kind: "faq",
+        question:
+          "Can a Unit played on a previous turn still attack the rival Gig area if I use Johnny's effect on it?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "4560f3d0-5f63-466b-93b7-fc9d822a556e",
@@ -8920,6 +10195,51 @@ export const rawCards = [
     ],
     selected_printing_id: "8d0ad645-ac9a-4ecb-93d0-4c2061a4c477",
     legality: "legal",
+    rulings: [
+      {
+        id: "3dbd8dd8-e076-4ca2-8103-e648718f35e6",
+        kind: "faq",
+        question: "If I play a Program from my trash, does the first effect still trigger?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "179be304-b54b-47f7-8358-eac64e44f31e",
+        kind: "faq",
+        question:
+          "Can I trigger the first effect multiple times in a turn by playing multiple BRAINDANCE Programs?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "5822e4e8-3878-49b3-b0d0-fb241272ae6d",
+        kind: "faq",
+        question:
+          "Can I choose the same friendly Unit with this card's first effect each time I play a Program?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "284c60bf-247b-4ff1-8bcb-d60361138dad",
+        kind: "faq",
+        question:
+          "If I play a [QUICK] BRAINDANCE Program as a reaction on my Rival's turn, does first effect trigger?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "cb7f8d05-87cc-4606-ad71-a9283f2f4b20",
@@ -9002,6 +10322,18 @@ export const rawCards = [
     ],
     selected_printing_id: "dcfe8370-9abf-4395-b50b-efea505609ba",
     legality: "legal",
+    rulings: [
+      {
+        id: "90d8581b-b42a-4061-a7d4-d589879389cc",
+        kind: "faq",
+        question: "Can I activate this card's effect if I have no cards left in my deck?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5a441989-2997-40a2-a72e-08ca1442a7f3",
@@ -9084,6 +10416,19 @@ export const rawCards = [
     ],
     selected_printing_id: "e54e06c0-3f9c-412a-8dea-942eebecd687",
     legality: "legal",
+    rulings: [
+      {
+        id: "91ff465b-38fc-45b1-8db2-d8cbe6b465cc",
+        kind: "faq",
+        question:
+          "If I roll a 1 on a friendly Gig and choose to reroll with Kerry Eurodyne's effect, but don't roll a 1 or 20 on that Gig, do I still get the draw effect for the first result?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5c4d4058-9185-4305-9e8f-7eca41cf6674",
@@ -9180,6 +10525,39 @@ export const rawCards = [
     ],
     selected_printing_id: "c26c7db6-f540-4073-ab33-b09335631764",
     legality: "legal",
+    rulings: [
+      {
+        id: "d23941b5-53c4-4036-b19d-cfa8bf059c5a",
+        kind: "faq",
+        question: "Can I activate Kerry's [Spend Icon:] effect the turn I play him?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "1da9b201-025a-487d-b49b-b1c8523579a8",
+        kind: "faq",
+        question: "Can I activate Kerry’s [Spend Icon:] effect if I do not control an 8+ Gig?",
+        answer: "Yes, but you won't get to draw 2.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "498e223a-b488-4fc8-a8cf-35f5e800543a",
+        kind: "faq",
+        question:
+          "If Kerry readies after I activated his [Spend Icon:] effect, can I activate  it again on the same turn?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "654f2289-5d75-4f8b-bd35-702031fbb214",
@@ -9292,6 +10670,18 @@ export const rawCards = [
     ],
     selected_printing_id: "ec3368a9-79f1-4dfc-9cf7-1cb464ec1c88",
     legality: "legal",
+    rulings: [
+      {
+        id: "22d75516-cd32-4b86-bce5-915d075c3ec3",
+        kind: "faq",
+        question: "Do I have to look at at friendly face-down Legend even if I don't want to?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "1b516742-cdf3-4597-8ba1-be787240ab3b",
@@ -9359,6 +10749,41 @@ export const rawCards = [
     ],
     selected_printing_id: "e3d1d8a0-1d53-4c85-84ca-66439fd3639a",
     legality: "legal",
+    rulings: [
+      {
+        id: "7cf45f7a-84df-4193-9f28-656d3054d183",
+        kind: "faq",
+        question:
+          "When La Llorona uses [BLOCKER], do I increase a Gig for her second effect before or after the ensuing fight?",
+        answer: "Before.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "10236d8a-b781-4d18-8857-57f7b3555983",
+        kind: "faq",
+        question:
+          "Can I use  a different Unit's [BLOCKER] effect after I block with La Llorna to redirect the attack again?",
+        answer: "Yes. There is no limit of how many times you can use [BLOCKER] in one turn.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "287826c0-e5e6-4383-ab1a-a24314ebc44d",
+        kind: "faq",
+        question:
+          "Can La Llorona increase a Gig by 0, 1, 2, or 3, or must it increase by exactly 3?",
+        answer: "Up to means 0, 1, 2, or 3.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "c29aefc5-c8dd-4188-95d9-e46c5ee289eb",
@@ -9425,6 +10850,28 @@ export const rawCards = [
     ],
     selected_printing_id: "14a0b813-d5e3-46e6-a001-aebbd3a95f11",
     legality: "legal",
+    rulings: [
+      {
+        id: "9a85bf8b-c371-4d1a-8d13-22976fb78130",
+        kind: "faq",
+        question: "Who chooses?",
+        answer: "The Player activating the card Chooses.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "072482a5-a9f6-4f39-9d18-53f483613eed",
+        kind: "faq",
+        question: "Can I play this card if there is no Rival Unit?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "793d9650-0a59-4c89-9d85-05a9d6873d2e",
@@ -9491,6 +10938,38 @@ export const rawCards = [
     ],
     selected_printing_id: "f931c82e-a382-4f60-808c-5910ac9850be",
     legality: "legal",
+    rulings: [
+      {
+        id: "3c7f6d4d-2ff5-42a8-a56b-71767d912551",
+        kind: "faq",
+        question: "Can I play this Program if I do not have a friendly Unit in the field area?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "a391a6fc-a480-4d18-b451-438ba58948e1",
+        kind: "faq",
+        question: "Can I play this Program if there is no rival Unit in the field area?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "8ebfb418-5733-4153-a981-8076cb0e9f41",
+        kind: "faq",
+        question: "Can I play this Program if there are no Units in the field area?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "6b078eff-4cef-4beb-a299-ed388a72ce45",
@@ -9624,6 +11103,19 @@ export const rawCards = [
     ],
     selected_printing_id: "e14bdd12-1214-4104-bfdd-ae023c21527c",
     legality: "legal",
+    rulings: [
+      {
+        id: "bd1e1e2f-a20a-40dc-be90-265bfcb367aa",
+        kind: "faq",
+        question:
+          "If I steal more than 1 Gig at a time, does my Rival have to discard more than 1?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "35c1fda3-60f9-4779-b690-30b283d52297",
@@ -9691,6 +11183,29 @@ export const rawCards = [
     ],
     selected_printing_id: "43e5568f-a609-4eff-8502-e81ba9134d2c",
     legality: "legal",
+    rulings: [
+      {
+        id: "a40d7f07-d5ed-4ae5-88f7-f5e4e4d4b28f",
+        kind: "faq",
+        question: 'What is "the opposing rival Unit?"',
+        answer: "It's the Unit in a fight with your friendly Unit.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "3dc2ff22-518e-4809-ae1e-f778621642f0",
+        kind: "faq",
+        question:
+          "If my Unit loses a fight but has an effect that it cannot be defeated, does it still lose the fight?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5380dea3-4d21-445b-af02-487b45d40395",
@@ -9803,6 +11318,19 @@ export const rawCards = [
     ],
     selected_printing_id: "8a7131eb-e1dd-46d6-84f6-2de315aee975",
     legality: "legal",
+    rulings: [
+      {
+        id: "9d6d9ce9-9dca-42f9-bb90-0e89c5fed80b",
+        kind: "faq",
+        question:
+          "If I can't discard 2 Programs to gain the rest of the effect, can I choose to just discard 1 anyway?",
+        answer: "No. You may discard 2 to resolve the full effect or none at all.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "6720e7fd-d1e8-4c8a-9ff2-f51f62241902",
@@ -10167,6 +11695,18 @@ export const rawCards = [
     ],
     selected_printing_id: "f1fa787d-e936-42a8-b42f-14999e722793",
     legality: "legal",
+    rulings: [
+      {
+        id: "9dfba4f9-6ebe-46ab-adcf-757a0e407d11",
+        kind: "faq",
+        question: "Am I forced to Swap Gigs?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "78fee308-5d4e-491c-9596-423dc20da5e3",
@@ -10233,6 +11773,18 @@ export const rawCards = [
     ],
     selected_printing_id: "060f0c56-cbb7-45fd-a0cd-9c7b9d0f8103",
     legality: "legal",
+    rulings: [
+      {
+        id: "86289bd1-7a4f-4b3e-b588-b8acc2212ad7",
+        kind: "faq",
+        question: "Does MaxTac Heavy's effect change the cost of the card?",
+        answer: "No, only the amount you pay.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "2a8802d3-598c-4ce3-9051-59ecf965ffbf",
@@ -10329,6 +11881,20 @@ export const rawCards = [
     ],
     selected_printing_id: "22b276f4-7cf6-4b14-a220-8368a0839287",
     legality: "legal",
+    rulings: [
+      {
+        id: "36ecf80a-cd64-4a27-91ac-a079e8d4250b",
+        kind: "faq",
+        question:
+          "If I ready my Maxtac Squadron with a different end-of-turn effect before I resolve this effect, can I still ready a friendly face-up Legend?",
+        answer:
+          "No. To avoid invalidating Maxtac Squadron's effect, resolve it before any effects that would ready it.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "95840ebd-d00a-49ff-b4e5-e2064cfc13a9",
@@ -10395,6 +11961,19 @@ export const rawCards = [
     ],
     selected_printing_id: "47f55164-e5da-494e-9d55-02bd0b7f97c1",
     legality: "legal",
+    rulings: [
+      {
+        id: "00a253c5-f0a2-4f13-a7a3-520c703c2402",
+        kind: "faq",
+        question:
+          "I played a friendly Legend to the field area with [GO SOLO] this turn. Can it attack even if my rival has a Maxtax Suppression Team?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "0f7c1c54-0e2e-44a5-ac7f-5263fbab21d3",
@@ -10462,6 +12041,18 @@ export const rawCards = [
     ],
     selected_printing_id: "ef9f2959-de87-4a54-be45-5c9dcc507aba",
     legality: "legal",
+    rulings: [
+      {
+        id: "5e7e7fa9-d975-45fd-aaaf-27cd449ac788",
+        kind: "faq",
+        question: "Can I choose a Unit that's already spent for this card's effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "21f68be2-c664-4ae0-a7ef-965a3a5a14c8",
@@ -10529,6 +12120,19 @@ export const rawCards = [
     ],
     selected_printing_id: "5939771d-bdcc-4b42-aea4-376311189e93",
     legality: "legal",
+    rulings: [
+      {
+        id: "ae3bd50b-b937-4a8a-8c8a-24dab0acd367",
+        kind: "faq",
+        question:
+          "If a Rival adjusts or swaps multiple friendly Gigs simultaneously, does Meredith Stout's effect trigger for each of them?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "383abfb4-eedb-47c1-87f0-3ae4973c3619",
@@ -10611,6 +12215,28 @@ export const rawCards = [
     ],
     selected_printing_id: "17252514-02ba-4d0d-a9cc-3590cee528af",
     legality: "legal",
+    rulings: [
+      {
+        id: "e82502be-aaff-4d75-bd4b-87e00e760fa1",
+        kind: "faq",
+        question: "Do card types include Legends?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "1d61a391-26ad-484b-9ae5-621df7aa2adc",
+        kind: "faq",
+        question: 'Can I choose "Legends" for this effect?',
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "920cabc9-f350-4f61-96c6-69e649271456",
@@ -10678,6 +12304,18 @@ export const rawCards = [
     ],
     selected_printing_id: "50e8101a-3d0e-45ea-9444-22007f7f9cb0",
     legality: "legal",
+    rulings: [
+      {
+        id: "e6eaf7b6-9d18-41a9-8e01-d2d060dafc03",
+        kind: "faq",
+        question: "Can this effect be used in the trash?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "08b52bdb-be1e-4931-90c4-4354eea5b145",
@@ -10745,6 +12383,19 @@ export const rawCards = [
     ],
     selected_printing_id: "3bd6767b-ef0c-47dd-9f47-d00112a74111",
     legality: "legal",
+    rulings: [
+      {
+        id: "d0a32e18-0674-4b46-ae37-e4f5dd4ab053",
+        kind: "faq",
+        question:
+          "If I have less (Street Cred) than a Rival at the end of my turn, am I forced to ready this Unit?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "ef77dd1f-3abd-4ce2-becc-97dd768a5022",
@@ -10812,6 +12463,19 @@ export const rawCards = [
     ],
     selected_printing_id: "354fd7d3-070d-4767-989c-5b3efbd9f30d",
     legality: "legal",
+    rulings: [
+      {
+        id: "993d5dde-b6f3-4e0a-b6de-48fe2efda10c",
+        kind: "faq",
+        question:
+          "I use this on my rival's Unit that has an effect that reads \"This Unit can't attack.\" will that Unit be able to make an attack?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "fc516d53-5fd8-43dd-8349-9e60f0606efa",
@@ -10954,6 +12618,39 @@ export const rawCards = [
     ],
     selected_printing_id: "dbbf4a6c-340d-4356-81ad-776940a7ee32",
     legality: "legal",
+    rulings: [
+      {
+        id: "63f515ca-17b9-40ee-83ae-30abb4404bb4",
+        kind: "faq",
+        question: "If I do not have a friendly Unit, do I have to choose the Draw 1 effect?",
+        answer: 'No. You can still "choose" the other effect, it just fails.',
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "329babc2-5aa7-40ee-a760-126d86bdc2c5",
+        kind: "faq",
+        question: "Does Muamar Reyes's effect each fight the Unit is in this turn?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "c155d52c-a1ee-42f6-8698-13721cb2b6b9",
+        kind: "faq",
+        question:
+          "If the chosen Unit with Muamar Reye's effect can't be defeated, can it still lose a fight?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3c144d6a-0c1a-43e9-bd35-85d6fc46adef",
@@ -11021,6 +12718,19 @@ export const rawCards = [
     ],
     selected_printing_id: "4bab255b-763a-4762-b5e2-430316526b8a",
     legality: "legal",
+    rulings: [
+      {
+        id: "526169c5-08ff-4dfe-9690-c385754b658c",
+        kind: "faq",
+        question:
+          "If Nadia attacks the rival Gig area the turn she is played but an effect causes my Rival to have less Gig's than me, does that cancel Nadia's attack?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "40c98fdc-45d0-458d-be2c-2697dc337ca5",
@@ -11118,6 +12828,52 @@ export const rawCards = [
     ],
     selected_printing_id: "07f119d6-8fb2-4b23-9862-818a7e941010",
     legality: "legal",
+    rulings: [
+      {
+        id: "44cc0af1-c683-4dd4-882e-7eefd4c443b3",
+        kind: "faq",
+        question:
+          "When I spend a Unit equipped with Netwatch Netdriver to declare an attack, do I get Netwatch Netdriver's effect before or after I resolve the attack?",
+        answer: "Before.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "e7efa410-6ebf-4195-9e8e-8a31a00f20b2",
+        kind: "faq",
+        question:
+          "If I spend a Unit equipped with Netwatch Netdriver to declare an attack, and the Unit or Legend has an [ATTACK] effect, do I get Netwatch Netdriver's effect before or after the [ATTACK] effect?",
+        answer: "You can choose the order you resolve these effects.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "6a903897-b1e2-486f-835e-3c702fcbe77c",
+        kind: "faq",
+        question:
+          "If I spend a Unit or Legend equipped with Netwatch Netdriver to activate the Unit/Legend's [Spend Icon:] effect, do I resolve Netwatch Netdriver's effect before or after the activated effect?",
+        answer: "After. Resolve the activated [Spend Icon:] effect first.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "52e98457-4afa-4996-972b-5ec373a331c5",
+        kind: "faq",
+        question:
+          "If I spend a Legend equipped with Netwatch Netdriver to pay a card's cost, do I resolve Netwatch Netdriver's effect before or after I play the card?",
+        answer: "After.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "e4af26f0-e25d-4e30-8bac-6701f54f3e97",
@@ -11185,6 +12941,40 @@ export const rawCards = [
     ],
     selected_printing_id: "70c7f11e-e41d-44f2-b5cd-e8568915d6ac",
     legality: "legal",
+    rulings: [
+      {
+        id: "d1fecc2d-4186-438c-9de7-de02184f0ad7",
+        kind: "faq",
+        question: "How do I know if my fixer area is empty?",
+        answer:
+          "If there are no longer any Gig die in the fixer area then the fixer area is now empty.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "d9d3bf9e-e13a-4a19-9220-7fcc74e47eae",
+        kind: "faq",
+        question:
+          "May I chose an effect even if I cannot meet the requirements to fufill the effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "0bba2dd4-1887-48bc-a577-9411b1081a64",
+        kind: "faq",
+        question: "If your fixer area is empty am I forced to play this for 1 eddie?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "4c098450-e3ae-47e5-98d4-d51a2ab132ce",
@@ -11252,6 +13042,18 @@ export const rawCards = [
     ],
     selected_printing_id: "089df0e6-0000-4e6c-b6d3-d9119466b624",
     legality: "legal",
+    rulings: [
+      {
+        id: "79a2970c-40e7-4d7f-a419-57a4b8eb3c76",
+        kind: "faq",
+        question: "Does Octant's effect change the cost of the card?",
+        answer: "No, only the amount you pay.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3ce6b982-7bba-46f1-8832-8867ec3588d4",
@@ -11348,6 +13150,19 @@ export const rawCards = [
     ],
     selected_printing_id: "fbefb447-34a3-4d53-9b23-d1bf141f8eec",
     legality: "legal",
+    rulings: [
+      {
+        id: "b91fa741-e2c0-4974-8663-74d7f661d3e3",
+        kind: "faq",
+        question:
+          "If my Rival does not have a Unit on the field when I play Offduty Malfini, do I still have to spend it?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "144c3559-3518-4c01-b9e6-af42b7166661",
@@ -11459,6 +13274,38 @@ export const rawCards = [
     ],
     selected_printing_id: "f1cf4133-45ef-4de5-abfc-757de1613731",
     legality: "legal",
+    rulings: [
+      {
+        id: "3aec4fa6-6b30-466a-a4a8-7449ce7ab078",
+        kind: "faq",
+        question: "Can I use this to defeat a Unit with 0 power if I do not have a friendly D20?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "6b61f796-5665-4ae0-bb6a-4b607cb20b28",
+        kind: "faq",
+        question: "Can I defeat my own Unit with this effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "00b41165-2bad-41c3-8a4a-be0c6747f4d7",
+        kind: "faq",
+        question: "If I do not control a friendly d20, can I play Over the Edge?",
+        answer: "Yes, but you cannot defeat a Unit.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "78ea68b3-1260-416b-9f88-d6be4586232b",
@@ -11541,6 +13388,19 @@ export const rawCards = [
     ],
     selected_printing_id: "336131d1-3bc8-4b39-b893-5fce9be8ce7f",
     legality: "legal",
+    rulings: [
+      {
+        id: "7f11608a-92cf-4b9f-a3b0-9d170ef231c7",
+        kind: "faq",
+        question:
+          "If I use this card's [Spend Icon:] effect but my hand is empty, can I still do the rest of the effect?",
+        answer: "No, you must discard 1.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "c4ef7be4-4817-4fae-9016-582e999d4996",
@@ -11608,6 +13468,18 @@ export const rawCards = [
     ],
     selected_printing_id: "b43f5006-7388-4189-81ff-343b5428305b",
     legality: "legal",
+    rulings: [
+      {
+        id: "933f4b48-5e65-48a8-97ba-3a2e255a8b7d",
+        kind: "faq",
+        question: "Do I have to choose a rival Unit with this effect when played?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "501a3796-9983-400f-86e4-97ffac5d5451",
@@ -11690,6 +13562,28 @@ export const rawCards = [
     ],
     selected_printing_id: "c7f0583f-2493-4e1f-9967-977bc0c6fa15",
     legality: "legal",
+    rulings: [
+      {
+        id: "2376d51c-ae2c-4eb6-aed9-d25a05d56e09",
+        kind: "faq",
+        question: "If there are no viable rival Units, do I have to choose the draw effect?",
+        answer: 'No. You can still "choose" the other effect, it just fails.',
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "afa9a2eb-1766-49c4-95d5-2c1673aae7dd",
+        kind: "faq",
+        question: "May I use this card's [Spend Icon:] if all Gigs are already the same value?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "950f045c-f5a4-4318-9907-b630d64de754",
@@ -11787,6 +13681,30 @@ export const rawCards = [
     ],
     selected_printing_id: "6e4ee31b-82d1-421c-b658-ba3f79520365",
     legality: "legal",
+    rulings: [
+      {
+        id: "097a8261-ba28-407e-9f81-1cf59c8e995b",
+        kind: "faq",
+        question:
+          "Can I move a Gear from this Legend to an unequipped friendly Unit that's already ready?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "5c29eb76-b653-47e4-a7c5-ad38e770890c",
+        kind: "faq",
+        question: "For the second effect,  do I need both Units and Legends equipped?",
+        answer:
+          "No, a combination of any 5 equipped Units and equipped Legends satisfies the condition.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "34774f04-4f16-40eb-8ee4-999144e572ab",
@@ -11869,6 +13787,19 @@ export const rawCards = [
     ],
     selected_printing_id: "9231f9ff-1ba5-4c4f-bd78-70e0780b58e5",
     legality: "legal",
+    rulings: [
+      {
+        id: "eb1edc97-4acc-49ca-b9e7-8c07cb28e1d9",
+        kind: "faq",
+        question:
+          "If I already Called a Legend this turn, can I call another Legend with Panam Palmer's effect?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "20484778-9294-4148-bd8c-fa78572f4452",
@@ -11966,6 +13897,18 @@ export const rawCards = [
     ],
     selected_printing_id: "8570122a-52aa-4a6b-8d72-4c8848df0f9b",
     legality: "legal",
+    rulings: [
+      {
+        id: "070c816a-ea6e-43b6-9408-cf976ef42dac",
+        kind: "faq",
+        question: "Does the Gig I set need to be part of the value-pair in order to draw 1?",
+        answer: "No. Any friendly value-pair satisfies the conditions.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "0974a7af-dcd7-44d9-b57a-b6a4719afcd6",
@@ -12033,6 +13976,18 @@ export const rawCards = [
     ],
     selected_printing_id: "0de81196-f1d3-4fd0-ae6a-062dae3f3f2c",
     legality: "legal",
+    rulings: [
+      {
+        id: "1f2d750b-a776-4d1c-bc79-a4621ab2cf0d",
+        kind: "faq",
+        question: "What's a value-pair?",
+        answer: "Two Gigs with the same value within the same Gig area.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "783a9082-b79c-4b45-bf66-48728ff9b92d",
@@ -12099,6 +14054,18 @@ export const rawCards = [
     ],
     selected_printing_id: "81c55c1f-362e-4ffd-8f9b-4162b298dbd5",
     legality: "legal",
+    rulings: [
+      {
+        id: "ae31fcd3-d3db-4bbe-b099-2a07cc0ba270",
+        kind: "faq",
+        question: "May I discard 1 Program even if there's no rival Unit to bottom-deck?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "14d87f2a-8bd7-424f-b65b-3659156cef81",
@@ -12219,7 +14186,7 @@ export const rawCards = [
     display_name: "Pyramid Song",
     slug: "pyramid-song",
     rules_text:
-      "Choose one effect. If a friendly d4 is a min Gig, choose both instead.\nGive a rival Unit -5 power this turn. // Bottom-deck a rival Unit with power 0.",
+      "Choose one effect. If a friendly d4 is a min Gig, choose both instead.\nGive a rival Unit -4 power this turn. // Bottom-deck a rival Unit with power 0.",
     flavor_text: null,
     description: null,
     youtube_url: null,
@@ -12277,6 +14244,18 @@ export const rawCards = [
     ],
     selected_printing_id: "3b1d0570-bb8e-4ea5-9ec7-c698d9c9f94d",
     legality: "legal",
+    rulings: [
+      {
+        id: "29b8e233-81e1-4660-9df8-eb9002af9562",
+        kind: "faq",
+        question: "If I choose both effetcs, can I choose what order I resolve them?",
+        answer: "No, you must resolve the top effect first, then the bottom one.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "ad13a7bc-c49d-4166-8a9c-965e7bfa9b8f",
@@ -12389,6 +14368,19 @@ export const rawCards = [
     ],
     selected_printing_id: "fb096d3f-48eb-47c0-a065-81b39691e12f",
     legality: "legal",
+    rulings: [
+      {
+        id: "e18d31dd-7ee1-4494-8098-a72db45bfa2d",
+        kind: "faq",
+        question:
+          "If my Unit loses a fight but isn't defeated due to this effect, does it still count as losing the fight?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "92edc648-10d6-43d3-b4ab-4ad65a5c7425",
@@ -12537,6 +14529,19 @@ export const rawCards = [
     ],
     selected_printing_id: "ce570725-0de7-438a-a9c8-33074a7180ba",
     legality: "legal",
+    rulings: [
+      {
+        id: "06f40e31-2d2e-46d4-bfab-7670da4c189c",
+        kind: "faq",
+        question:
+          "Does this effect force my Rival to use [GO SOLO] on their turn if they have enough €$ available?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "65a14367-da52-4578-8162-3c4bac11007d",
@@ -12604,6 +14609,19 @@ export const rawCards = [
     ],
     selected_printing_id: "5d795b32-9ad8-4c94-abd4-d01e389db389",
     legality: "legal",
+    rulings: [
+      {
+        id: "7b34456c-7332-4134-9650-5864aee59890",
+        kind: "faq",
+        question:
+          "If I have no cards left in my deck when I spend a friendly Rita Wheeler, do I lose the game?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "e64e2978-695b-4fc5-b17b-62c710a11c47",
@@ -12731,6 +14749,49 @@ export const rawCards = [
     ],
     selected_printing_id: "b3895f75-e147-49b0-a6d8-6fb35b356b2e",
     legality: "legal",
+    rulings: [
+      {
+        id: "88707f62-0eaf-4383-9304-c28a50c995e3",
+        kind: "faq",
+        question:
+          "Can I activate River Ward’s [QUICK] [Spend Icon:] effect if I have no Gear cards in hand?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "81489d83-54af-42d9-a5b3-8eb4e5399ae6",
+        kind: "faq",
+        question: "Does the Gear have to be equipped to this Legend?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "a6ed37cc-f3f9-42e6-8246-0edf668b0bc5",
+        kind: "faq",
+        question: "Do you have to Trash the top card after searching?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "28a594b5-9188-4f9b-9d3d-8e0100d6ce5e",
+        kind: "faq",
+        question: "Do I keep the card not Trashed on top of my deck?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "7ea6eecc-e55e-4634-93eb-b2b46e79635d",
@@ -12894,6 +14955,28 @@ export const rawCards = [
     ],
     selected_printing_id: "2dd7547d-5098-4082-a98b-f39a583a222f",
     legality: "legal",
+    rulings: [
+      {
+        id: "e4837808-b775-4bbb-8e98-6c5c8441324e",
+        kind: "faq",
+        question: "Does Rogue Amendiares' effect trigger if she steals a Gig herself?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "c66b9c47-a74d-4293-89ae-3d04bbb5bf92",
+        kind: "faq",
+        question: "Does Rogue Amendiares' effect work while face-up in the Legend area?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "9d994a42-4a63-44ad-ad7a-edead6af06a2",
@@ -12976,6 +15059,19 @@ export const rawCards = [
     ],
     selected_printing_id: "3193a6bd-3e99-4501-9c5c-8d5ea32c779c",
     legality: "legal",
+    rulings: [
+      {
+        id: "9ce8258b-6b6a-4157-9054-7923068292d5",
+        kind: "faq",
+        question:
+          "If I manage to play Rogue Amendiares on my Rival's turn, can I use her [QUICK] effect that turn?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "9e465b11-9743-4275-a71d-d701b059eef0",
@@ -13058,6 +15154,29 @@ export const rawCards = [
     ],
     selected_printing_id: "b749ce16-1b44-47d8-bce4-4fd373007a5c",
     legality: "legal",
+    rulings: [
+      {
+        id: "506cd2e9-d647-404d-a713-14e340241fcc",
+        kind: "faq",
+        question: "Do I have to defeat a rival Unit even if I don't want to?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "3ae8916f-514c-47dd-b078-a5844f21277d",
+        kind: "faq",
+        question:
+          "If a rival Unit’s power is reduced to 2 or 3 by another effect this turn, can Royce defeat it?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "9e681d3e-cbfd-4c7b-a69a-72a83dc8b847",
@@ -13185,6 +15304,40 @@ export const rawCards = [
     ],
     selected_printing_id: "3e2e228b-dbfb-484b-b82d-6972ff184aab",
     legality: "legal",
+    rulings: [
+      {
+        id: "4c90424e-2603-4927-8bbd-067de4332a36",
+        kind: "faq",
+        question: "Can I equip Gear to Royce in the Legends area?",
+        answer: "Yes, you can equip face-up Legends in the Legends area.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "46c436af-2ee0-4b1a-b7d5-03df43ed5203",
+        kind: "faq",
+        question:
+          "Does the Royce +2 power for each equipped Gear apply while he is still in the Legend area?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "903ccbd0-d2d9-46e0-9ffc-cd5ebddef04a",
+        kind: "faq",
+        question: "What happens to a Gear on a Legend when the Legend is removed from play?",
+        answer:
+          "When a Legend leaves the field or Legends area, its attached Gear follows the Legend to that area, then is no longer equipped in the new area. So, the Gear remains in that new area when you remove the Legend from play.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "fee335a7-2546-48a5-9bb8-b0886014ce66",
@@ -13281,6 +15434,19 @@ export const rawCards = [
     ],
     selected_printing_id: "e1b674d0-4ac7-4523-be19-809308871d49",
     legality: "legal",
+    rulings: [
+      {
+        id: "76746ab1-b325-427c-a8ca-499dcff97fb3",
+        kind: "faq",
+        question:
+          "If this Unit is chosen by Mox Inciters to attack but there's no spent rival Unit, is this Unit forced to make an attack on the rival's Gig area?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "b4cba235-816d-4888-a308-1c397b9288e7",
@@ -13348,6 +15514,18 @@ export const rawCards = [
     ],
     selected_printing_id: "5d987aa8-baed-45b2-986c-a21e04a53331",
     legality: "legal",
+    rulings: [
+      {
+        id: "6b38d8b1-470f-402a-aeca-024e1db97b4d",
+        kind: "faq",
+        question: "Do I need to choose a Unit on the field for this Program to effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "9611a3ba-d365-453f-89ed-c986a1948edc",
@@ -13430,6 +15608,18 @@ export const rawCards = [
     ],
     selected_printing_id: "f452a0ca-3204-48d5-8565-ec746f27959b",
     legality: "legal",
+    rulings: [
+      {
+        id: "2507570b-3a3a-4c5e-bb34-451ebf248cc4",
+        kind: "faq",
+        question: "Can this Unit attack ready Units with its effect?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "55153b49-c3a7-4208-a47b-0a91fa7e3b5c",
@@ -13572,6 +15762,19 @@ export const rawCards = [
     ],
     selected_printing_id: "97de62e2-3fea-4324-8367-87d1f1d674ed",
     legality: "legal",
+    rulings: [
+      {
+        id: "66f0aa50-b90c-4bf0-9a02-ddfbec146375",
+        kind: "faq",
+        question:
+          "At the end of my turn do I have to ready this Unit or Legend even if I don't want to?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "e2dc863c-5bc9-4ad7-9138-2d5b966ed901",
@@ -13654,6 +15857,31 @@ export const rawCards = [
     ],
     selected_printing_id: "2647f881-5a7e-4ffb-b231-6574dc531f43",
     legality: "legal",
+    rulings: [
+      {
+        id: "8b665720-9bdc-47ee-8930-9e8b6f6d41ef",
+        kind: "faq",
+        question:
+          "If I attack the rival Gig area with Sasha but she has 0 power, does she steal a Gig?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "f548eacd-802d-4101-b47c-36cf1155e1df",
+        kind: "faq",
+        question:
+          "When I declare an attack with Sasha Yakovleva, can I use her [ATTACK] effect before I choose a target?",
+        answer:
+          "No. You must declare the attack target before revealing the card for her [ATTACK] effect.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "4670d02b-b97a-4771-bb7e-65bdc012530e",
@@ -13796,6 +16024,30 @@ export const rawCards = [
     ],
     selected_printing_id: "11a8fed4-5401-4cfc-901b-ab9b5b94d0ab",
     legality: "legal",
+    rulings: [
+      {
+        id: "d9ad00b9-ab93-498f-a6fa-bab6d833d949",
+        kind: "faq",
+        question:
+          "If a friendly Unit equipped with Satori fights a Unit of the same power and they defeat each other, do I still draw 1?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "8ba81187-0232-4320-b876-cae87a389ea5",
+        kind: "faq",
+        question:
+          "If my Unit equipped with Satori is attacked by a rival Unit and my Unit wins the fight, do I draw 1?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "a29490bb-2836-48b6-a4f9-a44b25c8bfa2",
@@ -13863,6 +16115,18 @@ export const rawCards = [
     ],
     selected_printing_id: "60e476b4-51ab-4b10-8861-a8362b4232d7",
     legality: "legal",
+    rulings: [
+      {
+        id: "1f7a2ac5-b236-4b1c-9f4b-6e0b34441174",
+        kind: "faq",
+        question: "Do other Units keep the +2 power while fighting and stealing too?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "7a62beca-ac54-4c0d-847d-ed85838c5093",
@@ -13929,6 +16193,29 @@ export const rawCards = [
     ],
     selected_printing_id: "a7117b0f-74ab-44b5-87fb-de267d0f2164",
     legality: "legal",
+    rulings: [
+      {
+        id: "461379b1-06dd-4753-91b2-1fdabc5024e0",
+        kind: "faq",
+        question:
+          "If I have another Unit in my trash, do I have to add it to my hand  even if I don't want to?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "0db0dbe4-a10b-458b-9b5c-9e478b71c615",
+        kind: "faq",
+        question: "Can Screw's effect add a different copy of Screw from my trash to my hand?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "b05cb065-309e-45a3-bbe0-20f4b6ea71aa",
@@ -14168,6 +16455,20 @@ export const rawCards = [
     ],
     selected_printing_id: "3401c7cf-45c5-4fe4-a883-284a9334262d",
     legality: "legal",
+    rulings: [
+      {
+        id: "0d03437c-9149-4ee7-8006-7bb8fd044608",
+        kind: "faq",
+        question:
+          "If neither player has cards in hand when I play Shattered Memories, what happens?",
+        answer:
+          "Each player may still choose to draw 5, and the total number of discarded cards equals 0.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "b3b40c68-705b-41ff-ae10-4132497c4a39",
@@ -14235,6 +16536,19 @@ export const rawCards = [
     ],
     selected_printing_id: "12f0398c-bcc3-4944-af72-ac2ae9f36761",
     legality: "legal",
+    rulings: [
+      {
+        id: "9e6de445-d9cb-42cc-8e94-20c941da7cd9",
+        kind: "faq",
+        question:
+          "When I search the top 3 cards of my deck, can I choose not to reveal any cards and bottom-deck them all even if there's a Gear among them?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3c4e7fcb-933d-4712-9ce7-6052a14f8e94",
@@ -14346,6 +16660,19 @@ export const rawCards = [
     ],
     selected_printing_id: "1c053198-187e-49ab-a9e0-0661b4c3b337",
     legality: "legal",
+    rulings: [
+      {
+        id: "c41cdb0c-25d6-47ec-8c4c-5bb900a14b3e",
+        kind: "faq",
+        question:
+          "If this Unit gains 5+ power while fighting or after I declare an attack or in a fight. Do I draw 1?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "f3ba5ef7-5e91-4956-a887-b88a4b854867",
@@ -14413,6 +16740,29 @@ export const rawCards = [
     ],
     selected_printing_id: "4277845b-1209-46df-8353-8fd36f56148a",
     legality: "legal",
+    rulings: [
+      {
+        id: "9f5fa425-bb0f-4f5f-908c-d56b67d14862",
+        kind: "faq",
+        question: "Does this effect count friendly face-up Legends in the field area?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "2a2b9c9f-1076-493c-aa0f-24a274fbf85a",
+        kind: "faq",
+        question:
+          "If I use this on a friendly Legend in that field area that is now a also a Unit, does the Legend count itself for a +1?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5a5a177c-6ed8-4bd9-8b11-13c2b64414e2",
@@ -14510,6 +16860,28 @@ export const rawCards = [
     ],
     selected_printing_id: "e2e3d98d-0159-4a79-b543-e37264f23118",
     legality: "legal",
+    rulings: [
+      {
+        id: "2110a5e9-a27c-42b5-b3e4-ca464f1d2dd0",
+        kind: "faq",
+        question: "Do I have to reveal the friendly face-down Legends I look at?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "2a1bca2f-eaca-4418-baeb-96aab1b4e476",
+        kind: "faq",
+        question: "Do I have to look at my Legends even if I don't want to?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "1535c19d-54e5-4289-9cb7-15ab429c0092",
@@ -14577,6 +16949,30 @@ export const rawCards = [
     ],
     selected_printing_id: "bc1401d4-5b9b-495a-853e-0a22a11f6f4c",
     legality: "legal",
+    rulings: [
+      {
+        id: "4e9fde1b-cbe0-4025-9a04-c61b13ecde02",
+        kind: "faq",
+        question: "Does this apply to Units stealing Gigs through effects outside of attacking?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "b6be2042-7260-4c72-a7e0-0478c9cda9f9",
+        kind: "faq",
+        question:
+          "If I use Take Control on a rival Unit that would normally steal 1 Gig but is equipped with Gorilla Arms, how many Gigs does it actually steal?",
+        answer:
+          "0 Gigs. Take Control's effect prevents the rival Unit from stealing a Gig, which means Gorilla Arms does not activate.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "39665784-d2f1-43e8-a958-894bac716d71",
@@ -14674,6 +17070,19 @@ export const rawCards = [
     ],
     selected_printing_id: "576f82ff-3c4d-4637-aa91-2773de43bbc8",
     legality: "legal",
+    rulings: [
+      {
+        id: "5ecbb33e-871b-40cd-bb66-6997a692e1a6",
+        kind: "faq",
+        question:
+          "When searching the top card of the deck is the card still currently counted as being in the deck?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5ea00b3a-7e85-4c7d-91ad-90e0cf370c27",
@@ -14741,6 +17150,31 @@ export const rawCards = [
     ],
     selected_printing_id: "a1e2c25e-fb27-458f-984d-df422f879664",
     legality: "legal",
+    rulings: [
+      {
+        id: "8151aa53-358f-4d39-b3f6-58b165127b8e",
+        kind: "faq",
+        question:
+          "If I trash 1 or more Gears from this effect, do I have to add one to my hand even if I don't want to?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "4f2133a0-c3cc-4955-9815-6026ed16735d",
+        kind: "faq",
+        question:
+          "If I choose a Gear with cost equal to the value of a friendly Gig, do I have to play it for free, or can I just add it to my hand?",
+        answer:
+          "You may add it to your hand if you don't want to play it immediately. (But if you play it later, you must pay its cost normally.)",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "1263e2bf-bc15-4550-ad07-b028602d1354",
@@ -14823,6 +17257,20 @@ export const rawCards = [
     ],
     selected_printing_id: "38d14168-c182-4a34-a3b2-1b8380ab6635",
     legality: "legal",
+    rulings: [
+      {
+        id: "91373c98-159f-48e1-a231-045b5fe34631",
+        kind: "faq",
+        question:
+          "When a Unit or Legend equipped with The Relic is defeated, do I move any equipped Gear on it to the bottom-deck, too?",
+        answer:
+          "No. The Unit/Legend moves to the trash first, so any Gear (including The Relic) remains in the trash when you bottom-deck the Unit/Legend.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "2993d637-d44d-4add-8473-26d67c0d1bc0",
@@ -14890,6 +17338,19 @@ export const rawCards = [
     ],
     selected_printing_id: "573a88e9-ac01-4402-8e3d-2420dc4ca949",
     legality: "legal",
+    rulings: [
+      {
+        id: "71b6fcd4-2bac-430b-8589-258ab1aae486",
+        kind: "faq",
+        question:
+          "When searching the top 3 cards of my deck, are the cards still considered part of the deck?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "9a0fd5a3-a00b-425c-a251-755eeab12bfe",
@@ -14972,6 +17433,28 @@ export const rawCards = [
     ],
     selected_printing_id: "15920617-a06f-4302-9dfb-c85d3470c7eb",
     legality: "legal",
+    rulings: [
+      {
+        id: "2a2fadce-85ca-49cd-a9a5-76a77e5cf615",
+        kind: "faq",
+        question: "IfI have the same amount of Street Cred as a Rival, do I get both effects?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "cabf44d5-8f4c-420e-b149-e408e4fcc699",
+        kind: "faq",
+        question: "If I choose both effetcs, can I choose what order I resolve them?",
+        answer: "No, you must resolve the top effect first, then the bottom one.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "2a4a1f1a-9888-403e-90a9-4021c3f52674",
@@ -15038,6 +17521,18 @@ export const rawCards = [
     ],
     selected_printing_id: "0d6c1f36-628b-4631-a96d-2000f6fb054e",
     legality: "legal",
+    rulings: [
+      {
+        id: "b7e62adb-5a98-482e-8ec7-39fc3d176aa1",
+        kind: "faq",
+        question: "Does Trauma Team Operatives' effect change the cost of the card?",
+        answer: "No, only the amount you pay.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "ec857ab0-995e-4c32-84b6-7ba57b2f6137",
@@ -15134,6 +17629,19 @@ export const rawCards = [
     ],
     selected_printing_id: "70a2a18e-05c2-4a49-9236-e33b2c9819a5",
     legality: "legal",
+    rulings: [
+      {
+        id: "cc187a60-e949-4ff2-a8d2-38adf6ff32e9",
+        kind: "faq",
+        question:
+          "Does the Gig I decrease with the effect have to be the min Gig I use for the draw 1 effect condition?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "31e5b986-1e67-439c-81fc-49f8938bd002",
@@ -15201,6 +17709,41 @@ export const rawCards = [
     ],
     selected_printing_id: "28267ce7-17dc-42c4-b8c4-4235a7f3c3df",
     legality: "legal",
+    rulings: [
+      {
+        id: "0c12a0d1-b75a-4269-b1b5-68d5e80acf4b",
+        kind: "faq",
+        question:
+          "If I don't Call a Legend for free when I play this card, can I Call a Legend for free later instead?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "1dcc06cf-2c53-4507-88d8-f5f002e2d656",
+        kind: "faq",
+        question:
+          "If I manage to play Tyger's Whisper on my Rival's turn, can I Call a Legend for free through its [PLAY] effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "92d69f9f-e14d-491e-8589-7f79d56b5320",
+        kind: "faq",
+        question:
+          "If I already Called a Legend this turn, can I call another Legend with Tyger's Whisper's [PLAY] effect?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5b8f8d4f-c62e-4bde-a086-2ce15bd9449d",
@@ -15267,6 +17810,19 @@ export const rawCards = [
     ],
     selected_printing_id: "b21f86a3-cb77-44a3-bf94-4c5e068ac2c8",
     legality: "legal",
+    rulings: [
+      {
+        id: "51314e7a-dea5-4d38-aeeb-52f58dc2a55a",
+        kind: "faq",
+        question:
+          "If I play this when there are no rival Units do I still have to bottom deck a friendly Unit?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "9ed58d18-df78-4689-b28f-77260243c522",
@@ -15334,6 +17890,19 @@ export const rawCards = [
     ],
     selected_printing_id: "c1747b7d-de5c-43eb-a4ed-b632f1861712",
     legality: "legal",
+    rulings: [
+      {
+        id: "9eee394b-2dc7-4750-a5ef-5cb0fc988ee9",
+        kind: "faq",
+        question: "If V steals multiple Gigs in one attack, can V increase each stolen Gig?",
+        answer:
+          "Yes, as this card specifies 'A Gig' so each Gig that gets stolen may be increased by the effect.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "81a8dec7-9541-4020-93e1-7d798a57dcbc",
@@ -15506,6 +18075,39 @@ export const rawCards = [
     ],
     selected_printing_id: "3fc63c58-5954-4744-a5af-047bfc5cb159",
     legality: "legal",
+    rulings: [
+      {
+        id: "1dd664ff-e61f-4b15-8e96-45f0dd31a13a",
+        kind: "faq",
+        question: "When I trash 3, do I need to add a BRAINDANCE Program from the cards I trashed?",
+        answer: "No. You can add any BRAINDANCE Program from your trash.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "ba7d3b2f-96f6-4570-8e03-b7f514512d9a",
+        kind: "faq",
+        question: "If there are fewer than 3 cards in my deck, can I still call V?",
+        answer: "Yes. Trash as many cards as possible, instead.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "15ebfd43-82fa-4e07-a8e5-2432562e32ef",
+        kind: "faq",
+        question:
+          "If V’s [CALL] effect trashes multiple BRAINDANCE Programs,  can I choose more than 1?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5cf0c12a-814e-4801-8171-7fe8c09fad21",
@@ -15573,6 +18175,19 @@ export const rawCards = [
     ],
     selected_printing_id: "67b82386-5cb0-4ae7-b940-ac0d982b773c",
     legality: "legal",
+    rulings: [
+      {
+        id: "fbe43ae0-a606-4391-8183-342a43213365",
+        kind: "faq",
+        question:
+          "If Valentino Guerrera attacks a ready rival Unit with [BLOCKER], can the attacked Unit use its own [BLOCKER] effect?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5d6afeed-1532-4a01-bb40-a011030a7785",
@@ -15640,6 +18255,19 @@ export const rawCards = [
     ],
     selected_printing_id: "dc15db71-3443-4de0-b988-c62601bae5e1",
     legality: "legal",
+    rulings: [
+      {
+        id: "c78f53c3-489c-4a0e-8d73-9ab7a8431419",
+        kind: "faq",
+        question:
+          "If I give a friendly Unit [ADRENALINE] on my Rival's turn, can it make an attack?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "92d23553-8b0d-49cd-8cbe-6f00b3377298",
@@ -15706,6 +18334,30 @@ export const rawCards = [
     ],
     selected_printing_id: "2285cd3a-7010-4ba4-b23a-ba40aba296f9",
     legality: "legal",
+    rulings: [
+      {
+        id: "80577b2c-f335-442e-9476-b2e38d0d03dd",
+        kind: "faq",
+        question:
+          "If I have a way to play a Gear on my rival's turn, do I still get the  -3 €$ discount?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "449ecd14-296c-4431-b445-261265f89c1d",
+        kind: "faq",
+        question:
+          "When I play my first Cyberware each turn, do I have to pay the reduced amount even if I would prefer to pay full price?",
+        answer: "Yes, the discount is mandatory.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "647bb074-197f-4059-bac5-251b47c98287",
@@ -15773,6 +18425,18 @@ export const rawCards = [
     ],
     selected_printing_id: "4eca7fcd-85c1-43d0-8a07-4227312ab0db",
     legality: "legal",
+    rulings: [
+      {
+        id: "602f90aa-bda8-44dc-97b6-f3e23e59918f",
+        kind: "faq",
+        question: "Can I choose not to use Viktor Vektor's [PLAY] effect?",
+        answer: "No, the effect is mandatory. If you can do it, you must.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "99f5e311-8dfd-42a9-abd0-2e50ac68679e",
@@ -15855,6 +18519,28 @@ export const rawCards = [
     ],
     selected_printing_id: "8f7a7d0b-5935-4732-a9ba-76b19467d5a0",
     legality: "legal",
+    rulings: [
+      {
+        id: "ab2739ef-ffc9-493d-b523-b6823ba1b618",
+        kind: "faq",
+        question: "If there are no viable rival Units, do I have to choose the draw effect?",
+        answer: 'No. You can still "choose" the other effect, it just fails.',
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "8bbbcb97-0cb0-41b9-a674-7647d6085163",
+        kind: "faq",
+        question: "Can I use this card's [Spend Icon:] effect on an already min Gig?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "404748b4-f30e-4bf1-8991-5ad449da755a",
@@ -15952,6 +18638,29 @@ export const rawCards = [
     ],
     selected_printing_id: "63821536-cdf5-4347-812a-0bf72d727596",
     legality: "legal",
+    rulings: [
+      {
+        id: "972b7a64-cc96-4e31-8e7f-5718d319914a",
+        kind: "faq",
+        question: "Does this card's effect change the cost of the card?",
+        answer: "No, only the amount you pay.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "abf24590-be16-41a4-9314-05cf9964a483",
+        kind: "faq",
+        question:
+          "Can I choose to play this card for it's full cost if my Rival has 2 or more Gigs?",
+        answer: "No, the discount is mandatory.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "b7a94000-c026-433e-82fa-901bf22db54e",
@@ -16019,6 +18728,30 @@ export const rawCards = [
     ],
     selected_printing_id: "5801d086-7e87-4645-95e2-68239230098d",
     legality: "legal",
+    rulings: [
+      {
+        id: "6a19fd88-c002-4d46-914c-dfe3b13fd27b",
+        kind: "faq",
+        question:
+          "If my Rival plays a Legend to the field after I play Westbrook Netrunner, can the Legend steal a Gig with value less than their power?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "5b17e2c5-e679-4dad-a131-815a6618dd48",
+        kind: "faq",
+        question:
+          "If Westbrook Netrunner is defeated before my next turn, is its effect still active?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3126fa21-ea19-4096-8233-d63797bb9fe4",
@@ -16085,6 +18818,39 @@ export const rawCards = [
     ],
     selected_printing_id: "54f0308f-8fb2-4861-a414-c15ca24426c3",
     legality: "legal",
+    rulings: [
+      {
+        id: "d0d1a60f-cb84-4dbf-b131-c2ee9f7bae22",
+        kind: "faq",
+        question: "Can I play this card if there are no spent Units on the field?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "192c3c09-2160-4818-840a-ae6b1d9cf27f",
+        kind: "faq",
+        question: "Can I choose a friendly Unit with this effect?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "7ea036d0-1f07-4425-9a47-198eec19fef1",
+        kind: "faq",
+        question:
+          "If I play this Program and there is only a spent friendly Unit in the Field areas. Will I have to choose my Unit?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "67b47cff-2237-4765-86fb-9b2b3abecbb1",
@@ -16182,6 +18948,19 @@ export const rawCards = [
     ],
     selected_printing_id: "0944037e-5b14-4332-b345-7935924c2125",
     legality: "legal",
+    rulings: [
+      {
+        id: "7ec76a28-572e-45e7-81b2-53c8f38b8ce3",
+        kind: "faq",
+        question:
+          "When this card steals a Gig do I have to ready another friendly Unit even if I don't want to?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "6cf6456d-d020-4c6c-9041-66d503a01a0a",
@@ -16249,6 +19028,41 @@ export const rawCards = [
     ],
     selected_printing_id: "c057ccc4-bb15-4efd-8115-8d223568134b",
     legality: "legal",
+    rulings: [
+      {
+        id: "16ff9b92-68eb-4215-9e05-eaa8bcd9afa4",
+        kind: "faq",
+        question:
+          "If the Unit played by Yorinobu has [ADRENALINE], can it attack the rival Gig area this turn?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "6e649617-ec75-42db-a1b0-a3c2b1ebee6c",
+        kind: "faq",
+        question:
+          "Does Yorinobu count itself for “the first time an ARASAKA Unit is defeated each turn”?",
+        answer: "Yes.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "d2074e1b-4efa-4cfb-bc7a-0ca063fcf804",
+        kind: "faq",
+        question:
+          "If a friendly Arasaka Unit was defeated previusly during my turn and then play Yorinobu Arasaka. If another friendly Arasaka Unit is then defeated this turn. Will I draw 1 off Yorinobu's effect?",
+        answer: "No.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "1d7f3d02-27b5-4ab8-af99-f8f2e0fd62cf",
@@ -16315,6 +19129,18 @@ export const rawCards = [
     ],
     selected_printing_id: "8b8bcfcd-37c8-4bca-8c25-17a3b3363349",
     legality: "legal",
+    rulings: [
+      {
+        id: "fc46987c-3869-4d97-b73b-686e1e08120e",
+        kind: "faq",
+        question: "Does this card's effect change the cost of the card?",
+        answer: "No, only the amount you pay.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "b88d436f-1ec7-4f62-9dbc-c5f5e0d0a0df",
@@ -16412,6 +19238,53 @@ export const rawCards = [
     ],
     selected_printing_id: "79cdc9a5-d94d-4df4-9f88-aa02fb0357b3",
     legality: "legal",
+    rulings: [
+      {
+        id: "a4b85193-1647-4001-a076-846f54d54481",
+        kind: "faq",
+        question:
+          "When I spend a Unit equipped with Zetatech Faceplate to declare an attack, do I get Zetatech Faceplate's effect before or after I resolve the attack?",
+        answer:
+          "Before. Adjust the Gig for Zetatech Faceplate's effect before moving on to your Rival's react step.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "9f87591e-514c-44ee-bba4-515fc488fb77",
+        kind: "faq",
+        question:
+          "If I spend a Unit equipped with Zetatech Faceplate to declare an attack, and the Unit or Legend has an [ATTACK] effect, do I get Zetatech Faceplacte's effect before or after the [ATTACK] effect?",
+        answer: "You can choose the order you resolve these effects.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "9b281489-5883-47ca-80a9-fa6707655b12",
+        kind: "faq",
+        question:
+          "If I spend a Unit or Legend equipped with Zetatech Faceplate to activate the Unit/Legend's [Spend Icon:] effect, do I get Zetatech Faceplate's effect before or after the activated effect?",
+        answer: "After. Resolve the activated [Spend Icon:] effect first.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "62c60c04-72ec-4231-9ea7-f5b8048eb4d8",
+        kind: "faq",
+        question:
+          "If I spend a Legend equipped with Zetatech Faceplate to pay a card's cost, do I get Zetatech Faceplate's effect before or after I play the card?",
+        answer: "After. Play the card first, then adjust the Gig.",
+        language_code: "en",
+        card_printing_id: null,
+        source: null,
+        ruling_date: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
 ] satisfies RawCardRecord[];
 
@@ -17642,6 +20515,18 @@ export const cards = [
     type: "legend",
     cost: 5,
     power: 7,
+    rulings: [
+      {
+        id: "9ad7e1cf-9965-4ba0-8503-ac17c897ffbd",
+        kind: "faq",
+        question: "Can I use this Legend's [Blocker] in the Legend area?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "08e6a687-56b7-4ac1-982f-8a8d6d0c0bc5",
@@ -17701,6 +20586,19 @@ export const cards = [
     type: "unit",
     cost: 4,
     power: 4,
+    rulings: [
+      {
+        id: "0c5b038a-705c-44ba-bff6-95403c35f032",
+        kind: "faq",
+        question:
+          "If all my friendly Legends become face-up after I declare an attack, does Goro Takemura's effect trigger?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "066641c5-acc2-45f4-ba67-16a8d20cce73",
@@ -17776,6 +20674,28 @@ export const cards = [
     type: "unit",
     cost: 7,
     power: 9,
+    rulings: [
+      {
+        id: "a6bfa127-ff5b-4aed-a261-fac2be6a71c5",
+        kind: "faq",
+        question: "Can I still play this card if I don't have more Street Cred than my Rival?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "1528eec2-100f-4436-9874-d45f3589e9af",
+        kind: "faq",
+        question: "Do I have to defeat a rival Unit with power 5 or less, even if I don't want to?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "cf50fa24-bf94-4c35-bcc1-c6d56a6f68d8",
@@ -17860,6 +20780,18 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "18318e94-6979-4623-9cf5-fee73924d728",
+        kind: "faq",
+        question: "Do my Friendly Arasaka Units have +1 power while in the fight or steal step?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "31fa5825-946a-4ca2-afa8-8f07b9898d6a",
@@ -17944,6 +20876,19 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "61ad63b3-47d9-48ee-a3f6-4c2842b11c66",
+        kind: "faq",
+        question:
+          "If I've already attacked with an ARASAKA Unit this turn before Yorinobu Arasaka is face-up, then flip Yorinobu, can I trigger Yorinobu's effect that turn by attacking with another ARASAKA Unit?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "4acee220-f0ae-4bdc-85c9-f8e70ba99673",
@@ -19186,6 +22131,19 @@ export const cards = [
     type: "unit",
     cost: 3,
     power: 4,
+    rulings: [
+      {
+        id: "ac95df60-d8dd-44bc-b04f-1246a08a8540",
+        kind: "faq",
+        question:
+          "With the [Play] and [Attack] effect. If I choose to adjust up to 0. Does that still count as adjusting a Gig?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "40502c1f-78a2-426a-a706-c60ebd4b31e3",
@@ -19268,6 +22226,40 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "15b27a52-f1e8-48fb-9c59-ac9d2d4c6824",
+        kind: "faq",
+        question:
+          "If I've already played a Blue Unit or Gear this turn before Jackie Welles is face-up, then flip Jackie, can I trigger Jackie's effect that turn by playing another Blue Gear or Unit?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "763356ba-0750-492a-86d2-2b7b75325208",
+        kind: "faq",
+        question:
+          "Does playing a Legend from the Legends area to the field, trigger Jackie Welles's effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "c58d792f-af25-4060-b261-dc7369c18aa2",
+        kind: "faq",
+        question: "If I choose an already min Gig for Jackie Welles's effect, can I draw 1?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "619429c9-132f-496e-8aa0-414e850c87ec",
@@ -19324,6 +22316,29 @@ export const cards = [
     type: "unit",
     cost: 5,
     power: 7,
+    rulings: [
+      {
+        id: "b0b79c55-4167-448c-8717-b9f9f60b7ea6",
+        kind: "faq",
+        question: "Am I able to sell this card even if it is a Unit?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "4ab27f37-6192-43a3-97eb-cf81060bb6d3",
+        kind: "faq",
+        question:
+          "If I have lower Street Cred when I attack with MT0D12 Flathead, but triggered effects or reactions make my Rival's Street Cred lower than mine, can my Rival then block the MT0D12 Flathead's attack?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "627186b3-cffb-4228-aed4-b3ee35235fb6",
@@ -19406,6 +22421,18 @@ export const cards = [
     type: "legend",
     cost: 5,
     power: 8,
+    rulings: [
+      {
+        id: "22eadcab-b88a-45cd-9e07-ef51084da8cf",
+        kind: "faq",
+        question: "Can I play this Legend to the Field area without using the [GO SOLO] keyword?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "f090dc44-d7f0-4aec-a19e-9213155a6611",
@@ -19488,6 +22515,19 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "03d7a874-2d53-4fc9-9f7d-905cebcedcc7",
+        kind: "faq",
+        question:
+          "When I search the top 5 cards of my deck, can I choose not to reveal any cards and bottom-deck them all even if there's a viable Gear among them?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "e48c9d39-ef27-4b8f-8690-d75c3a4807b0",
@@ -19535,6 +22575,18 @@ export const cards = [
     type: "unit",
     cost: 4,
     power: 6,
+    rulings: [
+      {
+        id: "ed0b637f-567a-418c-a759-ab8deb631ce4",
+        kind: "faq",
+        question: "If a friendly Unit steals two d6s simultaneously, can I increase two Gigs?",
+        answer: "Yes, the effect triggers for each stolen d6.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "eff41c12-b872-4101-9779-00e691532893",
@@ -19608,6 +22660,53 @@ export const cards = [
     type: "legend",
     cost: 9,
     power: 9,
+    rulings: [
+      {
+        id: "4dc5a7cb-cb53-4a44-bcd4-33e373dafbd3",
+        kind: "faq",
+        question:
+          "Does Adam Smasher’s [PLAY] effect trigger when he is called or flipped face-up as a Legend?",
+        answer:
+          "No, the [PLAY] effect only activates when you play Adam Smasher to the field area.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "439b43af-068f-4296-923b-fd7a55ec73a9",
+        kind: "faq",
+        question: "Does Adam Smasher’s [PLAY] effect trigger when he Goes Solo?",
+        answer:
+          "Yes. [GO SOLO] plays Adam Smasher to the field area and triggers the [PLAY] effect.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "89104f80-8329-4ad9-85ff-cb23f3320d53",
+        kind: "faq",
+        question:
+          "If Adam Smasher is removed from the field area after being played to the field area is Adam Smasher removed from the game instead of being placed in the designated area?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "321ab46b-ddf1-4110-9078-9e691a8267e6",
+        kind: "faq",
+        question:
+          "If Adam Smasher’s cost is reduced does that also reduce cost to activate [GO SOLO]?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "a2ad9c2f-bfb7-473b-9408-91af142d269d",
@@ -19688,6 +22787,19 @@ export const cards = [
     type: "unit",
     cost: 9,
     power: 15,
+    rulings: [
+      {
+        id: "a40401c6-6467-486a-9e91-a0e95a95b210",
+        kind: "faq",
+        question:
+          "If I manage to play Adam Smasher on my Rival's turn. Does it still get the [PLAY] effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "6a5a1e34-fdd3-42de-b6bd-4b2553d6df39",
@@ -19736,6 +22848,19 @@ export const cards = [
     type: "gear",
     cost: 2,
     power: 3,
+    rulings: [
+      {
+        id: "fc82d674-d5c0-42f8-9fd9-a47a71be9ec7",
+        kind: "faq",
+        question:
+          "If my Rival controls exactly 2 more Gigs than me when I play Adrenline Converter but I steal a Gig before I attack with the equipped Unit,  does it still have [ADRENALINE]?",
+        answer: "No, the Unit only has [ADRENALINE] while the conditions are met.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "d039e4b3-9b83-40da-8d8f-b1dfb1f172f1",
@@ -19825,6 +22950,19 @@ export const cards = [
     type: "program",
     cost: 1,
     power: null,
+    rulings: [
+      {
+        id: "e81b51a1-5dd8-4a2b-9bb8-28b93b227bee",
+        kind: "faq",
+        question:
+          "If I choose not to adjust a Gig, can I still draw 1 if I control 2 or more Gigs with different values?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "1f969c27-dddb-4971-9ab5-bd728c3e3e52",
@@ -19872,6 +23010,39 @@ export const cards = [
     type: "program",
     cost: 1,
     power: null,
+    rulings: [
+      {
+        id: "6f7d6a80-3536-4417-bbb8-c27485f07557",
+        kind: "faq",
+        question:
+          "If All is Lost trashes one or more Units, do I have to add them to my hand  even if I don't want to?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "086fb943-7bfb-4fee-8645-01f3cf132232",
+        kind: "faq",
+        question: "If All is Lost's effect trashes no Units, can I still add a Unit to my hand?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "8227301d-f845-4e94-b4ff-556fd7c9e5d0",
+        kind: "faq",
+        question: "If I have fewer than 3 cards in my deck, can I still play All is Lost?",
+        answer: "Yes. Trash as many cards as possible, instead.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "858e95f5-2efb-460e-b890-e8a5140e11c9",
@@ -19929,6 +23100,18 @@ export const cards = [
     type: "unit",
     cost: 7,
     power: 8,
+    rulings: [
+      {
+        id: "9c300537-ed1f-4196-a9c7-076dc5fd4603",
+        kind: "faq",
+        question: "Do both effects work on either players turn?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "12475e77-0e16-420e-a935-65eb74290de8",
@@ -20010,6 +23193,40 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "f6e95797-6d5e-4a78-b1ab-dbc01b1821f4",
+        kind: "faq",
+        question: "Does Alt Cunningham's first effect apply to Programs played from Trash, too?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "c2b026c3-6e44-4b3e-97db-abef28faa220",
+        kind: "faq",
+        question:
+          "If I ready Alt Cunningham after using her first effect and use it again before playing a Program, does the discount stack?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "dd4138dc-c8ee-4d08-899a-d3f69fb00fc7",
+        kind: "faq",
+        question:
+          "I activated Alt Cunningham's first effect with 2 friendly min Gigs, but before I play my next Program I acquire a 3rd min Gig. Does my next Program play for -3 €$ instead of -2€$?",
+        answer: "No, the reduction amount is determined when you activate the effect.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "e8aa7757-e5e3-4137-8970-4fa546b9bed9",
@@ -20105,6 +23322,42 @@ export const cards = [
     type: "program",
     cost: 3,
     power: null,
+    rulings: [
+      {
+        id: "f7e7ce23-ddae-4f92-a770-e2e7a0fe368e",
+        kind: "faq",
+        question:
+          "When I play Appetite for Destruction, do I choose a friendly Unit, or can any friendly Unit satisfy the effect later this turn?",
+        answer:
+          "You must choose a friendly Unit when you play this card. The condition will only be met when that Unit wins a fight.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "dd350a6e-8ee0-4c1f-9418-2d22a5160c40",
+        kind: "faq",
+        question:
+          "If a Unit steals a Gig because of Appetite for Destruction, does that count as that Unit stealing a Gig for effects that trigger when that Unit steals a Gig?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "82802953-08ff-450a-8630-517546b3091a",
+        kind: "faq",
+        question:
+          "If the friendly Unit cannot defeat the rival Unit but still wins the fight, does it still steal a Gig?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5233bacc-f39f-4383-8e25-57ef634735ca",
@@ -20171,6 +23424,19 @@ export const cards = [
     type: "gear",
     cost: 2,
     power: 2,
+    rulings: [
+      {
+        id: "d3587386-2389-4745-b6e9-8953bc790bfe",
+        kind: "faq",
+        question:
+          "If the equipped Unit or Legend is spent as part of an attack, can Arasaka Emergency Radioport Call a Legend before that Unit’s [ATTACK] effect resolves?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "ce45cb9d-430a-4ccf-bb4b-acf0b76120e0",
@@ -20219,6 +23485,18 @@ export const cards = [
     type: "unit",
     cost: 3,
     power: 2,
+    rulings: [
+      {
+        id: "1dc1d892-bdbf-46a6-a217-ab452b6c0c63",
+        kind: "faq",
+        question: "Can I use [BLOCKER] even if my Rival has no cards in their hand?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3eb0f8bf-afb9-42a7-a4fa-710e2eb5c89c",
@@ -20267,6 +23545,19 @@ export const cards = [
     type: "program",
     cost: 3,
     power: null,
+    rulings: [
+      {
+        id: "b3bcae3f-acb3-4891-a985-4d69fea65fc7",
+        kind: "faq",
+        question:
+          "If a Rival controls at least 2 more Gigs than me, can I still choose to defeat only one Unit?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "84561b4c-67f0-4b2e-80ac-6b9c0a2396e3",
@@ -20331,6 +23622,40 @@ export const cards = [
     type: "program",
     cost: 5,
     power: null,
+    rulings: [
+      {
+        id: "63c9a5f8-27f2-485d-a779-79587ac49d91",
+        kind: "faq",
+        question: "Do I reveal or get to look at the card I am selling?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "71cfd404-4021-41e1-bebe-a468e11f0a3d",
+        kind: "faq",
+        question:
+          "If the top card of my deck doesn't have a sell tag, do I still sell it for this effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "68737f4d-0d40-42b9-b490-30d02b06544f",
+        kind: "faq",
+        question:
+          "If I already sold a card during my main phase, can I still sell a card from Bootleg Sapphire's effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "0273f402-94fb-4b59-90ec-a1057c2d1284",
@@ -20380,6 +23705,29 @@ export const cards = [
     type: "unit",
     cost: 5,
     power: 5,
+    rulings: [
+      {
+        id: "31c66530-6c62-4ba8-a521-e34ec9be6b01",
+        kind: "faq",
+        question: "Do I have to defeat a rival Unit with cost 2 or less even if I don't want to?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "03bc1552-a6ba-410b-8c26-4fbc895a57d5",
+        kind: "faq",
+        question:
+          "If the second card my Rival discards also has a cost equal to a friendly Gig, does my rival have to discard again?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "81fb66ee-b054-4f78-b0c9-7d2c9ff53435",
@@ -20428,6 +23776,19 @@ export const cards = [
     type: "program",
     cost: 6,
     power: null,
+    rulings: [
+      {
+        id: "31ed50ec-6a68-4eff-9f47-fc232e4e90e6",
+        kind: "faq",
+        question:
+          "When I play this Program for less because of it's effect does that change the cost of the card too?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3c4cf61f-c469-4ad6-a209-67e715f9d45b",
@@ -20494,6 +23855,61 @@ export const cards = [
     type: "unit",
     cost: 5,
     power: 6,
+    rulings: [
+      {
+        id: "42c38a1d-103c-4c9a-adf0-e199853a16e9",
+        kind: "faq",
+        question: "Does Chrome Fang’s effect apply to all rival Units?",
+        answer: "Yes. Including any new rival Units played after Chrome Fang.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "eb37dc38-f33d-49c8-aade-383f879945c8",
+        kind: "faq",
+        question:
+          "Does Chrome Fang’s effect continue to apply if Chrome Fang leaves the field before your next turn?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "28a0d1ab-e3a1-4dd4-a952-b0ad4403f831",
+        kind: "faq",
+        question: "If my rival Unit has power 6 can it steal a friendly Gig with value 6?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "18a0c359-400b-43de-9055-c7fc79baf415",
+        kind: "faq",
+        question:
+          "What happens if a rival Unit attacks my Gig area while Chrome Fang's effect is active, but all friendly Gig values are higher than its power?",
+        answer: "The attack still happens, but the rival Unit does not steal any Gigs.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "fa5d28f5-57df-451f-8246-cd8949f324ad",
+        kind: "faq",
+        question:
+          "If an effect says a Unit steals an additional Gig (like Gorilla Arms), does Chrome Fang's effect apply?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "19f34c9b-a24a-43be-bd9f-62c37435e994",
@@ -20542,6 +23958,40 @@ export const cards = [
     type: "program",
     cost: 3,
     power: null,
+    rulings: [
+      {
+        id: "9caf46ed-3bf8-4dd7-9110-7d9e147e821e",
+        kind: "faq",
+        question:
+          "If I the chosen rival Unit that can't attack until my next turn is given the effect to attack. Can it?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "5139f71f-b1f8-4819-8a83-51880067dbea",
+        kind: "faq",
+        question: "What is a min Gig?",
+        answer: "A Gig showing it's 1 value.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "1dc8b307-ebd1-43e8-9d14-d11a7893c1d1",
+        kind: "faq",
+        question:
+          "When resolving this effect and do not choose to Call a Legend for free. Can I call a Legend for free later in the turn from this effect?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "71652e73-984a-4630-be47-af947f87d5c1",
@@ -20632,6 +24082,18 @@ export const cards = [
     type: "unit",
     cost: 2,
     power: 2,
+    rulings: [
+      {
+        id: "030e8902-1692-4ba3-86de-56b83c036897",
+        kind: "faq",
+        question: "If this Unit gains [ADRENALINE] the turn it's played, can it attack?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "71fb410b-b56e-42b2-a793-4c49e935b9f1",
@@ -20705,6 +24167,28 @@ export const cards = [
     type: "program",
     cost: 2,
     power: null,
+    rulings: [
+      {
+        id: "4496adf7-0641-4c06-a1f7-6eb120c075bf",
+        kind: "faq",
+        question: "Can I play this card without a rival Unit on the field?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "00513475-b873-4eec-b582-c8bb969fe1e5",
+        kind: "faq",
+        question: "Can I choose a Unit that's already spent for this card's effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "87e001dd-8604-4523-af6e-d768118ccf98",
@@ -20769,6 +24253,41 @@ export const cards = [
     type: "program",
     cost: 3,
     power: null,
+    rulings: [
+      {
+        id: "b59cc194-67ee-4b3e-9e4e-6858131f2903",
+        kind: "faq",
+        question: "Can I choose an equipped rival Unit with this effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "0f661d5c-bfc7-4c2a-8174-b4f98e7d8b61",
+        kind: "faq",
+        question:
+          "If I play this Program [QUICK] as a reaction and choose the attacking rival Unit for the effect, what happens?",
+        answer:
+          "The rival Unit gets the power boost for the ensuing fight and is defeated at the end of the turn.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "0a4c62a0-f5aa-4b7e-9341-db86caf28c81",
+        kind: "faq",
+        question:
+          "If a Unit  under the effect of Cyberpsychosis attacks but does not make it to the Fight or Steal step, is it still defeated at the end of the turn?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "1d8f611c-dd08-48d1-82eb-451d56dcf651",
@@ -20817,6 +24336,30 @@ export const cards = [
     type: "gear",
     cost: 3,
     power: 1,
+    rulings: [
+      {
+        id: "307b211e-ebe4-46db-9baa-e652918576fe",
+        kind: "faq",
+        question:
+          "If a Unit or Legend with two or more Deadman Transmitters is defeated, do I have to defeat both Deadman Transmitters?",
+        answer: "No, choose one of them.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "4b85693e-f6d3-4895-8606-e9917f6c706a",
+        kind: "faq",
+        question:
+          "If Deadman Transmitter protects a Unit from being defeated in a fight did that Unit still lose the fight?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "a1e60653-5e28-49ee-9798-d16520b553c3",
@@ -20905,6 +24448,19 @@ export const cards = [
     type: "unit",
     cost: 4,
     power: 4,
+    rulings: [
+      {
+        id: "59552a2f-6661-4130-95cd-6f119a95f6b6",
+        kind: "faq",
+        question:
+          "If this Unit steals a Gig but is no longer in the field area at the end of the turn, do I still ready 1 Eddie?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3bb1f191-927e-45b3-86ca-cb30baabfe0d",
@@ -20953,6 +24509,18 @@ export const cards = [
     type: "unit",
     cost: 3,
     power: 0,
+    rulings: [
+      {
+        id: "cdc01e4e-6e36-43a8-a193-90564776528d",
+        kind: "faq",
+        question: "Do I have to Draw 2 with this card's [PLAY] effect even if I don't want to?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "2697ed9d-72fc-4658-9c94-977668911a67",
@@ -21000,6 +24568,28 @@ export const cards = [
     type: "program",
     cost: 1,
     power: null,
+    rulings: [
+      {
+        id: "2ae2b855-aecf-4b12-9858-234649764cf1",
+        kind: "faq",
+        question: "Can Detonate defeat Gear equipped to a face-up Legend?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "c459acd1-042d-47ae-9278-3cdd05d98283",
+        kind: "faq",
+        question: "Can I play Detonate if there are no rival Gears in play?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "91df478a-91d5-4d42-a624-4c20ec61121c",
@@ -21089,6 +24679,41 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "47feaf18-6dff-4cf7-b24f-ba01d2a92514",
+        kind: "faq",
+        question:
+          "If I don't have a friendly Unit on the field when I call Dexter Deshawn, do I have to choose Draw 1?",
+        answer: "No, you can still choose the other effect, it just fails.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "f868fe18-6a35-457a-9ed5-004b48956db9",
+        kind: "faq",
+        question:
+          "If I call Dexter Deshawn as a reaction, can I play a [QUICK] card that I drew off of Dexter's effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "2a8619f2-2d2b-4b22-a190-623617b0b515",
+        kind: "faq",
+        question:
+          "Can Dexter Deshawn ’s [Spend Icon:] effect increase either a friendly Gig or a rival Gig?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "17a80b46-c583-4867-97ac-7855494363a9",
@@ -21152,6 +24777,28 @@ export const cards = [
     type: "program",
     cost: 7,
     power: null,
+    rulings: [
+      {
+        id: "fc26a153-0d04-43ec-8f94-beaa97ce3a93",
+        kind: "faq",
+        question: "If all rival Units are already spent, can I still use this card?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "1715a8ca-857b-4dcc-9c1c-4782ccd13c04",
+        kind: "faq",
+        question: "Can I defeat a spent Unit that I did not spend with this effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3b3f941d-aa58-4337-99dc-4af3fd3ccd47",
@@ -21217,6 +24864,29 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "94144c1c-7f0c-4bb0-898f-a9edaa1d0cd9",
+        kind: "faq",
+        question: "Can Dum Dum’s [QUICK] effect choose a friendly Unit with no equipped Gear?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "bfb1adc4-7e30-4d4c-8219-c62ee23df515",
+        kind: "faq",
+        question:
+          "If the chosen Unit gains or loses Gear after Dum Dum’s [QUICK] effect resolves, does the power bonus change?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "df06b6e2-1675-48a3-bfe2-d0bc4c5f35eb",
@@ -21307,6 +24977,30 @@ export const cards = [
     type: "gear",
     cost: 2,
     power: 2,
+    rulings: [
+      {
+        id: "5f960b7a-2008-4b2c-bbfd-ec852848651f",
+        kind: "faq",
+        question:
+          'If I choose not to decrease a Gig, can I still ready 2 Eddies at the end of my turn if the equipped Unit is named "V"?',
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "881c635b-268e-4855-8617-a84587951a8f",
+        kind: "faq",
+        question:
+          'If this Gear is attached to a Unit named "V" and the Unit attacks but is defeated before the end of the turn, can I still ready 2 Eddies?',
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "c688ca08-b3b7-441d-b161-78b9a63a8a9e",
@@ -21356,6 +25050,41 @@ export const cards = [
     type: "unit",
     cost: 5,
     power: 4,
+    rulings: [
+      {
+        id: "2984e648-802f-48da-9ecd-0e0c0434f9e3",
+        kind: "faq",
+        question:
+          "If I control multiple friendly max Gigs, can I choose which one El Sombrerón's effect uses?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "71386fef-475e-4a5f-9a81-084f6a32f02b",
+        kind: "faq",
+        question:
+          "If the value of my chosen friendly max Gig changes later in the turn, does El Sombrerón’s gained power change too?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "a51b1f00-a914-4586-8baf-9926b76fcbec",
+        kind: "faq",
+        question:
+          "If I do not control a friendly max Gig can I still pay 2 €$ for El Sombrerón’s effect?",
+        answer: "Yes, but El Sombrerón won't gain any power from it.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "917e6515-ed23-4a1d-baaa-474d879bdabc",
@@ -21502,6 +25231,32 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "6f60b8fc-5126-488c-9aeb-5ee39226a5f0",
+        kind: "faq",
+        question:
+          "If a rival Unit chosen by Evenlyn Parker's second effect makes an attack and then readies in the same turn, is it forced to make another attack?",
+        answer:
+          "Yes; as long as the chosen Unit can attack, your Rival cannot end their turn until it attacks.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "99f345a2-35ad-4d4e-8f7b-c6da08c50b4a",
+        kind: "faq",
+        question:
+          "If I have a Unit chosen by Evelyn Parker's second effect, do I have to attack with it as soon as possible, or can I play other cards first?",
+        answer:
+          "You may do other actions but cannot end your turn if the Unit chosen by Evelyn Parker can still legally declare an attack.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "a3cc3d15-8e6a-4684-b2ca-c843b4a854e2",
@@ -21576,6 +25331,18 @@ export const cards = [
     type: "unit",
     cost: 2,
     power: 0,
+    rulings: [
+      {
+        id: "21199b77-ad4d-42ac-834c-416bf3d458b5",
+        kind: "faq",
+        question: "Is Evelyn Parker's [ATTACK] effect mandatory?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "4a8dfe3f-980d-4370-ac10-6bd989042cdf",
@@ -21657,6 +25424,18 @@ export const cards = [
     type: "unit",
     cost: 3,
     power: 2,
+    rulings: [
+      {
+        id: "e83fc5f6-3649-4162-9415-f1ff3fde56ed",
+        kind: "faq",
+        question: "Does 0 count as an even number?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "0cd37c43-e722-48eb-91ef-4c1bd1645215",
@@ -21745,6 +25524,18 @@ export const cards = [
     type: "program",
     cost: 1,
     power: null,
+    rulings: [
+      {
+        id: "2c3ac370-03ca-4a5c-9cf3-a61e9789b515",
+        kind: "faq",
+        question: "Can you play this with no rival Units in play?",
+        answer: "Yes",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "c5d2fed1-1470-4ac5-9f84-bf66705901ce",
@@ -21793,6 +25584,19 @@ export const cards = [
     type: "program",
     cost: 2,
     power: null,
+    rulings: [
+      {
+        id: "7cc65141-2888-4258-9e95-b77b60f43754",
+        kind: "faq",
+        question:
+          "When I reveal the top 2 cards of my deck, are they still considered part of my deck?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "1f71ec32-3c11-466b-bcdd-a8a3009ea8ac",
@@ -21841,6 +25645,18 @@ export const cards = [
     type: "unit",
     cost: 4,
     power: 3,
+    rulings: [
+      {
+        id: "db8d72b0-4892-45a9-82fb-9d7cf1df3791",
+        kind: "faq",
+        question: "If my Rival does not have a Unit, may I still defeat a friendly Gear?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "6dd172b1-2341-473f-8837-a9efe6a75701",
@@ -21889,6 +25705,19 @@ export const cards = [
     type: "gear",
     cost: 4,
     power: 3,
+    rulings: [
+      {
+        id: "978f0a21-058a-4676-8366-ce220a6f6aa4",
+        kind: "faq",
+        question:
+          "Who steals the Gig with this effect; the player, or the Unit equipped with Gorilla arms?",
+        answer: "The Unit.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "424c9c0f-cc01-40ec-8404-75957985c7f8",
@@ -21954,6 +25783,50 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "c40c2c04-c8eb-453b-8a04-2cb0cb4fd1a4",
+        kind: "faq",
+        question:
+          "If I manage to play a Unit during my React step and I give it [BLOCKER] from Goro Takemura, can that friendly Unit use [BLOCKER] immediately?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "46be1b50-5788-41f0-92de-af2fb2f670be",
+        kind: "faq",
+        question: "When a friendly Unit uses [BLOCKER] am I forced to discard 1?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "3e703f01-25ac-4255-ae2f-b3c0fb7a816c",
+        kind: "faq",
+        question: "If I have no cards in deck may I still discard 1?",
+        answer: "Yes, but you must draw 1 after, so you will lose the game.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "048e77d0-3873-4e27-a4ee-b419fc503d3d",
+        kind: "faq",
+        question:
+          "Does a friendly Unit using [BLOCKER] trigger Goro Takemura's second effect even if it's not a result of first effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "27c01b18-2a9c-4d66-ad21-b75869fba666",
@@ -22002,6 +25875,29 @@ export const cards = [
     type: "program",
     cost: 4,
     power: null,
+    rulings: [
+      {
+        id: "2a901389-f319-4b65-ae4b-00483f4e80f5",
+        kind: "faq",
+        question: "Can I choose the order of the two effects?",
+        answer: "No. You must resolve the effect from top to bottom.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "e4e22bef-839b-49d6-9bed-8a34f59b95ce",
+        kind: "faq",
+        question:
+          "When my Rival chooses the effect for Gunpoint Diplomacy, do they also choose the friendly Unit?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "d2a9bcb0-a5e1-4413-8140-8b808258a753",
@@ -22049,6 +25945,19 @@ export const cards = [
     type: "unit",
     cost: 4,
     power: 3,
+    rulings: [
+      {
+        id: "d7f37678-fda8-4c98-b027-af22cc68b7c6",
+        kind: "faq",
+        question:
+          "After I trash 3 with this effect do I have to add a Program to hand from those 3?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "380b5e52-2651-4cde-8222-1db2ae6469e2",
@@ -22106,6 +26015,38 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "b9dffd87-5e0a-45a6-92c3-dae20f68df5f",
+        kind: "faq",
+        question: "If either myself or my Rival controls 0 Gigs, can I swap?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "1b9a65e5-250a-446e-971f-867ab7f688fb",
+        kind: "faq",
+        question: "Is swapping Gigs considered stealing?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "4b611db2-a369-4b7f-b074-377613c6cada",
+        kind: "faq",
+        question: "When I activate this effect, do I get to choose the rival Gig too?",
+        answer: "Yes, you choose both Gigs involved in the swap.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "2902da45-ec28-4971-a731-ea1eda4c6ba1",
@@ -22228,6 +26169,18 @@ export const cards = [
     type: "unit",
     cost: 6,
     power: 8,
+    rulings: [
+      {
+        id: "89eca244-872c-4c28-bf2c-7dbf294e0e6c",
+        kind: "faq",
+        question: "May I defeat a Gear if I don't have any Gigs that match cost with value?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "a708461f-1f91-4789-bb0d-96e3de5fcf44",
@@ -22317,6 +26270,29 @@ export const cards = [
     type: "program",
     cost: 1,
     power: null,
+    rulings: [
+      {
+        id: "ad3b75f8-1401-485f-891d-7e54fdbfe30f",
+        kind: "faq",
+        question: "Can I choose to increase a Gig by 0?",
+        answer:
+          'Yes, but it does not count as "adjusting" a Gig for effects triggered by "adjusting a Gig."',
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "2f4ce47f-25ba-4321-a673-809fc8f75bd7",
+        kind: "faq",
+        question: "Can I adjust a rival Gig?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "b0453570-7ed8-4031-9562-cb73d7a979e5",
@@ -22364,6 +26340,19 @@ export const cards = [
     type: "unit",
     cost: 2,
     power: 2,
+    rulings: [
+      {
+        id: "39c1b729-a65b-4cf6-81dd-150719aa38b3",
+        kind: "faq",
+        question:
+          "If this Unit gains [ADRENALINE] the turn it's played , can it attack even if I haven't played a Program yet?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "04a82ebf-eba1-4888-a95d-f01b9bbd0167",
@@ -22445,6 +26434,50 @@ export const cards = [
     type: "legend",
     cost: 6,
     power: 8,
+    rulings: [
+      {
+        id: "739fcd51-c571-4770-9ceb-dc6d7c785842",
+        kind: "faq",
+        question:
+          "When I defeat Jackie Welles instead of a friendly Unit, does the Unit's [DEFEATED] effect trigger?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "659dec0e-519c-445d-966e-6e27e4ad5c1f",
+        kind: "faq",
+        question: "Can I use this effect if Jackie Welles is in the Field area as a Unit?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "2d22697d-50af-4372-bffb-29cae81f45cc",
+        kind: "faq",
+        question: "Can I use this effect if Jackie Welles is in the Legends area?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "ab195483-70b3-4bdf-9d42-488148b666ec",
+        kind: "faq",
+        question:
+          "If Jackie Welles would be defeated while it's a Unit, could I use Jackie Welle's effect to defeat himself instead of being defeated the other way?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "b665e103-456b-4c51-9551-95b0bc87212a",
@@ -22510,6 +26543,29 @@ export const cards = [
     type: "unit",
     cost: 6,
     power: 8,
+    rulings: [
+      {
+        id: "801aa9c8-c507-44e9-89c1-3477c1f8a2b1",
+        kind: "faq",
+        question: "If Gig becomes odd after Jackie attacks, does Jackie lose the +2 power?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "c61101be-05ed-46e3-b027-d05f5981632f",
+        kind: "faq",
+        question:
+          "If I acquire another friendly even Gig after Jackie Welles attacks, does Jackie Welles get another +2 power this turn?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "e8b0432c-4d2d-4464-9a00-f3626917a7f0",
@@ -22558,6 +26614,18 @@ export const cards = [
     type: "unit",
     cost: 2,
     power: 0,
+    rulings: [
+      {
+        id: "cce96f5d-9d4d-4a30-b6ba-5e49c53280dc",
+        kind: "faq",
+        question: "Can Japantown Jonin choose itself with its own [PLAY] effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "9a4002b0-0f0b-4c9a-a198-691d058b6dcc",
@@ -22615,6 +26683,53 @@ export const cards = [
     type: "unit",
     cost: 6,
     power: 8,
+    rulings: [
+      {
+        id: "3cfb42c3-4d87-44db-9b06-7f48c24b912f",
+        kind: "faq",
+        question: 'What "This Unit wins all fights against CORPO Units" mean?',
+        answer:
+          "When Johnny Silvlerhand attacks (or is attacked by) a CORPO Unit,  he always wins the fight, regardless of power. So, Johnny Silverhand defeats the opposing CORPO Unit (as long as he has power 1+).",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "e512816e-a856-491a-896b-fde16d661ea7",
+        kind: "faq",
+        question:
+          "If Johnny wins a fight during a Rival’s turn, does he still ready from his effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "d33a4200-b3f8-48ee-8a83-35c113ee45da",
+        kind: "faq",
+        question:
+          "If Johnny wins his first fight this turn but is already ready, can I use the effect on his next attack instead?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "69794180-6e80-4a4c-b0dc-df8c290bdc19",
+        kind: "faq",
+        question:
+          "If Johnny has power 0 when he fights a CORPO Unit., does he still defeat the opposing rival Unit?",
+        answer:
+          "No. Johnny Silverhand still wins the fight, but Units at power 0 can't defeat other Units in a fight, so neither Unit is defeated.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "56947a14-0b1e-4c3d-89e0-17839bcf4280",
@@ -22672,6 +26787,39 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "97a58f36-cd0e-4e0b-9be0-b1ff61a9d2b4",
+        kind: "faq",
+        question: "Can I reduce Johnny Silverhand’s effect cost to 0 €$?",
+        answer: "Yes, but you still need to spend Johnny Silverhand to activate it.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "7af4302f-2f3e-4ddc-9445-fe0ac9f755d7",
+        kind: "faq",
+        question: "Can I use Johnny's effect on a Unit that wasn't played this turn?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "e403c866-e7b1-4982-8c0c-0b7d672b7185",
+        kind: "faq",
+        question:
+          "Can a Unit played on a previous turn still attack the rival Gig area if I use Johnny's effect on it?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "4560f3d0-5f63-466b-93b7-fc9d822a556e",
@@ -22769,6 +26917,51 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "3dbd8dd8-e076-4ca2-8103-e648718f35e6",
+        kind: "faq",
+        question: "If I play a Program from my trash, does the first effect still trigger?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "179be304-b54b-47f7-8358-eac64e44f31e",
+        kind: "faq",
+        question:
+          "Can I trigger the first effect multiple times in a turn by playing multiple BRAINDANCE Programs?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "5822e4e8-3878-49b3-b0d0-fb241272ae6d",
+        kind: "faq",
+        question:
+          "Can I choose the same friendly Unit with this card's first effect each time I play a Program?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "284c60bf-247b-4ff1-8bcb-d60361138dad",
+        kind: "faq",
+        question:
+          "If I play a [QUICK] BRAINDANCE Program as a reaction on my Rival's turn, does first effect trigger?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "cb7f8d05-87cc-4606-ad71-a9283f2f4b20",
@@ -22826,6 +27019,18 @@ export const cards = [
     type: "unit",
     cost: 6,
     power: 6,
+    rulings: [
+      {
+        id: "90d8581b-b42a-4061-a7d4-d589879389cc",
+        kind: "faq",
+        question: "Can I activate this card's effect if I have no cards left in my deck?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5a441989-2997-40a2-a72e-08ca1442a7f3",
@@ -22883,6 +27088,19 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "91ff465b-38fc-45b1-8db2-d8cbe6b465cc",
+        kind: "faq",
+        question:
+          "If I roll a 1 on a friendly Gig and choose to reroll with Kerry Eurodyne's effect, but don't roll a 1 or 20 on that Gig, do I still get the draw effect for the first result?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5c4d4058-9185-4305-9e8f-7eca41cf6674",
@@ -22947,6 +27165,39 @@ export const cards = [
     type: "unit",
     cost: 4,
     power: 5,
+    rulings: [
+      {
+        id: "d23941b5-53c4-4036-b19d-cfa8bf059c5a",
+        kind: "faq",
+        question: "Can I activate Kerry's [Spend Icon:] effect the turn I play him?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "1da9b201-025a-487d-b49b-b1c8523579a8",
+        kind: "faq",
+        question: "Can I activate Kerry’s [Spend Icon:] effect if I do not control an 8+ Gig?",
+        answer: "Yes, but you won't get to draw 2.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "498e223a-b488-4fc8-a8cf-35f5e800543a",
+        kind: "faq",
+        question:
+          "If Kerry readies after I activated his [Spend Icon:] effect, can I activate  it again on the same turn?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "654f2289-5d75-4f8b-bd35-702031fbb214",
@@ -23020,6 +27271,18 @@ export const cards = [
     type: "gear",
     cost: 1,
     power: 1,
+    rulings: [
+      {
+        id: "22d75516-cd32-4b86-bce5-915d075c3ec3",
+        kind: "faq",
+        question: "Do I have to look at at friendly face-down Legend even if I don't want to?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "1b516742-cdf3-4597-8ba1-be787240ab3b",
@@ -23069,6 +27332,41 @@ export const cards = [
     type: "unit",
     cost: 3,
     power: 3,
+    rulings: [
+      {
+        id: "7cf45f7a-84df-4193-9f28-656d3054d183",
+        kind: "faq",
+        question:
+          "When La Llorona uses [BLOCKER], do I increase a Gig for her second effect before or after the ensuing fight?",
+        answer: "Before.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "10236d8a-b781-4d18-8857-57f7b3555983",
+        kind: "faq",
+        question:
+          "Can I use  a different Unit's [BLOCKER] effect after I block with La Llorna to redirect the attack again?",
+        answer: "Yes. There is no limit of how many times you can use [BLOCKER] in one turn.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "287826c0-e5e6-4383-ab1a-a24314ebc44d",
+        kind: "faq",
+        question:
+          "Can La Llorona increase a Gig by 0, 1, 2, or 3, or must it increase by exactly 3?",
+        answer: "Up to means 0, 1, 2, or 3.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "c29aefc5-c8dd-4188-95d9-e46c5ee289eb",
@@ -23116,6 +27414,28 @@ export const cards = [
     type: "program",
     cost: 5,
     power: null,
+    rulings: [
+      {
+        id: "9a85bf8b-c371-4d1a-8d13-22976fb78130",
+        kind: "faq",
+        question: "Who chooses?",
+        answer: "The Player activating the card Chooses.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "072482a5-a9f6-4f39-9d18-53f483613eed",
+        kind: "faq",
+        question: "Can I play this card if there is no Rival Unit?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "793d9650-0a59-4c89-9d85-05a9d6873d2e",
@@ -23163,6 +27483,38 @@ export const cards = [
     type: "program",
     cost: 3,
     power: null,
+    rulings: [
+      {
+        id: "3c7f6d4d-2ff5-42a8-a56b-71767d912551",
+        kind: "faq",
+        question: "Can I play this Program if I do not have a friendly Unit in the field area?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "a391a6fc-a480-4d18-b451-438ba58948e1",
+        kind: "faq",
+        question: "Can I play this Program if there is no rival Unit in the field area?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "8ebfb418-5733-4153-a981-8076cb0e9f41",
+        kind: "faq",
+        question: "Can I play this Program if there are no Units in the field area?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "6b078eff-4cef-4beb-a299-ed388a72ce45",
@@ -23259,6 +27611,19 @@ export const cards = [
     type: "unit",
     cost: 3,
     power: 3,
+    rulings: [
+      {
+        id: "bd1e1e2f-a20a-40dc-be90-265bfcb367aa",
+        kind: "faq",
+        question:
+          "If I steal more than 1 Gig at a time, does my Rival have to discard more than 1?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "35c1fda3-60f9-4779-b690-30b283d52297",
@@ -23307,6 +27672,29 @@ export const cards = [
     type: "unit",
     cost: 4,
     power: 0,
+    rulings: [
+      {
+        id: "a40d7f07-d5ed-4ae5-88f7-f5e4e4d4b28f",
+        kind: "faq",
+        question: 'What is "the opposing rival Unit?"',
+        answer: "It's the Unit in a fight with your friendly Unit.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "3dc2ff22-518e-4809-ae1e-f778621642f0",
+        kind: "faq",
+        question:
+          "If my Unit loses a fight but has an effect that it cannot be defeated, does it still lose the fight?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5380dea3-4d21-445b-af02-487b45d40395",
@@ -23379,6 +27767,19 @@ export const cards = [
     type: "unit",
     cost: 5,
     power: 3,
+    rulings: [
+      {
+        id: "9d6d9ce9-9dca-42f9-bb90-0e89c5fed80b",
+        kind: "faq",
+        question:
+          "If I can't discard 2 Programs to gain the rest of the effect, can I choose to just discard 1 anyway?",
+        answer: "No. You may discard 2 to resolve the full effect or none at all.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "6720e7fd-d1e8-4c8a-9ff2-f51f62241902",
@@ -23614,6 +28015,18 @@ export const cards = [
     type: "unit",
     cost: 5,
     power: 8,
+    rulings: [
+      {
+        id: "9dfba4f9-6ebe-46ab-adcf-757a0e407d11",
+        kind: "faq",
+        question: "Am I forced to Swap Gigs?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "78fee308-5d4e-491c-9596-423dc20da5e3",
@@ -23661,6 +28074,18 @@ export const cards = [
     type: "unit",
     cost: 7,
     power: 8,
+    rulings: [
+      {
+        id: "86289bd1-7a4f-4b3e-b588-b8acc2212ad7",
+        kind: "faq",
+        question: "Does MaxTac Heavy's effect change the cost of the card?",
+        answer: "No, only the amount you pay.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "2a8802d3-598c-4ce3-9051-59ecf965ffbf",
@@ -23724,6 +28149,20 @@ export const cards = [
     type: "unit",
     cost: 3,
     power: 4,
+    rulings: [
+      {
+        id: "36ecf80a-cd64-4a27-91ac-a079e8d4250b",
+        kind: "faq",
+        question:
+          "If I ready my Maxtac Squadron with a different end-of-turn effect before I resolve this effect, can I still ready a friendly face-up Legend?",
+        answer:
+          "No. To avoid invalidating Maxtac Squadron's effect, resolve it before any effects that would ready it.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "95840ebd-d00a-49ff-b4e5-e2064cfc13a9",
@@ -23771,6 +28210,19 @@ export const cards = [
     type: "unit",
     cost: 5,
     power: 7,
+    rulings: [
+      {
+        id: "00a253c5-f0a2-4f13-a7a3-520c703c2402",
+        kind: "faq",
+        question:
+          "I played a friendly Legend to the field area with [GO SOLO] this turn. Can it attack even if my rival has a Maxtax Suppression Team?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "0f7c1c54-0e2e-44a5-ac7f-5263fbab21d3",
@@ -23819,6 +28271,18 @@ export const cards = [
     type: "program",
     cost: 4,
     power: null,
+    rulings: [
+      {
+        id: "5e7e7fa9-d975-45fd-aaaf-27cd449ac788",
+        kind: "faq",
+        question: "Can I choose a Unit that's already spent for this card's effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "21f68be2-c664-4ae0-a7ef-965a3a5a14c8",
@@ -23868,6 +28332,19 @@ export const cards = [
     type: "unit",
     cost: 4,
     power: 5,
+    rulings: [
+      {
+        id: "ae3bd50b-b937-4a8a-8c8a-24dab0acd367",
+        kind: "faq",
+        question:
+          "If a Rival adjusts or swaps multiple friendly Gigs simultaneously, does Meredith Stout's effect trigger for each of them?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "383abfb4-eedb-47c1-87f0-3ae4973c3619",
@@ -23925,6 +28402,28 @@ export const cards = [
     type: "unit",
     cost: 3,
     power: 0,
+    rulings: [
+      {
+        id: "e82502be-aaff-4d75-bd4b-87e00e760fa1",
+        kind: "faq",
+        question: "Do card types include Legends?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "1d61a391-26ad-484b-9ae5-621df7aa2adc",
+        kind: "faq",
+        question: 'Can I choose "Legends" for this effect?',
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "920cabc9-f350-4f61-96c6-69e649271456",
@@ -23973,6 +28472,18 @@ export const cards = [
     type: "unit",
     cost: 6,
     power: 8,
+    rulings: [
+      {
+        id: "e6eaf7b6-9d18-41a9-8e01-d2d060dafc03",
+        kind: "faq",
+        question: "Can this effect be used in the trash?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "08b52bdb-be1e-4931-90c4-4354eea5b145",
@@ -24021,6 +28532,19 @@ export const cards = [
     type: "unit",
     cost: 5,
     power: 4,
+    rulings: [
+      {
+        id: "d0a32e18-0674-4b46-ae37-e4f5dd4ab053",
+        kind: "faq",
+        question:
+          "If I have less (Street Cred) than a Rival at the end of my turn, am I forced to ready this Unit?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "ef77dd1f-3abd-4ce2-becc-97dd768a5022",
@@ -24069,6 +28593,19 @@ export const cards = [
     type: "unit",
     cost: 3,
     power: 2,
+    rulings: [
+      {
+        id: "993d5dde-b6f3-4e0a-b6de-48fe2efda10c",
+        kind: "faq",
+        question:
+          "I use this on my rival's Unit that has an effect that reads \"This Unit can't attack.\" will that Unit be able to make an attack?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "fc516d53-5fd8-43dd-8349-9e60f0606efa",
@@ -24158,6 +28695,39 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "63f515ca-17b9-40ee-83ae-30abb4404bb4",
+        kind: "faq",
+        question: "If I do not have a friendly Unit, do I have to choose the Draw 1 effect?",
+        answer: 'No. You can still "choose" the other effect, it just fails.',
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "329babc2-5aa7-40ee-a760-126d86bdc2c5",
+        kind: "faq",
+        question: "Does Muamar Reyes's effect each fight the Unit is in this turn?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "c155d52c-a1ee-42f6-8698-13721cb2b6b9",
+        kind: "faq",
+        question:
+          "If the chosen Unit with Muamar Reye's effect can't be defeated, can it still lose a fight?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3c144d6a-0c1a-43e9-bd35-85d6fc46adef",
@@ -24207,6 +28777,19 @@ export const cards = [
     type: "unit",
     cost: 6,
     power: 8,
+    rulings: [
+      {
+        id: "526169c5-08ff-4dfe-9690-c385754b658c",
+        kind: "faq",
+        question:
+          "If Nadia attacks the rival Gig area the turn she is played but an effect causes my Rival to have less Gig's than me, does that cancel Nadia's attack?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "40c98fdc-45d0-458d-be2c-2697dc337ca5",
@@ -24271,6 +28854,52 @@ export const cards = [
     type: "gear",
     cost: 3,
     power: 2,
+    rulings: [
+      {
+        id: "44cc0af1-c683-4dd4-882e-7eefd4c443b3",
+        kind: "faq",
+        question:
+          "When I spend a Unit equipped with Netwatch Netdriver to declare an attack, do I get Netwatch Netdriver's effect before or after I resolve the attack?",
+        answer: "Before.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "e7efa410-6ebf-4195-9e8e-8a31a00f20b2",
+        kind: "faq",
+        question:
+          "If I spend a Unit equipped with Netwatch Netdriver to declare an attack, and the Unit or Legend has an [ATTACK] effect, do I get Netwatch Netdriver's effect before or after the [ATTACK] effect?",
+        answer: "You can choose the order you resolve these effects.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "6a903897-b1e2-486f-835e-3c702fcbe77c",
+        kind: "faq",
+        question:
+          "If I spend a Unit or Legend equipped with Netwatch Netdriver to activate the Unit/Legend's [Spend Icon:] effect, do I resolve Netwatch Netdriver's effect before or after the activated effect?",
+        answer: "After. Resolve the activated [Spend Icon:] effect first.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "52e98457-4afa-4996-972b-5ec373a331c5",
+        kind: "faq",
+        question:
+          "If I spend a Legend equipped with Netwatch Netdriver to pay a card's cost, do I resolve Netwatch Netdriver's effect before or after I play the card?",
+        answer: "After.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "e4af26f0-e25d-4e30-8bac-6701f54f3e97",
@@ -24319,6 +28948,40 @@ export const cards = [
     type: "program",
     cost: 3,
     power: null,
+    rulings: [
+      {
+        id: "d1fecc2d-4186-438c-9de7-de02184f0ad7",
+        kind: "faq",
+        question: "How do I know if my fixer area is empty?",
+        answer:
+          "If there are no longer any Gig die in the fixer area then the fixer area is now empty.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "d9d3bf9e-e13a-4a19-9220-7fcc74e47eae",
+        kind: "faq",
+        question:
+          "May I chose an effect even if I cannot meet the requirements to fufill the effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "0bba2dd4-1887-48bc-a577-9411b1081a64",
+        kind: "faq",
+        question: "If your fixer area is empty am I forced to play this for 1 eddie?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "4c098450-e3ae-47e5-98d4-d51a2ab132ce",
@@ -24367,6 +29030,18 @@ export const cards = [
     type: "unit",
     cost: 7,
     power: 8,
+    rulings: [
+      {
+        id: "79a2970c-40e7-4d7f-a419-57a4b8eb3c76",
+        kind: "faq",
+        question: "Does Octant's effect change the cost of the card?",
+        answer: "No, only the amount you pay.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3ce6b982-7bba-46f1-8832-8867ec3588d4",
@@ -24431,6 +29106,19 @@ export const cards = [
     type: "unit",
     cost: 4,
     power: 5,
+    rulings: [
+      {
+        id: "b91fa741-e2c0-4974-8663-74d7f661d3e3",
+        kind: "faq",
+        question:
+          "If my Rival does not have a Unit on the field when I play Offduty Malfini, do I still have to spend it?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "144c3559-3518-4c01-b9e6-af42b7166661",
@@ -24504,6 +29192,38 @@ export const cards = [
     type: "program",
     cost: 3,
     power: null,
+    rulings: [
+      {
+        id: "3aec4fa6-6b30-466a-a4a8-7449ce7ab078",
+        kind: "faq",
+        question: "Can I use this to defeat a Unit with 0 power if I do not have a friendly D20?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "6b61f796-5665-4ae0-bb6a-4b607cb20b28",
+        kind: "faq",
+        question: "Can I defeat my own Unit with this effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "00b41165-2bad-41c3-8a4a-be0c6747f4d7",
+        kind: "faq",
+        question: "If I do not control a friendly d20, can I play Over the Edge?",
+        answer: "Yes, but you cannot defeat a Unit.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "78ea68b3-1260-416b-9f88-d6be4586232b",
@@ -24561,6 +29281,19 @@ export const cards = [
     type: "gear",
     cost: 4,
     power: 4,
+    rulings: [
+      {
+        id: "7f11608a-92cf-4b9f-a3b0-9d170ef231c7",
+        kind: "faq",
+        question:
+          "If I use this card's [Spend Icon:] effect but my hand is empty, can I still do the rest of the effect?",
+        answer: "No, you must discard 1.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "c4ef7be4-4817-4fae-9016-582e999d4996",
@@ -24609,6 +29342,18 @@ export const cards = [
     type: "unit",
     cost: 4,
     power: 1,
+    rulings: [
+      {
+        id: "933f4b48-5e65-48a8-97ba-3a2e255a8b7d",
+        kind: "faq",
+        question: "Do I have to choose a rival Unit with this effect when played?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "501a3796-9983-400f-86e4-97ffac5d5451",
@@ -24666,6 +29411,28 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "2376d51c-ae2c-4eb6-aed9-d25a05d56e09",
+        kind: "faq",
+        question: "If there are no viable rival Units, do I have to choose the draw effect?",
+        answer: 'No. You can still "choose" the other effect, it just fails.',
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "afa9a2eb-1766-49c4-95d5-2c1673aae7dd",
+        kind: "faq",
+        question: "May I use this card's [Spend Icon:] if all Gigs are already the same value?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "950f045c-f5a4-4318-9907-b630d64de754",
@@ -24731,6 +29498,30 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "097a8261-ba28-407e-9f81-1cf59c8e995b",
+        kind: "faq",
+        question:
+          "Can I move a Gear from this Legend to an unequipped friendly Unit that's already ready?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "5c29eb76-b653-47e4-a7c5-ad38e770890c",
+        kind: "faq",
+        question: "For the second effect,  do I need both Units and Legends equipped?",
+        answer:
+          "No, a combination of any 5 equipped Units and equipped Legends satisfies the condition.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "34774f04-4f16-40eb-8ee4-999144e572ab",
@@ -24788,6 +29579,19 @@ export const cards = [
     type: "unit",
     cost: 6,
     power: 6,
+    rulings: [
+      {
+        id: "eb1edc97-4acc-49ca-b9e7-8c07cb28e1d9",
+        kind: "faq",
+        question:
+          "If I already Called a Legend this turn, can I call another Legend with Panam Palmer's effect?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "20484778-9294-4148-bd8c-fa78572f4452",
@@ -24852,6 +29656,18 @@ export const cards = [
     type: "program",
     cost: 1,
     power: null,
+    rulings: [
+      {
+        id: "070c816a-ea6e-43b6-9408-cf976ef42dac",
+        kind: "faq",
+        question: "Does the Gig I set need to be part of the value-pair in order to draw 1?",
+        answer: "No. Any friendly value-pair satisfies the conditions.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "0974a7af-dcd7-44d9-b57a-b6a4719afcd6",
@@ -24901,6 +29717,18 @@ export const cards = [
     type: "unit",
     cost: 4,
     power: 6,
+    rulings: [
+      {
+        id: "1f2d750b-a776-4d1c-bc79-a4621ab2cf0d",
+        kind: "faq",
+        question: "What's a value-pair?",
+        answer: "Two Gigs with the same value within the same Gig area.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "783a9082-b79c-4b45-bf66-48728ff9b92d",
@@ -24949,6 +29777,18 @@ export const cards = [
     type: "unit",
     cost: 8,
     power: 10,
+    rulings: [
+      {
+        id: "ae31fcd3-d3db-4bbe-b099-2a07cc0ba270",
+        kind: "faq",
+        question: "May I discard 1 Program even if there's no rival Unit to bottom-deck?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "14d87f2a-8bd7-424f-b65b-3659156cef81",
@@ -25029,7 +29869,7 @@ export const cards = [
     name: "Pyramid Song",
     displayName: "Pyramid Song",
     rulesText:
-      "Choose one effect. If a friendly d4 is a min Gig, choose both instead.\nGive a rival Unit -5 power this turn. // Bottom-deck a rival Unit with power 0.",
+      "Choose one effect. If a friendly d4 is a min Gig, choose both instead.\nGive a rival Unit -4 power this turn. // Bottom-deck a rival Unit with power 0.",
     color: "blue",
     classifications: ["Braindance"],
     set: {
@@ -25069,6 +29909,18 @@ export const cards = [
     type: "program",
     cost: 3,
     power: null,
+    rulings: [
+      {
+        id: "29b8e233-81e1-4660-9df8-eb9002af9562",
+        kind: "faq",
+        question: "If I choose both effetcs, can I choose what order I resolve them?",
+        answer: "No, you must resolve the top effect first, then the bottom one.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "ad13a7bc-c49d-4166-8a9c-965e7bfa9b8f",
@@ -25142,6 +29994,19 @@ export const cards = [
     type: "program",
     cost: 2,
     power: null,
+    rulings: [
+      {
+        id: "e18d31dd-7ee1-4494-8098-a72db45bfa2d",
+        kind: "faq",
+        question:
+          "If my Unit loses a fight but isn't defeated due to this effect, does it still count as losing the fight?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "92edc648-10d6-43d3-b4ab-4ad65a5c7425",
@@ -25245,6 +30110,19 @@ export const cards = [
     type: "gear",
     cost: 2,
     power: 1,
+    rulings: [
+      {
+        id: "06f40e31-2d2e-46d4-bfab-7670da4c189c",
+        kind: "faq",
+        question:
+          "Does this effect force my Rival to use [GO SOLO] on their turn if they have enough €$ available?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "65a14367-da52-4578-8162-3c4bac11007d",
@@ -25294,6 +30172,19 @@ export const cards = [
     type: "unit",
     cost: 4,
     power: 4,
+    rulings: [
+      {
+        id: "7b34456c-7332-4134-9650-5864aee59890",
+        kind: "faq",
+        question:
+          "If I have no cards left in my deck when I spend a friendly Rita Wheeler, do I lose the game?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "e64e2978-695b-4fc5-b17b-62c710a11c47",
@@ -25375,6 +30266,49 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "88707f62-0eaf-4383-9304-c28a50c995e3",
+        kind: "faq",
+        question:
+          "Can I activate River Ward’s [QUICK] [Spend Icon:] effect if I have no Gear cards in hand?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "81489d83-54af-42d9-a5b3-8eb4e5399ae6",
+        kind: "faq",
+        question: "Does the Gear have to be equipped to this Legend?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "a6ed37cc-f3f9-42e6-8246-0edf668b0bc5",
+        kind: "faq",
+        question: "Do you have to Trash the top card after searching?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "28a594b5-9188-4f9b-9d3d-8e0100d6ce5e",
+        kind: "faq",
+        question: "Do I keep the card not Trashed on top of my deck?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "7ea6eecc-e55e-4634-93eb-b2b46e79635d",
@@ -25487,6 +30421,28 @@ export const cards = [
     type: "legend",
     cost: 7,
     power: 7,
+    rulings: [
+      {
+        id: "e4837808-b775-4bbb-8e98-6c5c8441324e",
+        kind: "faq",
+        question: "Does Rogue Amendiares' effect trigger if she steals a Gig herself?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "c66b9c47-a74d-4293-89ae-3d04bbb5bf92",
+        kind: "faq",
+        question: "Does Rogue Amendiares' effect work while face-up in the Legend area?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "9d994a42-4a63-44ad-ad7a-edead6af06a2",
@@ -25544,6 +30500,19 @@ export const cards = [
     type: "unit",
     cost: 5,
     power: 4,
+    rulings: [
+      {
+        id: "9ce8258b-6b6a-4157-9054-7923068292d5",
+        kind: "faq",
+        question:
+          "If I manage to play Rogue Amendiares on my Rival's turn, can I use her [QUICK] effect that turn?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "9e465b11-9743-4275-a71d-d701b059eef0",
@@ -25601,6 +30570,29 @@ export const cards = [
     type: "unit",
     cost: 5,
     power: 4,
+    rulings: [
+      {
+        id: "506cd2e9-d647-404d-a713-14e340241fcc",
+        kind: "faq",
+        question: "Do I have to defeat a rival Unit even if I don't want to?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "3ae8916f-514c-47dd-b078-a5844f21277d",
+        kind: "faq",
+        question:
+          "If a rival Unit’s power is reduced to 2 or 3 by another effect this turn, can Royce defeat it?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "9e681d3e-cbfd-4c7b-a69a-72a83dc8b847",
@@ -25682,6 +30674,40 @@ export const cards = [
     type: "legend",
     cost: 6,
     power: 6,
+    rulings: [
+      {
+        id: "4c90424e-2603-4927-8bbd-067de4332a36",
+        kind: "faq",
+        question: "Can I equip Gear to Royce in the Legends area?",
+        answer: "Yes, you can equip face-up Legends in the Legends area.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "46c436af-2ee0-4b1a-b7d5-03df43ed5203",
+        kind: "faq",
+        question:
+          "Does the Royce +2 power for each equipped Gear apply while he is still in the Legend area?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "903ccbd0-d2d9-46e0-9ffc-cd5ebddef04a",
+        kind: "faq",
+        question: "What happens to a Gear on a Legend when the Legend is removed from play?",
+        answer:
+          "When a Legend leaves the field or Legends area, its attached Gear follows the Legend to that area, then is no longer equipped in the new area. So, the Gear remains in that new area when you remove the Legend from play.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "fee335a7-2546-48a5-9bb8-b0886014ce66",
@@ -25747,6 +30773,19 @@ export const cards = [
     type: "unit",
     cost: 2,
     power: 4,
+    rulings: [
+      {
+        id: "76746ab1-b325-427c-a8ca-499dcff97fb3",
+        kind: "faq",
+        question:
+          "If this Unit is chosen by Mox Inciters to attack but there's no spent rival Unit, is this Unit forced to make an attack on the rival's Gig area?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "b4cba235-816d-4888-a308-1c397b9288e7",
@@ -25795,6 +30834,18 @@ export const cards = [
     type: "program",
     cost: 2,
     power: null,
+    rulings: [
+      {
+        id: "6b38d8b1-470f-402a-aeca-024e1db97b4d",
+        kind: "faq",
+        question: "Do I need to choose a Unit on the field for this Program to effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "9611a3ba-d365-453f-89ed-c986a1948edc",
@@ -25852,6 +30903,18 @@ export const cards = [
     type: "unit",
     cost: 7,
     power: 8,
+    rulings: [
+      {
+        id: "2507570b-3a3a-4c5e-bb34-451ebf248cc4",
+        kind: "faq",
+        question: "Can this Unit attack ready Units with its effect?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "55153b49-c3a7-4208-a47b-0a91fa7e3b5c",
@@ -25942,6 +31005,19 @@ export const cards = [
     type: "gear",
     cost: 3,
     power: 2,
+    rulings: [
+      {
+        id: "66f0aa50-b90c-4bf0-9a02-ddfbec146375",
+        kind: "faq",
+        question:
+          "At the end of my turn do I have to ready this Unit or Legend even if I don't want to?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "e2dc863c-5bc9-4ad7-9138-2d5b966ed901",
@@ -25999,6 +31075,31 @@ export const cards = [
     type: "legend",
     cost: 5,
     power: 0,
+    rulings: [
+      {
+        id: "8b665720-9bdc-47ee-8930-9e8b6f6d41ef",
+        kind: "faq",
+        question:
+          "If I attack the rival Gig area with Sasha but she has 0 power, does she steal a Gig?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "f548eacd-802d-4101-b47c-36cf1155e1df",
+        kind: "faq",
+        question:
+          "When I declare an attack with Sasha Yakovleva, can I use her [ATTACK] effect before I choose a target?",
+        answer:
+          "No. You must declare the attack target before revealing the card for her [ATTACK] effect.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "4670d02b-b97a-4771-bb7e-65bdc012530e",
@@ -26090,6 +31191,30 @@ export const cards = [
     type: "gear",
     cost: 2,
     power: 2,
+    rulings: [
+      {
+        id: "d9ad00b9-ab93-498f-a6fa-bab6d833d949",
+        kind: "faq",
+        question:
+          "If a friendly Unit equipped with Satori fights a Unit of the same power and they defeat each other, do I still draw 1?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "8ba81187-0232-4320-b876-cae87a389ea5",
+        kind: "faq",
+        question:
+          "If my Unit equipped with Satori is attacked by a rival Unit and my Unit wins the fight, do I draw 1?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "a29490bb-2836-48b6-a4f9-a44b25c8bfa2",
@@ -26139,6 +31264,18 @@ export const cards = [
     type: "unit",
     cost: 8,
     power: 14,
+    rulings: [
+      {
+        id: "1f7a2ac5-b236-4b1c-9f4b-6e0b34441174",
+        kind: "faq",
+        question: "Do other Units keep the +2 power while fighting and stealing too?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "7a62beca-ac54-4c0d-847d-ed85838c5093",
@@ -26187,6 +31324,29 @@ export const cards = [
     type: "unit",
     cost: 5,
     power: 7,
+    rulings: [
+      {
+        id: "461379b1-06dd-4753-91b2-1fdabc5024e0",
+        kind: "faq",
+        question:
+          "If I have another Unit in my trash, do I have to add it to my hand  even if I don't want to?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "0db0dbe4-a10b-458b-9b5c-9e478b71c615",
+        kind: "faq",
+        question: "Can Screw's effect add a different copy of Screw from my trash to my hand?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "b05cb065-309e-45a3-bbe0-20f4b6ea71aa",
@@ -26342,6 +31502,20 @@ export const cards = [
     type: "program",
     cost: 4,
     power: null,
+    rulings: [
+      {
+        id: "0d03437c-9149-4ee7-8006-7bb8fd044608",
+        kind: "faq",
+        question:
+          "If neither player has cards in hand when I play Shattered Memories, what happens?",
+        answer:
+          "Each player may still choose to draw 5, and the total number of discarded cards equals 0.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "b3b40c68-705b-41ff-ae10-4132497c4a39",
@@ -26390,6 +31564,19 @@ export const cards = [
     type: "unit",
     cost: 2,
     power: 0,
+    rulings: [
+      {
+        id: "9e6de445-d9cb-42cc-8e94-20c941da7cd9",
+        kind: "faq",
+        question:
+          "When I search the top 3 cards of my deck, can I choose not to reveal any cards and bottom-deck them all even if there's a Gear among them?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3c4e7fcb-933d-4712-9ce7-6052a14f8e94",
@@ -26463,6 +31650,19 @@ export const cards = [
     type: "unit",
     cost: 3,
     power: 3,
+    rulings: [
+      {
+        id: "c41cdb0c-25d6-47ec-8c4c-5bb900a14b3e",
+        kind: "faq",
+        question:
+          "If this Unit gains 5+ power while fighting or after I declare an attack or in a fight. Do I draw 1?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "f3ba5ef7-5e91-4956-a887-b88a4b854867",
@@ -26511,6 +31711,29 @@ export const cards = [
     type: "program",
     cost: 1,
     power: null,
+    rulings: [
+      {
+        id: "9f5fa425-bb0f-4f5f-908c-d56b67d14862",
+        kind: "faq",
+        question: "Does this effect count friendly face-up Legends in the field area?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "2a2b9c9f-1076-493c-aa0f-24a274fbf85a",
+        kind: "faq",
+        question:
+          "If I use this on a friendly Legend in that field area that is now a also a Unit, does the Legend count itself for a +1?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5a5a177c-6ed8-4bd9-8b11-13c2b64414e2",
@@ -26577,6 +31800,28 @@ export const cards = [
     type: "unit",
     cost: 4,
     power: 4,
+    rulings: [
+      {
+        id: "2110a5e9-a27c-42b5-b3e4-ca464f1d2dd0",
+        kind: "faq",
+        question: "Do I have to reveal the friendly face-down Legends I look at?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "2a1bca2f-eaca-4418-baeb-96aab1b4e476",
+        kind: "faq",
+        question: "Do I have to look at my Legends even if I don't want to?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "1535c19d-54e5-4289-9cb7-15ab429c0092",
@@ -26625,6 +31870,30 @@ export const cards = [
     type: "program",
     cost: 2,
     power: null,
+    rulings: [
+      {
+        id: "4e9fde1b-cbe0-4025-9a04-c61b13ecde02",
+        kind: "faq",
+        question: "Does this apply to Units stealing Gigs through effects outside of attacking?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "b6be2042-7260-4c72-a7e0-0478c9cda9f9",
+        kind: "faq",
+        question:
+          "If I use Take Control on a rival Unit that would normally steal 1 Gig but is equipped with Gorilla Arms, how many Gigs does it actually steal?",
+        answer:
+          "0 Gigs. Take Control's effect prevents the rival Unit from stealing a Gig, which means Gorilla Arms does not activate.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "39665784-d2f1-43e8-a958-894bac716d71",
@@ -26690,6 +31959,19 @@ export const cards = [
     type: "gear",
     cost: 1,
     power: 1,
+    rulings: [
+      {
+        id: "5ecbb33e-871b-40cd-bb66-6997a692e1a6",
+        kind: "faq",
+        question:
+          "When searching the top card of the deck is the card still currently counted as being in the deck?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5ea00b3a-7e85-4c7d-91ad-90e0cf370c27",
@@ -26738,6 +32020,31 @@ export const cards = [
     type: "program",
     cost: 2,
     power: null,
+    rulings: [
+      {
+        id: "8151aa53-358f-4d39-b3f6-58b165127b8e",
+        kind: "faq",
+        question:
+          "If I trash 1 or more Gears from this effect, do I have to add one to my hand even if I don't want to?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "4f2133a0-c3cc-4955-9815-6026ed16735d",
+        kind: "faq",
+        question:
+          "If I choose a Gear with cost equal to the value of a friendly Gig, do I have to play it for free, or can I just add it to my hand?",
+        answer:
+          "You may add it to your hand if you don't want to play it immediately. (But if you play it later, you must pay its cost normally.)",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "1263e2bf-bc15-4550-ad07-b028602d1354",
@@ -26795,6 +32102,20 @@ export const cards = [
     type: "gear",
     cost: 5,
     power: 3,
+    rulings: [
+      {
+        id: "91373c98-159f-48e1-a231-045b5fe34631",
+        kind: "faq",
+        question:
+          "When a Unit or Legend equipped with The Relic is defeated, do I move any equipped Gear on it to the bottom-deck, too?",
+        answer:
+          "No. The Unit/Legend moves to the trash first, so any Gear (including The Relic) remains in the trash when you bottom-deck the Unit/Legend.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "2993d637-d44d-4add-8473-26d67c0d1bc0",
@@ -26843,6 +32164,19 @@ export const cards = [
     type: "program",
     cost: 2,
     power: null,
+    rulings: [
+      {
+        id: "71b6fcd4-2bac-430b-8589-258ab1aae486",
+        kind: "faq",
+        question:
+          "When searching the top 3 cards of my deck, are the cards still considered part of the deck?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "9a0fd5a3-a00b-425c-a251-755eeab12bfe",
@@ -26899,6 +32233,28 @@ export const cards = [
     type: "program",
     cost: 6,
     power: null,
+    rulings: [
+      {
+        id: "2a2fadce-85ca-49cd-a9a5-76a77e5cf615",
+        kind: "faq",
+        question: "IfI have the same amount of Street Cred as a Rival, do I get both effects?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "cabf44d5-8f4c-420e-b149-e408e4fcc699",
+        kind: "faq",
+        question: "If I choose both effetcs, can I choose what order I resolve them?",
+        answer: "No, you must resolve the top effect first, then the bottom one.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "2a4a1f1a-9888-403e-90a9-4021c3f52674",
@@ -26946,6 +32302,18 @@ export const cards = [
     type: "unit",
     cost: 6,
     power: 7,
+    rulings: [
+      {
+        id: "b7e62adb-5a98-482e-8ec7-39fc3d176aa1",
+        kind: "faq",
+        question: "Does Trauma Team Operatives' effect change the cost of the card?",
+        answer: "No, only the amount you pay.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "ec857ab0-995e-4c32-84b6-7ba57b2f6137",
@@ -27009,6 +32377,19 @@ export const cards = [
     type: "program",
     cost: 1,
     power: null,
+    rulings: [
+      {
+        id: "cc187a60-e949-4ff2-a8d2-38adf6ff32e9",
+        kind: "faq",
+        question:
+          "Does the Gig I decrease with the effect have to be the min Gig I use for the draw 1 effect condition?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "31e5b986-1e67-439c-81fc-49f8938bd002",
@@ -27057,6 +32438,41 @@ export const cards = [
     type: "unit",
     cost: 2,
     power: 0,
+    rulings: [
+      {
+        id: "0c12a0d1-b75a-4269-b1b5-68d5e80acf4b",
+        kind: "faq",
+        question:
+          "If I don't Call a Legend for free when I play this card, can I Call a Legend for free later instead?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "1dcc06cf-2c53-4507-88d8-f5f002e2d656",
+        kind: "faq",
+        question:
+          "If I manage to play Tyger's Whisper on my Rival's turn, can I Call a Legend for free through its [PLAY] effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "92d69f9f-e14d-491e-8589-7f79d56b5320",
+        kind: "faq",
+        question:
+          "If I already Called a Legend this turn, can I call another Legend with Tyger's Whisper's [PLAY] effect?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5b8f8d4f-c62e-4bde-a086-2ce15bd9449d",
@@ -27104,6 +32520,19 @@ export const cards = [
     type: "program",
     cost: 4,
     power: null,
+    rulings: [
+      {
+        id: "51314e7a-dea5-4d38-aeeb-52f58dc2a55a",
+        kind: "faq",
+        question:
+          "If I play this when there are no rival Units do I still have to bottom deck a friendly Unit?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "9ed58d18-df78-4689-b28f-77260243c522",
@@ -27153,6 +32582,19 @@ export const cards = [
     type: "unit",
     cost: 5,
     power: 6,
+    rulings: [
+      {
+        id: "9eee394b-2dc7-4750-a5ef-5cb0fc988ee9",
+        kind: "faq",
+        question: "If V steals multiple Gigs in one attack, can V increase each stolen Gig?",
+        answer:
+          "Yes, as this card specifies 'A Gig' so each Gig that gets stolen may be increased by the effect.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "81a8dec7-9541-4020-93e1-7d798a57dcbc",
@@ -27260,6 +32702,39 @@ export const cards = [
     type: "legend",
     cost: 5,
     power: 6,
+    rulings: [
+      {
+        id: "1dd664ff-e61f-4b15-8e96-45f0dd31a13a",
+        kind: "faq",
+        question: "When I trash 3, do I need to add a BRAINDANCE Program from the cards I trashed?",
+        answer: "No. You can add any BRAINDANCE Program from your trash.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "ba7d3b2f-96f6-4570-8e03-b7f514512d9a",
+        kind: "faq",
+        question: "If there are fewer than 3 cards in my deck, can I still call V?",
+        answer: "Yes. Trash as many cards as possible, instead.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "15ebfd43-82fa-4e07-a8e5-2432562e32ef",
+        kind: "faq",
+        question:
+          "If V’s [CALL] effect trashes multiple BRAINDANCE Programs,  can I choose more than 1?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5cf0c12a-814e-4801-8171-7fe8c09fad21",
@@ -27308,6 +32783,19 @@ export const cards = [
     type: "unit",
     cost: 3,
     power: 4,
+    rulings: [
+      {
+        id: "fbe43ae0-a606-4391-8183-342a43213365",
+        kind: "faq",
+        question:
+          "If Valentino Guerrera attacks a ready rival Unit with [BLOCKER], can the attacked Unit use its own [BLOCKER] effect?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "5d6afeed-1532-4a01-bb40-a011030a7785",
@@ -27356,6 +32844,19 @@ export const cards = [
     type: "unit",
     cost: 3,
     power: 3,
+    rulings: [
+      {
+        id: "c78f53c3-489c-4a0e-8d73-9ab7a8431419",
+        kind: "faq",
+        question:
+          "If I give a friendly Unit [ADRENALINE] on my Rival's turn, can it make an attack?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "92d23553-8b0d-49cd-8cbe-6f00b3377298",
@@ -27404,6 +32905,30 @@ export const cards = [
     type: "unit",
     cost: 5,
     power: 5,
+    rulings: [
+      {
+        id: "80577b2c-f335-442e-9476-b2e38d0d03dd",
+        kind: "faq",
+        question:
+          "If I have a way to play a Gear on my rival's turn, do I still get the  -3 €$ discount?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "449ecd14-296c-4431-b445-261265f89c1d",
+        kind: "faq",
+        question:
+          "When I play my first Cyberware each turn, do I have to pay the reduced amount even if I would prefer to pay full price?",
+        answer: "Yes, the discount is mandatory.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "647bb074-197f-4059-bac5-251b47c98287",
@@ -27453,6 +32978,18 @@ export const cards = [
     type: "unit",
     cost: 3,
     power: 3,
+    rulings: [
+      {
+        id: "602f90aa-bda8-44dc-97b6-f3e23e59918f",
+        kind: "faq",
+        question: "Can I choose not to use Viktor Vektor's [PLAY] effect?",
+        answer: "No, the effect is mandatory. If you can do it, you must.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "99f5e311-8dfd-42a9-abd0-2e50ac68679e",
@@ -27510,6 +33047,28 @@ export const cards = [
     type: "legend",
     cost: null,
     power: null,
+    rulings: [
+      {
+        id: "ab2739ef-ffc9-493d-b523-b6823ba1b618",
+        kind: "faq",
+        question: "If there are no viable rival Units, do I have to choose the draw effect?",
+        answer: 'No. You can still "choose" the other effect, it just fails.',
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "8bbbcb97-0cb0-41b9-a674-7647d6085163",
+        kind: "faq",
+        question: "Can I use this card's [Spend Icon:] effect on an already min Gig?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "404748b4-f30e-4bf1-8991-5ad449da755a",
@@ -27574,6 +33133,29 @@ export const cards = [
     type: "program",
     cost: 5,
     power: null,
+    rulings: [
+      {
+        id: "972b7a64-cc96-4e31-8e7f-5718d319914a",
+        kind: "faq",
+        question: "Does this card's effect change the cost of the card?",
+        answer: "No, only the amount you pay.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "abf24590-be16-41a4-9314-05cf9964a483",
+        kind: "faq",
+        question:
+          "Can I choose to play this card for it's full cost if my Rival has 2 or more Gigs?",
+        answer: "No, the discount is mandatory.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "b7a94000-c026-433e-82fa-901bf22db54e",
@@ -27622,6 +33204,30 @@ export const cards = [
     type: "unit",
     cost: 4,
     power: 5,
+    rulings: [
+      {
+        id: "6a19fd88-c002-4d46-914c-dfe3b13fd27b",
+        kind: "faq",
+        question:
+          "If my Rival plays a Legend to the field after I play Westbrook Netrunner, can the Legend steal a Gig with value less than their power?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "5b17e2c5-e679-4dad-a131-815a6618dd48",
+        kind: "faq",
+        question:
+          "If Westbrook Netrunner is defeated before my next turn, is its effect still active?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "3126fa21-ea19-4096-8233-d63797bb9fe4",
@@ -27669,6 +33275,39 @@ export const cards = [
     type: "program",
     cost: 5,
     power: null,
+    rulings: [
+      {
+        id: "d0d1a60f-cb84-4dbf-b131-c2ee9f7bae22",
+        kind: "faq",
+        question: "Can I play this card if there are no spent Units on the field?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "192c3c09-2160-4818-840a-ae6b1d9cf27f",
+        kind: "faq",
+        question: "Can I choose a friendly Unit with this effect?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "7ea036d0-1f07-4425-9a47-198eec19fef1",
+        kind: "faq",
+        question:
+          "If I play this Program and there is only a spent friendly Unit in the Field areas. Will I have to choose my Unit?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "67b47cff-2237-4765-86fb-9b2b3abecbb1",
@@ -27733,6 +33372,19 @@ export const cards = [
     type: "unit",
     cost: 5,
     power: 4,
+    rulings: [
+      {
+        id: "7ec76a28-572e-45e7-81b2-53c8f38b8ce3",
+        kind: "faq",
+        question:
+          "When this card steals a Gig do I have to ready another friendly Unit even if I don't want to?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "6cf6456d-d020-4c6c-9041-66d503a01a0a",
@@ -27782,6 +33434,41 @@ export const cards = [
     type: "unit",
     cost: 7,
     power: 9,
+    rulings: [
+      {
+        id: "16ff9b92-68eb-4215-9e05-eaa8bcd9afa4",
+        kind: "faq",
+        question:
+          "If the Unit played by Yorinobu has [ADRENALINE], can it attack the rival Gig area this turn?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "6e649617-ec75-42db-a1b0-a3c2b1ebee6c",
+        kind: "faq",
+        question:
+          "Does Yorinobu count itself for “the first time an ARASAKA Unit is defeated each turn”?",
+        answer: "Yes.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "d2074e1b-4efa-4cfb-bc7a-0ca063fcf804",
+        kind: "faq",
+        question:
+          "If a friendly Arasaka Unit was defeated previusly during my turn and then play Yorinobu Arasaka. If another friendly Arasaka Unit is then defeated this turn. Will I draw 1 off Yorinobu's effect?",
+        answer: "No.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "1d7f3d02-27b5-4ab8-af99-f8f2e0fd62cf",
@@ -27829,6 +33516,18 @@ export const cards = [
     type: "gear",
     cost: 6,
     power: 3,
+    rulings: [
+      {
+        id: "fc46987c-3869-4d97-b73b-686e1e08120e",
+        kind: "faq",
+        question: "Does this card's effect change the cost of the card?",
+        answer: "No, only the amount you pay.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
   {
     id: "b88d436f-1ec7-4f62-9dbc-c5f5e0d0a0df",
@@ -27894,5 +33593,52 @@ export const cards = [
     type: "gear",
     cost: 2,
     power: 2,
+    rulings: [
+      {
+        id: "a4b85193-1647-4001-a076-846f54d54481",
+        kind: "faq",
+        question:
+          "When I spend a Unit equipped with Zetatech Faceplate to declare an attack, do I get Zetatech Faceplate's effect before or after I resolve the attack?",
+        answer:
+          "Before. Adjust the Gig for Zetatech Faceplate's effect before moving on to your Rival's react step.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "9f87591e-514c-44ee-bba4-515fc488fb77",
+        kind: "faq",
+        question:
+          "If I spend a Unit equipped with Zetatech Faceplate to declare an attack, and the Unit or Legend has an [ATTACK] effect, do I get Zetatech Faceplacte's effect before or after the [ATTACK] effect?",
+        answer: "You can choose the order you resolve these effects.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "9b281489-5883-47ca-80a9-fa6707655b12",
+        kind: "faq",
+        question:
+          "If I spend a Unit or Legend equipped with Zetatech Faceplate to activate the Unit/Legend's [Spend Icon:] effect, do I get Zetatech Faceplate's effect before or after the activated effect?",
+        answer: "After. Resolve the activated [Spend Icon:] effect first.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+      {
+        id: "62c60c04-72ec-4231-9ea7-f5b8048eb4d8",
+        kind: "faq",
+        question:
+          "If I spend a Legend equipped with Zetatech Faceplate to pay a card's cost, do I get Zetatech Faceplate's effect before or after I play the card?",
+        answer: "After. Play the card first, then adjust the Gig.",
+        languageCode: "en",
+        cardPrintingId: null,
+        source: null,
+        rulingDate: "2026-09-04T22:57:19.946Z",
+      },
+    ],
   },
 ] satisfies CardDefinition[];

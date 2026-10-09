@@ -60,7 +60,9 @@ describe("Buzz Lightyear - Providing Cover", () => {
     });
 
     expect(testEngine.asPlayerOne().playCard(buzzLightyearProvidingCover)).toBeSuccessfulCommand();
-    expect(testEngine.asPlayerOne().resolvePendingByCard(buzzLightyearProvidingCover)).toBeSuccessfulCommand();
+    expect(
+      testEngine.asPlayerOne().resolvePendingByCard(buzzLightyearProvidingCover),
+    ).toBeSuccessfulCommand();
     expect(testEngine.asPlayerOne().resolveNextPending({ choiceIndex: 0 })).toBeSuccessfulCommand();
     expect(
       testEngine.asPlayerOne().resolveNextPending({

@@ -3,6 +3,12 @@ import type { ChooseTargetChoicePrompt } from "../../view/player-prompt.ts";
 import type { FilteredCardView } from "../../view/filter.ts";
 import { assertNever } from "../util/assert-never.ts";
 import { planAdjustGig } from "./adjust-gig.ts";
+import {
+  DIE_MAX_VALUES,
+  isDieType,
+  isGigCopyPairAllowed,
+  type DieType,
+} from "@tcg/cyberpunk-types";
 
 /**
  * Default chooseTarget resolver. Branches exhaustively on the sub-type so that
@@ -52,12 +58,24 @@ const resolveEffectTarget: ChoiceResolver<ChooseTargetChoicePrompt> = (
       eligibleIds: eligible,
       direction: adjustGig.direction,
       maxAmount: adjustGig.maxAmount,
+      allowUnchanged:
+        adjustGig.chooseUpTo === true || choice.payload.canDecline === true || min === 0,
       sourceColor: choice.payload.source?.color,
     });
     if (!plan) {
       return {
         kind: "stuck",
         reason: "effectTarget: adjustGig candidates are missing from the player view",
+      };
+    }
+    if (choice.payload.adjustGig === undefined) {
+      // A direct effectTarget chooses the die first. Only an atomic prompt
+      // permits resolveAdjustGig at this stage.
+      return {
+        kind: "command",
+        move: "resolveEffectTarget",
+        args:
+          choice.payload.canDecline && !plan.changed ? { pass: true } : { targetIds: [plan.dieId] },
       };
     }
     return {
@@ -69,6 +87,24 @@ const resolveEffectTarget: ChoiceResolver<ChooseTargetChoicePrompt> = (
           : { kind: "adjust", dieId: plan.dieId, value: plan.value },
     };
   }
+  if (choice.payload.targetKind === "gig" && choice.payload.pairConstraint) {
+    const pair = pickValidGigCopyPair(ctx, eligible, choice.payload.pairConstraint);
+    if (pair) {
+      return {
+        kind: "command",
+        move: "resolveEffectTarget",
+        args: { targetIds: pair },
+      };
+    }
+    if (choice.payload.canDecline) {
+      return {
+        kind: "command",
+        move: "resolveEffectTarget",
+        args: { pass: true },
+      };
+    }
+    return { kind: "stuck", reason: "effectTarget: no legal Gig copy pair" };
+  }
   const selected = pickEffectTargets(choice, ctx, eligible, max);
   return {
     kind: "command",
@@ -76,6 +112,42 @@ const resolveEffectTarget: ChoiceResolver<ChooseTargetChoicePrompt> = (
     args: { targetIds: selected },
   };
 };
+
+function pickValidGigCopyPair(
+  ctx: Parameters<ChoiceResolver<ChooseTargetChoicePrompt>>[1],
+  eligible: string[],
+  pairConstraint: NonNullable<ChooseTargetChoicePrompt["payload"]["pairConstraint"]>,
+): [string, string] | null {
+  const gigs = new Map<string, { ownerId: string; dieType: DieType; value: number }>();
+  for (const [ownerId, player] of Object.entries(ctx.view.players)) {
+    const gigArea = player.zones.gigArea;
+    if (!Array.isArray(gigArea)) continue;
+    for (const gig of gigArea) {
+      if (!isDieType(gig.definitionId)) continue;
+      gigs.set(gig.instanceId, {
+        ownerId,
+        dieType: gig.definitionId,
+        value: gig.effectivePower,
+      });
+    }
+  }
+
+  let fallback: [string, string] | null = null;
+  for (const sourceId of eligible) {
+    const source = gigs.get(sourceId);
+    if (!source) continue;
+    for (const targetId of eligible) {
+      const target = gigs.get(targetId);
+      if (!target || sourceId === targetId) continue;
+      if (!isGigCopyPairAllowed(source.ownerId, target.ownerId, pairConstraint)) continue;
+      fallback ??= [sourceId, targetId];
+      if (source.value !== target.value && source.value <= DIE_MAX_VALUES[target.dieType]) {
+        return [sourceId, targetId];
+      }
+    }
+  }
+  return fallback;
+}
 
 function pickEffectTargets(
   choice: ChooseTargetChoicePrompt,
@@ -185,6 +257,7 @@ const resolveAdjustGig: ChoiceResolver<ChooseTargetChoicePrompt> = (choice, ctx)
     eligibleIds: [dieId],
     direction,
     maxAmount,
+    allowUnchanged: choice.payload.chooseUpTo === true,
     sourceColor: choice.payload.source?.color,
     focusedDie: {
       dieId,

@@ -21,8 +21,15 @@ describe("OP12-021 Ipponmatsu", () => {
     engine.playCard(op01Izo033, "south");
     const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     if (target?.kind !== "selectEntity") throw new Error("Expected Izo's rest target.");
-    expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(protectedId);
+    expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(protectedId);
     expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(legalId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [protectedId] }, "south");
+    expect(
+      engine
+        .getView("north")
+        .players.north.characters.find((card) => card?.instanceId === protectedId)?.rested,
+    ).toBe(false);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
   test("can become the new target of an opponent's attack as a Blocker", () => {

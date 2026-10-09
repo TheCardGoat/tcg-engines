@@ -3,6 +3,8 @@ import type { ActionLogEvent, ActionLogMessageKey } from "../types/game-events.t
 
 export type { ActionLogMessageKey };
 
+export { formatStolenGigSummary, type StolenGigLogEntry } from "./stolen-gig-summary.ts";
+
 export { type PrivateField, privateField, stripPrivateFields } from "./private-field.ts";
 
 export {
@@ -93,27 +95,42 @@ export function createLogEntry(
  * describe turn-level events include `{playerId}` where needed.
  */
 export const enMessages: Record<ActionLogMessageKey, string> = {
+  "move.rejected": "Action failed: {reason}.",
   "move.playCard": "Played {cardName} for {cost} eddies.",
   "move.playCard.gear": "Played {cardName} for {cost} eddies, attached to {attachedToName}.",
   "move.sellCard": "Sold {cardName}.",
   "move.callLegend": "Called {legendName}.",
   "move.attackUnit": "Attack: {attackerName} spent to attack {defenderName}.",
   "move.attackRival": "Attack: {attackerName} spent to attack the rival Gig area.",
-  "move.useBlocker": "React: {blockerName} used BLOCKER to redirect {attackerName}.",
+  "move.useBlocker":
+    "React: {blockerName} ({blockerPower} power) used BLOCKER to redirect {attackerName} ({attackerPower} power).",
   "move.resolveAttack.fight.attackerWins":
-    "Fight: {attackerName} ({attackerPower}) defeated {defenderName} ({defenderPower}).",
+    "Fight: {attackerName} ({attackerPower}) won against {defenderName} ({defenderPower}).",
   "move.resolveAttack.fight.attackerWins.prevented":
-    "Fight: {attackerName} ({attackerPower}) beat {defenderName} ({defenderPower}), but {sourceCardName} prevented {defenderName}'s defeat.",
+    "Fight: {attackerName} ({attackerPower}) won against {defenderName} ({defenderPower}); {sourceCardName} prevents the resulting defeat.",
   "move.resolveAttack.fight.defenderWins":
-    "Fight: {defenderName} ({defenderPower}) defeated {attackerName} ({attackerPower}).",
+    "Fight: {defenderName} ({defenderPower}) won against {attackerName} ({attackerPower}).",
+  "move.resolveAttack.fight.defenderWins.prevented":
+    "Fight: {defenderName} ({defenderPower}) won against {attackerName} ({attackerPower}); {sourceCardName} prevents the resulting defeat.",
   "move.resolveAttack.fight.mutual":
-    "Fight: both Units were defeated ({attackerName} {attackerPower}, {defenderName} {defenderPower}).",
+    "Fight: both Units lost ({attackerName} {attackerPower}, {defenderName} {defenderPower}).",
   "move.resolveAttack.fight.mutual.prevented":
-    "Fight: {attackerName} and {defenderName} tied ({attackerPower}), but {sourceCardName} prevented {defenderName}'s defeat.",
-  "move.resolveAttack.direct":
-    "Steal: {attackerName} stole {count} Gig(s) at {attackerPower} power.",
+    "Fight: both Units lost at {attackerPower} power; {sourceCardName} prevents {defenderName}'s resulting defeat.",
+  "move.resolveAttack.fight.mutual.attackerPrevented":
+    "Fight: both Units lost ({attackerName} {attackerPower}, {defenderName} {defenderPower}); {sourceCardName} prevents {attackerName}'s resulting defeat.",
+  "move.resolveAttack.fight.mutual.bothPrevented":
+    "Fight: both Units lost ({attackerName} {attackerPower}, {defenderName} {defenderPower}); {sourceCardName} prevents both resulting defeats.",
+  "move.resolveAttack.direct": "Steal: {attackerName} stole {stolenGigs} at {attackerPower} power.",
   "move.resolveAttack.ended": "Attack: {attackerName}'s attack ended before a fight or steal.",
+  "move.resolveRedirectDefeat":
+    "{replacementCardName} spent {cost} Eddie to prevent {protectedCardName}'s defeat and was removed from the game instead.",
+  "move.readyStep.cantReady": "{cardName} did not ready because of {sourceDescription}.",
   "move.turnEnded": "Turn {turnNumber} ended.",
+  "game.overtimeStarted": "Overtime began. The first player to hold 7 Gigs wins immediately.",
+  "game.overtimeFirstEmptyTurn":
+    "Both Fixer areas began empty. Overtime begins after one more turn that starts this way.",
+  "game.overtimeFinalTurn":
+    "Both Fixer areas began empty for a second turn. Overtime begins when this turn ends.",
   "move.concede": "Player {playerId} conceded the game.",
   "move.activateAbility": "{cardName} activated its ability.",
   "move.activateAbility.attached": "{attachedToName} activated {cardName}.",
@@ -126,7 +143,7 @@ export const enMessages: Record<ActionLogMessageKey, string> = {
   "move.resolveRevealDestination":
     "{chooserLabel} chose {destination}: moved {count} revealed card(s) to {destination}.",
   "move.resolveAdjustGig": "Adjusted {dieLabel} gig die from {previousValue} to {value}.",
-  "move.manualSetGigValue": "Board correction: set {dieLabel} to {value}.",
+  "move.manualSetGigValue": "Board correction: set {dieLabel} from {previousValue} to {value}.",
   "move.manualMoveGig": "Board correction: moved {dieLabel} to {destination}.",
   "move.manualMoveCard": "Board correction: moved {cardName} to {destination}.",
   "move.manualAttachGear": "Board correction: attached {gearName} to {hostName}.",
@@ -149,6 +166,16 @@ export const enMessages: Record<ActionLogMessageKey, string> = {
     "{sourceCardName} discarded {discardedCardName} (cost {discardedCost}).",
   "effect.draw.resolved": "{sourceCardName} drew {drawnCount} card(s).",
   "effect.draw.skipped": "{sourceCardName} did not draw: {reason}.",
+  "effect.skipped": "{sourceCardName}'s {effectName} effect was skipped: {reason}.",
+  "effect.noAction":
+    "{sourceCardName}'s {effectName} effect did nothing because its requirements were not met.",
+  "effect.noValidTargets": "{sourceCardName}'s {effectName} effect had no valid targets.",
+  "effect.modifyPower.resolved": "{sourceCardName} gave {targetNames} {powerChange} power.",
+  "trigger.resolutionFailed": "{cardName}'s ability could not resolve: {reason}.",
+  "effect.insufficientTargets":
+    "{sourceCardName}'s {effectName} effect needed {requiredCount} valid targets but found {availableCount}; it did nothing.",
+  "effect.spend.skippedAlreadySpent":
+    "{sourceCardName}'s spend did nothing: {targetName} is already spent.",
   "effect.trashFromDeck.resolved":
     "{sourceCardName} trashed {trashedCount} card(s) from the top of the deck: {trashedCardNames}.",
   "effect.sellFromDeck.resolved": "{sourceCardName} sold {soldCardNames} from the top of the deck.",
@@ -157,8 +184,12 @@ export const enMessages: Record<ActionLogMessageKey, string> = {
   "trigger.orderPending": "Trigger order pending: choose 1 of {triggerCount}: {triggerNames}.",
   "trigger.orderSelected":
     "Trigger order selected: {cardName} resolves next; {remainingCount} remain ({remainingTriggerNames}).",
-  "trigger.noValidTargets": "{cardName} had no valid targets.",
-  "trigger.stealGig": "{cardName} stole {count} additional {dieTypes} {gigWord}.",
+  "trigger.noValidTargets": "{cardName} had no valid targets: {reason}.",
+  "trigger.requiredTargetUnavailable":
+    "{cardName} had no legal {targetDescription}; target-dependent effects were skipped.",
+  "trigger.insufficientTargets":
+    "{cardName} needed {requiredCount} legal {targetDescription} targets but found {availableCount}; target-dependent effects were skipped.",
+  "trigger.stealGig": "{cardName} stole {stolenGigs}.",
   "trigger.targetResolved": "Selected {targetNames} for {sourceCardName}.",
   "trigger.targetResolved.deckBottom":
     "Selected {targetNames} for {sourceCardName} to move to the bottom of the deck.",
@@ -167,18 +198,22 @@ export const enMessages: Record<ActionLogMessageKey, string> = {
   "trigger.grantRule.cantAttack":
     "{sourceCardName} made {targetNames} unable to attack until your next turn.",
   "trigger.defeatedTarget": "{sourceCardName} defeated {targetNames}.",
+  "trigger.defeatFailed":
+    "{sourceCardName} did not defeat {targetNames}; the target was unavailable or its defeat was prevented.",
   "effect.callLegend.free": "{sourceCardName} called {legendName} for free.",
   "effect.callLegend.skippedAlreadyCalled":
     "{sourceCardName} skipped calling a Legend because a Legend was already called this turn.",
   "trigger.copyGigValue":
     "{sourceCardName} copied {sourceDieType}'s {sourceValue} to {targetDieType} ({previousValue} -> {newValue}).",
-  "trigger.copyGigValueCapped":
-    "{sourceCardName} could not copy {sourceDieType}'s {sourceValue} to {targetDieType}; {targetDieType} can show at most {targetMax}, so it {resultText}.",
+  "trigger.copyGigValueFailed":
+    "{sourceCardName} could not set {targetDieType} from {previousValue} to {sourceDieType}'s {sourceValue}: a {targetDieType} only has values 1–{targetMax}. It remains at {previousValue}.",
   "trigger.delayedDefeat": "{sourceCardName} defeated {targetNames} at the end of the turn.",
   "trigger.revealTopCardType.hit":
     "{sourceCardName} selected {chosenType}, revealed {revealedCardName} ({revealedType}), and because it matched, added it to hand.",
   "trigger.revealTopCardType.miss":
     "{sourceCardName} selected {chosenType}, revealed {revealedCardName} ({revealedType}), and because it did not match, trashed it.",
+  "setup.blankEddie": "Added {count} blank Eddie(s) from the top of the deck.",
+  "setup.firstPlayerChoice": "Chose to go {order}.",
 };
 
 /**

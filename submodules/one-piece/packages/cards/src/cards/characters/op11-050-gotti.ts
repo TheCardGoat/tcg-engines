@@ -39,7 +39,7 @@ export const op11Gotti050: CharacterCard = {
               {
                 filter: "trait",
                 value: "Firetank Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

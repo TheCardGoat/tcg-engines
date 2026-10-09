@@ -30,7 +30,7 @@ export const op03CharlotteLinlin077: LeaderCard = {
   setId: "OP03",
   power: 5000,
   life: 4,
-  traits: ["The Four Emperors Big Mom Pirates"],
+  traits: ["The Four Emperors", "Big Mom Pirates"],
   attribute: "special",
   effect:
     "[DON!! x2] [When Attacking] (2) (You may rest the specified number of DON!! cards in your cost area.) You may trash 1 card from your hand: If you have 1 or less Life cards, add up to 1 card from the top of your deck to the top of your Life cards.",

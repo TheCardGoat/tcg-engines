@@ -83,4 +83,37 @@ describe("OP15-024 Usopp", () => {
     ).toBe(false);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("opponent Events can rest Usopp despite his Leader and Character protection", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op15Usopp024] },
+      { hand: ["OP15-078"], activeDon: 2 },
+    );
+    const usoppId = engine.findCardInZone("south", "character", op15Usopp024);
+    engine.endTurn("south");
+    engine.playCard("OP15-078", "north");
+    engine.asNorth().acceptOptional();
+    engine.acceptLeadingOptional("north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [usoppId] }, "north");
+    expect(engine.getView("south").players.south.characters[0]?.rested).toBe(true);
+  });
+
+  test("opponent Character effects cannot rest Usopp", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op15Usopp024] },
+      { hand: ["OP15-032"], activeDon: 8 },
+    );
+    engine.endTurn("south");
+    engine.playCard("OP15-032", "north");
+    const prompt = engine.pendingDecision("effectMixedRestSelection", "north").steps[0];
+    if (prompt?.kind !== "payCost") throw new Error("Expected Brook targets");
+    expect(prompt.candidates.map((c) => c.ref.id)).toContain(
+      engine.findCardInZone("south", "character", op15Usopp024),
+    );
+    engine.resolveDecision(
+      "effectMixedRestSelection",
+      { selectedIds: [engine.findCardInZone("south", "character", op15Usopp024)] },
+      "north",
+    );
+    expect(engine.getView("south").players.south.characters[0]?.rested).toBe(false);
+  });
 });

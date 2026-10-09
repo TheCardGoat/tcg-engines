@@ -22,21 +22,41 @@ describe("OP16-001 Portgas.D.Ace", () => {
     expect(engine.getView("south").players.north.lifeCount).toBe(lifeBefore - 1);
   });
 
-  test("[Continuous] survives the turn handoff", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ cardId: "OP16-001", attachedDon: 1 }], activeDon: 5 },
-      { activeDon: 5 },
+  test("both named Luffy and Whitebeard alternatives require current power at least 8000", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP16-001", character: ["OP02-062", "OP16-004", "OP02-018"] },
+      {},
     );
-    const northBefore = engine.getView("south").players.north;
-
-    engine.endTurn("south");
-    const after = engine.getView("south").players.north;
-
-    expect(after.activeDon).toBe(northBefore.activeDon + 2);
-    expect(after.lifeCount).toBe(northBefore.lifeCount);
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP16-001",
+    e.asSouth().activateMain(e.leader("south"));
+    const step = e.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (step.kind !== "selectEntity") throw new Error("Expected Rush target");
+    expect(step.candidates.map((c) => c.publicInfo?.cardId)).toEqual(["OP16-004"]);
+    e.resolveDecision("effectTargetSelection", { selectedIds: [] }, "south");
+    const result = e.expectFailure({
+      type: "activateEffect",
+      seat: "south",
+      sourceInstanceId: e.leader("south"),
+      trigger: "activateMain",
+    });
+    expect(result.reason).toMatch(/already|once/i);
+  });
+  test("a newly played Luffy reaching 8000 with DON gains Rush and can attack", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "OP16-001",
+        character: [{ cardId: "OP02-062", playedOnTurn: 3 }],
+        activeDon: 1,
+        hand: [],
+      },
+      {},
+      { turnNumber: 3 },
     );
-    expect(engine.getView("south").prompts).toHaveLength(0);
+    const luffy = e.findCardInZone("south", "character", "OP02-062");
+    e.asSouth().attachDon(luffy, 1);
+    e.asSouth().activateMain(e.leader("south"));
+    e.resolveDecision("effectTargetSelection", { selectedIds: [luffy] }, "south");
+    const life = e.getView("south").players.north.lifeCount;
+    e.asSouth().attack(luffy, e.leader("north"));
+    expect(e.getView("south").players.north.lifeCount).toBe(life - 1);
   });
 });

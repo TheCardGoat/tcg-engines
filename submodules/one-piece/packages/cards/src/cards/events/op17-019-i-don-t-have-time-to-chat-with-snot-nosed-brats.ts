@@ -22,7 +22,7 @@ export const op17IDonTHaveTimeToChatWithSnotNosedBrats019: EventCard = {
   setId: "OP17",
   cost: 1,
   trigger: "Your Leader gains +1000 power during this turn.",
-  traits: ["The Four Emperors Whitebeard Pirates"],
+  traits: ["The Four Emperors", "Whitebeard Pirates"],
   effect:
     '[Main] Look at 5 cards from the top of your deck; reveal up to 1 card with a type including "Whitebeard Pirates" and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
   effects: {

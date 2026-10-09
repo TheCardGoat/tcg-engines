@@ -22,7 +22,7 @@ export const op10FightingFish069: CharacterCard = {
   setId: "OP10",
   cost: 4,
   power: 6000,
-  traits: ["Animal Dressrosa"],
+  traits: ["Animal", "Dressrosa"],
   attribute: "strike",
   effect:
     "[DON!! x1] [When Attacking] DON!! −1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): K.O. up to 1 of your opponent's Characters with a cost of 1 or less.",

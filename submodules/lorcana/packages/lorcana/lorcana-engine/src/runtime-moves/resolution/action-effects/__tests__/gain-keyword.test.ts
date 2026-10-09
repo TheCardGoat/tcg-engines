@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, it, mock } from "bun:test";
 import type { CardInstanceId } from "#core";
 import type { GainKeywordEffect } from "@tcg/lorcana-types";
 import type { PlayCardExecutionContext } from "../types";
@@ -19,7 +19,9 @@ function readKeywords(
 
 describe("gain-keyword", () => {
   it("records a temporary Evasive grant on the chosen target", () => {
+    const log = mock(() => undefined);
     const ctx = createTestContext({
+      log,
       zoneCards: { "play:player-one": [TGT] },
       definitions: { tgt: { id: "tgt", cardType: "character" } },
     });
@@ -40,6 +42,16 @@ describe("gain-keyword", () => {
     const keywords = readKeywords(ctx, TGT);
     expect(keywords).toBeDefined();
     expect(Object.keys(keywords ?? {})).toContain("Evasive");
+    expect(log).toHaveBeenCalledTimes(1);
+    expect(log).toHaveBeenCalledWith(
+      expect.objectContaining({
+        visibility: { mode: "PUBLIC" },
+        typedEntry: expect.objectContaining({
+          type: "lorcana.outcome.keywordGranted",
+          values: { sourceId: "src", targetId: TGT, keyword: "Evasive" },
+        }),
+      }),
+    );
   });
 
   it("is a no-op when the keyword string is empty", () => {

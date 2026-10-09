@@ -24,6 +24,8 @@ export interface LorcanaServerAuthoritativeSnapshot {
   state: LorcanaMatchState;
   cardsMaps: CardsMaps;
   undoStack?: LorcanaUndoStackEntrySnapshot[];
+  turnStartCheckpoint?: LorcanaUndoStackEntrySnapshot | null;
+  turnStartStateID?: number | null;
 }
 
 /**
@@ -42,6 +44,8 @@ export function getLorcanaServerAuthoritativeSnapshot(
     state: getLorcanaServerAuthoritativeState(engine),
     cardsMaps,
     undoStack: engine.getUndoStackSnapshot(),
+    turnStartCheckpoint: engine.getTurnStartCheckpointSnapshot(),
+    turnStartStateID: engine.getTurnStartStateID(),
   };
 }
 

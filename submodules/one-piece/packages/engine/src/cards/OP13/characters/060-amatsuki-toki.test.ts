@@ -63,4 +63,19 @@ describe("OP13-060 Amatsuki Toki", () => {
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(targetId);
     expect(view.prompts).toHaveLength(0);
   });
+  test("can trash itself to replace its own effect K.O. without a K.O. observer firing", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: ["OP13-060"] },
+      { leaderCardId: "OP01-061", hand: ["OP08-117"], activeDon: 5, life: 1, donDeckCount: 5 },
+      { activeSeat: "north" },
+    );
+    const source = engine.findCardInZone("south", "character", "OP13-060");
+    engine.asNorth().play("OP08-117");
+    engine.asNorth().acceptOptional();
+    engine.asNorth().chooseTargets(source);
+    engine.resolveDecision("effectKoReplacement", { optionId: "yes" }, "south");
+    expect(engine.getView("south").players.south.trash.map((c) => c.instanceId)).toContain(source);
+    expect(engine.getView("north").players.north.donDeckCount).toBe(5);
+    expect(engine.getView("north").prompts).toHaveLength(0);
+  });
 });

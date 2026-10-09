@@ -85,7 +85,7 @@ export function EntityStateChangeLayer() {
         // one: slot boxes can be landscape or padded around a portrait card,
         // and the rotating copy must start/end exactly where the real card
         // sits, or the handoff snaps in size and position.
-        rect: visualNode.getBoundingClientRect(),
+        rect: stateChangeVisualRect(visualNode.getBoundingClientRect(), step.fromRotationDeg),
       });
     }
     setVisuals(next);
@@ -156,6 +156,15 @@ export function stateChangeVisualNode(
     return node.querySelector<HTMLElement>("[data-sim-animation-orientation-target]") ?? node;
   }
   return node;
+}
+
+export function stateChangeVisualRect(rect: DOMRect, rotationDeg = 0): DOMRect {
+  const rotationWithinHalfTurn = ((rotationDeg % 180) + 180) % 180;
+  if (rotationWithinHalfTurn !== 90) return rect;
+
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  return new DOMRect(centerX - rect.height / 2, centerY - rect.width / 2, rect.height, rect.width);
 }
 
 function StateChangeVisual({ visual }: { readonly visual: StateChangeVisual }) {

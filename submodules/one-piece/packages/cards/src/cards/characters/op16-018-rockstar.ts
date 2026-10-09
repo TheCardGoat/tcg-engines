@@ -42,7 +42,7 @@ export const op16Rockstar018: CharacterCard = {
             {
               filter: "trait",
               value: "Red-Haired Pirates",
-              match: "includes",
+              match: "exact",
             },
           ],
         },

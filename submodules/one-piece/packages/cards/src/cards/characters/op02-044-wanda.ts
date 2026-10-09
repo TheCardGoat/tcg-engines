@@ -55,7 +55,7 @@ export const op02Wanda044: CharacterCard = {
               {
                 filter: "trait",
                 value: "Minks",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

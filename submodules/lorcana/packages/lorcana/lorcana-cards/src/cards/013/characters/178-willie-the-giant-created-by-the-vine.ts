@@ -30,6 +30,7 @@ export const willieTheGiantCreatedByTheVine: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fa625dce7d994607aa2f211dacc7f583",
+    tcgPlayer: "702699",
   },
   text: [
     {

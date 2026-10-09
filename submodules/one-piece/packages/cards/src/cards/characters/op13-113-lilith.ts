@@ -32,7 +32,7 @@ export const op13Lilith113: CharacterCard = {
   power: 2000,
   counter: 1000,
   trigger: "Activate this card's [On Play] effect.",
-  traits: ["Scientist Egghead"],
+  traits: ["Egghead", "Scientist"],
   attribute: "wisdom",
   effect:
     "[On Play] Look at 4 cards from the top of your deck; reveal up to 1 card with a [Trigger] other than [Lilith] and add it to your hand. Then, place the rest at the bottom of your deck in any order.",

@@ -216,6 +216,9 @@ export function prepareGrandArchiveRuleBoundEvent(
     case "object-moved": {
       const object = state.objects[event.objectId];
       if (!object) return event;
+      // Tokens 3.1: a token that left the field cannot change zones again,
+      // including within one resolving effect before it ceases to exist.
+      if (object.isToken && object.zone !== "field") return undefined;
       let admittedEvent: Extract<GrandArchiveProposedEvent, { readonly type: "object-moved" }> =
         event;
       if (event.entryFace !== undefined) {

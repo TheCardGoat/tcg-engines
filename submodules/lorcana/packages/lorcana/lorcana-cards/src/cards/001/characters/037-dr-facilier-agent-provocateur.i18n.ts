@@ -20,7 +20,17 @@ export const drFacilierAgentProvocateurI18n: Record<Languages, I18nProperties> =
   de: {
     name: "Dr. Facilier",
     version: "Agent Provocateur",
-    text: "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Dr.-Facilier-Charaktere auszuspielen.)\\Im Schattenreich\\ Jedes Mal, wenn einer deiner anderen Charaktere durch eine Herausforderung verbannt wird, darfst du jene Karte zurück auf deine Hand nehmen.",
+    text: [
+      {
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Dr.-Facilier-Charaktere auszuspielen.)",
+      },
+      {
+        title: "Im Schattenreich",
+        description:
+          "Jedes Mal, wenn einer deiner anderen Charaktere durch eine Herausforderung verbannt wird, darfst du jene Karte zurück auf deine Hand nehmen.",
+      },
+    ],
   },
   fr: {
     name: "DR. FACILIER",

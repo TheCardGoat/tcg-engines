@@ -535,8 +535,7 @@ describe("InteractionDraftProvider", () => {
 
   it("submits an empty optional selection after confirmation", () => {
     const onSubmit = vi.fn((_submission: InteractionSubmission) => true);
-    // The required mode keeps the draft open; a lone min-0 input would be
-    // submitted as an omission by begin() before confirmation ever runs.
+    // The optional target follows a required mode in this multi-step action.
     const optionalSelectionView: EngineInteractionView = {
       ...view,
       actions: [

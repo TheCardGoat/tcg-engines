@@ -68,6 +68,7 @@ export const shockTherapy: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
             counter: "enlighten",
             amount: 1,
           },
+          functionalZones: ["memory"],
         },
         {
           id: "tyj2s3572j-a2",

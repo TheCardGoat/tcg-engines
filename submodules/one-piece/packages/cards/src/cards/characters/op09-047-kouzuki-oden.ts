@@ -22,7 +22,7 @@ export const op09KouzukiOden047: CharacterCard = {
   setId: "OP09",
   cost: 9,
   power: 10000,
-  traits: ["Land of Wano Whitebeard Pirates"],
+  traits: ["Land of Wano", "Whitebeard Pirates"],
   attribute: "slash",
   effect:
     "[Double Attack] (This card deals 2 damage.)\n[On K.O.] Draw 2 cards and trash 1 card from your hand.",

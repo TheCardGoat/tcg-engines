@@ -23,7 +23,7 @@ export const eb03Baccarat007: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["FILM Grantesoro"],
+  traits: ["FILM", "Grantesoro"],
   attribute: "special",
   effect:
     "[Blocker] [On K.O.] Play up to 1 Character card with 6000 power or less and no base effect from your hand.",

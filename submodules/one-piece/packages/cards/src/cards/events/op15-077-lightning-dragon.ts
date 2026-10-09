@@ -37,6 +37,7 @@ export const op15LightningDragon077: EventCard = {
     effects: [
       {
         trigger: "main",
+        optional: true,
         costs: [
           {
             cost: "returnDon",
@@ -59,6 +60,7 @@ export const op15LightningDragon077: EventCard = {
                 upTo: true,
               },
               filters: [
+                { filter: "power", comparison: "lte", value: 6000 },
                 {
                   filter: "state",
                   value: "rested",

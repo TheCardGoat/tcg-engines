@@ -72,6 +72,7 @@ export const maledictumVitae: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
           id: "24I0xn0OQ1-a2",
           kind: "triggered",
           text: "Whenever this card is put into a champion's lineage, that champion's controller recovers 4.",
+          functionalZones: ["inner-lineage"],
           trigger: {
             kind: "event",
             event: {

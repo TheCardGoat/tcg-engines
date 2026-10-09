@@ -23,7 +23,7 @@ export const op13LordOfTheCoast010: CharacterCard = {
   cost: 6,
   power: 8000,
   counter: 1000,
-  traits: ["East Blue Neptunian"],
+  traits: ["Neptunian", "East Blue"],
   attribute: "strike",
   i18n: op13LordOfTheCoast010I18n,
 };

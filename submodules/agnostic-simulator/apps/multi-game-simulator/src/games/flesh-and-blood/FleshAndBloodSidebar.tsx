@@ -56,6 +56,7 @@ export interface FleshAndBloodSidebarProps {
   /** Sync / conflict / pending label shown in the activity region. */
   readonly status: ReactNode;
   readonly sidebarExtra?: ReactNode;
+  readonly chat?: ReactNode;
   /**
    * Page-owned action surface (practice legal moves, fixture switcher content
    * embedded by the page, replay chrome). Lives in the flexible activity band
@@ -114,6 +115,7 @@ export function FleshAndBloodSidebar({
   opponent,
   status,
   sidebarExtra,
+  chat,
   matchActions,
   spectatorReturnHref,
   activity,
@@ -170,6 +172,7 @@ export function FleshAndBloodSidebar({
           opponentId,
           status,
           sidebarExtra,
+          chat,
           pageOwnedActions,
           activityLogLabel,
           activityOwnsStatus,
@@ -213,6 +216,7 @@ export function FleshAndBloodMobilePanel({
   opponent,
   status,
   sidebarExtra,
+  chat,
   matchActions,
   spectatorReturnHref,
   activity,
@@ -255,6 +259,7 @@ export function FleshAndBloodMobilePanel({
       opponentId,
       status,
       sidebarExtra,
+      chat,
       pageOwnedActions,
       activityLogLabel,
       activityOwnsStatus,
@@ -416,6 +421,7 @@ export function buildFabActivity({
   viewerId,
   opponentId,
   sidebarExtra,
+  chat,
   pageOwnedActions,
   activityLogLabel,
   eventLog,
@@ -426,6 +432,7 @@ export function buildFabActivity({
   readonly opponentId: string;
   readonly status: ReactNode;
   readonly sidebarExtra?: ReactNode;
+  readonly chat?: ReactNode;
   readonly pageOwnedActions: ReactNode | null;
   readonly activityLogLabel?: string;
   readonly activityOwnsStatus?: boolean;
@@ -479,6 +486,8 @@ export function buildFabActivity({
 
   return {
     log,
+    chat,
+    chatLabel: chat ? "Chat" : undefined,
     logLabel:
       activityLogLabel ??
       (pageOwnedActions

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "bun:test";
+import { getLocale, overwriteGetLocale } from "$lib/paraglide/runtime.js";
 import type { MatchStaticResources } from "@tcg/lorcana-engine";
 import type { LorcanaProjectedBoardView } from "@tcg/lorcana-engine";
 
@@ -459,6 +460,62 @@ describe("buildCardSnapshotMap", () => {
         cards: new Map([[definitionId, { id: definitionId, ...cardDefinition }]]),
       } as unknown as MatchStaticResources;
     }
+
+    it("maps both Hat branches to translated text while keeping one printed entry", () => {
+      const originalGetLocale = getLocale;
+      const english = { title: "HAT COUTURE", description: "You may ink a hand card." };
+      const german = {
+        title: "Hut-Couture",
+        description: "Lege eine Karte verdeckt und erschöpft in deinen Tintenvorrat.",
+      };
+      try {
+        overwriteGetLocale(() => "de");
+        const resources = makeStaticResources("hat-de", "hat-def-de", {
+          name: "Spyglass Hat",
+          cardType: "item",
+          text: [english],
+          i18n: { de: { name: "Fernrohr-Hut", text: [german] } },
+          abilities: [
+            { type: "triggered", name: "HAT COUTURE", trigger: { event: "play", on: "SELF" } },
+            {
+              type: "triggered",
+              name: "HAT COUTURE",
+              trigger: { event: "play", on: { cardType: "item" } },
+            },
+          ],
+        });
+        const snapshot = buildCardSnapshotMap(makeBoard("hat-de", "hat-def-de"), resources)[
+          "hat-de"
+        ];
+        expect(snapshot.textEntries).toEqual([german]);
+        expect(snapshot.abilityTextEntries).toEqual([german, german]);
+        expect(snapshot.text).toContain(german.description);
+        expect(snapshot.text).not.toContain(english.description);
+      } finally {
+        overwriteGetLocale(originalGetLocale);
+      }
+    });
+
+    it("maps two engine branches to their one printed ability without duplicating card text", () => {
+      const entry = { title: "HAT COUTURE", description: "You may ink a hand card." };
+      const board = makeBoard("hat-1", "hat-def");
+      const resources = makeStaticResources("hat-1", "hat-def", {
+        name: "Spyglass Hat",
+        cardType: "item",
+        text: [entry],
+        abilities: [
+          { type: "triggered", name: "HAT COUTURE", trigger: { event: "play", on: "SELF" } },
+          {
+            type: "triggered",
+            name: "HAT COUTURE",
+            trigger: { event: "play", on: { cardType: "item" } },
+          },
+        ],
+      });
+      const snapshot = buildCardSnapshotMap(board, resources)["hat-1"];
+      expect(snapshot.textEntries).toEqual([entry]);
+      expect(snapshot.abilityTextEntries).toEqual([entry, entry]);
+    });
 
     it("produces a single textEntry for a plain string keyword (e.g. 'Support')", () => {
       const board = makeBoard("card-1", "def-1");

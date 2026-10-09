@@ -33,6 +33,7 @@ export const kocoumDefenderOfTheTribe: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_79c67a3bbf9f48e9ac759264d0ded41a",
+    tcgPlayer: "704547",
   },
   text: "Bodyguard",
   classifications: ["Storyborn", "Ally"],

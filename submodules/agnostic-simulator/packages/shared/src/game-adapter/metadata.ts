@@ -39,3 +39,15 @@ export function sortMetadataFacets(facets: Iterable<DeckMetadataFacet>): DeckMet
       left.label.localeCompare(right.label),
   );
 }
+
+/** Return the first three distinct members of the first populated identity type in facet order. */
+export function projectDeckIdentityMembers<T extends { cardId: string }>(
+  facets: readonly { type: string; members?: readonly T[] }[],
+): T[] {
+  const identityType = facets.find((facet) => facet.members?.length)?.type;
+  if (!identityType) return [];
+  const members = facets
+    .filter((facet) => facet.type === identityType)
+    .flatMap((facet) => facet.members ?? []);
+  return [...new Map(members.map((member) => [member.cardId, member])).values()].slice(0, 3);
+}

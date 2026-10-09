@@ -77,4 +77,18 @@ describe("OP11-114 Gum-Gum Fire-Fist Pistol Red Hawk", () => {
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
+  test("pays the three DON cost before a four-total-Life condition fails", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "ST01-001", hand: ["OP11-114"], activeDon: 4, life: 2 },
+      { leaderCardId: "ST01-001", life: 2, character: ["EB01-018"] },
+    );
+    const target = e.findCardInZone("north", "character", "EB01-018");
+    e.asSouth().play("OP11-114");
+    e.asSouth().acceptOptional();
+    expect(e.getView("south").players.south).toMatchObject({ activeDon: 0, restedDon: 4 });
+    expect(e.getView("south").players.north.characters.some((c) => c?.instanceId === target)).toBe(
+      true,
+    );
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

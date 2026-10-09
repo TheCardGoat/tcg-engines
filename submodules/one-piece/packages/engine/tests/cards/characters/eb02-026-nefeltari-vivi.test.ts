@@ -52,4 +52,15 @@ describe("EB02-026 Nefeltari Vivi", () => {
     });
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("single-color Leader fails even with a small hand", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "ST01-001",
+      hand: ["EB02-026"],
+      activeDon: 4,
+      deck: ["EB01-005", "EB01-025", "EB01-018"],
+    });
+    e.asSouth().play("EB02-026");
+    expect(e.getView("south").players.south).toMatchObject({ handCount: 0, deckCount: 3 });
+    expect(e.getView("south").prompts).toHaveLength(0);
+  });
 });

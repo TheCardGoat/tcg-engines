@@ -40,7 +40,7 @@ export const op17ThereSNoAuthorityInTheWorldThatLastsForever055: EventCard = {
             action: "grantKeyword",
             target: {
               player: "self",
-              zones: ["character"],
+              zones: ["leader", "character"],
               count: {
                 amount: 1,
                 upTo: true,

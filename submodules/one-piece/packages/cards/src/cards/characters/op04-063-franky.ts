@@ -53,7 +53,7 @@ export const op04Franky063: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Water Seven",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

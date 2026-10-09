@@ -1,5 +1,13 @@
-# ONE PIECE CARD GAME Comprehensive Rules Version 1.2.0
-**Last updated: 1/16/2026**
+---
+official_source:
+  publisher: "Bandai"
+  url: "https://en.onepiece-cardgame.com/pdf/rule_comprehensive.pdf?20260828="
+  relation: "current_index"
+  copy_version: "1.2.1"
+---
+
+# ONE PIECE CARD GAME Comprehensive Rules Version 1.2.1
+**Last updated: 8/28/2026**
 
 ## Table of Contents
 - Contents of Comprehensive Rules
@@ -183,7 +191,7 @@
 
 2-7-2. When playing a Character card from your hand, you should first reveal the card you wish to play, select a number of active DON!! cards in your cost area equal to the card’s cost, rest those DON!! cards, and then play the revealed card.
 
-2-7-3. When activating an Event card from your hand, you should first reveal the card you wish to activate, select a number of active DON!! cards in your cost area equal to the card’s cost, rest those DON!! cards, and then trash the revealed card to activate it.
+2-7-3. When activating an Event card from your hand, you should first reveal the card you wish to activate, select a number of active DON!! cards in your cost area equal to the card’s cost, rest those DON!! cards, trash the revealed card, then activate and resolve the effect.
 
 2-7-4. When playing a Stage card from your hand, you should first reveal the card you wish to play, select a number of active DON!! cards in your cost area equal to the card’s cost, rest those DON!! cards, and then play the revealed card.
 
@@ -224,6 +232,10 @@
 2-10-1. This specifies the power increase to a Character card’s power that can be activated during the Counter Step.
 
 2-10-2. Only Character cards have (Symbol) Counter.
+
+2-10-3. Depending on the effect, the value of the (Symbol) Counter may differ from the value indicated on the card.
+
+2-10-4. If a card has multiple (Symbol) Counters, only the Counter with the highest value is applied.
 
 ### 2-11. [Trigger]
 
@@ -268,6 +280,8 @@ card number in your deck.
 3-1-1. The areas are the deck, DON!! deck, hand, trash, Leader area, Character area, Stage area, cost area, and Life area.
 
 3-1-2. The Leader area, Character area, Stage area, and cost area are sometimes collectively referred to as “the field”.
+
+3-1-2-1. When referring to specific conditions with such phrasing as "If you have", "if your opponent has", "If you have no", "if you do not have", etc., the area being referred to is "the field" unless otherwise specified.
 
 3-1-3. Unless otherwise specified, each player possesses one of every area.
 
@@ -465,19 +479,13 @@ case, the face-up card is treated as a card in an open area as an exception.
 
 4-10-1. If a preceding “if” clause in the text cannot be resolved, the following clause in that text also cannot be resolved.
 
-4-10-2. If a preceding “then” clause in the text cannot be resolved, the following clause in that text can still be resolved.
+4-10-2. If a preceding “then” clause in the text cannot be resolved, the following clause in that text can still be resolved. However, if a preceding “if” clause has not been resolved as outlined in 4-10-1., the following clause in that text cannot be resolved.
 
 ### 4-11. “Remove”
 
 4-11-1. The term “remove” appears in some card text.
 
 4-11-2. “Remove” refers to moving a card from the area it is placed in to another area.
-
-« Set Power to 0 »
-
-« Set Power to 0 » is an effect that reduces the power of the target for a specified duration, by the same amount as the target’s current power at the time the effect was activated.
-
-If the target card’s power is already in the negatives, nothing will happen when « Set Power to 0 » is applied to it.
 
 ### 4-12. « Set Power to 0 »
 
@@ -603,6 +611,8 @@ DON!! card given to them.
 
 6-6-1-1. Auto effects that read “[End of Your Turn]” (Keyword) and “[End of Your Opponent’s Turn]” (Keyword) are activated.
 
+6-6-1-1-1. Auto effects that read “[End of Your Turn]” (Keyword) and “[End of Your Opponent’s Turn]” (Keyword) can only be activated and resolved once.
+
 6-6-1-1-2. After all “[End of Your Turn]” (Keyword) effects have been activated and resolved, all “[End of Your Opponent’s Turn]” (Keyword) effects are activated and resolved.
 
 6-6-1-1-3. If there are multiple “[End of Your Turn]” (Keyword) effects to be resolved, the turn player may activate and resolve them in any order.
@@ -643,15 +653,13 @@ DON!! card given to them.
 
 #### 7-1-3. Counter Step
 
-7-1-3-1. Effects of the player being attacked that read “when attacked” activate.
+7-1-3-1. The player being attacked may perform the following actions in any order and as many times as they wish:
 
-7-1-3-2. The player being attacked may perform the following actions in any order and as many times as they wish:
+7-1-3-1-1. Activate [(Symbol) Counter]: The player being attacked may trash a Character card with [(Symbol) Counter] from their hand to activate an effect that increases the power of their Leader or 1 Character card by the value of the [(Symbol) Counter] during that battle.
 
-7-1-3-2-1. Activate [(Symbol) Counter]: The player being attacked may trash a Character card with [(Symbol) Counter] from their hand to activate an effect that increases the power of their Leader or 1 Character card by the value of the [(Symbol) Counter] during that battle.
+7-1-3-1-2. Activate an Event card: The player being attacked may pay the cost of an Event card with [Counter] in their hand, and then trash it to activate the [Counter] effect.
 
-7-1-3-2-2. Activate an Event card: The player being attacked may pay the cost of an Event card with [Counter] in their hand, and then trash it to activate the [Counter] effect.
-
-7-1-2-3. If, at the end of the Counter Step, the attacking card or the target card for the attack has moved areas due to some method, proceed not to the Damage Step (see 7-1-4.), but to the End of the Battle (see 7-1-5.).
+7-1-3-1-3. If, at the end of the Counter Step, the attacking card or the target card for the attack has moved areas due to some method, proceed not to the Damage Step (see 7-1-4.), but to the End of the Battle (see 7-1-5.).
 
 #### 7-1-4. Damage Step
 
@@ -775,7 +783,7 @@ applied.
 
 8-3-1-3-1. If you have fulfilled the conditions to pay the activation cost, activated the effect, and become unable to pay the activation cost while in the process of paying the activation cost, pay as much of the activation cost as possible. You cannot resolve the effect as written after the : colon. In addition, see 10-2-13-5. regarding the processing of [Once Per Turn] effects in this situation.
 
-8-3-1-4. Activation costs may be specified using “can” or “may”. The player can choose not to pay the activation cost; however, this will mean the effect cannot be activated.
+8-3-1-4. Activation costs may be specified using “can” or “may”. The player can choose not to pay the activation cost; however, this will mean the effect as written after the : colon mark cannot be activated.
 
 8-3-1-5. Activation costs may be specified using a symbol such as ①. That symbol means that the player must select a number of active DON!! cards equal to the number in the symbol from their cost area and rest them.
 
@@ -971,9 +979,11 @@ to be activated in certain situations.
 
 10-2-12-1. [Opponent’s Turn] is a keyword indicating a condition that is satisfied during your opponent’s turn.
 
-effects can be activated and resolved once for each card.
-
 #### 10-2-13. [Once Per Turn]
+
+10-2-13-1. [Once Per Turn] is a keyword indicating an effect can only be activated and resolved once during that turn.
+
+10-2-13-2. Where there are multiple cards with the same effect, [Once Per Turn] effects can be activated and resolved once for each card.
 
 10-2-13-3. After a [Once Per Turn] effect has been resolved once, it cannot be activated again, even if the conditions can be met during that turn. In addition, that card’s activation cost cannot be paid again during that turn.
 

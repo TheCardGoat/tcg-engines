@@ -23,7 +23,7 @@ export const op11Bins011: CharacterCard = {
   cost: 5,
   power: 7000,
   counter: 1000,
-  traits: ["FILM Neo Navy"],
+  traits: ["FILM", "Neo Navy"],
   attribute: "special",
   i18n: op11Bins011I18n,
 };

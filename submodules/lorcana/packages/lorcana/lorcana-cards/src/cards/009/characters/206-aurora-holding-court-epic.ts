@@ -23,7 +23,7 @@ export const auroraHoldingCourtEpic: CharacterCard = {
   franchise: "Sleeping Beauty",
   set: "009",
   cardNumber: 206,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 1,
   strength: 1,

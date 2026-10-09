@@ -60,7 +60,7 @@ export const op05Baby5033: CharacterCard = {
               {
                 filter: "trait",
                 value: "Donquixote Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

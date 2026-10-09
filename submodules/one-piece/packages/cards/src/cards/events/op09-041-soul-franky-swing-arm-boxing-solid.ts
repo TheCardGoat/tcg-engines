@@ -22,7 +22,7 @@ export const op09SoulFrankySwingArmBoxingSolid041: EventCard = {
   setId: "OP09",
   cost: 1,
   trigger: "Rest up to 1 of your opponent's Characters with a cost of 4 or less.",
-  traits: ["Straw Hat Crew ODYSSEY"],
+  traits: ["ODYSSEY", "Straw Hat Crew"],
   effect:
     '[Counter] Up to 1 of your Leader or Character cards gains +2000 power during this battle. Then, if your Leader has the "ODYSSEY" type and you have 2 or more rested Characters, set up to 2 of your Characters as active.',
   effects: {
@@ -60,7 +60,7 @@ export const op09SoulFrankySwingArmBoxingSolid041: EventCard = {
                 {
                   condition: "leaderTrait",
                   trait: "ODYSSEY",
-                  match: "includes",
+                  match: "exact",
                 },
                 {
                   condition: "zoneCount",

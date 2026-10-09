@@ -66,7 +66,7 @@ export const prb02DraculeMihawkP081PirateFoil081: CharacterCard = {
               {
                 filter: "trait",
                 value: "Cross Guild",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",
@@ -87,7 +87,7 @@ export const prb02DraculeMihawkP081PirateFoil081: CharacterCard = {
                 {
                   filter: "trait",
                   value: "Cross Guild",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },

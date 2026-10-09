@@ -30,7 +30,7 @@ export const op11Koby001: LeaderCard = {
   setId: "OP11",
   power: 5000,
   life: 4,
-  traits: ["Navy SWORD"],
+  traits: ["Navy", "SWORD"],
   attribute: "strike",
   effect:
     'Your "SWORD" type Characters can attack Characters on the turn in which they are played.\n[Once Per Turn] If your "Navy" type Character with 7000 base power or less would be removed from the field by your opponent\'s effect, you may place 3 cards from your trash at the bottom of your deck in any order instead.',
@@ -50,7 +50,7 @@ export const op11Koby001: LeaderCard = {
                 {
                   filter: "trait",
                   value: "SWORD",
-                  match: "includes",
+                  match: "exact",
                 },
               ],
             },
@@ -73,7 +73,7 @@ export const op11Koby001: LeaderCard = {
             {
               filter: "trait",
               value: "Navy",
-              match: "includes",
+              match: "exact",
             },
             {
               filter: "basePower",

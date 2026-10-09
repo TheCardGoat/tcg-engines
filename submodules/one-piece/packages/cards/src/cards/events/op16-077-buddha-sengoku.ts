@@ -44,7 +44,7 @@ export const op16BuddhaSengoku077: EventCard = {
               {
                 filter: "trait",
                 value: "Navy",
-                match: "includes",
+                match: "exact",
               },
             ],
             revealDestination: "hand",

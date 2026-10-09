@@ -47,7 +47,7 @@ export const op11MonkeyDGarp095: CharacterCard = {
               {
                 filter: "trait",
                 value: "Navy",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

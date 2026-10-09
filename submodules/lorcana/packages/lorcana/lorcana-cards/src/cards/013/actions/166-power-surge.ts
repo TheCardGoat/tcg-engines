@@ -25,6 +25,10 @@ export const powerSurge: ActionCard = {
   rarity: "uncommon",
   cost: 4,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_bf7da5218eb6497890a8b51515c3abaf",
+    tcgPlayer: "702698",
+  },
   text: "Each player puts the top 2 cards of their deck into their inkwell facedown and exerted.",
   abilities: [
     {

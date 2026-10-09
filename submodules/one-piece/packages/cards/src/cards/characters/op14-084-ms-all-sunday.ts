@@ -48,58 +48,62 @@ export const op14eb04MsAllSunday084: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
+            action: "playGrouped",
             source: {
               player: "self",
               zone: "trash",
             },
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            filters: [
+            groups: [
               {
-                filter: "cost",
-                comparison: "lte",
-                value: 4,
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 4,
+                  },
+                  {
+                    filter: "trait",
+                    value: "Baroque Works",
+                    match: "includes",
+                  },
+                  {
+                    filter: "cardCategory",
+                    value: "character",
+                  },
+                ],
               },
               {
-                filter: "trait",
-                value: "Baroque Works",
-                match: "includes",
-              },
-              {
-                filter: "cardCategory",
-                value: "character",
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "eq",
+                    value: 1,
+                  },
+                  {
+                    filter: "trait",
+                    value: "Baroque Works",
+                    match: "includes",
+                  },
+                  {
+                    filter: "cardCategory",
+                    value: "character",
+                  },
+                ],
               },
             ],
-          },
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "trash",
+            playStates: {
+              single: "active",
+              multiple: ["active", "active"],
+              byGroup: true,
             },
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            filters: [
-              {
-                filter: "cost",
-                comparison: "eq",
-                value: 1,
-              },
-              {
-                filter: "trait",
-                value: "Baroque Works",
-                match: "includes",
-              },
-              {
-                filter: "cardCategory",
-                value: "character",
-              },
-            ],
           },
         ],
       },

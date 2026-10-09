@@ -35,6 +35,7 @@ export const mickeyMousePlayfulSorcererEpic: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_db6db54405ff449ba819ed521fae7df0",
+    tcgPlayer: "543909",
   },
   text: [
     {

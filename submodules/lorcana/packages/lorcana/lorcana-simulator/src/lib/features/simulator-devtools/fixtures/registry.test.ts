@@ -8,8 +8,12 @@ import {
   LORCANA_SIMULATOR_FIXTURE_MANIFEST_BY_ID,
 } from "./index.js";
 import { createFixtureLoaderRegistry, createFixtureRegistry } from "./registry.js";
+import { all014Cards } from "@tcg/lorcana-cards/cards/014";
 import { set13CardGalleryFixture } from "./set13-card-gallery.js";
 import { SET13_MANUAL_VALIDATION_FIXTURE_IDS } from "./set13-manual-validation.js";
+import { set14CardGalleryFixture } from "./set14-card-gallery.js";
+import { SET14_MANUAL_VALIDATION_FIXTURE_IDS } from "./set14-manual-validation.js";
+import { SET14_CONDITION_SCENARIO_FIXTURE_IDS } from "./set14-condition-scenarios.js";
 
 function buildFixture(id: string, name = id): LorcanaSimulatorFixture {
   return {
@@ -92,7 +96,36 @@ describe("createFixtureRegistry", () => {
     const fixture = await loadLorcanaFixture("set13-card-gallery");
 
     expect(fixture?.id).toBe(set13CardGalleryFixture.id);
-    expect(fixture?.playerOne.hand).toHaveLength(241);
+    expect(fixture?.playerOne.hand).toHaveLength(262);
+  });
+
+  it("loads the full set14 card gallery fixture with every Hyperia City card", async () => {
+    const fixture = await loadLorcanaFixture("set14-card-gallery");
+
+    expect(fixture?.id).toBe(set14CardGalleryFixture.id);
+
+    const handIds = new Set(
+      (fixture?.playerOne.hand as Array<{ id: string }>).map((entry) => entry.id),
+    );
+    expect(handIds.size).toBe(all014Cards.length);
+    for (const card of all014Cards) {
+      expect(handIds.has(card.id)).toBe(true);
+    }
+  });
+
+  it("registers every explicit set14 manual validation and condition scenario fixture", async () => {
+    expect(SET14_MANUAL_VALIDATION_FIXTURE_IDS).toHaveLength(13);
+    expect(SET14_CONDITION_SCENARIO_FIXTURE_IDS).toHaveLength(11);
+
+    for (const fixtureId of [
+      ...SET14_MANUAL_VALIDATION_FIXTURE_IDS,
+      ...SET14_CONDITION_SCENARIO_FIXTURE_IDS,
+    ]) {
+      expect(isKnownLorcanaFixtureId(fixtureId)).toBe(true);
+
+      const fixture = await loadLorcanaFixture(fixtureId);
+      expect(fixture?.id).toBe(fixtureId);
+    }
   });
 
   it("returns undefined for unknown lazy fixture ids", async () => {

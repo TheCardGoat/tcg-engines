@@ -39,7 +39,7 @@ export const eb01KouzukiOden001: LeaderCard = {
   setId: "EB01",
   power: 5000,
   life: 4,
-  traits: ["Land of Wano Kouzuki Clan"],
+  traits: ["Land of Wano", "Kouzuki Clan"],
   attribute: "slash",
 
   effect:
@@ -56,7 +56,7 @@ export const eb01KouzukiOden001: LeaderCard = {
               count: { amount: "all" },
               filters: [
                 { filter: "cardCategory", value: "character" },
-                { filter: "trait", value: "Land of Wano", match: "includes" },
+                { filter: "trait", value: "Land of Wano", match: "exact" },
                 { filter: "counter", comparison: "eq", value: 0 },
               ],
             },
@@ -81,7 +81,7 @@ export const eb01KouzukiOden001: LeaderCard = {
               {
                 filter: "trait",
                 value: "Land of Wano",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cost",

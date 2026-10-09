@@ -55,7 +55,7 @@ export const op03ThreeThousandWorlds057: EventCard = {
   rarity: "R",
   setId: "OP03",
   cost: 4,
-  traits: ["Straw Hat Crew East Blue"],
+  traits: ["East Blue", "Straw Hat Crew"],
   effect:
     "[Main] Place up to 1 Character with a cost of 5 or less at the bottom of the owner's deck. [Trigger] Place up to 1 Character with a cost of 3 or less at the bottom of the owner's deck.",
   effects: {

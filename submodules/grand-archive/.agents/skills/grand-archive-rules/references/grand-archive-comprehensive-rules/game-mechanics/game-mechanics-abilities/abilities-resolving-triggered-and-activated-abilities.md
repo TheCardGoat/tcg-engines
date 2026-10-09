@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-abilities/abilities-resolving-triggered-and-activated-abilities"
+  relation: "current_index"
+---
+
 # Abilities - Resolving Triggered and Activated Abilities
 
 #### General Rules:

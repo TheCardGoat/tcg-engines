@@ -23,7 +23,7 @@ export const eb01Sanji014: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 2000,
-  traits: ["FILM Straw Hat Crew"],
+  traits: ["FILM", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[DON!! x1] [Your Turn] This Character gains +1000 power for every 3 of your rested DON!! cards.",

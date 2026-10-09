@@ -25,7 +25,7 @@ export const rapunzelEtherealProtectorEpic: CharacterCard = {
   franchise: "Tangled",
   set: "011",
   cardNumber: 222,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 3,
   strength: 3,

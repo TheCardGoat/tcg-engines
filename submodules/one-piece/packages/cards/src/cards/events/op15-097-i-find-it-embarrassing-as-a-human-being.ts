@@ -28,6 +28,15 @@ export const op15IFindItEmbarrassingAsAHumanBeing097: EventCard = {
   effects: {
     effects: [
       {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "main",
+          },
+        ],
+      },
+      {
         trigger: "main",
         conditions: [
           {

@@ -25,7 +25,7 @@ export const op09Sanji105: CharacterCard = {
   counter: 1000,
   trigger:
     'If your Leader has the "Egghead" type, add up to 1 card from the top of your deck to the top of your Life cards. Then, trash 2 cards from your hand.',
-  traits: ["Straw Hat Crew Egghead"],
+  traits: ["Egghead", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     '[Trigger] If your Leader has the "Egghead" type, add up to 1 card from the top of your deck to the top of your Life cards. Then, trash 2 cards from your hand.',
@@ -37,7 +37,7 @@ export const op09Sanji105: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Egghead",
-            match: "includes",
+            match: "exact",
           },
         ],
         actions: [

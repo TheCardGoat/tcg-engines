@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-abilities/abilities-triggered-abilities"
+  relation: "current_index"
+---
+
 # Abilities - Triggered Abilities
 
 #### General Rules:

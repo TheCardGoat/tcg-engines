@@ -446,3 +446,50 @@ describe("Grand Archive selection quantifiers", () => {
     }
   });
 });
+
+for (const edge of ["top", "bottom"] as const)
+  it(`takes a contiguous ${edge} slice when choosing up to two cards`, () => {
+    const fixture = setup();
+    const original = fixture.runtime.state;
+    const state = new GrandArchiveTransactionKernel().transact(
+      original,
+      [fixture.actionId, ...fixture.allyIds].map((objectId) => ({
+        type: "object-moved" as const,
+        objectId,
+        from: original.objects[objectId]!.zone,
+        to: "main-deck" as const,
+      })),
+    ).state;
+    const ids = [...state.zones[fixture.p1]["main-deck"]];
+    if (edge === "bottom") ids.reverse();
+    const selection: GrandArchiveResolutionChoice = {
+      id: "edge-cards",
+      kind: "choice",
+      declared: "resolution",
+      chooser: "controller",
+      count: { kind: "up-to", amount: 2 },
+      candidates: {
+        kind: "card",
+        zones: ["main-deck"],
+        player: "controller",
+        ...(edge === "top" ? { fromTop: true } : { fromBottom: true }),
+      },
+    };
+    const evaluation = {
+      program: fixture.program,
+      state,
+      controllerId: fixture.p1,
+      sourceId: fixture.championId,
+      bindings: {},
+    };
+    for (const count of [0, 1, 2])
+      expect(
+        declareGrandArchiveResolutionChoice(selection, ids.slice(0, count), evaluation),
+      ).toEqual(ids.slice(0, count));
+    expect(() => declareGrandArchiveResolutionChoice(selection, [ids[1]!], evaluation)).toThrow(
+      "Ordered-zone choice must use cards from the indicated edge",
+    );
+    expect(() =>
+      declareGrandArchiveResolutionChoice(selection, [ids[0]!, ids[2]!], evaluation),
+    ).toThrow("Ordered-zone choice must use cards from the indicated edge");
+  });

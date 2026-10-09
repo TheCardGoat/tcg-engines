@@ -149,6 +149,9 @@ export interface TargetDSL<TFilter = unknown, TContext extends BaseContext = Bas
   /** All selected targets must be different cards */
   requireDifferentTargets?: boolean;
 
+  /** All selected targets must share the same card name (e.g. "Reveal 2 cards with the same name"). */
+  requireSameName?: boolean;
+
   /** The chosen cards must belong to one player (e.g. chosen player's discard). */
   requireSameOwner?: true;
 
@@ -198,6 +201,8 @@ export type PlayerTargetScope =
  * ```
  */
 export interface PlayerTargetDSL {
+  /** Exclude the controller when choosing another player. */
+  excludeSelf?: boolean;
   /** Which player(s) to target */
   selector: PlayerTargetScope;
 

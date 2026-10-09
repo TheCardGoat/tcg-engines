@@ -23,7 +23,7 @@ export const op04Usopp003: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  traits: ["Alabasta Straw Hat Crew"],
+  traits: ["Alabasta", "Straw Hat Crew"],
   attribute: "wisdom",
   effect: "[On K.O.] K.O. up to 1 of your opponent's Characters with 5000 base power or less.",
   effects: {

@@ -1,5 +1,5 @@
 const DEFAULT_PLAYER_ZONE_WIDTH = 960;
-const HAND_TARGET_WIDTH_RATIO = 0.48;
+const OPPONENT_HAND_TARGET_WIDTH_RATIO = 0.48;
 const MIN_CENTER_STEP_RATIO = 0.3;
 const MAX_CENTER_STEP_RATIO = 0.96;
 const MIN_PLAYER_CARD_WIDTH = 78;
@@ -20,14 +20,8 @@ const HAND_OFFSCREEN_RATIO = {
      keeps the hand tactile while returning vertical space to the play area. */
   player: 0.22,
 } as const;
-const PLAYER_HAND_ARC_HEIGHT = {
-  opponent: 5,
-  player: 7,
-} as const;
-const PLAYER_HAND_MAX_ROTATION = {
-  opponent: 3,
-  player: 5,
-} as const;
+const OPPONENT_HAND_ARC_HEIGHT = 5;
+const OPPONENT_HAND_MAX_ROTATION = 3;
 const PLAYER_HAND_FULL_GAP = 8;
 
 export type HandLayoutVariant = keyof typeof HAND_SIZE_MULTIPLIERS;
@@ -74,7 +68,10 @@ export function computePlayerHandLayout(
     return { cards: [{ angle: 0, x: 0, y: baselineOffset }], cardWidth };
   }
 
-  const targetWidth = Math.round(safeZoneWidth * HAND_TARGET_WIDTH_RATIO);
+  const targetWidth =
+    variant === "player"
+      ? safeZoneWidth - HAND_EDGE_GUTTER
+      : Math.round(safeZoneWidth * OPPONENT_HAND_TARGET_WIDTH_RATIO);
   const preferredStep = (targetWidth - cardWidth) / (n - 1);
   const fullSpreadStep = cardWidth + PLAYER_HAND_FULL_GAP;
   const fullSpreadWidth = cardWidth * n + PLAYER_HAND_FULL_GAP * (n - 1);
@@ -94,9 +91,15 @@ export function computePlayerHandLayout(
       const x = i * step - halfSpan;
       const normalized = halfSpan > 0 ? x / halfSpan : 0;
       return {
-        angle: normalized * PLAYER_HAND_MAX_ROTATION[variant],
+        // The player's drawn card flies as an upright rectangle. Keep its final
+        // hand slot upright too, so revealing it cannot cause a second tilt or
+        // position shift after the transfer lands.
+        angle: variant === "player" ? 0 : normalized * OPPONENT_HAND_MAX_ROTATION,
         x: Math.round(alignment === "start" ? x + halfSpan + cardWidth / 2 : x),
-        y: Math.round(baselineOffset + Math.abs(normalized) ** 2 * PLAYER_HAND_ARC_HEIGHT[variant]),
+        y:
+          variant === "player"
+            ? baselineOffset
+            : Math.round(baselineOffset + Math.abs(normalized) ** 2 * OPPONENT_HAND_ARC_HEIGHT),
       };
     }),
   };

@@ -51,7 +51,7 @@ describe("EB02-052 Enel", () => {
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 
-  test("can pay above one Life and still gains the post-condition power without adding Life", () => {
+  test("can pay above one Life but gains neither Life nor power (FAQ Q879)", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [{ card: eb02Enel052, playedOnTurn: 0 }],
@@ -73,7 +73,7 @@ describe("EB02-052 Enel", () => {
     expect(view.players.south.lifeCount).toBe(2);
     expect(view.players.south.deckCount).toBe(2);
     expect(view.players.south.characters.find((card) => card?.instanceId === enelId)?.power).toBe(
-      12000,
+      11000,
     );
     expect(view.decisions.some((decision) => decision.kind === "chooseOption")).toBe(false);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
@@ -108,5 +108,42 @@ describe("EB02-052 Enel", () => {
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("without a Sky Island Leader the newly played Character cannot attack", () => {
+    const e = OnePieceTestEngine.create({
+      leaderCardId: "ST01-001",
+      hand: [eb02Enel052],
+      activeDon: 10,
+    });
+    e.playCard(eb02Enel052);
+    const enel = e.findCardInZone("south", "character", eb02Enel052);
+    expect(
+      e.expectFailure({
+        type: "declareAttack",
+        seat: "south",
+        attackerId: enel,
+        targetId: e.leader("north"),
+      }).reason,
+    ).toBe("The selected attacker cannot attack.");
+  });
+  test("at one Life choosing zero Life still grants power until end of turn", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb02Enel052, playedOnTurn: 0 }],
+        hand: [eb01Doma005],
+        life: 1,
+        deck: [eb01Doma005, eb01Fourtricks025],
+      },
+      {},
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const enel = e.findCardInZone("south", "character", eb02Enel052);
+    e.declareAttack(enel, e.leader("north"), "south");
+    e.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    e.resolveDecision("effectAddToLifeFromDeck", { optionId: "0" }, "south");
+    expect(e.getView("south").players.south.lifeCount).toBe(1);
+    expect(e.getView("south").players.south.characters[0]?.power).toBe(12000);
+    e.endTurn("south");
+    expect(e.getView("south").players.south.characters[0]?.power).toBe(11000);
   });
 });

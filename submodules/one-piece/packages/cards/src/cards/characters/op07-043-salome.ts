@@ -23,7 +23,7 @@ export const op07Salome043: CharacterCard = {
   cost: 1,
   power: 2000,
   counter: 1000,
-  traits: ["Animal Kuja Pirates"],
+  traits: ["Animal", "Kuja Pirates"],
   attribute: "strike",
   effect:
     "[Your Turn] [On Play] Up to 1 of your [Boa Hancock] cards gains +2000 power during this turn.",

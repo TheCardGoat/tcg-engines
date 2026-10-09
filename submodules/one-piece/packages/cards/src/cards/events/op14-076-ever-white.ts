@@ -21,7 +21,7 @@ export const op14eb04EverWhite076: EventCard = {
   rarity: "R",
   setId: "OP14",
   cost: 1,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  traits: ["The Seven Warlords of the Sea", "Donquixote Pirates"],
   effect:
     "[Main] You may rest 2 of your DON!! cards: If your Leader has the {Donquixote Pirates} type, add up to 1 DON!! card from your DON!! deck and rest it.\n[Counter] Your Leader gains +3000 power during this battle.",
   effects: {
@@ -45,7 +45,7 @@ export const op14eb04EverWhite076: EventCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Donquixote Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

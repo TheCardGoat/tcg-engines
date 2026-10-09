@@ -92,7 +92,9 @@ describe("BattleStepRibbon", () => {
 
     const beacon = screen.getByLabelText("Your priority");
     expect(beacon.getAttribute("data-responsive")).toBe("true");
-    expect(screen.getByText("Your priority", { exact: true }).className).toContain("hidden");
-    expect(screen.getByText("Your priority", { exact: true }).className).toContain("sm:inline");
+    // The label is mobile-hidden and re-shown at the small breakpoint and up.
+    const label = screen.getByText("Your priority", { exact: true }).className;
+    expect(label).toMatch(/(^|\s)hidden(\s|$)/);
+    expect(label).toMatch(/sm:(inline|block)/);
   });
 });

@@ -70,7 +70,7 @@ export const greaterBoonOfFlock: GrandArchiveCard<GrandArchiveAbilityDefinition,
               {
                 id: "cascade-1",
                 text: "Summon a Fledgling token.",
-                counts: [1, 4],
+                counts: [1, 2, 3, 4],
                 effect: {
                   kind: "summon",
                   object: "Fledgling",
@@ -81,38 +81,47 @@ export const greaterBoonOfFlock: GrandArchiveCard<GrandArchiveAbilityDefinition,
               {
                 id: "cascade-2",
                 text: "Put a buff counter on a Bird ally you control.",
-                counts: [5, 9],
-                targets: [
-                  {
-                    id: "target-1",
-                    kind: "target",
-                    declared: "announcement",
+                counts: [5, 6, 7, 8, 9],
+                effect: {
+                  kind: "choose",
+                  selection: {
+                    id: "chosen-counter-object",
+                    kind: "choice",
+                    declared: "resolution",
                     chooser: "controller",
                     count: {
                       kind: "exactly",
                       amount: 1,
                     },
-                    unique: true,
                     candidates: {
                       kind: "object",
                       zones: ["field"],
                       relationship: "controlled-by",
                       player: "controller",
                       filter: {
-                        kind: "type",
-                        oneOf: ["ALLY"],
+                        kind: "all",
+                        filters: [
+                          {
+                            kind: "type",
+                            oneOf: ["ALLY"],
+                          },
+                          {
+                            kind: "subtype",
+                            oneOf: ["BIRD"],
+                          },
+                        ],
                       },
                     },
                   },
-                ],
-                effect: {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "bound",
-                    binding: "target-1",
+                  effect: {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "bound",
+                      binding: "chosen-counter-object",
+                    },
+                    counter: "buff",
+                    amount: 1,
                   },
-                  counter: "buff",
-                  amount: 1,
                 },
               },
               {

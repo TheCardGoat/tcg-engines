@@ -73,6 +73,10 @@ export const edelsteinQueenOfDiamonds: GrandArchiveCard<GrandArchiveAbilityDefin
                       },
                       {
                         kind: "subtype",
+                        oneOf: ["SUITED"],
+                      },
+                      {
+                        kind: "subtype",
                         oneOf: ["SPELL"],
                       },
                     ],

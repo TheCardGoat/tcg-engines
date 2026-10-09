@@ -27,6 +27,19 @@ const promotionSpec: BotEvaluationSpecV1 = {
   maximumCellRegression: 0.05,
 };
 
+test("a zero regression limit admits a neutral cell and rejects an actual loss", () => {
+  const input = {
+    spec: { ...promotionSpec, maximumCellRegression: 0 },
+    blocks: 200,
+    meanPairedImprovement: 0.1,
+    confidenceInterval: { level: 0.95, lower: 0.05, upper: 0.15 },
+    hardFailureCount: 0,
+    cellRegressions: { neutral: 0 },
+  };
+  expect(classifyPromotion(input).verdict).toBe("promote");
+  expect(classifyPromotion({ ...input, cellRegressions: { loss: -0.001 } }).verdict).toBe("reject");
+});
+
 describe("stable bot artifacts", () => {
   test("canonicalizes objects before hashing", () => {
     expect(canonicalJson({ b: 2, a: { d: 4, c: 3 } })).toBe('{"a":{"c":3,"d":4},"b":2}');

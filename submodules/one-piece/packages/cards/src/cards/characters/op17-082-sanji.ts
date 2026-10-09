@@ -23,7 +23,7 @@ export const op17Sanji082: CharacterCard = {
   cost: 2,
   power: 2000,
   counter: 1000,
-  traits: ["Straw Hat Crew Elbaph"],
+  traits: ["Elbaph", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "If there is a Character with a cost of 12 or more, this Character gains +3000 power.\n[On Play] Draw 2 cards and trash 2 cards from your hand.",

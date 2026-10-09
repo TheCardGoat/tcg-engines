@@ -122,12 +122,7 @@ export type LorcanaColor = "amber" | "amethyst" | "emerald" | "ruby" | "sapphire
 export type LorcanaCardType = "character" | "action" | "item" | "location" | "song";
 
 export type LorcanaRarity =
-  | "common"
-  | "uncommon"
-  | "rare"
-  | "super_rare"
-  | "legendary"
-  | "enchanted";
+  "common" | "uncommon" | "rare" | "super_rare" | "legendary" | "enchanted";
 
 export type LorcanaCard = {
   id: CardId;

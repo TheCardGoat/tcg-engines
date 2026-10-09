@@ -35,39 +35,49 @@ describe("OP14-036 Strive to Surpass me, Roronoa Zoro!!!", () => {
     expect(engine.getView("north").prompts).toHaveLength(0);
   });
 
-  test("Life Trigger rests one own card as cost, then an opposing base-power-7000-or-less Character", () => {
-    const engine = OnePieceTestEngine.create(
-      {
-        character: [
-          { card: eb01MountainGod018, playedOnTurn: 0 },
-          { card: eb01Doma005, playedOnTurn: 0 },
-        ],
-      },
-      { life: [op14eb04StriveToSurpassMeRoronoaZoro036], character: [eb01Doma005] },
-      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
-    );
-    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
-    const targetId = engine.findCardInZone("south", "character", eb01Doma005);
-    const costId = engine.findCardInZone("north", "character", eb01Doma005);
-    engine.declareAttack(attackerId, engine.leader("north"), "south");
-    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
-    engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
-    engine.resolveDecision("effectCostRestCards", { selectedIds: [costId] }, "north");
-    const rest = engine.pendingDecision("effectTargetSelection", "north").steps[0];
-    expect(rest?.kind).toBe("selectEntity");
-    if (rest?.kind !== "selectEntity") throw new Error("Expected an opposing rest target.");
-    expect(rest.candidates.map((candidate) => candidate.ref.id)).toContain(targetId);
-    expect(rest.candidates.map((candidate) => candidate.ref.id)).not.toContain(attackerId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [targetId] }, "north");
-    const view = engine.getView("north");
-    expect(view.players.north.characters.find((card) => card?.instanceId === costId)?.rested).toBe(
-      true,
-    );
-    expect(
-      view.players.south.characters.find((card) => card?.instanceId === targetId)?.rested,
-    ).toBe(true);
-    expect(view.prompts).toHaveLength(0);
-  });
+  test.each([false, true])(
+    "Life Trigger rests one own card as cost, then an opposing base-power-7000-or-less Character (already rested: %s)",
+    (chooseRested) => {
+      const engine = OnePieceTestEngine.create(
+        {
+          character: [
+            { card: eb01MountainGod018, playedOnTurn: 0 },
+            { card: eb01Doma005, playedOnTurn: 0 },
+          ],
+        },
+        { life: [op14eb04StriveToSurpassMeRoronoaZoro036], character: [eb01Doma005] },
+        SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+      );
+      const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+      const targetId = engine.findCardInZone("south", "character", eb01Doma005);
+      const costId = engine.findCardInZone("north", "character", eb01Doma005);
+      engine.declareAttack(attackerId, engine.leader("north"), "south");
+      engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+      engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
+      engine.resolveDecision("effectCostRestCards", { selectedIds: [costId] }, "north");
+      const rest = engine.pendingDecision("effectTargetSelection", "north").steps[0];
+      expect(rest?.kind).toBe("selectEntity");
+      if (rest?.kind !== "selectEntity") throw new Error("Expected an opposing rest target.");
+      expect(rest.candidates.map((candidate) => candidate.ref.id)).toContain(targetId);
+      expect(rest.candidates.map((candidate) => candidate.ref.id)).toContain(attackerId);
+      engine.resolveDecision(
+        "effectTargetSelection",
+        { selectedIds: [chooseRested ? attackerId : targetId] },
+        "north",
+      );
+      const view = engine.getView("north");
+      expect(
+        view.players.south.characters.find((card) => card?.instanceId === attackerId)?.rested,
+      ).toBe(true);
+      expect(
+        view.players.north.characters.find((card) => card?.instanceId === costId)?.rested,
+      ).toBe(true);
+      expect(
+        view.players.south.characters.find((card) => card?.instanceId === targetId)?.rested,
+      ).toBe(!chooseRested);
+      expect(view.prompts).toHaveLength(0);
+    },
+  );
 
   test("may decline optional so paid effect does not apply", () => {
     const engine = OnePieceTestEngine.create(

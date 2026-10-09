@@ -1,6 +1,15 @@
-import { describe, expect, it } from "vite-plus/test";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { INTERACTION_PROTOCOL_VERSION, type InteractionSubmission } from "@tcg/protocol";
-import type { LocalEngine, MatchState, PlayerPrompt } from "@tcg/cyberpunk-engine";
+import {
+  CyberpunkTestEngine,
+  P1,
+  P2,
+  createMockUnit,
+  createMockLegend,
+  type LocalEngine,
+  type MatchState,
+  type PlayerPrompt,
+} from "@tcg/cyberpunk-engine";
 import type { DispatchSuccess } from "@tcg/shared/game-engine";
 import { CyberpunkServerEngine } from "./cyberpunk-server-engine.js";
 
@@ -41,6 +50,34 @@ describe("CyberpunkServerEngine timeout drop", () => {
 });
 
 describe("CyberpunkServerEngine interaction submission", () => {
+  it("returns a structured failure when the interaction view cannot be built", () => {
+    const engine = new CyberpunkServerEngine({
+      getState: () => ({ ctx: { stateID: 4 }, G: { gameEnded: false } }),
+      getPrompt: () => {
+        throw new RangeError("Mandatory target selection has no legal candidates.");
+      },
+    } as unknown as LocalEngine);
+    const submission: InteractionSubmission = {
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      stateVersion: 4,
+      requestId: "cyberpunk:4:resolveEffectTarget",
+      actionId: "resolveEffectTarget",
+      values: {},
+    };
+
+    expect(
+      engine.submitInteraction("p1", submission, {
+        gameId: "g1",
+        sourceAuthority: "server",
+      }),
+    ).toEqual({
+      success: false,
+      error: "Mandatory target selection has no legal candidates.",
+      errorCode: "invalid_interaction_view",
+      stateID: 4,
+    });
+  });
+
   it("rejects invalid protocol values before native command dispatch", () => {
     const calls: unknown[] = [];
     const prompt: PlayerPrompt = {
@@ -453,4 +490,41 @@ describe("CyberpunkServerEngine rewind to turn start", () => {
     expect(result.success).toBe(false);
     expect(result).toMatchObject({ errorCode: "NO_TURN_START_CHECKPOINT", stateID: 2 });
   });
+});
+
+describe("CyberpunkServerEngine full-information bot", () => {
+  it.each([undefined, "default", "expert-oracle"])(
+    "runs Expert for %s without exposing hidden cards to players or spectators",
+    (strategyId) => {
+      const unit = createMockUnit({ name: "Bot Unit", cost: 1, power: 4 });
+      const hidden = createMockUnit({ name: "Hidden rival card", cost: 8 });
+      const legend = createMockLegend({ name: "Hidden rival Legend" });
+      const fixture = CyberpunkTestEngine.createWithFixture(
+        { hand: [unit], eddies: 3, deck: 10, legendArea: [] },
+        { hand: [hidden], deck: [hidden, hidden], legendArea: [{ card: legend, faceDown: true }] },
+      );
+      const local = fixture.getLocalEngine();
+      const adapter = new CyberpunkServerEngine(local);
+      const oracle = vi.spyOn(local, "getOracleView");
+      const before = adapter.getStateID();
+      const result = adapter.takeAutomatedAction(
+        { strategyId },
+        { gameId: "expert-hidden-info-test", sourceAuthority: "server" },
+      );
+      expect(result.strategyId).toBe("expert-oracle");
+      expect(result.finalResult.success).toBe(true);
+      expect(result.selectedCandidate?.family).toBe("playCard");
+      expect(adapter.getStateID()).toBeGreaterThan(before);
+      expect(oracle).toHaveBeenCalledWith(P1);
+      // The hosted player/spectator boundary always uses filtered projections.
+      for (const viewer of [{ role: "player", actorId: P1 }, { role: "spectator" }] as const) {
+        const serialized = JSON.stringify(adapter.getViewerState(viewer));
+        expect(serialized).not.toContain(hidden.name);
+        expect(serialized).not.toContain(legend.name);
+      }
+      expect(local.getFilteredView(P1).players[P2]?.zones.hand).toBe(1);
+      expect(typeof local.getFilteredView(P1).players[P2]?.zones.deck).toBe("number");
+      oracle.mockRestore();
+    },
+  );
 });

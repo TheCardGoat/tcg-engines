@@ -83,7 +83,8 @@ export type LorcanaSetCode =
   | "WIW" // set10 — Whispers in the Well
   | "WSP" // set11 — Winterspell
   | "WUN" // set12 — Wilds Unknown
-  | "013"; // set13 — Attack of the Vine!
+  | "013" // set13 — Attack of the Vine!
+  | "014"; // set14 — Hyperia City
 
 // ---------------------------------------------------------------------------
 // Format identifiers

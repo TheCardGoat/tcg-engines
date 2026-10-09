@@ -39,7 +39,7 @@ export const op14eb04Queen032: CharacterCard = {
               {
                 filter: "trait",
                 value: "Animal Kingdom Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
           },
@@ -72,7 +72,7 @@ export const op14eb04Queen032: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Animal Kingdom Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

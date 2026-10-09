@@ -23,7 +23,7 @@ export const op10TonyTonyChopper087: CharacterCard = {
   cost: 2,
   power: 0,
   counter: 1000,
-  traits: ["Animal Straw Hat Crew Dressrosa"],
+  traits: ["Animal", "Dressrosa", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     '[Activate: Main] You may rest this Character and 1 of your "Dressrosa" type Leader or Stage cards: If your opponent has 5 or more cards in their hand, your opponent trashes 1 card from their hand. Then, trash 2 cards from the top of your deck.',
@@ -31,6 +31,14 @@ export const op10TonyTonyChopper087: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
+        postCostConditions: [
+          {
+            condition: "handCount",
+            player: "opponent",
+            comparison: "gte",
+            value: 5,
+          },
+        ],
         costs: [
           {
             cost: "restThisCard",
@@ -42,7 +50,7 @@ export const op10TonyTonyChopper087: CharacterCard = {
               {
                 filter: "trait",
                 value: "Dressrosa",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "anyOf",
@@ -69,12 +77,6 @@ export const op10TonyTonyChopper087: CharacterCard = {
             action: "trashFromHand",
             player: "opponent",
             amount: 1,
-            condition: {
-              condition: "handCount",
-              player: "opponent",
-              comparison: "gte",
-              value: 5,
-            },
           },
           {
             action: "trashFromDeck",

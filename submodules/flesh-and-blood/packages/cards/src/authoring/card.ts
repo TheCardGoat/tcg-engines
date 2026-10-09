@@ -198,6 +198,21 @@ export function defineCard<
   });
 }
 
+/** Preserve semantic ability keys for a card with authored localization. */
+export function defineLocalizedCard<
+  const Abilities extends SemanticAbilityMap = Readonly<Record<never, never>>,
+  const Options extends CardBehaviorOptions<Abilities> = CardBehaviorOptions<Abilities>,
+>(
+  identity: CanonicalCardIdentity,
+  options: ExactCardBehaviorOptions<Options> & AuthoringHasStatusConstraint<Abilities>,
+): FleshAndBloodCard &
+  SemanticLocalizationContractCarrier<SemanticLocalizationContract<Abilities>> {
+  return {
+    ...defineCard<Abilities, Options>(identity, options),
+    ...carrySemanticLocalizationContract<SemanticLocalizationContract<Abilities>>(),
+  };
+}
+
 export function expandSemanticAbilities(
   canonicalId: string,
   abilityMap: SemanticAbilityMap,

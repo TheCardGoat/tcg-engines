@@ -23,6 +23,7 @@ export interface NarutoActivityPanelProps {
     readonly zone: EntityZoneKind | null;
     readonly owner: PlayerId | null;
   };
+  readonly chat?: ReactNode;
   readonly onNewGame?: (() => void) | undefined;
   readonly onReportBug?: (() => void) | undefined;
 }
@@ -38,6 +39,7 @@ export function NarutoActivityPanel({
   inspected,
   onNewGame,
   onReportBug,
+  chat,
 }: NarutoActivityPanelProps) {
   const { projection } = kit;
   const route = useSimulatorRoute();
@@ -116,6 +118,8 @@ export function NarutoActivityPanel({
           </div>
         ),
         logLabel: "Log",
+        chat,
+        chatLabel: "Chat",
         secondary: (
           <div className={classes.sidebarTools}>
             <Inspector

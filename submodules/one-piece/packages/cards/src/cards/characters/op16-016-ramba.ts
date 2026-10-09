@@ -22,6 +22,7 @@ export const op16Ramba016: CharacterCard = {
   setId: "OP16",
   cost: 6,
   power: 8000,
+  counter: 1000,
   traits: ["Whitebeard Pirates Allies"],
   attribute: "slash",
   i18n: op16Ramba016I18n,

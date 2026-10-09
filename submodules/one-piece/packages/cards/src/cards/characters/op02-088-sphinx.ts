@@ -23,7 +23,7 @@ export const op02Sphinx088: CharacterCard = {
   cost: 4,
   power: 6000,
   counter: 1000,
-  traits: ["Animal Impel Down"],
+  traits: ["Animal", "Impel Down"],
   attribute: "strike",
   i18n: op02Sphinx088I18n,
 };

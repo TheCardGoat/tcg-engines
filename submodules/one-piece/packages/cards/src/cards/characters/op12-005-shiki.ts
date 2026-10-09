@@ -23,7 +23,7 @@ export const op12Shiki005: CharacterCard = {
   cost: 8,
   power: 10000,
   counter: 1000,
-  traits: ["FILM Golden Lion Pirates"],
+  traits: ["FILM", "Golden Lion Pirates"],
   attribute: "slash",
   i18n: op12Shiki005I18n,
 };

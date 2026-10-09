@@ -156,6 +156,7 @@ function normalizeAuthUser(value: unknown): AuthUser | null {
     username: optionalString(candidate.username),
     displayUsername: optionalString(candidate.displayUsername),
     emailVerified: typeof candidate.emailVerified === "boolean" ? candidate.emailVerified : false,
+    isAnonymous: candidate.isAnonymous === true,
     role: isUserRole(candidate.role) ? candidate.role : "user",
     subscriptionTier: isSubscriptionTier(candidate.subscriptionTier)
       ? candidate.subscriptionTier

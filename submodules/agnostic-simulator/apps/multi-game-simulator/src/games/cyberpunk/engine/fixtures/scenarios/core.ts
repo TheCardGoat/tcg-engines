@@ -99,7 +99,148 @@ function mobileLedgerMixedScenario(
 }
 
 export const coreScenarios: Scenario[] = [
+  {
+    id: "gigWinThreatHud",
+    group: "core",
+    label: "Gig win threat · HUD",
+    description:
+      "V2 visual fixture with eight rival Gigs, including two stolen dice, before the rival turn-start win check.",
+    build: () => {
+      const gigs: NonNullable<PlayerFixture["gigArea"]> = [
+        { dieType: "d4", faceValue: 1 },
+        { dieType: "d6", faceValue: 2 },
+        { dieType: "d8", faceValue: 3 },
+        { dieType: "d10", faceValue: 4 },
+        { dieType: "d12", faceValue: 5 },
+        { dieType: "d20", faceValue: 6 },
+        { dieType: "d4", faceValue: 2, source: "rival" },
+        { dieType: "d6", faceValue: 3, source: "rival" },
+      ];
+      return CyberpunkTestEngine.createWithFixture(
+        {
+          ...mobileLedgerPlayer(3),
+          gigArea: [
+            { dieType: "d8", faceValue: 3 },
+            { dieType: "d10", faceValue: 4 },
+            { dieType: "d12", faceValue: 5 },
+            { dieType: "d20", faceValue: 6 },
+          ],
+        },
+        { ...mobileLedgerPlayer(3, true), gigArea: gigs },
+        { seed: scenarioSeed("gigWinThreatHud"), autoGainGig: false },
+      );
+    },
+  },
   // ── Core scenarios ──────────────────────────────────────────────────────
+  {
+    id: "paymentQuickAbilityQa",
+    group: "core",
+    label: "Payment · QUICK ability",
+    description: "Dum Dum can spend itself and pay one Eddie for its QUICK ability.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            {
+              card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailKiroshiOptics],
+            },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailDumDumMaelstromTriggerman, faceDown: false },
+          ],
+          eddies: 2,
+        },
+        { eddies: 0 },
+        { seed: scenarioSeed("paymentQuickAbilityQa"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "paymentAllResourcesQa",
+    group: "core",
+    label: "Payment · Full resource pool",
+    description: "A 3 €$ card with two ready Eddies and one spendable Legend.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailMoxInciters],
+          legendArea: [{ card: c.welcomeToNightCityRetailVStreetkid, faceDown: true }],
+          eddies: 2,
+        },
+        { eddies: 0 },
+        { seed: scenarioSeed("paymentAllResourcesQa"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "paymentFullEddiesQa",
+    group: "core",
+    label: "Payment · Eddies with Legends available",
+    description: "A 5 €$ card with five ready Eddies and three spendable Legends.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailMaxtacSuppressionTeam],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailVStreetkid, faceDown: true },
+            { card: c.welcomeToNightCityRetailJackieWellesRideOrDieChoom, faceDown: true },
+            { card: c.welcomeToNightCityRetailRoycePsychoOnTheEdge, faceDown: true },
+          ],
+          eddies: 5,
+        },
+        { eddies: 0 },
+        { seed: scenarioSeed("paymentFullEddiesQa"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "paymentOnlyEddiesQa",
+    group: "core",
+    label: "Payment · Spent Legends",
+    description: "A 3 €$ card, four ready Eddies, and a spent Legend.",
+    build: () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailMoxInciters],
+          legendArea: [{ card: c.welcomeToNightCityRetailVStreetkid, faceDown: true }],
+          eddies: 4,
+        },
+        { eddies: 0 },
+        { seed: scenarioSeed("paymentOnlyEddiesQa"), autoGainGig: false },
+      );
+      engine.judgeSpendCard(c.welcomeToNightCityRetailVStreetkid, { as: P1 });
+      return engine;
+    },
+  },
+  {
+    id: "paymentPhysicalEddiesQa",
+    group: "core",
+    label: "Payment · Physical Eddie pool",
+    description:
+      "A 3 €$ card, one sold Eddie card in a shallow pool, and three spendable Legends — like a real game, every pool Eddie has a card.",
+    build: () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [
+            c.welcomeToNightCityRetailMoxInciters,
+            c.welcomeToNightCityRetailAfterpartyAtLizzieS,
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailVStreetkid, faceDown: true },
+            { card: c.welcomeToNightCityRetailRoycePsychoOnTheEdge, faceDown: true },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: true },
+          ],
+          eddies: 0,
+        },
+        { eddies: 0 },
+        { seed: scenarioSeed("paymentPhysicalEddiesQa"), autoGainGig: false },
+      );
+      // Selling turns the card into a physical, ready Eddie and bumps the
+      // pool to 1 — the real-game shape where automatic payment must remain
+      // available even though no pool Eddie is "virtual".
+      engine.sellCard(c.welcomeToNightCityRetailAfterpartyAtLizzieS, { as: P1 });
+      return engine;
+    },
+  },
   {
     id: "boardTappedResourcesQa",
     group: "core",
@@ -153,6 +294,20 @@ export const coreScenarios: Scenario[] = [
       }),
   },
   {
+    id: "firstPlayerChoice",
+    group: "core",
+    label: "Setup · Choose first player",
+    description:
+      "Engine paused before the first-player choice, with both players' presented Legends visible.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(startBase, startBase, {
+        skipSetup: false,
+        autoChooseFirstPlayer: false,
+        autoGainGig: false,
+        seed: scenarioSeed("firstPlayerChoice"),
+      }),
+  },
+  {
     id: "retailCardCatalog",
     group: "core",
     label: "Retail · official card catalog",
@@ -161,16 +316,8 @@ export const coreScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          trash: [
-            ...c.boxToppersRetailCards,
-            ...c.theHeistRetailStarterDeckCards,
-            ...c.welcomeToNightCityRetailCards,
-          ].filter((card) => card.type !== "legend"),
-          legendArea: [
-            ...c.boxToppersRetailCards,
-            ...c.theHeistRetailStarterDeckCards,
-            ...c.welcomeToNightCityRetailCards,
-          ]
+          trash: [...c.structuredCards].filter((card) => card.type !== "legend"),
+          legendArea: [...c.structuredCards]
             .filter((card) => card.type === "legend")
             .slice(0, 3)
             .map((card) => ({ card, faceDown: false })),
@@ -181,6 +328,26 @@ export const coreScenarios: Scenario[] = [
           autoGainGig: false,
         },
       ),
+  },
+  {
+    id: "trashProgramPreview",
+    group: "core",
+    label: "Trash · consecutive Programs",
+    description:
+      "Both Trash piles end with All is Lost and Over the Edge. Their previews must retain card size without power badges.",
+    build: () => {
+      const trash = [
+        c.welcomeToNightCityRetailLaLloronaGhostOfThePast,
+        c.welcomeToNightCityRetailMeredithStoutStoneColdCorpo,
+        c.welcomeToNightCityRetailAllIsLost,
+        c.welcomeToNightCityRetailOverTheEdge,
+      ];
+      return CyberpunkTestEngine.createWithFixture(
+        { ...playerBase, trash },
+        { ...opponentBase, trash },
+        { seed: "trash-program-preview", autoGainGig: false },
+      );
+    },
   },
   {
     id: "retailProgramTargetBench",
@@ -436,7 +603,7 @@ export const coreScenarios: Scenario[] = [
     group: "core",
     label: "Mobile ledger · zero Legends",
     description:
-      "Visual fixture for the mobile center ledger with no Legends on either side. Gig dice and Street Cred should take the recovered vertical space.",
+      "Visual fixture for the invariant mobile center ledger with no Legends on either side. Both empty Legend areas remain reserved between the two Gig rows.",
     build: () => mobileLedgerScenario(0),
   },
   {
@@ -444,7 +611,7 @@ export const coreScenarios: Scenario[] = [
     group: "core",
     label: "Mobile ledger · one Legend",
     description:
-      "Visual fixture for the mobile center ledger with one Legend on each side. The single Legend should read as a wide slot without crowding the Gig lane.",
+      "Visual fixture for the invariant mobile center ledger with one Legend on each side. Both Legends remain visible between the two Gig rows.",
     build: () => mobileLedgerScenario(1),
   },
   {
@@ -452,7 +619,7 @@ export const coreScenarios: Scenario[] = [
     group: "core",
     label: "Mobile ledger · two Legends",
     description:
-      "Visual fixture for the mobile center ledger with two Legends on each side. It uses the stacked ledger so Street Cred and both Gig lanes remain readable.",
+      "Visual fixture for the invariant mobile center ledger with two Legends on each side. Street Cred and both full-width Gig rows remain readable.",
     build: () => mobileLedgerScenario(2),
   },
   {
@@ -460,15 +627,49 @@ export const coreScenarios: Scenario[] = [
     group: "core",
     label: "Mobile ledger · three Legends",
     description:
-      "Visual fixture for the mobile center ledger with three Legends on each side. The full Legend row should stay compact enough to keep Gig dice visible.",
+      "Visual fixture for the invariant mobile center ledger with three Legends on each side. All six Legends remain visible in the shared middle row.",
     build: () => mobileLedgerScenario(3),
+  },
+  {
+    id: "overtimeCountdown",
+    group: "core",
+    label: "Overtime · countdown",
+    description: "Both Fixer areas are empty; overtime begins after two qualifying turns.",
+    build: () => {
+      const gigs: NonNullable<PlayerFixture["gigArea"]> = [
+        { dieType: "d4", faceValue: 1 },
+        { dieType: "d6", faceValue: 2 },
+        { dieType: "d8", faceValue: 3 },
+        { dieType: "d10", faceValue: 4 },
+        { dieType: "d12", faceValue: 5 },
+        { dieType: "d20", faceValue: 6 },
+      ];
+      return CyberpunkTestEngine.createWithFixture(
+        { ...mobileLedgerPlayer(3), gigArea: gigs },
+        { ...mobileLedgerPlayer(3, true), gigArea: gigs },
+        { seed: scenarioSeed("overtimeCountdown"), autoGainGig: false },
+      );
+    },
+  },
+  {
+    id: "overtimeCenterRow",
+    group: "core",
+    label: "Overtime · center row",
+    description:
+      "Visual fixture for the overtime cue across desktop and mobile Gig lanes before either side reaches seven Gigs.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(mobileLedgerPlayer(3), mobileLedgerPlayer(3, true), {
+        seed: scenarioSeed("overtimeCenterRow"),
+        autoGainGig: false,
+        overtime: true,
+      }),
   },
   {
     id: "mobileLedgerFriendlyOneRivalThree",
     group: "core",
     label: "Mobile ledger · friendly one, rival three Legends",
     description:
-      "Mixed-count visual fixture for validating side-specific ledger layouts when the rival side requires the stacked Legend row.",
+      "Mixed-count visual fixture proving both Legend areas remain visible without changing the center-row structure or height.",
     build: () => mobileLedgerMixedScenario(1, 3, "mobileLedgerFriendlyOneRivalThree"),
   },
   {
@@ -476,7 +677,7 @@ export const coreScenarios: Scenario[] = [
     group: "core",
     label: "Mobile ledger · friendly zero, rival two Legends",
     description:
-      "Mixed-count visual fixture for validating a score-only friendly lane beside a two-Legend rival lane.",
+      "Mixed-count visual fixture proving Rival Legends remain visible when the friendly Legend area is empty.",
     build: () => mobileLedgerMixedScenario(0, 2, "mobileLedgerFriendlyZeroRivalTwo"),
   },
   {
@@ -544,6 +745,56 @@ export const coreScenarios: Scenario[] = [
       }),
   },
   {
+    id: "openingMainNoSellable",
+    group: "core",
+    label: "Opening · No Sell-tag card",
+    description: "P1 has not sold this turn, but currently has no Sell-tag card in hand.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          ...playerBase,
+          hand: [c.welcomeToNightCityRetailMoxInciters, c.welcomeToNightCityRetailSwordwiseHuscle],
+        },
+        opponentBase,
+        { seed: scenarioSeed("openingMainNoSellable"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "combatPriorityHold",
+    group: "core",
+    label: "Combat · Empty held React window",
+    description:
+      "Your hold is armed. Pass or switch Hold combat priority off to finish the rival's attack without another combat click.",
+    build: () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          hand: [],
+          legendArea: [],
+          eddies: 0,
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailOffdutyMalfini, spent: false, hasLag: false }],
+          hand: [],
+          legendArea: [],
+          eddies: 0,
+        },
+        {
+          activePlayerId: P2,
+          combatProgression: "automatic",
+          seed: scenarioSeed("combatPriorityHold"),
+        },
+      );
+      engine.executeMove("setCombatPriority", { args: { mode: "hold" } }, P1);
+      engine.attackUnit(
+        c.welcomeToNightCityRetailOffdutyMalfini,
+        c.welcomeToNightCityRetailCorpoSecurity,
+        { as: P2 },
+      );
+      return engine;
+    },
+  },
+  {
     id: "attackStep",
     group: "core",
     label: "Main phase · Attackers ready",
@@ -562,10 +813,20 @@ export const coreScenarios: Scenario[] = [
     description:
       "P2 attacks; P1 is in the React step with `useBlocker` + resolve available. select-action mode with constrained verbs.",
     build: () => {
-      const engine = CyberpunkTestEngine.createWithFixture(playerBase, opponentBase, {
-        seed: scenarioSeed("reactStep"),
-        autoGainGig: false,
-      });
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          ...playerBase,
+          field: [
+            ...(Array.isArray(playerBase.field) ? playerBase.field : []),
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+          ],
+        },
+        opponentBase,
+        {
+          seed: scenarioSeed("reactStep"),
+          autoGainGig: false,
+        },
+      );
       if (engine.getState().G.turnMetadata.activePlayerId === P1) {
         engine.completeTurn({ as: P1 });
         skipGainGig(engine);
@@ -606,6 +867,66 @@ export const coreScenarios: Scenario[] = [
       );
       return engine;
     },
+  },
+  {
+    id: "chooseDiscardFromHand",
+    group: "core",
+    label: "Choice · discard a card from hand",
+    description:
+      "Panam's attack requires the player to choose one of several hand cards to discard.",
+    build: () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            {
+              card: c.welcomeToNightCityRetailPanamPalmerStrengthThroughFamily,
+              spent: false,
+              hasLag: false,
+            },
+          ],
+          hand: [
+            c.welcomeToNightCityRetailCorpoSecurity,
+            c.welcomeToNightCityRetailFieldOperator,
+            c.welcomeToNightCityRetailMoxInciters,
+          ],
+          legendArea: [{ card: c.welcomeToNightCityRetailVStreetkid, faceDown: false }],
+        },
+        { legendArea: [{ card: c.welcomeToNightCityRetailVStreetkid, faceDown: false }] },
+        { seed: scenarioSeed("chooseDiscardFromHand"), autoGainGig: false },
+      );
+      engine.attackRival(c.welcomeToNightCityRetailPanamPalmerStrengthThroughFamily, { as: P1 });
+      const choice = engine.getState().G.turnMetadata.pendingChoice;
+      if (choice?.type !== "chooseTarget" || choice.payload.type !== "discardFromHand") {
+        throw new Error("Discard fixture must offer a hand-card choice.");
+      }
+      return engine;
+    },
+  },
+  {
+    id: "handFanOverflow",
+    group: "core",
+    label: "Hand · crowded fan and next page",
+    description:
+      "Thirteen hand cards exercise dense fan spacing, card input, and access to the next page.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          ...playerBase,
+          hand: Array.from(
+            { length: 13 },
+            (_, index) =>
+              [
+                c.welcomeToNightCityRetailCorpoSecurity,
+                c.welcomeToNightCityRetailFieldOperator,
+                c.welcomeToNightCityRetailMoxInciters,
+                c.welcomeToNightCityRetailFloorIt,
+              ][index % 4]!,
+          ),
+          eddies: 8,
+        },
+        opponentBase,
+        { seed: scenarioSeed("handFanOverflow"), autoGainGig: false },
+      ),
   },
   {
     id: "opponentTurn",

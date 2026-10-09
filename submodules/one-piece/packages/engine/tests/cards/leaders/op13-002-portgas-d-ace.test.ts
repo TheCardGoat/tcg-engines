@@ -93,4 +93,39 @@ describe("OP13-002 Portgas.D.Ace", () => {
     expect(engine.getView("north").players.north.hand).toHaveLength(1);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("shares the draw limit between a qualifying Character K.O. and later Leader damage", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [
+          { card: op12Issho082, playedOnTurn: 0 },
+          { card: op12Issho082, playedOnTurn: 0 },
+        ],
+      },
+      {
+        leaderCardId: op13PortgasDAce002,
+        character: [{ card: op12TrafalgarLaw106, rested: true }],
+        life: [eb01Doma005],
+        deck: [eb01Doma005, eb01Doma005, eb01Doma005],
+        activeDon: 1,
+      },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    engine.attachDon(engine.leader("north"), 1, "north");
+    engine.endTurn("north");
+    const attackers = engine
+      .getView("south")
+      .players.south.characters.filter((card) => card !== null)
+      .map((card) => card.instanceId!);
+    engine.declareAttack(
+      attackers[0]!,
+      engine.findCardInZone("north", "character", op12TrafalgarLaw106),
+      "south",
+    );
+    expect(engine.getView("north").players.north.deckCount).toBe(2);
+    engine.declareAttack(attackers[1]!, engine.leader("north"), "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    engine.asNorth().chooseCounter();
+    expect(engine.getView("north").players.north.deckCount).toBe(2);
+    expect(engine.getView("north").players.north.hand).toHaveLength(2);
+  });
 });

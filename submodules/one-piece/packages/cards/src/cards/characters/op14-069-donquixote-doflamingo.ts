@@ -71,7 +71,7 @@ export const op14eb04DonquixoteDoflamingoOp14069069: CharacterCard = {
                   condition: {
                     condition: "leaderTrait",
                     trait: "Donquixote Pirates",
-                    match: "includes",
+                    match: "exact",
                   },
                 },
               ],

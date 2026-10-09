@@ -23,7 +23,7 @@ export const eb02Iceburg032: CharacterCard = {
   cost: 1,
   power: 0,
   counter: 2000,
-  traits: ["Galley-La Company Water Seven"],
+  traits: ["Water Seven", "Galley-La Company"],
   attribute: "wisdom",
   effect:
     "[On Play] If you have 3 or more DON!! cards on your field, look at 7 cards from the top of your deck; reveal up to 1 [Galley-La Company] and add it to your hand. Then, place the rest at the bottom of your deck in any order and play up to 1 [Galley-La Company] from your hand.",

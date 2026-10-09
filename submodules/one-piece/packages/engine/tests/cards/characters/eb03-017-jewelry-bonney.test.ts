@@ -53,4 +53,16 @@ describe("EB03-017 Jewelry Bonney", () => {
     ).toBe(true);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("FAQ: a non-Supernovas Leader receives neither DON activation nor rest prohibition", () => {
+    const e = OnePieceTestEngine.create(
+      { leaderCardId: "OP03-040", hand: ["EB03-017"], activeDon: 5 },
+      { character: ["EB01-005"] },
+    );
+    e.asSouth().play("EB03-017");
+    expect(e.getView("south").players.south).toMatchObject({ activeDon: 0, restedDon: 5 });
+    expect(e.getView("south").prompts).toHaveLength(0);
+    e.asSouth().endTurn();
+    e.asNorth().attack(e.findCardInZone("north", "character", "EB01-005"), e.leader("south"));
+    expect(e.getView("north").players.north.characters[0]?.rested).toBe(true);
+  });
 });

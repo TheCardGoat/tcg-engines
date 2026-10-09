@@ -9,7 +9,7 @@ describe("OP11-098 Blue Hole", () => {
     const engine = OnePieceTestEngine.create(
       {
         hand: [op11BlueHole098],
-        deck: [eb01Doma005, op09Usopp024, eb01MountainGod018],
+        deck: [eb01Doma005, op09Usopp024, eb01MountainGod018, op09Usopp024],
         activeDon: 3,
       },
       { character: [eb01Doma005, eb01MountainGod018] },
@@ -77,5 +77,24 @@ describe("OP11-098 Blue Hole", () => {
     expect(after.deckCount).toBe(deckBefore);
     expect(after.trash.length).toBe(trashBefore);
     expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+  test("an insufficient deck cannot partially pay the optional three-card trash", () => {
+    const e = OnePieceTestEngine.create(
+      {
+        leaderCardId: "ST01-001",
+        hand: ["OP11-098"],
+        deck: ["EB01-005", "EB01-018"],
+        activeDon: 3,
+      },
+      { leaderCardId: "ST01-001", character: ["EB01-005"] },
+    );
+    const target = e.findCardInZone("north", "character", "EB01-005");
+    e.asSouth().play("OP11-098");
+    expect(e.getView("south").players.south.deckCount).toBe(2);
+    expect(e.getView("south").players.south.trash.map((c) => c.cardId)).toEqual(["OP11-098"]);
+    expect(e.getView("south").players.north.characters.some((c) => c?.instanceId === target)).toBe(
+      true,
+    );
+    expect(e.getView("south").prompts).toHaveLength(0);
   });
 });

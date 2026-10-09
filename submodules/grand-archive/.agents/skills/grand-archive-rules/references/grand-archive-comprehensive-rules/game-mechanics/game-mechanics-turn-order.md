@@ -1,3 +1,10 @@
+---
+official_source:
+  publisher: "Weebs of the Shore"
+  url: "https://rules.gatcg.com/game-mechanics/game-mechanics-turn-order"
+  relation: "current_index"
+---
+
 # Game Mechanics - Turn Order
 
 #### General Rules:

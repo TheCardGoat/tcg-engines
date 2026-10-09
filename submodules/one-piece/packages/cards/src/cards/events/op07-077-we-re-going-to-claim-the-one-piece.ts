@@ -21,7 +21,7 @@ export const op07WeReGoingToClaimTheOnePiece077: EventCard = {
   rarity: "R",
   setId: "OP07",
   cost: 1,
-  traits: ["Land of Wano The Four Emperors"],
+  traits: ["The Four Emperors", "Land of Wano"],
   effect:
     "[Main] If your Leader has the [Animal Kingdom Pirates] or [Big Mom Pirates] type, look at 5 cards from the top of your deck; reveal up to 1 [Animal Kingdom Pirates] or [Big Mom Pirates] type card and add it to your hand. Then, place the rest at the bottom of your deck in any order. [Trigger] Activate this card's [Main] effect.",
   effects: {
@@ -36,12 +36,12 @@ export const op07WeReGoingToClaimTheOnePiece077: EventCard = {
               {
                 condition: "leaderTrait",
                 trait: "Animal Kingdom Pirates",
-                match: "includes",
+                match: "exact",
               },
               {
                 condition: "leaderTrait",
                 trait: "Big Mom Pirates",
-                match: "includes",
+                match: "exact",
               },
             ],
           },
@@ -65,12 +65,12 @@ export const op07WeReGoingToClaimTheOnePiece077: EventCard = {
                   {
                     filter: "trait",
                     value: "Animal Kingdom Pirates",
-                    match: "includes",
+                    match: "exact",
                   },
                   {
                     filter: "trait",
                     value: "Big Mom Pirates",
-                    match: "includes",
+                    match: "exact",
                   },
                 ],
               },

@@ -23,7 +23,7 @@ export const op08Hamlet090: CharacterCard = {
   cost: 3,
   power: 4000,
   counter: 1000,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   attribute: "slash",
   effect:
     "[On Play] Play up to 1 [SMILE] type Character card with a cost of 2 or less from your trash.",
@@ -51,7 +51,7 @@ export const op08Hamlet090: CharacterCard = {
               {
                 filter: "trait",
                 value: "SMILE",
-                match: "includes",
+                match: "exact",
               },
               {
                 filter: "cardCategory",

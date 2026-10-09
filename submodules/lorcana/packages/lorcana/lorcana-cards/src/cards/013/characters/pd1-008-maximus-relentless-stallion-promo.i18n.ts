@@ -36,12 +36,12 @@ export const maximusRelentlessStallionPD1PromoI18n: Record<Languages, I18nProper
   },
   it: {
     name: "Maximus",
-    version: "Relentless Stallion",
+    version: "Stallone Implacabile",
     text: [
       {
-        title: "No Escape",
+        title: "Non C'È Scampo",
         description:
-          "If you discarded a card this turn, this character gains <Challenger> +2 and can challenge ready characters this turn. (They get +2 {S} while challenging.)",
+          "Se hai scartato una carta in questo turno, questo personaggio ottiene <Sfidante> +2 e può sfidare i personaggi preparati per questo turno. (Riceve +2 {S} mentre sta sfidando.)",
       },
     ],
   },

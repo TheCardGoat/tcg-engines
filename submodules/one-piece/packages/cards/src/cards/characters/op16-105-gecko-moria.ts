@@ -25,7 +25,7 @@ export const op16GeckoMoria105: CharacterCard = {
   counter: 1000,
   trigger:
     "If you have 1 or less Life cards, play up to 1 [Absalom], up to 1 [Dr. Hogback], and up to 1 [Perona], with a cost of 4 or less from your trash.",
-  traits: ["The Seven Warlords of the Sea Thriller Bark Pirates"],
+  traits: ["The Seven Warlords of the Sea", "Thriller Bark Pirates"],
   attribute: "special",
   effect:
     "[Trigger] If you have 1 or less Life cards, play up to 1 [Absalom], up to 1 [Dr. Hogback], and up to 1 [Perona], with a cost of 4 or less from your trash.",
@@ -43,65 +43,69 @@ export const op16GeckoMoria105: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
+            action: "playGrouped",
             source: {
               player: "self",
               zone: "trash",
             },
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            filters: [
+            groups: [
               {
-                filter: "name",
-                value: "Absalom",
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 4,
+                  },
+                  {
+                    filter: "name",
+                    value: "Absalom",
+                  },
+                ],
+              },
+              {
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 4,
+                  },
+                  {
+                    filter: "name",
+                    value: "Dr. Hogback",
+                  },
+                ],
+              },
+              {
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 4,
+                  },
+                  {
+                    filter: "name",
+                    value: "Perona",
+                  },
+                ],
               },
             ],
-          },
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "trash",
+            playStates: {
+              single: "active",
+              multiple: ["active", "active", "active"],
+              byGroup: true,
             },
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            filters: [
-              {
-                filter: "cost",
-                comparison: "lte",
-                value: 4,
-              },
-              {
-                filter: "name",
-                value: "Perona",
-              },
-            ],
-          },
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "trash",
-            },
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            filters: [
-              {
-                filter: "cost",
-                comparison: "lte",
-                value: 4,
-              },
-              {
-                filter: "name",
-                value: "Dr. Hogback",
-              },
-            ],
           },
         ],
       },

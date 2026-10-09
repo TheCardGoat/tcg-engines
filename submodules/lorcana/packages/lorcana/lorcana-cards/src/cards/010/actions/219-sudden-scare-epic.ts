@@ -21,7 +21,7 @@ export const suddenScareEpic: ActionCard = {
   inkType: ["sapphire"],
   set: "010",
   cardNumber: 219,
-  rarity: "common",
+  rarity: "epic",
   specialRarity: "epic",
   cost: 4,
   inkable: true,

@@ -31,6 +31,7 @@ export const celiaMaeFriendlyReceptionist: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b8569f3f5fd643c4adacaa5ee82c5e9e",
+    tcgPlayer: "704543",
   },
   text: [
     {

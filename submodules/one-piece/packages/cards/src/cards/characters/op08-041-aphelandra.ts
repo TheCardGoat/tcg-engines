@@ -58,7 +58,7 @@ export const op08Aphelandra041: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Kuja Pirates",
-              match: "includes",
+              match: "exact",
             },
           },
         ],

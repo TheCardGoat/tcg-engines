@@ -23,7 +23,7 @@ export const op15Urouge099: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 1000,
-  traits: ["Fallen Monk Pirates Supernovas Sky Island"],
+  traits: ["Sky Island", "Supernovas", "Fallen Monk Pirates"],
   attribute: "strike",
   effect:
     "[On Play] You may trash 1 {Supernovas} type card from your hand: This Character gains [Rush] during this turn.\n[Activate: Main] You may turn 1 card from the top of your Life cards face-down: Give up to 1 rested DON!! card to your Leader or 1 of your Characters.",
@@ -39,7 +39,7 @@ export const op15Urouge099: CharacterCard = {
               {
                 filter: "trait",
                 value: "Supernovas",
-                match: "includes",
+                match: "exact",
               },
             ],
           },

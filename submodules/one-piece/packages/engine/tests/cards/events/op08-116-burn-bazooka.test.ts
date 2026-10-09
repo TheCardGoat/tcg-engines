@@ -54,6 +54,7 @@ describe("OP08-116 Burn Bazooka", () => {
     }
     expect(lifeStep.candidates.map((candidate) => candidate.ref.id)).toEqual([shandianId]);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [shandianId] }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     expect(engine.getView("north").players.north.hand.map((card) => card.instanceId)).toContain(
       bottomLifeId,
@@ -90,6 +91,7 @@ describe("OP08-116 Burn Bazooka", () => {
     const lifeBefore = engine.getView("north").players.north.lifeCount;
     const handBefore = engine.getView("north").players.north.hand.length;
     engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("north");
     expect(view.players.north.lifeCount).toBe(lifeBefore);

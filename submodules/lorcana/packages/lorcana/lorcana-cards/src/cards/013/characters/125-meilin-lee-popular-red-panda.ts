@@ -33,6 +33,7 @@ export const meilinLeePopularRedPanda: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bf8641478666476d982b2ce013982386",
+    tcgPlayer: "702659",
   },
   text: [
     {

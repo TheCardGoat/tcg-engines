@@ -21,7 +21,7 @@ export const op01ElephantSMarchoo115: EventCard = {
   rarity: "C",
   setId: "OP01",
   cost: 4,
-  traits: ["Animal Kingdom Pirates SMILE"],
+  traits: ["Animal Kingdom Pirates", "SMILE"],
   effect:
     "[Main] K.O. up to 1 of your opponent's Characters with a cost of 2 or less, then add up to 1 DON!! card from your DON!! deck and set it as active. [Trigger] Activate this card's [Main] effect.  This card has been officially errata'd.",
   effects: {

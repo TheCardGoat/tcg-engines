@@ -11,7 +11,7 @@ describe("parseInlineCondition", () => {
       expect(result!.condition).toEqual({
         condition: "leaderTrait",
         trait: "Revolutionary Army",
-        match: "includes",
+        match: "exact",
       });
       expect(result!.remainingText).toBe("draw 1 card.");
     });
@@ -24,7 +24,7 @@ describe("parseInlineCondition", () => {
       expect(result!.condition).toEqual({
         condition: "leaderTrait",
         trait: "Water Seven",
-        match: "includes",
+        match: "exact",
       });
     });
 
@@ -36,7 +36,7 @@ describe("parseInlineCondition", () => {
       expect(result!.condition).toEqual({
         condition: "leaderTrait",
         trait: "Donquixote Pirates",
-        match: "includes",
+        match: "exact",
       });
     });
 
@@ -101,8 +101,8 @@ describe("parseInlineCondition — multi-trait leader condition", () => {
       condition: "compound",
       operator: "or",
       conditions: [
-        { condition: "leaderTrait", trait: "Fish-Man", match: "includes" },
-        { condition: "leaderTrait", trait: "Merfolk", match: "includes" },
+        { condition: "leaderTrait", trait: "Fish-Man", match: "exact" },
+        { condition: "leaderTrait", trait: "Merfolk", match: "exact" },
       ],
     });
   });
@@ -116,8 +116,8 @@ describe("parseInlineCondition — multi-trait leader condition", () => {
       condition: "compound",
       operator: "or",
       conditions: [
-        { condition: "leaderTrait", trait: "Shandian Warrior", match: "includes" },
-        { condition: "leaderTrait", trait: "Skypiea", match: "includes" },
+        { condition: "leaderTrait", trait: "Shandian Warrior", match: "exact" },
+        { condition: "leaderTrait", trait: "Skypiea", match: "exact" },
       ],
     });
   });
@@ -131,7 +131,7 @@ describe("parseInlineCondition — multi-trait leader condition", () => {
       condition: "compound",
       operator: "or",
       conditions: [
-        { condition: "leaderTrait", trait: "Cross Guild", match: "includes" },
+        { condition: "leaderTrait", trait: "Cross Guild", match: "exact" },
         { condition: "leaderTrait", trait: "Baroque Works", match: "includes" },
       ],
     });
@@ -145,7 +145,7 @@ describe("parseInlineCondition — multi-trait leader condition", () => {
     expect(result!.condition).toEqual({
       condition: "leaderTrait",
       trait: "Donquixote Pirates",
-      match: "includes",
+      match: "exact",
     });
   });
 });

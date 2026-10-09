@@ -22,7 +22,7 @@ export const op04MonkeyDLuffy014: CharacterCard = {
   setId: "OP04",
   cost: 8,
   power: 9000,
-  traits: ["Alabasta Straw Hat Crew"],
+  traits: ["Alabasta", "Straw Hat Crew"],
   attribute: "strike",
   effect:
     "[Banish] (When this card deals damage, the target card is trashed without activating its Trigger.)",

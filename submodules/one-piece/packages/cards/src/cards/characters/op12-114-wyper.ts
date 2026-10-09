@@ -23,7 +23,7 @@ export const op12Wyper114: CharacterCard = {
   cost: 6,
   power: 7000,
   counter: 2000,
-  traits: ["Sky Island Shandian Warrior"],
+  traits: ["Sky Island", "Shandian Warrior"],
   attribute: "ranged",
   i18n: op12Wyper114I18n,
 };

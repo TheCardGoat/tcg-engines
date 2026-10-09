@@ -107,19 +107,19 @@ describe("EB03-018 Tashigi", () => {
     const rest = engine.pendingDecision("effectTargetSelection", "north").steps[0];
     expect(rest?.kind).toBe("selectEntity");
     if (rest?.kind !== "selectEntity") throw new Error("Expected Radio Knife's rest target.");
-    expect(rest.candidates.map((candidate) => candidate.ref.id)).not.toContain(tashigiId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "north");
+    expect(rest.candidates.map((candidate) => candidate.ref.id)).toContain(tashigiId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [tashigiId] }, "north");
 
     const ko = engine.pendingDecision("effectTargetSelection", "north").steps[0];
     expect(ko?.kind).toBe("selectEntity");
     if (ko?.kind !== "selectEntity") throw new Error("Expected Radio Knife's K.O. target.");
     expect(ko.candidates.map((candidate) => candidate.ref.id)).toContain(eligibleId);
-    expect(ko.candidates.map((candidate) => candidate.ref.id)).not.toContain(tashigiId);
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [eligibleId] }, "north");
+    expect(ko.candidates.map((candidate) => candidate.ref.id)).toContain(tashigiId);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [tashigiId] }, "north");
 
     const view = engine.getView("south");
     expect(view.players.south.characters.some((card) => card?.instanceId === tashigiId)).toBe(true);
-    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(eligibleId);
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(eligibleId);
     expect(engine.getView("north").players.north.trash.map((card) => card.instanceId)).toContain(
       eventId,
     );

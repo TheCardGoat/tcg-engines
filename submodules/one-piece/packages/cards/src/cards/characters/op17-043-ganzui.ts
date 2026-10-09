@@ -27,6 +27,23 @@ export const op17Ganzui043: CharacterCard = {
   effect:
     "If this Character would be removed from the field, you may trash 2 cards from your hand instead.  [On Play] Your Leader's base power becomes 6000 until the end of your opponent's next End Phase.",
   effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        actions: [
+          {
+            action: "setBasePower",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: { amount: 1 },
+            },
+            value: 6000,
+            duration: "untilEndOfOpponentNextTurn",
+          },
+        ],
+      },
+    ],
     replacementEffects: [
       {
         replacedEvent: "removeFromField",

@@ -1,4 +1,10 @@
-import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018, op01Shanks120 } from "@tcg/op-cards";
+import {
+  op11Zephyr006,
+  eb01Doma005,
+  eb01Fourtricks025,
+  eb01MountainGod018,
+  op01Shanks120,
+} from "@tcg/op-cards";
 import type { CharacterCard } from "@tcg/op-types";
 import { describe, expect, test } from "vite-plus/test";
 import { op14eb04Mr5Gem094 } from "../../../../../cards/src/cards/characters/op14-094-mr-5-gem.ts";
@@ -76,5 +82,26 @@ describe("OP14-094 Mr.5(Gem)", () => {
     const view = engine.getView("south");
     expect(view.players.south.lifeCount).toBe(lifeBefore);
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(blockerId);
+  });
+  test("printed Special attribute lets Zephyr select it, excluding a Strike Character", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op14eb04Mr5Gem094, eb01Fourtricks025] },
+      { character: [{ card: op11Zephyr006, playedOnTurn: 0 }], activeDon: 1 },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const target = engine.findCardInZone("south", "character", op14eb04Mr5Gem094);
+    const strike = engine.findCardInZone("south", "character", eb01Fourtricks025);
+    const attacker = engine.findCardInZone("north", "character", "OP11-006");
+    engine.attachDon(attacker, 1, "north");
+    engine.declareAttack(attacker, engine.leader("south"), "north");
+    const selection = engine.pendingDecision("effectTargetSelection", "north").steps[0];
+    if (selection?.kind !== "selectEntity") throw new Error("Expected Special Character choice");
+    expect(selection.candidates.map((card) => card.ref.id)).toContain(target);
+    expect(selection.candidates.map((card) => card.ref.id)).not.toContain(strike);
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [target] }, "north");
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === target)
+        ?.power,
+    ).toBe(1000);
   });
 });

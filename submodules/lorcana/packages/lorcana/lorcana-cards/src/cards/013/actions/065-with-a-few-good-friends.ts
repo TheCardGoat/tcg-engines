@@ -29,6 +29,7 @@ export const withAFewGoodFriends: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9c14d6ee5bfd49538ccf3d3323baac68",
+    tcgPlayer: "704583",
   },
   text: [
     {

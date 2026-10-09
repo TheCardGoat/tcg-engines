@@ -33,4 +33,18 @@ describe("OP10-102 Emporio.Ivankov", () => {
       }).reason,
     ).toBe("This effect has already been used this turn.");
   });
+  test("can give power with zero Life and the power expires at turn end", () => {
+    const e = OnePieceTestEngine.create({ character: ["OP10-102", "OP10-100"], life: [] });
+    const ivankov = e.findCardInZone("south", "character", "OP10-102");
+    e.asSouth().activateMain(ivankov);
+    e.asSouth().chooseTargets(ivankov);
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === ivankov)?.power,
+    ).toBe(7000);
+    expect(e.getView("south").players.south.lifeCount).toBe(0);
+    e.asSouth().endTurn();
+    expect(
+      e.getView("south").players.south.characters.find((c) => c?.instanceId === ivankov)?.power,
+    ).toBe(6000);
+  });
 });

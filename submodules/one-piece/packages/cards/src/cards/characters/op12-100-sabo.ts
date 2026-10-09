@@ -23,7 +23,7 @@ export const op12Sabo100: CharacterCard = {
   cost: 5,
   power: 6000,
   counter: 1000,
-  traits: ["Revolutionary Army Dressrosa"],
+  traits: ["Dressrosa", "Revolutionary Army"],
   attribute: "special",
   effect:
     "If you have 3 or less Life cards, this Character gains [Blocker] and +3 cost.\n[On Play] You may add 1 card from the top of your Life cards to your hand: Draw 2 cards and trash 1 card from your hand.",

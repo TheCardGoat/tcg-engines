@@ -39,4 +39,25 @@ describe("EB01-007 Yamato", () => {
     ).toBe(1);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+  test("cannot repeat the effect while another rested DON remains available", () => {
+    const engine = OnePieceTestEngine.create({ character: [eb01Yamato007], restedDon: 2 });
+    const yamato = engine.findCardInZone("south", "character", eb01Yamato007);
+    engine.activateEffect(yamato, "activateMain", "south");
+    engine.resolveDecision("effectGiveDonCount", { optionId: "1" }, "south");
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.leader("south")] },
+      "south",
+    );
+    expect(engine.getView("south").players.south.restedDon).toBe(1);
+    expect(engine.getView("south").players.south.leader.attachedDon).toBe(1);
+    expect(
+      engine.expectFailure({
+        type: "activateEffect",
+        seat: "south",
+        sourceInstanceId: yamato,
+        trigger: "activateMain",
+      }).reason,
+    ).toBe("This effect has already been used this turn.");
+  });
 });
